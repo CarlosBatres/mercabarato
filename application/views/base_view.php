@@ -13,7 +13,8 @@
 
         <link rel="shortcut icon" href="<?php echo assets_url('imgs/favicon.ico'); ?>" type="image/x-icon" />
         
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="<?php echo assets_url('css/font.css'); ?>"> 
+        <link rel="stylesheet" href="<?php echo assets_url('css/font-awesome.min.css'); ?>">        
         <link rel="stylesheet" href="<?php echo assets_url('css/bootstrap.min.css'); ?>">        
         <link rel="stylesheet" href="<?php echo assets_url('css/style.default.css'); ?>" id="theme-stylesheet">        
         <link rel="stylesheet" href="<?php echo assets_url('css/main.css'); ?>">

@@ -9,8 +9,8 @@ class Template {
 
     private $_ci;
 
-    protected $brand_name = 'CodeIgniter Skeleton';
-    protected $title_separator = ' - ';
+    protected $brand_name = '';
+    protected $title_separator = '';
     protected $ga_id = FALSE; // UA-XXXXX-X
 
     protected $layout = 'default';

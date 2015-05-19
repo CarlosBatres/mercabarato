@@ -2508,6 +2508,13 @@ fieldset[disabled] .btn-template-primary.active {
   background: #555555;
   padding: 50px 0;
   color: #999999;
+  
+  position: absolute;
+  bottom: 0;
+  width: 100%;  
+  left: 0;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 #footer h1,
 #footer h2,
