@@ -8,7 +8,7 @@ body {
 }
 
 .container-body{        
-    min-height: 600px;
+    min-height: 1200px;
 }
 /* Navbar 
 ------------------------------------------------------*/
@@ -42,4 +42,12 @@ body {
 
 .logo_footer{
     padding-top: 40px;
+}
+
+#footer a{
+    color:#ffffff;
+}
+#footer h4{
+    color:#ec9c29;
+    font-size: 18px;    
 }

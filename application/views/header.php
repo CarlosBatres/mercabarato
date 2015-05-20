@@ -1,19 +1,3 @@
-<!--<header class="navbar navbar-inverse navbar-static-top navbar-custom">
-    <div class="container">
-        <div class="navbar-header">            
-            <a href="<?php echo site_url(); ?>" class="navbar-brand"> <img src="<?php echo assets_url('imgs/logo.png') ?>"/> </a>
-        </div>
-        <nav class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="<?php echo site_url(); ?>">Subastas</a></li>
-                <li><a href="<?php echo site_url(); ?>">Productos</a></li>                
-                <li><a href="<?php echo site_url(); ?>">Vendedores</a></li>                
-                <li><a href="<?php echo site_url(); ?>">Seguros</a></li>                
-            </ul>            
-        </nav>
-    </div>
-</header>-->
-
 <header>
     <!-- *** TOP ***
     _________________________________________________________ -->
@@ -34,8 +18,8 @@
                     </div>
 
                     <div class="login">
-                        <a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Acceso</span></a>
-                        <a href="customer-register.html"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Registro</span></a>
+                        <a href="" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Acceso</span></a>
+                        <a href="<?php echo site_url('registro'); ?>"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Registro</span></a>
                     </div>
 
                 </div>
@@ -103,26 +87,23 @@ _________________________________________________________ -->
                 <h4 class="modal-title" id="Login">Customer login</h4>
             </div>
             <div class="modal-body">
-                <form action="customer-orders.html" method="post">
+                <?php echo form_open('login','id="loginForm"'); ?>                 
                     <div class="form-group">
-                        <input type="text" class="form-control" id="email_modal" placeholder="email">
+                        <input type="text" class="form-control" name="email_modal" placeholder="email">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="password_modal" placeholder="password">
+                        <input type="password" class="form-control" name="password_modal" placeholder="password">
                     </div>
 
                     <p class="text-center">
-                        <button class="btn btn-template-main"><i class="fa fa-sign-in"></i> Log in</button>
-                    </p>
-
-                </form>
-
-                <p class="text-center text-muted">Not registered yet?</p>
-                <p class="text-center text-muted"><a href="customer-register.html"><strong>Register now</strong></a>! It is easy and done in 1&nbsp;minute and gives you access to special discounts and much more!</p>
+                        <button class="btn btn-template-main" type="submit"><i class="fa fa-sign-in"></i> Iniciar</button>
+                    </p>                    
+                <?php echo form_close(); ?>
+                <p class="text-center text-muted">No esta registrado?</p>
+                <p class="text-center text-muted"><a href="<?php echo site_url('registro'); ?>"><strong>Registrese ahora</strong></a>!</p>
 
             </div>
         </div>
     </div>
 </div>
-
 <!-- *** LOGIN MODAL END *** -->

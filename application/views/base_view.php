@@ -18,6 +18,9 @@
         <link rel="stylesheet" href="<?php echo assets_url('css/bootstrap.min.css'); ?>">        
         <link rel="stylesheet" href="<?php echo assets_url('css/style.default.css'); ?>" id="theme-stylesheet">        
         <link rel="stylesheet" href="<?php echo assets_url('css/main.css'); ?>">
+        <link rel="stylesheet" href="<?php echo assets_url('css/owl.carousel.css'); ?>" >
+        <link rel="stylesheet" href="<?php echo assets_url('css/owl.theme.css'); ?>" >
+        
         <?php echo $css; ?>
         <!-- / -->
 
@@ -32,8 +35,9 @@
         <!-- / -->
 
         <script src="<?php echo assets_url('js/jquery.min.js'); ?>"></script>
-        <script src="<?php echo assets_url('js/bootstrap.min.js'); ?>"></script>
-        <script src="<?php echo assets_url('js/main.js'); ?>"></script>
+        <script src="<?php echo assets_url('js/bootstrap.min.js'); ?>"></script>        
+        <script src="<?php echo assets_url('js/owl.carousel.min.js'); ?>"></script>
+        <script src="<?php echo assets_url('js/main.js'); ?>"></script>        
         <!-- Extra javascript -->
         <?php echo $js; ?>
         <!-- / -->
