@@ -2,9 +2,9 @@
     'use strict';
 
     var // Localise globals
-        document = window.document,
-        $ = window.$,
-        CIS = window.CIS = window.CIS || {};
+            document = window.document,
+            $ = window.$,
+            CIS = window.CIS = window.CIS || {};
 
     CIS.Ajax = {
         /*
@@ -41,7 +41,7 @@
          */
         response: function(data) {
             var data = data || {},
-                context = this;
+                    context = this;
             CIS.Ajax.lastContext = context;
 
             if (typeof data.scripts === 'undefined') {
@@ -52,7 +52,7 @@
             for (var i = 0, length = data.scripts.length; i < length; i++) {
                 try {
                     (new Function(data.scripts[i])).call(context);
-                } catch(ex) {
+                } catch (ex) {
                     console.log(ex);
                 }
             }
@@ -66,7 +66,6 @@
         // List of Javascript files that were already loaded
         // by the CIS.Script.require function
         loadedFiles: {},
-
         /**
          * Load Javascript files if they were not loaded, then execute them
          * file: string or array of string
@@ -74,17 +73,17 @@
          */
         require: function(file, callback) {
             var self = this,
-                files = (file instanceof Array) ? file : [file],
-                // List of Javascript files that were not loaded
-                unloadedFiles = [],
-                // List of functions that will be executed to load the Javascript file
-                functions = [];
+                    files = (file instanceof Array) ? file : [file],
+                    // List of Javascript files that were not loaded
+                    unloadedFiles = [],
+                    // List of functions that will be executed to load the Javascript file
+                    functions = [];
 
             // Prepare list of Javascript files that need to be loaded
             for (var i = 0; i < files.length; i++) {
                 if (typeof files[i] === 'string' || files[i] instanceof String) {
                     // Check if the file was loaded or not
-                    if ( ! self.loadedFiles.hasOwnProperty(files[i])) {
+                    if (!self.loadedFiles.hasOwnProperty(files[i])) {
                         unloadedFiles.push(files[i]);
                         functions.push($.ajax({
                             dataType: "script",
@@ -124,8 +123,8 @@
         // Ajaxify links
         $(document).on('click', 'a[rel]', function(e) {
             var $a = $(this),
-                rel = $a.attr('rel'),
-                url = $a.attr('ajaxify');
+                    rel = $a.attr('rel'),
+                    url = $a.attr('ajaxify');
 
             if (typeof url === 'undefined') {
                 e.preventDefault();
@@ -156,8 +155,8 @@
         // Ajaxify forms
         $(document).on('submit', 'form[rel]', function(e) {
             var $form = $(this),
-                rel = $form.attr('rel'),
-                url = $form.attr('action');
+                    rel = $form.attr('rel'),
+                    url = $form.attr('action');
 
             if (typeof url === 'undefined') {
                 e.preventDefault();
@@ -188,9 +187,10 @@
             }
             e.preventDefault();
         });
-        
+
         sliderHomepage();
         sliders();
+        validateLogin();
     });
 
     // Execute queued scripts
@@ -205,66 +205,86 @@
 
 function sliderHomepage() {
     if ($('#slider').length) {
-	var owl = $("#slider");
+        var owl = $("#slider");
 
-	$("#slider").owlCarousel({
-	    autoPlay: 3000,
-	    items: 4,
-	    itemsDesktopSmall: [900, 3],
-	    itemsTablet: [600, 3],
-	    itemsMobile: [500, 2]
-	});
+        $("#slider").owlCarousel({
+            autoPlay: 3000,
+            items: 4,
+            itemsDesktopSmall: [900, 3],
+            itemsTablet: [600, 3],
+            itemsMobile: [500, 2]
+        });
     }
 
 }
 /* sliders */
-
 function sliders() {
     if ($('.owl-carousel').length) {
-
-	$(".customers").owlCarousel({
-	    items: 6,
-	    itemsDesktopSmall: [990, 4],
-	    itemsTablet: [768, 2],
-	    itemsMobile: [480, 1]
-	});
-
-	$(".testimonials").owlCarousel({
-	    items: 4,
-	    itemsDesktopSmall: [990, 3],
-	    itemsTablet: [768, 2],
-	    itemsMobile: [480, 1]
-	});
-
-	$('.project').owlCarousel({
-	    navigation: true, // Show next and prev buttons
-	    navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
-	    slideSpeed: 300,
-	    paginationSpeed: 400,
-	    autoPlay: true,
-	    stopOnHover: true,
-	    singleItem: true,
-	    afterInit: '',
-	    lazyLoad: true
-	});
-
-	$('.homepage').owlCarousel({
-	    navigation: false, // Show next and prev buttons
-	    navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
-	    slideSpeed: 2000,
-	    paginationSpeed: 1000,
-	    autoPlay: true,
-	    stopOnHover: true,
-	    singleItem: true,
-	    lazyLoad: false,
-	    addClassActive: true,
-	    afterInit: function () {
-		//animationsSlider();
-	    },
-	    afterMove: function () {
-		//animationsSlider();
-	    }
-	});
+        $('.homepage').owlCarousel({
+            navigation: false, // Show next and prev buttons
+            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
+            slideSpeed: 2000,
+            paginationSpeed: 1000,
+            autoPlay: true,
+            stopOnHover: true,
+            singleItem: true,
+            lazyLoad: false,
+            addClassActive: true,
+            afterInit: function() {
+                //animationsSlider();
+            },
+            afterMove: function() {
+                //animationsSlider();
+            }
+        });
     }
+}
+
+function validateLogin() {
+    $("#loginForm").validate({
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+            }
+        },
+        messages: {
+            email: {
+                required: "Ingrese su email",
+                email: "Ingrese un email valido"
+            },
+            password: {
+                required: "Ingrese una contraseña",
+            },
+        }
+    });
+
+    $('#login-modal').on('shown.bs.modal', function() {
+        if(!$(this).find('.alert-danger').hasClass('hidden')){
+            $(this).find('.alert-danger').addClass('hidden');        
+        }        
+    });
+
+    $("#loginForm").on('submit', function(e) {
+        e.preventDefault();        
+        $.ajax({
+            type: "POST",
+            url: SITE_URL + 'login',
+            data: $("#loginForm").serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if (response.success === "true") {
+                    $('#login-modal').modal('hide')
+                    window.location.href = response.url;
+                } else {
+                    $('#login-modal').find('.alert-danger').removeClass('hidden');
+                }                
+            }
+        });
+    });
 
 }
+

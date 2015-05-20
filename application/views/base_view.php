@@ -13,13 +13,19 @@
 
         <link rel="shortcut icon" href="<?php echo assets_url('imgs/favicon.ico'); ?>" type="image/x-icon" />
         
-        <link rel="stylesheet" href="<?php echo assets_url('css/font.css'); ?>"> 
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
+        
         <link rel="stylesheet" href="<?php echo assets_url('css/font-awesome.min.css'); ?>">        
         <link rel="stylesheet" href="<?php echo assets_url('css/bootstrap.min.css'); ?>">        
         <link rel="stylesheet" href="<?php echo assets_url('css/style.default.css'); ?>" id="theme-stylesheet">        
         <link rel="stylesheet" href="<?php echo assets_url('css/main.css'); ?>">
         <link rel="stylesheet" href="<?php echo assets_url('css/owl.carousel.css'); ?>" >
         <link rel="stylesheet" href="<?php echo assets_url('css/owl.theme.css'); ?>" >
+        
+        <script>
+            var BASE_URL = "<?php echo base_url(); ?>";            
+            var SITE_URL = "<?php echo site_url(); ?>";            
+        </script>
         
         <?php echo $css; ?>
         <!-- / -->
@@ -35,6 +41,7 @@
         <!-- / -->
 
         <script src="<?php echo assets_url('js/jquery.min.js'); ?>"></script>
+        <script src="<?php echo assets_url('js/jquery.validate.min.js'); ?>"></script>
         <script src="<?php echo assets_url('js/bootstrap.min.js'); ?>"></script>        
         <script src="<?php echo assets_url('js/owl.carousel.min.js'); ?>"></script>
         <script src="<?php echo assets_url('js/main.js'); ?>"></script>        

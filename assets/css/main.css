@@ -8,7 +8,7 @@ body {
 }
 
 .container-body{        
-    min-height: 1200px;
+    //min-height: 1200px;
 }
 /* Navbar 
 ------------------------------------------------------*/
@@ -37,7 +37,7 @@ body {
 }
 
 .navbar-brand img{
-   margin: 10px 0 0 0;
+    margin: 10px 0 0 0;
 }
 
 .logo_footer{
@@ -51,3 +51,46 @@ body {
     color:#ec9c29;
     font-size: 18px;    
 }
+
+#loginForm label.error {
+    margin-left: 10px;
+    width: auto;
+    display: inline;
+    color: red;
+    font-style: italic;
+}
+
+#content-body {
+  overflow:auto;
+  padding-bottom:200px; /* this needs to be bigger than footer height*/
+}
+
+.tipo_registro {
+    margin:0 -15px;
+    padding:.5em 0;
+    font-size:2em;
+    text-align:center;    
+}
+.tipo_registro a {
+    width: 90%;
+    display: inline-block;
+    padding: 1em 2.5em;
+    margin: 0 15px;
+    border-radius:4px;
+    color: #fff;
+    background-color: hsl(41,90%,58%);    
+    text-shadow: 1px 1px 1px hsla(0,0%,10%,0.5);
+    background-image: radial-gradient(hsla(41,95%,60%,1) 10%, hsla(41,90%,50%,1) 100%);
+    box-shadow: 0 0 0 1px hsla(41,90%,50%,.9) inset, 0 0 0 2px hsla(41,90%,25%,.3) inset;    
+ }
+
+.tipo_registro a.selected {
+    background-color: hsl(41,90%,45%);    
+    text-shadow: 1px 1px 1px hsla(0,0%,10%,0.5);
+    background-image: radial-gradient(hsla(41,95%,30%,1) 10%, hsla(41,90%,25%,1) 100%);
+    box-shadow: 0 0 0 1px hsla(41,90%,48%,1) inset, 0 0 0 2px hsla(41,90%,50%,1) inset;    
+ }
+
+ body .box_registro{
+     border:0px;
+ }

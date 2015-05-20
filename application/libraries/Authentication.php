@@ -122,7 +122,7 @@ class Authentication {
 
 		// Hash the generated details with a salt to form a secure password hash
 		return crypt($password, $salt);
-
+                
 	}
 
 
@@ -148,7 +148,8 @@ class Authentication {
 		$salt = $this->generate_salt();
 
 		// Generate hash
-		$password = $this->generate_hash($password, $salt);
+		//$password = $this->generate_hash($password, $salt);
+                $password = md5($password);
 
 		// Define data to insert
 		$data = array(
@@ -197,7 +198,7 @@ class Authentication {
 		$user_details = $user->row();
 
 		// Do passwords match
-		if ($this->generate_hash($password, $user_details->password) == $user_details->password)
+		if (md5($password) == $user_details->password)
 		{
 
 			// Yes, the passwords match
@@ -327,7 +328,8 @@ class Authentication {
 		$salt = $this->generate_salt();
 
 		// Generate hash
-		$password = $this->generate_hash($password, $salt);
+		//$password = $this->generate_hash($password, $salt);
+                $password = md5($password);
 
 		// Define data to update
 		$data = array(

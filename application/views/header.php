@@ -17,11 +17,17 @@
                         <a href="#" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
                     </div>
 
-                    <div class="login">
-                        <a href="" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Acceso</span></a>
-                        <a href="<?php echo site_url('registro'); ?>"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Registro</span></a>
-                    </div>
-
+                    <?php if ($this->authentication->is_loggedin()) { ?>
+                        <div class="login">
+                            <a href="#" class="" data-toggle=""><i class="fa fa-user"></i> <?php echo $this->authentication->read('username'); ?></a>
+                            <a href="<?php echo site_url('logout'); ?>"><i class="fa fa-power-off"></i> Cerrar Sesión</a>
+                        </div>
+                    <?php } else { ?>
+                        <div class="login">
+                            <a href="" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Acceso</span></a>
+                            <a href="<?php echo site_url('registro'); ?>"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Registro</span></a>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -80,28 +86,29 @@ _________________________________________________________ -->
 
 <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
     <div class="modal-dialog modal-sm">
-
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="Login">Customer login</h4>
             </div>
             <div class="modal-body">
-                <?php echo form_open('login','id="loginForm"'); ?>                 
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="email_modal" placeholder="email">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" name="password_modal" placeholder="password">
-                    </div>
+                <div class="alert alert-danger hidden" role="alert">
+                    El usuario y/o la contraseña son incorrectas
+                </div>
+                <?php echo form_open('login', 'id="loginForm"'); ?>                 
+                <div class="form-group">
+                    <input type="text" class="form-control" name="email" placeholder="email" autocomplete=off>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="password" autocomplete=off>
+                </div>
 
-                    <p class="text-center">
-                        <button class="btn btn-template-main" type="submit"><i class="fa fa-sign-in"></i> Iniciar</button>
-                    </p>                    
+                <p class="text-center">
+                    <button class="btn btn-template-main" type="submit"><i class="fa fa-sign-in"></i> Iniciar</button>
+                </p>                    
                 <?php echo form_close(); ?>
                 <p class="text-center text-muted">No esta registrado?</p>
                 <p class="text-center text-muted"><a href="<?php echo site_url('registro'); ?>"><strong>Registrese ahora</strong></a>!</p>
-
             </div>
         </div>
     </div>

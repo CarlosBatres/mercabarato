@@ -39,7 +39,11 @@
 */
 
 /* Front */
+$route['home'] = 'home/main';
 $route['login'] = 'home/user/login';
+$route['logout'] = 'home/user/logout';
+$route['registro'] = 'home/user/view_registro';
+$route['registrar'] = 'home/user/new_user';
 
 $route['default_controller'] = "home/main";
 $route['404_override'] = '';
