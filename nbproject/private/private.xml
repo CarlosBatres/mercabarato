@@ -3,20 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/assets/css/style.default.css</file>
             <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/assets/js/registro.js</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/home/controllers/poblacion.php</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/models/poblacion_model.php</file>
+            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/assets/css/style.default.css</file>
+            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/home/controllers/comprador.php</file>
             <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/home/views/index.php</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/core/MY_Model.php</file>
             <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/assets/js/main.js</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/models/provincia_model.php</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/views/header.php</file>
+            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/home/controllers/vendedor.php</file>
             <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/home/controllers/user.php</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/config/routes.php</file>
             <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/assets/css/main.css</file>
+            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/config/routes.php</file>
             <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/home/views/registro.php</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/home/controllers/provincia.php</file>
             <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/views/base_view.php</file>
         </group>
     </open-files>

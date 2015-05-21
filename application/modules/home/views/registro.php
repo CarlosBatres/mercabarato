@@ -35,9 +35,9 @@
             <div class="box box_registro">
                 <h2 class="text-uppercase">Nueva Cuenta</h2>                                        
                 <hr>
-                <?php echo form_open('registrar', 'id="registrar_comprador"'); ?>                 
+                <?php echo form_open('registrar_comprador', 'id="registrar_comprador"'); ?>                 
                 <div class="form-group">
-                    <label>Email</label>
+                    <label>E-mail</label>
                     <input type="text" class="form-control" name="email">
                 </div>
                 <div class="form-group">
@@ -52,6 +52,19 @@
                 <div class="form-group">
                     <label>Nombre</label>
                     <input type="text" class="form-control" name="nombre">
+                </div>
+                <div class="form-group">
+                    <label>Apellidos</label>
+                    <input type="text" class="form-control" name="apellidos">
+                </div>
+                <div class="form-group">
+                    <label>Sexo</label><br>
+                    <label>Hombre<input type="radio" name="sexo" value="H" class="radioInput"></label>
+                    <label>Mujer<input type="radio" name="sexo" value="F" class="radioInput"></label>
+                </div>
+                <div class="form-group">
+                    <label>Fecha de Nacimiento</label>
+                    <input type="text" id="datepicker" class="form-control" name="fecha_nacimiento">
                 </div>
                 <div class="form-group">
                     <label>Pais</label>
@@ -116,7 +129,7 @@
             <div class="box box_registro">
                 <h2 class="text-uppercase">Nueva Cuenta</h2>                                        
                 <hr>
-                <?php echo form_open('registrar', 'id="registrar_vendedor"'); ?>                 
+                <?php echo form_open('registrar_vendedor', 'id="registrar_vendedor"'); ?>                 
                 <div class="form-group">
                     <label>Email</label>
                     <input type="text" class="form-control" name="email">
@@ -135,10 +148,14 @@
                     <input type="text" class="form-control" name="nombre">
                 </div>
                 <div class="form-group">
+                    <label>Breve Descripcion de la Empresa</label>
+                    <input type="text" class="form-control" name="descripcion">
+                </div>
+                <div class="form-group">
                     <label>Actividad</label>
                     <select name="actividad" class="form-control">
-                        <option value="0">---</option>
-                        <option value="1">Actividad</option>
+                        <option value="No Especificada">No Especificada</option>
+                        <option value="Actividad">Actividad</option>
                     </select>
                 </div>
                 <div class="form-group">

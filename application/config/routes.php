@@ -43,7 +43,8 @@ $route['home'] = 'home/main';
 $route['login'] = 'home/user/login';
 $route['logout'] = 'home/user/logout';
 $route['registro'] = 'home/user/view_registro';
-$route['registrar'] = 'home/user/new_user';
+$route['registrar_comprador'] = 'home/comprador/new_comprador';
+$route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
 
 $route['default_controller'] = "home/main";
 $route['404_override'] = '';
