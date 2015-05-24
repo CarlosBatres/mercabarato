@@ -15,7 +15,7 @@
         
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
         
-        <link rel="stylesheet" href="<?php echo assets_url('css/font-awesome.min.css'); ?>">        
+        <link rel="stylesheet" href="<?php echo assets_url('font-awesome/css/font-awesome.min.css'); ?>">        
         <link rel="stylesheet" href="<?php echo assets_url('css/bootstrap.min.css'); ?>">        
         <link rel="stylesheet" href="<?php echo assets_url('css/style.default.css'); ?>" id="theme-stylesheet">        
         <link rel="stylesheet" href="<?php echo assets_url('css/main.css'); ?>">

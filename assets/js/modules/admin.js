@@ -187,10 +187,7 @@
             }
             e.preventDefault();
         });
-
-        sliderHomepage();
-        sliders();
-        validateLogin();
+       
     });
 
     // Execute queued scripts
@@ -202,89 +199,3 @@
         }
     })(CIS.Script.queue);
 })(window);
-
-function sliderHomepage() {
-    if ($('#slider').length) {
-        var owl = $("#slider");
-
-        $("#slider").owlCarousel({
-            autoPlay: 3000,
-            items: 4,
-            itemsDesktopSmall: [900, 3],
-            itemsTablet: [600, 3],
-            itemsMobile: [500, 2]
-        });
-    }
-
-}
-/* sliders */
-function sliders() {
-    if ($('.owl-carousel').length) {
-        $('.homepage').owlCarousel({
-            navigation: false, // Show next and prev buttons
-            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
-            slideSpeed: 2000,
-            paginationSpeed: 1000,
-            autoPlay: true,
-            stopOnHover: true,
-            singleItem: true,
-            lazyLoad: false,
-            addClassActive: true,
-            afterInit: function() {
-                //animationsSlider();
-            },
-            afterMove: function() {
-                //animationsSlider();
-            }
-        });
-    }
-}
-
-function validateLogin() {
-    $("#loginForm").validate({
-        rules: {
-            email: {
-                required: true,
-                email: true
-            },
-            password: {
-                required: true,
-            }
-        },
-        messages: {
-            email: {
-                required: "Ingrese su email",
-                email: "Ingrese un email valido"
-            },
-            password: {
-                required: "Ingrese una contraseña",
-            },
-        }
-    });
-
-    $('#login-modal').on('shown.bs.modal', function() {
-        if(!$(this).find('.alert-danger').hasClass('hidden')){
-            $(this).find('.alert-danger').addClass('hidden');        
-        }        
-    });
-
-    $("#loginForm").on('submit', function(e) {
-        e.preventDefault();        
-        $.ajax({
-            type: "POST",
-            url: SITE_URL + 'login',
-            data: $("#loginForm").serialize(),
-            dataType: 'json',
-            success: function(response) {
-                if (response.success === "true") {
-                    $('#login-modal').modal('hide')
-                    window.location.href = response.url;
-                } else {
-                    $('#login-modal').find('.alert-danger').removeClass('hidden');
-                }                
-            }
-        });
-    });
-        
-}
-

@@ -45,6 +45,15 @@ $route['logout'] = 'home/user/logout';
 $route['registro'] = 'home/user/view_registro';
 $route['registrar_comprador'] = 'home/comprador/new_comprador';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
+$route['productos'] = 'home/producto/view_listado';
+
+
+/* Admin */
+$route['admin/login'] = 'admin/user/view_login';
+$route['admin/do_login'] = 'admin/user/login';
+$route['admin/do_logout'] = 'admin/user/logout';
+$route['admin'] = 'admin/main';
+$route['admin/sin_permiso'] = 'admin/user/sin_permiso';
 
 $route['default_controller'] = "home/main";
 $route['404_override'] = '';

@@ -29,6 +29,7 @@ class Vendedor extends MY_Controller {
                 $usuario->fecha_creado = date("Y-m-d H:i:s");
                 $usuario->ultimo_acceso = date("Y-m-d H:i:s");
                 $usuario->estado = 1;
+                $usuario->is_admin = 0;
 
                 $this->usuario_model->update($usuario, $user_id);
 
@@ -47,11 +48,13 @@ class Vendedor extends MY_Controller {
                 $this->vendedor_model->insert($data);
                 
                 $this->authentication->login($username, $password);
-                redirect(site_url());
+                redirect('');
             } else {
                 // There was an ERROR creating the user
-                redirect(site_url());
+                redirect('');
             }
+        }else{
+            redirect('');
         }
     }
 

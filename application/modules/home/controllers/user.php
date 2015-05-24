@@ -15,10 +15,10 @@ class User extends MY_Controller {
     public function view_registro() {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $this->template->add_js('registro.js');
-        $paises=$this->pais_model->get_all();
-        $data=array("paises"=>$paises);
+        $paises = $this->pais_model->get_all();
+        $data = array("paises" => $paises);
 
-        $this->template->load_view('home/registro',$data);
+        $this->template->load_view('home/registro', $data);
     }
 
     /**
@@ -26,24 +26,28 @@ class User extends MY_Controller {
      * POST-AJAX
      */
     public function login() {
-        $formValues = $this->input->post();
+        if ($this->input->is_ajax_request()) {
+            $formValues = $this->input->post();
 
-        if ($formValues !== false) {
-            $password = $this->input->post('password');
-            $username = $this->input->post('email');
+            if ($formValues !== false) {
+                $password = $this->input->post('password');
+                $username = $this->input->post('email');
 
-            if ($this->authentication->login($username, $password)) {
-                $ip_address = $this->session->userdata('ip_address');
-                $user_id = $this->authentication->read('identifier');
-                $usuario = $this->usuario_model->get($user_id);
-                $usuario->ip_address = $ip_address;                
-                $usuario->ultimo_acceso = date("Y-m-d H:i:s");                
+                if ($this->authentication->login($username, $password)) {
+                    $ip_address = $this->session->userdata('ip_address');
+                    $user_id = $this->authentication->read('identifier');
+                    $usuario = $this->usuario_model->get($user_id);
+                    $usuario->ip_address = $ip_address;
+                    $usuario->ultimo_acceso = date("Y-m-d H:i:s");
 
-                $this->usuario_model->update($usuario, $user_id);
-                echo json_encode(array("success" => "true", "url" => site_url()));
-            } else {
-                echo json_encode(array("success" => "false"));
+                    $this->usuario_model->update($usuario, $user_id);
+                    echo json_encode(array("success" => "true", "url" => site_url()));
+                } else {
+                    echo json_encode(array("success" => "false"));
+                }
             }
+        } else {
+            redirect('');
         }
     }
 
@@ -54,6 +58,6 @@ class User extends MY_Controller {
     public function logout() {
         $this->authentication->logout();
         redirect('');
-    }    
+    }
 
 }

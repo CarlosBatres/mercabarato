@@ -56,19 +56,21 @@
 
                 <div class="navbar-collapse collapse" id="navigation">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown active">
+                        <li class="dropdown <?php if ($this->uri->uri_string() == ''): echo "active"; endif;?>" >
                             <a href="<?php echo site_url(); ?>">Inicio <b class="caret"></b></a>                            
                         </li>
-                        <li class="dropdown">
+                        <li class="dropdown <?php if ($this->uri->uri_string() == 'subastas'): echo "active"; endif;?>" >
                             <a href="<?php echo site_url(); ?>">Subastas <b class="caret"></b></a>                            
                         </li>
-                        <li class="dropdown">
-                            <a href="<?php echo site_url(); ?>">Productos <b class="caret"></b></a>                            
-                        </li>
-                        <li class="dropdown">
+
+                        <li class="dropdown <?php if ($this->uri->uri_string() == 'productos'): echo "active"; endif;?>" >
+                            <a href="<?php echo site_url('productos'); ?>">Productos<b class="caret"></b></a>
+                        </li>                       
+
+                        <li class="dropdown <?php if ($this->uri->uri_string() == 'vendedores'): echo "active"; endif;?>" >
                             <a href="<?php echo site_url(); ?>">Vendedores <b class="caret"></b></a>                            
                         </li>
-                        <li class="dropdown">
+                        <li class="dropdown <?php if ($this->uri->uri_string() == 'seguros'): echo "active"; endif;?>" >
                             <a href="<?php echo site_url(); ?>">Seguros <b class="caret"></b></a>                            
                         </li>                                                
                     </ul>
@@ -97,10 +99,10 @@ _________________________________________________________ -->
                 </div>
                 <?php echo form_open('login', 'id="loginForm"'); ?>                 
                 <div class="form-group">
-                    <input type="text" class="form-control" name="email" placeholder="email" autocomplete=off>
+                    <input type="text" class="form-control" name="email" placeholder="E-mail" autocomplete=off>
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" name="password" placeholder="password" autocomplete=off>
+                    <input type="password" class="form-control" name="password" placeholder="Password" autocomplete=off>
                 </div>
 
                 <p class="text-center">

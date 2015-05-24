@@ -3,17 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/assets/js/registro.js</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/assets/css/style.default.css</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/home/controllers/comprador.php</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/home/views/index.php</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/assets/js/main.js</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/home/controllers/vendedor.php</file>
+            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/admin/views/base_view.php</file>
+            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/assets/css/modules/admin.css</file>
+            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/libraries/Authentication.php</file>
             <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/home/controllers/user.php</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/assets/css/main.css</file>
+            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/admin/controllers/main.php</file>
+            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/admin/views/layout/default.php</file>
             <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/config/routes.php</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/home/views/registro.php</file>
-            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/views/base_view.php</file>
+            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/admin/views/login.php</file>
+            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/admin/views/sin_permiso.php</file>
+            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/admin/controllers/user.php</file>
+            <file>file:/C:/XAMPP/htdocs/freelancer/mercabarato_new/application/modules/admin/views/index.php</file>
         </group>
     </open-files>
 </project-private>
