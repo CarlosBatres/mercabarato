@@ -11,7 +11,7 @@ class User extends MY_Controller {
 
     public function view_login() {
         $this->template->set_layout('login_page');
-        $this->template->load_view('admin/login');
+        $this->template->load_view('admin/login/login');
     }
 
     public function login() {
@@ -43,7 +43,7 @@ class User extends MY_Controller {
 
     public function sin_permiso() {
         $this->template->set_layout('login_page');
-        $this->template->load_view('admin/sin_permiso');
+        $this->template->load_view('admin/login/sin_permiso');
     }
 
 }

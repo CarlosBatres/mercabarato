@@ -27,8 +27,7 @@ class MY_Model extends CI_Model {
         }
     }
 
-    function get_all() {
-        $this->db->where("status", 1);
+    function get_all() {        
         $query = $this->db->get($this->table_name);
         if ($query->num_rows() > 0){
             return $query->result();

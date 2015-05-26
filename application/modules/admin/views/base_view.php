@@ -48,7 +48,9 @@
         <script src="<?php echo assets_url('js/jquery.validate.min.js'); ?>"></script>
         <script src="<?php echo assets_url('js/jquery-ui.min.js'); ?>"></script>                
         <script src="<?php echo assets_url('js/bootstrap.min.js'); ?>"></script>                
-        <script src="<?php echo assets_url('js/modules/admin.js'); ?>"></script>                
+        <script src="<?php echo assets_url('js/jquery.autocomplete.js'); ?>"></script>                 
+        
+        <script src="<?php echo assets_url('js/modules/admin/admin.js'); ?>"></script>                
         <!-- Extra javascript -->
         <?php echo $js; ?>
         <!-- / -->

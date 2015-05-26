@@ -17,13 +17,16 @@
         
         <link rel="stylesheet" href="<?php echo assets_url('font-awesome/css/font-awesome.min.css'); ?>">        
         <link rel="stylesheet" href="<?php echo assets_url('css/bootstrap.min.css'); ?>">        
-        <link rel="stylesheet" href="<?php echo assets_url('css/style.default.css'); ?>" id="theme-stylesheet">        
-        <link rel="stylesheet" href="<?php echo assets_url('css/main.css'); ?>">
+        
         <link rel="stylesheet" href="<?php echo assets_url('css/owl.carousel.css'); ?>" >
         <link rel="stylesheet" href="<?php echo assets_url('css/owl.theme.css'); ?>" >
+        
         <link rel="stylesheet" href="<?php echo assets_url('css/jquery-ui.theme.min.css'); ?>" >
         <link rel="stylesheet" href="<?php echo assets_url('css/jquery-ui.structure.min.css'); ?>" >
         <link rel="stylesheet" href="<?php echo assets_url('css/jquery-ui.min.css'); ?>" >
+        
+        <link rel="stylesheet" href="<?php echo assets_url('css/modules/style.default.css'); ?>" id="theme-stylesheet">        
+        <link rel="stylesheet" href="<?php echo assets_url('css/modules/main.css'); ?>">
         
         <script>
             var BASE_URL = "<?php echo base_url(); ?>";            
@@ -48,7 +51,7 @@
         <script src="<?php echo assets_url('js/jquery-ui.min.js'); ?>"></script>                
         <script src="<?php echo assets_url('js/bootstrap.min.js'); ?>"></script>        
         <script src="<?php echo assets_url('js/owl.carousel.min.js'); ?>"></script>
-        <script src="<?php echo assets_url('js/main.js'); ?>"></script>                
+        <script src="<?php echo assets_url('js/modules/home/main.js'); ?>"></script>                
         <!-- Extra javascript -->
         <?php echo $js; ?>
         <!-- / -->

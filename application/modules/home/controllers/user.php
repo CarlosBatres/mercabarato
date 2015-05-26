@@ -14,11 +14,11 @@ class User extends MY_Controller {
      */
     public function view_registro() {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
-        $this->template->add_js('registro.js');
+        $this->template->add_js('modules/home/registro.js');
         $paises = $this->pais_model->get_all();
         $data = array("paises" => $paises);
 
-        $this->template->load_view('home/registro', $data);
+        $this->template->load_view('home/user/registro', $data);
     }
 
     /**
