@@ -179,7 +179,11 @@ class Producto extends MY_Controller {
             "productos" => $productos_array["productos"],
             "search_params" => array(
                 "pagina" => $pagina,
-                "total_paginas" => $paginas));
+                "total_paginas" => $paginas,
+                "por_pagina"=>$limit,
+                "total"=>$productos_array["total"],
+                "hasta"=>($pagina*$limit<$productos_array["total"])?$pagina*$limit:$productos_array["total"],
+                "desde"=>(($pagina*$limit)-$limit)+1));
 
         $this->template->load_view('admin/producto/tabla_resultados', $data);
     }

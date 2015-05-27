@@ -14,3 +14,4 @@
 .autocomplete-group strong { font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }
 
 #footer{height: 100px;padding: 50px;}
+.paginacion-listado{text-align: right;}

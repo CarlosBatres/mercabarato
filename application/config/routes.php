@@ -50,6 +50,7 @@ $route['productos'] = 'home/producto/view_listado';
 
 /* Admin */
 $route['admin'] = 'admin/main';
+$route['admin/dashboard'] = 'admin/main/dashboard';
 $route['admin/login'] = 'admin/user/view_login'; 
 $route['admin/do_login'] = 'admin/user/login'; 
 $route['admin/do_logout'] = 'admin/user/logout'; 

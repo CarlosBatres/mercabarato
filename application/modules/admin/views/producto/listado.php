@@ -83,8 +83,18 @@
                     </div>
                 </div>
             </div>
-
-            <div id="tabla-resultados"></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Productos
+                        </div>
+                        <div class="panel-body">
+                            <div id="tabla-resultados"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>    
 </div>

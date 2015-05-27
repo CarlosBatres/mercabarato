@@ -56,26 +56,35 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    
+    <?php if ($search_params['total_paginas'] > 1):?>
+        <div class="col-md-6"> Mostrando 
+            <?php echo ($search_params['desde']<$search_params['hasta'])? $search_params['desde'].' a '.$search_params['hasta']: ' el '.$search_params['desde'];?> 
+            de <?php echo $search_params['total'];?> resultados</div>
+        <div class="col-md-6">
+            <div class="paginacion-listado">
+                <ul class="pagination">
+                    <li>
+                        <a href="#">Anterior</a>
+                    </li>
+                    <?php
+                    for ($i = 1; $i <= $search_params['total_paginas']; $i++) {
+                        $class = "";
+                        if ($i == $search_params['pagina']) {
+                            $class = "active";
+                        }
+                        ?>
+                        <li class="<?php echo $class; ?>">
+                            <a data-id="<?php echo $i; ?>" href="<?php echo site_url('admin/productos/') . '/' . $i ?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php } ?>
+                    <li>
+                        <a href="#">Siguiente</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    <?php endif; ?>
+
 </div> 
 
-<?php if ($search_params['total_paginas'] > 1): ?>
-    <ul class="pagination">
-        <li>
-            <a href="#">«</a>
-        </li>
-        <?php
-        for ($i = 1; $i <= $search_params['total_paginas']; $i++) {
-            $class = "";
-            if ($i == $search_params['pagina']) {
-                $class = "active";
-            }
-            ?>
-            <li class="<?php echo $class; ?>">
-                <a data-id="<?php echo $i; ?>" href="<?php echo site_url('admin/productos/') . '/' . $i ?>"><?php echo $i; ?></a>
-            </li>
-        <?php } ?>
-        <li>
-            <a href="#">»</a>
-        </li>
-    </ul>
-<?php endif; ?>

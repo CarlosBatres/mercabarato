@@ -236,24 +236,24 @@
                         </div>
                         <!-- /input-group -->
                     </li>
-                    <li <?php
-                    if ($this->uri->uri_string() == 'admin'): echo "class='active'";
-                    endif;
-                    ?> >
-                        <a href="<?php echo site_url('admin'); ?>"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                    </li>                
-                    <li <?php
-                    if ($this->uri->uri_string() == 'admin/usuarios'): echo "class='active'";
-                    endif;
-                    ?> >
-                        <a href="<?php echo site_url('admin'); ?>"><i class="fa fa-fw fa-user"></i> Usuarios</a>
+                    <li>
+                        <a href="<?php echo site_url('admin/dashboard'); ?>"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                    </li>                                    
+                    <li>
+                        <a href="#"><i class="fa fa-user fa-fw"></i> Usuarios<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo site_url('admin/comprador'); ?>">Comprador</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('admin/vendedor'); ?>">Vendedor</a>
+                            </li>                            
+                        </ul>
+                        <!-- /.nav-second-level -->
                     </li>
-                    <li <?php
-                    if ($this->uri->uri_string() == 'admin/productos'): echo "class='active'";
-                    endif;
-                    ?> >
-                        <a href="<?php echo site_url('admin/productos'); ?>"><i class="fa fa-fw fa-inbox"></i> Producto</a>
-                    </li>                                                                                               
+                    <li>
+                        <a href="<?php echo site_url('admin/productos'); ?>"><i class="fa fa-fw fa-inbox"></i> Productos</a>
+                    </li>                    
 
                 </ul>
             </div>
