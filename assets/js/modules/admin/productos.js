@@ -1,31 +1,24 @@
 $(document).ready(function() {
-    updateResultados();
     
-    $('#listado-productos').on('submit',function(e){
-        e.preventDefault();
-        $('#pagina').val('1');
-        updateResultados();        
+    // admin/producto/nuevo
+    $("#admin_nuevo_producto").find('input[name="vendedor"]').devbridgeAutocomplete({
+        serviceUrl: SITE_URL + 'admin/vendedores/autocomplete',
+        minChars: 1,
+        onSelect: function(suggestion) {
+            $('#vendedor_id').val(suggestion.data);
+        },
+        showNoSuggestionNotice: true,
+        noSuggestionNotice: 'No se encontraron resultados',
+    });
+    
+    // admin/producto/editar
+    $("#admin_editar_producto").find('input[name="vendedor"]').devbridgeAutocomplete({
+        serviceUrl: SITE_URL + 'admin/vendedores/autocomplete',
+        minChars: 1,
+        onSelect: function(suggestion) {
+            $('#vendedor_id').val(suggestion.data);
+        },
+        showNoSuggestionNotice: true,
+        noSuggestionNotice: 'No se encontraron resultados',
     });
 });
-
-function updateResultados(){
-    var form = $('#listado-productos');
-    $.ajax({
-        type: "POST",
-        url: SITE_URL + 'admin/producto/ajax_get_listado_resultados',
-        data: form.serialize(),
-        dataType: "html",
-        success: function(response) {
-            $('#tabla-resultados').html(response);
-            bind_pagination_links();
-        }
-    });
-}
-
-function bind_pagination_links(){
-    $('.pagination a').on('click',function(e){
-        e.preventDefault();
-        $('#pagina').val($(this).data('id'));
-        updateResultados();
-    });
-}

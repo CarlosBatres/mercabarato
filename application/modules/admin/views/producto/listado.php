@@ -1,17 +1,3 @@
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h3 id="myModalLabel">Delete</h3>
-    </div>
-    <div class="modal-body">
-        <p></p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button data-dismiss="modal" class="btn red" id="btnYes">Confirm</button>
-    </div>
-</div>
-
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="row">
@@ -31,10 +17,16 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-md-12">            
+        <div class="col-md-12">
+            <?php if ($this->session->flashdata('success')) { ?>
+                <div class="alert alert-success"> 
+                    <a class="close" data-dismiss="alert">×</a>
+                    <?= $this->session->flashdata('success') ?> 
+                </div>
+            <?php } ?>
             <div class="row agregar_producto">
                 <div class="col-md-12">            
-                    <a class="btn btn-lg btn-default" href="<?php echo site_url('admin/productos/nuevo'); ?>">Crear Producto</a>
+                    <a class="btn btn-lg btn-default" href="<?php echo site_url('admin/productos/crear'); ?>">Crear Producto</a>
                 </div>                
             </div>
 
@@ -53,7 +45,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-12" for="nombre">Nombre del Producto</label>
                                             <div class="col-md-12">
-                                                <input type="text" name="nombre" id="nombre" value="<?php echo $search_params["nombre"]; ?>" class="form-control"/>                                
+                                                <input type="text" name="nombre" id="nombre" value="" class="form-control"/>                                
                                             </div>
                                         </div>
                                     </div>                                                                                                                                                

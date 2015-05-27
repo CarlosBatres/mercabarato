@@ -59,10 +59,6 @@
                         <li class="dropdown <?php if ($this->uri->uri_string() == ''): echo "active"; endif;?>" >
                             <a href="<?php echo site_url(); ?>">Inicio <b class="caret"></b></a>                            
                         </li>
-                        <li class="dropdown <?php if ($this->uri->uri_string() == 'subastas'): echo "active"; endif;?>" >
-                            <a href="<?php echo site_url(); ?>">Subastas <b class="caret"></b></a>                            
-                        </li>
-
                         <li class="dropdown <?php if ($this->uri->uri_string() == 'productos'): echo "active"; endif;?>" >
                             <a href="<?php echo site_url('productos'); ?>">Productos<b class="caret"></b></a>
                         </li>                       

@@ -197,20 +197,6 @@
                 queue[i]();
             }
         }
-    })(CIS.Script.queue);
-
-    // admin/producto/crear
-    $("#admin_nuevo_producto").find('input[name="vendedor"]').devbridgeAutocomplete({
-        serviceUrl: SITE_URL + 'admin/vendedores/autocomplete',
-        minChars: 1,
-        onSelect: function(suggestion) {
-            $('#vendedor_id').val(suggestion.data);
-        },
-        showNoSuggestionNotice: true,
-        noSuggestionNotice: 'No se encontraron resultados',
-    });
-
-    
-
+    })(CIS.Script.queue);        
 
 })(window);

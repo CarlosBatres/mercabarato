@@ -15,7 +15,7 @@ class Vendedor_model extends MY_Model {
         $limit=10;        
         $this->db->select('id,nombre');  
         $this->db->from($this->table_name);
-        $this->db->like('nombre', $nombre);        
+        $this->db->like('nombre', $nombre,'both');        
         $this->db->limit($limit);
         
         $vendedores = $this->db->get()->result();

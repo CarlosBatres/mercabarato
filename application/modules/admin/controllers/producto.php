@@ -16,89 +16,168 @@ class Producto extends MY_Controller {
         }
     }
 
+    /**
+     *  Productos / Listado
+     */
     public function view_listado() {
         $this->template->set_title("Panel de Administracion - Mercabarato.com");
-        $this->template->add_js("modules/admin/productos.js");        
+        $this->template->add_js("modules/admin/productos_listado.js");
         $categorias = $this->categoria_model->get_all();
-        
-        $data = array(
-            "categorias" => $categorias,            
-            "search_params" => array(
-                "nombre" => "",
-                "pagina" => "1"));
-
+        $data = array("categorias" => $categorias);
         $this->template->load_view('admin/producto/listado', $data);
     }
 
-    public function view_nuevo() {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
-        $categorias = $this->categoria_model->get_all();
-
-        $data = array("categorias" => $categorias);
-
-        $this->template->load_view('admin/producto/nuevo', $data);
-    }
-
+    /**
+     * Productos / Crear
+     * 
+     * 
+     */
     public function crear() {
         $formValues = $this->input->post();
 
         if ($formValues !== false) {
-            $vendedor_id = $this->input->post('vendedor_id');
-            $vendedor = $this->vendedor_model->get($vendedor_id);
+            $accion = $this->input->post('accion');
 
-            if ($vendedor) {
-                $data = array(
-                    "nombre" => $this->input->post('nombre'),
-                    "descripcion" => $this->input->post('descripcion'),
-                    "precio_venta_publico" => $this->input->post('precio_venta_publico'),
-                    "mostrar_publico" => $this->input->post('mostrar_publico'),
-                    "mostrar_precio_venta_publico" => $this->input->post('mostrar_precio'),
-                    "vendedor_id" => $vendedor_id,
-                    "categoria_id" => $this->input->post('categoria'),
-                );
+            if ($accion === "producto-crear") {
+                $vendedor_id = $this->input->post('vendedor_id');
+                $vendedor = $this->vendedor_model->get($vendedor_id);
 
-                $this->producto_model->insert($data);
-                redirect('admin/productos');
+                if ($vendedor) {
+                    $data = array(
+                        "nombre" => $this->input->post('nombre'),
+                        "descripcion" => $this->input->post('descripcion'),
+                        "precio_venta_publico" => $this->input->post('precio_venta_publico'),
+                        "mostrar_publico" => $this->input->post('mostrar_publico'),
+                        "mostrar_precio_venta_publico" => $this->input->post('mostrar_precio'),
+                        "vendedor_id" => $vendedor_id,
+                        "categoria_id" => $this->input->post('categoria'),
+                    );
+
+                    $this->producto_model->insert($data);
+                    redirect('admin/productos');
+                } else {
+                    $this->session->set_flashdata('error', 'El vendedor no existe.');
+                    redirect('admin/productos/crear');
+                }
             } else {
-                $this->session->set_flashdata('error', 'El vendedor no existe.');
-                redirect('admin/productos/nuevo');
+                redirect('admin');
             }
         } else {
+            $this->template->set_title("Panel de Administracion - Mercabarato.com");
+            $this->template->add_js("modules/admin/productos.js");
+            $categorias = $this->categoria_model->get_all();
+
+            $data = array("categorias" => $categorias);
+
+            $this->template->load_view('admin/producto/nuevo', $data);
+        }
+    }
+
+    /**
+     * Productos / Borrar
+     * 
+     * @param type $id
+     */
+    public function borrar($id) {
+        if ($this->input->is_ajax_request()) {
+            $this->producto_model->delete($id);
             redirect('admin/productos');
         }
     }
 
+    /**
+     * Productos / Editar
+     * @param type $id
+     */
+    public function editar($id) {
+        $formValues = $this->input->post();
+        if ($formValues !== false) {
+            $accion = $this->input->post('accion');
+
+            if ($accion === "producto-editar") {
+                $vendedor_id = $this->input->post('vendedor_id');
+                $vendedor = $this->vendedor_model->get($vendedor_id);
+                $producto_id = $this->input->post('id');
+
+                if ($vendedor) {
+                    $data = array(
+                        "nombre" => $this->input->post('nombre'),
+                        "descripcion" => $this->input->post('descripcion'),
+                        "precio_venta_publico" => $this->input->post('precio_venta_publico'),
+                        "mostrar_publico" => $this->input->post('mostrar_publico'),
+                        "mostrar_precio_venta_publico" => $this->input->post('mostrar_precio'),
+                        "vendedor_id" => $vendedor_id,
+                        "categoria_id" => $this->input->post('categoria'),
+                    );
+
+                    $this->producto_model->update($data, $producto_id);
+                    $this->session->set_flashdata('success', 'Producto modificado con exito');
+                    redirect('admin/productos');
+                } else {
+                    $this->session->set_flashdata('error', 'El vendedor no existe.');
+                    redirect('admin/productos/editar/' . $producto_id);
+                }
+            } else {
+                redirect('admin');
+            }
+        } else {
+            $producto = $this->producto_model->get($id);
+            if ($producto) {
+                $this->template->set_title("Panel de Administracion - Mercabarato.com");
+                $this->template->add_js("modules/admin/productos.js");
+                $categorias = $this->categoria_model->get_all();
+                $vendedor = $this->vendedor_model->get($producto->vendedor_id);
+
+                $data = array("categorias" => $categorias, "producto" => $producto, "vendedor" => $vendedor);
+
+                $this->template->load_view('admin/producto/editar', $data);
+            } else {
+                //TODO : No se encuentra el producto
+            }
+        }
+    }
+
+    /**
+     *  AJAX Productos / Listado
+     */
     public function ajax_get_listado_resultados() {
         $formValues = $this->input->post();
 
+        $params = array();
         if ($formValues !== false) {
-            $nombre_producto = $this->input->post('nombre');
+            if ($this->input->post('nombre') != "") {
+                $params["nombre"] = $this->input->post('nombre');
+            }
+            if ($this->input->post('categoria') != 0) {
+                $params["categoria_id"] = $this->input->post('categoria');
+            }
+            if ($this->input->post('vendedor') != "") {
+                $params["vendedor"] = $this->input->post('vendedor');
+            }
             $pagina = $this->input->post('pagina');
         } else {
-            $nombre_producto = '';
             $pagina = 1;
         }
 
-        $limit = 2;
-        $offset = $limit * ($pagina - 1);                
-        $productos_array = $this->producto_model->get_admin_search($nombre_producto, $limit, $offset);        
-        $flt = (float)($productos_array["total"]/$limit);
-        $ent = (int)($productos_array["total"]/$limit);
-        if($flt > $ent || $flt < $ent){
-          $paginas = $ent+1;  
-        }else{
+        $limit = 15;
+        $offset = $limit * ($pagina - 1);
+        $productos_array = $this->producto_model->get_admin_search($params, $limit, $offset);
+        $flt = (float) ($productos_array["total"] / $limit);
+        $ent = (int) ($productos_array["total"] / $limit);
+        if ($flt > $ent || $flt < $ent) {
+            $paginas = $ent + 1;
+        } else {
             $paginas = $ent;
         }
         // TODO: Falta testear mas
-        
+
         if ($productos_array["total"] == 0) {
             $productos_array["productos"] = array();
             // TODO: Resultados vacio
         }
-        $data = array(            
+        $data = array(
             "productos" => $productos_array["productos"],
             "search_params" => array(
-                "nombre" => $nombre_producto,
                 "pagina" => $pagina,
                 "total_paginas" => $paginas));
 

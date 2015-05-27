@@ -16,14 +16,13 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
         
         <link rel="stylesheet" href="<?php echo assets_url('font-awesome/css/font-awesome.min.css'); ?>">        
-        <link rel="stylesheet" href="<?php echo assets_url('css/bootstrap.min.css'); ?>">        
-        <link rel="stylesheet" href="<?php echo assets_url('css/plugins/morris.css'); ?>">
+        <link rel="stylesheet" href="<?php echo assets_url('css/bootstrap.min.css'); ?>">                
                 
         <link rel="stylesheet" href="<?php echo assets_url('css/jquery-ui.theme.min.css'); ?>" >
         <link rel="stylesheet" href="<?php echo assets_url('css/jquery-ui.structure.min.css'); ?>" >
         <link rel="stylesheet" href="<?php echo assets_url('css/jquery-ui.min.css'); ?>" >
         
-        <link rel="stylesheet" href="<?php echo assets_url('css/modules/sb-admin.css'); ?>">
+        <link rel="stylesheet" href="<?php echo assets_url('css/modules/sb-admin-2.css'); ?>">
         <link rel="stylesheet" href="<?php echo assets_url('css/modules/admin.css'); ?>">
         
         <script>
@@ -49,6 +48,7 @@
         <script src="<?php echo assets_url('js/jquery-ui.min.js'); ?>"></script>                
         <script src="<?php echo assets_url('js/bootstrap.min.js'); ?>"></script>                
         <script src="<?php echo assets_url('js/jquery.autocomplete.js'); ?>"></script>                 
+        <script src="<?php echo assets_url('js/jquery.blockUI.js'); ?>"></script>                
         
         <script src="<?php echo assets_url('js/modules/admin/admin.js'); ?>"></script>                
         <!-- Extra javascript -->

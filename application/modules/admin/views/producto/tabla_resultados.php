@@ -1,3 +1,17 @@
+<div id="question" style="display:none; cursor: default">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Esta seguro que desea eliminar este producto?.</h4>
+        </div>
+        <div class="modal-body">                                    
+            <p class="text-center">
+                <button class="btn btn-success" type="button" id="yes"><i class="fa fa-check"></i> Si</button>
+                <button class="btn btn-danger" type="button" id="no"><i class="fa fa-close"></i> No</button>
+            </p>                                            
+        </div>        
+    </div>
+</div> 
+
 <div class="table-responsive">
     <table class="table table-bordered table-hover table-striped">
         <thead>
@@ -34,8 +48,8 @@
                     </td>                                                                
                     <td>
                         <div class="options">
-                            <a href="<?php echo site_url('admin/edit') ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>
-                            <a href="<?php echo site_url('admin/delete') ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
+                            <a href="<?php echo site_url('admin/productos/editar') . '/' . $producto->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a class="producto_borrar" href="<?php echo site_url('admin/productos/borrar') . '/' . $producto->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
                         </div>                           
                     </td>
                 </tr>
@@ -59,7 +73,7 @@
             <li class="<?php echo $class; ?>">
                 <a data-id="<?php echo $i; ?>" href="<?php echo site_url('admin/productos/') . '/' . $i ?>"><?php echo $i; ?></a>
             </li>
-    <?php } ?>
+        <?php } ?>
         <li>
             <a href="#">»</a>
         </li>

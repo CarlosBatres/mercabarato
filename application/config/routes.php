@@ -50,14 +50,14 @@ $route['productos'] = 'home/producto/view_listado';
 
 /* Admin */
 $route['admin'] = 'admin/main';
-$route['admin/login'] = 'admin/user/view_login'; // Vista
-$route['admin/do_login'] = 'admin/user/login'; // Ejecutar Login
-$route['admin/do_logout'] = 'admin/user/logout'; // Ejecutar Logout
-$route['admin/sin_permiso'] = 'admin/user/sin_permiso'; // Vista
-$route['admin/productos'] = 'admin/producto/view_listado'; // Vista
-$route['admin/productos/nuevo'] = 'admin/producto/view_nuevo'; // Vista
-$route['admin/productos/crear'] = 'admin/producto/crear'; // Crear
-
+$route['admin/login'] = 'admin/user/view_login'; 
+$route['admin/do_login'] = 'admin/user/login'; 
+$route['admin/do_logout'] = 'admin/user/logout'; 
+$route['admin/sin_permiso'] = 'admin/user/sin_permiso'; 
+$route['admin/productos'] = 'admin/producto/view_listado'; 
+$route['admin/productos/crear'] = 'admin/producto/crear';
+$route['admin/productos/editar/(:num)'] = 'admin/producto/editar/$1'; 
+$route['admin/productos/borrar/(:num)'] = 'admin/producto/borrar/$1'; 
 $route['admin/vendedores/autocomplete'] = 'admin/vendedor/autocomplete';
 
 $route['default_controller'] = "home/main";
