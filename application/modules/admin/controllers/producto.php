@@ -53,7 +53,19 @@ class Producto extends MY_Controller {
                         "categoria_id" => $this->input->post('categoria'),
                     );
 
-                    $this->producto_model->insert($data);
+                    $producto_id=$this->producto_model->insert($data);
+                    
+                    $data_img=array(
+                        "producto_id"=>$producto_id,
+                        "nombre"=>"Imagen del Producto",
+                        "descripcion"=>"Imagen del Producto",
+                        "tipo"=>"imagen",
+                        "url_path"=>$this->input->post('file_name'),
+                        "orden"=>0,
+                    );
+                    
+                    $this->producto_resources_model->insert($data_img);
+                    
                     redirect('admin/productos');
                 } else {
                     $this->session->set_flashdata('error', 'El vendedor no existe.');
@@ -64,6 +76,7 @@ class Producto extends MY_Controller {
             }
         } else {
             $this->template->set_title("Panel de Administracion - Mercabarato.com");
+            $this->template->add_js("fileupload.js");            
             $this->template->add_js("modules/admin/productos.js");            
             $categorias = $this->categoria_model->get_all();
 

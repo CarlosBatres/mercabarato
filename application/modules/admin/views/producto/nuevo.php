@@ -49,7 +49,10 @@
                 </div>
                 <div class="form-group">
                     <label>Imagen del Producto</label>
+                    <div id="imagen_temporal">                        
+                    </div>
                     <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('admin/producto_resource/upload_image') ?>">
+                    <input type="hidden" name="file_name" id="file_name" value="">                                                            
                 </div>
                 <div class="form-group">
                     <label>Vendedor / Empresa</label>

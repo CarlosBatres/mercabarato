@@ -22,5 +22,16 @@ $(document).ready(function() {
         noSuggestionNotice: 'No se encontraron resultados',
     });
 
-    
+    $('#fileupload').fileupload({
+        replaceFileInput: false,
+        method: "post",
+        dataType: "json"
+    }).bind('fileuploaddone', function(e, data) {                
+        $.each(data.result.files, function (index, file) {
+            $('#file_name').val(file.name);
+            $('#imagen_temporal').html('<img src = "'+file.url+'" />');
+        });
+
+    });
+
 });
