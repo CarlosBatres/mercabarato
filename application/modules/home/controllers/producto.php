@@ -13,8 +13,8 @@ class Producto extends MY_Controller {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         //$this->template->add_js('producto.js');
         
-        $data=array();
-        $this->template->load_view('home/producto/listado',$data);
+        $productos=$this->producto_model->get_all();
+        $this->template->load_view('home/producto/listado',array("productos"=>$productos));
     }
             
 }

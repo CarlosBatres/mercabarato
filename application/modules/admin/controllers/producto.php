@@ -64,7 +64,7 @@ class Producto extends MY_Controller {
             }
         } else {
             $this->template->set_title("Panel de Administracion - Mercabarato.com");
-            $this->template->add_js("modules/admin/productos.js");
+            $this->template->add_js("modules/admin/productos.js");            
             $categorias = $this->categoria_model->get_all();
 
             $data = array("categorias" => $categorias);

@@ -243,10 +243,10 @@
                         <a href="#"><i class="fa fa-user fa-fw"></i> Usuarios<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo site_url('admin/comprador'); ?>">Comprador</a>
+                                <a href="<?php echo site_url('admin/compradores'); ?>">Compradores</a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url('admin/vendedor'); ?>">Vendedor</a>
+                                <a href="<?php echo site_url('admin/vendedores'); ?>">Vendedores</a>
                             </li>                            
                         </ul>
                         <!-- /.nav-second-level -->

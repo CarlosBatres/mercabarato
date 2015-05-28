@@ -97,14 +97,7 @@
         <div class="col-md-6">            
             <div class="box box_registro">
                 <h4> Informacion sobre Cuenta Comprador</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.</p>                               
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis maximus sapien, sed maximus diam. Aliquam efficitur, risus tincidunt gravida blandit, tellus nisi aliquam nisl, nec aliquam augue libero eget diam. Donec rutrum nibh lacus. Donec vitae commodo neque. Aliquam erat volutpat. Morbi a felis dolor. Sed viverra tristique erat, a imperdiet sem fermentum vitae. Vivamus convallis, quam ut pulvinar placerat, felis nisi lobortis libero, ut euismod mi urna sed lectus.</p>                               
             </div>
         </div>
     </div>
@@ -114,14 +107,7 @@
         <div class="col-md-6">            
             <div class="box box_registro">
                 <h4> Informacion sobre Cuenta Vendedor</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec aliquet condimentum scelerisque.</p>  
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis maximus sapien, sed maximus diam. Aliquam efficitur, risus tincidunt gravida blandit, tellus nisi aliquam nisl, nec aliquam augue libero eget diam. Donec rutrum nibh lacus. Donec vitae commodo neque. Aliquam erat volutpat. Morbi a felis dolor. Sed viverra tristique erat, a imperdiet sem fermentum vitae. Vivamus convallis, quam ut pulvinar placerat, felis nisi lobortis libero, ut euismod mi urna sed lectus.</p>  
             </div>
         </div>          
 

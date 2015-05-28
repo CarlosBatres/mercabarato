@@ -47,7 +47,10 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-
+                <div class="form-group">
+                    <label>Imagen del Producto</label>
+                    <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('admin/producto_resource/upload_image') ?>">
+                </div>
                 <div class="form-group">
                     <label>Vendedor / Empresa</label>
                     <input type="text" class="form-control" name="vendedor">                                        

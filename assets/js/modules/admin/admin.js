@@ -191,8 +191,7 @@
     });
     
     $(function() {
-        $('#side-menu').metisMenu();
-        //$('#side-menu li a').removeClass('active');
+        $('#side-menu').metisMenu();        
     });
 
         //Loads the correct sidebar on window load,
