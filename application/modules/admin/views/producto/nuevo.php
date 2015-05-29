@@ -30,7 +30,7 @@
                         <?= $this->session->flashdata('error') ?> 
                     </div>
                 <?php } ?>
-                <?php echo form_open('admin/productos/crear', 'id="admin_nuevo_producto"'); ?>                 
+                <?php echo form_open('admin/productos/crear', 'id="admin_producto_form"'); ?>                 
                 <div class="form-group">
                     <label>Nombre</label>
                     <input type="text" class="form-control" name="nombre">
@@ -48,9 +48,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Imagen del Producto</label>
-                    <div id="imagen_temporal">                        
-                    </div>
+                    <label>Imagen del Producto</label>                    
                     <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('admin/producto_resource/upload_image') ?>">
                     <input type="hidden" name="file_name" id="file_name" value="">                                                            
                 </div>
@@ -93,7 +91,7 @@
                 </div>
                 <hr>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-lg btn-default"> Crear Producto</button>
+                    <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-default"> Crear Producto</button>
                 </div>
                 <input type="hidden" name="accion" value="producto-crear">
                 <?php echo form_close(); ?>

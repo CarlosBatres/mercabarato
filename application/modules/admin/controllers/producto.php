@@ -53,19 +53,20 @@ class Producto extends MY_Controller {
                         "categoria_id" => $this->input->post('categoria'),
                     );
 
-                    $producto_id=$this->producto_model->insert($data);
-                    
-                    $data_img=array(
-                        "producto_id"=>$producto_id,
-                        "nombre"=>"Imagen del Producto",
-                        "descripcion"=>"Imagen del Producto",
-                        "tipo"=>"imagen",
-                        "url_path"=>$this->input->post('file_name'),
-                        "orden"=>0,
-                    );
-                    
-                    $this->producto_resources_model->insert($data_img);
-                    
+                    $producto_id = $this->producto_model->insert($data);
+
+                    if ($this->input->post('file_name') !== "") {
+                        $data_img = array(
+                            "producto_id" => $producto_id,
+                            "nombre" => "Imagen principal del producto",
+                            "descripcion" => "Idealmente esta imagen seria lo mas grande posible.",
+                            "tipo" => "imagen_principal",
+                            "url_path" => $this->input->post('file_name'),
+                            "orden" => 0,
+                        );
+
+                        $this->producto_resources_model->insert($data_img);
+                    }
                     redirect('admin/productos');
                 } else {
                     $this->session->set_flashdata('error', 'El vendedor no existe.');
@@ -76,8 +77,8 @@ class Producto extends MY_Controller {
             }
         } else {
             $this->template->set_title("Panel de Administracion - Mercabarato.com");
-            $this->template->add_js("fileupload.js");            
-            $this->template->add_js("modules/admin/productos.js");            
+            $this->template->add_js("fileupload.js");
+            $this->template->add_js("modules/admin/productos.js");
             $categorias = $this->categoria_model->get_all();
 
             $data = array("categorias" => $categorias);
@@ -124,6 +125,25 @@ class Producto extends MY_Controller {
                     );
 
                     $this->producto_model->update($data, $producto_id);
+
+                    if ($this->input->post('file_name') !== "") {
+                        $producto_imagen = $this->producto_resources_model->get_producto_imagen($producto_id);
+                        if ($producto_imagen) {
+                            $this->producto_resources_model->delete($producto_imagen->id);
+                        }
+
+                        $data_img = array(
+                            "producto_id" => $producto_id,
+                            "nombre" => "Imagen principal del producto",
+                            "descripcion" => "Idealmente esta imagen seria lo mas grande posible.",
+                            "tipo" => "imagen_principal",
+                            "url_path" => $this->input->post('file_name'),
+                            "orden" => 0,
+                        );
+
+                        $this->producto_resources_model->insert($data_img);
+                    }
+
                     $this->session->set_flashdata('success', 'Producto modificado con exito');
                     redirect('admin/productos');
                 } else {
@@ -140,8 +160,13 @@ class Producto extends MY_Controller {
                 $this->template->add_js("modules/admin/productos.js");
                 $categorias = $this->categoria_model->get_all();
                 $vendedor = $this->vendedor_model->get($producto->vendedor_id);
+                $producto_imagen = $this->producto_resources_model->get_producto_imagen($producto->id);
 
-                $data = array("categorias" => $categorias, "producto" => $producto, "vendedor" => $vendedor);
+                $data = array(
+                    "categorias" => $categorias,
+                    "producto" => $producto,
+                    "vendedor" => $vendedor,
+                    "producto_imagen" => $producto_imagen);
 
                 $this->template->load_view('admin/producto/editar', $data);
             } else {
@@ -193,10 +218,10 @@ class Producto extends MY_Controller {
             "search_params" => array(
                 "pagina" => $pagina,
                 "total_paginas" => $paginas,
-                "por_pagina"=>$limit,
-                "total"=>$productos_array["total"],
-                "hasta"=>($pagina*$limit<$productos_array["total"])?$pagina*$limit:$productos_array["total"],
-                "desde"=>(($pagina*$limit)-$limit)+1));
+                "por_pagina" => $limit,
+                "total" => $productos_array["total"],
+                "hasta" => ($pagina * $limit < $productos_array["total"]) ? $pagina * $limit : $productos_array["total"],
+                "desde" => (($pagina * $limit) - $limit) + 1));
 
         $this->template->load_view('admin/producto/tabla_resultados', $data);
     }

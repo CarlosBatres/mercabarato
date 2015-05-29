@@ -30,7 +30,7 @@
                         <?= $this->session->flashdata('error') ?> 
                     </div>
                 <?php } ?>
-                <?php echo form_open('admin/productos/editar/' . $producto->id, 'id="admin_editar_producto"'); ?>                 
+                <?php echo form_open('admin/productos/editar/' . $producto->id, 'id="admin_producto_form"'); ?>                 
                 <div class="form-group">
                     <label>ID</label>
                     <input type="text" class="form-control" readonly name="id" value="<?php echo $producto->id; ?>">
@@ -47,9 +47,27 @@
                     <label>Categoria</label>
                     <select name="categoria" class="form-control">                        
                         <?php foreach ($categorias as $categoria): ?>
-                            <option value="<?php echo $categoria->id ?>" <?php if ($producto->categoria_id == $categoria->id): echo "selected"; endif;?>><?php echo $categoria->nombre ?></option>
+                            <option value="<?php echo $categoria->id ?>" <?php
+                            if ($producto->categoria_id == $categoria->id): echo "selected";
+                            endif;
+                            ?>><?php echo $categoria->nombre ?></option>
                                 <?php endforeach; ?>
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Imagen del Producto</label>
+                    <?php if ($producto_imagen): ?>
+                        <div class="preview_imagen">                        
+                            <img src="<?php echo assets_url('uploads/imgs/' . $producto_imagen->url_path); ?>" width="250"/>
+                        </div>
+                    <br>
+                    <?php endif; ?>
+                    <button type="button" id="cambiar_imagen" class="btn btn-lg btn-default"> Cambiar Imagen</button>
+                    <div class='fileupload_button' style='display:none'>
+                        <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('admin/producto_resource/upload_image') ?>">
+                    </div>
+                    <input type="hidden" name="file_name" id="file_name" value="">                    
                 </div>
 
                 <div class="form-group">
@@ -103,7 +121,7 @@
                 </div>
                 <hr>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-lg btn-default"> Confirmar Cambios</button>
+                    <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-default"> Confirmar Cambios</button>
                 </div>
                 <input type="hidden" name="accion" value="producto-editar">
                 <?php echo form_close(); ?>

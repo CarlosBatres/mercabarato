@@ -33,6 +33,7 @@ class Producto_model extends MY_Model {
         $count = $this->db->count_all_results();
 
         if ($count > 0) {
+            $this->db->order_by('id','asc');
             $this->db->limit($limit, $offset);
             $productos = $this->db->get()->result();
             return array("productos" => $productos, "total" => $count);
