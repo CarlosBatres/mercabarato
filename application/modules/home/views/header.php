@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-5 contact">
-                    <p class="hidden-sm hidden-xs">Contactenos en +420 777 555 333  o  mail@mercabarato.com.</p>
+                    <p class="hidden-sm hidden-xs">Contactenos en +666 666 66 666  o  mail@mercabarato.com.</p>
                     <p class="hidden-md hidden-lg"><a href="#" data-animate-hover="pulse"><i class="fa fa-phone"></i></a>  <a href="#" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
                     </p>
                 </div>
