@@ -11,7 +11,11 @@ class MY_Controller extends MX_Controller {
     {
         parent::__construct();
 
-        $this->_ci =& get_instance();
+        $this->_ci =& get_instance();        
+    }
+    
+    public function show_profiler(){
+        $this->output->enable_profiler(TRUE);
     }
 
     /**
