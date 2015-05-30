@@ -19,7 +19,7 @@ if (!defined('BASEPATH'))
   | environments.
   |
  */
-$config['base_url'] = 'http://localhost/freelancer/mercabarato_new/';
+$config['base_url'] = 'http://www.micesc-dev.com/mercabarato/';
 
 /*
   |--------------------------------------------------------------------------

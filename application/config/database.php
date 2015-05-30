@@ -48,9 +48,9 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
-$db['default']['password'] = 'root';
+$db['default']['hostname'] = 'mysql.micesc-dev.com';
+$db['default']['username'] = 'micesc';
+$db['default']['password'] = 'enIFInxheOyy';
 $db['default']['database'] = 'mercabarato_bd';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
