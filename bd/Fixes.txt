@@ -1,0 +1,15 @@
+- 
+
+
+
+- Para arreglar el error de headers se hizo esto:
+cannot modify header information codeigniter session
+
+place this ob_start(); on first line of index.php under your application directory like this :
+
+<?php
+ob_start();
+/*
+ *---------------------------------------------------------------
+ * APPLICATION ENVIRONMENT
+ *---------------------------------------------------------------
