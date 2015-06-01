@@ -61,8 +61,8 @@ body {
 }
 
 #content-body {
-  overflow:auto;
-  padding-bottom:200px; /* this needs to be bigger than footer height*/
+    overflow:auto;
+    padding-bottom:200px; /* this needs to be bigger than footer height*/
 }
 
 .tipo_registro {
@@ -82,20 +82,29 @@ body {
     text-shadow: 1px 1px 1px hsla(0,0%,10%,0.5);
     background-image: radial-gradient(hsla(41,95%,60%,1) 10%, hsla(41,90%,50%,1) 100%);
     box-shadow: 0 0 0 1px hsla(41,90%,50%,.9) inset, 0 0 0 2px hsla(41,90%,25%,.3) inset;    
- }
+}
 
 .tipo_registro a.selected {
     background-color: hsl(41,90%,45%);    
     text-shadow: 1px 1px 1px hsla(0,0%,10%,0.5);
     background-image: radial-gradient(hsla(41,95%,30%,1) 10%, hsla(41,90%,25%,1) 100%);
     box-shadow: 0 0 0 1px hsla(41,90%,48%,1) inset, 0 0 0 2px hsla(41,90%,50%,1) inset;    
- }
+}
 
- body .box_registro{
-     border:0px;
- }
+body .box_registro{
+    border:0px;
+}
 
- #registrar_comprador .radioInput{
-     margin-left: 8px;
-     margin-right: 8px;
- }
+#registrar_comprador .radioInput{
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.paginacion-listado{text-align: right;}
+.box-anuncios{
+    border-left: solid 1px #ccc;
+    border-right: solid 1px #ccc;
+}
+.box-anuncios>.box-header,.box-productos>.box-header{
+    background-color: #ec9c29;
+}

@@ -31,7 +31,7 @@ class Comprador extends MY_Controller {
                 $usuario->estado = 1;
                 $usuario->is_admin = 0;
 
-                $this->usuario_model->update($usuario, $user_id);
+                $this->usuario_model->update($user_id,$usuario);
 
                 $data = array(
                     "usuario_id" => $user_id,

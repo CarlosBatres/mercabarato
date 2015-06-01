@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     // admin/producto/nuevo
-    $("#admin_nuevo_producto").find('input[name="vendedor"]').devbridgeAutocomplete({
+    $("#admin_producto_form").find('input[name="vendedor"]').devbridgeAutocomplete({
         serviceUrl: SITE_URL + 'admin/vendedores/autocomplete',
         minChars: 1,
         onSelect: function(suggestion) {
@@ -12,7 +12,7 @@ $(document).ready(function() {
     });
 
     // admin/producto/editar
-    $("#admin_editar_producto").find('input[name="vendedor"]').devbridgeAutocomplete({
+    $("#admin_producto_form").find('input[name="vendedor"]').devbridgeAutocomplete({
         serviceUrl: SITE_URL + 'admin/vendedores/autocomplete',
         minChars: 1,
         onSelect: function(suggestion) {

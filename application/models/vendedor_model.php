@@ -8,13 +8,13 @@ class Vendedor_model extends MY_Model {
 
     function __construct() {
         parent::__construct();
-        $this->table_name = "vendedor";
+        $this->_table = "vendedor";
     }
 
     function get_by_nombre($nombre) {        
         $limit=10;        
         $this->db->select('id,nombre');  
-        $this->db->from($this->table_name);
+        $this->db->from($this->_table);
         $this->db->like('nombre', $nombre,'both');        
         $this->db->limit($limit);
         

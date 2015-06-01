@@ -5,16 +5,18 @@ if (!defined('BASEPATH')) {
 }
 
 class Producto_model extends MY_Model {
+    
+    public $has_many = array('producto_resources' => array('model' => 'producto_resource_model','primary_key'=>'producto_id'));
 
     function __construct() {
         parent::__construct();
-        $this->table_name = "producto";
+        $this->_table = "producto";
     }
 
     public function get_admin_search($params, $limit, $offset) {
         $this->db->start_cache();
         $this->db->select("producto.*,categoria.nombre AS Categoria,vendedor.nombre AS Vendedor");
-        $this->db->from($this->table_name);
+        $this->db->from($this->_table);
         $this->db->join("categoria", "categoria.id=producto.categoria_id", 'INNER');
         $this->db->join("vendedor", "vendedor.id=producto.vendedor_id", 'INNER');
 
@@ -42,25 +44,66 @@ class Producto_model extends MY_Model {
         }
     }
 
-    public function get_site_search($params, $limit, $offset) {
-        $query = "(SELECT p . * , pr.url_path imagen_nombre ";
-        $query.="FROM producto p ";
-        $query.="LEFT JOIN producto_resources pr ON pr.producto_id = p.id) ";
+    public function get_site_search($params, $limit, $offset ,$order_by , $order) {
 
-        $query.="UNION ";
+        //-------------------------------------------------------
+
+        $this->db->select("id");
+        $this->db->from($this->_table);
+        if (isset($params['nombre'])) {
+            $this->db->like('producto.nombre', $params['nombre'], 'both');
+        }
+        if (isset($params['categoria_id'])) {
+            $this->db->where('producto.categoria_id', $params['categoria_id']);
+        }        
+        $q = $this->db->get(); 
+        $total_count=$q->num_rows();
         
-        $query.="(SELECT p . * , pr.url_path imagen_nombre ";
+        
+        //--------------------------------------------------------              
+        
+        $query_params = "";
+        if (isset($params['nombre'])) {
+            $query_params.="p.nombre LIKE '%" . $params['nombre'] . "%' ";
+        }
+        if (isset($params['categoria_id'])) {
+            if ($query_params != "") {
+                $query_params.=" AND ";
+            }
+            $query_params.="p.categoria_id=" . $params['categoria_id'] . " ";
+        }        
+        
+        $query = "(SELECT p . * , pr.url_path as imagen_nombre ";
         $query.="FROM producto p ";
-        $query.="RIGHT JOIN producto_resources pr ON pr.producto_id = p.id) ";        
+        $query.="LEFT JOIN producto_resources pr ON pr.producto_id = p.id";
+
+        if ($query_params !== "") {
+            $query.=" WHERE " . $query_params;
+        }
+
+        $query.=" ) UNION (";
+        $query.="SELECT p . * , pr.url_path as imagen_nombre ";
+        $query.="FROM producto p ";
+        $query.="RIGHT JOIN producto_resources pr ON pr.producto_id = p.id ";
+
+        if ($query_params !== "") {
+            $query.=" WHERE " . $query_params;
+        }
+
+        $query.=" )";
         
-        $result=$this->db->query($query);
+        $query.=" ORDER BY ".$order_by." ".$order;
+        $query.=" LIMIT ".$offset.", ".$limit;
+        
+
+        $result = $this->db->query($query);
         $records = $result->result_array();
         $count = count($records);
         if ($count > 0) {
-            return array("productos" => $records, "total" => 0);
-        }else{
+            return array("productos" => $records, "total" => $total_count);
+        } else {
             return array("total" => 0);
         }
-    }
+    }        
 
 }

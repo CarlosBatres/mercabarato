@@ -8,7 +8,7 @@ class Categoria_model extends MY_Model {
 
     function __construct() {
         parent::__construct();
-        $this->table_name = "categoria";
+        $this->_table = "categoria";
     }
     
     

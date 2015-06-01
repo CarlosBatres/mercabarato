@@ -28,7 +28,7 @@ class User extends MY_Controller {
                 $usuario->ip_address = $ip_address;
                 $usuario->ultimo_acceso = date("Y-m-d H:i:s");
 
-                $this->usuario_model->update($usuario, $user_id);
+                $this->usuario_model->update($user_id,$usuario);
                 redirect('admin');
             } else {
                 redirect('admin/login');

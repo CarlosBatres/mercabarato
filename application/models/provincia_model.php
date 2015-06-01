@@ -8,12 +8,12 @@ class Provincia_model extends MY_Model {
 
     function __construct() {
         parent::__construct();
-        $this->table_name = "provincia";
+        $this->_table = "provincia";
     }
 
     function get_all_by_pais($pais_id) {
         $this->db->where("pais_id", $pais_id);
-        $query = $this->db->get($this->table_name);
+        $query = $this->db->get($this->_table);
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {

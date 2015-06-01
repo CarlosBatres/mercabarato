@@ -1,3 +1,9 @@
+<?php if ($search_params['total_paginas'] < 1): ?>
+<div>
+    <p> No se encontraron resultados...</p>    
+</div>
+<?php else: ?>
+
 <div id="question" style="display:none; cursor: default">
     <div class="modal-content">
         <div class="modal-header">
@@ -56,17 +62,19 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    
-    <?php if ($search_params['total_paginas'] > 1):?>
+
+    <?php if ($search_params['total_paginas'] > 1): ?>
         <div class="col-md-6"> Mostrando 
-            <?php echo ($search_params['desde']<$search_params['hasta'])? $search_params['desde'].' a '.$search_params['hasta']: ' el '.$search_params['desde'];?> 
-            de <?php echo $search_params['total'];?> resultados</div>
+            <?php echo ($search_params['desde'] < $search_params['hasta']) ? $search_params['desde'] . ' a ' . $search_params['hasta'] : ' el ' . $search_params['desde']; ?> 
+            de <?php echo $search_params['total']; ?> resultados</div>
         <div class="col-md-6">
             <div class="paginacion-listado">
                 <ul class="pagination">
-                    <li>
-                        <a href="#">Anterior</a>
-                    </li>
+                    <?php if ($search_params['anterior'] != -1): ?>
+                        <li>
+                            <a data-id="<?php echo $search_params['anterior']; ?>" href="<?php echo site_url('productos/') . '/' . $search_params['anterior'] ?>">Anterior</a>
+                        </li>
+                    <?php endif; ?>
                     <?php
                     for ($i = 1; $i <= $search_params['total_paginas']; $i++) {
                         $class = "";
@@ -78,13 +86,14 @@
                             <a data-id="<?php echo $i; ?>" href="<?php echo site_url('admin/productos/') . '/' . $i ?>"><?php echo $i; ?></a>
                         </li>
                     <?php } ?>
-                    <li>
-                        <a href="#">Siguiente</a>
-                    </li>
+                    <?php if ($search_params['siguiente'] != -1): ?>
+                        <li>
+                            <a data-id="<?php echo $search_params['siguiente']; ?>" href="<?php echo site_url('productos/') . '/' . $search_params['siguiente'] ?>">Siguiente</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>
     <?php endif; ?>
-
 </div> 
-
+<?php endif; ?>

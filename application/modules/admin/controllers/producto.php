@@ -65,7 +65,7 @@ class Producto extends MY_Controller {
                             "orden" => 0,
                         );
 
-                        $this->producto_resources_model->insert($data_img);
+                        $this->producto_resource_model->insert($data_img);
                     }
                     redirect('admin/productos');
                 } else {
@@ -124,12 +124,12 @@ class Producto extends MY_Controller {
                         "categoria_id" => $this->input->post('categoria'),
                     );
 
-                    $this->producto_model->update($data, $producto_id);
+                    $this->producto_model->update($producto_id,$data);
 
                     if ($this->input->post('file_name') !== "") {
-                        $producto_imagen = $this->producto_resources_model->get_producto_imagen($producto_id);
+                        $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto_id);
                         if ($producto_imagen) {
-                            $this->producto_resources_model->delete($producto_imagen->id);
+                            $this->producto_resource_model->delete($producto_imagen->id);
                         }
 
                         $data_img = array(
@@ -141,7 +141,7 @@ class Producto extends MY_Controller {
                             "orden" => 0,
                         );
 
-                        $this->producto_resources_model->insert($data_img);
+                        $this->producto_resource_model->insert($data_img);
                     }
 
                     $this->session->set_flashdata('success', 'Producto modificado con exito');
@@ -160,7 +160,7 @@ class Producto extends MY_Controller {
                 $this->template->add_js("modules/admin/productos.js");
                 $categorias = $this->categoria_model->get_all();
                 $vendedor = $this->vendedor_model->get($producto->vendedor_id);
-                $producto_imagen = $this->producto_resources_model->get_producto_imagen($producto->id);
+                $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto->id);
 
                 $data = array(
                     "categorias" => $categorias,
@@ -216,6 +216,8 @@ class Producto extends MY_Controller {
         $data = array(
             "productos" => $productos_array["productos"],
             "search_params" => array(
+                "anterior"=>(($pagina-1)<1)?-1:($pagina-1),
+                "siguiente"=>(($pagina+1)>$paginas)?-1:($pagina+1),
                 "pagina" => $pagina,
                 "total_paginas" => $paginas,
                 "por_pagina" => $limit,

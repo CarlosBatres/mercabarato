@@ -8,12 +8,12 @@ class Poblacion_model extends MY_Model {
 
     function __construct() {
         parent::__construct();
-        $this->table_name = "poblacion";
+        $this->_table = "poblacion";
     }
 
     function get_all_by_provincia($provincia_id) {
         $this->db->where("provincia_id", $provincia_id);
-        $query = $this->db->get($this->table_name);
+        $query = $this->db->get($this->_table);
         if ($query->num_rows() > 0) {
             return $query->result();
         } else {

@@ -793,7 +793,7 @@ fieldset[disabled] .btn-template-primary.active {
   padding: 30px;
   margin-bottom: 0;
   position: relative;
-  background: url('../imgs/photogrid.jpg') center center repeat;
+  background: url('../../imgs/photogrid.jpg') center center repeat;
   background-size: cover;
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
@@ -1143,7 +1143,7 @@ fieldset[disabled] .btn-template-primary.active {
 }
 .home-carousel {
   position: relative;
-  background: url('../imgs/photogrid.jpg') center center repeat;
+  background: url('../../imgs/photogrid.jpg') center center repeat;
   background-size: cover;
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
@@ -2242,14 +2242,16 @@ fieldset[disabled] .btn-template-primary.active {
   overflow: hidden;
   text-align: center;
   border: 1px solid #ccc;
+  //height:340px;
 }
 .product .image {
   overflow: hidden;
+  height: 200px;
 }
 .product .image img {
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
-  transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;  
 }
 @media (max-width: 767px) {
   .product .image img.img-responsive {
