@@ -21,8 +21,7 @@ class Producto extends MY_Controller {
     /**
      *  AJAX Productos / Listado
      */
-    public function ajax_get_listado_resultados() {
-        //$this->show_profiler();
+    public function ajax_get_listado_resultados() {        
         $formValues = $this->input->post();
 
         $params = array();
