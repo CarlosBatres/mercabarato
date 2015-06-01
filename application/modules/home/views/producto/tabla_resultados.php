@@ -4,15 +4,15 @@
 </div>
 <?php else: ?>
 <div class="row products">
-    <?php foreach ($productos as $producto): ?>
-        <div class="col-md-4">
+    <?php foreach ($productos as $key=>$producto): ?>
+        <div class="col-xs-3">
             <div class="product">
                 <div class="image">
                     <a href="#">
                         <?php if ($producto["imagen_nombre"] === null): ?>
-                            <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="img-responsive image_clip">
+                            <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="img-responsive">
                         <?php else: ?>
-                            <img src="<?php echo assets_url("uploads/imgs/" . $producto["imagen_nombre"]) ?>" alt="" class="img-responsive image_clip">
+                            <img src="<?php echo assets_url("uploads/imgs/" . $producto["imagen_nombre"]) ?>" alt="" class="img-responsive">
                         <?php endif; ?>
 
                     </a>
@@ -23,7 +23,7 @@
                     <p class="price"><?php echo $producto["precio_venta_publico"] . ' ' . $this->config->item('money_sign') ?></p>                            
                 </div>                        
             </div>                    
-        </div>           
+        </div>        
     <?php endforeach; ?>
 </div>
 

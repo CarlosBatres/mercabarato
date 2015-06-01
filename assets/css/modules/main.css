@@ -101,8 +101,10 @@ body .box_registro{
 }
 
 .paginacion-listado{text-align: right;}
-.image_clip{
-    width:300px;
-    height: auto;
-    overflow:hidden;
+.box-anuncios{
+    border-left: solid 1px #ccc;
+    border-right: solid 1px #ccc;
+}
+.box-anuncios>.box-header,.box-productos>.box-header{
+    background-color: #ec9c29;
 }

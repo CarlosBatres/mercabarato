@@ -36,9 +36,9 @@ class Producto extends MY_Controller {
             }
             $pagina = $this->input->post('pagina');                        
            
-            $limit = 6;
+            $limit = 8;
             $offset = $limit * ($pagina - 1);
-            $productos = $this->producto_model->get_site_search($params, $limit, $offset);
+            $productos = $this->producto_model->get_site_search($params, $limit, $offset,"id","ASC");
             $flt = (float) ($productos["total"] / $limit);
             $ent = (int) ($productos["total"] / $limit);
             if ($flt > $ent || $flt < $ent) {

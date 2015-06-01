@@ -37,45 +37,46 @@
 
     <!-- *** NAVBAR ***
     _________________________________________________________ -->
-
-    <div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
-        <div class="navbar navbar-default yamm navbar-custom" role="navigation" id="navbar">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand home" href="<?php echo site_url(); ?>">                        
-                        <img src="<?php echo assets_url('imgs/logo.png') ?>" alt="mercabarato logo" >
-                    </a>
-                    <div class="navbar-buttons">
-                        <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
-                            <span class="sr-only">Toggle navigation</span>
-                            <i class="fa fa-align-justify"></i>
-                        </button>
-                    </div>
+    <div class="navbar navbar-default yamm navbar-custom" role="navigation" id="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand home" href="<?php echo site_url(); ?>">                        
+                    <img src="<?php echo assets_url('imgs/logo.png') ?>" alt="mercabarato logo" >
+                </a>
+                <div class="navbar-buttons">
+                    <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="fa fa-align-justify"></i>
+                    </button>
                 </div>
-                <!--/.navbar-header -->
-
-                <div class="navbar-collapse collapse" id="navigation">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown <?php if ($this->uri->uri_string() == ''): echo "active"; endif;?>" >
-                            <a href="<?php echo site_url(); ?>">Inicio <b class="caret"></b></a>                            
-                        </li>
-                        <li class="dropdown <?php if ($this->uri->uri_string() == 'productos'): echo "active"; endif;?>" >
-                            <a href="<?php echo site_url('productos'); ?>">Productos<b class="caret"></b></a>
-                        </li>                       
-
-                        <li class="dropdown <?php if ($this->uri->uri_string() == 'vendedores'): echo "active"; endif;?>" >
-                            <a href="<?php echo site_url(); ?>">Vendedores <b class="caret"></b></a>                            
-                        </li>
-                        <li class="dropdown <?php if ($this->uri->uri_string() == 'seguros'): echo "active"; endif;?>" >
-                            <a href="<?php echo site_url(); ?>">Seguros <b class="caret"></b></a>                            
-                        </li>                                                
-                    </ul>
-                </div>
-                <!--/.nav-collapse -->                                
             </div>
+            <!--/.navbar-header -->
+
+            <div class="navbar-collapse collapse" id="navigation">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown <?php if ($this->uri->uri_string() == ''): echo "active";
+                    endif; ?>" >
+                        <a href="<?php echo site_url(); ?>">Inicio <b class="caret"></b></a>                            
+                    </li>
+                    <li class="dropdown <?php if ($this->uri->uri_string() == 'productos'): echo "active";
+                    endif; ?>" >
+                        <a href="<?php echo site_url('productos'); ?>">Productos<b class="caret"></b></a>
+                    </li>                       
+
+                    <li class="dropdown <?php if ($this->uri->uri_string() == 'vendedores'): echo "active";
+                    endif; ?>" >
+                        <a href="<?php echo site_url(); ?>">Vendedores <b class="caret"></b></a>                            
+                    </li>
+                    <li class="dropdown <?php if ($this->uri->uri_string() == 'seguros'): echo "active";
+                    endif; ?>" >
+                        <a href="<?php echo site_url(); ?>">Seguros <b class="caret"></b></a>                            
+                    </li>                                                
+                </ul>
+            </div>
+            <!--/.nav-collapse -->                                
         </div>
-        <!-- /#navbar -->
     </div>
+    <!-- /#navbar -->    
     <!-- *** NAVBAR END *** -->
 </header>
 
@@ -93,7 +94,7 @@ _________________________________________________________ -->
                 <div class="alert alert-danger hidden" role="alert">
                     El usuario y/o la contraseña son incorrectas
                 </div>
-                <?php echo form_open('login', 'id="loginForm"'); ?>                 
+<?php echo form_open('login', 'id="loginForm"'); ?>                 
                 <div class="form-group">
                     <input type="text" class="form-control" name="email" placeholder="E-mail" autocomplete=off>
                 </div>
@@ -104,7 +105,7 @@ _________________________________________________________ -->
                 <p class="text-center">
                     <button class="btn btn-template-main" type="submit"><i class="fa fa-sign-in"></i> Iniciar</button>
                 </p>                    
-                <?php echo form_close(); ?>
+<?php echo form_close(); ?>
                 <p class="text-center text-muted">No esta registrado?</p>
                 <p class="text-center text-muted"><a href="<?php echo site_url('registro'); ?>"><strong>Registrese ahora</strong></a>!</p>
             </div>

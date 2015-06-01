@@ -5,9 +5,8 @@ if (!defined('BASEPATH')) {
 }
 
 class Producto_model extends MY_Model {
-
-    //public $has_many = array( 'Producto_resources' );
-    public $has_many = array('producto_resources' => array('model' => 'producto_resource'));
+    
+    public $has_many = array('producto_resources' => array('model' => 'producto_resource_model','primary_key'=>'producto_id'));
 
     function __construct() {
         parent::__construct();
@@ -45,7 +44,7 @@ class Producto_model extends MY_Model {
         }
     }
 
-    public function get_site_search($params, $limit, $offset) {
+    public function get_site_search($params, $limit, $offset ,$order_by , $order) {
 
         //-------------------------------------------------------
 
@@ -93,7 +92,9 @@ class Producto_model extends MY_Model {
 
         $query.=" )";
         
+        $query.=" ORDER BY ".$order_by." ".$order;
         $query.=" LIMIT ".$offset.", ".$limit;
+        
 
         $result = $this->db->query($query);
         $records = $result->result_array();
@@ -103,6 +104,6 @@ class Producto_model extends MY_Model {
         } else {
             return array("total" => 0);
         }
-    }
+    }        
 
 }
