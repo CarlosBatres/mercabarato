@@ -62,7 +62,7 @@ class Producto_model extends MY_Model {
         
         //--------------------------------------------------------              
         
-        $query_params = "";
+        $query_params = "";                
         if (isset($params['nombre'])) {
             $query_params.="p.nombre LIKE '%" . $params['nombre'] . "%' ";
         }
@@ -75,7 +75,7 @@ class Producto_model extends MY_Model {
         
         $query = "(SELECT p . * , pr.url_path as imagen_nombre ";
         $query.="FROM producto p ";
-        $query.="LEFT JOIN producto_resources pr ON pr.producto_id = p.id";
+        $query.="LEFT JOIN producto_resources pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
 
         if ($query_params !== "") {
             $query.=" WHERE " . $query_params;
@@ -84,7 +84,7 @@ class Producto_model extends MY_Model {
         $query.=" ) UNION (";
         $query.="SELECT p . * , pr.url_path as imagen_nombre ";
         $query.="FROM producto p ";
-        $query.="RIGHT JOIN producto_resources pr ON pr.producto_id = p.id ";
+        $query.="RIGHT JOIN producto_resources pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
 
         if ($query_params !== "") {
             $query.=" WHERE " . $query_params;

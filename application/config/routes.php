@@ -68,7 +68,7 @@ $route['admin/compradores/borrar/(:num)'] = 'admin/comprador/borrar/$1';
 $route['admin/vendedores/autocomplete'] = 'admin/vendedor/autocomplete';
 
 $route['default_controller'] = "home/main";
-$route['404_override'] = '';
+$route['404_override'] = 'home/main/not_found';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

@@ -10,5 +10,10 @@ class Main extends MY_Controller {
         $productos = $this->producto_model->get_site_search(array(), 8, 0 ,"id","DESC");        
         $this->template->load_view('home/index',array("productos"=>$productos["productos"]));
     }
+    
+    public function not_found(){
+        $this->template->set_title('Mercabarato - Anuncios y subastas');        
+        $this->template->load_view('home/404');
+    }
 
 }
