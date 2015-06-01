@@ -2242,6 +2242,7 @@ fieldset[disabled] .btn-template-primary.active {
   overflow: hidden;
   text-align: center;
   border: 1px solid #ccc;
+  //height:360px;
 }
 .product .image {
   overflow: hidden;

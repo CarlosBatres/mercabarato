@@ -4,16 +4,19 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Producto_resources_model extends MY_Model {
+class Producto_resource_model extends MY_Model {
 
+    //public $belongs_to = array( 'producto' );
+    public $belongs_to = array( 'producto' => array( 'model' => 'producto' ) );
+    
     function __construct() {
         parent::__construct();
-        $this->table_name = "producto_resources";
+        $this->_table = "producto_resources";
     }
     
     public function get_producto_imagen($producto_id){
         $this->db->select('*');
-        $this->db->from($this->table_name);
+        $this->db->from($this->_table);
         $this->db->where('producto_id',$producto_id);
         $this->db->where('tipo','imagen_principal');
         $result = $this->db->get();        

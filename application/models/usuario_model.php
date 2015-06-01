@@ -8,7 +8,7 @@ class Usuario_model extends MY_Model {
 
     function __construct() {
         parent::__construct();
-        $this->table_name = "usuario";
+        $this->_table = "usuario";
     }        
 
 }

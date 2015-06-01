@@ -47,7 +47,6 @@ $route['registrar_comprador'] = 'home/comprador/new_comprador';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
 $route['productos'] = 'home/producto/view_listado';
 
-
 /* Admin */
 $route['admin'] = 'admin/main';
 $route['admin/dashboard'] = 'admin/main/dashboard';
