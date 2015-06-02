@@ -108,3 +108,24 @@ body .box_registro{
 .box-anuncios>.box-header,.box-productos>.box-header{
     background-color: #ec9c29;
 }
+
+.frame {
+    height: 200px;      
+    width: 100%;
+    white-space: nowrap;    
+    text-align: center; margin: 1em 0;
+}
+
+.helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.producto-img {
+    background: #3A6F9A;
+    vertical-align: middle;
+    max-height: 200px;
+    max-width: 180px;
+    margin: 0 auto;    
+}

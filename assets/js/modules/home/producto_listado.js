@@ -11,6 +11,7 @@ $(document).ready(function() {
         $('#pagina').val("1");
         if ($(this).parent().hasClass('active')) {
             $(this).parent().removeClass('active');
+            updateResultados();
         } else {
             $('.category-menu>li.active').removeClass('active');
             $(this).parent().addClass('active');
