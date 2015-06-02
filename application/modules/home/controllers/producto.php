@@ -21,13 +21,15 @@ class Producto extends MY_Controller {
     /**
      *  AJAX Productos / Listado
      */
-    public function ajax_get_listado_resultados() {        
+    public function ajax_get_listado_resultados() {
+        //$this->show_profiler();
         $formValues = $this->input->post();
 
         $params = array();
         if ($formValues !== false) {
             if ($this->input->post('search_query') != "") {
                 $params["nombre"] = $this->input->post('search_query');
+                $params["descripcion"] = $this->input->post('search_query');
             }
 
             if ($this->input->post('categoria_id') != "") {

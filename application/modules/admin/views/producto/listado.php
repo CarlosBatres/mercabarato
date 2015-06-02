@@ -37,7 +37,7 @@
                     <?= $this->session->flashdata('success') ?> 
                 </div>
             <?php } ?>
-            <div class="row agregar_producto">
+            <div class="row agregar-item">
                 <div class="col-md-12">            
                     <a class="btn btn-lg btn-default" href="<?php echo site_url('admin/productos/crear'); ?>">Crear Producto</a>
                 </div>                

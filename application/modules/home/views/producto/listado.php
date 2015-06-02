@@ -25,15 +25,16 @@
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked category-menu">
-                        <?php foreach ($categorias as $key=>$categoria): ?>
+                        <?php foreach ($categorias as $key => $categoria): ?>
                             <li class="seleccion_categoria">
-                                <a href="" data-id="<?php echo $categoria->id;?>"><?php echo $categoria->nombre; ?> <span class="badge pull-right">00</span></a>                            
+                                <a href="" data-id="<?php echo $categoria->id; ?>"><?php echo $categoria->nombre; ?> <span class="badge pull-right">00</span></a>                            
                             </li>                                               
                         <?php endforeach; ?>
-                    </ul>
+                    </ul>                    
                 </div>
-            </div>                                
+            </div>              
         </div>
+
 
         <div class="col-sm-9">            
             <div class="box-simple">                                
