@@ -67,5 +67,17 @@ class Producto extends MY_Controller {
             $this->template->load_view('home/producto/tabla_resultados', $data);
         }
     }
+    
+    public function ver_producto($id){
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        //$this->template->add_js('modules/home/producto_listado.js');
+        $producto = $this->producto_model->get($id);        
+        $producto_imagen = $this->producto_resource_model->get_producto_imagen($id);
+        
+        $data=array(
+            "producto"=>$producto,
+            "producto_imagen"=>$producto_imagen);
+        $this->template->load_view('home/producto/ficha', $data);
+    }
 
 }

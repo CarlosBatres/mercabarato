@@ -46,7 +46,7 @@
                 </div>
                 <div class="form-group">
                     <label>Confirme Contraseña</label>
-                    <input type="password" class="form-control" name="password-confirmar">
+                    <input type="password" class="form-control" name="password_confirmar">
                 </div>
                 <br><hr><br>
                 <div class="form-group">
@@ -126,7 +126,7 @@
                 </div>
                 <div class="form-group">
                     <label>Confirme Contraseña</label>
-                    <input type="password" class="form-control" name="password-confirmar">
+                    <input type="password" class="form-control" name="password_confirmar">
                 </div>
                 <br><hr><br>
                 <div class="form-group">
