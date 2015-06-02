@@ -11,7 +11,7 @@ _________________________________________________________ -->
         </div>
 
         <div class="col-md-3 col-sm-6">
-            <h4>Subastas</h4>
+            <h4>&nbsp;</h4>
             <a href="<?php echo site_url(); ?>">Seguros</a><br>
             <a href="<?php echo site_url(); ?>">InfoCompras</a><br>
             <a href="<?php echo site_url(); ?>">Tarifas</a><br>

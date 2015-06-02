@@ -58,8 +58,8 @@ class Producto extends MY_Controller {
                     if ($this->input->post('file_name') !== "") {
                         $data_img = array(
                             "producto_id" => $producto_id,
-                            "nombre" => "Imagen principal del producto",
-                            "descripcion" => "Idealmente esta imagen seria lo mas grande posible.",
+                            "nombre" => "Producto: ".$data["nombre"],
+                            "descripcion" => "Imagen principal del producto ".$data["nombre"],
                             "tipo" => "imagen_principal",
                             "url_path" => $this->input->post('file_name'),
                             "orden" => 0,
@@ -94,6 +94,7 @@ class Producto extends MY_Controller {
      */
     public function borrar($id) {
         if ($this->input->is_ajax_request()) {
+            $this->producto_resource_model->cleanup_resources($id);
             $this->producto_model->delete($id);
             redirect('admin/productos');
         }
@@ -178,7 +179,7 @@ class Producto extends MY_Controller {
     /**
      *  AJAX Productos / Listado
      */
-    public function ajax_get_listado_resultados() {
+    public function ajax_get_listado_resultados() {        
         $formValues = $this->input->post();
 
         $params = array();
