@@ -33,12 +33,13 @@ function bind_pagination_links() {
 }
 
 function bind_borrar_links() {
-    $('.table-responsive').find('.options').find('.producto_borrar').off('click').on('click', function(e) {
-        console.log("bind_borrar_links");
-        e.preventDefault();
-        var a_href = $(this).attr('href');
+    $('.table-responsive').find('.options').find('.producto_borrar').off();
+    $('.table-responsive').find('.options').find('.producto_borrar').on('click', function(e) {        
+        e.preventDefault();        
+        var a_href = $(this).attr('href');        
         $.blockUI({message: $('#question'), css: {}});
 
+        $('#yes').off();
         $('#yes').click(function() {
             $.ajax({
                 url: a_href,
