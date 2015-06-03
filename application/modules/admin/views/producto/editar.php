@@ -61,22 +61,14 @@
                         <div class="preview_imagen">                        
                             <img src="<?php echo assets_url('uploads/imgs/' . $producto_imagen->url_path); ?>" width="250"/>
                         </div>
-                    <br>
+                        <br>
                     <?php endif; ?>
                     <button type="button" id="cambiar_imagen" class="btn btn-lg btn-default"> Cambiar Imagen</button>
                     <div class='fileupload_button' style='display:none'>
                         <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('admin/producto_resource/upload_image') ?>">
                     </div>
                     <input type="hidden" name="file_name" id="file_name" value="">                    
-                </div>
-
-                <div class="form-group">
-                    <label>Vendedor / Empresa</label>
-                    <input type="text" class="form-control" name="vendedor" value="<?php echo $vendedor->nombre; ?>">                                        
-                    <input type="hidden" name="vendedor_id" id="vendedor_id" value="<?php echo $producto->vendedor_id; ?>">                                        
-                </div>
-
-
+                </div>               
                 <div class="form-group">
                     <label>Precio Venta Publico</label>
                     <input type="text" class="form-control" name="precio_venta_publico" value="<?php echo $producto->precio_venta_publico; ?>">
@@ -118,6 +110,16 @@
                             ?>> No
                         </label>
                     </div>                    
+                </div>
+                <hr>
+                <div class="alert alert-warning">
+                    <strong>Advertencia:</strong>                    
+                    <p> Para poder agregar un nuevo producto al sistema por esta via debe existir al menos un Usuario Vendedor para asociar con este producto.</p>                    
+                </div
+                <div class="form-group">
+                    <label>Vendedor / Empresa</label>
+                    <input type="text" class="form-control" name="vendedor" value="<?php echo $vendedor->nombre; ?>">                                        
+                    <input type="hidden" name="vendedor_id" id="vendedor_id" value="<?php echo $producto->vendedor_id; ?>">                                        
                 </div>
                 <hr>
                 <div class="text-center">

@@ -51,14 +51,7 @@
                     <label>Imagen del Producto</label>                    
                     <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('admin/producto_resource/upload_image') ?>">
                     <input type="hidden" name="file_name" id="file_name" value="">                                                            
-                </div>
-                <div class="form-group">
-                    <label>Vendedor / Empresa</label>
-                    <input type="text" class="form-control" name="vendedor">                                        
-                    <input type="hidden" name="vendedor_id" id="vendedor_id" value="">                                        
-                </div>
-
-
+                </div>                
                 <div class="form-group">
                     <label>Precio Venta Publico</label>
                     <input type="text" class="form-control" name="precio_venta_publico">
@@ -88,6 +81,16 @@
                             <input type="radio" name="mostrar_precio" id="mostrar_precio_no" value="0"> No
                         </label>
                     </div>                    
+                </div>
+                <hr>
+                <div class="alert alert-warning">
+                    <strong>Advertencia:</strong>                    
+                    <p> Para poder agregar un nuevo producto al sistema por esta via debe existir al menos un Usuario Vendedor para asociar con este producto.</p>                    
+                </div>
+                <div class="form-group">
+                    <label>Vendedor / Empresa</label>
+                    <input type="text" class="form-control" name="vendedor">                                        
+                    <input type="hidden" name="vendedor_id" id="vendedor_id" value="">                                        
                 </div>
                 <hr>
                 <div class="text-center">

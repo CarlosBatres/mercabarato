@@ -21,13 +21,15 @@ class Producto extends MY_Controller {
     /**
      *  AJAX Productos / Listado
      */
-    public function ajax_get_listado_resultados() {        
+    public function ajax_get_listado_resultados() {
+        //$this->show_profiler();
         $formValues = $this->input->post();
 
         $params = array();
         if ($formValues !== false) {
             if ($this->input->post('search_query') != "") {
                 $params["nombre"] = $this->input->post('search_query');
+                $params["descripcion"] = $this->input->post('search_query');
             }
 
             if ($this->input->post('categoria_id') != "") {
@@ -66,6 +68,18 @@ class Producto extends MY_Controller {
 
             $this->template->load_view('home/producto/tabla_resultados', $data);
         }
+    }
+    
+    public function ver_producto($id){
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        //$this->template->add_js('modules/home/producto_listado.js');
+        $producto = $this->producto_model->get($id);        
+        $producto_imagen = $this->producto_resource_model->get_producto_imagen($id);
+        
+        $data=array(
+            "producto"=>$producto,
+            "producto_imagen"=>$producto_imagen);
+        $this->template->load_view('home/producto/ficha', $data);
     }
 
 }

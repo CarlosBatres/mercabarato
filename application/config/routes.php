@@ -46,6 +46,7 @@ $route['registro'] = 'home/user/view_registro';
 $route['registrar_comprador'] = 'home/comprador/new_comprador';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
 $route['productos'] = 'home/producto/view_listado';
+$route['productos/ficha/(:any)'] = 'home/producto/ver_producto/$1';
 
 /* Admin */
 $route['admin'] = 'admin/main';
@@ -65,6 +66,10 @@ $route['admin/compradores/crear'] = 'admin/comprador/crear';
 $route['admin/compradores/editar/(:num)'] = 'admin/comprador/editar/$1'; 
 $route['admin/compradores/borrar/(:num)'] = 'admin/comprador/borrar/$1'; 
 
+$route['admin/vendedores'] = 'admin/vendedor/view_listado'; 
+$route['admin/vendedores/crear'] = 'admin/vendedor/crear';
+$route['admin/vendedores/editar/(:num)'] = 'admin/vendedor/editar/$1'; 
+$route['admin/vendedores/borrar/(:num)'] = 'admin/vendedor/borrar/$1'; 
 $route['admin/vendedores/autocomplete'] = 'admin/vendedor/autocomplete';
 
 $route['default_controller'] = "home/main";

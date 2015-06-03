@@ -59,5 +59,19 @@ class User extends MY_Controller {
         $this->authentication->logout();
         redirect('');
     }
-
+    
+    public function check_email(){
+        if ($this->input->is_ajax_request()) {
+            $formValues = $this->input->post();
+            if ($formValues !== false) {                 
+                 if ( $this->usuario_model->email_exists($this->input->post('email')) == TRUE ) {
+			echo json_encode(FALSE);
+		} else {
+			echo json_encode(TRUE);
+		}
+            }            
+        }else{
+            redirect('404');
+        }        
+    }            
 }

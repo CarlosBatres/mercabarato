@@ -74,7 +74,7 @@ _________________________________________________________ -->
                             <div class="col-lg-3 col-md-4 col-sm-6">
                                 <div class="product">
                                     <div class="frame">
-                                        <a href="#">
+                                        <a href="<?php echo site_url("productos/ficha/".$producto->id)?>">
                                             <span class="helper"></span>
                                             <?php if ($producto->imagen_nombre === null): ?>
                                                 <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="producto-img">
@@ -85,7 +85,7 @@ _________________________________________________________ -->
                                     </div>
                                     <!-- /.image -->
                                     <div class="text">
-                                        <h3><a href="#"><?php echo $producto->nombre; ?></a></h3>
+                                        <h3><a href="<?php echo site_url("productos/ficha/".$producto->id)?>"><?php echo $producto->nombre; ?></a></h3>
                                         <p class="price"><?php echo $producto->precio_venta_publico . ' ' . $this->config->item('money_sign') ?></p>                            
                                     </div>                        
                                 </div>                    

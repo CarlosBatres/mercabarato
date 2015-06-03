@@ -77,5 +77,75 @@ $(document).ready(function() {
         yearRange: "1900:-nn"
     });
 
-
+    validateForms();
 });
+
+function validateForms() {
+    var password_comprador = $("#registrar_comprador").find("input[name='password']");    
+    var email_comprador = $("#registrar_comprador").find("input[name='email']");
+    $("#registrar_comprador").validate({        
+        rules: {
+            email: {
+                required: true, 
+                email: true,
+                remote: {
+			url: SITE_URL+"/home/user/check_email",
+			type: "post",
+			data: {
+				email: function(){ return email_comprador.val(); }
+			}
+		}
+            },
+            password: {required: true},
+            password_confirmar: {required: true, equalTo: password_comprador}
+        },
+        messages: {
+            email: {
+                required: "Ingrese su email",
+                email: "Ingrese un email valido",
+                remote: 'Email ya existe. Ingrese un email diferente.'
+            },
+            password: {
+                required: "Ingrese una contraseña"
+            },
+            password_confirmar: {
+                required: "Confirme su contraseña",
+                equalTo: "Las contraseñas tienen que ser iguales"
+            }
+        }
+    });
+    
+    var password_vendedor = $("#registrar_vendedor").find("input[name='password']");
+    var email_vendedor = $("#registrar_vendedor").find("input[name='email']");
+    $("#registrar_vendedor").validate({        
+        rules: {
+            email: {
+                required: true, 
+                email: true ,
+                remote: {
+			url: SITE_URL+"/home/user/check_email",
+			type: "post",
+			data: {
+				email: function(){ return email_vendedor.val(); }
+			}
+		}
+            },
+            password: {required: true},
+            password_confirmar: {required: true, equalTo: password_vendedor}
+        },
+        messages: {
+            email: {
+                required: "Ingrese su email",
+                email: "Ingrese un email valido",
+                remote: 'Email ya existe. Ingrese un email diferente.'
+            },
+            password: {
+                required: "Ingrese una contraseña"
+            },
+            password_confirmar: {
+                required: "Confirme su contraseña",
+                equalTo: "Las contraseñas tienen que ser iguales"
+            }
+        }
+    });
+}

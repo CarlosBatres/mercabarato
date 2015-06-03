@@ -65,11 +65,11 @@
 
                     <li class="dropdown <?php if ($this->uri->uri_string() == 'vendedores'): echo "active";
                     endif; ?>" >
-                        <a href="<?php echo site_url(); ?>">Vendedores <b class="caret"></b></a>                            
+                        <a href="<?php echo site_url('vendedores'); ?>">Vendedores <b class="caret"></b></a>                            
                     </li>
                     <li class="dropdown <?php if ($this->uri->uri_string() == 'seguros'): echo "active";
                     endif; ?>" >
-                        <a href="<?php echo site_url(); ?>">Seguros <b class="caret"></b></a>                            
+                        <a href="<?php echo site_url('seguros'); ?>">Seguros <b class="caret"></b></a>                            
                     </li>                                                
                 </ul>
             </div>

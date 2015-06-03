@@ -1,7 +1,7 @@
 $(document).ready(function() {
     updateResultados();
 
-    $('#listado-productos').on('submit', function(e) {
+    $('#listado-items').on('submit', function(e) {
         e.preventDefault();
         $('#pagina').val('1');
         updateResultados();
@@ -9,11 +9,11 @@ $(document).ready(function() {
 });
 
 function updateResultados() {
-    var form = $('#listado-productos');
+    var form = $('#listado-items');
     $('#tabla-resultados').html('');
     $.ajax({
         type: "POST",
-        url: SITE_URL + 'admin/producto/ajax_get_listado_resultados',
+        url: SITE_URL + 'admin/comprador/ajax_get_listado_resultados',
         data: form.serialize(),
         dataType: "html",
         success: function(response) {
@@ -33,8 +33,8 @@ function bind_pagination_links() {
 }
 
 function bind_borrar_links() {
-    $('.table-responsive').find('.options').find('.producto_borrar').off();
-    $('.table-responsive').find('.options').find('.producto_borrar').on('click', function(e) {        
+    $('.table-responsive').find('.options').find('.comprador_borrar').off();
+    $('.table-responsive').find('.options').find('.comprador_borrar').on('click', function(e) {        
         e.preventDefault();        
         var a_href = $(this).attr('href');        
         $.blockUI({message: $('#question'), css: {}});

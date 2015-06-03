@@ -8,7 +8,12 @@
                 <div class="panel-body">
                     <h4>El acceso a esta pagina esta restringido para usuarios autorizados.</h4>
                     <br><br>
-                    <a href="<?php echo site_url('') ?>" >Regresar</a>
+                    <div class="form-group pull-left">
+                        <a class="btn btn-sm btn-primary btn-block" href="<?php echo site_url('admin/do_logout') ?>" >Ingresar con otra cuenta</a>
+                    </div>
+                    <div class="form-group pull-right">
+                        <a class="btn btn-sm btn-primary btn-block" href="<?php echo site_url('') ?>" >Regresar</a>
+                    </div>
                 </div>                
             </div>
         </div>
