@@ -72,6 +72,11 @@ $route['admin/vendedores/editar/(:num)'] = 'admin/vendedor/editar/$1';
 $route['admin/vendedores/borrar/(:num)'] = 'admin/vendedor/borrar/$1'; 
 $route['admin/vendedores/autocomplete'] = 'admin/vendedor/autocomplete';
 
+$route['admin/categorias'] = 'admin/categoria/view_listado'; 
+$route['admin/categorias/crear'] = 'admin/categoria/crear';
+$route['admin/categorias/editar/(:num)'] = 'admin/categoria/editar/$1'; 
+$route['admin/categorias/borrar/(:num)'] = 'admin/categoria/borrar/$1'; 
+
 $route['default_controller'] = "home/main";
 $route['404_override'] = 'home/main/not_found';
 

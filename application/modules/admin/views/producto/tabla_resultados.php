@@ -9,9 +9,9 @@
         <thead>
             <tr>
                 <th style="width: 5%">ID</th>
-                <th style="width: 20%">Nombre del Producto</th>
-                <th style="width: 20%">Categoria</th>
-                <th style="width: 20%">Vendedor / Empresa</th>                            
+                <th style="width: 15%">Nombre del Producto</th>
+                <th style="width: 15%">Categoria</th>
+                <th style="width: 15%">Vendedor / Empresa</th>                            
                 <th style="width: 5%;text-align: center">Visible al Publico</th>
                 <th style="width: 5%;text-align: center">Precio Venta Publico</th>                            
                 <th style="width: 5%;text-align: center">PVP Visible</th>                                                        

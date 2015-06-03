@@ -9,11 +9,11 @@
         <thead>
             <tr>
                 <th style="width: 5%">ID</th>
-                <th style="width: 20%">Nombre Completo</th>                
-                <th style="width: 10%">Sexo</th>
+                <th style="width: 15%">Nombre Completo</th>                
+                <th style="width: 5%">Sexo</th>
                 <th style="width: 10%">Fecha de Nacimiento</th>
-                <th style="width: 20%">Email</th>
-                <th style="width: 10%">Ultimo Acceso</th>                
+                <th style="width: 15%">Email</th>
+                <th style="width: 15%">Ultimo Acceso</th>                
                 <th style="width: 5%">&nbsp;</th> 
             </tr>
         </thead>

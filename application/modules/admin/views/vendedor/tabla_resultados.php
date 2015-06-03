@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th style="width: 5%">ID</th>
-                <th style="width: 20%">Nombre Empresa</th>                
+                <th style="width: 10%">Nombre Empresa</th>                
                 <th style="width: 10%">Actividad</th>
                 <th style="width: 10%">Sitio Web</th>                
                 <th style="width: 10%">Email</th>                

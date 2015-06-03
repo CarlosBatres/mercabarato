@@ -253,7 +253,10 @@
                     </li>
                     <li>
                         <a href="<?php echo site_url('admin/productos'); ?>"><i class="fa fa-fw fa-inbox"></i> Productos</a>
-                    </li>                    
+                    </li> 
+                    <li>
+                        <a href="<?php echo site_url('admin/categorias'); ?>"><i class="fa fa-fw fa-tasks"></i> Categorias</a>
+                    </li> 
 
                 </ul>
             </div>
