@@ -9,27 +9,27 @@
         <thead>
             <tr>
                 <th style="width: 5%">ID</th>
-                <th style="width: 20%">Nombre Completo</th>                
-                <th style="width: 10%">Sexo</th>
-                <th style="width: 10%">Fecha de Nacimiento</th>
-                <th style="width: 20%">Email</th>
+                <th style="width: 20%">Nombre Empresa</th>                
+                <th style="width: 10%">Actividad</th>
+                <th style="width: 10%">Sitio Web</th>                
+                <th style="width: 10%">Email</th>                
                 <th style="width: 10%">Ultimo Acceso</th>                
                 <th style="width: 5%">&nbsp;</th> 
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($compradores as $comprador): ?>
+            <?php foreach ($vendedores as $vendedor): ?>
                 <tr>
-                    <td><?php echo $comprador->id; ?></td>
-                    <td><?php echo $comprador->nombre.' '.$comprador->apellidos; ?></td>                                                                                    
-                    <td><?php echo ($comprador->sexo=='H')?'Hombre':'Mujer'; ?></td>
-                    <td><?php echo date('d-M-Y',strtotime($comprador->fecha_nacimiento)); ?></td>
-                    <td><?php echo $comprador->email; ?></td>
-                    <td><?php echo $comprador->ultimo_acceso; ?></td>                    
+                    <td><?php echo $vendedor->id; ?></td>
+                    <td><?php echo $vendedor->nombre;?></td>                                                                                    
+                    <td><?php echo $vendedor->actividad;?></td> 
+                    <td><?php echo $vendedor->sitioweb;?></td>                    
+                    <td><?php echo $vendedor->email; ?></td>
+                    <td><?php echo $vendedor->ultimo_acceso; ?></td>                    
                     <td>
                         <div class="options">
-                            <a href="<?php echo site_url('admin/compradores/editar') . '/' . $comprador->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>
-                            <a class="comprador_borrar" href="<?php echo site_url('admin/compradores/borrar') . '/' . $comprador->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
+                            <a href="<?php echo site_url('admin/vendedores/editar') . '/' . $vendedor->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a class="vendedor_borrar" href="<?php echo site_url('admin/vendedores/borrar') . '/' . $vendedor->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
                         </div>                           
                     </td>
                 </tr>
@@ -46,7 +46,7 @@
                 <ul class="pagination">
                     <?php if ($search_params['anterior'] != -1): ?>
                         <li>
-                            <a data-id="<?php echo $search_params['anterior']; ?>" href="<?php echo site_url('compradores/') . '/' . $search_params['anterior'] ?>">Anterior</a>
+                            <a data-id="<?php echo $search_params['anterior']; ?>" href="<?php echo site_url('vendedores/') . '/' . $search_params['anterior'] ?>">Anterior</a>
                         </li>
                     <?php endif; ?>
                     <?php
@@ -57,12 +57,12 @@
                         }
                         ?>
                         <li class="<?php echo $class; ?>">
-                            <a data-id="<?php echo $i; ?>" href="<?php echo site_url('admin/compradores/') . '/' . $i ?>"><?php echo $i; ?></a>
+                            <a data-id="<?php echo $i; ?>" href="<?php echo site_url('admin/vendedores/') . '/' . $i ?>"><?php echo $i; ?></a>
                         </li>
                     <?php } ?>
                     <?php if ($search_params['siguiente'] != -1): ?>
                         <li>
-                            <a data-id="<?php echo $search_params['siguiente']; ?>" href="<?php echo site_url('compradores/') . '/' . $search_params['siguiente'] ?>">Siguiente</a>
+                            <a data-id="<?php echo $search_params['siguiente']; ?>" href="<?php echo site_url('vendedores/') . '/' . $search_params['siguiente'] ?>">Siguiente</a>
                         </li>
                     <?php endif; ?>
                 </ul>

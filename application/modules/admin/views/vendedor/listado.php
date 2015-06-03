@@ -16,14 +16,14 @@
     <div class="row">
         <div class="col-md-12">
             <h1 class="page-header">
-                Usuarios Compradores
+                Usuarios Vendedores
             </h1>
             <ol class="breadcrumb">
                 <li>
                     <i class="fa fa-dashboard"></i>  <a href="<?php echo site_url('admin'); ?>">Dashboard</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-inbox"></i> Compradores
+                    <i class="fa fa-inbox"></i> Vendedores
                 </li>
             </ol>
         </div>
@@ -39,7 +39,7 @@
             <?php } ?>
             <div class="row agregar-item">
                 <div class="col-md-12">            
-                    <a class="btn btn-lg btn-default" href="<?php echo site_url('admin/compradores/crear'); ?>">Nuevo Usuario</a>
+                    <a class="btn btn-lg btn-default" href="<?php echo site_url('admin/vendedores/crear'); ?>">Nuevo Usuario</a>
                 </div>                
             </div>
 
@@ -52,29 +52,25 @@
                     </div>
                     <div id="collapse_search" class="panel-collapse collapse" style="height: 0px;">
                         <div class="panel-body">
-                            <form action="<?php echo site_url('admin/comprador') ?>" method="post" class="search-form" id="listado-items">
+                            <form action="<?php echo site_url('admin/vendedor') ?>" method="post" class="search-form" id="listado-items">
                                 <div class="row">                                    
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label class="control-label col-md-12" for="nombre">Nombre del Comprador</label>
+                                            <label class="control-label col-md-12" for="nombre">Nombre de Empresa o Vendedor</label>
                                             <div class="col-md-12">
                                                 <input type="text" name="nombre" id="nombre" value="" class="form-control"/>                                
                                             </div>
                                         </div>
-                                    </div>                                                                                                                                                
+                                    </div> 
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="control-label col-md-12" for="sexo">Sexo</label>
-                                            <div class="col-md-12">
-                                                <select name="sexo" class="form-control">
-                                                    <option value="X">Seleccione uno</option>
-                                                    <option value="H">Hombre</option>
-                                                    <option value="M">Mujer</option>
-                                                </select>
+                                            <label class="control-label col-md-12" for="actividad">Actividad</label>
+                                            <div class="col-md-12">                                                
+                                                <?php echo form_dropdown('actividad', vendedor_actividad_dropdown(), null, 'id="actividad" class="form-control"') ?>
                                             </div>
                                         </div>
-                                    </div>                                     
-                                    <div class="col-md-8">
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label col-md-12" for="email">Email</label>
                                             <div class="col-md-12">
@@ -82,6 +78,38 @@
                                             </div>
                                         </div>
                                     </div> 
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-12" for="sitioweb">Sitio Web</label>
+                                            <div class="col-md-12">
+                                                <input type="text" name="sitioweb" id="sitioweb" value="" class="form-control"/>                                
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-12" for="telefono1">Telefono Principal</label>
+                                            <div class="col-md-12">
+                                                <input type="text" name="telefono1" id="telefono1" value="" class="form-control"/>                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-12" for="telefono2">Telefono Secundario</label>
+                                            <div class="col-md-12">
+                                                <input type="text" name="telefono2" id="telefono2" value="" class="form-control"/>                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-12" for="codigo_postal">Codigo Postal</label>
+                                            <div class="col-md-12">
+                                                <input type="text" name="codigo_postal" id="codigo_postal" value="" class="form-control"/>                                
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>                                
                                 <hr>
                                 <div class="row"> 
@@ -99,7 +127,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Listado de Usuarios Compradores
+                            Listado de Usuarios Vendedores
                         </div>
                         <div class="panel-body">
                             <div id="tabla-resultados"></div>

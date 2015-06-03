@@ -139,10 +139,7 @@
                 </div>
                 <div class="form-group">
                     <label>Actividad</label>
-                    <select name="actividad" class="form-control">
-                        <option value="No Especificada">No Especificada</option>
-                        <option value="Actividad">Actividad</option>
-                    </select>
+                    <?php echo form_dropdown('actividad', vendedor_actividad_dropdown(), null, 'id="actividad" class="form-control"') ?>
                 </div>
                 <div class="form-group">
                     <label>Direccion</label>
