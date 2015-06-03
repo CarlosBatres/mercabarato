@@ -46,8 +46,16 @@
                         <option value="H">Hombre</option>
                         <option value="M">Mujer</option>
                     </select>
-                </div>                
+                </div>
+                <div class="form-group">
+                    <label>Fecha de Nacimiento</label>
+                    <input type="text" id="datepicker" class="form-control" name="fecha_nacimiento">
+                </div>
                 <hr>
+                <div class="alert alert-warning">
+                    <strong>Advertencia:</strong>                    
+                    <p> Si se quiere crear un usuario de esta manera tienes que ingresar un email valido y un password.</p>                    
+                </div>
                 <div class="form-group">
                     <label>Email</label>
                     <input type="text" class="form-control" name="email">

@@ -13,7 +13,7 @@
                     <i class="fa fa-inbox"></i> <a href="<?php echo site_url('admin/compradores'); ?>">Compradores</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-edit"></i> Editar Usuario - <?php echo $comprador->nombre.' '.$comprador->apellidos ?>
+                    <i class="fa fa-edit"></i> Editar Usuario - <?php echo $comprador->nombre . ' ' . $comprador->apellidos ?>
                 </li>
             </ol>
         </div>
@@ -39,20 +39,28 @@
                     <label>Nombre</label>
                     <input type="text" class="form-control" name="nombre" value="<?php echo $comprador->nombre; ?>">
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                     <label>Apellidos</label>
                     <input type="text" class="form-control" name="apellidos" value="<?php echo $comprador->apellidos; ?>">
                 </div>
-               
                 <div class="form-group">
                     <label>Sexo</label>
                     <select name="sexo" class="form-control">                        
                         <option value="X">Seleccione uno</option>
-                        <option value="H" <?php echo ($comprador->sexo=='H')?'selected':''?>>Hombre</option>
-                        <option value="M" <?php echo ($comprador->sexo=='M')?'selected':''?>>Mujer</option>
+                        <option value="H" <?php echo ($comprador->sexo == 'H') ? 'selected' : '' ?>>Hombre</option>
+                        <option value="M" <?php echo ($comprador->sexo == 'M') ? 'selected' : '' ?>>Mujer</option>
                     </select>
-                </div>                
+                </div> 
+                <div class="form-group">
+                    <label>Fecha de Nacimiento</label>
+                    <input type="text" id="datepicker" class="form-control" value="<?php echo date("d-m-Y", strtotime($comprador->fecha_nacimiento)); ?>" name="fecha_nacimiento">
+                </div>
                 <hr>
+                <div class="alert alert-warning">
+                    <strong>Advertencia:</strong>                    
+                    <p> No se deberian modificar estos campos, solo de ser totalmente necesario.</p>
+                    <p> El email es el username de la cuenta si lo modificas puede que la persona no pueda acceder de nuevo a la cuenta</p>
+                </div>
                 <div class="form-group">
                     <label>Email</label>
                     <input type="text" class="form-control" name="email" value="<?php echo $usuario['email']; ?>">
@@ -61,7 +69,7 @@
                     <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-default"> Confirmar Cambios</button>
                 </div>
                 <input type="hidden" name="accion" value="form-editar">
-                <input type="hidden" name="usuario_id" value="<?php echo $usuario['id']?>">
+                <input type="hidden" name="usuario_id" value="<?php echo $usuario['id'] ?>">
                 <?php echo form_close(); ?>
             </div>
         </div>

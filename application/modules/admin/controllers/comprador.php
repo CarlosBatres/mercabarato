@@ -55,7 +55,8 @@ class Comprador extends MY_Controller {
                     "nombre" => $this->input->post('nombre'),
                     "apellidos" => $this->input->post('apellidos'),
                     "sexo" => $this->input->post('sexo'),
-                    "usuario_id" => $user_id
+                    "fecha_nacimiento" => date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))),
+                    "usuario_id" => $user_id,                    
                 );
 
                 $this->comprador_model->insert($data);
@@ -66,7 +67,7 @@ class Comprador extends MY_Controller {
         } else {
             $this->template->set_title("Panel de Administracion - Mercabarato.com");
             //$this->template->add_js("fileupload.js");
-            $this->template->add_js("modules/admin/comprador.js");
+            $this->template->add_js("modules/admin/compradores.js");
             $this->template->load_view('admin/comprador/nuevo');
         }
     }
@@ -86,6 +87,7 @@ class Comprador extends MY_Controller {
                     "nombre" => $this->input->post('nombre'),
                     "apellidos" => $this->input->post('apellidos'),
                     "sexo" => $this->input->post('sexo'),                    
+                    "fecha_nacimiento" => date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))),
                 );
 
                 $this->comprador_model->update($comprador_id, $data);               
@@ -102,7 +104,7 @@ class Comprador extends MY_Controller {
             $comprador = $this->comprador_model->get($id);
             if ($comprador) {
                 $this->template->set_title("Panel de Administracion - Mercabarato.com");
-                //$this->template->add_js("modules/admin/productos.js");
+                $this->template->add_js("modules/admin/compradores.js");
                 $usuario = $this->usuario_model->get($comprador->usuario_id);
                 $usuario_data = array(
                     "id"=>$usuario->id,
