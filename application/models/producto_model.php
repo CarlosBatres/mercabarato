@@ -47,6 +47,11 @@ class Producto_model extends MY_Model {
     }
 
     public function get_site_search($params, $limit, $offset, $order_by, $order) {
+        if (isset($params['categoria_general'])) {
+            $array=$this->get_categorias($params['categoria_general']);            
+            
+        }        
+        
         $this->db->start_cache();
         $this->db->select('p.*,pr.url_path as imagen_nombre');
         $this->db->from('producto p');
@@ -57,6 +62,10 @@ class Producto_model extends MY_Model {
         }
         if (isset($params['categoria_id'])) {
             $this->db->where('p.categoria_id', $params['categoria_id']);
+        }
+        if (isset($params['categoria_general'])) {
+           // $array=$this->get_categorias_de($params['categoria_general']);
+           // $this->db->where_in('p.categoria_id', $array);
         }
 
         $this->db->stop_cache();
@@ -72,6 +81,25 @@ class Producto_model extends MY_Model {
             $this->db->flush_cache();
             return array("total" => 0);
         } 
+    }
+    
+    public function get_categorias($id){
+        $this->db->select('*');
+        $this->db->from('categoria');
+        $this->db->where('padre_id', $id);
+        $categorias = $this->db->get()->result_array();
+        
+        if($categorias){
+            foreach($categorias as $key=>$value){
+                $res=$this->get_categorias($value['id']);
+                if($res){
+                    $categorias[$key]['subcategorias']=$res;
+                }
+            }
+            return $categorias;
+        }else{
+            return false;
+        }
     }
     
 }

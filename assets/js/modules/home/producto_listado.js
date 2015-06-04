@@ -25,6 +25,7 @@ function updateResultados() {
     var search_query = $('input[name="search_query"]').val();
     var categoria_id = $('.category-menu>li.active a').data('id');
     var pagina_id = $('#pagina').val();
+    var categoria_padre = $('input[name="categoria_padre"]').val();
     
     if (typeof categoria_id === "undefined") {
         categoria_id = "";
@@ -37,7 +38,8 @@ function updateResultados() {
         data: {
             search_query: search_query,
             categoria_id: categoria_id,
-            pagina:pagina_id
+            pagina:pagina_id,
+            categoria_padre:categoria_padre
         },
         dataType: "html",
         success: function(response) {

@@ -45,7 +45,8 @@ $route['logout'] = 'home/user/logout';
 $route['registro'] = 'home/user/view_registro';
 $route['registrar_comprador'] = 'home/comprador/new_comprador';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
-$route['productos'] = 'home/producto/view_listado';
+$route['productos'] = 'home/producto/view_pre_listado';
+$route['productos/(:any)'] = 'home/producto/view_listado/$1';
 $route['productos/ficha/(:any)'] = 'home/producto/ver_producto/$1';
 
 /* Admin */
