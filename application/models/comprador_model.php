@@ -34,8 +34,10 @@ class Comprador_model extends MY_Model {
             $this->db->order_by('comprador.id', 'asc');
             $this->db->limit($limit, $offset);
             $compradores = $this->db->get()->result();
+            $this->db->flush_cache();
             return array("compradores" => $compradores, "total" => $count);
         } else {
+            $this->db->flush_cache();
             return array("total" => 0);
         }
     }

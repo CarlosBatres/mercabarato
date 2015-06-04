@@ -66,7 +66,7 @@
                 </div>
                 <hr>
                 <div class="text-center">
-                    <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-default"> Crear Usuario</button>
+                    <button type="submit" id="admin_form_submit" class="btn btn-lg btn-default"> Crear Usuario</button>
                 </div>
                 <input type="hidden" name="accion" value="form-crear">
                 <?php echo form_close(); ?>

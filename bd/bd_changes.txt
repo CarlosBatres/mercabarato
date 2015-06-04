@@ -1,0 +1,7 @@
+04/06/2015
+
+ALTER TABLE `mercabarato_bd`.`vendedor` 
+ADD COLUMN `activado` INT(11) NOT NULL DEFAULT 0 AFTER `sitioweb`;
+
+ALTER TABLE `mercabarato_bd`.`categoria` 
+ADD COLUMN `slug` VARCHAR(255) NULL DEFAULT NULL AFTER `imagen_url`;

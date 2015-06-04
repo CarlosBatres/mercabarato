@@ -73,9 +73,12 @@ $route['admin/vendedores/borrar/(:num)'] = 'admin/vendedor/borrar/$1';
 $route['admin/vendedores/autocomplete'] = 'admin/vendedor/autocomplete';
 
 $route['admin/categorias'] = 'admin/categoria/view_listado'; 
-$route['admin/categorias/crear'] = 'admin/categoria/crear';
+$route['admin/categorias/crear'] = 'admin/categoria/crear/0';
+$route['admin/categorias/crear/(:num)'] = 'admin/categoria/crear/$1';
 $route['admin/categorias/editar/(:num)'] = 'admin/categoria/editar/$1'; 
 $route['admin/categorias/borrar/(:num)'] = 'admin/categoria/borrar/$1'; 
+$route['admin/categoria/ajax_get_listado_resultados'] = 'admin/categoria/ajax_get_listado_resultados'; 
+$route['admin/categoria/(:any)'] = 'admin/categoria/view_listado_subcategorias/$1'; 
 
 $route['default_controller'] = "home/main";
 $route['404_override'] = 'home/main/not_found';

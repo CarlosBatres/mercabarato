@@ -62,8 +62,10 @@ class Vendedor_model extends MY_Model {
             $this->db->order_by('vendedor.id', 'asc');
             $this->db->limit($limit, $offset);
             $vendedores = $this->db->get()->result();
+            $this->db->flush_cache();
             return array("vendedores" => $vendedores, "total" => $count);
         } else {
+            $this->db->flush_cache();
             return array("total" => 0);
         }
     }

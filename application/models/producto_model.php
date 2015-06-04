@@ -38,8 +38,10 @@ class Producto_model extends MY_Model {
             $this->db->order_by('id', 'asc');
             $this->db->limit($limit, $offset);
             $productos = $this->db->get()->result();
+            $this->db->flush_cache();
             return array("productos" => $productos, "total" => $count);
         } else {
+            $this->db->flush_cache();
             return array("total" => 0);
         }
     }
@@ -64,8 +66,10 @@ class Producto_model extends MY_Model {
             $this->db->order_by($order_by, $order);
             $this->db->limit($limit, $offset);
             $productos = $this->db->get()->result();
+            $this->db->flush_cache();
             return array("productos" => $productos, "total" => $count);
         } else {
+            $this->db->flush_cache();
             return array("total" => 0);
         } 
     }

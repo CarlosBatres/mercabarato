@@ -78,7 +78,7 @@
                     <input type="text" class="form-control" name="email" value="<?php echo $usuario['email']; ?>">
                 </div>
                 <div class="text-center">
-                    <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-default"> Confirmar Cambios</button>
+                    <button type="submit" id="admin_form_submit" class="btn btn-lg btn-default"> Confirmar Cambios</button>
                 </div>
                 <input type="hidden" name="accion" value="form-editar">
                 <input type="hidden" name="usuario_id" value="<?php echo $usuario['id'] ?>">
