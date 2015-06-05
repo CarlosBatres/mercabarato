@@ -1,20 +1,50 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-$config['photo'] = array(
-    // Defines which files (based on their names) are accepted for upload:
-    'accept_file_types' => '/(\.|\/)(gif|jpe?g|png)$/i',    
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
+$config['producto'] = array(
+    'upload_dir' => absolute_path() . '/assets/'.$this->config['productos_img_path'],
+    'upload_url' => assets_url($this->config['productos_img_path']),
+// Defines which files (based on their names) are accepted for upload:
+    'accept_file_types' => '/(\.|\/)(gif|jpe?g|png)$/i',
     // The php.ini settings upload_max_filesize and post_max_size
-    // take precedence over the following max_file_size setting:
+// take precedence over the following max_file_size setting:
     'max_file_size' => NULL,
     'min_file_size' => 1,
-
     // Image resolution restrictions:
     'max_width' => NULL,
     'max_height' => NULL,
     'min_width' => 1,
     'min_height' => 1,
+    'image_versions' => array(
+        '' => array(
+            'max_width' => 450,
+            'max_height' => 450,
+            'jpeg_quality' => 95
+        ),
+        'thumbnail' => array(
+            'crop' => TRUE,
+            'max_width' => 50,
+            'max_height' => 50
+        )
+    )
+);
 
+$config['categoria'] = array(
+    'upload_dir' => absolute_path() . '/assets/'.$this->config['categorias_img_path'],
+    'upload_url' => assets_url($this->config['categorias_img_path']),
+// Defines which files (based on their names) are accepted for upload:
+    'accept_file_types' => '/(\.|\/)(gif|jpe?g|png)$/i',
+    // The php.ini settings upload_max_filesize and post_max_size
+// take precedence over the following max_file_size setting:
+    'max_file_size' => NULL,
+    'min_file_size' => 1,
+    // Image resolution restrictions:
+    'max_width' => NULL,
+    'max_height' => NULL,
+    'min_width' => 1,
+    'min_height' => 1,
     'image_versions' => array(
         '' => array(
             'max_width' => 450,

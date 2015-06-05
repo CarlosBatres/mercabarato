@@ -33,7 +33,7 @@
                     <div class="box-image">
                         <a href="<?php echo site_url('productos/').'/'.$categoria->slug; ?>">
                         <div class="image">
-                            <img src="<?php echo assets_url('uploads/categorias/').'/'.$categoria->imagen_url; ?>" alt="" class="img-responsive">
+                            <img src="<?php echo assets_url($this->config->item('categorias_img_path')).'/'.$categoria->imagen_url; ?>" alt="" class="img-responsive">
                             <h4><?php echo $categoria->nombre?></h4>
                         </div>
                         <div class="bg"></div>

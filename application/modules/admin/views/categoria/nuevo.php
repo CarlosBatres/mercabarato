@@ -17,10 +17,10 @@
                 </li>
             </ol>
         </div>
-    </div>
+    </div>    
     <!-- /.row -->
     <div class="row">
-        <div class="col-md-6 col-md-offset-1">
+        <div class="col-md-8 col-md-offset-2">
             <div class="box box_registro">
                 <h2 class="text-uppercase">Informacion de la Categoria</h2>                                        
                 <hr>
@@ -30,7 +30,7 @@
                         <?= $this->session->flashdata('error') ?> 
                     </div>
                 <?php } ?>
-                <?php echo form_open('admin/categorias/crear', 'id="admin_nuevo_form"'); ?>                 
+                <?php echo form_open('admin/categorias/crear', 'id="admin_categoria_form"'); ?>                 
                 <div class="form-group">
                     <label>Nombres</label>
                     <input type="text" class="form-control" name="nombre">
@@ -38,7 +38,12 @@
                 <div class="form-group">
                     <label>Descripcion</label>
                     <textarea name="descripcion" class="form-control" rows="4" cols="20"></textarea>                    
-                </div>                
+                </div>
+                <div class="form-group">
+                    <label>Imagen para la Categoria</label>                    
+                    <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('admin/categoria/upload_image') ?>">
+                    <input type="hidden" name="file_name" id="file_name" value="">                                                            
+                </div>  
                 <hr>                
                 <div class="text-center">
                     <button type="submit" id="admin_form_submit" class="btn btn-lg btn-default"> Crear Categoria</button>

@@ -46,8 +46,8 @@ $route['registro'] = 'home/user/view_registro';
 $route['registrar_comprador'] = 'home/comprador/new_comprador';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
 $route['productos'] = 'home/producto/view_pre_listado';
-$route['productos/(:any)'] = 'home/producto/view_listado/$1';
 $route['productos/ficha/(:any)'] = 'home/producto/ver_producto/$1';
+$route['productos/(:any)'] = 'home/producto/view_listado/$1';
 
 /* Admin */
 $route['admin'] = 'admin/main';
@@ -79,6 +79,7 @@ $route['admin/categorias/crear/(:num)'] = 'admin/categoria/crear/$1';
 $route['admin/categorias/editar/(:num)'] = 'admin/categoria/editar/$1'; 
 $route['admin/categorias/borrar/(:num)'] = 'admin/categoria/borrar/$1'; 
 $route['admin/categoria/ajax_get_listado_resultados'] = 'admin/categoria/ajax_get_listado_resultados'; 
+$route['admin/categoria/upload_image'] = 'admin/categoria/upload_image'; 
 $route['admin/categoria/(:any)'] = 'admin/categoria/view_listado_subcategorias/$1'; 
 
 $route['default_controller'] = "home/main";

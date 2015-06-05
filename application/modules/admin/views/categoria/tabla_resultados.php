@@ -11,7 +11,7 @@
                 <th style="width: 5%">ID</th>
                 <th style="width: 30%">Nombre Categoria</th>                
                 <th style="width: 40%">Descripcion</th>                
-                <th style="width: 5%">&nbsp;</th> 
+                <th style="width: 10%">&nbsp;</th> 
             </tr>
         </thead>
         <tbody>

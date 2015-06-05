@@ -15,70 +15,93 @@ class Categoria extends MY_Controller {
             }
         }
     }
-    
+
     /**
      *  Crear
      * 
      * 
      */
-    public function crear($id=0) {
+    public function crear($id = 0) {
+        $config = array(
+            'table' => 'categoria',
+            'id' => 'id',
+            'field' => 'slug',
+            'title' => 'nombre',
+            'replacement' => 'dash' // Either dash or underscore
+        );
+        $this->load->library('slug', $config);
+
         $formValues = $this->input->post();
 
         if ($formValues !== false) {
             $accion = $this->input->post('accion');
 
-            if ($accion === "form-crear") {  
-                $padre_id=$this->input->post('padre_id');
+            if ($accion === "form-crear") {
+                $padre_id = $this->input->post('padre_id');
+                $slug=$this->slug->create_uri($this->input->post('nombre'));
                 $data = array(
                     "nombre" => $this->input->post('nombre'),
                     "descripcion" => $this->input->post('descripcion'),
-                    "padre_id"=>$padre_id
+                    "padre_id" => $padre_id,
+                    "slug" => $slug,
+                    "imagen_url"=>$this->input->post('file_name')
                 );
 
                 $this->categoria_model->insert($data);
-                if($padre_id!=0){
-                    $padre=$this->categoria_model->get($padre_id);
-                    redirect('admin/categoria/'.$padre->slug);
-                }else{
+                if ($padre_id != 0) {
+                    $padre = $this->categoria_model->get($padre_id);
+                    redirect('admin/categoria/' . $padre->slug);
+                } else {
                     redirect('admin/categorias');
-                }                
+                }
             } else {
                 redirect('admin');
             }
         } else {
             $this->template->set_title("Panel de Administracion - Mercabarato.com");
-            //$this->template->add_js("fileupload.js");
-            //$this->template->add_js("modules/admin/compradores.js");
-            $this->template->load_view('admin/categoria/nuevo',array("padre_id"=>$id));
+            $this->template->add_js("fileupload.js");
+            $this->template->add_js("modules/admin/categorias.js");
+            $this->template->load_view('admin/categoria/nuevo', array("padre_id" => $id));
         }
     }
-    
-     /**
+
+    /**
      *  Editar
      * @param type $id
      */
     public function editar($id) {
+         $config = array(
+            'table' => 'categoria',
+            'id' => 'id',
+            'field' => 'slug',
+            'title' => 'nombre',
+            'replacement' => 'dash' // Either dash or underscore
+        );
+        $this->load->library('slug', $config);
+        
         $formValues = $this->input->post();
         if ($formValues !== false) {
             $accion = $this->input->post('accion');
 
             if ($accion === "form-editar") {
                 $categoria_id = $this->input->post('id');
-                $padre_id=$this->input->post('padre_id');
+                $padre_id = $this->input->post('padre_id');
+                $slug=$this->slug->create_uri($this->input->post('nombre'),$categoria_id);
                 $data = array(
                     "nombre" => $this->input->post('nombre'),
                     "descripcion" => $this->input->post('descripcion'),
-                    "padre_id" => $padre_id
+                    "padre_id" => $padre_id,
+                    "slug"=>$slug
                 );
 
-                $this->categoria_model->update($categoria_id, $data);                                               
+                $this->categoria_model->update($categoria_id, $data);
                 $this->session->set_flashdata('success', 'Categoria modificada con exito');
-                if($padre_id!=0){
-                    $padre=$this->categoria_model->get($padre_id);
-                    redirect('admin/categoria/'.$padre->slug);
-                }else{
+                if ($padre_id != 0) {
+                    $padre = $this->categoria_model->get($padre_id);
+                    redirect('admin/categoria/' . $padre->slug);
+                } else {
                     redirect('admin/categorias');
-                }                 
+                }
             } else {
                 redirect('admin');
             }
@@ -87,9 +110,9 @@ class Categoria extends MY_Controller {
             if ($categoria) {
                 $this->template->set_title("Panel de Administracion - Mercabarato.com");
                 //$this->template->add_js("modules/admin/compradores.js");
-                
+
                 $data = array(
-                    "categoria" => $categoria,                    
+                    "categoria" => $categoria,
                 );
 
                 $this->template->load_view('admin/categoria/editar', $data);
@@ -98,7 +121,7 @@ class Categoria extends MY_Controller {
             }
         }
     }
-    
+
     /**
      * 
      */
@@ -107,40 +130,41 @@ class Categoria extends MY_Controller {
         $this->template->add_js("modules/admin/categorias_listado.js");
         $this->template->load_view('admin/categoria/listado');
     }
-    
+
     /**
      * 
      */
     public function view_listado_subcategorias($slug) {
         $this->template->set_title("Panel de Administracion - Mercabarato.com");
         $this->template->add_js("modules/admin/categorias_listado.js");
-        
-        $categoria=$this->categoria_model->get_by('slug',$slug);
-        $subcategorias=$this->categoria_model->get_by("padre_id",$categoria->id);
-        
-        $result=$this->categoria_model->get_arbol_path($categoria->padre_id);
-        $categorias_arbol=array_reverse($result);
-                
-        $data=array(
-            "categoria"=>$categoria,
-            "subcategorias"=>$subcategorias,
-            "categorias_arbol"=>$categorias_arbol);
-        
-        $this->template->load_view('admin/categoria/listado_sub',$data);
+
+        $categoria = $this->categoria_model->get_by('slug', $slug);
+        $subcategorias = $this->categoria_model->get_by("padre_id", $categoria->id);
+
+        $result = $this->categoria_model->get_arbol_path($categoria->padre_id);
+        $categorias_arbol = array_reverse($result);
+
+        $data = array(
+            "categoria" => $categoria,
+            "subcategorias" => $subcategorias,
+            "categorias_arbol" => $categorias_arbol);
+
+        $this->template->load_view('admin/categoria/listado_sub', $data);
     }
-    
+
     /**
      * Borrar
      * 
      * @param type $id
      */
     public function borrar($id) {
-        if ($this->input->is_ajax_request()) {            
-            $this->categoria_model->delete($id);
+        if ($this->input->is_ajax_request()) {
+            //$this->categoria_model->delete($id);
+            $this->categoria_model->delete_categoria($id);
             redirect('admin/categorias');
         }
     }
-    
+
     /**
      *  AJAX  Listado
      */
@@ -152,17 +176,17 @@ class Categoria extends MY_Controller {
         if ($formValues !== false) {
             if ($this->input->post('nombre') != "") {
                 $params["nombre"] = $this->input->post('nombre');
-            }            
+            }
             $tipo = $this->input->post('tipo');
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
         }
-        
-        if($tipo=='base'){
-            $params["padre_id"]=0;
-        }elseif($tipo=='sub'){
-            $params["padre_id"]=$this->input->post('categoria_id');
+
+        if ($tipo == 'base') {
+            $params["padre_id"] = 0;
+        } elseif ($tipo == 'sub') {
+            $params["padre_id"] = $this->input->post('categoria_id');
         }
 
         $limit = 15;
@@ -180,10 +204,10 @@ class Categoria extends MY_Controller {
         if ($categorias_array["total"] == 0) {
             $categorias_array["categorias"] = array();
             // TODO: Resultados vacio
-        }                
-        
+        }
+
         $data = array(
-            "categorias" => $categorias_array["categorias"],        
+            "categorias" => $categorias_array["categorias"],
             "search_params" => array(
                 "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
                 "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
@@ -195,6 +219,11 @@ class Categoria extends MY_Controller {
                 "desde" => (($pagina * $limit) - $limit) + 1));
 
         $this->template->load_view('admin/categoria/tabla_resultados', $data);
+    }
+    
+     public function upload_image(){        
+        $this->load->config('upload', TRUE);
+        $this->load->library('UploadHandler', $this->config->item('categoria', 'upload'));                        
     }
 
 }

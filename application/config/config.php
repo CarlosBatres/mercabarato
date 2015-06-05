@@ -363,8 +363,10 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 
-$config['money_sign'] = '€'; // Euro
-$config['default_per_page'] = '10'; // Limita a 10 por pagina
+$config["money_sign"]='€';
+$config["admin_default_per_page"]='10';
+$config["productos_img_path"]='/uploads/productos/';
+$config["categorias_img_path"]='/uploads/categorias/';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
