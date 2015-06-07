@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-7">
-                <h1><?php echo $categoria->nombre?></h1>
+                <h1><?php echo $categoria->nombre ?></h1>
             </div>
             <div class="col-md-5">
                 <ul class="breadcrumb">
@@ -12,7 +12,7 @@
                     <li>
                         <a href="<?php echo site_url('productos'); ?>">Productos</a>
                     </li>
-                    <li><?php echo $categoria->nombre?></li>
+                    <li><?php echo $categoria->nombre ?></li>
                 </ul>
 
             </div>
@@ -29,14 +29,37 @@
                 </div>
                 <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked category-menu">
-                        <?php foreach ($subcategorias as $key => $subcategoria): ?>
-                            <li class="seleccion_categoria">
-                                <a href="" data-id="<?php echo $subcategoria->id; ?>"><?php echo $subcategoria->nombre; ?></a>                            
-                            </li>                                               
-                        <?php endforeach; ?>
+                        <?php echo ($subcategorias) ? $subcategorias : "No hay categorias disponibles"; ?>                        
                     </ul>                    
                 </div>
-            </div>              
+            </div>
+            <div class="panel panel-default sidebar-menu">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Precios</h3>
+                    <a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> <span class="hidden-sm">Deshacer</span></a>
+                </div>
+
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group">                            
+                                <?php
+                                $j = 0;
+                                foreach ($precios as $precio) {
+                                    $checked = ($precio['checked']) ? "checked='checked'" : "";
+                                    echo '<div class="checkbox">'
+                                    . '<label>'
+                                    . '<input type="checkbox" name="precios" value="' . $precio['value'] . '" ' . $checked . '>&nbsp;' . $precio['text'] . ''
+                                    . '</label>'
+                                    . '</div>';
+                                    $j++;
+                                }
+                                ?>                                                            
+                        </div>
+                        <button id="precios-search-aplicar" class="btn btn-default btn-sm btn-template-main"><i class="fa fa-pencil"></i> Aplicar</button>
+                    </form>
+
+                </div>
+            </div>
         </div>
 
 

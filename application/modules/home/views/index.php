@@ -79,7 +79,7 @@ _________________________________________________________ -->
                                             <?php if ($producto->imagen_nombre === null): ?>
                                                 <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="producto-img">
                                             <?php else: ?>
-                                                <img src="<?php echo assets_url("uploads/imgs/" . $producto->imagen_nombre) ?>" alt="" class="producto-img">
+                                                <img src="<?php echo assets_url($this->config->item('productos_img_path')) .'/'. $producto->imagen_nombre ?>" alt="" class="producto-img">
                                             <?php endif; ?>
                                         </a>
                                     </div>

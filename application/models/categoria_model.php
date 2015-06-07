@@ -94,5 +94,23 @@ class Categoria_model extends MY_Model {
         }
         $this->delete_by("id", $categoria_id);
     }
+    
+    public function get_categorias_searchbar($categoria_id){
+        $query="SELECT id,nombre FROM categoria WHERE padre_id='".$categoria_id."'";
+        $result = $this->db->query($query);                
+        $categorias = $result->result_array();        
+        if($categorias){            
+            foreach($categorias as $key=>$value){                
+                $res=$this->get_categorias_searchbar($value['id']);
+                if($res){                    
+                    $categorias[$key]['subcategorias']=$res;
+                }
+            }
+            return $categorias;
+        }else{
+            return false;
+        }        
+        
+    }
 
 }

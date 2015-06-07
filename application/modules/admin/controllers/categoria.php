@@ -38,13 +38,13 @@ class Categoria extends MY_Controller {
 
             if ($accion === "form-crear") {
                 $padre_id = $this->input->post('padre_id');
-                $slug=$this->slug->create_uri($this->input->post('nombre'));
+                $slug = $this->slug->create_uri($this->input->post('nombre'));
                 $data = array(
                     "nombre" => $this->input->post('nombre'),
                     "descripcion" => $this->input->post('descripcion'),
                     "padre_id" => $padre_id,
                     "slug" => $slug,
-                    "imagen_url"=>$this->input->post('file_name')
+                    "imagen_url" => $this->input->post('file_name')
                 );
 
                 $this->categoria_model->insert($data);
@@ -70,7 +70,7 @@ class Categoria extends MY_Controller {
      * @param type $id
      */
     public function editar($id) {
-         $config = array(
+        $config = array(
             'table' => 'categoria',
             'id' => 'id',
             'field' => 'slug',
@@ -78,7 +78,7 @@ class Categoria extends MY_Controller {
             'replacement' => 'dash' // Either dash or underscore
         );
         $this->load->library('slug', $config);
-        
+
         $formValues = $this->input->post();
         if ($formValues !== false) {
             $accion = $this->input->post('accion');
@@ -86,12 +86,12 @@ class Categoria extends MY_Controller {
             if ($accion === "form-editar") {
                 $categoria_id = $this->input->post('id');
                 $padre_id = $this->input->post('padre_id');
-                $slug=$this->slug->create_uri($this->input->post('nombre'),$categoria_id);
+                $slug = $this->slug->create_uri($this->input->post('nombre'), $categoria_id);
                 $data = array(
                     "nombre" => $this->input->post('nombre'),
                     "descripcion" => $this->input->post('descripcion'),
                     "padre_id" => $padre_id,
-                    "slug"=>$slug
+                    "slug" => $slug
                 );
 
                 $this->categoria_model->update($categoria_id, $data);
@@ -220,10 +220,10 @@ class Categoria extends MY_Controller {
 
         $this->template->load_view('admin/categoria/tabla_resultados', $data);
     }
-    
-     public function upload_image(){        
+
+    public function upload_image() {
         $this->load->config('upload', TRUE);
-        $this->load->library('UploadHandler', $this->config->item('categoria', 'upload'));                        
+        $this->load->library('UploadHandler', $this->config->item('categoria', 'upload'));
     }
 
 }

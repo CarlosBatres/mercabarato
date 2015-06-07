@@ -22,8 +22,13 @@ class Producto extends MY_Controller {
         $this->template->add_js('modules/home/producto_listado.js');
 
         $categoria = $this->categoria_model->get_by('slug', $categoria);
-        $subcategorias = $this->categoria_model->get_many_by('padre_id', $categoria->id);
-        $data = array("subcategorias" => $subcategorias, "categoria" => $categoria);
+        //$subcategorias = $this->categoria_model->get_many_by('padre_id', $categoria->id);
+
+        $subcategorias = $this->categoria_model->get_categorias_searchbar($categoria->id);
+        $subcategorias_html = $this->_build_categorias_searchparams($subcategorias);
+        $precios=  precios_options();
+
+        $data = array("subcategorias" => $subcategorias_html, "categoria" => $categoria,"precios"=>$precios);
         $this->template->load_view('home/producto/listado', $data);
     }
 
@@ -31,7 +36,7 @@ class Producto extends MY_Controller {
      *  AJAX Productos / Listado
      */
     public function ajax_get_listado_resultados() {
-        //$this->show_profiler();
+        $this->show_profiler();
         $formValues = $this->input->post();
 
         $params = array();
@@ -46,6 +51,9 @@ class Producto extends MY_Controller {
             }
             if ($this->input->post('categoria_padre') != "") {
                 $params["categoria_general"] = $this->input->post('categoria_padre');
+            }
+             if ($this->input->post('precio_tipo1') != 0) {
+                $params["precio_tipo1"] = $this->input->post('precio_tipo1');
             }
 
             $pagina = $this->input->post('pagina');
@@ -93,6 +101,26 @@ class Producto extends MY_Controller {
             "producto" => $producto,
             "producto_imagen" => $producto_imagen);
         $this->template->load_view('home/producto/ficha', $data);
+    }
+
+    private function _build_categorias_searchparams($categorias) {
+        if (!empty($categorias)) {
+            $html = "";
+            foreach ($categorias as $categoria) {
+                $html.='<li class="seleccion_categoria">';
+                $html.='<a href="" data-id="' . $categoria['id'] . '">' . $categoria['nombre'] . '</a>';
+                if (isset($categoria['subcategorias'])) {
+                    $res_html = $this->_build_categorias_searchparams($categoria['subcategorias']);
+                    $html.='<ul>';
+                    $html.=$res_html;
+                    $html.='</ul>';
+                }
+                $html.='</li>';
+            }
+            return $html;
+        }else{
+            return false;
+        }
     }
 
 }
