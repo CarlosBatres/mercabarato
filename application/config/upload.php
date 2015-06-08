@@ -47,8 +47,8 @@ $config['categoria'] = array(
     'min_height' => 1,
     'image_versions' => array(
         '' => array(
-            'max_width' => 450,
-            'max_height' => 450,
+            'max_width' => 140,
+            'max_height' => 140,
             'jpeg_quality' => 95
         ),
         'thumbnail' => array(

@@ -30,16 +30,12 @@
         <div class="col-sm-12">
             <?php foreach ($categorias as $categoria): ?>
                 <div class="col-sm-6 col-md-3">
-                    <div class="box-image">
+                    <div>
                         <a href="<?php echo site_url('productos/').'/'.$categoria->slug; ?>">
                         <div class="image">
                             <img src="<?php echo assets_url($this->config->item('categorias_img_path')).'/'.$categoria->imagen_url; ?>" alt="" class="img-responsive">
                             <h4><?php echo $categoria->nombre?></h4>
-                        </div>
-                        <div class="bg"></div>
-                        <div class="name">
-                            <h3><?php echo $categoria->nombre?></h3> 
-                        </div>       
+                        </div>                                                
                         </a>
                     </div>
                     <!-- /.box-image -->
