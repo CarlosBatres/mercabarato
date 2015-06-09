@@ -41,7 +41,7 @@
                 <ul class="pagination">
                     <?php if ($search_params['anterior'] != -1): ?>
                         <li>
-                            <a data-id="<?php echo $search_params['anterior']; ?>" href="<?php echo site_url('categorias/') . '/' . $search_params['anterior'] ?>">Anterior</a>
+                            <a data-id="<?php echo $search_params['anterior']; ?>" href="<?php echo site_url('admin/categorias/') . '/' . $search_params['anterior'] ?>">Anterior</a>
                         </li>
                     <?php endif; ?>
                     <?php
@@ -57,7 +57,7 @@
                     <?php } ?>
                     <?php if ($search_params['siguiente'] != -1): ?>
                         <li>
-                            <a data-id="<?php echo $search_params['siguiente']; ?>" href="<?php echo site_url('categorias/') . '/' . $search_params['siguiente'] ?>">Siguiente</a>
+                            <a data-id="<?php echo $search_params['siguiente']; ?>" href="<?php echo site_url('admin/categorias/') . '/' . $search_params['siguiente'] ?>">Siguiente</a>
                         </li>
                     <?php endif; ?>
                 </ul>

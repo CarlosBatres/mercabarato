@@ -28,7 +28,7 @@ class Vendedor extends MY_Controller {
                 $usuario->ip_address = $ip_address;
                 $usuario->fecha_creado = date("Y-m-d H:i:s");
                 $usuario->ultimo_acceso = date("Y-m-d H:i:s");
-                $usuario->estado = 1;
+                $usuario->activo = 1;
                 $usuario->is_admin = 0;
 
                 $this->usuario_model->update($user_id,$usuario);

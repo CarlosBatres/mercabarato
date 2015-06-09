@@ -32,7 +32,7 @@
                 <?php } ?>
                 <?php echo form_open('admin/categorias/crear', 'id="admin_categoria_form"'); ?>                 
                 <div class="form-group">
-                    <label>Nombres</label>
+                    <label>Nombre de la Categoria</label>
                     <input type="text" class="form-control" name="nombre">
                 </div>
                 <div class="form-group">
@@ -40,7 +40,7 @@
                     <textarea name="descripcion" class="form-control" rows="4" cols="20"></textarea>                    
                 </div>
                 <div class="form-group">
-                    <label>Imagen para la Categoria</label>                    
+                    <label>Imagen representativa para la Categoria</label>                    
                     <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('admin/categoria/upload_image') ?>">
                     <input type="hidden" name="file_name" id="file_name" value="">                                                            
                 </div>  

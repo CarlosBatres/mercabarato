@@ -46,9 +46,9 @@ class Producto extends MY_Controller {
                     $data = array(
                         "nombre" => $this->input->post('nombre'),
                         "descripcion" => $this->input->post('descripcion'),
-                        "precio_venta_publico" => $this->input->post('precio_venta_publico'),
-                        "mostrar_publico" => $this->input->post('mostrar_publico'),
-                        "mostrar_precio_venta_publico" => $this->input->post('mostrar_precio'),
+                        "precio" => $this->input->post('precio'),
+                        "mostrar_producto" => $this->input->post('mostrar_producto'),
+                        "mostrar_precio" => $this->input->post('mostrar_precio'),
                         "vendedor_id" => $vendedor_id,
                         "categoria_id" => $this->input->post('categoria'),
                     );
@@ -61,7 +61,7 @@ class Producto extends MY_Controller {
                             "nombre" => "Producto: ".$data["nombre"],
                             "descripcion" => "Imagen principal del producto ".$data["nombre"],
                             "tipo" => "imagen_principal",
-                            "url_path" => $this->input->post('file_name'),
+                            "filename" => $this->input->post('file_name'),
                             "orden" => 0,
                         );
 
@@ -118,9 +118,9 @@ class Producto extends MY_Controller {
                     $data = array(
                         "nombre" => $this->input->post('nombre'),
                         "descripcion" => $this->input->post('descripcion'),
-                        "precio_venta_publico" => $this->input->post('precio_venta_publico'),
-                        "mostrar_publico" => $this->input->post('mostrar_publico'),
-                        "mostrar_precio_venta_publico" => $this->input->post('mostrar_precio'),
+                        "precio" => $this->input->post('precio'),
+                        "mostrar_producto" => $this->input->post('mostrar_producto'),
+                        "mostrar_precio" => $this->input->post('mostrar_precio'),
                         "vendedor_id" => $vendedor_id,
                         "categoria_id" => $this->input->post('categoria'),
                     );
@@ -138,7 +138,7 @@ class Producto extends MY_Controller {
                             "nombre" => "Imagen principal del producto",
                             "descripcion" => "Idealmente esta imagen seria lo mas grande posible.",
                             "tipo" => "imagen_principal",
-                            "url_path" => $this->input->post('file_name'),
+                            "filename" => $this->input->post('file_name'),
                             "orden" => 0,
                         );
 

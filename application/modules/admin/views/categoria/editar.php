@@ -36,7 +36,7 @@
                     <input type="text" class="form-control" readonly name="id" value="<?php echo $categoria->id; ?>">
                 </div>                
                 <div class="form-group">
-                    <label>Nombre</label>
+                    <label>Nombre de la Categoria</label>
                     <input type="text" class="form-control" name="nombre" value="<?php echo $categoria->nombre; ?>">
                 </div>
                 <div class="form-group">

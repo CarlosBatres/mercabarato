@@ -21,7 +21,7 @@
                 <!-- /.image -->
                 <div class="text">
                     <h3><a href="<?php echo site_url("productos/ficha/".$producto->id)?>"><?php echo $producto->nombre; ?></a></h3>
-                    <p class="price"><?php echo $producto->precio_venta_publico . ' ' . $this->config->item('money_sign') ?></p>                            
+                    <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>                            
                 </div>                        
             </div>                    
         </div>        

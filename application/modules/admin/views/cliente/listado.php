@@ -16,14 +16,14 @@
     <div class="row">
         <div class="col-md-12">
             <h1 class="page-header">
-                Usuarios Compradores
+                Usuarios
             </h1>
             <ol class="breadcrumb">
                 <li>
                     <i class="fa fa-dashboard"></i>  <a href="<?php echo site_url('admin'); ?>">Dashboard</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-inbox"></i> Compradores
+                    <i class="fa fa-inbox"></i> Usuarios
                 </li>
             </ol>
         </div>
@@ -39,7 +39,7 @@
             <?php } ?>
             <div class="row agregar-item">
                 <div class="col-md-12">            
-                    <a class="btn btn-lg btn-default" href="<?php echo site_url('admin/compradores/crear'); ?>">Nuevo Usuario</a>
+                    <a class="btn btn-lg btn-default" href="<?php echo site_url('admin/usuarios/crear'); ?>">Nuevo Usuario</a>
                 </div>                
             </div>
 
@@ -52,11 +52,11 @@
                     </div>
                     <div id="collapse_search" class="panel-collapse collapse" style="height: 0px;">
                         <div class="panel-body">
-                            <form action="<?php echo site_url('admin/comprador') ?>" method="post" class="search-form" id="listado-items">
+                            <form action="<?php echo site_url('admin/cliente') ?>" method="post" class="search-form" id="listado-items">
                                 <div class="row">                                    
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label class="control-label col-md-12" for="nombre">Nombre del Comprador</label>
+                                            <label class="control-label col-md-12" for="nombre">Nombre del Usuario</label>
                                             <div class="col-md-12">
                                                 <input type="text" name="nombre" id="nombre" value="" class="form-control"/>                                
                                             </div>
@@ -99,7 +99,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Listado de Usuarios Compradores
+                            Listado de Usuarios
                         </div>
                         <div class="panel-body">
                             <div id="tabla-resultados"></div>

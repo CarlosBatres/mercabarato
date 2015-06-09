@@ -40,10 +40,10 @@
 
 /* Front */
 $route['home'] = 'home/main';
-$route['login'] = 'home/user/login';
-$route['logout'] = 'home/user/logout';
-$route['registro'] = 'home/user/view_registro';
-$route['registrar_comprador'] = 'home/comprador/new_comprador';
+$route['login'] = 'home/usuario/login';
+$route['logout'] = 'home/usuario/logout';
+$route['registro'] = 'home/usuario/view_registro';
+$route['registrar_cliente'] = 'home/cliente/crear';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
 $route['productos'] = 'home/producto/view_pre_listado';
 $route['productos/ficha/(:any)'] = 'home/producto/ver_producto/$1';
@@ -52,20 +52,20 @@ $route['productos/(:any)'] = 'home/producto/view_listado/$1';
 /* Admin */
 $route['admin'] = 'admin/main';
 $route['admin/dashboard'] = 'admin/main/dashboard';
-$route['admin/login'] = 'admin/user/view_login'; 
-$route['admin/do_login'] = 'admin/user/login'; 
-$route['admin/do_logout'] = 'admin/user/logout'; 
-$route['admin/sin_permiso'] = 'admin/user/sin_permiso'; 
+$route['admin/login'] = 'admin/usuario/view_login'; 
+$route['admin/do_login'] = 'admin/usuario/login'; 
+$route['admin/do_logout'] = 'admin/usuario/logout'; 
+$route['admin/sin_permiso'] = 'admin/usuario/sin_permiso'; 
 
 $route['admin/productos'] = 'admin/producto/view_listado'; 
 $route['admin/productos/crear'] = 'admin/producto/crear';
 $route['admin/productos/editar/(:num)'] = 'admin/producto/editar/$1'; 
 $route['admin/productos/borrar/(:num)'] = 'admin/producto/borrar/$1'; 
 
-$route['admin/compradores'] = 'admin/comprador/view_listado'; 
-$route['admin/compradores/crear'] = 'admin/comprador/crear';
-$route['admin/compradores/editar/(:num)'] = 'admin/comprador/editar/$1'; 
-$route['admin/compradores/borrar/(:num)'] = 'admin/comprador/borrar/$1'; 
+$route['admin/usuarios'] = 'admin/cliente/view_listado'; 
+$route['admin/usuarios/crear'] = 'admin/cliente/crear';
+$route['admin/usuarios/editar/(:num)'] = 'admin/cliente/editar/$1'; 
+$route['admin/usuarios/borrar/(:num)'] = 'admin/cliente/borrar/$1'; 
 
 $route['admin/vendedores'] = 'admin/vendedor/view_listado'; 
 $route['admin/vendedores/crear'] = 'admin/vendedor/crear';

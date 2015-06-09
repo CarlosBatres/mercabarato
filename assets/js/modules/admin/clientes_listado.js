@@ -13,7 +13,7 @@ function updateResultados() {
     $('#tabla-resultados').html('');
     $.ajax({
         type: "POST",
-        url: SITE_URL + 'admin/comprador/ajax_get_listado_resultados',
+        url: SITE_URL + 'admin/cliente/ajax_get_listado_resultados',
         data: form.serialize(),
         dataType: "html",
         success: function(response) {
@@ -33,8 +33,8 @@ function bind_pagination_links() {
 }
 
 function bind_borrar_links() {
-    $('.table-responsive').find('.options').find('.comprador_borrar').off();
-    $('.table-responsive').find('.options').find('.comprador_borrar').on('click', function(e) {        
+    $('.table-responsive').find('.options').find('.item_borrar').off();
+    $('.table-responsive').find('.options').find('.item_borrar').on('click', function(e) {        
         e.preventDefault();        
         var a_href = $(this).attr('href');        
         $.blockUI({message: $('#question'), css: {}});

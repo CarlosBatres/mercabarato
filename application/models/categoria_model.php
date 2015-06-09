@@ -89,8 +89,8 @@ class Categoria_model extends MY_Model {
     public function delete_categoria($categoria_id) {
         $resource = $this->get_by("id", $categoria_id);
         if ($resource) {
-            unlink('./assets/'.$this->config->item('categorias_img_path').'/'.$resource->imagen_url);
-            unlink('./assets/'.$this->config->item('categorias_img_path').'/thumbnail/' . $resource->imagen_url);
+            unlink('./assets/'.$this->config->item('categorias_img_path').'/'.$resource->filename);
+            unlink('./assets/'.$this->config->item('categorias_img_path').'/thumbnail/' . $resource->filename);
         }
         $this->delete_by("id", $categoria_id);
     }

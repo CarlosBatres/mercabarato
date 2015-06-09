@@ -240,6 +240,12 @@
                         <a href="<?php echo site_url('admin/dashboard'); ?>"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>                                    
                     <li>
+                        <a href="<?php echo site_url('admin/usuarios'); ?>"><i class="fa fa-user fa-fw"></i> Usuarios</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo site_url('admin/vendedores'); ?>"><i class="fa fa-money fa-fw"></i> Vendedores</a>
+                    </li>
+<!--                    <li>
                         <a href="#"><i class="fa fa-user fa-fw"></i> Usuarios<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -249,8 +255,8 @@
                                 <a href="<?php echo site_url('admin/vendedores'); ?>">Vendedores</a>
                             </li>                            
                         </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
+                         /.nav-second-level 
+                    </li>-->
                     <li>
                         <a href="<?php echo site_url('admin/productos'); ?>"><i class="fa fa-fw fa-inbox"></i> Productos</a>
                     </li> 

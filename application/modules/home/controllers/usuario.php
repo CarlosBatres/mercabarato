@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class User extends MY_Controller {
+class Usuario extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -18,7 +18,7 @@ class User extends MY_Controller {
         $paises = $this->pais_model->get_all();
         $data = array("paises" => $paises);
 
-        $this->template->load_view('home/user/registro', $data);
+        $this->template->load_view('home/usuario/registro', $data);
     }
 
     /**
@@ -60,6 +60,10 @@ class User extends MY_Controller {
         redirect('');
     }
     
+    /**
+     *  Verificar que el email no exista 
+     *  AJAX Call
+     */    
     public function check_email(){
         if ($this->input->is_ajax_request()) {
             $formValues = $this->input->post();

@@ -59,7 +59,7 @@
                     <label>Imagen del Producto</label>
                     <?php if ($producto_imagen): ?>
                         <div class="preview_imagen">                        
-                            <img src="<?php echo assets_url('uploads/imgs/' . $producto_imagen->url_path); ?>" width="250"/>
+                            <img src="<?php echo assets_url('uploads/imgs/' . $producto_imagen->filename); ?>" width="250"/>
                         </div>
                         <br>
                     <?php endif; ?>
@@ -71,22 +71,22 @@
                 </div>               
                 <div class="form-group">
                     <label>Precio Venta Publico</label>
-                    <input type="text" class="form-control" name="precio_venta_publico" value="<?php echo $producto->precio_venta_publico; ?>">
+                    <input type="text" class="form-control" name="precio" value="<?php echo $producto->precio; ?>">
                 </div>
                 <div class="form-group">
                     <label>Mostrar al Publico</label>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="mostrar_publico" id="mostrar_si" value="1" <?php
-                            if ($producto->mostrar_publico == 1): echo "checked";
+                            <input type="radio" name="mostrar_producto" id="mostrar_si" value="1" <?php
+                            if ($producto->mostrar_producto == 1): echo "checked";
                             endif;
                             ?>> Si
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="mostrar_publico" id="mostrar_no" value="0" <?php
-                            if ($producto->mostrar_publico == 0): echo "checked";
+                            <input type="radio" name="mostrar_producto" id="mostrar_no" value="0" <?php
+                            if ($producto->mostrar_producto == 0): echo "checked";
                             endif;
                             ?>> No
                         </label>
@@ -97,7 +97,7 @@
                     <div class="radio">
                         <label>
                             <input type="radio" name="mostrar_precio" id="mostrar_precio_si" value="1" <?php
-                            if ($producto->mostrar_precio_venta_publico == 1): echo "checked";
+                            if ($producto->mostrar_precio == 1): echo "checked";
                             endif;
                             ?>> Si
                         </label>
@@ -105,7 +105,7 @@
                     <div class="radio">
                         <label>
                             <input type="radio" name="mostrar_precio" id="mostrar_precio_no" value="0" <?php
-                            if ($producto->mostrar_precio_venta_publico == 0): echo "checked";
+                            if ($producto->mostrar_precio == 0): echo "checked";
                             endif;
                             ?>> No
                         </label>

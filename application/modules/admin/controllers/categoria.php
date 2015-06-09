@@ -44,7 +44,7 @@ class Categoria extends MY_Controller {
                     "descripcion" => $this->input->post('descripcion'),
                     "padre_id" => $padre_id,
                     "slug" => $slug,
-                    "imagen_url" => $this->input->post('file_name')
+                    "filename" => $this->input->post('file_name')
                 );
 
                 $this->categoria_model->insert($data);
@@ -189,7 +189,7 @@ class Categoria extends MY_Controller {
             $params["padre_id"] = $this->input->post('categoria_id');
         }
 
-        $limit = 15;
+        $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
         $categorias_array = $this->categoria_model->get_admin_search($params, $limit, $offset);
         $flt = (float) ($categorias_array["total"] / $limit);

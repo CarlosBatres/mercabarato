@@ -23,7 +23,7 @@
                     <td><?php echo $vendedor->id; ?></td>
                     <td><?php echo $vendedor->nombre;?></td>                                                                                    
                     <td><?php echo $vendedor->actividad;?></td> 
-                    <td><?php echo $vendedor->sitioweb;?></td>                    
+                    <td><?php echo $vendedor->sitio_web;?></td>                    
                     <td><?php echo $vendedor->email; ?></td>
                     <td><?php echo $vendedor->ultimo_acceso; ?></td>                    
                     <td>

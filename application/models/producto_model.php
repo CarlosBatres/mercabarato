@@ -48,9 +48,9 @@ class Producto_model extends MY_Model {
 
     public function get_site_search($params, $limit, $offset, $order_by, $order) {
         $this->db->start_cache();
-        $this->db->select('p.*,pr.url_path as imagen_nombre');
+        $this->db->select('p.*,pr.filename as imagen_nombre');
         $this->db->from('producto p');
-        $this->db->join('producto_resources pr', 'pr.producto_id = p.id AND pr.tipo="imagen_principal"', 'left');
+        $this->db->join('producto_resource pr', 'pr.producto_id = p.id AND pr.tipo="imagen_principal"', 'left');
 
         if (isset($params['nombre'])) {
             $this->db->like('p.nombre', $params['nombre'], 'both');
@@ -73,8 +73,8 @@ class Producto_model extends MY_Model {
             if ($params['precio_tipo1'] != '0') {
                 $precios = explode(";;", $params['precio_tipo1']);
                 // TODO : Aqui el precio puede ser precio oferta o una tarifa especifica. Resolver dependiendo de quien este conectado haciendo la busqueda
-                $this->db->where('p.precio_venta_publico >',$precios['0']);
-                $this->db->where('p.precio_venta_publico <=',$precios['1']);                
+                $this->db->where('p.precio >',$precios['0']);
+                $this->db->where('p.precio <=',$precios['1']);                
             }
         }
 

@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Comprador extends MY_Controller {
+class Cliente extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -21,8 +21,8 @@ class Comprador extends MY_Controller {
      */
     public function view_listado() {
         $this->template->set_title("Panel de Administracion - Mercabarato.com");
-        $this->template->add_js("modules/admin/compradores_listado.js");
-        $this->template->load_view('admin/comprador/listado');
+        $this->template->add_js("modules/admin/clientes_listado.js");
+        $this->template->load_view('admin/cliente/listado');
     }
 
     /**
@@ -45,30 +45,33 @@ class Comprador extends MY_Controller {
                     $usuario->ip_address = $ip_address;
                     $usuario->fecha_creado = date("Y-m-d H:i:s");
                     $usuario->ultimo_acceso = date("Y-m-d H:i:s");
-                    $usuario->estado = 1;
+                    $usuario->activo = 1;
                     $usuario->is_admin = 0;
 
                     $this->usuario_model->update($user_id, $usuario);
                 }
-
                 $data = array(
-                    "nombre" => $this->input->post('nombre'),
+                    "usuario_id" => $user_id,
+                    "nombres" => $this->input->post('nombres'),
                     "apellidos" => $this->input->post('apellidos'),
                     "sexo" => $this->input->post('sexo'),
                     "fecha_nacimiento" => date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))),
-                    "usuario_id" => $user_id,                    
-                );
+                    "codigo_postal" => $this->input->post('codigo_postal'),
+                    "direccion" => $this->input->post('direccion'),
+                    "telefono_fijo" => $this->input->post('telefono_fijo'),
+                    "telefono_movil" => $this->input->post('telefono_movil'),                    
+                );                
 
-                $this->comprador_model->insert($data);
-                redirect('admin/compradores');
+                $this->cliente_model->insert($data);
+                redirect('admin/usuarios');
             } else {
                 redirect('admin');
             }
         } else {
             $this->template->set_title("Panel de Administracion - Mercabarato.com");
             //$this->template->add_js("fileupload.js");
-            $this->template->add_js("modules/admin/compradores.js");
-            $this->template->load_view('admin/comprador/nuevo');
+            $this->template->add_js("modules/admin/clientes.js");
+            $this->template->load_view('admin/cliente/nuevo');
         }
     }
 
@@ -82,40 +85,44 @@ class Comprador extends MY_Controller {
             $accion = $this->input->post('accion');
 
             if ($accion === "form-editar") {
-                $comprador_id = $this->input->post('id');
-                $data = array(
-                    "nombre" => $this->input->post('nombre'),
+                $cliente_id = $this->input->post('id');
+                $data = array(                    
+                    "nombres" => $this->input->post('nombres'),
                     "apellidos" => $this->input->post('apellidos'),
-                    "sexo" => $this->input->post('sexo'),                    
+                    "sexo" => $this->input->post('sexo'),
                     "fecha_nacimiento" => date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))),
+                    "codigo_postal" => $this->input->post('codigo_postal'),
+                    "direccion" => $this->input->post('direccion'),
+                    "telefono_fijo" => $this->input->post('telefono_fijo'),
+                    "telefono_movil" => $this->input->post('telefono_movil')                    
                 );
 
-                $this->comprador_model->update($comprador_id, $data);               
-                
-                $data_usuario=array("email"=>$this->input->post('email'));                
-                $this->usuario_model->update($this->input->post('usuario_id'),$data_usuario);
+                $this->cliente_model->update($cliente_id, $data);
 
-                $this->session->set_flashdata('success', 'Comprador modificado con exito');
-                redirect('admin/compradores');
+                $data_usuario = array("email" => $this->input->post('email'));
+                $this->usuario_model->update($this->input->post('usuario_id'), $data_usuario);
+
+                $this->session->set_flashdata('success', 'Usuario modificado con exito');
+                redirect('admin/usuarios');
             } else {
                 redirect('admin');
             }
         } else {
-            $comprador = $this->comprador_model->get($id);
-            if ($comprador) {
+            $cliente = $this->cliente_model->get($id);
+            if ($cliente) {
                 $this->template->set_title("Panel de Administracion - Mercabarato.com");
-                $this->template->add_js("modules/admin/compradores.js");
-                $usuario = $this->usuario_model->get($comprador->usuario_id);
+                $this->template->add_js("modules/admin/clientes.js");
+                $usuario = $this->usuario_model->get($cliente->usuario_id);
                 $usuario_data = array(
-                    "id"=>$usuario->id,
+                    "id" => $usuario->id,
                     "email" => $usuario->email);
 
                 $data = array(
-                    "comprador" => $comprador,
+                    "cliente" => $cliente,
                     "usuario" => $usuario_data
                 );
 
-                $this->template->load_view('admin/comprador/editar', $data);
+                $this->template->load_view('admin/cliente/editar', $data);
             } else {
                 //TODO : No se encuentra el producto
             }
@@ -129,10 +136,10 @@ class Comprador extends MY_Controller {
      */
     public function borrar($id) {
         if ($this->input->is_ajax_request()) {
-            $comprador = $this->comprador_model->get($id);
-            $this->comprador_model->delete($id);
-            $this->usuario_model->delete($comprador->usuario_id);
-            redirect('admin/compradores');
+            $cliente = $this->cliente_model->get($id);
+            $this->cliente_model->delete($id);
+            $this->usuario_model->delete($cliente->usuario_id);
+            redirect('admin/usuarios');
         }
     }
 
@@ -159,11 +166,11 @@ class Comprador extends MY_Controller {
             $pagina = 1;
         }
 
-        $limit = 15;
+        $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
-        $compradores_array = $this->comprador_model->get_admin_search($params, $limit, $offset);
-        $flt = (float) ($compradores_array["total"] / $limit);
-        $ent = (int) ($compradores_array["total"] / $limit);
+        $clientes_array = $this->cliente_model->get_admin_search($params, $limit, $offset);
+        $flt = (float) ($clientes_array["total"] / $limit);
+        $ent = (int) ($clientes_array["total"] / $limit);
         if ($flt > $ent || $flt < $ent) {
             $paginas = $ent + 1;
         } else {
@@ -171,23 +178,23 @@ class Comprador extends MY_Controller {
         }
         // TODO: Falta testear mas
 
-        if ($compradores_array["total"] == 0) {
-            $compradores_array["compradores"] = array();
+        if ($clientes_array["total"] == 0) {
+            $clientes_array["clientes"] = array();
             // TODO: Resultados vacio
         }
         $data = array(
-            "compradores" => $compradores_array["compradores"],
+            "clientes" => $clientes_array["clientes"],
             "search_params" => array(
                 "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
                 "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
                 "pagina" => $pagina,
                 "total_paginas" => $paginas,
                 "por_pagina" => $limit,
-                "total" => $compradores_array["total"],
-                "hasta" => ($pagina * $limit < $compradores_array["total"]) ? $pagina * $limit : $compradores_array["total"],
+                "total" => $clientes_array["total"],
+                "hasta" => ($pagina * $limit < $clientes_array["total"]) ? $pagina * $limit : $clientes_array["total"],
                 "desde" => (($pagina * $limit) - $limit) + 1));
 
-        $this->template->load_view('admin/comprador/tabla_resultados', $data);
+        $this->template->load_view('admin/cliente/tabla_resultados', $data);
     }
 
 }
