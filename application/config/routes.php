@@ -40,37 +40,56 @@
 
 /* Front */
 $route['home'] = 'home/main';
-$route['login'] = 'home/user/login';
-$route['logout'] = 'home/user/logout';
-$route['registro'] = 'home/user/view_registro';
-$route['registrar_comprador'] = 'home/comprador/new_comprador';
+$route['usuario/perfil'] = 'home/usuario/view_perfil';
+$route['usuario/perfil/modificar'] = 'home/usuario/modificar';
+$route['usuario/password'] = 'home/usuario/view_password';
+$route['usuario/password/modificar'] = 'home/usuario/modificar_password';
+$route['login'] = 'home/usuario/login';
+$route['logout'] = 'home/usuario/logout';
+$route['registro'] = 'home/usuario/view_registro';
+$route['registrar_cliente'] = 'home/cliente/crear';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
-$route['productos'] = 'home/producto/view_listado';
+$route['productos'] = 'home/producto/view_pre_listado';
 $route['productos/ficha/(:any)'] = 'home/producto/ver_producto/$1';
+$route['productos/(:any)'] = 'home/producto/view_listado/$1';
 
 /* Admin */
 $route['admin'] = 'admin/main';
 $route['admin/dashboard'] = 'admin/main/dashboard';
-$route['admin/login'] = 'admin/user/view_login'; 
-$route['admin/do_login'] = 'admin/user/login'; 
-$route['admin/do_logout'] = 'admin/user/logout'; 
-$route['admin/sin_permiso'] = 'admin/user/sin_permiso'; 
+$route['admin/login'] = 'admin/usuario/view_login'; 
+$route['admin/do_login'] = 'admin/usuario/login'; 
+$route['admin/do_logout'] = 'admin/usuario/logout'; 
+$route['admin/sin_permiso'] = 'admin/usuario/sin_permiso'; 
 
 $route['admin/productos'] = 'admin/producto/view_listado'; 
 $route['admin/productos/crear'] = 'admin/producto/crear';
 $route['admin/productos/editar/(:num)'] = 'admin/producto/editar/$1'; 
 $route['admin/productos/borrar/(:num)'] = 'admin/producto/borrar/$1'; 
 
-$route['admin/compradores'] = 'admin/comprador/view_listado'; 
-$route['admin/compradores/crear'] = 'admin/comprador/crear';
-$route['admin/compradores/editar/(:num)'] = 'admin/comprador/editar/$1'; 
-$route['admin/compradores/borrar/(:num)'] = 'admin/comprador/borrar/$1'; 
+$route['admin/usuarios'] = 'admin/cliente/view_listado'; 
+$route['admin/usuarios/crear'] = 'admin/cliente/crear';
+$route['admin/usuarios/editar/(:num)'] = 'admin/cliente/editar/$1'; 
+$route['admin/usuarios/borrar/(:num)'] = 'admin/cliente/borrar/$1'; 
 
 $route['admin/vendedores'] = 'admin/vendedor/view_listado'; 
 $route['admin/vendedores/crear'] = 'admin/vendedor/crear';
 $route['admin/vendedores/editar/(:num)'] = 'admin/vendedor/editar/$1'; 
 $route['admin/vendedores/borrar/(:num)'] = 'admin/vendedor/borrar/$1'; 
 $route['admin/vendedores/autocomplete'] = 'admin/vendedor/autocomplete';
+
+$route['admin/categorias'] = 'admin/categoria/view_listado'; 
+$route['admin/categorias/crear'] = 'admin/categoria/crear/0';
+$route['admin/categorias/crear/(:num)'] = 'admin/categoria/crear/$1';
+$route['admin/categorias/editar/(:num)'] = 'admin/categoria/editar/$1'; 
+$route['admin/categorias/borrar/(:num)'] = 'admin/categoria/borrar/$1'; 
+$route['admin/categoria/ajax_get_listado_resultados'] = 'admin/categoria/ajax_get_listado_resultados'; 
+$route['admin/categoria/upload_image'] = 'admin/categoria/upload_image'; 
+$route['admin/categoria/(:any)'] = 'admin/categoria/view_listado_subcategorias/$1'; 
+
+$route['admin/anuncios'] = 'admin/anuncio/view_listado'; 
+$route['admin/anuncios/crear'] = 'admin/anuncio/crear';
+$route['admin/anuncios/editar/(:num)'] = 'admin/anuncio/editar/$1'; 
+$route['admin/anuncios/borrar/(:num)'] = 'admin/anuncio/borrar/$1'; 
 
 $route['default_controller'] = "home/main";
 $route['404_override'] = 'home/main/not_found';

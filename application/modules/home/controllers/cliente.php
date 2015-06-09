@@ -3,17 +3,17 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Comprador extends MY_Controller {
+class Cliente extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
     }
-
+    
     /**
-     * Crear nuevo comprador
+     * Crear un nuevo cliente     
      * POST
      */
-    public function new_comprador() {
+    public function crear() {
         $formValues = $this->input->post();
 
         if ($formValues !== false) {
@@ -28,19 +28,24 @@ class Comprador extends MY_Controller {
                 $usuario->ip_address = $ip_address;
                 $usuario->fecha_creado = date("Y-m-d H:i:s");
                 $usuario->ultimo_acceso = date("Y-m-d H:i:s");
-                $usuario->estado = 1;
+                $usuario->activo = 1;
                 $usuario->is_admin = 0;
 
                 $this->usuario_model->update($user_id,$usuario);
 
                 $data = array(
                     "usuario_id" => $user_id,
-                    "nombre" => $this->input->post('nombre'),
+                    "nombres" => $this->input->post('nombres'),
                     "apellidos" => $this->input->post('apellidos'),
                     "sexo" => $this->input->post('sexo'),
-                    "fecha_nacimiento" => date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))));
+                    "fecha_nacimiento" => date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))),
+                    "codigo_postal" => $this->input->post('codigo_postal'),
+                    "direccion" => $this->input->post('direccion'),
+                    "telefono_fijo" => $this->input->post('telefono_fijo'),
+                    "telefono_movil" => $this->input->post('telefono_movil'),                    
+                    );
 
-                $this->comprador_model->insert($data);
+                $this->cliente_model->insert($data);
                 
                 $this->authentication->login($username, $password);
                 redirect('');
@@ -52,5 +57,6 @@ class Comprador extends MY_Controller {
             redirect('');
         }
     }
-
+    
 }
+

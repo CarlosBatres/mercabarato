@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-md-12">
             <h1 class="page-header">
-                Usuarios Vendedores
+                Vendedores / Empresas
             </h1>
             <ol class="breadcrumb">
                 <li>
@@ -85,31 +85,7 @@
                                                 <input type="text" name="sitioweb" id="sitioweb" value="" class="form-control"/>                                
                                             </div>
                                         </div>
-                                    </div> 
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-12" for="telefono1">Telefono Principal</label>
-                                            <div class="col-md-12">
-                                                <input type="text" name="telefono1" id="telefono1" value="" class="form-control"/>                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-12" for="telefono2">Telefono Secundario</label>
-                                            <div class="col-md-12">
-                                                <input type="text" name="telefono2" id="telefono2" value="" class="form-control"/>                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-12" for="codigo_postal">Codigo Postal</label>
-                                            <div class="col-md-12">
-                                                <input type="text" name="codigo_postal" id="codigo_postal" value="" class="form-control"/>                                
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>                                    
                                 </div>                                
                                 <hr>
                                 <div class="row"> 

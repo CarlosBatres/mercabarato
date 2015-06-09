@@ -29,9 +29,10 @@ class Vendedor_model extends MY_Model {
 
     public function get_admin_search($params, $limit, $offset) {
         $this->db->start_cache();
-        $this->db->select("vendedor.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address");
+        $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address");
         $this->db->from($this->_table);
-        $this->db->join("usuario", "vendedor.usuario_id=usuario.id", 'INNER');
+        $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
+        $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
 
         if (isset($params['nombre'])) {
             $this->db->like('vendedor.nombre', $params['nombre'], 'both');
@@ -42,18 +43,9 @@ class Vendedor_model extends MY_Model {
         if (isset($params['actividad'])) {
             $this->db->like('vendedor.actividad', $params['actividad'], 'both');
         }
-        if (isset($params['sitioweb'])) {
-            $this->db->like('vendedor.sitioweb', $params['sitioweb'], 'both');
-        }
-        if (isset($params['telefono1'])) {
-            $this->db->where('vendedor.telefono1', $params['telefono1']);
-        }
-        if (isset($params['telefono2'])) {
-            $this->db->where('vendedor.telefono2', $params['telefono2']);
-        }
-        if (isset($params['codigo_postal'])) {
-            $this->db->where('vendedor.codigo_postal', $params['codigo_postal']);
-        }
+        if (isset($params['sitio_web'])) {
+            $this->db->like('vendedor.sitio_web', $params['sitio_web'], 'both');
+        }        
 
         $this->db->stop_cache();
         $count = $this->db->count_all_results();
@@ -62,10 +54,27 @@ class Vendedor_model extends MY_Model {
             $this->db->order_by('vendedor.id', 'asc');
             $this->db->limit($limit, $offset);
             $vendedores = $this->db->get()->result();
+            $this->db->flush_cache();
             return array("vendedores" => $vendedores, "total" => $count);
         } else {
+            $this->db->flush_cache();
             return array("total" => 0);
         }
     }
+    
+    public function get_vendedor($id){
+        $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address");
+        $this->db->from($this->_table);
+        $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
+        $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
+        $this->db->where('vendedor.id', $id);                
+        $result = $this->db->get();
 
+        if ($result->num_rows() > 0) {
+            return $result->row();
+        } else {
+            return FALSE;
+        }     
+    }
+        
 }

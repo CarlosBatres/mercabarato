@@ -9,9 +9,9 @@
         <thead>
             <tr>
                 <th style="width: 5%">ID</th>
-                <th style="width: 20%">Nombre del Producto</th>
-                <th style="width: 20%">Categoria</th>
-                <th style="width: 20%">Vendedor / Empresa</th>                            
+                <th style="width: 15%">Nombre del Producto</th>
+                <th style="width: 15%">Categoria</th>
+                <th style="width: 15%">Vendedor / Empresa</th>                            
                 <th style="width: 5%;text-align: center">Visible al Publico</th>
                 <th style="width: 5%;text-align: center">Precio Venta Publico</th>                            
                 <th style="width: 5%;text-align: center">PVP Visible</th>                                                        
@@ -26,14 +26,14 @@
                     <td><?php echo $producto->Categoria; ?></td>
                     <td><?php echo $producto->Vendedor; ?></td>
                     <td style="text-align: center"><?php
-                        if ($producto->mostrar_publico == 1): echo "<span class='label label-success'>Si</span>";
+                        if ($producto->mostrar_producto == 1): echo "<span class='label label-success'>Si</span>";
                         else: echo "<span class='label label-danger'>No</span>";
                         endif;
                         ?>
                     </td>
-                    <td style="text-align: center"><?php echo $producto->precio_venta_publico; ?></td>                                                                
+                    <td style="text-align: center"><?php echo $producto->precio; ?></td>                                                                
                     <td style="text-align: center"><?php
-                        if ($producto->mostrar_precio_venta_publico == 1): echo "<span class='label label-success'>Si</span>";
+                        if ($producto->mostrar_precio == 1): echo "<span class='label label-success'>Si</span>";
                         else: echo "<span class='label label-danger'>No</span>";
                         endif;
                         ?>

@@ -38,23 +38,44 @@ class Producto_model extends MY_Model {
             $this->db->order_by('id', 'asc');
             $this->db->limit($limit, $offset);
             $productos = $this->db->get()->result();
+            $this->db->flush_cache();
             return array("productos" => $productos, "total" => $count);
         } else {
+            $this->db->flush_cache();
             return array("total" => 0);
         }
     }
 
     public function get_site_search($params, $limit, $offset, $order_by, $order) {
         $this->db->start_cache();
-        $this->db->select('p.*,pr.url_path as imagen_nombre');
+        $this->db->select('p.*,pr.filename as imagen_nombre');
         $this->db->from('producto p');
-        $this->db->join('producto_resources pr', 'pr.producto_id = p.id AND pr.tipo="imagen_principal"', 'left');
+        $this->db->join('producto_resource pr', 'pr.producto_id = p.id AND pr.tipo="imagen_principal"', 'left');
 
         if (isset($params['nombre'])) {
             $this->db->like('p.nombre', $params['nombre'], 'both');
         }
-        if (isset($params['categoria_id'])) {
-            $this->db->where('p.categoria_id', $params['categoria_id']);
+        //if (isset($params['categoria_id'])) {
+        //    $this->db->where('p.categoria_id', $params['categoria_id']);
+        //}
+        if (isset($params['categoria_general'])) {
+            if (isset($params['categoria_id'])) {
+                $cat = $params['categoria_id'];
+            } else {
+                $cat = $params['categoria_general'];
+            }
+            $array = $this->get_all_categorias_of($cat);
+            $array[] = $cat;
+            $this->db->where_in('p.categoria_id', $array);
+        }
+
+        if (isset($params['precio_tipo1'])) {
+            if ($params['precio_tipo1'] != '0') {
+                $precios = explode(";;", $params['precio_tipo1']);
+                // TODO : Aqui el precio puede ser precio oferta o una tarifa especifica. Resolver dependiendo de quien este conectado haciendo la busqueda
+                $this->db->where('p.precio >',$precios['0']);
+                $this->db->where('p.precio <=',$precios['1']);                
+            }
         }
 
         $this->db->stop_cache();
@@ -64,10 +85,33 @@ class Producto_model extends MY_Model {
             $this->db->order_by($order_by, $order);
             $this->db->limit($limit, $offset);
             $productos = $this->db->get()->result();
+            $this->db->flush_cache();
             return array("productos" => $productos, "total" => $count);
         } else {
+            $this->db->flush_cache();
             return array("total" => 0);
-        } 
+        }
     }
-    
+
+    public function get_all_categorias_of($id) {
+        $query = "SELECT id FROM categoria WHERE padre_id='" . $id . "'";
+        $result = $this->db->query($query);
+        $categorias = $result->result_array();
+        $ids = array();
+        if ($categorias) {
+            foreach ($categorias as $value) {
+                $ids[] = $value["id"];
+                $res = $this->get_all_categorias_of($value['id']);
+                if ($res) {
+                    foreach ($res as $val) {
+                        $ids[] = $val;
+                    }
+                }
+            }
+            return $ids;
+        } else {
+            return false;
+        }
+    }
+
 }

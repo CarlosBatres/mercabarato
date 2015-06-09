@@ -20,7 +20,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-md-6 col-md-offset-1">
+        <div class="col-md-8 col-md-offset-2">
             <div class="box box_registro">
                 <h2 class="text-uppercase">Informacion del producto</h2>                                        
                 <hr>
@@ -54,18 +54,18 @@
                 </div>                
                 <div class="form-group">
                     <label>Precio Venta Publico</label>
-                    <input type="text" class="form-control" name="precio_venta_publico">
+                    <input type="text" class="form-control" name="precio">
                 </div>
                 <div class="form-group">
                     <label>Mostrar al Publico</label>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="mostrar_publico" id="mostrar_si" value="1" checked> Si
+                            <input type="radio" name="mostrar_producto" id="mostrar_si" value="1" checked> Si
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="mostrar_publico" id="mostrar_no" value="0"> No
+                            <input type="radio" name="mostrar_producto" id="mostrar_no" value="0"> No
                         </label>
                     </div>                    
                 </div>

@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-md-12">
             <h1 class="page-header">
-                Productos <small>Listado de productos actualmente en el sistema</small>
+                Productos
             </h1>
             <ol class="breadcrumb">
                 <li>

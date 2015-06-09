@@ -9,27 +9,22 @@
         <thead>
             <tr>
                 <th style="width: 5%">ID</th>
-                <th style="width: 20%">Nombre Completo</th>                
-                <th style="width: 10%">Sexo</th>
-                <th style="width: 10%">Fecha de Nacimiento</th>
-                <th style="width: 20%">Email</th>
-                <th style="width: 10%">Ultimo Acceso</th>                
-                <th style="width: 5%">&nbsp;</th> 
+                <th style="width: 30%">Nombre Categoria</th>                
+                <th style="width: 40%">Descripcion</th>                
+                <th style="width: 10%">&nbsp;</th> 
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($compradores as $comprador): ?>
+            <?php foreach ($categorias as $categoria): ?>
                 <tr>
-                    <td><?php echo $comprador->id; ?></td>
-                    <td><?php echo $comprador->nombre.' '.$comprador->apellidos; ?></td>                                                                                    
-                    <td><?php echo ($comprador->sexo=='H')?'Hombre':'Mujer'; ?></td>
-                    <td><?php echo date('d-M-Y',strtotime($comprador->fecha_nacimiento)); ?></td>
-                    <td><?php echo $comprador->email; ?></td>
-                    <td><?php echo $comprador->ultimo_acceso; ?></td>                    
+                    <td><?php echo $categoria->id; ?></td>
+                    <td><?php echo $categoria->nombre; ?></td>        
+                    <td><?php echo $categoria->descripcion; ?></td>        
                     <td>
                         <div class="options">
-                            <a href="<?php echo site_url('admin/compradores/editar') . '/' . $comprador->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>
-                            <a class="comprador_borrar" href="<?php echo site_url('admin/compradores/borrar') . '/' . $comprador->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
+                            <a href="<?php echo site_url('admin/categoria') . '/' . $categoria->slug ?>" data-toogle="tooltip"  title="Sub-Categorias"><i class="glyphicon glyphicon-expand"></i></a>
+                            <a href="<?php echo site_url('admin/categorias/editar') . '/' . $categoria->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a class="categoria_borrar" href="<?php echo site_url('admin/categorias/borrar') . '/' . $categoria->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
                         </div>                           
                     </td>
                 </tr>
@@ -46,7 +41,7 @@
                 <ul class="pagination">
                     <?php if ($search_params['anterior'] != -1): ?>
                         <li>
-                            <a data-id="<?php echo $search_params['anterior']; ?>" href="<?php echo site_url('compradores/') . '/' . $search_params['anterior'] ?>">Anterior</a>
+                            <a data-id="<?php echo $search_params['anterior']; ?>" href="<?php echo site_url('admin/categorias/') . '/' . $search_params['anterior'] ?>">Anterior</a>
                         </li>
                     <?php endif; ?>
                     <?php
@@ -57,12 +52,12 @@
                         }
                         ?>
                         <li class="<?php echo $class; ?>">
-                            <a data-id="<?php echo $i; ?>" href="<?php echo site_url('admin/compradores/') . '/' . $i ?>"><?php echo $i; ?></a>
+                            <a data-id="<?php echo $i; ?>" href="<?php echo site_url('admin/categorias/') . '/' . $i ?>"><?php echo $i; ?></a>
                         </li>
                     <?php } ?>
                     <?php if ($search_params['siguiente'] != -1): ?>
                         <li>
-                            <a data-id="<?php echo $search_params['siguiente']; ?>" href="<?php echo site_url('compradores/') . '/' . $search_params['siguiente'] ?>">Siguiente</a>
+                            <a data-id="<?php echo $search_params['siguiente']; ?>" href="<?php echo site_url('admin/categorias/') . '/' . $search_params['siguiente'] ?>">Siguiente</a>
                         </li>
                     <?php endif; ?>
                 </ul>

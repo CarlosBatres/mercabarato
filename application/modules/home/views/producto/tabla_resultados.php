@@ -13,7 +13,7 @@
                         <?php if ($producto->imagen_nombre === null): ?>
                             <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="producto-img">
                         <?php else: ?>
-                            <img src="<?php echo assets_url("uploads/imgs/" . $producto->imagen_nombre) ?>" alt="" class="producto-img">
+                            <img src="<?php echo assets_url($this->config->item('productos_img_path')) .'/'. $producto->imagen_nombre ?>" alt="" class="producto-img">
                         <?php endif; ?>
 
                     </a>
@@ -21,7 +21,7 @@
                 <!-- /.image -->
                 <div class="text">
                     <h3><a href="<?php echo site_url("productos/ficha/".$producto->id)?>"><?php echo $producto->nombre; ?></a></h3>
-                    <p class="price"><?php echo $producto->precio_venta_publico . ' ' . $this->config->item('money_sign') ?></p>                            
+                    <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>                            
                 </div>                        
             </div>                    
         </div>        

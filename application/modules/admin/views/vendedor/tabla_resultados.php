@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th style="width: 5%">ID</th>
-                <th style="width: 20%">Nombre Empresa</th>                
+                <th style="width: 10%">Nombre Empresa</th>                
                 <th style="width: 10%">Actividad</th>
                 <th style="width: 10%">Sitio Web</th>                
                 <th style="width: 10%">Email</th>                
@@ -23,7 +23,7 @@
                     <td><?php echo $vendedor->id; ?></td>
                     <td><?php echo $vendedor->nombre;?></td>                                                                                    
                     <td><?php echo $vendedor->actividad;?></td> 
-                    <td><?php echo $vendedor->sitioweb;?></td>                    
+                    <td><?php echo $vendedor->sitio_web;?></td>                    
                     <td><?php echo $vendedor->email; ?></td>
                     <td><?php echo $vendedor->ultimo_acceso; ?></td>                    
                     <td>

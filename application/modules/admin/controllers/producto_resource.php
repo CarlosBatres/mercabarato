@@ -18,7 +18,7 @@ class Producto_resource extends MY_Controller {
     
     public function upload_image(){        
         $this->load->config('upload', TRUE);
-        $this->load->library('UploadHandler', $this->config->item('photo', 'upload'));                        
+        $this->load->library('UploadHandler', $this->config->item('producto', 'upload'));                        
     }
 
 }

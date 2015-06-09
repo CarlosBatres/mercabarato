@@ -5,6 +5,7 @@ _________________________________________________________ -->
         <div class="dark-mask"></div>
         <div class="container">
             <div class="homepage owl-carousel">
+
                 <div class="item">
                     <div class="row">
                         <div class="col-sm-5 right">                                                        
@@ -28,26 +29,7 @@ _________________________________________________________ -->
 
                     </div>
                 </div>
-                <div class="item">
-                    <div class="row">
-                        <div class="col-sm-5 right">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sem orci, sodales condimentum nulla non, lobortis consequat quam. Proin porta dui leo. Nulla sed justo vitae diam finibus aliquet nec a justo.</p>
-                        </div>
-                        <div class="col-sm-7">
-                            <img class="img-responsive" src="<?php echo assets_url('imgs/slider/3.jpg') ?>" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="row">
-                        <div class="col-sm-7">
-                            <img class="img-responsive" src="<?php echo assets_url('imgs/slider/4.jpg') ?>" alt="">
-                        </div>
-                        <div class="col-sm-5">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sem orci, sodales condimentum nulla non, lobortis consequat quam. Proin porta dui leo. Nulla sed justo vitae diam finibus aliquet nec a justo.</p>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <!-- /.project owl-slider -->
         </div>
@@ -74,19 +56,19 @@ _________________________________________________________ -->
                             <div class="col-lg-3 col-md-4 col-sm-6">
                                 <div class="product">
                                     <div class="frame">
-                                        <a href="<?php echo site_url("productos/ficha/".$producto->id)?>">
+                                        <a href="<?php echo site_url("productos/ficha/" . $producto->id) ?>">
                                             <span class="helper"></span>
                                             <?php if ($producto->imagen_nombre === null): ?>
                                                 <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="producto-img">
                                             <?php else: ?>
-                                                <img src="<?php echo assets_url("uploads/imgs/" . $producto->imagen_nombre) ?>" alt="" class="producto-img">
+                                                <img src="<?php echo assets_url($this->config->item('productos_img_path')) . '/' . $producto->imagen_nombre ?>" alt="" class="producto-img">
                                             <?php endif; ?>
                                         </a>
                                     </div>
                                     <!-- /.image -->
                                     <div class="text">
-                                        <h3><a href="<?php echo site_url("productos/ficha/".$producto->id)?>"><?php echo $producto->nombre; ?></a></h3>
-                                        <p class="price"><?php echo $producto->precio_venta_publico . ' ' . $this->config->item('money_sign') ?></p>                            
+                                        <h3><a href="<?php echo site_url("productos/ficha/" . $producto->id) ?>"><?php echo $producto->nombre; ?></a></h3>
+                                        <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>                            
                                     </div>                        
                                 </div>                    
                             </div>                    
@@ -103,15 +85,19 @@ _________________________________________________________ -->
                 <div class="table-responsive">
                     <table class="table">
                         <tbody>
-                            <tr>
-                                <td><p><strong>20-05-2015</strong>  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sem orci, sodales condimentum nulla non, lobortis consequat quam. Proin porta dui leo. Nulla sed justo vitae diam finibus aliquet nec a justo.</p></td>                                
-                            </tr>
-                            <tr>
-                                <td><p><strong>20-05-2015</strong>  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sem orci, sodales condimentum nulla non, lobortis consequat quam. Proin porta dui leo. Nulla sed justo vitae diam finibus aliquet nec a justo.</p></td>                                
-                            </tr>
-                            <tr>
-                                <td><p><strong>20-05-2015</strong>  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sem orci, sodales condimentum nulla non, lobortis consequat quam. Proin porta dui leo. Nulla sed justo vitae diam finibus aliquet nec a justo.</p></td>                                
-                            </tr>                            
+                            <?php
+                            if ($anuncios):
+                                foreach ($anuncios as $anuncio):
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <p><strong><?php echo date("d-M-Y",strtotime($anuncio->fecha_publicacion)) ?></strong>  <?php echo $anuncio->contenido;?></p>
+                                        </td>                                
+                                    </tr>
+                                <?php
+                                endforeach;
+                            endif;
+                            ?>                            
                         </tbody>
                     </table>
                 </div>

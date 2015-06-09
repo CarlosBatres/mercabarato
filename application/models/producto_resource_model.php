@@ -10,7 +10,7 @@ class Producto_resource_model extends MY_Model {
 
     function __construct() {
         parent::__construct();
-        $this->_table = "producto_resources";
+        $this->_table = "producto_resource";
     }
 
     public function get_producto_imagen($producto_id) {
@@ -31,8 +31,8 @@ class Producto_resource_model extends MY_Model {
         $resources = $this->get_many_by("producto_id",$producto_id);
         foreach ($resources as $resource) {
             if ($resource->tipo == "imagen_principal") {
-                unlink('./assets/uploads/imgs/'.$resource->url_path);
-                unlink('./assets/uploads/imgs/thumbnail/'.$resource->url_path);
+                unlink('./assets/'.$this->config->item('productos_img_path').'/'.$resource->filename);
+                unlink('./assets/'.$this->config->item('productos_img_path').'/thumbnail/'.$resource->filename);
             }
         }
         $this->delete_by("producto_id",$producto_id);

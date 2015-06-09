@@ -14,4 +14,26 @@
 .autocomplete-group strong { font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }
 
 #footer{height: 100px;padding: 50px;}
+#footer .container{padding-left: 200px;}
 .paginacion-listado{text-align: right;}
+.nav-custom{
+    background: #ec9c29; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ec9c29 0%, #d99327 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ec9c29), color-stop(100%,#d99327)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ec9c29 0%,#d99327 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ec9c29 0%,#d99327 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ec9c29 0%,#d99327 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ec9c29 0%,#d99327 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ec9c29', endColorstr='#d99327',GradientType=0 ); /* IE6-9 */
+    border: 0px;
+}
+.navbar-brand,
+.navbar-nav li a {
+    line-height: 60px;
+    height: 60px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.navbar-right{
+    padding-top: 4px;
+}

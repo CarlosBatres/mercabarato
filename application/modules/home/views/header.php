@@ -10,16 +10,16 @@
                     </p>
                 </div>
                 <div class="col-xs-7">
-                    <div class="social">
+                    <!--<div class="social">
                         <a href="#" class="external facebook" data-animate-hover="pulse"><i class="fa fa-facebook"></i></a>
                         <a href="#" class="external gplus" data-animate-hover="pulse"><i class="fa fa-google-plus"></i></a>
                         <a href="#" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
                         <a href="#" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
-                    </div>
+                    </div>-->
 
                     <?php if ($this->authentication->is_loggedin()) { ?>
                         <div class="login">
-                            <a href="#" class="" data-toggle=""><i class="fa fa-user"></i> <?php echo $this->authentication->read('username'); ?></a>
+                            <a href="<?php echo site_url('usuario/perfil')?>" class="" data-toggle=""><i class="fa fa-user"></i> <?php echo $this->authentication->read('username'); ?></a>
                             <a href="<?php echo site_url('logout'); ?>"><i class="fa fa-power-off"></i> Cerrar Sesión</a>
                         </div>
                     <?php } else { ?>

@@ -22,14 +22,14 @@
     <div class="row" id="productMain">
         <div class="col-sm-6">
             <div id="mainImage">
-                <img src="<?php echo assets_url("/uploads/imgs/".$producto_imagen->url_path)?>" alt="" class="img-responsive">
+                <img src="<?php echo assets_url($this->config->item('productos_img_path')) .'/'.$producto_imagen->filename ?>" alt="" class="img-responsive">
             </div>            
         </div>
         <div class="col-sm-6">
             <div class="box">
                 <p class="lead"><?php echo $producto->descripcion ?></p>
                 <form>                                        
-                    <p class="price"><?php echo $producto->precio_venta_publico . ' ' . $this->config->item('money_sign') ?></p>
+                    <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
                     <p class="text-center">
                         <button type="submit" class="btn btn-template-main"><i class="fa fa-phone"></i> Solicitar Producto</button>                        
                     </p>

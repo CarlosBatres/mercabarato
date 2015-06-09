@@ -95,7 +95,7 @@ body .box_registro{
     border:0px;
 }
 
-#registrar_comprador .radioInput{
+#form_crear .radioInput{
     margin-left: 8px;
     margin-right: 8px;
 }
@@ -131,3 +131,4 @@ body .box_registro{
 }
 
 label.error { display: block; float: none; color: red; padding-left: 2.5em; vertical-align: top; }
+.box-image .image>img{margin:auto;}
