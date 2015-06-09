@@ -40,6 +40,10 @@
 
 /* Front */
 $route['home'] = 'home/main';
+$route['usuario/perfil'] = 'home/usuario/view_perfil';
+$route['usuario/perfil/modificar'] = 'home/usuario/modificar';
+$route['usuario/password'] = 'home/usuario/view_password';
+$route['usuario/password/modificar'] = 'home/usuario/modificar_password';
 $route['login'] = 'home/usuario/login';
 $route['logout'] = 'home/usuario/logout';
 $route['registro'] = 'home/usuario/view_registro';
@@ -81,6 +85,11 @@ $route['admin/categorias/borrar/(:num)'] = 'admin/categoria/borrar/$1';
 $route['admin/categoria/ajax_get_listado_resultados'] = 'admin/categoria/ajax_get_listado_resultados'; 
 $route['admin/categoria/upload_image'] = 'admin/categoria/upload_image'; 
 $route['admin/categoria/(:any)'] = 'admin/categoria/view_listado_subcategorias/$1'; 
+
+$route['admin/anuncios'] = 'admin/anuncio/view_listado'; 
+$route['admin/anuncios/crear'] = 'admin/anuncio/crear';
+$route['admin/anuncios/editar/(:num)'] = 'admin/anuncio/editar/$1'; 
+$route['admin/anuncios/borrar/(:num)'] = 'admin/anuncio/borrar/$1'; 
 
 $route['default_controller'] = "home/main";
 $route['404_override'] = 'home/main/not_found';

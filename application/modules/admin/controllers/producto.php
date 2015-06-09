@@ -198,7 +198,7 @@ class Producto extends MY_Controller {
             $pagina = 1;
         }
 
-        $limit = 15;
+        $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
         $productos_array = $this->producto_model->get_admin_search($params, $limit, $offset);
         $flt = (float) ($productos_array["total"] / $limit);
