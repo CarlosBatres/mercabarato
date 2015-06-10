@@ -21,6 +21,9 @@ class Usuario extends MY_Controller {
         $this->template->load_view('home/usuario/registro', $data);
     }
 
+    /**
+     *  usuario / perfil
+     */
     public function view_perfil() {
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
@@ -28,23 +31,42 @@ class Usuario extends MY_Controller {
             $usuario = $this->usuario_model->get($user_id);
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
+            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+            if ($cliente_es_vendedor) {
+                $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
+            } else {
+                $vendedor = array();
+            }
+
             $this->template->load_view('home/usuario/perfil', array(
                 "usuario" => $usuario,
-                "cliente" => $cliente));
+                "cliente" => $cliente,
+                "vendedor" => $vendedor,
+                "es_vendedor" => $cliente_es_vendedor));
         } else {
             redirect('');
         }
     }
 
+    /**
+     *  usuario / password
+     */
     public function view_password() {
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
-            $this->template->load_view('home/usuario/cambio_password');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+
+            $this->template->load_view('home/usuario/cambio_password', array("es_vendedor" => $cliente_es_vendedor));
         } else {
             redirect('');
         }
     }
 
+    /**
+     * 
+     */
     public function modificar() {
         $formValues = $this->input->post();
         if ($formValues !== false) {
@@ -66,6 +88,17 @@ class Usuario extends MY_Controller {
 
                 $this->cliente_model->update($cliente->id, $data);
 
+                if ($this->input->post('nombre_empresa')) {
+                    $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
+                    $data_vendedor = array(
+                        "nombre" => $this->input->post('nombre_empresa'),
+                        "descripcion" => $this->input->post('descripcion'),
+                        "sitio_web" => $this->input->post('sitio_web'),                        
+                        "actividad" => $this->input->post('actividad'),                        
+                    );
+                    $this->vendedor_model->update($vendedor->id,$data_vendedor);
+                }
+
                 $this->session->set_flashdata('success', 'Tus datos han sido modificados con exito.');
             }
             redirect('usuario/perfil');
@@ -73,24 +106,27 @@ class Usuario extends MY_Controller {
             redirect('usuario/perfil');
         }
     }
-    
-    public function modificar_password(){
+
+    /**
+     * 
+     */
+    public function modificar_password() {
         $formValues = $this->input->post();
         if ($formValues !== false) {
             $accion = $this->input->post('accion');
             if ($accion === "form-editar") {
                 $user_id = $this->authentication->read('identifier');
-                $usuario = $this->usuario_model->get($user_id);                
-                                
-                $password_old=$this->input->post('password_old');
-                $password_new=$this->input->post('password_1');
-                                
-                if(md5($password_old)==$usuario->password){
+                $usuario = $this->usuario_model->get($user_id);
+
+                $password_old = $this->input->post('password_old');
+                $password_new = $this->input->post('password_1');
+
+                if (md5($password_old) == $usuario->password) {
                     $this->authentication->change_password($password_new);
                     $this->session->set_flashdata('success', 'Tus contraseña se ha modificado con exito.');
-                }else{
+                } else {
                     $this->session->set_flashdata('error', 'La contraseña es incorrecta.');
-                }                                
+                }
             }
             redirect('usuario/password');
         } else {

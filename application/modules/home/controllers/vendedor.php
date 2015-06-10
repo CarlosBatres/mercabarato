@@ -10,50 +10,101 @@ class Vendedor extends MY_Controller {
     }
 
     /**
-     * Crear nuevo vendedor
-     * POST
+     *  Afiliarse - Paso 1 
      */
-    public function new_vendedor() {
+    public function view_afiliarse() {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            
+            $this->session->unset_userdata('afiliacion_cliente');
+            $this->session->unset_userdata('afiliacion_vendedor');            
+            $this->template->load_view('home/vendedor/afiliarse', array("cliente" => $cliente));
+        } else {
+            redirect('');
+        }
+    }
+
+    /**
+     *  Afiliarse - Recibe Paso 1
+     */
+    public function cliente_a_vendedor() {
         $formValues = $this->input->post();
 
         if ($formValues !== false) {
-            $password = $this->input->post('password');
-            $username = $this->input->post('email');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
-            $user_id = $this->authentication->create_user($username, $password);
+            $data = array(
+                "cliente_id" => $cliente->id,
+                "nombre" => $this->input->post('nombre_empresa'),
+                "descripcion" => $this->input->post('descripcion'),
+                "actividad" => $this->input->post('actividad'),
+                "sitio_web" => $this->input->post('sitio_web'),
+                "habilitado" => 0
+            );
 
-            if ($user_id !== FALSE) {
-                $ip_address = $this->session->userdata('ip_address');
-                $usuario = $this->usuario_model->get($user_id);
-                $usuario->ip_address = $ip_address;
-                $usuario->fecha_creado = date("Y-m-d H:i:s");
-                $usuario->ultimo_acceso = date("Y-m-d H:i:s");
-                $usuario->activo = 1;
-                $usuario->is_admin = 0;
+            $data_cliente = array(
+                "direccion" => $this->input->post('direccion'),
+                "telefono_fijo" => $this->input->post('telefono_fijo'),
+                "telefono_movil" => $this->input->post('telefono_movil')                
+            );
 
-                $this->usuario_model->update($user_id,$usuario);
+            $this->session->unset_userdata('afiliacion_cliente');
+            $this->session->unset_userdata('afiliacion_vendedor');
 
-                $data = array(
-                    "usuario_id" => $user_id,
-                    "nombre" => $this->input->post('nombre'),
-                    "descripcion" => $this->input->post('descripcion'),
-                    "actividad" => $this->input->post('actividad'),
-                    "direccion" => $this->input->post('direccion'),
-                    "codigo_postal" => $this->input->post('postal'),
-                    "telefono1" => $this->input->post('telefono_principal'),
-                    "telefono2" => $this->input->post('telefono_secundario'),
-                    "sitioweb" => $this->input->post('sitio_web'),
-                    );
+            $this->session->set_userdata(array(
+                'afiliacion_cliente' => $data_cliente,
+                'afiliacion_vendedor' => $data,
+            ));
 
-                $this->vendedor_model->insert($data);
-                
-                $this->authentication->login($username, $password);
-                redirect('');
-            } else {
-                // There was an ERROR creating the user
-                redirect('');
-            }
-        }else{
+            redirect('usuario/afiliacion-paso2');
+        } else {
+            redirect('usuario/perfil');
+        }
+    }
+
+    public function view_seleccionar_paquete() {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+
+            $this->template->load_view('home/vendedor/seleccion_paquete', array("cliente" => $cliente));
+        } else {
+            redirect('');
+        }
+    }
+
+    public function submit_afiliacion($paquete_id) {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            
+            $data_cliente = $this->session->userdata('afiliacion_cliente');
+            $data_vendedor = $this->session->userdata('afiliacion_vendedor');
+            $this->cliente_model->update($cliente->id, $data_cliente);
+            $this->vendedor_model->insert($data_vendedor);
+
+            // TODO : Agregar el paquete segun el seleccionado $paquete_id
+            
+            $this->session->unset_userdata('afiliacion_cliente');
+            $this->session->unset_userdata('afiliacion_vendedor');
+            redirect('usuario/completado');
+        } else {
+            redirect('');
+        }
+    }
+
+    public function view_completado() {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $this->template->load_view('home/vendedor/completado', array("cliente" => $cliente));
+        } else {
             redirect('');
         }
     }
