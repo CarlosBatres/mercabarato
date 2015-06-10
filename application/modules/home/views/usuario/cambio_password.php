@@ -83,8 +83,23 @@
                                 <a href="<?php echo site_url('usuario/perfil') ?>"><i class="fa fa-user"></i> Datos Personales</a>
                             </li>
                             <li class="active">
-                                <a href="<?php echo site_url('usuario/password') ?>"><i class="fa fa-list"></i> Contraseña</a>
-                            </li>                                    
+                                <a href="<?php echo site_url('usuario/password') ?>"><i class="fa fa-lock"></i> Contraseña</a>
+                            </li>
+                            <?php if (!$es_vendedor): ?>
+                            <li>
+                                <a href="<?php echo site_url('usuario/afiliacion') ?>"><i class="fa fa-money"></i> Afiliación</a>
+                            </li>
+                            <?php else: ?>
+                                <li>
+                                    <a href="<?php echo site_url('') ?>"><i class="fa fa-building"></i> Paquetes</a>
+                                </li>         
+                                <li>
+                                    <a href="<?php echo site_url('') ?>"><i class="fa fa-credit-card"></i> Productos</a>
+                                </li>  
+                                <li>
+                                    <a href="<?php echo site_url('') ?>"><i class="fa fa-columns"></i> Anuncios</a>
+                                </li>  
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>                        

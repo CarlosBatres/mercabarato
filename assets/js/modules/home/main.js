@@ -263,13 +263,16 @@ function validateLogin() {
     });
 
     $('#login-modal').on('shown.bs.modal', function() {
-        if(!$(this).find('.alert-danger').hasClass('hidden')){
-            $(this).find('.alert-danger').addClass('hidden');        
-        }        
+        if (!$(this).find('.alert-danger').hasClass('hidden')) {
+            $(this).find('.alert-danger').addClass('hidden');
+        }
+        setTimeout(function() {
+            $('input[name="email"]').focus();
+        }, 1000);
     });
 
     $("#loginForm").on('submit', function(e) {
-        e.preventDefault();        
+        e.preventDefault();
         $.ajax({
             type: "POST",
             url: SITE_URL + 'login',
@@ -281,9 +284,9 @@ function validateLogin() {
                     window.location.href = response.url;
                 } else {
                     $('#login-modal').find('.alert-danger').removeClass('hidden');
-                }                
+                }
             }
         });
-    });        
+    });
 }
 
