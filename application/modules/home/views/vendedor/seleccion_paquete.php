@@ -31,70 +31,40 @@
                     </div>
                     <p class="lead">Seleccione uno de los siguientes paquetes mostrados a continuacion, si lo desea puede saltar este paso y completarlo en otro momento.</p>
                     <div class="row packages">
-                        <!-- PRIMER PAQUETE -->
-                        <div class="col-md-4">
-                            <div class="best-value">
+
+                        <?php foreach ($paquetes as $paquete): ?>
+                            <!-- TODO: col-md-4 si son mas de 3 paquetes o menos hay que acomodar aqui -->
+                            <div class="col-md-4">                                
                                 <div class="package ">
                                     <div class="package-header">
-                                        <h5>Basico</h5>
+                                        <h5><?php echo $paquete->nombre; ?></h5>
                                     </div>
                                     <div class="price">
                                         <div class="price-container">
-                                            <h4><span class="currency"></span>5 <?php echo $this->config->item('money_sign') ?></h4>
-                                            <span class="period"> / month</span>
+                                            <h4><span class="currency"></span><?php echo $paquete->costo . ' ' . $this->config->item('money_sign') ?></h4>                                            
                                         </div>
                                     </div>
                                     <ul>
-                                        <li><i class="fa fa-check"></i>Sin limite de Productos</li>
-                                        <li><i class="fa fa-check"></i>Sin limite de Anuncios</li>
-                                        <li><i class="fa fa-times"></i>No hay anuncios destacados</li>                                        
+                                        <li><i class="fa fa-check"></i>
+                                            <?php
+                                            if ($paquete->limite_productos == -1): echo "Sin limite de Productos";
+                                            else: echo $paquete->limite_productos .' productos';
+                                            endif;
+                                            ?>
+                                        </li>
+                                        <li><i class="fa fa-check"></i>
+                                            <?php
+                                            if ($paquete->limite_anuncios == -1): echo "Sin limite de Anuncios";
+                                            else: echo $paquete->limite_anuncios .' anuncios';
+                                            endif;
+                                            ?>
+                                        </li>                                        
                                     </ul>
-                                    <a href="<?php echo site_url("usuario/afiliacion-final/1")?>" class="btn btn-template-main"> Comprar </a>
-                                </div>
+                                    <a href="<?php echo site_url("usuario/afiliacion-final/".$paquete->id) ?>" class="btn btn-template-main"> Comprar </a>
+                                </div>                                
                             </div>
-                        </div>
-                        <!-- / END FIRST PACKAGE -->
-                        <!-- SEGUNDO PAQUETE -->
-                        <div class="col-md-4">
-                            <div class="package ">
-                                <div class="package-header">
-                                    <h5>Estandar</h5>
-                                </div>
-                                <div class="price">
-                                    <div class="price-container">
-                                        <h4><span class="currency"></span>15 <?php echo $this->config->item('money_sign') ?></h4>
-                                        <span class="period">/ month</span>
-                                    </div>
-                                </div>
-                                <ul>
-                                    <li><i class="fa fa-check"></i>Sin limite de Productos</li>
-                                    <li><i class="fa fa-check"></i>Sin limite de Anuncios</li>
-                                    <li><i class="fa fa-times"></i>No hay anuncios destacados</li>                                        
-                                </ul>
-                                <a href="<?php echo site_url("usuario/afiliacion-final/2")?>" class="btn btn-template-main"> Comprar </a>
-                            </div>
-                        </div>
-                        <!-- TERCER PAQUETE -->
-                        <div class="col-md-4">
-                            <div class="package">
-                                <div class="package-header">
-                                    <h5>Premium</h5>
-                                    <div class="meta-text">
-                                        Best Value
-                                    </div>
-                                </div>
-                                <div class="price">
-                                    <h4><span class="currency"></span>20 <?php echo $this->config->item('money_sign') ?></h4>
-                                    <span class="period">/ month</span>
-                                </div>
-                                <ul>
-                                    <li><i class="fa fa-check"></i>Sin limite de Productos</li>
-                                    <li><i class="fa fa-check"></i>Sin limite de Anuncios</li>
-                                    <li><i class="fa fa-times"></i>No hay anuncios destacados</li>                                        
-                                </ul>
-                                <a href="<?php echo site_url("usuario/afiliacion-final/3")?>" class="btn btn-template-main"> Comprar </a>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>                        
+
                     </div>
                     <div class="box clearfix">
                         <div class="box-footer">

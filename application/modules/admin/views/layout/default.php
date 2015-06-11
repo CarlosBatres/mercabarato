@@ -105,7 +105,7 @@
                         <a href="<?php echo site_url('admin/dashboard'); ?>"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>                                    
                     <li>
-                        <a href="<?php echo site_url('admin'); ?>"><i class="fa fa-money fa-fw"></i> Activar Paquete Vendedor</a>
+                        <a href="<?php echo site_url('admin/vendedor_paquetes/listado_por_activar'); ?>"><i class="fa fa-money fa-fw"></i> Activar Paquete Vendedor</a>
                     </li>
 
                     <li>
@@ -125,6 +125,9 @@
                             </li> 
                             <li>
                                 <a href="<?php echo site_url('admin/categorias'); ?>"><i class="fa fa-fw fa-tasks"></i> Categorias</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('admin/paquetes'); ?>"><i class="fa fa-fw fa-suitcase"></i> Paquetes</a>
                             </li>
                         </ul>                         
                     </li>

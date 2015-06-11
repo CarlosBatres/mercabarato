@@ -1,5 +1,5 @@
-- 
-
+- Un problema de routing se arreglo acomodando el .htaccess para que quedara asi:
+RewriteRule ^(.*)$ index.php/?$1 [L] 
 
 
 - Para arreglar el error de headers se hizo esto:

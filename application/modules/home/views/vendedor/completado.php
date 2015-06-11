@@ -48,7 +48,7 @@
                                 <a href="<?php echo site_url('usuario/password') ?>"><i class="fa fa-lock"></i> Contraseña</a>
                             </li>                                    
                             <li class='active'>
-                                <a href="<?php echo site_url('usuario/afiliacion') ?>"><i class="fa fa-money"></i> Afiliación</a>
+                                <a href="<?php echo site_url('usuario/completado') ?>"><i class="fa fa-money"></i> Afiliación</a>
                             </li>                                    
                         </ul>
                     </div>

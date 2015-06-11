@@ -96,6 +96,13 @@ $route['admin/anuncios/crear'] = 'admin/anuncio/crear';
 $route['admin/anuncios/editar/(:num)'] = 'admin/anuncio/editar/$1'; 
 $route['admin/anuncios/borrar/(:num)'] = 'admin/anuncio/borrar/$1'; 
 
+$route['admin/paquetes'] = 'admin/paquete/view_listado'; 
+$route['admin/paquetes/crear'] = 'admin/paquete/crear';
+$route['admin/paquetes/borrar/(:num)'] = 'admin/paquete/borrar/$1'; 
+
+$route['admin/vendedor_paquetes/listado_por_activar'] = 'admin/vendedor_paquete/view_listado_por_activar'; 
+$route['admin/vendedor_paquetes/aprobar/(:num)'] = 'admin/vendedor_paquete/aprobar/$1'; 
+
 $route['default_controller'] = "home/main";
 $route['404_override'] = 'home/main/not_found';
 
