@@ -53,4 +53,20 @@ class Vendedor_paquete_model extends MY_Model {
         
         $this->update($id, $data);        
     }
+    
+    public function get_paquetes_por_vendedor($vendedor_id){
+        $this->db->select("vendedor_paquete.*,paquete.nombre as nombre_paquete,paquete.descripcion as descripcion_paquete");
+        $this->db->from($this->_table);
+        $this->db->join("paquete", "paquete.id=vendedor_paquete.paquete_id", 'INNER');
+        $this->db->where("vendedor_paquete.vendedor_id",$vendedor_id);
+        $this->db->where("vendedor_paquete.aprobado",0);
+        $this->db->limit(10);
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            return $result->result();
+        } else {
+            return FALSE;
+        }         
+    }
 }

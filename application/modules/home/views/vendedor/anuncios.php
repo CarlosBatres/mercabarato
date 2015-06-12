@@ -8,7 +8,7 @@
                 <ul class="breadcrumb">
                     <li><a href="<?php echo site_url(); ?>">Inicio</a>
                     </li>
-                    <li>Mi Cuenta</li>                    
+                    <li>Mi Cuenta</li>
                 </ul>
 
             </div>
@@ -19,25 +19,40 @@
 <div id="content" class="clearfix">
 
     <div class="container">
+
         <div class="row">
 
             <!-- *** LEFT COLUMN ***
                  _________________________________________________________ -->
 
-            <div class="col-md-9 clearfix">                                                
-                <div class="col-md-12">
-                    <div class="heading">
-                        <h3>Completado</h3>
-                    </div>
-                    <p class="lead">Felicidades se ha recibido con exito su afilicacion, nos contactaremos via email con usted en la breveda posible.</p>                    
-                </div>                
-            </div>       
+            <div class="col-md-9 clearfix" id="customer-account">                                                
+                <div class="box clearfix">
 
+                    <div class="heading">
+                        <h3 class="text-uppercase">Anuncios</h3>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                </div>                 
+            </div>                    
 
             <div class="col-md-3">                       
-                <?php echo $html_options;?>                        
+               <?php echo $html_options;?>                                                                      
             </div>                    
 
         </div>
+        <!-- /.row -->
+
     </div>
+    <!-- /.container -->
 </div>
+<!-- /#content -->
