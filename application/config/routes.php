@@ -86,6 +86,7 @@ $route['admin/vendedores/crear'] = 'admin/vendedor/crear';
 $route['admin/vendedores/editar/(:num)'] = 'admin/vendedor/editar/$1'; 
 $route['admin/vendedores/borrar/(:num)'] = 'admin/vendedor/borrar/$1'; 
 $route['admin/vendedores/autocomplete'] = 'admin/vendedor/autocomplete';
+$route['admin/vendedores_lista_control'] = 'admin/vendedor/view_listado_control'; 
 
 $route['admin/categorias'] = 'admin/categoria/view_listado'; 
 $route['admin/categorias/crear'] = 'admin/categoria/crear/0';

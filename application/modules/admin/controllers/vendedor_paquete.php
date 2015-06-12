@@ -14,8 +14,8 @@ class Vendedor_paquete extends MY_Controller {
                 redirect('admin/sin_permiso');
             }
         }
-    } 
-    
+    }
+
     /**
      *  Listado
      */
@@ -24,15 +24,16 @@ class Vendedor_paquete extends MY_Controller {
         $this->template->add_js("modules/admin/vendedor_paquete_listado.js");
         $this->template->load_view('admin/vendedor_paquete/listado_por_activar');
     }
+
     /**
      * 
      * @param type $id
      */
-    public function aprobar($id){
+    public function aprobar($id) {
         $this->vendedor_paquete_model->aprobar_paquete($id);
         redirect('admin/vendedor_paquetes/listado_por_activar');
     }
-    
+
     /**
      *  AJAX Productos / Listado
      */
@@ -42,7 +43,16 @@ class Vendedor_paquete extends MY_Controller {
         $params = array();
         if ($formValues !== false) {
             if ($this->input->post('nombre') != "") {
-                $params["nombre"] = $this->input->post('nombre');
+                $params["nombre_empresa"] = $this->input->post('nombre');
+            }
+            if ($this->input->post('email') != "") {
+                $params["email"] = $this->input->post('email');
+            }
+            if ($this->input->post('sitioweb') != "") {
+                $params["sitioweb"] = $this->input->post('sitioweb');
+            }
+            if ($this->input->post('actividad') != "No Especificada") {
+                $params["actividad"] = $this->input->post('actividad');
             }
             $pagina = $this->input->post('pagina');
         } else {
@@ -80,6 +90,39 @@ class Vendedor_paquete extends MY_Controller {
         $this->template->load_view('admin/vendedor_paquete/tabla_resultados', $data);
     }
 
-    
-    
+    public function ajax_get_paquete_info() {
+        if ($this->input->is_ajax_request()) {
+            $formValues = $this->input->post();
+            if ($formValues !== false) {
+                $vendedor_paquete_id = $this->input->post("vendedor_paquete_id");
+                $vendedor_paquete = $this->vendedor_paquete_model->get($vendedor_paquete_id);
+                $paquete = $this->paquete_model->get($vendedor_paquete->paquete_id);
+                $vendedor = $this->vendedor_model->get($vendedor_paquete->vendedor_id);
+                $cliente = $this->cliente_model->get($vendedor->cliente_id);
+                $usuario = $this->usuario_model->get($cliente->usuario_id);
+                
+                $html='<table class="table table-bordered table-hover table-striped">';
+                $html.='<thead>';
+                $html.='<tr>';                
+                $html.='<th style="width: 15%">Vendedor / Empresa</th>';
+                $html.='<th style="width: 15%">Email</th>';
+                $html.='<th style="width: 15%">Monto a Cancelar</th>';
+                $html.='<th style="width: 15%">Paquete</th>';                                
+                $html.='</tr>';
+                $html.='</thead>';
+                $html.='<tbody>';            
+                $html.='<tr>';                    
+                $html.='<td>'.$vendedor->nombre.'</td>';
+                $html.='<td>'.$usuario->email.'</td>';
+                $html.='<td>'.$vendedor_paquete->monto_a_cancelar .' '.$this->config->item('money_sign').'</td>';
+                $html.='<td>'.$paquete->nombre.'</td>';
+                $html.='</tr>';            
+                $html.='</tbody>';
+                $html.='</table>';                
+                
+                echo $html;
+            }
+        }
+    }
+
 }

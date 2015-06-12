@@ -3,7 +3,10 @@
         <div class="modal-header">
             <h4 class="modal-title">Esta seguro que desea aprobar este paquete del vendedor?.</h4>
         </div>
-        <div class="modal-body">                                    
+        <div class="modal-body">
+            <div class="question-content">
+                
+            </div>
             <p class="text-center">
                 <button class="btn btn-success" type="button" id="yes"><i class="fa fa-check"></i> Si</button>
                 <button class="btn btn-danger" type="button" id="no"><i class="fa fa-close"></i> No</button>
