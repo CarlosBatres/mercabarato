@@ -37,12 +37,15 @@ class Usuario extends MY_Controller {
             } else {
                 $vendedor = array();
             }
+            
+            $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
 
             $this->template->load_view('home/usuario/perfil', array(
                 "usuario" => $usuario,
                 "cliente" => $cliente,
-                "vendedor" => $vendedor,
-                "es_vendedor" => $cliente_es_vendedor));
+                "vendedor" => $vendedor,                
+                "html_options" => $html_options)
+            );
         } else {
             redirect('');
         }
@@ -57,8 +60,10 @@ class Usuario extends MY_Controller {
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
-
-            $this->template->load_view('home/usuario/cambio_password', array("es_vendedor" => $cliente_es_vendedor));
+            
+            $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+            
+            $this->template->load_view('home/usuario/cambio_password', array("html_options" => $html_options));
         } else {
             redirect('');
         }
@@ -93,10 +98,10 @@ class Usuario extends MY_Controller {
                     $data_vendedor = array(
                         "nombre" => $this->input->post('nombre_empresa'),
                         "descripcion" => $this->input->post('descripcion'),
-                        "sitio_web" => $this->input->post('sitio_web'),                        
-                        "actividad" => $this->input->post('actividad'),                        
+                        "sitio_web" => $this->input->post('sitio_web'),
+                        "actividad" => $this->input->post('actividad'),
                     );
-                    $this->vendedor_model->update($vendedor->id,$data_vendedor);
+                    $this->vendedor_model->update($vendedor->id, $data_vendedor);
                 }
 
                 $this->session->set_flashdata('success', 'Tus datos han sido modificados con exito.');

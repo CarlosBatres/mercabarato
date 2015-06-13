@@ -119,7 +119,9 @@ $autoload['model'] = array(
     'categoria_model',
     'producto_resource_model',
     'cliente_model',
-    'anuncio_model');
+    'anuncio_model',
+    'paquete_model',
+    'vendedor_paquete_model');
 
 
 /* End of file autoload.php */

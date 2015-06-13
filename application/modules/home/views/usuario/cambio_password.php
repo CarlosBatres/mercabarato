@@ -73,36 +73,7 @@
 
 
             <div class="col-md-3">                       
-                <div class="panel panel-default sidebar-menu">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel Opciones</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="nav nav-pills nav-stacked">
-                            <li>
-                                <a href="<?php echo site_url('usuario/perfil') ?>"><i class="fa fa-user"></i> Datos Personales</a>
-                            </li>
-                            <li class="active">
-                                <a href="<?php echo site_url('usuario/password') ?>"><i class="fa fa-lock"></i> Contraseña</a>
-                            </li>
-                            <?php if (!$es_vendedor): ?>
-                            <li>
-                                <a href="<?php echo site_url('usuario/afiliacion') ?>"><i class="fa fa-money"></i> Afiliación</a>
-                            </li>
-                            <?php else: ?>
-                                <li>
-                                    <a href="<?php echo site_url('') ?>"><i class="fa fa-building"></i> Paquetes</a>
-                                </li>         
-                                <li>
-                                    <a href="<?php echo site_url('') ?>"><i class="fa fa-credit-card"></i> Productos</a>
-                                </li>  
-                                <li>
-                                    <a href="<?php echo site_url('') ?>"><i class="fa fa-columns"></i> Anuncios</a>
-                                </li>  
-                            <?php endif; ?>
-                        </ul>
-                    </div>
-                </div>                        
+                <?php echo $html_options;?>                                              
             </div> 
 
         </div>

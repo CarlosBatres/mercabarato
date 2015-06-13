@@ -223,5 +223,14 @@ class Vendedor extends MY_Controller {
             echo json_encode(array("suggestions" => $data));
         }
     }
+    
+     /**
+     * 
+     */
+    public function view_listado_control() {
+        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        //$this->template->add_js("modules/admin/vendedores_listado.js");
+        $this->template->load_view('admin/vendedor/listado_control');
+    }
 
 }

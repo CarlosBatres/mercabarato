@@ -49,6 +49,11 @@ $route['usuario/afiliacion/registrar'] = 'home/vendedor/cliente_a_vendedor';
 $route['usuario/afiliacion-paso2'] = 'home/vendedor/view_seleccionar_paquete';
 $route['usuario/afiliacion-final/(:num)'] = 'home/vendedor/submit_afiliacion/$1';
 $route['usuario/completado'] = 'home/vendedor/view_completado';
+$route['usuario/paquetes'] = 'home/vendedor/mis_paquetes';
+$route['usuario/productos'] = 'home/vendedor/mis_productos';
+$route['usuario/anuncios'] = 'home/vendedor/mis_anuncios';
+$route['usuario/comprar_paquetes'] = 'home/vendedor/comprar_paquetes';
+$route['usuario/comprar_paquete/(:any)'] = 'home/vendedor/submit_comprar_paquetes/$1';
 $route['login'] = 'home/usuario/login';
 $route['logout'] = 'home/usuario/logout';
 $route['registro'] = 'home/usuario/view_registro';
@@ -81,6 +86,7 @@ $route['admin/vendedores/crear'] = 'admin/vendedor/crear';
 $route['admin/vendedores/editar/(:num)'] = 'admin/vendedor/editar/$1'; 
 $route['admin/vendedores/borrar/(:num)'] = 'admin/vendedor/borrar/$1'; 
 $route['admin/vendedores/autocomplete'] = 'admin/vendedor/autocomplete';
+$route['admin/vendedores_lista_control'] = 'admin/vendedor/view_listado_control'; 
 
 $route['admin/categorias'] = 'admin/categoria/view_listado'; 
 $route['admin/categorias/crear'] = 'admin/categoria/crear/0';
@@ -95,6 +101,13 @@ $route['admin/anuncios'] = 'admin/anuncio/view_listado';
 $route['admin/anuncios/crear'] = 'admin/anuncio/crear';
 $route['admin/anuncios/editar/(:num)'] = 'admin/anuncio/editar/$1'; 
 $route['admin/anuncios/borrar/(:num)'] = 'admin/anuncio/borrar/$1'; 
+
+$route['admin/paquetes'] = 'admin/paquete/view_listado'; 
+$route['admin/paquetes/crear'] = 'admin/paquete/crear';
+$route['admin/paquetes/borrar/(:num)'] = 'admin/paquete/borrar/$1'; 
+
+$route['admin/vendedor_paquetes/listado_por_activar'] = 'admin/vendedor_paquete/view_listado_por_activar'; 
+$route['admin/vendedor_paquetes/aprobar/(:num)'] = 'admin/vendedor_paquete/aprobar/$1'; 
 
 $route['default_controller'] = "home/main";
 $route['404_override'] = 'home/main/not_found';

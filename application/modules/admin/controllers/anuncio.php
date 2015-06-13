@@ -15,19 +15,19 @@ class Anuncio extends MY_Controller {
             }
         }
     }
-    
-     /**
+
+    /**
      *  Listado
      */
     public function view_listado() {
         $this->template->set_title("Panel de Administracion - Mercabarato.com");
-        $this->template->add_js("modules/admin/anuncios_listado.js");        
+        $this->template->add_js("modules/admin/anuncios_listado.js");
         $this->template->load_view('admin/anuncio/listado');
     }
-    
+
     /**
      *  Crear
-     */    
+     */
     public function crear() {
         $formValues = $this->input->post();
 
@@ -41,11 +41,11 @@ class Anuncio extends MY_Controller {
                 if ($vendedor) {
                     $data = array(
                         "titulo" => $this->input->post('titulo'),
-                        "contenido" => $this->input->post('contenido'),                        
+                        "contenido" => $this->input->post('contenido'),
                         "fecha_publicacion" => date("Y-m-d H:i:s"),
                         "destacada" => 0,
-                        "vendedor_id" => $vendedor_id,                        
-                        "imagen"=>null,
+                        "vendedor_id" => $vendedor_id,
+                        "imagen" => null,
                     );
 
                     $this->anuncio_model->insert($data);
@@ -60,18 +60,18 @@ class Anuncio extends MY_Controller {
         } else {
             $this->template->set_title("Panel de Administracion - Mercabarato.com");
             //$this->template->add_js("fileupload.js");
-            $this->template->add_js("modules/admin/anuncios.js");                        
+            $this->template->add_js("modules/admin/anuncios.js");
 
             $this->template->load_view('admin/anuncio/nuevo');
         }
     }
-    
+
     /**
      * Borrar
      * @param type $id
      */
-     public function borrar($id) {
-        if ($this->input->is_ajax_request()) {            
+    public function borrar($id) {
+        if ($this->input->is_ajax_request()) {
             $this->anuncio_model->delete($id);
             redirect('admin/anuncios');
         }
@@ -94,11 +94,11 @@ class Anuncio extends MY_Controller {
                 if ($vendedor) {
                     $data = array(
                         "titulo" => $this->input->post('titulo'),
-                        "contenido" => $this->input->post('contenido'),                                                
-                        "vendedor_id" => $vendedor_id,                        
+                        "contenido" => $this->input->post('contenido'),
+                        "vendedor_id" => $vendedor_id,
                     );
 
-                    $this->anuncio_model->update($anuncio_id,$data);                    
+                    $this->anuncio_model->update($anuncio_id, $data);
 
                     $this->session->set_flashdata('success', 'Anuncio modificado con exito');
                     redirect('admin/anuncios');
@@ -114,10 +114,10 @@ class Anuncio extends MY_Controller {
             if ($anuncio) {
                 $this->template->set_title("Panel de Administracion - Mercabarato.com");
                 $this->template->add_js("modules/admin/anuncios.js");
-                
+
                 $data = array(
                     "anuncio" => $anuncio,
-                    );
+                );
 
                 $this->template->load_view('admin/anuncio/editar', $data);
             } else {
@@ -125,18 +125,18 @@ class Anuncio extends MY_Controller {
             }
         }
     }
-    
+
     /**
      *  AJAX Productos / Listado
      */
-    public function ajax_get_listado_resultados() {        
+    public function ajax_get_listado_resultados() {
         $formValues = $this->input->post();
 
         $params = array();
         if ($formValues !== false) {
             if ($this->input->post('titulo') != "") {
                 $params["titulo"] = $this->input->post('titulo');
-            }            
+            }
             if ($this->input->post('email') != "") {
                 $params["email"] = $this->input->post('email');
             }
@@ -164,8 +164,8 @@ class Anuncio extends MY_Controller {
         $data = array(
             "anuncios" => $anuncios_array["anuncios"],
             "search_params" => array(
-                "anterior"=>(($pagina-1)<1)?-1:($pagina-1),
-                "siguiente"=>(($pagina+1)>$paginas)?-1:($pagina+1),
+                "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+                "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
                 "pagina" => $pagina,
                 "total_paginas" => $paginas,
                 "por_pagina" => $limit,
@@ -175,5 +175,5 @@ class Anuncio extends MY_Controller {
 
         $this->template->load_view('admin/anuncio/tabla_resultados', $data);
     }
-    
+
 }
