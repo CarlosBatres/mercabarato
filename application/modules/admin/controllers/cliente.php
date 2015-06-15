@@ -49,20 +49,22 @@ class Cliente extends MY_Controller {
                     $usuario->is_admin = 0;
 
                     $this->usuario_model->update($user_id, $usuario);
-                }
+                }                                
+                
                 $data = array(
                     "usuario_id" => $user_id,
-                    "nombres" => $this->input->post('nombres'),
-                    "apellidos" => $this->input->post('apellidos'),
-                    "sexo" => $this->input->post('sexo'),
-                    "fecha_nacimiento" => date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))),
-                    "codigo_postal" => $this->input->post('codigo_postal'),
-                    "direccion" => $this->input->post('direccion'),
-                    "telefono_fijo" => $this->input->post('telefono_fijo'),
-                    "telefono_movil" => $this->input->post('telefono_movil'),                    
-                );                
+                    "nombres" => ($this->input->post('nombres')!='')?$this->input->post('nombres'):null,
+                    "apellidos" => ($this->input->post('apellidos')!='')?$this->input->post('apellidos'):null,
+                    "sexo" => ($this->input->post('sexo')!='X')?$this->input->post('sexo'):null,
+                    "fecha_nacimiento" => ($this->input->post('fecha_nacimiento')!='')?date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))):null,
+                    "codigo_postal" => ($this->input->post('codigo_postal')!='')?$this->input->post('codigo_postal'):null,
+                    "direccion" => ($this->input->post('direccion')!='')?$this->input->post('direccion'):null,
+                    "telefono_fijo" => ($this->input->post('telefono_fijo')!='')?$this->input->post('telefono_fijo'):null,
+                    "telefono_movil" => ($this->input->post('telefono_movil')!='')?$this->input->post('telefono_movil'):null,
+                );
 
                 $this->cliente_model->insert($data);
+                $this->session->set_flashdata('success', 'Usuario creado con exito');
                 redirect('admin/usuarios');
             } else {
                 redirect('admin');
@@ -86,15 +88,15 @@ class Cliente extends MY_Controller {
 
             if ($accion === "form-editar") {
                 $cliente_id = $this->input->post('id');
-                $data = array(                    
-                    "nombres" => $this->input->post('nombres'),
-                    "apellidos" => $this->input->post('apellidos'),
-                    "sexo" => $this->input->post('sexo'),
-                    "fecha_nacimiento" => date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))),
-                    "codigo_postal" => $this->input->post('codigo_postal'),
-                    "direccion" => $this->input->post('direccion'),
-                    "telefono_fijo" => $this->input->post('telefono_fijo'),
-                    "telefono_movil" => $this->input->post('telefono_movil')                    
+                $data = array(
+                    "nombres" => ($this->input->post('nombres')!='')?$this->input->post('nombres'):null,
+                    "apellidos" => ($this->input->post('apellidos')!='')?$this->input->post('apellidos'):null,
+                    "sexo" => ($this->input->post('sexo')!='X')?$this->input->post('sexo'):null,
+                    "fecha_nacimiento" => ($this->input->post('fecha_nacimiento')!='')?date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))):null,
+                    "codigo_postal" => ($this->input->post('codigo_postal')!='')?$this->input->post('codigo_postal'):null,
+                    "direccion" => ($this->input->post('direccion')!='')?$this->input->post('direccion'):null,
+                    "telefono_fijo" => ($this->input->post('telefono_fijo')!='')?$this->input->post('telefono_fijo'):null,
+                    "telefono_movil" => ($this->input->post('telefono_movil')!='')?$this->input->post('telefono_movil'):null,
                 );
 
                 $this->cliente_model->update($cliente_id, $data);
@@ -121,7 +123,7 @@ class Cliente extends MY_Controller {
                     "cliente" => $cliente,
                     "usuario" => $usuario_data
                 );
-
+                
                 $this->template->load_view('admin/cliente/editar', $data);
             } else {
                 //TODO : No se encuentra el producto
@@ -137,9 +139,15 @@ class Cliente extends MY_Controller {
     public function borrar($id) {
         if ($this->input->is_ajax_request()) {
             $cliente = $this->cliente_model->get($id);
-            $this->cliente_model->delete($id);
-            $this->usuario_model->delete($cliente->usuario_id);
-            redirect('admin/usuarios');
+            $usuario=$this->usuario_model->get($cliente->usuario_id);
+
+            if ($usuario->id == 1 && $usuario->email === "admin@mail.com") {
+                $this->session->set_flashdata('error', 'Esta cuenta de usuario <strong>admin@mail.com</strong> no se puede eliminar.');            
+            } else {
+                $this->cliente_model->delete($id);
+                $this->usuario_model->delete($cliente->usuario_id);
+                $this->session->set_flashdata('success', 'Cliente/Usuario eliminado con exito.');                
+            }
         }
     }
 

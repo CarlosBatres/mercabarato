@@ -100,15 +100,21 @@
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="text" class="form-control" name="email">
+                    <div class="input-group">                        
+                        <span class="input-group-addon">*</span>
+                        <input type="text" class="form-control" name="email">
+                    </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group">                    
                     <label>Password</label>
-                    <input type="password" class="form-control" name="password">
+                    <div class="input-group">                        
+                        <span class="input-group-addon">*</span>
+                        <input type="password" class="form-control" name="password">
+                    </div>
                 </div>
                 <hr>
                 <div class="text-center">
-                    <button type="submit" id="admin_form_submit" class="btn btn-lg btn-default"> Crear Usuario</button>
+                    <button type="submit" id="admin_form_submit" class="btn btn-lg btn-primary"> Crear Usuario</button>
                 </div>
                 <input type="hidden" name="accion" value="form-crear">
                 <?php echo form_close(); ?>

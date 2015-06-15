@@ -76,5 +76,13 @@ class Vendedor_model extends MY_Model {
             return FALSE;
         }     
     }
+    
+    public function habilitar_vendedor($id){
+        $data = array(
+            "habilitado" => 1,            
+        );        
+
+        $this->update($id, $data);
+    }
         
 }

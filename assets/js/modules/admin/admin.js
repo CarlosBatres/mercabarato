@@ -189,14 +189,14 @@
         });
 
     });
-    
+
     $(function() {
-        $('#side-menu').metisMenu();        
+        $('#side-menu').metisMenu();
     });
 
-        //Loads the correct sidebar on window load,
-        //collapses the sidebar on window resize.
-        // Sets the min-height of #page-wrapper to window size        
+    //Loads the correct sidebar on window load,
+    //collapses the sidebar on window resize.
+    // Sets the min-height of #page-wrapper to window size        
     $(function() {
         $(window).bind("load resize", function() {
             var topOffset = 50;
@@ -235,5 +235,23 @@
             }
         }
     })(CIS.Script.queue);
+
+    $.validator.setDefaults({
+        highlight: function(element) {
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function(element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function(error, element) {
+            if (element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
 
 })(window);
