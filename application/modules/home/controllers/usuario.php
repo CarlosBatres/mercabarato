@@ -81,14 +81,14 @@ class Usuario extends MY_Controller {
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
                 $data = array(
-                    "nombres" => $this->input->post('nombres'),
-                    "apellidos" => $this->input->post('apellidos'),
-                    "sexo" => $this->input->post('sexo'),
-                    "fecha_nacimiento" => date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))),
-                    "codigo_postal" => $this->input->post('codigo_postal'),
-                    "direccion" => $this->input->post('direccion'),
-                    "telefono_fijo" => $this->input->post('telefono_fijo'),
-                    "telefono_movil" => $this->input->post('telefono_movil')
+                    "nombres" => ($this->input->post('nombres')!='')?$this->input->post('nombres'):null,
+                    "apellidos" => ($this->input->post('apellidos')!='')?$this->input->post('apellidos'):null,
+                    "sexo" => ($this->input->post('sexo')!='X')?$this->input->post('sexo'):null,
+                    "fecha_nacimiento" => ($this->input->post('fecha_nacimiento')!='')?date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))):null,
+                    "codigo_postal" => ($this->input->post('codigo_postal')!='')?$this->input->post('codigo_postal'):null,
+                    "direccion" => ($this->input->post('direccion')!='')?$this->input->post('direccion'):null,
+                    "telefono_fijo" => ($this->input->post('telefono_fijo')!='')?$this->input->post('telefono_fijo'):null,
+                    "telefono_movil" => ($this->input->post('telefono_movil')!='')?$this->input->post('telefono_movil'):null,
                 );
 
                 $this->cliente_model->update($cliente->id, $data);
@@ -96,10 +96,10 @@ class Usuario extends MY_Controller {
                 if ($this->input->post('nombre_empresa')) {
                     $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
                     $data_vendedor = array(
-                        "nombre" => $this->input->post('nombre_empresa'),
-                        "descripcion" => $this->input->post('descripcion'),
-                        "sitio_web" => $this->input->post('sitio_web'),
-                        "actividad" => $this->input->post('actividad'),
+                        "nombre" => ($this->input->post('nombre_empresa')!='')?$this->input->post('nombre_empresa'):null,
+                        "descripcion" => ($this->input->post('descripcion')!='')?$this->input->post('descripcion'):null,
+                        "sitio_web" => ($this->input->post('sitio_web')!='')?$this->input->post('sitio_web'):null,
+                        "actividad" => ($this->input->post('actividad')!='')?$this->input->post('actividad'):null,
                     );
                     $this->vendedor_model->update($vendedor->id, $data_vendedor);
                 }

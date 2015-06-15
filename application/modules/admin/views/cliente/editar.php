@@ -13,7 +13,7 @@
                     <i class="fa fa-inbox"></i> <a href="<?php echo site_url('admin/usuarios'); ?>">Usuarios</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-edit"></i> Editar Usuario - <?php echo $cliente->nombres . ' ' . $cliente->apellidos ?>
+                    <i class="fa fa-edit"></i> Editar Usuario - <?php echo $usuario['email'] ?>
                 </li>
             </ol>
         </div>
@@ -55,7 +55,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Fecha de Nacimiento</label>
-                            <input type="text" id="datepicker" class="form-control" value="<?php echo date("d-m-Y", strtotime($cliente->fecha_nacimiento)); ?>" name="fecha_nacimiento">
+                            <input type="text" id="datepicker" class="form-control" value="<?php echo ($cliente->fecha_nacimiento!=null)?date("d-m-Y", strtotime($cliente->fecha_nacimiento)):''; ?>" name="fecha_nacimiento">
                         </div>
                     </div>                    
                     <div class="col-md-3">
@@ -100,15 +100,18 @@
                 <hr>
                 <div class="alert alert-warning">
                     <strong>Advertencia:</strong>                    
-                    <p> No se deberian modificar estos campos, solo de ser totalmente necesario.</p>
+                    <p> No se deberian modificar el campo email, solo de ser totalmente necesario.</p>
                     <p> El email es el <strong>username</strong> de la cuenta si lo modificas puede que la persona no pueda acceder de nuevo.</p>
-                </div>
+                </div>                                
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="text" class="form-control" name="email" value="<?php echo $usuario['email']; ?>">
+                    <div class="input-group">                        
+                        <span class="input-group-addon">*</span>
+                        <input type="text" class="form-control" name="email" value="<?php echo $usuario['email']; ?>">
+                    </div>
                 </div>
                 <div class="text-center">
-                    <button type="submit" id="admin_form_submit" class="btn btn-lg btn-default"> Confirmar Cambios</button>
+                    <button type="submit" id="admin_form_submit" class="btn btn-lg btn-primary"> Confirmar Cambios</button>
                 </div>
                 <input type="hidden" name="accion" value="form-editar">
                 <input type="hidden" name="usuario_id" value="<?php echo $usuario['id'] ?>">

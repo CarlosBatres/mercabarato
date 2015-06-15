@@ -108,13 +108,16 @@ class Producto extends MY_Controller {
             $html = "";
             foreach ($categorias as $categoria) {
                 $html.='<li class="seleccion_categoria">';
-                $html.='<a href="" data-id="' . $categoria['id'] . '">' . $categoria['nombre'] . '</a>';
+                $html.='<a href="" data-id="' . $categoria['id'] . '">' . $categoria['nombre'];                                
                 if (isset($categoria['subcategorias'])) {
+                    $html.='<span class="fa plus-times"></span></a>';
                     $res_html = $this->_build_categorias_searchparams($categoria['subcategorias']);
                     $html.='<ul>';
                     $html.=$res_html;
                     $html.='</ul>';
-                }
+                }else{
+                    $html.='</a>';
+                }                
                 $html.='</li>';
             }
             return $html;

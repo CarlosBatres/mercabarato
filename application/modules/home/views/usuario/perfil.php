@@ -71,7 +71,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Fecha de Nacimiento</label>
-                                    <input type="text" id="datepicker" class="form-control" value="<?php echo date("d-m-Y", strtotime($cliente->fecha_nacimiento)); ?>" name="fecha_nacimiento">
+                                    <input type="text" id="datepicker" class="form-control" value="<?php echo ($cliente->fecha_nacimiento!=null)?date("d-m-Y", strtotime($cliente->fecha_nacimiento)):''; ?>" name="fecha_nacimiento">
                                 </div>
                             </div>                    
                             <div class="col-md-3">

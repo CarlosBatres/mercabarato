@@ -30,13 +30,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-md-12">
-            <?php if ($this->session->flashdata('success')) { ?>
-                <div class="alert alert-success"> 
-                    <a class="close" data-dismiss="alert">×</a>
-                    <?= $this->session->flashdata('success') ?> 
-                </div>
-            <?php } ?>
+        <div class="col-md-12">            
             <div class="row agregar-item">
                 <div class="col-md-12">            
                     <a class="btn btn-lg btn-default" href="<?php echo site_url('admin/usuarios/crear'); ?>">Nuevo Usuario</a>
@@ -102,6 +96,20 @@
                             Listado de Usuarios
                         </div>
                         <div class="panel-body">
+                            <div class="alertas">
+                                <?php if ($this->session->flashdata('error')) { ?>
+                                    <div class="alert alert-danger"> 
+                                        <a class="close" data-dismiss="alert">×</a>
+                                        <?= $this->session->flashdata('error') ?> 
+                                    </div>
+                                <?php } ?>
+                                <?php if ($this->session->flashdata('success')) { ?>
+                                    <div class="alert alert-success"> 
+                                        <a class="close" data-dismiss="alert">×</a>
+                                        <?= $this->session->flashdata('success') ?> 
+                                    </div>
+                                <?php } ?>
+                            </div>
                             <div id="tabla-resultados"></div>
                         </div>
                     </div>

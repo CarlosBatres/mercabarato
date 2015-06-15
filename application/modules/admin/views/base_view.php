@@ -49,7 +49,7 @@
         <script src="<?php echo assets_url('js/jquery-ui.min.js'); ?>"></script>                
         <script src="<?php echo assets_url('js/bootstrap.min.js'); ?>"></script>                
         <script src="<?php echo assets_url('js/jquery.autocomplete.js'); ?>"></script>                 
-        <script src="<?php echo assets_url('js/jquery.blockUI.js'); ?>"></script>                
+        <script src="<?php echo assets_url('js/jquery.blockUI.js'); ?>"></script>
         <script src="<?php echo assets_url('js/metisMenu.min.js'); ?>"></script>                                        
         <script src="<?php echo assets_url('js/fileupload.js'); ?>"></script>                                        
         

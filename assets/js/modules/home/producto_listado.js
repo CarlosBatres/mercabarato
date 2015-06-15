@@ -1,5 +1,6 @@
 $(document).ready(function() {
     updateResultados();
+    $('#producto-menu-categorias').metisMenu();
 
     $('#search_button').on('click', function(e) {
         e.preventDefault();
@@ -10,11 +11,11 @@ $(document).ready(function() {
         e.preventDefault();
         $('#pagina').val("1");
         if ($(this).parent().hasClass('active')) {
-            $(this).parent().removeClass('active');
-            updateResultados();
+            //$(this).parent().removeClass('active');
+            //updateResultados();
         } else {
-            $('.category-menu').find('li.active').removeClass('active');
-            $(this).parent().addClass('active');
+            //$('.category-menu').find('li.active').removeClass('active');
+            //$(this).parent().addClass('active');
             updateResultados();
         }
     });

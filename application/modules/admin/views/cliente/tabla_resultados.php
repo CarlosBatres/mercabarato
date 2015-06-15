@@ -5,6 +5,18 @@
 <?php else: ?>
 
     <div class="table-responsive">
+        <?php if ($this->session->flashdata('error')) { ?>
+                <div class="alert alert-danger"> 
+                    <a class="close" data-dismiss="alert">×</a>
+                    <?= $this->session->flashdata('error') ?> 
+                </div>
+            <?php } ?>
+            <?php if ($this->session->flashdata('success')) { ?>
+                <div class="alert alert-success"> 
+                    <a class="close" data-dismiss="alert">×</a>
+                    <?= $this->session->flashdata('success') ?> 
+                </div>
+            <?php } ?>
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>
@@ -24,19 +36,19 @@
                         <?php if ($cliente->nombres != null): ?>
                             <td><?php echo $cliente->nombres . ' ' . $cliente->apellidos; ?></td>                                                                                    
                         <?php else: ?>   
-                            <td></td>
+                            <td class="warning"></td>
                         <?php endif; ?>
 
                         <?php if ($cliente->sexo != null): ?>
                             <td><?php echo ($cliente->sexo == 'H') ? 'Hombre' : 'Mujer'; ?></td>
                         <?php else: ?>   
-                            <td></td>    
+                            <td class="warning"></td>
                         <?php endif; ?>
 
                         <?php if ($cliente->fecha_nacimiento != null): ?>
                             <td><?php echo date('d-M-Y', strtotime($cliente->fecha_nacimiento)); ?></td>
                         <?php else: ?>   
-                            <td></td>
+                            <td class="warning"></td>
                         <?php endif; ?>
 
                         <td><?php echo $cliente->email; ?></td>

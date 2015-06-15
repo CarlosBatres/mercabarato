@@ -106,10 +106,7 @@
                     </li>                                                        
                     <li>
                         <a href="<?php echo site_url('admin/vendedor_paquetes/listado_por_activar'); ?>"><i class="fa fa-money fa-fw"></i> Activar Paquete Vendedor</a>
-                    </li>
-                    <li>
-                        <a href="<?php echo site_url('admin/vendedores_lista_control'); ?>"><i class="fa fa-fw fa-dashboard"></i> Habilitar / Inhabilitar Vendedor</a>
-                    </li>                      
+                    </li>                    
                     <li>
                         <a href="#"><i class="fa fa-tasks fa-fw"></i> Opciones Avanzadas<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">

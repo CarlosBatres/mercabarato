@@ -30,7 +30,10 @@ class Vendedor_paquete extends MY_Controller {
      * @param type $id
      */
     public function aprobar($id) {
+        $vendedor_paquete=$this->vendedor_paquete_model->get($id);        
         $this->vendedor_paquete_model->aprobar_paquete($id);
+        $this->vendedor_model->habilitar_vendedor($vendedor_paquete->vendedor_id);
+        $this->session->set_flashdata('success', 'El paquete ha sido aprobado y el Vendedor habilitado.');
         redirect('admin/vendedor_paquetes/listado_por_activar');
     }
 
