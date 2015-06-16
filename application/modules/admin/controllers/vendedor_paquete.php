@@ -31,8 +31,12 @@ class Vendedor_paquete extends MY_Controller {
      */
     public function aprobar($id) {
         $vendedor_paquete=$this->vendedor_paquete_model->get($id);        
-        $this->vendedor_paquete_model->aprobar_paquete($id);
+        $paquete=$this->paquete_model->get($vendedor_paquete->paquete_id);
+        $this->vendedor_paquete_model->aprobar_paquete($id,$paquete);
         $this->vendedor_model->habilitar_vendedor($vendedor_paquete->vendedor_id);
+        
+        // TODO: Enviar correo al cliente para informarle que ya esta activo su paquete y el esta habilitado
+        
         $this->session->set_flashdata('success', 'El paquete ha sido aprobado y el Vendedor habilitado.');
         redirect('admin/vendedor_paquetes/listado_por_activar');
     }
