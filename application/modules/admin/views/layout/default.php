@@ -105,7 +105,7 @@
                         <a href="<?php echo site_url('admin/dashboard'); ?>"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>                                                        
                     <li>
-                        <a href="<?php echo site_url('admin/vendedor_paquetes/listado_por_activar'); ?>"><i class="fa fa-money fa-fw"></i> Activar Paquete Vendedor</a>
+                        <a href="<?php echo site_url('admin/vendedor_paquetes/listado_por_activar'); ?>"><i class="fa fa-money fa-fw"></i> Aprobar Paquete</a>
                     </li>                    
                     <li>
                         <a href="#"><i class="fa fa-tasks fa-fw"></i> Opciones Avanzadas<span class="fa arrow"></span></a>

@@ -173,20 +173,24 @@ class Vendedor extends MY_Controller {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-            $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
 
-            $vendedor_paquetes = $this->vendedor_paquete_model->get_paquetes_por_vendedor($vendedor->id);
-            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
-            $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+            if ($this->cliente_model->es_vendedor($cliente->id)) {
+                $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
+                $vendedor_paquetes = $this->vendedor_paquete_model->get_paquetes_por_vendedor($vendedor->id);
+                $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+                $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
 
-            $data = array(
-                "cliente" => $cliente,
-                "vendedor" => $vendedor,
-                "vendedor_paquetes" => $vendedor_paquetes,
-                "html_options" => $html_options
-            );
+                $data = array(
+                    "cliente" => $cliente,
+                    "vendedor" => $vendedor,
+                    "vendedor_paquetes" => $vendedor_paquetes,
+                    "html_options" => $html_options
+                );
 
-            $this->template->load_view('home/vendedor/paquetes', $data);
+                $this->template->load_view('home/vendedor/paquetes', $data);
+            } else {
+                redirect('usuario/perfil');
+            }
         } else {
             redirect('');
         }
@@ -197,18 +201,23 @@ class Vendedor extends MY_Controller {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-            $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
 
-            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
-            $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+            if ($this->cliente_model->es_vendedor($cliente->id)) {
+                $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
 
-            $data = array(
-                "cliente" => $cliente,
-                "vendedor" => $vendedor,
-                "html_options" => $html_options
-            );
+                $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+                $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
 
-            $this->template->load_view('home/vendedor/productos', $data);
+                $data = array(
+                    "cliente" => $cliente,
+                    "vendedor" => $vendedor,
+                    "html_options" => $html_options
+                );
+
+                $this->template->load_view('home/vendedor/productos', $data);
+            } else {
+                redirect('usuario/perfil');
+            }
         } else {
             redirect('');
         }
@@ -219,16 +228,21 @@ class Vendedor extends MY_Controller {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-            $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
 
-            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
-            $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+            if ($this->cliente_model->es_vendedor($cliente->id)) {
+                $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
 
-            $data = array(
-                "html_options" => $html_options
-            );
+                $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+                $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
 
-            $this->template->load_view('home/vendedor/anuncios', $data);
+                $data = array(
+                    "html_options" => $html_options
+                );
+
+                $this->template->load_view('home/vendedor/anuncios', $data);
+            } else {
+                redirect('usuario/perfil');
+            }
         } else {
             redirect('');
         }
@@ -249,8 +263,8 @@ class Vendedor extends MY_Controller {
 
                 $data = array(
                     "html_options" => $html_options,
-                    "cliente"=>$cliente,
-                    "paquetes"=>$paquetes
+                    "cliente" => $cliente,
+                    "paquetes" => $paquetes
                 );
 
                 $this->template->load_view('home/vendedor/compra_paquete', $data);

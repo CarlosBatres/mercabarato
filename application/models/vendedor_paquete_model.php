@@ -49,14 +49,13 @@ class Vendedor_paquete_model extends MY_Model {
         }
     }
 
-    public function aprobar_paquete($id) {
+    public function aprobar_paquete($id, $paquete) {        
+        $periodo=$paquete->duracion;        
         $data = array(
             "fecha_aprobado" => date("Y-m-d"),
             "aprobado" => 1,
-            "fecha_terminar" => date("Y-m-d")
+            "fecha_terminar" => date('Y-m-d', strtotime("+$periodo months", strtotime(date("Y-m-d"))))
         );
-        // TODO: Calcular fecha_terminar antes de hacer el update en base a duracion en meses
-
         $this->update($id, $data);
     }
 
@@ -65,7 +64,6 @@ class Vendedor_paquete_model extends MY_Model {
         $this->db->from($this->_table);
         $this->db->join("paquete", "paquete.id=vendedor_paquete.paquete_id", 'INNER');
         $this->db->where("vendedor_paquete.vendedor_id", $vendedor_id);
-        $this->db->where("vendedor_paquete.aprobado", 0);
         $this->db->limit(10);
         $result = $this->db->get();
 
