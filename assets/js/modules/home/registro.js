@@ -47,7 +47,7 @@ function validateForms() {
                 required: true, 
                 email: true,
                 remote: {
-			url: SITE_URL+"/home/usuario/check_email",
+			url: SITE_URL+"home/usuario/check_email",
 			type: "post",
 			data: {
 				email: function(){ return email_comprador.val(); }
