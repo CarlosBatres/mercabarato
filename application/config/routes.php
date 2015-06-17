@@ -49,11 +49,15 @@ $route['usuario/afiliacion/registrar'] = 'home/vendedor/cliente_a_vendedor';
 $route['usuario/afiliacion-paso2'] = 'home/vendedor/view_seleccionar_paquete';
 $route['usuario/afiliacion-final/(:num)'] = 'home/vendedor/submit_afiliacion/$1';
 $route['usuario/completado'] = 'home/vendedor/view_completado';
-$route['usuario/paquetes'] = 'home/vendedor/mis_paquetes';
-$route['usuario/productos'] = 'home/vendedor/mis_productos';
-$route['usuario/anuncios'] = 'home/vendedor/mis_anuncios';
-$route['usuario/comprar_paquetes'] = 'home/vendedor/comprar_paquetes';
-$route['usuario/comprar_paquete/(:any)'] = 'home/vendedor/submit_comprar_paquetes/$1';
+$route['usuario/panel_vendedor'] = 'home/vendedor/ir_panel_vendedor';
+
+$route['usuario/paquetes/mis-paquetes'] = 'home/vendedor/mis_paquetes';
+$route['usuario/paquetes/comprar'] = 'home/vendedor/comprar_paquetes';
+$route['usuario/paquetes/comprar_paquete/(:any)'] = 'home/vendedor/submit_comprar_paquetes/$1';
+$route['usuario/productos/mis-productos'] = 'home/vendedor/mis_productos';
+$route['usuario/productos/agregar'] = 'home/vendedor/agregar_producto';
+$route['usuario/anuncios/mis-anuncios'] = 'home/vendedor/mis_anuncios';
+
 $route['login'] = 'home/usuario/login';
 $route['logout'] = 'home/usuario/logout';
 $route['registro'] = 'home/usuario/view_registro';
@@ -62,6 +66,20 @@ $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
 $route['productos'] = 'home/producto/view_pre_listado';
 $route['productos/ficha/(:any)'] = 'home/producto/ver_producto/$1';
 $route['productos/(:any)'] = 'home/producto/view_listado/$1';
+
+/* Apartado para vendedores */
+ 
+$route['panel_vendedor'] = 'admin/panel_vendedores/resumen';
+$route['panel_vendedor/resumen'] = 'admin/panel_vendedores/resumen';
+$route['panel_vendedor/login'] = 'admin/panel_vendedores/login';
+$route['panel_vendedor/logout'] = 'admin/panel_vendedores/logout';
+$route['panel_vendedor/producto/listado'] = 'admin/panel_vendedores_productos/listado';
+$route['panel_vendedor/producto/agregar'] = 'admin/panel_vendedores_productos/agregar';
+$route['panel_vendedor/producto/borrar/(:num)'] = 'admin/panel_vendedores_productos/borrar/$1'; 
+$route['panel_vendedor/producto/editar/(:num)'] = 'admin/panel_vendedores_productos/editar/$1'; 
+$route['panel_vendedor/producto/upload_image'] = 'admin/panel_vendedores/upload_image';
+$route['panel_vendedor/producto/ajax_get_listado_resultados'] = 'admin/panel_vendedores_productos/ajax_get_listado_resultados'; 
+
 
 /* Admin */
 $route['admin'] = 'admin/main';

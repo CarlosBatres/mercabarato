@@ -73,12 +73,12 @@
                     <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil Usuario</a>
+                    <li><a href="#"><i class="fa fa-user fa-fw"></i> Peril Usuario</a>
                     </li>
                     <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configuración</a>
                     </li>
                     <li class="divider"></li>
-                    <li><a href="<?php echo site_url('admin/do_logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
+                    <li><a href="<?php echo site_url('panel_vendedor/logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
                     </li>
                 </ul>
                 <!-- /.dropdown-user -->
@@ -102,35 +102,22 @@
                         <!-- /input-group -->
                     </li>
                     <li>
-                        <a href="<?php echo site_url('admin/dashboard'); ?>"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                    </li>                                                        
+                        <a href="<?php echo site_url('panel_vendedor/resumen'); ?>"><i class="fa fa-fw fa-dashboard"></i> Resumen</a>
+                    </li>                                                                            
                     <li>
-                        <a href="<?php echo site_url('admin/vendedor_paquetes/listado_por_activar'); ?>"><i class="fa fa-money fa-fw"></i> Aprobar Paquete</a>
-                    </li>                    
-                    <li>
-                        <a href="#"><i class="fa fa-tasks fa-fw"></i> Opciones Avanzadas<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Mis Productos<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo site_url('admin/usuarios'); ?>"><i class="fa fa-user fa-fw"></i> Usuarios</a>
-                            </li>
+                                <a href="<?php echo site_url('panel_vendedor/producto/agregar'); ?>"><i class="fa fa-plus fa-fw"></i> Agregar un producto</a>
+                            </li>                            
                             <li>
-                                <a href="<?php echo site_url('admin/vendedores'); ?>"><i class="fa fa-money fa-fw"></i> Vendedores</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url('admin/anuncios'); ?>"><i class="fa fa-fw fa-calendar"></i> Anuncios</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url('admin/productos'); ?>"><i class="fa fa-fw fa-inbox"></i> Productos</a>
-                            </li> 
-                            <li>
-                                <a href="<?php echo site_url('admin/categorias'); ?>"><i class="fa fa-fw fa-tasks"></i> Categorias</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url('admin/paquetes'); ?>"><i class="fa fa-fw fa-suitcase"></i> Paquetes</a>
-                            </li>
+                                <a href="<?php echo site_url('panel_vendedor/producto/listado'); ?>"><i class="fa fa-fw fa-calendar"></i> Listado de productos</a>
+                            </li>                            
                         </ul>                         
                     </li>
-
+                    <li>
+                        <a href="<?php echo site_url(''); ?>"><i class="fa fa-fw fa-arrow-left"></i> Regresar al Sitio</a>
+                    </li> 
 
                 </ul>
             </div>

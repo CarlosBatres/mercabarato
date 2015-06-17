@@ -59,7 +59,7 @@
                     <label>Imagen del Producto</label>
                     <?php if ($producto_imagen): ?>
                         <div class="preview_imagen">                        
-                            <img src="<?php echo assets_url('uploads/imgs/' . $producto_imagen->filename); ?>" width="250"/>
+                            <img src="<?php echo assets_url($this->config->item('productos_img_path')) .'/'.$producto_imagen->filename ?>" width="250"/>
                         </div>
                         <br>
                     <?php endif; ?>

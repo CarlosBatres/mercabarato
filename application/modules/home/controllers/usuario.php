@@ -39,7 +39,7 @@ class Usuario extends MY_Controller {
             }
             
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
-
+            $this->template->add_js('modules/home/perfil.js');
             $this->template->load_view('home/usuario/perfil', array(
                 "usuario" => $usuario,
                 "cliente" => $cliente,
@@ -62,7 +62,7 @@ class Usuario extends MY_Controller {
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
             
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
-            
+            $this->template->add_js('modules/home/perfil.js');
             $this->template->load_view('home/usuario/cambio_password', array("html_options" => $html_options));
         } else {
             redirect('');
