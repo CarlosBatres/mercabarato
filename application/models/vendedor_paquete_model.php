@@ -49,8 +49,9 @@ class Vendedor_paquete_model extends MY_Model {
         }
     }
 
-    public function aprobar_paquete($id, $paquete) {        
+    public function aprobar_paquete($id, $paquete) {                
         $periodo=$paquete->duracion;        
+        // TODO : Validar que sea un periodo valido de meses ??
         $data = array(
             "fecha_aprobado" => date("Y-m-d"),
             "aprobado" => 1,

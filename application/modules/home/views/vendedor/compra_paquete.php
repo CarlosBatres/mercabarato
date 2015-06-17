@@ -60,7 +60,7 @@
                                             ?>
                                         </li>                                        
                                     </ul>
-                                    <a href="<?php echo site_url("usuario/comprar_paquete/".$paquete->id) ?>" class="btn btn-template-main"> Comprar </a>
+                                    <a href="<?php echo site_url("usuario/paquetes/comprar_paquete/".$paquete->id) ?>" class="btn btn-template-main"> Comprar </a>
                                 </div>                                
                             </div>
                         <?php endforeach; ?>                                                    

@@ -37,6 +37,8 @@
                                     <tr>
                                         <th>Nombre</th>
                                         <th>Fecha Compra</th>
+                                        <th>Fecha Aprobación</th>
+                                        <th>Fecha Terminar</th>
                                         <th>Costo</th>
                                         <th>Estado</th>                                        
                                     </tr>
@@ -46,6 +48,8 @@
                                         <tr>
                                             <th><?php echo $paquete->nombre_paquete ?></th>
                                             <td><?php echo date("d-M-Y", strtotime($paquete->fecha_comprado)) ?></td>
+                                            <td><?php echo ($paquete->fecha_aprobado!=null)?date("d-m-Y", strtotime($paquete->fecha_aprobado)):''; ?></td>
+                                            <td><?php echo ($paquete->fecha_terminar!=null)?date("d-m-Y", strtotime($paquete->fecha_terminar)):''; ?></td>
                                             <td><?php echo $paquete->monto_a_cancelar . ' ' . $this->config->item('money_sign') ?></td>
                                             <td>
                                                 <?php if ($paquete->aprobado == 1): ?>
@@ -72,7 +76,7 @@
                         <h3>Le interesa comprar un nuevo paquete?</h3>
                     </div>
                     <div class="col-md-4 col-sm-12">
-                        <a href="<?php echo site_url('usuario/comprar_paquetes') ?>" id="comprar-paquetes" class="btn btn-template-primary"> Comprar Paquetes</a>
+                        <a href="<?php echo site_url('usuario/paquetes/comprar') ?>" id="boton-perfil" class="btn btn-template-primary"> Comprar Paquetes</a>
                     </div>
                 </div>
                     
