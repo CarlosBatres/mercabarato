@@ -9,7 +9,9 @@ class Panel_vendedores extends MY_Controller {
         parent::__construct();
         $this->_validar_conexion();
     }
-
+    /**
+     * 
+     */
     public function resumen() {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
@@ -55,7 +57,9 @@ class Panel_vendedores extends MY_Controller {
         redirect('');
     }
            
-    
+    /**
+     * 
+     */
     public function upload_image() {
         $this->load->config('upload', TRUE);
         $this->load->library('UploadHandler', $this->config->item('producto', 'upload'));

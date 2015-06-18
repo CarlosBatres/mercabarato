@@ -48,3 +48,10 @@ CREATE TABLE IF NOT EXISTS `mercabarato_bd`.`vendedor_paquete` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
+
+---------------------------
+-- 18/06/2015 
+---------------------------
+
+ALTER TABLE `mercabarato_bd`.`anuncio` 
+ADD COLUMN `habilitado` INT(1) NOT NULL DEFAULT 0 AFTER `fecha_publicacion`;

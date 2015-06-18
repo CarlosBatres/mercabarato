@@ -67,70 +67,76 @@ class Panel_vendedores_productos extends MY_Controller {
      * @param type $id
      */
     public function editar($id) {
-        $formValues = $this->input->post();
-        if ($formValues !== false) {
-            $accion = $this->input->post('accion');
+        $user_id = $this->authentication->read('identifier');
+        $vendedor = $this->usuario_model->get_full_identidad($user_id);
+        $producto_id = $id;
 
-            if ($accion === "producto-editar") {
-                $user_id = $this->authentication->read('identifier');
-                $vendedor = $this->usuario_model->get_full_identidad($user_id);
-                $producto_id = $this->input->post('id');
+        $res = $this->producto_model->get_vendedor_id_del_producto($producto_id);
+        if ($res == $vendedor["vendedor"]->id) {
+            $formValues = $this->input->post();
+            if ($formValues !== false) {
+                $accion = $this->input->post('accion');
 
-                $data = array(
-                    "nombre" => $this->input->post('nombre'),
-                    "descripcion" => $this->input->post('descripcion'),
-                    "precio" => $this->input->post('precio'),
-                    "mostrar_producto" => $this->input->post('mostrar_producto'),
-                    "mostrar_precio" => $this->input->post('mostrar_precio'),
-                    "vendedor_id" => $vendedor['vendedor']->id,
-                    "categoria_id" => $this->input->post('categoria'),
-                );
-
-                $this->producto_model->update($producto_id, $data);
-
-                if ($this->input->post('file_name') !== "") {
-                    $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto_id);
-                    if ($producto_imagen) {
-                        $this->producto_resource_model->delete($producto_imagen->id);
-                    }
-
-                    $data_img = array(
-                        "producto_id" => $producto_id,
-                        "nombre" => "Imagen principal del producto",
-                        "descripcion" => "Idealmente esta imagen seria lo mas grande posible.",
-                        "tipo" => "imagen_principal",
-                        "filename" => $this->input->post('file_name'),
-                        "orden" => 0,
+                if ($accion === "producto-editar") {
+                    $data = array(
+                        "nombre" => $this->input->post('nombre'),
+                        "descripcion" => $this->input->post('descripcion'),
+                        "precio" => $this->input->post('precio'),
+                        "mostrar_producto" => $this->input->post('mostrar_producto'),
+                        "mostrar_precio" => $this->input->post('mostrar_precio'),
+                        "vendedor_id" => $vendedor['vendedor']->id,
+                        "categoria_id" => $this->input->post('categoria'),
                     );
 
-                    $this->producto_resource_model->insert($data_img);
-                }
+                    $this->producto_model->update($producto_id, $data);
 
-                $this->session->set_flashdata('success', 'Producto modificado con exito');
-                redirect('panel_vendedor/producto/listado');
+                    if ($this->input->post('file_name') !== "") {
+                        $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto_id);
+                        if ($producto_imagen) {
+                            $this->producto_resource_model->delete($producto_imagen->id);
+                        }
+
+                        $data_img = array(
+                            "producto_id" => $producto_id,
+                            "nombre" => "Imagen principal del producto",
+                            "descripcion" => "Idealmente esta imagen seria lo mas grande posible.",
+                            "tipo" => "imagen_principal",
+                            "filename" => $this->input->post('file_name'),
+                            "orden" => 0,
+                        );
+
+                        $this->producto_resource_model->insert($data_img);
+                    }
+
+                    $this->session->set_flashdata('success', 'Producto modificado con exito');
+                    redirect('panel_vendedor/producto/listado');
+                } else {
+                    redirect('panel_vendedor');
+                }
             } else {
-                redirect('panel_vendedor');
+                $producto = $this->producto_model->get($id);
+                if ($producto) {
+                    $this->template->set_title("Panel de Administracion - Mercabarato.com");
+                    $this->template->add_js("modules/admin/panel_vendedores/productos.js");
+                    $categorias = $this->categoria_model->get_all();
+                    $vendedor = $this->vendedor_model->get($producto->vendedor_id);
+                    $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto->id);
+
+                    $data = array(
+                        "categorias" => $categorias,
+                        "producto" => $producto,
+                        "vendedor" => $vendedor,
+                        "producto_imagen" => $producto_imagen);
+
+                    $this->template->set_layout('panel_vendedores');
+                    $this->template->load_view('admin/panel_vendedores/producto/producto_editar', $data);
+                } else {
+                    //TODO : No se encuentra el producto
+                }
             }
         } else {
-            $producto = $this->producto_model->get($id);
-            if ($producto) {
-                $this->template->set_title("Panel de Administracion - Mercabarato.com");
-                $this->template->add_js("modules/admin/panel_vendedores/productos.js");
-                $categorias = $this->categoria_model->get_all();
-                $vendedor = $this->vendedor_model->get($producto->vendedor_id);
-                $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto->id);
-
-                $data = array(
-                    "categorias" => $categorias,
-                    "producto" => $producto,
-                    "vendedor" => $vendedor,
-                    "producto_imagen" => $producto_imagen);
-
-                $this->template->set_layout('panel_vendedores');
-                $this->template->load_view('admin/panel_vendedores/producto/producto_editar', $data);
-            } else {
-                //TODO : No se encuentra el producto
-            }
+            // TODO : Este no es tu producto PAGINA DE ERROR
+            redirect('panel_vendedor/producto/listado');
         }
     }
 
@@ -158,7 +164,7 @@ class Panel_vendedores_productos extends MY_Controller {
     /**
      * 
      */
-    public function ajax_get_listado_resultados() {
+    public function ajax_get_listado_resultados() {        
         $formValues = $this->input->post();
 
         $params = array();
@@ -169,9 +175,10 @@ class Panel_vendedores_productos extends MY_Controller {
             if ($this->input->post('categoria') != 0) {
                 $params["categoria_id"] = $this->input->post('categoria');
             }
-            if ($this->input->post('vendedor') != "") {
-                $params["vendedor"] = $this->input->post('vendedor');
-            }
+            $user_id = $this->authentication->read('identifier');
+            $vendedor = $this->usuario_model->get_full_identidad($user_id);
+            $params["vendedor_id"] = $vendedor["vendedor"]->id;
+
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
@@ -206,6 +213,23 @@ class Panel_vendedores_productos extends MY_Controller {
                 "desde" => (($pagina * $limit) - $limit) + 1));
 
         $this->template->load_view('admin/panel_vendedores/producto/producto_tabla_resultados', $data);
+    }
+
+    /**
+     * Verifico si un producto pertenece al vendedor actualmente logeado
+     * @param type $producto_id
+     * @return boolean
+     */
+    private function _verificar_producto_dueño($producto_id) {
+        $user_id = $this->authentication->read('identifier');
+        $vendedor = $this->usuario_model->get_full_identidad($user_id);
+
+        $res = $this->producto_model->get_vendedor_id_del_producto($producto_id);
+        if ($res == $vendedor["vendedor"]->id) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

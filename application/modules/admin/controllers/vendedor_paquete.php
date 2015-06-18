@@ -26,7 +26,8 @@ class Vendedor_paquete extends MY_Controller {
     }
 
     /**
-     * 
+     * Aprobamos un vendedor_paquete
+     * Verificamos productos y anuncios 
      * @param type $id
      */
     public function aprobar($id) {
@@ -35,8 +36,22 @@ class Vendedor_paquete extends MY_Controller {
         $this->vendedor_paquete_model->aprobar_paquete($id,$paquete);
         $this->vendedor_model->habilitar_vendedor($vendedor_paquete->vendedor_id);
         
-        // TODO: Enviar correo al cliente para informarle que ya esta activo su paquete y el esta habilitado
+        $productos=$this->producto_model->get_many_by("vendedor_id",$vendedor_paquete->vendedor_id);
+        $anuncios=$this->anuncio_model->get_many_by("vendedor_id",$vendedor_paquete->vendedor_id);
         
+        if(sizeof($productos)<=$vendedor_paquete->limite_productos){
+            $this->producto_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>1));
+        }else{
+            $this->producto_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>0));
+        }
+        
+        if(sizeof($anuncios)<=$vendedor_paquete->limite_anuncios){
+            $this->anuncio_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>1));
+        }else{
+            $this->anuncio_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>0));
+        }        
+        
+        // TODO: Enviar correo al cliente para informarle que ya esta activo su paquete y el esta habilitado        
         $this->session->set_flashdata('success', 'El paquete ha sido aprobado y el Vendedor habilitado.');
         redirect('admin/vendedor_paquetes/listado_por_activar');
     }

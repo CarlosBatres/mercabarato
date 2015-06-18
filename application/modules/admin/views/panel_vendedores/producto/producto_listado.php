@@ -61,15 +61,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>                                     
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-12" for="vendedor">Vendedor / Empresa</label>
-                                            <div class="col-md-12">
-                                                <input type="text" name="vendedor" id="vendedor" value="" class="form-control"/>                                
-                                            </div>
-                                        </div>
-                                    </div> 
+                                    </div>                                                                         
                                 </div>                                
                                 <hr>
                                 <div class="row"> 

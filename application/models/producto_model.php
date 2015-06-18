@@ -29,6 +29,9 @@ class Producto_model extends MY_Model {
         if (isset($params['vendedor'])) {
             $this->db->like('vendedor.nombre', $params['vendedor'], 'both');
         }
+        if (isset($params['vendedor_id'])) {
+            $this->db->where('vendedor.id', $params['vendedor_id']);
+        }
 
 
         $this->db->stop_cache();
@@ -112,6 +115,16 @@ class Producto_model extends MY_Model {
         } else {
             return false;
         }
+    }
+    
+    
+    public function get_vendedor_id_del_producto($producto_id){
+        $producto=$this->get($producto_id);
+        if($producto){
+            return $producto->vendedor_id;
+        }else{
+            return FALSE;
+        }            
     }
 
 }
