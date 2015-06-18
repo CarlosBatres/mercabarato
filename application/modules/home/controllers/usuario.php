@@ -13,18 +13,39 @@ class Usuario extends MY_Controller {
      * Vista de la pagina del registro
      */
     public function view_registro() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
-        $this->template->add_js('modules/home/registro.js');
-        $paises = $this->pais_model->get_all();
-        $data = array("paises" => $paises);
+        if (!$this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->add_js('modules/home/registro.js');
+            $paises = $this->pais_model->get_all();
+            $data = array("paises" => $paises);
 
-        $this->template->load_view('home/usuario/registro', $data);
+            $this->template->load_view('home/usuario/registro', $data);
+        } else {
+            redirect('');
+        }
+    }
+    /**
+     * 
+     */
+    public function view_perfil() {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+
+            $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+            //$this->template->add_js('modules/home/perfil.js');
+            $this->template->load_view('home/usuario/perfil', array("html_options" => $html_options));
+        } else {
+            redirect('');
+        }
     }
 
     /**
      *  usuario / perfil
      */
-    public function view_perfil() {
+    public function view_datos_personales() {
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
             $user_id = $this->authentication->read('identifier');
@@ -37,13 +58,13 @@ class Usuario extends MY_Controller {
             } else {
                 $vendedor = array();
             }
-            
+
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
             $this->template->add_js('modules/home/perfil.js');
-            $this->template->load_view('home/usuario/perfil', array(
+            $this->template->load_view('home/usuario/datos_personales', array(
                 "usuario" => $usuario,
                 "cliente" => $cliente,
-                "vendedor" => $vendedor,                
+                "vendedor" => $vendedor,
                 "html_options" => $html_options)
             );
         } else {
@@ -60,7 +81,7 @@ class Usuario extends MY_Controller {
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
-            
+
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
             $this->template->add_js('modules/home/perfil.js');
             $this->template->load_view('home/usuario/cambio_password', array("html_options" => $html_options));
@@ -72,7 +93,7 @@ class Usuario extends MY_Controller {
     /**
      * 
      */
-    public function modificar() {
+    public function modificar_datos() {
         $formValues = $this->input->post();
         if ($formValues !== false) {
             $accion = $this->input->post('accion');
@@ -81,14 +102,14 @@ class Usuario extends MY_Controller {
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
                 $data = array(
-                    "nombres" => ($this->input->post('nombres')!='')?$this->input->post('nombres'):null,
-                    "apellidos" => ($this->input->post('apellidos')!='')?$this->input->post('apellidos'):null,
-                    "sexo" => ($this->input->post('sexo')!='X')?$this->input->post('sexo'):null,
-                    "fecha_nacimiento" => ($this->input->post('fecha_nacimiento')!='')?date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))):null,
-                    "codigo_postal" => ($this->input->post('codigo_postal')!='')?$this->input->post('codigo_postal'):null,
-                    "direccion" => ($this->input->post('direccion')!='')?$this->input->post('direccion'):null,
-                    "telefono_fijo" => ($this->input->post('telefono_fijo')!='')?$this->input->post('telefono_fijo'):null,
-                    "telefono_movil" => ($this->input->post('telefono_movil')!='')?$this->input->post('telefono_movil'):null,
+                    "nombres" => ($this->input->post('nombres') != '') ? $this->input->post('nombres') : null,
+                    "apellidos" => ($this->input->post('apellidos') != '') ? $this->input->post('apellidos') : null,
+                    "sexo" => ($this->input->post('sexo') != 'X') ? $this->input->post('sexo') : null,
+                    "fecha_nacimiento" => ($this->input->post('fecha_nacimiento') != '') ? date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))) : null,
+                    "codigo_postal" => ($this->input->post('codigo_postal') != '') ? $this->input->post('codigo_postal') : null,
+                    "direccion" => ($this->input->post('direccion') != '') ? $this->input->post('direccion') : null,
+                    "telefono_fijo" => ($this->input->post('telefono_fijo') != '') ? $this->input->post('telefono_fijo') : null,
+                    "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,
                 );
 
                 $this->cliente_model->update($cliente->id, $data);
@@ -96,10 +117,10 @@ class Usuario extends MY_Controller {
                 if ($this->input->post('nombre_empresa')) {
                     $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
                     $data_vendedor = array(
-                        "nombre" => ($this->input->post('nombre_empresa')!='')?$this->input->post('nombre_empresa'):null,
-                        "descripcion" => ($this->input->post('descripcion')!='')?$this->input->post('descripcion'):null,
-                        "sitio_web" => ($this->input->post('sitio_web')!='')?$this->input->post('sitio_web'):null,
-                        "actividad" => ($this->input->post('actividad')!='')?$this->input->post('actividad'):null,
+                        "nombre" => ($this->input->post('nombre_empresa') != '') ? $this->input->post('nombre_empresa') : null,
+                        "descripcion" => ($this->input->post('descripcion') != '') ? $this->input->post('descripcion') : null,
+                        "sitio_web" => ($this->input->post('sitio_web') != '') ? $this->input->post('sitio_web') : null,
+                        "actividad" => ($this->input->post('actividad') != '') ? $this->input->post('actividad') : null,
                     );
                     $this->vendedor_model->update($vendedor->id, $data_vendedor);
                 }
@@ -130,7 +151,7 @@ class Usuario extends MY_Controller {
                     $this->authentication->change_password($password_new);
                     $this->session->set_flashdata('success', 'Tus contraseña se ha modificado con exito.');
                 } else {
-                    $this->session->set_flashdata('error', 'La contraseña es incorrecta.');
+                    $this->session->set_flashdata('error', 'La contraseña que ingresaste es incorrecta.');
                 }
             }
             redirect('usuario/password');

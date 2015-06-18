@@ -70,11 +70,7 @@
                         <div class="box-footer">
                             <div class="pull-left">
                                 <a href="<?php echo site_url("usuario/afiliacion") ?>" class="btn btn-default"><i class="fa fa-chevron-left"></i>Regresar</a>
-                            </div>
-                            <div class="pull-right">
-                                <button type="submit" class="btn btn-template-main">Saltar este paso y Terminar<i class="fa fa-chevron-right"></i>
-                                </button>
-                            </div>
+                            </div>                            
                         </div>
                     </div>
                 </div>                

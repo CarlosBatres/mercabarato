@@ -16,123 +16,156 @@
     </div>
 </div>
 
-<div class="container">            
-    <div class="row row_registro_comprador">        
-        <div class="col-md-8 col-md-offset-2">            
-            <div class="box box_registro">
-                <h2 class="text-uppercase">Nueva Cuenta</h2>                
-                <hr>                
-                <?php echo form_open('registrar_cliente', 'id="form_crear"'); ?>                 
-                <div class="form-group">
-                    <label>E-mail</label>
-                    <input type="text" class="form-control" name="email">
-                </div>
-                <div class="form-group">
-                    <label>Contraseña</label>
-                    <input type="password" class="form-control" name="password">
-                </div>
-                <div class="form-group">
-                    <label>Confirme Contraseña</label>
-                    <input type="password" class="form-control" name="password_confirmar">
-                </div>
-                <div class="heading">
-                    <h3 class="text-uppercase">Información Personal</h3>
-                </div>
+<div id="content">
+    <div class="container">            
+        <div class="row row_registro_comprador">        
+            <div class="col-md-9 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="heading">
+                            <h3 class="text-uppercase">Informacion de la Cuenta</h3>
+                        </div>
+                        <hr>                
+                        <?php echo form_open('registrar_cliente', 'id="form_crear"'); ?>                 
+                        <div class="row">  
+                            <div class="col-md-12">
+                                <div class="form-group">                    
+                                    <div class="input-group">                                                
+                                        <input type="text" class="form-control" name="email" placeholder="Email" autofocus="">
+                                        <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                                    </div>                    
+                                </div>
+                                <div class="form-group">                    
+                                    <div class="input-group">                   
+                                        <input type="password" class="form-control" name="password" placeholder="Contraseña" autocomplete="off">
+                                        <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">                                           
+                                        <input type="password" class="form-control" name="password_confirmar" placeholder="Confirme su Contraseña" autocomplete="off">
+                                        <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>                    
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="nombres" placeholder="Nombres">
+                                        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group">                                    
+                                        <input type="text" class="form-control" name="apellidos" placeholder="Apellidos">
+                                        <span class="input-group-addon"><i class="fa fa-users fa-fw"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                 
+                        <div class="row">                    
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group">                                                                        
+                                        <input type="text" id="datepicker" class="form-control" name="fecha_nacimiento" placeholder="Fecha de Nacimiento">
+                                        <span class="input-group-addon"><i class="fa fa-calendar fa-fw"></i></span>
+                                    </div>
+                                </div>
+                            </div>                    
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group">                                                                                                            
+                                        <input type="text" class="form-control" name="codigo_postal" placeholder="Código Postal">
+                                        <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>                  
+                        <div class='row'>
+                            <div class="col-md-4">
+                                <div class="form-group">                                
+                                    <div class="input-group">                                                                                                            
+                                        <label>Hombre<input type="radio" name="sexo" value="H" class="radioInput"></label>
+                                        <label>Mujer<input type="radio" name="sexo" value="F" class="radioInput"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <div class="input-group">                                    
+                                        <input type="text" class="form-control" name="direccion" placeholder="Dirección">
+                                        <span class="input-group-addon"><i class="fa fa-street-view fa-fw"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group">                                                                        
+                                        <input type="text" class="form-control" name="telefono_fijo" placeholder="Teléfono">
+                                        <span class="input-group-addon"><i class="fa fa-phone fa-fw"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group">                                                                        
+                                        <input type="text" class="form-control" name="telefono_movil" placeholder="Teléfono Móvil">
+                                        <span class="input-group-addon"><i class="fa fa-mobile-phone fa-fw"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Nombres</label>
-                            <input type="text" class="form-control" name="nombres">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Apellidos</label>
-                            <input type="text" class="form-control" name="apellidos">
-                        </div>
-                    </div>
-                </div>                 
-                <div class="row">                    
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Fecha de Nacimiento</label>
-                            <input type="text" id="datepicker" class="form-control" name="fecha_nacimiento">
-                        </div>
-                    </div>                    
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Codigo Postal</label>
-                            <input type="text" class="form-control" name="codigo_postal">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Sexo</label><br>
-                            <label>Hombre<input type="radio" name="sexo" value="H" class="radioInput"></label>
-                            <label>Mujer<input type="radio" name="sexo" value="F" class="radioInput"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class='row'>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Dirección</label>
-                            <input type="text" class="form-control" name="direccion">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Telefono</label>
-                            <input type="text" class="form-control" name="telefono_fijo">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Telefono Movil</label>
-                            <input type="text" class="form-control" name="telefono_movil">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Pais</label>
-                            <select name="pais" class="form-control">
-                                <option value="0">Seleccione un Pais</option>
-                                <?php foreach ($paises as $pais): ?>
-                                    <option value="<?php echo $pais->id ?>"><?php echo $pais->nombre ?></option>
-                                <?php endforeach; ?>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">                                
+                                    <select name="pais" class="form-control">
+                                        <option value="0">País</option>
+                                        <?php foreach ($paises as $pais): ?>
+                                            <option value="<?php echo $pais->id ?>"><?php echo $pais->nombre ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">                                
+                                    <select name="provincia" class="form-control">
+                                        <option value="0">Provincia</option>                        
+                                    </select>
+                                </div>
+                            </div>
+                        </div>                 
+                        <div class="form-group">                        
+                            <select name="poblacion" class="form-control">
+                                <option value="0">Población</option>                        
                             </select>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Provincia</label>
-                            <select name="provincia" class="form-control">
-                                <option value="0">---</option>                        
-                            </select>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <p>Al crear una cuenta confirmas que has leído y aceptas los <a href="<?php echo site_url("") ?>">Términos del Servicio y Condiciones de Uso</a></p>
+                            </div>
                         </div>
+                        <br>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-template-main"><i class="fa fa-user-md"></i> Registrarse</button>
+                        </div>                    
+                        <?php echo form_close(); ?>
                     </div>
-                </div>                 
-                <div class="form-group">
-                    <label>Población</label>
-                    <select name="poblacion" class="form-control">
-                        <option value="0">---</option>                        
-                    </select>
                 </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-template-main"><i class="fa fa-user-md"></i> Registrarse</button>
-                </div>
-                <?php echo form_close(); ?>
-            </div>
-        </div>          
+            </div>          
 
-    </div>            
+        </div>            
+    </div>
+    <!-- /.container -->
 </div>
-<!-- /.container -->
 
 
