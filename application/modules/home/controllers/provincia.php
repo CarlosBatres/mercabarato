@@ -16,7 +16,7 @@ class Provincia extends MY_Controller {
             if ($formValues !== false) {
                 $pais_id = $this->input->post('pais_id');
                 $provincias = $this->provincia_model->get_all_by_pais($pais_id);
-                $html = "<option value='0'>Seleccione una Provincia</option>";
+                $html = "<option value='0'>Provincia</option>";
                 foreach ($provincias as $provincia) {
                     $html.="<option value='" . $provincia->id . "'>" . $provincia->nombre . "</option>";
                 }

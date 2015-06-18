@@ -45,7 +45,7 @@ class Vendedor_model extends MY_Model {
         }
         if (isset($params['sitio_web'])) {
             $this->db->like('vendedor.sitio_web', $params['sitio_web'], 'both');
-        }        
+        }
 
         $this->db->stop_cache();
         $count = $this->db->count_all_results();
@@ -61,28 +61,72 @@ class Vendedor_model extends MY_Model {
             return array("total" => 0);
         }
     }
-    
-    public function get_vendedor($id){
+
+    public function get_vendedor($id) {
         $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address");
         $this->db->from($this->_table);
         $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
         $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
-        $this->db->where('vendedor.id', $id);                
+        $this->db->where('vendedor.id', $id);
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {
             return $result->row();
         } else {
             return FALSE;
-        }     
+        }
     }
-    
-    public function habilitar_vendedor($id){
+
+    public function habilitar_vendedor($id) {
         $data = array(
-            "habilitado" => 1,            
-        );        
+            "habilitado" => 1,
+        );
 
         $this->update($id, $data);
     }
-        
+
+    /**
+     * Verificar si es posible asignarle un vendedor_paquete a este vendedor.
+     * - Si tiene paquetes con aprobado=0 FALSE
+     * - Si tiene paquetes aprobados en curso FALSE
+     * @param type $id
+     */
+    public function verificar_disponibilidad($id) {
+        $this->db->select('*');
+        $this->db->from('vendedor_paquete');
+        $this->db->where('vendedor_id', $id);
+        $paquetes = $this->db->get()->result();
+        $hoy = date("Y-m-d");
+
+        $flag = true;
+        if (sizeof($paquetes) > 0) {
+            foreach ($paquetes as $paquete) {
+                if ($paquete->aprobado == 0) {
+                    $flag = false;
+                } elseif ($paquete->fecha_terminar > $hoy) {
+                    $flag = false;
+                }
+            }
+        }
+        return $flag;
+    }
+    /**
+     * Retornar el vendedor_paquete que esta en curso
+     * @param type $id
+     */
+    public function get_paquete_en_curso($id){
+        $this->db->select("*");
+        $this->db->from('vendedor_paquete');        
+        $this->db->where('vendedor_id', $id);
+        $this->db->where('aprobado', '1');
+        $this->db->where('fecha_terminar >',date('Y-m-d'));
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            return $result->row();
+        } else {
+            return FALSE;
+        }
+    }
+
 }

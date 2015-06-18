@@ -2510,14 +2510,7 @@ fieldset[disabled] .btn-template-primary.active {
 #footer {
   background: #555555;
   padding: 50px 0;
-  color: #999999;
-  
-  position: absolute;
-  bottom: 0;
-  width: 100%;  
-  left: 0;
-  padding-left: 50px;
-  padding-right: 50px;
+  color: #999999;   
 }
 #footer h1,
 #footer h2,
@@ -2613,8 +2606,8 @@ fieldset[disabled] .btn-template-primary.active {
 #copyright {
   background: #333;
   color: #ccc;
-  padding: 50px 0;
-  font-size: 12px;
+  padding: 25px 0;
+  font-size: 14px;
   line-height: 28px;
 }
 #copyright p {

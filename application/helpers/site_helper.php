@@ -5,9 +5,9 @@ if (!defined('BASEPATH'))
 
 function vendedor_actividad_dropdown($pos = null) {
     $data = array(        
-        'No Especificada' => 'No Especificada',
-        'Actividad Temporal' => 'Actividad Temporal',        
-        'Actividad Temporal Dos' => 'Actividad Temporal Dos',        
+        'No Especificada' => 'Actividad',
+        'Informatica' => 'Informatica',        
+        'Seguros' => 'Seguros',        
     );
     $result = null;
 

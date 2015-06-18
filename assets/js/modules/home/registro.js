@@ -1,7 +1,7 @@
 $(document).ready(function() {    
     $('#form_crear').find('select[name="pais"]').on('change', function() {
-        $('#form_crear').find('select[name="provincia"]').html("<option value='0'>---</option>");
-        $('#form_crear').find('select[name="poblacion"]').html("<option value='0'>---</option>");
+        $('#form_crear').find('select[name="provincia"]').html("<option value='0'>Provincia</option>");
+        $('#form_crear').find('select[name="poblacion"]').html("<option value='0'>Población</option>");
         var pais_id = $(this).val();
         $.ajax({
             type: "POST",
@@ -15,7 +15,7 @@ $(document).ready(function() {
     });
 
     $('#form_crear').find('select[name="provincia"]').on('change', function() {
-        $('#form_crear').find('select[name="poblacion"]').html("<option value='0'>---</option>");
+        $('#form_crear').find('select[name="poblacion"]').html("<option value='0'>Problación</option>");
         var provincia_id = $(this).val();
         $.ajax({
             type: "POST",
@@ -55,7 +55,8 @@ function validateForms() {
 		}
             },
             password: {required: true},
-            password_confirmar: {required: true, equalTo: password_comprador}
+            password_confirmar: {required: true, equalTo: password_comprador},
+            nombres: {required: true},
         },
         messages: {
             email: {
@@ -69,7 +70,10 @@ function validateForms() {
             password_confirmar: {
                 required: "Confirme su contraseña",
                 equalTo: "Las contraseñas tienen que ser iguales"
-            }
+            },
+            nombres: {
+                required: "El nombre es requerido."
+            },
         }
     });   
     

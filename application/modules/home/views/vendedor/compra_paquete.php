@@ -29,9 +29,8 @@
                     <div class="heading">
                         <h3>Paquetes</h3>
                     </div>
-                    <p class="lead">Seleccione uno de los siguientes paquetes mostrados a continuacion, si lo desea puede saltar este paso y completarlo en otro momento.</p>
+                    <p class="lead">Seleccione uno de los siguientes paquetes mostrados a continuacion.</p>
                     <div class="row packages">
-
                         <?php foreach ($paquetes as $paquete): ?>
                             <!-- TODO: col-md-4 si son mas de 3 paquetes o menos hay que acomodar aqui -->
                             <div class="col-md-4">                                
@@ -48,23 +47,32 @@
                                         <li><i class="fa fa-check"></i>
                                             <?php
                                             if ($paquete->limite_productos == -1): echo "Sin limite de Productos";
-                                            else: echo $paquete->limite_productos .' productos';
+                                            else: echo $paquete->limite_productos . ' productos';
                                             endif;
                                             ?>
                                         </li>
                                         <li><i class="fa fa-check"></i>
                                             <?php
                                             if ($paquete->limite_anuncios == -1): echo "Sin limite de Anuncios";
-                                            else: echo $paquete->limite_anuncios .' anuncios';
+                                            else: echo $paquete->limite_anuncios . ' anuncios';
                                             endif;
                                             ?>
                                         </li>                                        
                                     </ul>
-                                    <a href="<?php echo site_url("usuario/paquetes/comprar_paquete/".$paquete->id) ?>" class="btn btn-template-main"> Comprar </a>
+                                    <a href="<?php echo site_url("usuario/paquetes/comprar_paquete/" . $paquete->id) ?>" class="btn btn-primary <?php echo (!$puede_comprar) ? 'disabled' : '' ?>"> Comprar </a>
                                 </div>                                
                             </div>
                         <?php endforeach; ?>                                                    
-                    </div>                    
+                    </div>
+                    <?php if (!$puede_comprar): ?>
+                        <hr>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="lead">De momento tienes un paquete habilitado asi que no necesitas realizar otra compra.</p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                     <hr>
                     <br>
                 </div>                
@@ -72,7 +80,7 @@
 
 
             <div class="col-md-3">                       
-                <?php echo $html_options;?>                        
+                <?php echo $html_options; ?>                        
             </div>                    
 
         </div>

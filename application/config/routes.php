@@ -41,7 +41,8 @@
 /* Front */
 $route['home'] = 'home/main';
 $route['usuario/perfil'] = 'home/usuario/view_perfil';
-$route['usuario/perfil/modificar'] = 'home/usuario/modificar';
+$route['usuario/datos-personales'] = 'home/usuario/view_datos_personales';
+$route['usuario/datos-personales/modificar'] = 'home/usuario/modificar_datos';
 $route['usuario/password'] = 'home/usuario/view_password';
 $route['usuario/password/modificar'] = 'home/usuario/modificar_password';
 $route['usuario/afiliacion'] = 'home/vendedor/view_afiliarse';
@@ -51,12 +52,9 @@ $route['usuario/afiliacion-final/(:num)'] = 'home/vendedor/submit_afiliacion/$1'
 $route['usuario/completado'] = 'home/vendedor/view_completado';
 $route['usuario/panel_vendedor'] = 'home/vendedor/ir_panel_vendedor';
 
-$route['usuario/paquetes/mis-paquetes'] = 'home/vendedor/mis_paquetes';
+$route['usuario/mis-paquetes'] = 'home/vendedor/mis_paquetes';
 $route['usuario/paquetes/comprar'] = 'home/vendedor/comprar_paquetes';
 $route['usuario/paquetes/comprar_paquete/(:any)'] = 'home/vendedor/submit_comprar_paquetes/$1';
-$route['usuario/productos/mis-productos'] = 'home/vendedor/mis_productos';
-$route['usuario/productos/agregar'] = 'home/vendedor/agregar_producto';
-$route['usuario/anuncios/mis-anuncios'] = 'home/vendedor/mis_anuncios';
 
 $route['login'] = 'home/usuario/login';
 $route['logout'] = 'home/usuario/logout';

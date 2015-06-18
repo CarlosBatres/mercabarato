@@ -74,5 +74,5 @@ class Vendedor_paquete_model extends MY_Model {
             return FALSE;
         }
     }
-
+        
 }

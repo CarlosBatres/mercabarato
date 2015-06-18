@@ -27,7 +27,7 @@ class MY_Controller extends MX_Controller {
     public function _validar_conexion() {
         $one_time_login = $this->session->userdata('one_time_login');
         if ($this->authentication->is_loggedin()) {
-            if (!$one_time_login) {
+            if (!$one_time_login && $this->uri->uri_string() != 'panel_vendedor/login') {
                 redirect('panel_vendedor/login');
             } elseif (!$this->_usuario_es_vendedor()) {
                 redirect('');
