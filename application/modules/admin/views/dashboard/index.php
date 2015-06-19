@@ -11,17 +11,17 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">
-                                <i class="fa fa-comments fa-5x"></i>
+                                <i class="fa fa-users fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">26</div>
-                                <div>New Comments!</div>
+                                <div class="huge"><?php echo $usuarios_activos_en_sistema?></div>
+                                <div>Usuarios en Sistemas</div>
                             </div>
                         </div>
                     </div>
                     <a href="#">
                         <div class="panel-footer">
-                            <span class="pull-left">View Details</span>
+                            <span class="pull-left">Ver Detalles</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                             <div class="clearfix"></div>
                         </div>
@@ -36,14 +36,14 @@
                                 <i class="fa fa-tasks fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">12</div>
-                                <div>New Tasks!</div>
+                                <div class="huge"><?php echo $vendedores_activos_en_sistema?></div>
+                                <div>Vendedores Registrados</div>
                             </div>
                         </div>
                     </div>
                     <a href="#">
                         <div class="panel-footer">
-                            <span class="pull-left">View Details</span>
+                            <span class="pull-left">Ver Detalles</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                             <div class="clearfix"></div>
                         </div>
@@ -58,14 +58,14 @@
                                 <i class="fa fa-shopping-cart fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">124</div>
-                                <div>New Orders!</div>
+                                <div class="huge"><?php echo $productos_activos_en_sistema ?></div>
+                                <div>Productos en Sistema</div>
                             </div>
                         </div>
                     </div>
                     <a href="#">
                         <div class="panel-footer">
-                            <span class="pull-left">View Details</span>
+                            <span class="pull-left">Ver Detalles</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                             <div class="clearfix"></div>
                         </div>
@@ -80,14 +80,14 @@
                                 <i class="fa fa-support fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">13</div>
-                                <div>Support Tickets!</div>
+                                <div class="huge"><?php echo $paquetes_comprados ?></div>
+                                <div>Paquetes Vendidos</div>
                             </div>
                         </div>
                     </div>
                     <a href="#">
                         <div class="panel-footer">
-                            <span class="pull-left">View Details</span>
+                            <span class="pull-left">Ver Detalles</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                             <div class="clearfix"></div>
                         </div>
@@ -114,7 +114,7 @@
             <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-table fa-fw"></i> Resumen 
+                        <i class="fa fa-table fa-fw"></i> Ultimos Mensajes 
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -123,22 +123,7 @@
                                 <i class="fa fa-money fa-fw"></i> Paquetes a la espera de aprobación
                                 <span class="pull-right text-muted small"><em><?php echo $paquetes_por_aprobacion ?> Paquetes</em>
                                 </span>
-                            </a>
-                            <a href="" class="list-group-item">
-                                <i class="fa fa-users fa-fw"></i> Usuarios activos en el sistema
-                                <span class="pull-right text-muted small"><em><?php echo $usuarios_activos_en_sistema?> Usuarios</em>
-                                </span>
-                            </a>
-                            <a href="" class="list-group-item">
-                                <i class="fa fa-sitemap fa-fw"></i> Vendedores activos en el sistema
-                                <span class="pull-right text-muted small"><em><?php echo $vendedores_activos_en_sistema?> Vendedores</em>
-                                </span>
-                            </a>
-                            <a href="" class="list-group-item">
-                                <i class="fa fa-shopping-cart fa-fw"></i> Productos activos en el sistema
-                                <span class="pull-right text-muted small"><em><?php echo $productos_activos_en_sistema ?> Productos</em>
-                                </span>
-                            </a>                            
+                            </a>                                                       
                         </div>                                                
                     </div>
                     

@@ -64,5 +64,12 @@ class Panel_vendedores extends MY_Controller {
         $this->load->config('upload', TRUE);
         $this->load->library('UploadHandler', $this->config->item('producto', 'upload'));
     }
+    
+    /**    
+     *  Esto es un hack para evitar un problema con el menu.
+     */
+    public function regresar() {        
+        redirect('');
+    }
 
 }

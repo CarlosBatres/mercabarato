@@ -43,12 +43,14 @@ class Vendedor_paquete extends MY_Controller {
             $this->producto_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>1));
         }else{
             $this->producto_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>0));
+            // TODO: Aqui deberia habilitar el numero de limite_productos y los demas quedan inhabilitados
         }
         
         if(sizeof($anuncios)<=$vendedor_paquete->limite_anuncios){
             $this->anuncio_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>1));
         }else{
             $this->anuncio_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>0));
+            // TODO: Aqui deberia habilitar el numero de limite_anuncios y los demas quedan inhabilitados
         }        
         
         // TODO: Enviar correo al cliente para informarle que ya esta activo su paquete y el esta habilitado        

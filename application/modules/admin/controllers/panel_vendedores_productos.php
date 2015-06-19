@@ -155,16 +155,28 @@ class Panel_vendedores_productos extends MY_Controller {
      */
     public function borrar($id) {
         if ($this->input->is_ajax_request()) {
-            $this->producto_resource_model->cleanup_resources($id);
-            $this->producto_model->delete($id);
-            redirect('panel_vendedor/producto/listado');
+            $user_id = $this->authentication->read('identifier');
+            $vendedor = $this->usuario_model->get_full_identidad($user_id);
+            $producto_id = $id;
+
+            $res = $this->producto_model->get_vendedor_id_del_producto($producto_id);
+            if ($res == $vendedor["vendedor"]->id) {
+                $this->producto_resource_model->cleanup_resources($id);
+                $this->producto_model->delete($id);
+                redirect('panel_vendedor/producto/listado');
+            }else{
+                // TODO: Enviar mensaje de error que diga tu no puedes realizar esta accion.
+                redirect('panel_vendedor/producto/listado');
+            }
+        }else{
+            redirect('404');
         }
     }
 
     /**
      * 
      */
-    public function ajax_get_listado_resultados() {        
+    public function ajax_get_listado_resultados() {
         $formValues = $this->input->post();
 
         $params = array();

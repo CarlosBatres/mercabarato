@@ -111,12 +111,23 @@
                                 <a href="<?php echo site_url('panel_vendedor/producto/agregar'); ?>"><i class="fa fa-plus fa-fw"></i> Agregar un producto</a>
                             </li>                            
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/producto/listado'); ?>"><i class="fa fa-fw fa-calendar"></i> Listado de productos</a>
+                                <a href="<?php echo site_url('panel_vendedor/producto/listado'); ?>"><i class="fa fa-fw fa-calendar"></i> Mis Productos</a>
                             </li>                            
                         </ul>                         
                     </li>
                     <li>
-                        <a href="<?php echo site_url(''); ?>"><i class="fa fa-fw fa-arrow-left"></i> Regresar al Sitio</a>
+                        <a href="#"><i class="fa fa-newspaper-o fa-fw"></i> Mis Anuncios<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo site_url('panel_vendedor/anuncio/agregar'); ?>"><i class="fa fa-plus fa-fw"></i> Agregar un anuncio</a>
+                            </li>                            
+                            <li>
+                                <a href="<?php echo site_url('panel_vendedor/anuncio/listado'); ?>"><i class="fa fa-fw fa-calendar"></i> Mis anuncios</a>
+                            </li>                            
+                        </ul>                         
+                    </li>
+                    <li>
+                        <a href="<?php echo site_url('panel_vendedor/regresar'); ?>"><i class="fa fa-fw fa-arrow-left"></i> Regresar al Sitio</a>
                     </li> 
 
                 </ul>

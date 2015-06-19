@@ -25,6 +25,9 @@ class Anuncio_model extends MY_Model {
         if (isset($params['email'])) {
             $this->db->like('usuario.email', $params['email'], 'both');
         }
+        if (isset($params['vendedor_id'])) {
+            $this->db->where('anuncio.vendedor_id', $params['vendedor_id']);
+        }
 
         $this->db->stop_cache();
         $count = $this->db->count_all_results();
@@ -68,5 +71,14 @@ class Anuncio_model extends MY_Model {
             return FALSE;
         }  
         
+    }
+    
+    public function get_vendedor_id_del_anuncio($anuncio_id){
+        $anuncio=$this->get($anuncio_id);
+        if($anuncio){
+            return $anuncio->vendedor_id;
+        }else{
+            return FALSE;
+        }            
     }
 }

@@ -23,6 +23,7 @@ class Main extends MY_Controller {
     public function dashboard() {
         $this->template->set_title("Panel de Administracion - Mercabarato.com");
         $paquetes_por_aprobacion=$this->vendedor_paquete_model->count_by("aprobado",'0');
+        $paquetes_comprados=$this->vendedor_paquete_model->count_by("aprobado",'1');
         $usuarios=$this->usuario_model->count_by("activo","1");
         $productos=$this->producto_model->count_by("habilitado","1");
         $vendedores=$this->vendedor_model->count_by("habilitado","1");
@@ -31,7 +32,8 @@ class Main extends MY_Controller {
             "paquetes_por_aprobacion"=>$paquetes_por_aprobacion,
             "usuarios_activos_en_sistema"=>$usuarios,
             "productos_activos_en_sistema"=>$productos,
-            "vendedores_activos_en_sistema"=>$vendedores
+            "vendedores_activos_en_sistema"=>$vendedores,
+            "paquetes_comprados"=>$paquetes_comprados
                 );
         $this->template->load_view('admin/dashboard/index',$data);
     }

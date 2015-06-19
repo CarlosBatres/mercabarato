@@ -69,14 +69,22 @@ $route['productos/(:any)'] = 'home/producto/view_listado/$1';
  
 $route['panel_vendedor'] = 'admin/panel_vendedores/resumen';
 $route['panel_vendedor/resumen'] = 'admin/panel_vendedores/resumen';
+$route['panel_vendedor/regresar'] = 'admin/panel_vendedores/regresar';
 $route['panel_vendedor/login'] = 'admin/panel_vendedores/login';
 $route['panel_vendedor/logout'] = 'admin/panel_vendedores/logout';
+
 $route['panel_vendedor/producto/listado'] = 'admin/panel_vendedores_productos/listado';
 $route['panel_vendedor/producto/agregar'] = 'admin/panel_vendedores_productos/agregar';
 $route['panel_vendedor/producto/borrar/(:num)'] = 'admin/panel_vendedores_productos/borrar/$1'; 
 $route['panel_vendedor/producto/editar/(:num)'] = 'admin/panel_vendedores_productos/editar/$1'; 
 $route['panel_vendedor/producto/upload_image'] = 'admin/panel_vendedores/upload_image';
 $route['panel_vendedor/producto/ajax_get_listado_resultados'] = 'admin/panel_vendedores_productos/ajax_get_listado_resultados'; 
+
+$route['panel_vendedor/anuncio/listado'] = 'admin/panel_vendedores_anuncios/listado';
+$route['panel_vendedor/anuncio/agregar'] = 'admin/panel_vendedores_anuncios/agregar';
+$route['panel_vendedor/anuncio/borrar/(:num)'] = 'admin/panel_vendedores_anuncios/borrar/$1'; 
+$route['panel_vendedor/anuncio/editar/(:num)'] = 'admin/panel_vendedores_anuncios/editar/$1'; 
+$route['panel_vendedor/anuncio/ajax_get_listado_resultados'] = 'admin/panel_vendedores_anuncios/ajax_get_listado_resultados'; 
 
 
 /* Admin */
