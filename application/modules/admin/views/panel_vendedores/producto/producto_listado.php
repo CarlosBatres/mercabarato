@@ -34,12 +34,12 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#search-block" href="#collapse_search" class="collapsed"><span class="pull-right glyphicon glyphicon-chevron-down"></span><span class="glyphicon glyphicon-search"></span> Busqueda</a>                                        
+                            <a data-toggle="collapse" data-parent="#search-block" href="#collapse_search"><span class="pull-right glyphicon glyphicon-chevron-down"></span><span class="glyphicon glyphicon-search"></span> Busqueda</a>                                        
                         </h4>
                     </div>
-                    <div id="collapse_search" class="panel-collapse collapse" style="height: 0px;">
+                    <div id="collapse_search" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            <form action="<?php echo site_url('admin/productos') ?>" method="post" class="search-form" id="listado-productos">
+                            <form action="<?php echo site_url('panel_vendedor/producto/listado') ?>" method="post" class="search-form" id="listado-productos">
                                 <div class="row">                                    
                                     <div class="col-md-8">
                                         <div class="form-group">
@@ -65,9 +65,11 @@
                                 </div>                                
                                 <hr>
                                 <div class="row"> 
-                                    <div class="form-buttons text-right">
-                                        <button type="submit" id="btn-search" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Buscar</button>
-                                        <input type="hidden" value="1" name="pagina" id="pagina"/>                                        
+                                    <div class="col-md-1">
+                                        <div class="form-buttons">
+                                            <button type="submit" id="btn-search" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+                                            <input type="hidden" value="1" name="pagina" id="pagina"/>                                        
+                                        </div>
                                     </div>
                                 </div>
                             </form>

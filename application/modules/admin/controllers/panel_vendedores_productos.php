@@ -147,7 +147,9 @@ class Panel_vendedores_productos extends MY_Controller {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
         $this->template->add_js("modules/admin/panel_vendedores/productos_listado.js");
-        $this->template->load_view('admin/panel_vendedores/producto/producto_listado');
+        $categorias = $this->categoria_model->get_all();
+        $data = array("categorias" => $categorias);
+        $this->template->load_view('admin/panel_vendedores/producto/producto_listado',$data);
     }
 
     /**

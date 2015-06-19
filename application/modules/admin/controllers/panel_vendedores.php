@@ -9,15 +9,27 @@ class Panel_vendedores extends MY_Controller {
         parent::__construct();
         $this->_validar_conexion();
     }
+
     /**
      * 
      */
     public function resumen() {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
-        $this->template->load_view('admin/panel_vendedores/resumen');
+
+        $user_id = $this->authentication->read('identifier');
+        $vendedor = $this->usuario_model->get_full_identidad($user_id);
+
+        $mis_productos = $this->producto_model->get_many_by("vendedor_id", $vendedor["vendedor"]->id);
+        $mis_anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vendedor["vendedor"]->id);
+
+        $data = array(
+            "mis_productos" => sizeof($mis_productos),
+            "mis_anuncios" => sizeof($mis_anuncios)
+        );
+
+        $this->template->load_view('admin/panel_vendedores/resumen', $data);
     }
-   
 
     /**
      * LOGIN al panel de vendedores
@@ -56,7 +68,7 @@ class Panel_vendedores extends MY_Controller {
         $this->authentication->logout();
         redirect('');
     }
-           
+
     /**
      * 
      */
@@ -64,11 +76,11 @@ class Panel_vendedores extends MY_Controller {
         $this->load->config('upload', TRUE);
         $this->load->library('UploadHandler', $this->config->item('producto', 'upload'));
     }
-    
-    /**    
+
+    /**
      *  Esto es un hack para evitar un problema con el menu.
      */
-    public function regresar() {        
+    public function regresar() {
         redirect('');
     }
 

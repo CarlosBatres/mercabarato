@@ -89,7 +89,7 @@ $route['panel_vendedor/anuncio/ajax_get_listado_resultados'] = 'admin/panel_vend
 
 /* Admin */
 $route['admin'] = 'admin/main';
-$route['admin/dashboard'] = 'admin/main/dashboard';
+$route['admin/resumen'] = 'admin/main/dashboard';
 $route['admin/login'] = 'admin/usuario/view_login'; 
 $route['admin/do_login'] = 'admin/usuario/login'; 
 $route['admin/do_logout'] = 'admin/usuario/logout'; 

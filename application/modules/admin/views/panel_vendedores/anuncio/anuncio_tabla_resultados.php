@@ -10,7 +10,8 @@
             <tr>                
                 <th style="width: 15%">Titulo</th>                
                 <th style="width: 50%">Contenido</th>                                
-                <th style="width: 5%">&nbsp;</th> 
+                <th style="width: 5%;text-align: center">Habilitado</th>
+                <th style="width: 5%">&nbsp; Acciones</th> 
             </tr>
         </thead>
         <tbody>
@@ -18,6 +19,12 @@
                 <tr>                
                     <td><?php echo $anuncio->titulo; ?></td>                    
                     <td><?php echo $anuncio->contenido; ?></td>                                        
+                    <td style="text-align: center"><?php
+                        if ($anuncio->habilitado == 1): echo "<span class='label label-success'>Si</span>";
+                        else: echo "<span class='label label-danger'>No</span>";
+                        endif;
+                        ?>
+                    </td>                                                                
                     <td>
                         <div class="options">
                             <a href="<?php echo site_url('panel_vendedor/anuncio/editar') . '/' . $anuncio->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>

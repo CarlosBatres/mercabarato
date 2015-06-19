@@ -41,16 +41,20 @@ class Vendedor_paquete extends MY_Controller {
         
         if(sizeof($productos)<=$vendedor_paquete->limite_productos){
             $this->producto_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>1));
+            $this->vendedor_paquete_model->update($id,array('productos_insertados'=>sizeof($productos)));
         }else{
             $this->producto_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>0));
-            // TODO: Aqui deberia habilitar el numero de limite_productos y los demas quedan inhabilitados
+            $count=$this->producto_model->habilitar_productos(array('vendedor_id'=>$vendedor_paquete->vendedor_id,"limit"=>$vendedor_paquete->limite_productos));
+            $this->vendedor_paquete_model->update($id,array('productos_insertados'=>$count));
         }
         
         if(sizeof($anuncios)<=$vendedor_paquete->limite_anuncios){
             $this->anuncio_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>1));
+            $this->vendedor_paquete_model->update($id,array('anuncios_insertados'=>sizeof($anuncios)));
         }else{
             $this->anuncio_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>0));
-            // TODO: Aqui deberia habilitar el numero de limite_anuncios y los demas quedan inhabilitados
+            $count=$this->anuncio_model->habilitar_anuncios(array('vendedor_id'=>$vendedor_paquete->vendedor_id,"limit"=>$vendedor_paquete->limite_anuncios));
+            $this->vendedor_paquete_model->update($id,array('anuncios_insertados'=>$count));
         }        
         
         // TODO: Enviar correo al cliente para informarle que ya esta activo su paquete y el esta habilitado        

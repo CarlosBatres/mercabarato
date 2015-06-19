@@ -15,7 +15,7 @@
                             </div>
                             <div class="col-xs-9 text-right">
                                 <div class="huge"><?php echo $usuarios_activos_en_sistema?></div>
-                                <div>Usuarios en Sistemas</div>
+                                <div>Usuarios en Sistema</div>
                             </div>
                         </div>
                     </div>

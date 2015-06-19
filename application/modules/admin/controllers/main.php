@@ -17,7 +17,7 @@ class Main extends MY_Controller {
     }
 
     public function index() {
-        redirect('admin/dashboard');
+        redirect('admin/resumen');
     }
 
     public function dashboard() {
