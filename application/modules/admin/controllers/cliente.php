@@ -126,7 +126,7 @@ class Cliente extends MY_Controller {
                 
                 $this->template->load_view('admin/cliente/editar', $data);
             } else {
-                //TODO : No se encuentra el producto
+                redirect('admin');
             }
         }
     }
@@ -183,12 +183,10 @@ class Cliente extends MY_Controller {
             $paginas = $ent + 1;
         } else {
             $paginas = $ent;
-        }
-        // TODO: Falta testear mas
+        }        
 
         if ($clientes_array["total"] == 0) {
-            $clientes_array["clientes"] = array();
-            // TODO: Resultados vacio
+            $clientes_array["clientes"] = array();            
         }
         $data = array(
             "clientes" => $clientes_array["clientes"],

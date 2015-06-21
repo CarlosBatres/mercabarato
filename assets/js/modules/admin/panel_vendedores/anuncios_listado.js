@@ -10,13 +10,18 @@ $(document).ready(function() {
 
 function updateResultados() {
     var form = $('#listado-items');
-    $('#tabla-resultados').html('');
+    $('#tabla-resultados').html('<br><br><br>');
+    $('#tabla-resultados').block({
+        message: '<h4>Procesando espere un momento..</h4>',
+        css: {border: '3px solid #a00'}
+    });
     $.ajax({
         type: "POST",
         url: SITE_URL + 'panel_vendedor/anuncio/ajax_get_listado_resultados',
         data: form.serialize(),
         dataType: "html",
         success: function(response) {
+            $('#tabla-resultados').unblock();
             $('#tabla-resultados').html(response);
             bind_pagination_links();
             bind_borrar_links();

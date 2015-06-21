@@ -7,7 +7,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-dashboard"></i>  <a href="<?php echo site_url('admin'); ?>">Dashboard</a>
+                    <i class="fa fa-dashboard"></i>  <a href="<?php echo site_url('admin'); ?>">Resumen</a>
                 </li>
                 <li>
                     <i class="fa fa-inbox"></i> <a href="<?php echo site_url('admin/usuarios'); ?>">Usuarios</a>
@@ -107,7 +107,7 @@
                     <label>Email</label>
                     <div class="input-group">                        
                         <span class="input-group-addon">*</span>
-                        <input type="text" class="form-control" name="email" value="<?php echo $usuario['email']; ?>">
+                        <input type="text" class="form-control" name="email" disabled value="<?php echo $usuario['email']; ?>">
                     </div>
                 </div>
                 <div class="text-center">

@@ -14,51 +14,56 @@ class Panel_vendedores_productos extends MY_Controller {
      * 
      */
     public function agregar() {
-        $formValues = $this->input->post();
-        if ($formValues !== false) {
-            $accion = $this->input->post('accion');
+        $user_id = $this->authentication->read('identifier');
+        $vendedor = $this->usuario_model->get_full_identidad($user_id);
+        $cantidad = $this->vendedor_model->get_cantidad_productos_disp($vendedor["vendedor"]->id);
 
-            if ($accion === "producto-crear") {
-                $user_id = $this->authentication->read('identifier');
-                $vendedor = $this->usuario_model->get_full_identidad($user_id);
-
-                $data = array(
-                    "nombre" => $this->input->post('nombre'),
-                    "descripcion" => $this->input->post('descripcion'),
-                    "precio" => $this->input->post('precio'),
-                    "mostrar_producto" => $this->input->post('mostrar_producto'),
-                    "mostrar_precio" => $this->input->post('mostrar_precio'),
-                    "vendedor_id" => $vendedor['vendedor']->id,
-                    "categoria_id" => $this->input->post('categoria'),
-                );
-
-                $producto_id = $this->producto_model->insert($data);
-
-                if ($this->input->post('file_name') !== "") {
-                    $data_img = array(
-                        "producto_id" => $producto_id,
-                        "nombre" => "Producto: " . $data["nombre"],
-                        "descripcion" => "Imagen principal del producto " . $data["nombre"],
-                        "tipo" => "imagen_principal",
-                        "filename" => $this->input->post('file_name'),
-                        "orden" => 0,
+        if ($cantidad > 0) {
+            $formValues = $this->input->post();
+            if ($formValues !== false) {
+                $accion = $this->input->post('accion');
+                if ($accion === "producto-crear") {
+                    $data = array(
+                        "nombre" => $this->input->post('nombre'),
+                        "descripcion" => $this->input->post('descripcion'),
+                        "precio" => $this->input->post('precio'),
+                        "mostrar_producto" => $this->input->post('mostrar_producto'),
+                        "mostrar_precio" => $this->input->post('mostrar_precio'),
+                        "vendedor_id" => $vendedor['vendedor']->id,
+                        "categoria_id" => $this->input->post('categoria'),
                     );
 
-                    $this->producto_resource_model->insert($data_img);
+                    $producto_id = $this->producto_model->insert($data);
+
+                    if ($this->input->post('file_name') !== "") {
+                        $data_img = array(
+                            "producto_id" => $producto_id,
+                            "nombre" => "Producto: " . $data["nombre"],
+                            "descripcion" => "Imagen principal del producto " . $data["nombre"],
+                            "tipo" => "imagen_principal",
+                            "filename" => $this->input->post('file_name'),
+                            "orden" => 0,
+                        );
+                        $this->producto_resource_model->insert($data_img);
+                    }
+                    redirect('panel_vendedor/producto/listado');
+                } else {
+                    redirect('panel_vendedor');
                 }
-                redirect('panel_vendedor/producto/listado');
             } else {
-                redirect('panel_vendedor');
+                $this->template->set_title("Panel de Control - Mercabarato.com");
+                $this->template->set_layout('panel_vendedores');
+                $this->template->add_js("fileupload.js");
+                $this->template->add_js("modules/admin/panel_vendedores/productos.js");
+                $categorias = $this->categoria_model->get_all();
+
+                $data = array("categorias" => $categorias);
+                $this->template->load_view('admin/panel_vendedores/producto/producto_agregar', $data);
             }
         } else {
             $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
-            $this->template->add_js("fileupload.js");
-            $this->template->add_js("modules/admin/panel_vendedores/productos.js");
-            $categorias = $this->categoria_model->get_all();
-
-            $data = array("categorias" => $categorias);
-            $this->template->load_view('admin/panel_vendedores/producto/producto_agregar', $data);
+            $this->template->load_view('admin/panel_vendedores/producto/producto_limite');
         }
     }
 
@@ -72,6 +77,7 @@ class Panel_vendedores_productos extends MY_Controller {
         $producto_id = $id;
 
         $res = $this->producto_model->get_vendedor_id_del_producto($producto_id);
+        // Validamos que el vendedor sea dueño de este producto
         if ($res == $vendedor["vendedor"]->id) {
             $formValues = $this->input->post();
             if ($formValues !== false) {
@@ -131,11 +137,10 @@ class Panel_vendedores_productos extends MY_Controller {
                     $this->template->set_layout('panel_vendedores');
                     $this->template->load_view('admin/panel_vendedores/producto/producto_editar', $data);
                 } else {
-                    //TODO : No se encuentra el producto
+                    redirect('panel_vendedor/producto/listado');
                 }
             }
-        } else {
-            // TODO : Este no es tu producto PAGINA DE ERROR
+        } else {            
             redirect('panel_vendedor/producto/listado');
         }
     }
@@ -149,7 +154,7 @@ class Panel_vendedores_productos extends MY_Controller {
         $this->template->add_js("modules/admin/panel_vendedores/productos_listado.js");
         $categorias = $this->categoria_model->get_all();
         $data = array("categorias" => $categorias);
-        $this->template->load_view('admin/panel_vendedores/producto/producto_listado',$data);
+        $this->template->load_view('admin/panel_vendedores/producto/producto_listado', $data);
     }
 
     /**
@@ -166,11 +171,11 @@ class Panel_vendedores_productos extends MY_Controller {
                 $this->producto_resource_model->cleanup_resources($id);
                 $this->producto_model->delete($id);
                 redirect('panel_vendedor/producto/listado');
-            }else{
+            } else {
                 // TODO: Enviar mensaje de error que diga tu no puedes realizar esta accion.
                 redirect('panel_vendedor/producto/listado');
             }
-        }else{
+        } else {
             redirect('404');
         }
     }
@@ -208,11 +213,9 @@ class Panel_vendedores_productos extends MY_Controller {
         } else {
             $paginas = $ent;
         }
-        // TODO: Falta testear mas
 
         if ($productos_array["total"] == 0) {
-            $productos_array["productos"] = array();
-            // TODO: Resultados vacio
+            $productos_array["productos"] = array();         
         }
         $data = array(
             "productos" => $productos_array["productos"],
@@ -227,23 +230,6 @@ class Panel_vendedores_productos extends MY_Controller {
                 "desde" => (($pagina * $limit) - $limit) + 1));
 
         $this->template->load_view('admin/panel_vendedores/producto/producto_tabla_resultados', $data);
-    }
-
-    /**
-     * Verifico si un producto pertenece al vendedor actualmente logeado
-     * @param type $producto_id
-     * @return boolean
-     */
-    private function _verificar_producto_dueño($producto_id) {
-        $user_id = $this->authentication->read('identifier');
-        $vendedor = $this->usuario_model->get_full_identidad($user_id);
-
-        $res = $this->producto_model->get_vendedor_id_del_producto($producto_id);
-        if ($res == $vendedor["vendedor"]->id) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
 }

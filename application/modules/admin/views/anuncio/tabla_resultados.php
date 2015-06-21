@@ -12,7 +12,7 @@
                 <th style="width: 15%">Titulo</th>                
                 <th style="width: 50%">Contenido</th>                
                 <th style="width: 15%">Vendedor / Empresa</th>                                            
-                <th style="width: 5%">&nbsp;</th> 
+                <th style="width: 5%;text-align: center">&nbsp; Acciones</th> 
             </tr>
         </thead>
         <tbody>
@@ -24,7 +24,7 @@
                     <td><?php echo $anuncio->Vendedor; ?></td>                                                                                   
                     <td>
                         <div class="options">
-                            <a href="<?php echo site_url('admin/anuncios/editar') . '/' . $anuncio->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>
+                            <!--<a href="<?php echo site_url('admin/anuncios/editar') . '/' . $anuncio->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>-->
                             <a class="item_borrar" href="<?php echo site_url('admin/anuncios/borrar') . '/' . $anuncio->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
                         </div>                           
                     </td>

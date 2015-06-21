@@ -10,7 +10,13 @@ class Paquete_model extends MY_Model {
         parent::__construct();
         $this->_table = "paquete";
     }
-    
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public function get_admin_search($params, $limit, $offset) {
         $this->db->start_cache();
         $this->db->select("paquete.*");
@@ -34,7 +40,10 @@ class Paquete_model extends MY_Model {
             return array("total" => 0);
         }
     }
-    
+    /**
+     * 
+     * @return boolean
+     */
     public function get_paquetes(){
         $this->db->select("*");
         $this->db->from("paquete");
@@ -49,11 +58,16 @@ class Paquete_model extends MY_Model {
             return false;
         }
     }
-    
+    /**
+     * Verifico que un paquete sea valido
+     * - Activo no sea 0
+     * @param type $id
+     * @return boolean
+     */
     public function validar_paquete($id){
         $this->db->select("*");
         $this->db->from("paquete");
-        $this->db->where("mostrar",1);
+        //$this->db->where("mostrar",1);
         $this->db->where("activo",1);
         $this->db->where("id",$id);        
         

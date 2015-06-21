@@ -1,57 +1,16 @@
 -------------------------------
--- 11/06/2015
+-- 21/06/2015
 --------------------------------
 
-CREATE TABLE IF NOT EXISTS `mercabarato_bd`.`paquete` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(255) NULL DEFAULT NULL,
-  `descripcion` TEXT NULL DEFAULT NULL,
-  `limite_productos` INT(11) NOT NULL DEFAULT 0,
-  `limite_anuncios` INT(11) NOT NULL DEFAULT 0,
-  `duracion` INT(11) NOT NULL COMMENT 'En meses',
-  `orden` INT(1) NOT NULL DEFAULT 0,
-  `activo` INT(1) NOT NULL DEFAULT 0,
-  `costo` FLOAT(10,2) NOT NULL,
-  `mostrar` INT(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci;
+ALTER TABLE `mercabarato_bd`.`vendedor_paquete` 
+DROP FOREIGN KEY `fk_vendedor_paquete_paquete1`;
 
-CREATE TABLE IF NOT EXISTS `mercabarato_bd`.`vendedor_paquete` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `paquete_id` INT(10) UNSIGNED NOT NULL,
-  `vendedor_id` INT(10) UNSIGNED NOT NULL,
-  `referencia` VARCHAR(255) NULL DEFAULT NULL,
-  `fecha_comprado` DATE NULL DEFAULT NULL,
-  `fecha_aprobado` DATE NULL DEFAULT NULL,
-  `fecha_terminar` DATE NULL DEFAULT NULL,
-  `productos_insertados` INT(11) NOT NULL DEFAULT 0,
-  `anuncios_insertados` INT(11) NOT NULL DEFAULT 0,
-  `limite_productos` INT(11) NOT NULL,
-  `limite_anuncios` INT(11) NOT NULL,
-  `monto_a_cancelar` FLOAT(10,2) NOT NULL,
-  `aprobado` INT(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  INDEX `fk_vendedor_paquete_paquete1_idx` (`paquete_id` ASC),
-  INDEX `fk_vendedor_paquete_vendedor1_idx` (`vendedor_id` ASC),
-  CONSTRAINT `fk_vendedor_paquete_paquete1`
-    FOREIGN KEY (`paquete_id`)
-    REFERENCES `mercabarato_bd`.`paquete` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_vendedor_paquete_vendedor1`
-    FOREIGN KEY (`vendedor_id`)
-    REFERENCES `mercabarato_bd`.`vendedor` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci;
-
----------------------------
--- 18/06/2015 
----------------------------
-
-ALTER TABLE `mercabarato_bd`.`anuncio` 
-ADD COLUMN `habilitado` INT(1) NOT NULL DEFAULT 0 AFTER `fecha_publicacion`;
+ALTER TABLE `mercabarato_bd`.`vendedor_paquete` 
+DROP COLUMN `anuncios_insertados`,
+DROP COLUMN `productos_insertados`,
+DROP COLUMN `paquete_id`,
+ADD COLUMN `nombre_paquete` VARCHAR(255) NOT NULL AFTER `vendedor_id`,
+ADD COLUMN `duracion_paquete` INT(11) NOT NULL AFTER `nombre_paquete`,
+ADD INDEX `fk_vendedor_paquete_vendedor1_idx` (`vendedor_id` ASC),
+DROP INDEX `fk_vendedor_paquete_vendedor1_idx` ,
+DROP INDEX `fk_vendedor_paquete_paquete1_idx` ;

@@ -7,7 +7,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-dashboard"></i>  <a href="<?php echo site_url('admin'); ?>">Dashboard</a>
+                    <i class="fa fa-dashboard"></i>  <a href="<?php echo site_url('admin'); ?>">Resumen</a>
                 </li>
                 <li>
                     <i class="fa fa-inbox"></i> <a href="<?php echo site_url('admin/paquetes'); ?>">Paquetes</a>
@@ -73,7 +73,7 @@
                 </div>                
                 <hr>
                 <div class="text-center">
-                    <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-default"> Crear Paquete</button>
+                    <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-primary"> Crear Paquete</button>
                 </div>
                 <input type="hidden" name="accion" value="item-crear">
                 <?php echo form_close(); ?>

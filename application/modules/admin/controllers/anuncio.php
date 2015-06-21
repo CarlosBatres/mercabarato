@@ -121,7 +121,7 @@ class Anuncio extends MY_Controller {
 
                 $this->template->load_view('admin/anuncio/editar', $data);
             } else {
-                //TODO : No se encuentra el producto
+                redirect('admin');
             }
         }
     }
@@ -140,6 +140,9 @@ class Anuncio extends MY_Controller {
             if ($this->input->post('email') != "") {
                 $params["email"] = $this->input->post('email');
             }
+            if ($this->input->post('vendedor') != "") {
+                $params["vendedor"] = $this->input->post('vendedor');
+            }
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
@@ -155,11 +158,9 @@ class Anuncio extends MY_Controller {
         } else {
             $paginas = $ent;
         }
-        // TODO: Falta testear mas
 
         if ($anuncios_array["total"] == 0) {
-            $anuncios_array["anuncios"] = array();
-            // TODO: Resultados vacio
+            $anuncios_array["anuncios"] = array();            
         }
         $data = array(
             "anuncios" => $anuncios_array["anuncios"],

@@ -171,7 +171,7 @@ class Producto extends MY_Controller {
 
                 $this->template->load_view('admin/producto/editar', $data);
             } else {
-                //TODO : No se encuentra el producto
+                redirect('admin');
             }
         }
     }
@@ -207,12 +207,10 @@ class Producto extends MY_Controller {
             $paginas = $ent + 1;
         } else {
             $paginas = $ent;
-        }
-        // TODO: Falta testear mas
+        }        
 
         if ($productos_array["total"] == 0) {
-            $productos_array["productos"] = array();
-            // TODO: Resultados vacio
+            $productos_array["productos"] = array();         
         }
         $data = array(
             "productos" => $productos_array["productos"],

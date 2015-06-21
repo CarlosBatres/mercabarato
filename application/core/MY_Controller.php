@@ -29,8 +29,9 @@ class MY_Controller extends MX_Controller {
         if ($this->authentication->is_loggedin()) {
             if (!$one_time_login && $this->uri->uri_string() != 'panel_vendedor/login') {
                 redirect('panel_vendedor/login');
-            } elseif (!$this->_usuario_es_vendedor()) {
-                redirect('');
+            } elseif (!$this->_usuario_es_vendedor_habilitado()) {
+                // TODO: No puedes acceder al panel todavia
+                redirect('404');
             }
         } else {
             if ($this->uri->uri_string() != 'panel_vendedor/login') {
@@ -40,13 +41,13 @@ class MY_Controller extends MX_Controller {
     }
 
     /**
-     * Validar si el usuario actualmente logeado es Vendedor
+     * Validar si el usuario actualmente logeado es Vendedor y esta habilitado
      * @return boolean
      */
-    public function _usuario_es_vendedor() {
+    public function _usuario_es_vendedor_habilitado() {
         $user_id = $this->authentication->read('identifier');
-        return $this->usuario_model->usuario_es_vendedor($user_id);
-    }
+        return $this->usuario_model->usuario_es_vendedor_habilitado($user_id);
+    }        
 
     /**
      * Load Javascript inside the page's body

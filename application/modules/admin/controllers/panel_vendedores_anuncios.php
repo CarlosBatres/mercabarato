@@ -14,35 +14,42 @@ class Panel_vendedores_anuncios extends MY_Controller {
      * 
      */
     public function agregar() {
-        $formValues = $this->input->post();
-        if ($formValues !== false) {
-            $accion = $this->input->post('accion');
+        $user_id = $this->authentication->read('identifier');
+        $vendedor = $this->usuario_model->get_full_identidad($user_id);
+        $cantidad = $this->vendedor_model->get_cantidad_anuncios_disp($vendedor["vendedor"]->id);
 
-            if ($accion === "item-crear") {
-                $user_id = $this->authentication->read('identifier');
-                $vendedor = $this->usuario_model->get_full_identidad($user_id);
+        if ($cantidad > 0) {
+            $formValues = $this->input->post();
+            if ($formValues !== false) {
+                $accion = $this->input->post('accion');
 
-                $data = array(
-                    "titulo" => $this->input->post('titulo'),
-                    "contenido" => $this->input->post('contenido'),
-                    "fecha_publicacion" => date("Y-m-d H:i:s"),
-                    "destacada" => 0,
-                    "vendedor_id" => $vendedor["vendedor"]->id,
-                    "imagen" => null,
-                );
+                if ($accion === "item-crear") {
+                    $data = array(
+                        "titulo" => $this->input->post('titulo'),
+                        "contenido" => $this->input->post('contenido'),
+                        "fecha_publicacion" => date("Y-m-d H:i:s"),
+                        "destacada" => 0,
+                        "vendedor_id" => $vendedor["vendedor"]->id,
+                        "imagen" => null,
+                    );
 
-                $this->anuncio_model->insert($data);
-                redirect('panel_vendedor/anuncio/listado');
+                    $this->anuncio_model->insert($data);
+                    redirect('panel_vendedor/anuncio/listado');
+                } else {
+                    redirect('panel_vendedor');
+                }
             } else {
-                redirect('panel_vendedor');
+                $this->template->set_title("Panel de Control - Mercabarato.com");
+                $this->template->set_layout('panel_vendedores');
+                //$this->template->add_js("fileupload.js");
+                //$this->template->add_js("modules/admin/panel_vendedores/productos.js");
+
+                $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_agregar');
             }
         } else {
             $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
-            //$this->template->add_js("fileupload.js");
-            //$this->template->add_js("modules/admin/panel_vendedores/productos.js");
-
-            $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_agregar');
+            $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_limite');
         }
     }
 
@@ -68,7 +75,7 @@ class Panel_vendedores_anuncios extends MY_Controller {
                     );
 
                     $this->anuncio_model->update($anuncio_id, $data);
-                    $this->session->set_flashdata('success', 'Anuncio modificado con exito');                                        
+                    $this->session->set_flashdata('success', 'Anuncio modificado con exito');
                     redirect('panel_vendedor/anuncio/listado');
                 } else {
                     redirect('panel_vendedor');
@@ -79,20 +86,19 @@ class Panel_vendedores_anuncios extends MY_Controller {
                     $this->template->set_title("Panel de Administracion - Mercabarato.com");
                     //$this->template->add_js("modules/admin/panel_vendedores/productos.js");
                     //$categorias = $this->categoria_model->get_all();
-                    $vendedor = $this->vendedor_model->get($anuncio->vendedor_id);                    
+                    $vendedor = $this->vendedor_model->get($anuncio->vendedor_id);
 
-                    $data = array(                                                
-                        "anuncio"=>$anuncio);
-                        
+                    $data = array(
+                        "anuncio" => $anuncio);
+
 
                     $this->template->set_layout('panel_vendedores');
                     $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_editar', $data);
                 } else {
-                    //TODO : No se encuentra el producto
+                    redirect('panel_vendedor/anuncio/listado');
                 }
             }
-        } else {
-            // TODO : Este no es tu producto PAGINA DE ERROR
+        } else {            
             redirect('panel_vendedor/anuncio/listado');
         }
     }
@@ -117,11 +123,10 @@ class Panel_vendedores_anuncios extends MY_Controller {
             $anuncio_id = $id;
 
             $res = $this->anuncio_model->get_vendedor_id_del_anuncio($anuncio_id);
-            if ($res == $vendedor["vendedor"]->id) {                
+            if ($res == $vendedor["vendedor"]->id) {
                 $this->anuncio_model->delete($id);
                 redirect('panel_vendedor/anuncio/listado');
-            } else {
-                // TODO: Enviar mensaje de error que diga tu no puedes realizar esta accion.
+            } else {                
                 redirect('panel_vendedor/anuncio/listado');
             }
         } else {
@@ -157,12 +162,10 @@ class Panel_vendedores_anuncios extends MY_Controller {
             $paginas = $ent + 1;
         } else {
             $paginas = $ent;
-        }
-        // TODO: Falta testear mas
+        }        
 
         if ($anuncios_array["total"] == 0) {
-            $anuncios_array["anuncios"] = array();
-            // TODO: Resultados vacio
+            $anuncios_array["anuncios"] = array();            
         }
         $data = array(
             "anuncios" => $anuncios_array["anuncios"],
@@ -177,23 +180,6 @@ class Panel_vendedores_anuncios extends MY_Controller {
                 "desde" => (($pagina * $limit) - $limit) + 1));
 
         $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_tabla_resultados', $data);
-    }
-
-    /**
-     * Verifico si un producto pertenece al vendedor actualmente logeado
-     * @param type $producto_id
-     * @return boolean
-     */
-    private function _verificar_producto_dueño($producto_id) {
-        $user_id = $this->authentication->read('identifier');
-        $vendedor = $this->usuario_model->get_full_identidad($user_id);
-
-        $res = $this->producto_model->get_vendedor_id_del_producto($producto_id);
-        if ($res == $vendedor["vendedor"]->id) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
 }

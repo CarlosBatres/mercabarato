@@ -76,11 +76,11 @@
     </div>
     <!-- /#page-wrapper -->
 
-    <footer id="footer">
+     <footer id="footer">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <p>Todos los derechos reservados</p>
+                <div class="col-md-12 text-center">
+                    <p class="text-center">Copyright &copy; 2015. Mercabarato.com Todos los derechos reservados.</p>
                 </div>                        
             </div>
         </div>

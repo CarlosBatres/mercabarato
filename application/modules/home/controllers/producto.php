@@ -70,8 +70,7 @@ class Producto extends MY_Controller {
             }
 
             if ($productos["total"] == 0) {
-                $productos["productos"] = array();
-                // TODO: Resultados vacio
+                $productos["productos"] = array();                
             }
 
             $data = array(

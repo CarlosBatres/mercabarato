@@ -26,7 +26,7 @@
                     <th style="width: 10%">Fecha de Nacimiento</th>
                     <th style="width: 15%">Email</th>
                     <th style="width: 15%">Ultimo Acceso</th>                
-                    <th style="width: 5%">&nbsp;</th> 
+                    <th style="width: 5%;text-align: center">&nbsp; Acciones</th> 
                 </tr>
             </thead>
             <tbody>

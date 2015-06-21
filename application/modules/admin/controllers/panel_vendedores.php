@@ -11,7 +11,7 @@ class Panel_vendedores extends MY_Controller {
     }
 
     /**
-     * 
+     * Vista - Panel Vendedor
      */
     public function resumen() {
         $this->template->set_title("Panel de Control - Mercabarato.com");
@@ -23,9 +23,28 @@ class Panel_vendedores extends MY_Controller {
         $mis_productos = $this->producto_model->get_many_by("vendedor_id", $vendedor["vendedor"]->id);
         $mis_anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vendedor["vendedor"]->id);
 
+        $paquete_vigente = $this->vendedor_model->get_paquete_en_curso($vendedor["vendedor"]->id);
+        $paquete_pendiente = $this->vendedor_model->get_paquete_pendiente($vendedor["vendedor"]->id);
+        if ($paquete_vigente) {
+            $paquete = $paquete_vigente;
+            $paquete_vigente = true;
+            $paquete_pendiente = false;
+        } elseif ($paquete_pendiente) {
+            $paquete = $paquete_pendiente;
+            $paquete_pendiente = true;
+            $paquete_vigente = false;
+        } else {
+            $paquete=array();
+            $paquete_pendiente = false;
+            $paquete_vigente = false;
+        }
+
         $data = array(
             "mis_productos" => sizeof($mis_productos),
-            "mis_anuncios" => sizeof($mis_anuncios)
+            "mis_anuncios" => sizeof($mis_anuncios),
+            "paquete_vigente" => $paquete_vigente,
+            "paquete_pendiente" => $paquete_pendiente,
+            "paquete" => $paquete
         );
 
         $this->template->load_view('admin/panel_vendedores/resumen', $data);
