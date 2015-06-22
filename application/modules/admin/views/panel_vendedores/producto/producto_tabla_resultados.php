@@ -7,31 +7,36 @@
 <div class="table-responsive">
     <table class="table table-bordered table-hover table-striped">
         <thead>
-            <tr>
-                <th style="width: 5%">ID</th>
+            <tr>                
                 <th style="width: 15%">Nombre del Producto</th>
-                <th style="width: 15%">Categoria</th>                
-                <th style="width: 5%;text-align: center">Visible al Publico</th>
-                <th style="width: 5%;text-align: center">Precio Venta Publico</th>                            
-                <th style="width: 5%;text-align: center">PVP Visible</th>                                                        
-                <th style="width: 5%">&nbsp;</th> 
+                <th style="width: 5%;text-align: center">Precio Venta Publico</th>
+                <th style="width: 10%">Categoria</th>                
+                <th style="width: 5%;text-align: center">Visible al Publico</th>                                            
+                <th style="width: 5%;text-align: center">PVP Visible</th>
+                <th style="width: 5%;text-align: center">Habilitado</th>
+                <th style="width: 5%;text-align: center">&nbsp; Acciones</th> 
             </tr>
         </thead>
         <tbody>
             <?php foreach ($productos as $producto): ?>
-                <tr>
-                    <td><?php echo $producto->id; ?></td>
+                <tr>                    
                     <td><?php echo $producto->nombre; ?></td>
+                    <td style="text-align: center"><?php echo $producto->precio; ?></td>                                                                
                     <td><?php echo $producto->Categoria; ?></td>                    
                     <td style="text-align: center"><?php
                         if ($producto->mostrar_producto == 1): echo "<span class='label label-success'>Si</span>";
                         else: echo "<span class='label label-danger'>No</span>";
                         endif;
                         ?>
-                    </td>
-                    <td style="text-align: center"><?php echo $producto->precio; ?></td>                                                                
+                    </td>                    
                     <td style="text-align: center"><?php
                         if ($producto->mostrar_precio == 1): echo "<span class='label label-success'>Si</span>";
+                        else: echo "<span class='label label-danger'>No</span>";
+                        endif;
+                        ?>
+                    </td>                                                                
+                    <td style="text-align: center"><?php
+                        if ($producto->habilitado == 1): echo "<span class='label label-success'>Si</span>";
                         else: echo "<span class='label label-danger'>No</span>";
                         endif;
                         ?>

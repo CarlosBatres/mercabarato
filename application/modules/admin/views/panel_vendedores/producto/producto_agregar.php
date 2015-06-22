@@ -22,12 +22,12 @@
                 <?php echo form_open('panel_vendedor/producto/agregar', 'id="admin_producto_form"'); ?>                 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
+                        <div class="form-group">                            
                             <label>Nombre</label>
                             <input type="text" class="form-control" name="nombre">
+                            </div>                    
                         </div>
                     </div>
-                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -47,11 +47,11 @@
                 </div> 
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="form-group">
+                        <div class="form-group">                            
                             <label>Precio Venta Publico</label>
                             <input type="text" class="form-control" name="precio">
+                            </div>
                         </div>
-                    </div>                    
                     <div class="col-md-3 pull-right">
                         <div class="form-group">
                             <br>

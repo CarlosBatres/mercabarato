@@ -10,12 +10,18 @@ class Vendedor_paquete_model extends MY_Model {
         parent::__construct();
         $this->_table = "vendedor_paquete";
     }
-
+    
+    /**
+     * Funcion para el search del admin
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public function get_admin_search($params, $limit, $offset) {
         $this->db->start_cache();
-        $this->db->select("vendedor_paquete.*,vendedor.nombre AS Vendedor,usuario.email,paquete.nombre as nombre_paquete");
-        $this->db->from($this->_table);
-        $this->db->join("paquete", "paquete.id=vendedor_paquete.paquete_id", 'INNER');
+        $this->db->select("vendedor_paquete.*,vendedor.nombre AS Vendedor,usuario.email");
+        $this->db->from($this->_table);        
         $this->db->join("vendedor", "vendedor.id=vendedor_paquete.vendedor_id", 'INNER');
         $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
         $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
@@ -48,9 +54,16 @@ class Vendedor_paquete_model extends MY_Model {
             return array("total" => 0);
         }
     }
-
-    public function aprobar_paquete($id, $paquete) {                
-        $periodo=$paquete->duracion;        
+    
+    /**
+     * ( IMPORTANTE )
+     * Funcion para aprobar un paquete de un vendedor
+     * @param type $id del vendedor_paquete
+     */
+    public function aprobar_paquete($id) {                
+        // TODO: Realizar alguna validacion adicional
+        $vendedor_paquete=$this->get($id);
+        $periodo=$vendedor_paquete->duracion_paquete;        
         // TODO : Validar que sea un periodo valido de meses ??
         $data = array(
             "fecha_aprobado" => date("Y-m-d"),
@@ -59,13 +72,18 @@ class Vendedor_paquete_model extends MY_Model {
         );
         $this->update($id, $data);
     }
-
+    
+    /**
+     * Devuelve los paquetes de un vendedor
+     * @param type $vendedor_id
+     * @return boolean
+     */
     public function get_paquetes_por_vendedor($vendedor_id) {
-        $this->db->select("vendedor_paquete.*,paquete.nombre as nombre_paquete,paquete.descripcion as descripcion_paquete");
-        $this->db->from($this->_table);
-        $this->db->join("paquete", "paquete.id=vendedor_paquete.paquete_id", 'INNER');
-        $this->db->where("vendedor_paquete.vendedor_id", $vendedor_id);
-        $this->db->limit(10);
+        $this->db->select("*");
+        $this->db->from($this->_table);        
+        $this->db->where("vendedor_id", $vendedor_id);
+        $this->db->order_by('fecha_comprado','desc');
+        $this->db->limit(10);        
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {
@@ -73,6 +91,5 @@ class Vendedor_paquete_model extends MY_Model {
         } else {
             return FALSE;
         }
-    }
-        
+    }              
 }

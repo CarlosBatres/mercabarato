@@ -18,7 +18,7 @@ class Cliente_model extends MY_Model {
         $this->db->join("usuario", "cliente.usuario_id=usuario.id", 'INNER');
 
         if (isset($params['nombre'])) {
-            // TODO: agregar el apellido
+            // TODO: Agregar el apellido a este search
             $this->db->like('cliente.nombres', $params['nombre'], 'both');
         }
         if (isset($params['sexo'])) {

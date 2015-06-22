@@ -1,7 +1,7 @@
 <div id="question" style="display:none; cursor: default">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title">Esta seguro que desea eliminar este producto?.</h4>
+            <h4 class="modal-title">Esta seguro que desea eliminar este anuncio?.</h4>
         </div>
         <div class="modal-body">                                    
             <p class="text-center">
@@ -16,16 +16,8 @@
     <div class="row">
         <div class="col-md-12">
             <h1 class="page-header">
-                Productos
-            </h1>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-dashboard"></i>  <a href="<?php echo site_url('admin'); ?>">Resumen</a>
-                </li>
-                <li class="active">
-                    <i class="fa fa-inbox"></i> Productos
-                </li>
-            </ol>
+                Anuncios 
+            </h1>            
         </div>
     </div>
     <!-- /.row -->
@@ -36,7 +28,8 @@
                     <a class="close" data-dismiss="alert">×</a>
                     <?= $this->session->flashdata('success') ?> 
                 </div>
-            <?php } ?>
+            <?php } ?>            
+
             <div class="panel-group search-block" id="search-block">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -46,42 +39,21 @@
                     </div>
                     <div id="collapse_search" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            <form action="<?php echo site_url('admin/productos') ?>" method="post" class="search-form" id="listado-productos">
+                            <form action="<?php echo site_url('panel_vendedor/anuncio/listado') ?>" method="post" class="search-form" id="listado-items">
                                 <div class="row">                                    
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label col-md-12" for="nombre">Nombre del Producto</label>
+                                            <label class="control-label col-md-12" for="nombre">Titulo del Anuncio</label>
                                             <div class="col-md-12">
-                                                <input type="text" name="nombre" id="nombre" value="" class="form-control"/>                                
+                                                <input type="text" name="titulo" id="titulo" value="" class="form-control"/>                                
                                             </div>
                                         </div>
-                                    </div>                                                                                                                                                
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-12" for="categoria">Categoria</label>
-                                            <div class="col-md-12">
-                                                <select name="categoria" class="form-control">
-                                                    <option value="0">Seleccione una Categoria</option>
-                                                    <?php foreach ($categorias as $categoria): ?>
-                                                        <option value="<?php echo $categoria->id ?>"><?php echo $categoria->nombre ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>                                     
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-12" for="vendedor">Vendedor / Empresa</label>
-                                            <div class="col-md-12">
-                                                <input type="text" name="vendedor" id="vendedor" value="" class="form-control"/>                                
-                                            </div>
-                                        </div>
-                                    </div> 
+                                    </div>                                                                                                                                                                                                                                                             
                                 </div>                                
                                 <hr>
                                 <div class="row"> 
-                                    <div class="col-md-12">
-                                        <div class="form-buttons">
+                                    <div class="col-md-2">
+                                        <div class="form-buttons pull-left">
                                             <button type="submit" id="btn-search" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Buscar</button>
                                             <input type="hidden" value="1" name="pagina" id="pagina"/>                                        
                                         </div>
@@ -96,7 +68,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Productos
+                            Anuncios
                         </div>
                         <div class="panel-body">
                             <div id="tabla-resultados"></div>

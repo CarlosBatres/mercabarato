@@ -13,6 +13,13 @@ class Producto_model extends MY_Model {
         $this->_table = "producto";
     }
 
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public function get_admin_search($params, $limit, $offset) {
         $this->db->start_cache();
         $this->db->select("producto.*,categoria.nombre AS Categoria,vendedor.nombre AS Vendedor");
@@ -28,6 +35,9 @@ class Producto_model extends MY_Model {
         }
         if (isset($params['vendedor'])) {
             $this->db->like('vendedor.nombre', $params['vendedor'], 'both');
+        }
+        if (isset($params['vendedor_id'])) {
+            $this->db->where('vendedor.id', $params['vendedor_id']);
         }
 
 
@@ -46,6 +56,15 @@ class Producto_model extends MY_Model {
         }
     }
 
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @param type $order_by
+     * @param type $order
+     * @return type
+     */
     public function get_site_search($params, $limit, $offset, $order_by, $order) {
         $this->db->start_cache();
         $this->db->select('p.*,pr.filename as imagen_nombre');
@@ -73,8 +92,8 @@ class Producto_model extends MY_Model {
             if ($params['precio_tipo1'] != '0') {
                 $precios = explode(";;", $params['precio_tipo1']);
                 // TODO : Aqui el precio puede ser precio oferta o una tarifa especifica. Resolver dependiendo de quien este conectado haciendo la busqueda
-                $this->db->where('p.precio >',$precios['0']);
-                $this->db->where('p.precio <=',$precios['1']);                
+                $this->db->where('p.precio >', $precios['0']);
+                $this->db->where('p.precio <=', $precios['1']);
             }
         }
 
@@ -93,6 +112,11 @@ class Producto_model extends MY_Model {
         }
     }
 
+    /**
+     * 
+     * @param type $id
+     * @return boolean
+     */
     public function get_all_categorias_of($id) {
         $query = "SELECT id FROM categoria WHERE padre_id='" . $id . "'";
         $result = $this->db->query($query);
@@ -112,6 +136,61 @@ class Producto_model extends MY_Model {
         } else {
             return false;
         }
+    }
+
+    /**
+     * 
+     * @param type $producto_id
+     * @return boolean
+     */
+    public function get_vendedor_id_del_producto($producto_id) {
+        $producto = $this->get($producto_id);
+        if ($producto) {
+            return $producto->vendedor_id;
+        } else {
+            return FALSE;
+        }
+    }
+
+    /**
+     * 
+     * @param type $vendedor_id
+     * @param type $count
+     * @return boolean
+     */
+    public function get_ultimos_productos_ids($vendedor_id, $count) {
+        $this->db->select('id');
+        $this->db->from('producto');
+        $this->db->where("vendedor_id", $vendedor_id);
+        $this->db->order_by("id", "desc");
+        $this->db->limit($count, 0);
+        $response = $this->db->get()->result_array();
+
+        if ($response) {
+            $producto_ids = array();
+            foreach ($response as $val) {
+                $producto_ids[] = $val['id'];
+            }
+            return $producto_ids;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * @param type $params
+     */
+    public function habilitar_productos($params) {
+        $data = array("habilitado" => 1);
+        if (isset($params["limit"]) && isset($params["vendedor_id"])) {
+            $ids = $this->get_ultimos_productos_ids($params["vendedor_id"], $params["limit"]);
+
+            $this->db->where_in('id', $ids);
+            $this->db->where('vendedor_id', $params["vendedor_id"]);
+        }
+        $this->db->update("producto", $data);
+        return $this->db->affected_rows();
     }
 
 }

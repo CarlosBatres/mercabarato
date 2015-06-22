@@ -18,7 +18,7 @@
                 <th style="width: 5%;text-align: center">Orden</th>
                 <th style="width: 5%;text-align: center">Activo</th>                
                 <th style="width: 5%;text-align: center">Mostrar</th>                
-                <th style="width: 5%">&nbsp;</th> 
+                <th style="width: 5%;text-align: center">&nbsp; Acciones</th> 
             </tr>
         </thead>
         <tbody>

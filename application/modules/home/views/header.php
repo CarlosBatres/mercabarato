@@ -23,7 +23,7 @@
             </div>
         </div>
     </div>   
-   
+
     <div class="navbar navbar-default yamm navbar-custom" role="navigation" id="navbar">
         <div class="container">
             <div class="navbar-header">
@@ -47,23 +47,26 @@
                         <a href="<?php echo site_url(); ?>">Inicio <b class="caret"></b></a>                            
                     </li>
                     <li class="dropdown <?php
-                        if ($this->uri->uri_string() == 'productos'): echo "active";
-                        endif;
-                        ?>" >
+                    if ($this->uri->uri_string() == 'productos'): echo "active";
+                    endif;
+                    ?>" >
                         <a href="<?php echo site_url('productos'); ?>">Productos<b class="caret"></b></a>
                     </li>                       
 
                     <li class="dropdown <?php
-                        if ($this->uri->uri_string() == 'vendedores'): echo "active";
-                        endif;
-                        ?>" >
+                    if ($this->uri->uri_string() == 'vendedores'): echo "active";
+                    endif;
+                    ?>" >
                         <a href="<?php echo site_url('vendedores'); ?>">Vendedores <b class="caret"></b></a>                            
                     </li>
                     <li class="dropdown <?php
                     if ($this->uri->uri_string() == 'seguros'): echo "active";
                     endif;
-                        ?>" >
-                        <a href="<?php echo site_url('seguros'); ?>">Seguros <b class="caret"></b></a>                            
+                    ?>" >
+                        <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Infocompras <b class="caret"></b></a>                           
+                        <ul class="dropdown-menu">
+                            <li class="sub-opcion-menu"><a href="<?php echo site_url('seguros'); ?>"> Seguros</a></li>                     
+                        </ul>
                     </li>                                                
                 </ul>
             </div>            

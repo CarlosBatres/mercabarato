@@ -13,8 +13,8 @@
 .autocomplete-group { padding: 2px 5px; }
 .autocomplete-group strong { font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }
 
-#footer{height: 100px;padding: 50px;}
-#footer .container{padding-left: 200px;}
+#footer{height: 100px;padding-top: 50px;}
+//#footer .container{padding-left: 200px;}
 .paginacion-listado{text-align: right;}
 .nav-custom{
     background: #ec9c29; /* Old browsers */
@@ -41,4 +41,8 @@
 #admin_producto_form .radioInput{
     margin-left: 8px;
     margin-right: 8px;
+}
+
+#cerrar-sesion{
+    color:#000;
 }

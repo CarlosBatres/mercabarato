@@ -7,7 +7,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li>
-                    <i class="fa fa-dashboard"></i>  <a href="<?php echo site_url('admin'); ?>">Dashboard</a>
+                    <i class="fa fa-dashboard"></i>  <a href="<?php echo site_url('admin'); ?>">Resumen</a>
                 </li>
                 <li>
                     <i class="fa fa-inbox"></i> <a href="<?php echo site_url('admin/vendedores'); ?>">Vendedores</a>
@@ -84,10 +84,10 @@
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="text" class="form-control" name="email" value="<?php echo $vendedor->email; ?>">
+                    <input type="text" class="form-control" disabled name="email" value="<?php echo $vendedor->email; ?>">
                 </div>
                 <div class="text-center">
-                    <button type="submit" id="admin_form_submit" class="btn btn-lg btn-default"> Confirmar Cambios</button>
+                    <button type="submit" id="admin_form_submit" class="btn btn-lg btn-primary"> Confirmar Cambios</button>
                 </div>
                 <input type="hidden" name="accion" value="form-editar">                
                 <?php echo form_close(); ?>

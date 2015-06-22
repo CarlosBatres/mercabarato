@@ -33,8 +33,7 @@ class Paquete extends MY_Controller {
 
         if ($formValues !== false) {
             $accion = $this->input->post('accion');            
-            if ($accion === "item-crear") {
-                $meses = $this->input->post('nombre');
+            if ($accion === "item-crear") {                
                 // TODO: Como transormar la cantidad de meses en datetime para sumarlo                
                 if($this->input->post('limite_productos')=="" or $this->input->post('limite_productos')==0){
                     $limite_productos=-1;
@@ -109,12 +108,10 @@ class Paquete extends MY_Controller {
             $paginas = $ent + 1;
         } else {
             $paginas = $ent;
-        }
-        // TODO: Falta testear mas
+        }        
 
         if ($paquetes_array["total"] == 0) {
-            $paquetes_array["paquetes"] = array();
-            // TODO: Resultados vacio
+            $paquetes_array["paquetes"] = array();         
         }
         $data = array(
             "paquetes" => $paquetes_array["paquetes"],

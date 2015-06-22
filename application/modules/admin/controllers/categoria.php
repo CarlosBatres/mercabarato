@@ -117,7 +117,7 @@ class Categoria extends MY_Controller {
 
                 $this->template->load_view('admin/categoria/editar', $data);
             } else {
-                //TODO : No se encuentra el producto
+                redirect('');
             }
         }
     }
@@ -198,12 +198,10 @@ class Categoria extends MY_Controller {
             $paginas = $ent + 1;
         } else {
             $paginas = $ent;
-        }
-        // TODO: Falta testear mas
+        }        
 
         if ($categorias_array["total"] == 0) {
-            $categorias_array["categorias"] = array();
-            // TODO: Resultados vacio
+            $categorias_array["categorias"] = array();            
         }
 
         $data = array(

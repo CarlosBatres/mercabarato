@@ -69,7 +69,7 @@
                         <br>
                         <div class="row">
                             <div class="col-md-12">
-                                <p class="lead">De momento tienes un paquete habilitado asi que no necesitas realizar otra compra.</p>
+                                <p class="lead">De momento tienes un paquete aprobado o esperando por aprobación asi que no necesitas realizar otra compra. Si deseas cambiar un paquete en espera por aprobación ponte en contacto con nosotros via email.</p>
                             </div>
                         </div>
                     <?php endif; ?>

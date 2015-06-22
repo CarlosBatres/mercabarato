@@ -15,7 +15,7 @@
                 <th style="width: 5%;text-align: center">Visible al Publico</th>
                 <th style="width: 5%;text-align: center">Precio Venta Publico</th>                            
                 <th style="width: 5%;text-align: center">PVP Visible</th>                                                        
-                <th style="width: 5%">&nbsp;</th> 
+                <th style="width: 5%;text-align: center">&nbsp; Acciones</th> 
             </tr>
         </thead>
         <tbody>
@@ -40,7 +40,7 @@
                     </td>                                                                
                     <td>
                         <div class="options">
-                            <a href="<?php echo site_url('admin/productos/editar') . '/' . $producto->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>
+                            <!--<a href="<?php echo site_url('admin/productos/editar') . '/' . $producto->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>-->
                             <a class="producto_borrar" href="<?php echo site_url('admin/productos/borrar') . '/' . $producto->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
                         </div>                           
                     </td>

@@ -97,8 +97,7 @@
                 <div class="text-center">
                     <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-primary"> Confirmar Cambios</button>
                 </div>
-                <input type="hidden" name="accion" value="producto-editar">
-                <input type="hidden" name="id" value="<?php echo $producto->id; ?>">
+                <input type="hidden" name="accion" value="producto-editar">                
                 <?php echo form_close(); ?>
             </div>
         </div>

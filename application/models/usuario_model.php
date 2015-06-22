@@ -10,7 +10,11 @@ class Usuario_model extends MY_Model {
         parent::__construct();
         $this->_table = "usuario";
     }
-
+    /**
+     * 
+     * @param type $email
+     * @return boolean
+     */
     public function email_exists($email) {
         $this->db->where('email', $email);
         $query = $this->db->get('usuario');
@@ -20,7 +24,11 @@ class Usuario_model extends MY_Model {
             return FALSE;
         }
     }
-
+    /**
+     * 
+     * @param type $usuario_id
+     * @return boolean
+     */
     public function get_full_identidad($usuario_id) {
         $identidad = array();
         $this->db->select("id,email,activo,fecha_creado,ultimo_acceso,ip_address,is_admin");
@@ -54,12 +62,37 @@ class Usuario_model extends MY_Model {
 
         return $identidad;
     }
-
+    /**
+     * 
+     * @param type $usuario_id
+     * @return boolean
+     */
     public function usuario_es_vendedor($usuario_id) {
         $user = $this->get_full_identidad($usuario_id);
         if ($user) {
             if (isset($user['vendedor'])) {
                 return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    /**
+     * 
+     * @param type $usuario_id
+     * @return boolean
+     */
+    public function usuario_es_vendedor_habilitado($usuario_id){
+        $user = $this->get_full_identidad($usuario_id);
+        if ($user) {
+            if (isset($user['vendedor'])) {
+                if($user['vendedor']->habilitado==1){
+                    return true;
+                }else{
+                    return false;
+                }                
             } else {
                 return false;
             }

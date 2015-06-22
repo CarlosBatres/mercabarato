@@ -26,17 +26,34 @@ class Vendedor_paquete extends MY_Controller {
     }
 
     /**
-     * 
+     * ( IMPORTANTE )
+     * Aprobamos un vendedor_paquete
+     * Verificamos productos y anuncios 
      * @param type $id
      */
     public function aprobar($id) {
-        $vendedor_paquete=$this->vendedor_paquete_model->get($id);        
-        $paquete=$this->paquete_model->get($vendedor_paquete->paquete_id);
-        $this->vendedor_paquete_model->aprobar_paquete($id,$paquete);
+        $vendedor_paquete=$this->vendedor_paquete_model->get($id);                
+        $this->vendedor_paquete_model->aprobar_paquete($id);
         $this->vendedor_model->habilitar_vendedor($vendedor_paquete->vendedor_id);
         
-        // TODO: Enviar correo al cliente para informarle que ya esta activo su paquete y el esta habilitado
+        $productos=$this->producto_model->get_many_by("vendedor_id",$vendedor_paquete->vendedor_id);
+        $anuncios=$this->anuncio_model->get_many_by("vendedor_id",$vendedor_paquete->vendedor_id);
         
+        if(sizeof($productos)<=$vendedor_paquete->limite_productos || $vendedor_paquete->limite_productos==-1){
+            $this->producto_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>1));            
+        }else{
+            $this->producto_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>0));
+            $this->producto_model->habilitar_productos(array('vendedor_id'=>$vendedor_paquete->vendedor_id,"limit"=>$vendedor_paquete->limite_productos));            
+        }
+        
+        if(sizeof($anuncios)<=$vendedor_paquete->limite_anuncios || $vendedor_paquete->limite_anuncios==-1){
+            $this->anuncio_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>1));            
+        }else{
+            $this->anuncio_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>0));
+            $this->anuncio_model->habilitar_anuncios(array('vendedor_id'=>$vendedor_paquete->vendedor_id,"limit"=>$vendedor_paquete->limite_anuncios));            
+        }        
+        
+        // TODO: (PAQUETE-APROBADO) Enviar correo al cliente para informarle que ya esta activo su paquete y el esta habilitado        
         $this->session->set_flashdata('success', 'El paquete ha sido aprobado y el Vendedor habilitado.');
         redirect('admin/vendedor_paquetes/listado_por_activar');
     }
@@ -75,12 +92,10 @@ class Vendedor_paquete extends MY_Controller {
             $paginas = $ent + 1;
         } else {
             $paginas = $ent;
-        }
-        // TODO: Falta testear mas
+        }        
 
         if ($vendedor_paquetes_array["total"] == 0) {
-            $vendedor_paquetes_array["vendedor_paquetes"] = array();
-            // TODO: Resultados vacio
+            $vendedor_paquetes_array["vendedor_paquetes"] = array();         
         }
         $data = array(
             "vendedor_paquetes" => $vendedor_paquetes_array["vendedor_paquetes"],
@@ -96,14 +111,16 @@ class Vendedor_paquete extends MY_Controller {
 
         $this->template->load_view('admin/vendedor_paquete/tabla_resultados', $data);
     }
-
+    
+    /**
+     * 
+     */
     public function ajax_get_paquete_info() {
         if ($this->input->is_ajax_request()) {
             $formValues = $this->input->post();
             if ($formValues !== false) {
                 $vendedor_paquete_id = $this->input->post("vendedor_paquete_id");
-                $vendedor_paquete = $this->vendedor_paquete_model->get($vendedor_paquete_id);
-                $paquete = $this->paquete_model->get($vendedor_paquete->paquete_id);
+                $vendedor_paquete = $this->vendedor_paquete_model->get($vendedor_paquete_id);                
                 $vendedor = $this->vendedor_model->get($vendedor_paquete->vendedor_id);
                 $cliente = $this->cliente_model->get($vendedor->cliente_id);
                 $usuario = $this->usuario_model->get($cliente->usuario_id);
@@ -111,18 +128,16 @@ class Vendedor_paquete extends MY_Controller {
                 $html='<table class="table table-bordered table-hover table-striped">';
                 $html.='<thead>';
                 $html.='<tr>';                
-                $html.='<th style="width: 15%">Vendedor / Empresa</th>';
-                $html.='<th style="width: 15%">Email</th>';
-                $html.='<th style="width: 15%">Monto a Cancelar</th>';
-                $html.='<th style="width: 15%">Paquete</th>';                                
+                $html.='<th style="width: 15%;text-align:center;">Vendedor / Empresa</th>';                
+                $html.='<th style="width: 15%;text-align:center;">Monto a Cancelar</th>';
+                $html.='<th style="width: 15%;text-align:center;">Paquete</th>';                                
                 $html.='</tr>';
                 $html.='</thead>';
                 $html.='<tbody>';            
                 $html.='<tr>';                    
-                $html.='<td>'.$vendedor->nombre.'</td>';
-                $html.='<td>'.$usuario->email.'</td>';
+                $html.='<td>'.$vendedor->nombre.'</td>';                
                 $html.='<td>'.$vendedor_paquete->monto_a_cancelar .' '.$this->config->item('money_sign').'</td>';
-                $html.='<td>'.$paquete->nombre.'</td>';
+                $html.='<td>'.$vendedor_paquete->nombre_paquete.'</td>';
                 $html.='</tr>';            
                 $html.='</tbody>';
                 $html.='</table>';                

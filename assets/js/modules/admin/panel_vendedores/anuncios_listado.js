@@ -9,7 +9,7 @@ $(document).ready(function() {
 });
 
 function updateResultados() {
-    var form = $('#listado-productos');
+    var form = $('#listado-items');
     $('#tabla-resultados').html('<br><br><br>');
     $('#tabla-resultados').block({
         message: '<h4>Procesando espere un momento..</h4>',
@@ -17,7 +17,7 @@ function updateResultados() {
     });
     $.ajax({
         type: "POST",
-        url: SITE_URL + 'admin/paquete/ajax_get_listado_resultados',
+        url: SITE_URL + 'panel_vendedor/anuncio/ajax_get_listado_resultados',
         data: form.serialize(),
         dataType: "html",
         success: function(response) {

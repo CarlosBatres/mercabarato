@@ -158,17 +158,17 @@ class Authentication {
      * @param	string [$password] The password to authenticate
      * @return	boolean Either TRUE or FALSE depending upon successful login
      */
-    public function login($username, $password, $check_admin = false) {        
+    public function login($username, $password, $check_admin = false) {
         // Select user details
         if ($check_admin) {
             $user = $this->ci->db
-                    ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username, ' . $this->password_field . ' as password, is_admin as is_admin')
+                    ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username, ' . $this->password_field . ' as password')
                     ->where($this->username_field, $username)
                     ->where('is_admin', '1')
-                    ->get($this->user_table);            
+                    ->get($this->user_table);
         } else {
             $user = $this->ci->db
-                    ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username, ' . $this->password_field . ' as password, is_admin as is_admin')
+                    ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username, ' . $this->password_field . ' as password')
                     ->where($this->username_field, $username)
                     ->get($this->user_table);
         }
@@ -192,7 +192,6 @@ class Authentication {
                 'identifier' => $user_details->identifier,
                 'username' => $user_details->username,
                 'logged_in' => $_SERVER['REQUEST_TIME'],
-                'is_admin' => $user_details->is_admin
             ));
 
             return TRUE;
@@ -329,7 +328,6 @@ class Authentication {
         $this->ci->session->unset_userdata('identifier');
         $this->ci->session->unset_userdata('username');
         $this->ci->session->unset_userdata('logged_in');
-        $this->ci->session->unset_userdata('is_admin');
 
         // Set logged out userdata
         $this->ci->session->set_userdata(array(
@@ -357,9 +355,24 @@ class Authentication {
             return FALSE;
         }
     }
-
+    /**
+     * Verificar si usuario tiene privilegios admin
+     * @return boolean
+     */
     public function user_is_admin() {
-        return (bool) $this->ci->session->userdata('is_admin');
+        $user_id = $this->ci->session->userdata('identifier');
+        $result = $this->ci->db
+                ->select('is_admin')
+                ->where($this->identifier_field, $user_id)
+                ->get($this->user_table);
+        
+        $is_admin=$result->row();
+        if($is_admin->is_admin==1){
+            return true;
+        }else{
+            return false;
+        }
+        
     }
 
 }

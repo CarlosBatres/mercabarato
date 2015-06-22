@@ -11,6 +11,11 @@ class Vendedor_model extends MY_Model {
         $this->_table = "vendedor";
     }
 
+    /**
+     * 
+     * @param type $nombre
+     * @return boolean
+     */
     function get_by_nombre($nombre) {
         $limit = 10;
         $this->db->select('id,nombre');
@@ -27,6 +32,13 @@ class Vendedor_model extends MY_Model {
         }
     }
 
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public function get_admin_search($params, $limit, $offset) {
         $this->db->start_cache();
         $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address");
@@ -62,6 +74,11 @@ class Vendedor_model extends MY_Model {
         }
     }
 
+    /**
+     * Devuelve un Vendedor
+     * @param type $id
+     * @return boolean
+     */
     public function get_vendedor($id) {
         $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address");
         $this->db->from($this->_table);
@@ -77,6 +94,10 @@ class Vendedor_model extends MY_Model {
         }
     }
 
+    /**
+     * Habilitar un vendedor
+     * @param type $id
+     */
     public function habilitar_vendedor($id) {
         $data = array(
             "habilitado" => 1,
@@ -89,12 +110,12 @@ class Vendedor_model extends MY_Model {
      * Verificar si es posible asignarle un vendedor_paquete a este vendedor.
      * - Si tiene paquetes con aprobado=0 FALSE
      * - Si tiene paquetes aprobados en curso FALSE
-     * @param type $id
+     * @param type $vendedor_id
      */
-    public function verificar_disponibilidad($id) {
+    public function verificar_disponibilidad($vendedor_id) {
         $this->db->select('*');
         $this->db->from('vendedor_paquete');
-        $this->db->where('vendedor_id', $id);
+        $this->db->where('vendedor_id', $vendedor_id);
         $paquetes = $this->db->get()->result();
         $hoy = date("Y-m-d");
 
@@ -110,16 +131,73 @@ class Vendedor_model extends MY_Model {
         }
         return $flag;
     }
+
     /**
      * Retornar el vendedor_paquete que esta en curso
-     * @param type $id
+     * @param type $vendedor_id
      */
-    public function get_paquete_en_curso($id){
+    public function get_paquete_en_curso($vendedor_id) {
         $this->db->select("*");
-        $this->db->from('vendedor_paquete');        
-        $this->db->where('vendedor_id', $id);
+        $this->db->from('vendedor_paquete');
+        $this->db->where('vendedor_id', $vendedor_id);
         $this->db->where('aprobado', '1');
-        $this->db->where('fecha_terminar >',date('Y-m-d'));
+        $this->db->where('fecha_terminar >', date('Y-m-d'));
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            return $result->row();
+        } else {
+            return FALSE;
+        }
+    }
+
+    /**
+     * Devuelve la cantidad de productos disponibles por insertar
+     * @param type $vendedor_id
+     */
+    public function get_cantidad_productos_disp($vendedor_id) {
+        $vendedor_paquete = $this->get_paquete_en_curso($vendedor_id);
+        if ($vendedor_paquete) {
+            if ($vendedor_paquete->limite_productos == -1) {
+                return 1;
+            } else {
+                $this->db->select('id')->from('producto')->where('vendedor_id', $vendedor_id);
+                $total = $this->db->count_all_results();
+                return ($vendedor_paquete->limite_productos - $total);
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Devuelve la cantidad de anuncios disponibles por insertar
+     * @param type $vendedor_id
+     */
+    public function get_cantidad_anuncios_disp($vendedor_id) {
+        $vendedor_paquete = $this->get_paquete_en_curso($vendedor_id);
+        if ($vendedor_paquete) {
+            if ($vendedor_paquete->limite_anuncios == -1) {
+                return 1;
+            } else {
+                $this->db->select('id')->from('anuncio')->where('vendedor_id', $vendedor_id);
+                $total = $this->db->count_all_results();
+                return ($vendedor_paquete->limite_anuncios - $total);
+            }
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Retornar el vendedor_paquete que esta pendiente por aprobacion, solo deberia existir uno
+     * @param type $vendedor_id
+     */
+    public function get_paquete_pendiente($vendedor_id) {
+        $this->db->select("*");
+        $this->db->from('vendedor_paquete');
+        $this->db->where('vendedor_id', $vendedor_id);
+        $this->db->where('aprobado', '0');
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {

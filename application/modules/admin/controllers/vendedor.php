@@ -129,7 +129,7 @@ class Vendedor extends MY_Controller {
                 //$this->template->add_js("modules/admin/vendedores.js");                
                 $this->template->load_view('admin/vendedor/editar', array("vendedor"=>$vendedor));
             } else {
-                //TODO : No se encuentra el vendedor
+                redirect('admin');
             }
         }
     }
@@ -183,12 +183,10 @@ class Vendedor extends MY_Controller {
             $paginas = $ent + 1;
         } else {
             $paginas = $ent;
-        }
-        // TODO: Falta testear mas
+        }        
 
         if ($vendedores_array["total"] == 0) {
-            $vendedores_array["vendedores"] = array();
-            // TODO: Resultados vacio
+            $vendedores_array["vendedores"] = array();         
         }
         $data = array(
             "vendedores" => $vendedores_array["vendedores"],

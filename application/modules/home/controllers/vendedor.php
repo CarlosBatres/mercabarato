@@ -125,24 +125,21 @@ class Vendedor extends MY_Controller {
                 $this->session->unset_userdata('afiliacion_cliente');
                 $this->session->unset_userdata('afiliacion_vendedor');
 
-                $paquete = $this->paquete_model->get($paquete_id);
-
-                // TODO : Calcular la fecha a terminar si aplica
-                $data = array(
-                    "paquete_id" => $paquete_id,
+                $paquete = $this->paquete_model->get($paquete_id);                
+                $data = array(                    
                     "vendedor_id" => $vendedor_id,
+                    "nombre_paquete"=>$paquete->nombre,
+                    "duracion_paquete"=>$paquete->duracion,
                     "fecha_comprado" => date("Y-m-d"),
                     "fecha_terminar" => null,
                     "fecha_aprobado" => null,
-                    "referencia" => "",
-                    "productos_insertados" => 0,
-                    "anuncios_insertados" => 0,
+                    "referencia" => "",                    
                     "limite_productos" => $paquete->limite_productos,
                     "limite_anuncios" => $paquete->limite_anuncios,
                     "monto_a_cancelar" => $paquete->costo,
                     "aprobado" => 0
                 );
-                // TODO: Enviar correo a mercabarato con la informacion de compra y enviarle un correo al email del cliente
+                // TODO: (NUEVA AFILIACION) Enviar correo a mercabarato con la informacion de compra y enviarle un correo al email del cliente
                 $this->vendedor_paquete_model->insert($data);
                 redirect('usuario/completado');
             } else {
@@ -264,18 +261,15 @@ class Vendedor extends MY_Controller {
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                 $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
 
-                $paquete = $this->paquete_model->get($paquete_id);
-
-                // TODO : Calcular la fecha a terminar si aplica
-                $data = array(
-                    "paquete_id" => $paquete_id,
+                $paquete = $this->paquete_model->get($paquete_id);                
+                $data = array(                    
                     "vendedor_id" => $vendedor->id,
+                    "nombre_paquete"=>$paquete->nombre,
+                    "duracion_paquete"=>$paquete->duracion,
                     "fecha_comprado" => date("Y-m-d"),
                     "fecha_terminar" => null,
                     "fecha_aprobado" => null,
-                    "referencia" => "",
-                    "productos_insertados" => 0,
-                    "anuncios_insertados" => 0,
+                    "referencia" => "",                    
                     "limite_productos" => $paquete->limite_productos,
                     "limite_anuncios" => $paquete->limite_anuncios,
                     "monto_a_cancelar" => $paquete->costo,
@@ -283,7 +277,7 @@ class Vendedor extends MY_Controller {
                 );
                 $result = $this->vendedor_model->verificar_disponibilidad($vendedor->id);
                 if ($result) {
-                    // TODO: Enviar correo a mercabarato con la informacion de compra y enviarle un correo al email del cliente                                                
+                    // TODO: (NUEVA COMPRA DE PAQUETE) Enviar correo a mercabarato con la informacion de compra y enviarle un correo al email del cliente                                                
                     $this->vendedor_paquete_model->insert($data);
                 }
                 redirect('usuario/mis-paquetes');
