@@ -1,6 +1,6 @@
 $(document).ready(function() {
     updateResultados();
-    $('#producto-menu-categorias').metisMenu();    
+    $('#producto-principal-categorias').metisMenu();    
 
     $('#search_button').on('click', function(e) {
         e.preventDefault();
@@ -53,7 +53,8 @@ function updateResultados() {
             categoria_id: categoria_id,
             pagina: pagina_id,
             categoria_padre: categoria_padre,
-            precio_tipo1:precio
+            precio_tipo1:precio,
+            alt_layout:true
         },
         dataType: "html",
         success: function(response) {

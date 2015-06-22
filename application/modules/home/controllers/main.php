@@ -6,7 +6,8 @@ if (!defined('BASEPATH'))
 class Main extends MY_Controller {
 
     public function index() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        
+        /*$this->template->set_title('Mercabarato - Anuncios y subastas');
         $productos = $this->producto_model->get_site_search(array(), 8, 0, "id", "DESC");
         $anuncios = $this->anuncio_model->get_ultimos_anuncios();
         if ($productos['total'] == 0) {
@@ -14,7 +15,7 @@ class Main extends MY_Controller {
         }
         $this->template->load_view('home/index', array(
             "productos" => $productos["productos"],
-            "anuncios" => $anuncios));
+            "anuncios" => $anuncios));*/
     }
 
     public function not_found() {

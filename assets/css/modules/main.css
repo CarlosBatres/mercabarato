@@ -92,7 +92,10 @@ body .box_registro{
     border-right: solid 1px #ccc;
 }
 .box-anuncios>.box-header,.box-productos>.box-header{
-    background-color: #ec9c29;
+    background-color: #ec9c29;    
+}
+.box-productos{
+    border: 0;
 }
 
 .frame {
@@ -127,12 +130,12 @@ body .box_registro{
 }
 
 #footer li a {
-  padding: 8px 0;
-  display: -moz-inline-stack;
-  display: inline-block;
-  vertical-align: middle;
-  zoom: 1;
-  font-size: 16px;
+    padding: 8px 0;
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: middle;
+    zoom: 1;
+    font-size: 16px;
 }
 
 #footer ul{
@@ -140,3 +143,48 @@ body .box_registro{
     -moz-column-count: 3; /* Firefox */
     column-count: 3;
 }
+
+#producto-principal-categorias a{
+    padding: 5px;
+}
+#producto-principal-categorias .seleccion_categoria .active>a{
+    color: #ffffff;
+    background-color: #38a7bb;
+}
+
+.tabla-resultados-principal{
+    list-style: none;
+    padding: 0px;
+}
+
+.tabla-resultados-principal a{
+    text-decoration: none;
+    font-size:15px;
+}
+
+.tabla-resultados-principal .productos-principal{
+    margin: 20px 0px 20px 0px;
+}
+
+.tabla-resultados-principal .precio{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.tabla-resultados-principal .nombre-producto{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.tabla-resultados-principal li{
+    border: 1px solid #d2d2d2;
+    font-size: 13px;
+    overflow: hidden;
+    padding: 5px 15px;
+    position: relative;
+    margin-bottom: 10px;
+
+}
+
+
+

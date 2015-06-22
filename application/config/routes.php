@@ -39,7 +39,8 @@
 */
 
 /* Front */
-$route['home'] = 'home/main';
+$route[''] = 'home/producto/view_principal';
+$route['home'] = 'home/producto/view_principal';
 $route['acceso_invalido'] = 'home/main/acceso_invalido';
 $route['usuario/perfil'] = 'home/usuario/view_perfil';
 $route['usuario/datos-personales'] = 'home/usuario/view_datos_personales';
@@ -62,6 +63,7 @@ $route['logout'] = 'home/usuario/logout';
 $route['registro'] = 'home/usuario/view_registro';
 $route['registrar_cliente'] = 'home/cliente/crear';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
+
 $route['productos'] = 'home/producto/view_pre_listado';
 $route['productos/ficha/(:any)'] = 'home/producto/ver_producto/$1';
 $route['productos/(:any)'] = 'home/producto/view_listado/$1';
@@ -134,7 +136,7 @@ $route['admin/paquetes/borrar/(:num)'] = 'admin/paquete/borrar/$1';
 $route['admin/vendedor_paquetes/listado_por_activar'] = 'admin/vendedor_paquete/view_listado_por_activar'; 
 $route['admin/vendedor_paquetes/aprobar/(:num)'] = 'admin/vendedor_paquete/aprobar/$1'; 
 
-$route['default_controller'] = "home/main";
+$route['default_controller'] = 'home/producto/view_principal';
 $route['404_override'] = 'home/main/not_found';
 
 /* End of file routes.php */

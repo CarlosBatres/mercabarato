@@ -9,6 +9,25 @@ class Producto extends MY_Controller {
         parent::__construct();
     }
 
+    public function view_principal() {
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->add_js('modules/home/producto_principal_listado.js');
+
+        //$categoria = $this->categoria_model->get_by('slug', $categoria);
+        //$subcategorias = $this->categoria_model->get_many_by('padre_id', $categoria->id);
+
+        $subcategorias = $this->categoria_model->get_categorias_searchbar(0);
+        $subcategorias_html = $this->_build_categorias_searchparams($subcategorias);
+        $precios = precios_options();
+
+        //$data = array("subcategorias" => $subcategorias_html, "categoria" => $categoria, "precios" => $precios);
+        $data = array("productos" => array(), "anuncios" => array(), "precios" => $precios, "subcate", "subcategorias" => $subcategorias_html);
+        $this->template->load_view('home/producto/listado_principal', $data);
+    }
+
+    /**
+     * 
+     */
     public function view_pre_listado() {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $categorias = $this->categoria_model->get_many_by('padre_id', 0);
@@ -17,6 +36,10 @@ class Producto extends MY_Controller {
         $this->template->load_view('home/producto/pre_listado', $data);
     }
 
+    /**
+     * 
+     * @param type $categoria
+     */
     public function view_listado($categoria) {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $this->template->add_js('modules/home/producto_listado.js');
@@ -26,9 +49,9 @@ class Producto extends MY_Controller {
 
         $subcategorias = $this->categoria_model->get_categorias_searchbar($categoria->id);
         $subcategorias_html = $this->_build_categorias_searchparams($subcategorias);
-        $precios=  precios_options();
+        $precios = precios_options();
 
-        $data = array("subcategorias" => $subcategorias_html, "categoria" => $categoria,"precios"=>$precios);
+        $data = array("subcategorias" => $subcategorias_html, "categoria" => $categoria, "precios" => $precios);
         $this->template->load_view('home/producto/listado', $data);
     }
 
@@ -52,9 +75,16 @@ class Producto extends MY_Controller {
             if ($this->input->post('categoria_padre') != "") {
                 $params["categoria_general"] = $this->input->post('categoria_padre');
             }
-             if ($this->input->post('precio_tipo1') != 0) {
+            if ($this->input->post('precio_tipo1') != 0) {
                 $params["precio_tipo1"] = $this->input->post('precio_tipo1');
             }
+
+            if ($this->input->post('alt_layout')) {
+                $alt_layout = true;
+            } else {
+                $alt_layout = false;
+            }
+
 
             $pagina = $this->input->post('pagina');
 
@@ -70,7 +100,7 @@ class Producto extends MY_Controller {
             }
 
             if ($productos["total"] == 0) {
-                $productos["productos"] = array();                
+                $productos["productos"] = array();
             }
 
             $data = array(
@@ -85,11 +115,18 @@ class Producto extends MY_Controller {
                     "hasta" => ($pagina * $limit < $productos["total"]) ? $pagina * $limit : $productos["total"],
                     "desde" => (($pagina * $limit) - $limit) + 1)
             );
-
-            $this->template->load_view('home/producto/tabla_resultados', $data);
+            if ($alt_layout) {
+                $this->template->load_view('home/producto/tabla_resultados_principal', $data);
+            } else {
+                $this->template->load_view('home/producto/tabla_resultados', $data);
+            }
         }
     }
 
+    /**
+     * 
+     * @param type $id
+     */
     public function ver_producto($id) {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         //$this->template->add_js('modules/home/producto_listado.js');
@@ -102,25 +139,30 @@ class Producto extends MY_Controller {
         $this->template->load_view('home/producto/ficha', $data);
     }
 
+    /**
+     * 
+     * @param type $categorias
+     * @return string|boolean
+     */
     private function _build_categorias_searchparams($categorias) {
         if (!empty($categorias)) {
             $html = "";
             foreach ($categorias as $categoria) {
                 $html.='<li class="seleccion_categoria">';
-                $html.='<a href="" data-id="' . $categoria['id'] . '">' . $categoria['nombre'];                                
+                $html.='<a href="" data-id="' . $categoria['id'] . '">' . $categoria['nombre'];
                 if (isset($categoria['subcategorias'])) {
                     $html.='<span class="fa plus-times"></span></a>';
                     $res_html = $this->_build_categorias_searchparams($categoria['subcategorias']);
                     $html.='<ul>';
                     $html.=$res_html;
                     $html.='</ul>';
-                }else{
+                } else {
                     $html.='</a>';
-                }                
+                }
                 $html.='</li>';
             }
             return $html;
-        }else{
+        } else {
             return false;
         }
     }
