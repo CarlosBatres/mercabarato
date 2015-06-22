@@ -31,7 +31,7 @@ class MY_Controller extends MX_Controller {
                 redirect('panel_vendedor/login');
             } elseif (!$this->_usuario_es_vendedor_habilitado()) {
                 // TODO: No puedes acceder al panel todavia
-                redirect('404');
+                redirect('acceso_invalido');
             }
         } else {
             if ($this->uri->uri_string() != 'panel_vendedor/login') {

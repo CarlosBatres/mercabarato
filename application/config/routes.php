@@ -40,6 +40,7 @@
 
 /* Front */
 $route['home'] = 'home/main';
+$route['acceso_invalido'] = 'home/main/acceso_invalido';
 $route['usuario/perfil'] = 'home/usuario/view_perfil';
 $route['usuario/datos-personales'] = 'home/usuario/view_datos_personales';
 $route['usuario/datos-personales/modificar'] = 'home/usuario/modificar_datos';

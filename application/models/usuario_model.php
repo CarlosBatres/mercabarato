@@ -88,7 +88,7 @@ class Usuario_model extends MY_Model {
         $user = $this->get_full_identidad($usuario_id);
         if ($user) {
             if (isset($user['vendedor'])) {
-                if($user['vendedo']->habilitado==1){
+                if($user['vendedor']->habilitado==1){
                     return true;
                 }else{
                     return false;

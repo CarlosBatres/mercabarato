@@ -1,11 +1,10 @@
-<div id="question" style="display:none; cursor: default">
+<div id="question" style="display:none; cursor: default">    
     <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">Esta seguro que desea aprobar este paquete del vendedor?.</h4>
         </div>
         <div class="modal-body">
             <div class="question-content">
-                
             </div>
             <p class="text-center">
                 <button class="btn btn-success" type="button" id="yes"><i class="fa fa-check"></i> Si</button>
@@ -97,7 +96,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">

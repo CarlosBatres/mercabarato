@@ -39,14 +39,14 @@ class Vendedor_paquete extends MY_Controller {
         $productos=$this->producto_model->get_many_by("vendedor_id",$vendedor_paquete->vendedor_id);
         $anuncios=$this->anuncio_model->get_many_by("vendedor_id",$vendedor_paquete->vendedor_id);
         
-        if(sizeof($productos)<=$vendedor_paquete->limite_productos){
+        if(sizeof($productos)<=$vendedor_paquete->limite_productos || $vendedor_paquete->limite_productos==-1){
             $this->producto_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>1));            
         }else{
             $this->producto_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>0));
             $this->producto_model->habilitar_productos(array('vendedor_id'=>$vendedor_paquete->vendedor_id,"limit"=>$vendedor_paquete->limite_productos));            
         }
         
-        if(sizeof($anuncios)<=$vendedor_paquete->limite_anuncios){
+        if(sizeof($anuncios)<=$vendedor_paquete->limite_anuncios || $vendedor_paquete->limite_anuncios==-1){
             $this->anuncio_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>1));            
         }else{
             $this->anuncio_model->update_by(array('vendedor_id'=>$vendedor_paquete->vendedor_id),array('habilitado'=>0));
@@ -128,16 +128,14 @@ class Vendedor_paquete extends MY_Controller {
                 $html='<table class="table table-bordered table-hover table-striped">';
                 $html.='<thead>';
                 $html.='<tr>';                
-                $html.='<th style="width: 15%">Vendedor / Empresa</th>';
-                $html.='<th style="width: 15%">Email</th>';
-                $html.='<th style="width: 15%">Monto a Cancelar</th>';
-                $html.='<th style="width: 15%">Paquete</th>';                                
+                $html.='<th style="width: 15%;text-align:center;">Vendedor / Empresa</th>';                
+                $html.='<th style="width: 15%;text-align:center;">Monto a Cancelar</th>';
+                $html.='<th style="width: 15%;text-align:center;">Paquete</th>';                                
                 $html.='</tr>';
                 $html.='</thead>';
                 $html.='<tbody>';            
                 $html.='<tr>';                    
-                $html.='<td>'.$vendedor->nombre.'</td>';
-                $html.='<td>'.$usuario->email.'</td>';
+                $html.='<td>'.$vendedor->nombre.'</td>';                
                 $html.='<td>'.$vendedor_paquete->monto_a_cancelar .' '.$this->config->item('money_sign').'</td>';
                 $html.='<td>'.$vendedor_paquete->nombre_paquete.'</td>';
                 $html.='</tr>';            

@@ -21,5 +21,10 @@ class Main extends MY_Controller {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $this->template->load_view('home/404');
     }
+    
+    public function acceso_invalido(){
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->load_view('home/acceso_invalido');
+    }
 
 }
