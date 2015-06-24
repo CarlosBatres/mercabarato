@@ -22,7 +22,11 @@
     <div class="row" id="productMain">
         <div class="col-sm-6">
             <div id="mainImage">
-                <img src="<?php echo assets_url($this->config->item('productos_img_path')) .'/'.$producto_imagen->filename ?>" alt="" class="img-responsive">
+                <?php if($producto_imagen):?>
+                    <img src="<?php echo assets_url($this->config->item('productos_img_path')) .'/'.$producto_imagen->filename ?>" alt="" class="img-responsive">
+                 <?php else: ?>   
+                    <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="img-responsive">
+                <?php endif;?>
             </div>            
         </div>
         <div class="col-sm-6">

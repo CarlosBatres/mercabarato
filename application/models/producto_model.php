@@ -7,6 +7,8 @@ if (!defined('BASEPATH')) {
 class Producto_model extends MY_Model {
 
     public $has_many = array('producto_resources' => array('model' => 'producto_resource_model', 'primary_key' => 'producto_id'));
+    public $before_create = array('pre_insertado');
+    public $protected_attributes = array('id');
 
     function __construct() {
         parent::__construct();
@@ -74,9 +76,13 @@ class Producto_model extends MY_Model {
         if (isset($params['nombre'])) {
             $this->db->like('p.nombre', $params['nombre'], 'both');
         }
-        //if (isset($params['categoria_id'])) {
-        //    $this->db->where('p.categoria_id', $params['categoria_id']);
-        //}
+        if (isset($params['categoria_id'])) {            
+            $array = $this->get_categorias_arbol($params['categoria_id']);
+            $array[]=$params['categoria_id'];
+            if ($array) {
+                $this->db->where_in('p.categoria_id', $array);
+            }
+        }
         if (isset($params['categoria_general'])) {
             if (isset($params['categoria_id'])) {
                 $cat = $params['categoria_id'];
@@ -113,7 +119,7 @@ class Producto_model extends MY_Model {
     }
 
     /**
-     * 
+     * Devuelve todas las categorias incluidas
      * @param type $id
      * @return boolean
      */
@@ -131,6 +137,35 @@ class Producto_model extends MY_Model {
                         $ids[] = $val;
                     }
                 }
+            }
+            return $ids;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Devuelve todas las categorias padre hasta la raiz
+     * @param type $id
+     * @return boolean
+     */
+    public function get_categorias_arbol($id) {
+        $query = "SELECT padre_id FROM categoria WHERE id='" . $id . "'";
+        $result = $this->db->query($query);
+        $categoria = $result->row();
+
+        $ids = array();
+        if ($categoria) {
+            if ($categoria->padre_id != '0') {
+                $ids[] = $categoria->padre_id;
+                $res = $this->get_categorias_arbol($categoria->padre_id);
+                if ($res) {
+                    foreach ($res as $val) {
+                        $ids[] = $val;
+                    }
+                }
+            } else {
+                return false;
             }
             return $ids;
         } else {
@@ -191,6 +226,16 @@ class Producto_model extends MY_Model {
         }
         $this->db->update("producto", $data);
         return $this->db->affected_rows();
+    }
+
+    /**
+     * 
+     * @param array $producto
+     * @return type
+     */
+    protected function pre_insertado($producto) {
+        $producto['fecha_insertado'] = date('Y-m-d');
+        return $producto;
     }
 
 }

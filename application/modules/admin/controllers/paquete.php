@@ -14,8 +14,8 @@ class Paquete extends MY_Controller {
                 redirect('admin/sin_permiso');
             }
         }
-    }        
-    
+    }
+
     /**
      *  Listado
      */
@@ -32,28 +32,28 @@ class Paquete extends MY_Controller {
         $formValues = $this->input->post();
 
         if ($formValues !== false) {
-            $accion = $this->input->post('accion');            
-            if ($accion === "item-crear") {                
+            $accion = $this->input->post('accion');
+            if ($accion === "item-crear") {
                 // TODO: Como transormar la cantidad de meses en datetime para sumarlo                
-                if($this->input->post('limite_productos')=="" or $this->input->post('limite_productos')==0){
-                    $limite_productos=-1;
-                }else{
-                    $limite_productos=$this->input->post('limite_productos');
+                if ($this->input->post('limite_productos') == "" or $this->input->post('limite_productos') == 0) {
+                    $limite_productos = -1;
+                } else {
+                    $limite_productos = $this->input->post('limite_productos');
                 }
-                if($this->input->post('limite_anuncios')=="" or $this->input->post('limite_anuncios')==0){
-                    $limite_anuncios=-1;
-                }else{
-                    $limite_anuncios=$this->input->post('limite_anuncios');
+                if ($this->input->post('limite_anuncios') == "" or $this->input->post('limite_anuncios') == 0) {
+                    $limite_anuncios = -1;
+                } else {
+                    $limite_anuncios = $this->input->post('limite_anuncios');
                 }
                 $data = array(
                     "nombre" => $this->input->post('nombre'),
                     "descripcion" => $this->input->post('descripcion'),
                     "limite_productos" => $limite_productos,
-                    "limite_anuncios" => $limite_anuncios,                    
+                    "limite_anuncios" => $limite_anuncios,
                     "duracion" => $this->input->post('duracion'),
-                    "costo"=>$this->input->post('costo'),
-                    "orden"=>$this->input->post('orden'),
-                    "activo"=>1,
+                    "costo" => $this->input->post('costo'),
+                    "orden" => $this->input->post('orden'),
+                    "activo" => 1,
                     "mostrar" => $this->input->post('mostrar'),
                 );
 
@@ -81,7 +81,6 @@ class Paquete extends MY_Controller {
             redirect('admin/paquetes');
         }
     }
-    
 
     /**
      *  AJAX Productos / Listado
@@ -108,22 +107,26 @@ class Paquete extends MY_Controller {
             $paginas = $ent + 1;
         } else {
             $paginas = $ent;
-        }        
+        }
 
         if ($paquetes_array["total"] == 0) {
-            $paquetes_array["paquetes"] = array();         
+            $paquetes_array["paquetes"] = array();
         }
+
+        $search_params = array(
+            "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+            "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+            "pagina" => $pagina,
+            "total_paginas" => $paginas,
+            "por_pagina" => $limit,
+            "total" => $paquetes_array["total"],
+            "hasta" => ($pagina * $limit < $paquetes_array["total"]) ? $pagina * $limit : $paquetes_array["total"],
+            "desde" => (($pagina * $limit) - $limit) + 1);
+        $pagination=  build_paginacion($search_params);
+        
         $data = array(
             "paquetes" => $paquetes_array["paquetes"],
-            "search_params" => array(
-                "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
-                "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
-                "pagina" => $pagina,
-                "total_paginas" => $paginas,
-                "por_pagina" => $limit,
-                "total" => $paquetes_array["total"],
-                "hasta" => ($pagina * $limit < $paquetes_array["total"]) ? $pagina * $limit : $paquetes_array["total"],
-                "desde" => (($pagina * $limit) - $limit) + 1));
+            "pagination"=>$pagination);
 
         $this->template->load_view('admin/paquete/tabla_resultados', $data);
     }
