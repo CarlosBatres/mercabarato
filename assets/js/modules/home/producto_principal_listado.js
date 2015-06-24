@@ -9,13 +9,12 @@ $(document).ready(function() {
 
     $('.seleccion_categoria a').on('click', function(e) {
         e.preventDefault();
-        $('#pagina').val("1");
-        if ($(this).parent().hasClass('active')) {
-            //$(this).parent().removeClass('active');
-            //updateResultados();
+        $('#pagina').val("1");        
+        if ($(this).hasClass('clicked')) {
+            $(this).removeClass('clicked');            
         } else {
-            //$('.category-menu').find('li.active').removeClass('active');
-            //$(this).parent().addClass('active');
+            $('.category-menu').find('.clicked').removeClass('clicked');
+            $(this).addClass('clicked');
             updateResultados();
         }
     });
@@ -29,9 +28,9 @@ $(document).ready(function() {
 
 function updateResultados() {
     var search_query = $('input[name="search_query"]').val();
-    var categoria_id = $('.category-menu').find('li.active a').data('id');
-    var pagina_id = $('#pagina').val();
-    var categoria_padre = $('input[name="categoria_padre"]').val();
+    var categoria_id = $('.category-menu').find('.clicked').data('id');
+    console.log(categoria_id);
+    var pagina_id = $('#pagina').val();    
     var precio = 0;
 
     $.each($('input[name="precios"]'), function(index,checkbox) {
@@ -51,8 +50,7 @@ function updateResultados() {
         data: {
             search_query: search_query,
             categoria_id: categoria_id,
-            pagina: pagina_id,
-            categoria_padre: categoria_padre,
+            pagina: pagina_id,            
             precio_tipo1:precio,
             alt_layout:true
         },

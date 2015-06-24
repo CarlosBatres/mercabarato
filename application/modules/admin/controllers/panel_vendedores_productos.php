@@ -140,7 +140,7 @@ class Panel_vendedores_productos extends MY_Controller {
                     redirect('panel_vendedor/producto/listado');
                 }
             }
-        } else {            
+        } else {
             redirect('panel_vendedor/producto/listado');
         }
     }
@@ -215,19 +215,23 @@ class Panel_vendedores_productos extends MY_Controller {
         }
 
         if ($productos_array["total"] == 0) {
-            $productos_array["productos"] = array();         
+            $productos_array["productos"] = array();
         }
+
+        $search_params = array(
+            "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+            "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+            "pagina" => $pagina,
+            "total_paginas" => $paginas,
+            "por_pagina" => $limit,
+            "total" => $productos_array["total"],
+            "hasta" => ($pagina * $limit < $productos_array["total"]) ? $pagina * $limit : $productos_array["total"],
+            "desde" => (($pagina * $limit) - $limit) + 1);
+        $pagination=  build_paginacion($search_params);        
+        
         $data = array(
             "productos" => $productos_array["productos"],
-            "search_params" => array(
-                "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
-                "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
-                "pagina" => $pagina,
-                "total_paginas" => $paginas,
-                "por_pagina" => $limit,
-                "total" => $productos_array["total"],
-                "hasta" => ($pagina * $limit < $productos_array["total"]) ? $pagina * $limit : $productos_array["total"],
-                "desde" => (($pagina * $limit) - $limit) + 1));
+            "pagination"=>$pagination);
 
         $this->template->load_view('admin/panel_vendedores/producto/producto_tabla_resultados', $data);
     }

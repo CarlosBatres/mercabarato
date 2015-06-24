@@ -198,23 +198,27 @@ class Categoria extends MY_Controller {
             $paginas = $ent + 1;
         } else {
             $paginas = $ent;
-        }        
+        }
 
         if ($categorias_array["total"] == 0) {
-            $categorias_array["categorias"] = array();            
+            $categorias_array["categorias"] = array();
         }
+
+        $search_params = array(
+            "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+            "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+            "pagina" => $pagina,
+            "total_paginas" => $paginas,
+            "por_pagina" => $limit,
+            "total" => $categorias_array["total"],
+            "hasta" => ($pagina * $limit < $categorias_array["total"]) ? $pagina * $limit : $categorias_array["total"],
+            "desde" => (($pagina * $limit) - $limit) + 1);
+
+        $pagination = build_paginacion($search_params);
 
         $data = array(
             "categorias" => $categorias_array["categorias"],
-            "search_params" => array(
-                "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
-                "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
-                "pagina" => $pagina,
-                "total_paginas" => $paginas,
-                "por_pagina" => $limit,
-                "total" => $categorias_array["total"],
-                "hasta" => ($pagina * $limit < $categorias_array["total"]) ? $pagina * $limit : $categorias_array["total"],
-                "desde" => (($pagina * $limit) - $limit) + 1));
+            "pagination" => $pagination);
 
         $this->template->load_view('admin/categoria/tabla_resultados', $data);
     }

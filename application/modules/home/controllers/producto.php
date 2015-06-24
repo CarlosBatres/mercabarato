@@ -103,18 +103,21 @@ class Producto extends MY_Controller {
                 $productos["productos"] = array();
             }
 
+            $search_params = array(
+                "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+                "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+                "pagina" => $pagina,
+                "total_paginas" => $paginas,
+                "por_pagina" => $limit,
+                "total" => $productos["total"],
+                "hasta" => ($pagina * $limit < $productos["total"]) ? $pagina * $limit : $productos["total"],
+                "desde" => (($pagina * $limit) - $limit) + 1);
+
+            $pagination = build_paginacion($search_params);
             $data = array(
                 "productos" => $productos["productos"],
-                "search_params" => array(
-                    "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
-                    "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
-                    "pagina" => $pagina,
-                    "total_paginas" => $paginas,
-                    "por_pagina" => $limit,
-                    "total" => $productos["total"],
-                    "hasta" => ($pagina * $limit < $productos["total"]) ? $pagina * $limit : $productos["total"],
-                    "desde" => (($pagina * $limit) - $limit) + 1)
-            );
+                "pagination" => $pagination);
+            
             if ($alt_layout) {
                 $this->template->load_view('home/producto/tabla_resultados_principal', $data);
             } else {

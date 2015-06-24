@@ -127,7 +127,7 @@ class Vendedor extends MY_Controller {
             if ($vendedor) {
                 $this->template->set_title("Panel de Administracion - Mercabarato.com");
                 //$this->template->add_js("modules/admin/vendedores.js");                
-                $this->template->load_view('admin/vendedor/editar', array("vendedor"=>$vendedor));
+                $this->template->load_view('admin/vendedor/editar', array("vendedor" => $vendedor));
             } else {
                 redirect('admin');
             }
@@ -168,7 +168,7 @@ class Vendedor extends MY_Controller {
             }
             if ($this->input->post('sitio_web') != "") {
                 $params["sitio_web"] = $this->input->post('sitio_web');
-            }            
+            }
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
@@ -183,22 +183,26 @@ class Vendedor extends MY_Controller {
             $paginas = $ent + 1;
         } else {
             $paginas = $ent;
-        }        
+        }
 
         if ($vendedores_array["total"] == 0) {
-            $vendedores_array["vendedores"] = array();         
+            $vendedores_array["vendedores"] = array();
         }
+
+        $search_params = array(
+            "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+            "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+            "pagina" => $pagina,
+            "total_paginas" => $paginas,
+            "por_pagina" => $limit,
+            "total" => $vendedores_array["total"],
+            "hasta" => ($pagina * $limit < $vendedores_array["total"]) ? $pagina * $limit : $vendedores_array["total"],
+            "desde" => (($pagina * $limit) - $limit) + 1);
+        $pagination=  build_paginacion($search_params);
+        
         $data = array(
             "vendedores" => $vendedores_array["vendedores"],
-            "search_params" => array(
-                "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
-                "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
-                "pagina" => $pagina,
-                "total_paginas" => $paginas,
-                "por_pagina" => $limit,
-                "total" => $vendedores_array["total"],
-                "hasta" => ($pagina * $limit < $vendedores_array["total"]) ? $pagina * $limit : $vendedores_array["total"],
-                "desde" => (($pagina * $limit) - $limit) + 1));
+            "pagination"=>$pagination);
 
         $this->template->load_view('admin/vendedor/tabla_resultados', $data);
     }
@@ -221,8 +225,8 @@ class Vendedor extends MY_Controller {
             echo json_encode(array("suggestions" => $data));
         }
     }
-    
-     /**
+
+    /**
      * 
      */
     public function view_listado_control() {

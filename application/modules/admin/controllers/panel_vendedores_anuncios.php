@@ -31,6 +31,7 @@ class Panel_vendedores_anuncios extends MY_Controller {
                         "destacada" => 0,
                         "vendedor_id" => $vendedor["vendedor"]->id,
                         "imagen" => null,
+                        "habilitado"=>1
                     );
 
                     $this->anuncio_model->insert($data);
@@ -167,9 +168,7 @@ class Panel_vendedores_anuncios extends MY_Controller {
         if ($anuncios_array["total"] == 0) {
             $anuncios_array["anuncios"] = array();            
         }
-        $data = array(
-            "anuncios" => $anuncios_array["anuncios"],
-            "search_params" => array(
+        $search_params=array(
                 "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
                 "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
                 "pagina" => $pagina,
@@ -177,7 +176,12 @@ class Panel_vendedores_anuncios extends MY_Controller {
                 "por_pagina" => $limit,
                 "total" => $anuncios_array["total"],
                 "hasta" => ($pagina * $limit < $anuncios_array["total"]) ? $pagina * $limit : $anuncios_array["total"],
-                "desde" => (($pagina * $limit) - $limit) + 1));
+                "desde" => (($pagina * $limit) - $limit) + 1);
+        $pagination=  build_paginacion($search_params);
+        
+        $data = array(
+            "anuncios" => $anuncios_array["anuncios"],
+            "pagination"=>$pagination);
 
         $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_tabla_resultados', $data);
     }

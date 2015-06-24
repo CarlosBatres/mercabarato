@@ -212,9 +212,8 @@ class Producto extends MY_Controller {
         if ($productos_array["total"] == 0) {
             $productos_array["productos"] = array();         
         }
-        $data = array(
-            "productos" => $productos_array["productos"],
-            "search_params" => array(
+        
+        $search_params = array(
                 "anterior"=>(($pagina-1)<1)?-1:($pagina-1),
                 "siguiente"=>(($pagina+1)>$paginas)?-1:($pagina+1),
                 "pagina" => $pagina,
@@ -222,7 +221,13 @@ class Producto extends MY_Controller {
                 "por_pagina" => $limit,
                 "total" => $productos_array["total"],
                 "hasta" => ($pagina * $limit < $productos_array["total"]) ? $pagina * $limit : $productos_array["total"],
-                "desde" => (($pagina * $limit) - $limit) + 1));
+                "desde" => (($pagina * $limit) - $limit) + 1);
+        
+        $pagination = build_paginacion($search_params);
+        
+        $data = array(
+            "productos" => $productos_array["productos"],
+            "pagination" => $pagination);
 
         $this->template->load_view('admin/producto/tabla_resultados', $data);
     }

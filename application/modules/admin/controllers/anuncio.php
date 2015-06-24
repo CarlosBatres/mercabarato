@@ -160,19 +160,23 @@ class Anuncio extends MY_Controller {
         }
 
         if ($anuncios_array["total"] == 0) {
-            $anuncios_array["anuncios"] = array();            
+            $anuncios_array["anuncios"] = array();
         }
+
+        $search_params = array(
+            "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+            "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+            "pagina" => $pagina,
+            "total_paginas" => $paginas,
+            "por_pagina" => $limit,
+            "total" => $anuncios_array["total"],
+            "hasta" => ($pagina * $limit < $anuncios_array["total"]) ? $pagina * $limit : $anuncios_array["total"],
+            "desde" => (($pagina * $limit) - $limit) + 1);
+        $pagination=  build_paginacion($search_params);
+        
         $data = array(
             "anuncios" => $anuncios_array["anuncios"],
-            "search_params" => array(
-                "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
-                "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
-                "pagina" => $pagina,
-                "total_paginas" => $paginas,
-                "por_pagina" => $limit,
-                "total" => $anuncios_array["total"],
-                "hasta" => ($pagina * $limit < $anuncios_array["total"]) ? $pagina * $limit : $anuncios_array["total"],
-                "desde" => (($pagina * $limit) - $limit) + 1));
+            "pagination"=>$pagination);
 
         $this->template->load_view('admin/anuncio/tabla_resultados', $data);
     }
