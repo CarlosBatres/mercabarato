@@ -88,7 +88,7 @@ class Producto extends MY_Controller {
 
             $pagina = $this->input->post('pagina');
 
-            $limit = 8;
+            $limit = $this->config->item("principal_default_per_page");
             $offset = $limit * ($pagina - 1);
             $productos = $this->producto_model->get_site_search($params, $limit, $offset, "id", "ASC");
             $flt = (float) ($productos["total"] / $limit);
@@ -131,10 +131,11 @@ class Producto extends MY_Controller {
      * @param type $id
      */
     public function ver_producto($id) {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
-        //$this->template->add_js('modules/home/producto_listado.js');
+        $this->template->set_title('Mercabarato - Anuncios y subastas');        
         $producto = $this->producto_model->get($id);
         $producto_imagen = $this->producto_resource_model->get_producto_imagen($id);
+        
+        $this->visita_model->nueva_visita($id,true);
 
         $data = array(
             "producto" => $producto,
