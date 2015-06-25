@@ -24,37 +24,7 @@ class Producto extends MY_Controller {
         $data = array("productos" => array(), "anuncios" => array(), "precios" => $precios, "subcate", "subcategorias" => $subcategorias_html);
         $this->template->load_view('home/producto/listado_principal', $data);
     }
-
-    /**
-     * 
-     */
-    public function view_pre_listado() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
-        $categorias = $this->categoria_model->get_many_by('padre_id', 0);
-        $data = array("categorias" => $categorias);
-
-        $this->template->load_view('home/producto/pre_listado', $data);
-    }
-
-    /**
-     * 
-     * @param type $categoria
-     */
-    public function view_listado($categoria) {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
-        $this->template->add_js('modules/home/producto_listado.js');
-
-        $categoria = $this->categoria_model->get_by('slug', $categoria);
-        //$subcategorias = $this->categoria_model->get_many_by('padre_id', $categoria->id);
-
-        $subcategorias = $this->categoria_model->get_categorias_searchbar($categoria->id);
-        $subcategorias_html = $this->_build_categorias_searchparams($subcategorias);
-        $precios = precios_options();
-
-        $data = array("subcategorias" => $subcategorias_html, "categoria" => $categoria, "precios" => $precios);
-        $this->template->load_view('home/producto/listado', $data);
-    }
-
+       
     /**
      *  AJAX Productos / Listado
      */
@@ -135,7 +105,7 @@ class Producto extends MY_Controller {
         $producto = $this->producto_model->get($id);
         $producto_imagen = $this->producto_resource_model->get_producto_imagen($id);
         
-        $this->visita_model->nueva_visita($id,true);
+        $this->visita_model->nueva_visita_producto($id);
 
         $data = array(
             "producto" => $producto,
@@ -152,12 +122,17 @@ class Producto extends MY_Controller {
         if (!empty($categorias)) {
             $html = "";
             foreach ($categorias as $categoria) {
-                $html.='<li class="seleccion_categoria">';
-                $html.='<a href="" data-id="' . $categoria['id'] . '">' . $categoria['nombre'];
-                if (isset($categoria['subcategorias'])) {
-                    $html.='<span class="fa plus-times"></span></a>';
+                $html.='<li>';
+                $html.='<a href="" data-id="' . $categoria['id'] . '">' . mb_strtoupper($categoria['nombre']);
+                if (isset($categoria['subcategorias'])) {                    
+                    if($categoria['padre_id']=='0'){
+                        $html.='<span class="caret arrow"></span></a>';
+                    }else{
+                        $html.='<span class="caret arrow"></span></a>';
+                    }
+                    
                     $res_html = $this->_build_categorias_searchparams($categoria['subcategorias']);
-                    $html.='<ul>';
+                    $html.='<ul class="nav nav-pills nav-stacked nav-second-level">';
                     $html.=$res_html;
                     $html.='</ul>';
                 } else {

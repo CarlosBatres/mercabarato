@@ -70,7 +70,10 @@ class Vendedor_paquete_model extends MY_Model {
             "aprobado" => 1,
             "fecha_terminar" => date('Y-m-d', strtotime("+$periodo months", strtotime(date("Y-m-d"))))
         );
-        $this->update($id, $data);
+        $this->update($id, $data);        
+        
+        $vendedor=$this->vendedor_model->get($vendedor_paquete->vendedor_id);
+        $this->cliente_model->update($vendedor->cliente_id,array("es_vendedor"=>"1"));
     }
     
     /**

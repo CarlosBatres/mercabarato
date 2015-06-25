@@ -16,15 +16,16 @@ class Panel_vendedores extends MY_Controller {
     public function resumen() {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
+        $this->template->add_js("modules/admin/panel_vendedores/resumen.js");
 
         $user_id = $this->authentication->read('identifier');
         $vendedor = $this->usuario_model->get_full_identidad($user_id);
 
-        $mis_productos = $this->producto_model->get_many_by("vendedor_id", $vendedor["vendedor"]->id);
-        $mis_anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vendedor["vendedor"]->id);
+        $mis_productos = $this->producto_model->get_many_by("vendedor_id", $vendedor->get_vendedor_id());
+        $mis_anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vendedor->get_vendedor_id());
 
-        $paquete_vigente = $this->vendedor_model->get_paquete_en_curso($vendedor["vendedor"]->id);
-        $paquete_pendiente = $this->vendedor_model->get_paquete_pendiente($vendedor["vendedor"]->id);
+        $paquete_vigente = $this->vendedor_model->get_paquete_en_curso($vendedor->get_vendedor_id());
+        $paquete_pendiente = $this->vendedor_model->get_paquete_pendiente($vendedor->get_vendedor_id());
         if ($paquete_vigente) {
             $paquete = $paquete_vigente;
             $paquete_vigente = true;
@@ -34,7 +35,7 @@ class Panel_vendedores extends MY_Controller {
             $paquete_pendiente = true;
             $paquete_vigente = false;
         } else {
-            $paquete=array();
+            $paquete = array();
             $paquete_pendiente = false;
             $paquete_vigente = false;
         }
@@ -101,6 +102,35 @@ class Panel_vendedores extends MY_Controller {
      */
     public function regresar() {
         redirect('');
+    }
+
+    public function get_visitas_estadisticas() {
+        if ($this->input->is_ajax_request()) {
+            $formValues = $this->input->post();
+            if ($formValues !== false) {
+                $tipo = $this->input->post('tipo');
+                
+                $user_id = $this->authentication->read('identifier');
+                $vendedor = $this->usuario_model->get_full_identidad($user_id);
+
+                if ($tipo == "mensual") {
+                    $visitas = $this->visita_model->get_vendedors_visitas_durante("2015-5-1", "2015-6-1",$vendedor->get_vendedor_id());
+                    $data = array();
+
+                    foreach ($visitas as $visita) {
+                        $data[] = array("date" => $visita->fecha, "value" => $visita->total);
+                    }
+                } elseif ($tipo == "anual") {
+                    $visitas = $this->visita_model->get_vendedors_visitas_durante("2015-1-1", "2015-12-31",$vendedor->get_vendedor_id());
+                    $data = array();
+
+                    foreach ($visitas as $visita) {
+                        $data[] = array("date" => $visita->fecha, "value" => $visita->total);
+                    }
+                }
+            }
+            echo json_encode($data);
+        }
     }
 
 }

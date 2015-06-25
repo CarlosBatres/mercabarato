@@ -46,7 +46,7 @@ _________________________________________________________ -->
                         <h3 class="panel-title">Categorias</h3>
                     </div>
                     <div class="panel-body">
-                        <ul class="nav nav-pills nav-stacked category-menu metismenu" id="producto-principal-categorias">
+                        <ul class="nav nav-pills nav-stacked metismenu" id="producto-principal-categorias">
                             <?php echo ($subcategorias) ? $subcategorias : "No hay categorias disponibles"; ?>                        
                         </ul>                    
                     </div>

@@ -96,7 +96,7 @@ class Categoria_model extends MY_Model {
     }
     
     public function get_categorias_searchbar($categoria_id){
-        $query="SELECT id,nombre FROM categoria WHERE padre_id='".$categoria_id."'";
+        $query="SELECT id,nombre,padre_id FROM categoria WHERE padre_id='".$categoria_id."'";
         $result = $this->db->query($query);                
         $categorias = $result->result_array();        
         if($categorias){            

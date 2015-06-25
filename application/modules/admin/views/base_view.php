@@ -22,6 +22,7 @@
         <link rel="stylesheet" href="<?php echo assets_url('css/jquery-ui.structure.min.css'); ?>" >
         <link rel="stylesheet" href="<?php echo assets_url('css/jquery-ui.min.css'); ?>" >
         <link rel="stylesheet" href="<?php echo assets_url('css/metisMenu.min.css'); ?>">
+        <link rel="stylesheet" href="<?php echo assets_url('css/morris.css'); ?>">
         
         <link rel="stylesheet" href="<?php echo assets_url('css/modules/sb-admin-2.css'); ?>">
         <link rel="stylesheet" href="<?php echo assets_url('css/modules/admin.css'); ?>">
@@ -52,6 +53,8 @@
         <script src="<?php echo assets_url('js/jquery.blockUI.js'); ?>"></script>
         <script src="<?php echo assets_url('js/metisMenu.min.js'); ?>"></script>                                        
         <script src="<?php echo assets_url('js/fileupload.js'); ?>"></script>                                        
+        <script src="<?php echo assets_url('js/raphael-min.js'); ?>"></script>                                        
+        <script src="<?php echo assets_url('js/morris.min.js'); ?>"></script>                                        
         
         <script src="<?php echo assets_url('js/modules/admin/admin.js'); ?>"></script>                
         <!-- Extra javascript -->
