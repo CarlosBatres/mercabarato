@@ -10,6 +10,7 @@ class Usuario_model extends MY_Model {
         parent::__construct();
         $this->_table = "usuario";
     }
+
     /**
      * 
      * @param type $email
@@ -24,20 +25,22 @@ class Usuario_model extends MY_Model {
             return FALSE;
         }
     }
+
     /**
      * 
      * @param type $usuario_id
      * @return boolean
      */
     public function get_full_identidad($usuario_id) {
-        $identidad = array();
+        $identidad_obj = new Identidad();
+        
         $this->db->select("id,email,activo,fecha_creado,ultimo_acceso,ip_address,is_admin");
         $this->db->from("usuario");
         $this->db->where("id", $usuario_id);
         $result = $this->db->get();
 
-        if ($result->num_rows() > 0) {
-            $identidad['usuario'] = $result->row();
+        if ($result->num_rows() > 0) {            
+            $identidad_obj->usuario = $result->row();
         } else {
             return false;
         }
@@ -47,21 +50,22 @@ class Usuario_model extends MY_Model {
         $this->db->where("usuario_id", $usuario_id);
         $result_cliente = $this->db->get();
 
-        if ($result_cliente->num_rows() > 0) {
-            $identidad['cliente'] = $result_cliente->row();
+        if ($result_cliente->num_rows() > 0) {            
+            $identidad_obj->cliente = $result_cliente->row();
 
             $this->db->select("*");
             $this->db->from("vendedor");
-            $this->db->where("cliente_id", $identidad['cliente']->id);
+            $this->db->where("cliente_id", $identidad_obj->get_cliente_id());
             $result_vendedor = $this->db->get();
 
             if ($result_vendedor->num_rows() > 0) {
-                $identidad['vendedor'] = $result_vendedor->row();
+                $identidad_obj->vendedor = $result_vendedor->row();                
             }
         }
 
-        return $identidad;
+        return $identidad_obj;
     }
+
     /**
      * 
      * @param type $usuario_id
@@ -70,29 +74,83 @@ class Usuario_model extends MY_Model {
     public function usuario_es_vendedor($usuario_id) {
         $user = $this->get_full_identidad($usuario_id);
         if ($user) {
-            if (isset($user['vendedor'])) {
-                return true;
-            } else {
-                return false;
-            }
+            return $user->es_vendedor();
         } else {
             return false;
         }
     }
+
     /**
      * 
      * @param type $usuario_id
      * @return boolean
      */
-    public function usuario_es_vendedor_habilitado($usuario_id){
+    public function usuario_es_vendedor_habilitado($usuario_id) {
         $user = $this->get_full_identidad($usuario_id);
         if ($user) {
-            if (isset($user['vendedor'])) {
-                if($user['vendedor']->habilitado==1){
-                    return true;
-                }else{
-                    return false;
-                }                
+            return $user->es_vendedor_habilitado();
+        } else {
+            return false;
+        }
+    }
+
+}
+
+class Identidad {
+
+    public $cliente;
+    public $usuario;
+    public $vendedor;
+
+    function __construct() {
+        $this->cliente = null;
+        $this->usuario = null;
+        $this->vendedor = null;
+    }
+    /**
+     * 
+     * @return boolean
+     */
+    public function get_cliente_id() {
+        if ($this->cliente != null) {
+            return $this->cliente->id;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * @return boolean
+     */
+    public function get_vendedor_id() {
+        if ($this->vendedor != null) {
+            return $this->vendedor->id;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * @return boolean
+     */
+    public function es_vendedor() {
+        if ($this->vendedor != null && $this->cliente->es_vendedor == "1") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * @return boolean
+     */
+    public function es_vendedor_habilitado() {
+        if ($this->vendedor != null) {
+            if ($this->vendedor->habilitado == 1) {
+                return true;
             } else {
                 return false;
             }

@@ -14,7 +14,9 @@ class MY_Controller extends MX_Controller {
 
         $this->_ci = & get_instance();
     }
-
+    /**
+     * 
+     */
     public function show_profiler() {
         $this->output->enable_profiler(TRUE);
     }

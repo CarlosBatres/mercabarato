@@ -16,7 +16,7 @@ class Panel_vendedores_productos extends MY_Controller {
     public function agregar() {
         $user_id = $this->authentication->read('identifier');
         $vendedor = $this->usuario_model->get_full_identidad($user_id);
-        $cantidad = $this->vendedor_model->get_cantidad_productos_disp($vendedor["vendedor"]->id);
+        $cantidad = $this->vendedor_model->get_cantidad_productos_disp($vendedor->get_vendedor_id());
 
         if ($cantidad > 0) {
             $formValues = $this->input->post();
@@ -29,7 +29,7 @@ class Panel_vendedores_productos extends MY_Controller {
                         "precio" => $this->input->post('precio'),
                         "mostrar_producto" => $this->input->post('mostrar_producto'),
                         "mostrar_precio" => $this->input->post('mostrar_precio'),
-                        "vendedor_id" => $vendedor['vendedor']->id,
+                        "vendedor_id" => $vendedor->get_vendedor_id(),
                         "categoria_id" => $this->input->post('categoria'),
                     );
 
@@ -78,7 +78,7 @@ class Panel_vendedores_productos extends MY_Controller {
 
         $res = $this->producto_model->get_vendedor_id_del_producto($producto_id);
         // Validamos que el vendedor sea dueño de este producto
-        if ($res == $vendedor["vendedor"]->id) {
+        if ($res == $vendedor->get_vendedor_id()) {
             $formValues = $this->input->post();
             if ($formValues !== false) {
                 $accion = $this->input->post('accion');
@@ -90,7 +90,7 @@ class Panel_vendedores_productos extends MY_Controller {
                         "precio" => $this->input->post('precio'),
                         "mostrar_producto" => $this->input->post('mostrar_producto'),
                         "mostrar_precio" => $this->input->post('mostrar_precio'),
-                        "vendedor_id" => $vendedor['vendedor']->id,
+                        "vendedor_id" => $vendedor->get_vendedor_id(),
                         "categoria_id" => $this->input->post('categoria'),
                     );
 
@@ -167,7 +167,7 @@ class Panel_vendedores_productos extends MY_Controller {
             $producto_id = $id;
 
             $res = $this->producto_model->get_vendedor_id_del_producto($producto_id);
-            if ($res == $vendedor["vendedor"]->id) {
+            if ($res == $vendedor->get_vendedor_id()) {
                 $this->producto_resource_model->cleanup_resources($id);
                 $this->producto_model->delete($id);
                 redirect('panel_vendedor/producto/listado');
@@ -196,7 +196,7 @@ class Panel_vendedores_productos extends MY_Controller {
             }
             $user_id = $this->authentication->read('identifier');
             $vendedor = $this->usuario_model->get_full_identidad($user_id);
-            $params["vendedor_id"] = $vendedor["vendedor"]->id;
+            $params["vendedor_id"] = $vendedor->get_vendedor_id();
 
             $pagina = $this->input->post('pagina');
         } else {

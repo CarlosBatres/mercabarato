@@ -186,5 +186,18 @@ body .box_registro{
 
 }
 
+ul.nav-stacked ul.nav-stacked > li > a {
+  padding-left: 30px;
+}
+ul.nav-stacked ul.nav-stacked ul.nav-stacked > li > a {
+  padding-left: 45px;
+}
+span.arrow {
+  float: right;
+  margin-top: 7px;
+}
 
+ul.nav-second-level>li{
+    padding-left: 10px;
+}
 

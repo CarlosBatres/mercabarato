@@ -64,9 +64,7 @@ $route['registro'] = 'home/usuario/view_registro';
 $route['registrar_cliente'] = 'home/cliente/crear';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
 
-$route['productos'] = 'home/producto/view_pre_listado';
 $route['productos/ficha/(:any)'] = 'home/producto/ver_producto/$1';
-$route['productos/(:any)'] = 'home/producto/view_listado/$1';
 
 /* Apartado para vendedores */
  
@@ -75,6 +73,8 @@ $route['panel_vendedor/resumen'] = 'admin/panel_vendedores/resumen';
 $route['panel_vendedor/regresar'] = 'admin/panel_vendedores/regresar';
 $route['panel_vendedor/login'] = 'admin/panel_vendedores/login';
 $route['panel_vendedor/logout'] = 'admin/panel_vendedores/logout';
+
+$route['panel_vendedor/visitas/get_estadisticas'] = 'admin/panel_vendedores/get_visitas_estadisticas';
 
 $route['panel_vendedor/producto/listado'] = 'admin/panel_vendedores_productos/listado';
 $route['panel_vendedor/producto/agregar'] = 'admin/panel_vendedores_productos/agregar';

@@ -16,7 +16,7 @@ class Panel_vendedores_anuncios extends MY_Controller {
     public function agregar() {
         $user_id = $this->authentication->read('identifier');
         $vendedor = $this->usuario_model->get_full_identidad($user_id);
-        $cantidad = $this->vendedor_model->get_cantidad_anuncios_disp($vendedor["vendedor"]->id);
+        $cantidad = $this->vendedor_model->get_cantidad_anuncios_disp($vendedor->get_vendedor_id());
 
         if ($cantidad > 0) {
             $formValues = $this->input->post();
@@ -29,7 +29,7 @@ class Panel_vendedores_anuncios extends MY_Controller {
                         "contenido" => $this->input->post('contenido'),
                         "fecha_publicacion" => date("Y-m-d H:i:s"),
                         "destacada" => 0,
-                        "vendedor_id" => $vendedor["vendedor"]->id,
+                        "vendedor_id" => $vendedor->get_vendedor_id(),
                         "imagen" => null,
                         "habilitado"=>1
                     );
@@ -64,7 +64,7 @@ class Panel_vendedores_anuncios extends MY_Controller {
         $anuncio_id = $id;
 
         $res = $this->anuncio_model->get_vendedor_id_del_anuncio($anuncio_id);
-        if ($res == $vendedor["vendedor"]->id) {
+        if ($res == $vendedor->get_vendedor_id()) {
             $formValues = $this->input->post();
             if ($formValues !== false) {
                 $accion = $this->input->post('accion');
@@ -124,7 +124,7 @@ class Panel_vendedores_anuncios extends MY_Controller {
             $anuncio_id = $id;
 
             $res = $this->anuncio_model->get_vendedor_id_del_anuncio($anuncio_id);
-            if ($res == $vendedor["vendedor"]->id) {
+            if ($res == $vendedor->get_vendedor_id()) {
                 $this->anuncio_model->delete($id);
                 redirect('panel_vendedor/anuncio/listado');
             } else {                
@@ -148,7 +148,7 @@ class Panel_vendedores_anuncios extends MY_Controller {
             }
             $user_id = $this->authentication->read('identifier');
             $vendedor = $this->usuario_model->get_full_identidad($user_id);
-            $params["vendedor_id"] = $vendedor["vendedor"]->id;
+            $params["vendedor_id"] = $vendedor->get_vendedor_id();
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
