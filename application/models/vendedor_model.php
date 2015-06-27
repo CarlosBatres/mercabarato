@@ -206,5 +206,34 @@ class Vendedor_model extends MY_Model {
             return FALSE;
         }
     }
+    
+    public function get_site_search($params, $limit, $offset) {
+        $this->db->start_cache();
+        $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address");
+        $this->db->from($this->_table);
+        $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
+        $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
+
+        if (isset($params['nombre'])) {
+            $this->db->like('vendedor.nombre', $params['nombre'], 'both');
+        }             
+        if (isset($params['descripcion'])) {
+            $this->db->or_like('vendedor.descripcion', $params['descripcion'], 'both');
+        }
+
+        $this->db->stop_cache();
+        $count = $this->db->count_all_results();
+
+        if ($count > 0) {
+            $this->db->order_by('vendedor.id', 'asc');
+            $this->db->limit($limit, $offset);
+            $vendedores = $this->db->get()->result();
+            $this->db->flush_cache();
+            return array("vendedores" => $vendedores, "total" => $count);
+        } else {
+            $this->db->flush_cache();
+            return array("total" => 0);
+        }
+    }
 
 }

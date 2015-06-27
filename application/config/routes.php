@@ -63,6 +63,7 @@ $route['logout'] = 'home/usuario/logout';
 $route['registro'] = 'home/usuario/view_registro';
 $route['registrar_cliente'] = 'home/cliente/crear';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
+$route['vendedores'] = 'home/vendedor/view_buscador';
 
 $route['productos/ficha/(:any)'] = 'home/producto/ver_producto/$1';
 

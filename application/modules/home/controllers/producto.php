@@ -122,8 +122,8 @@ class Producto extends MY_Controller {
         if (!empty($categorias)) {
             $html = "";
             foreach ($categorias as $categoria) {
-                $html.='<li>';
-                $html.='<a href="" data-id="' . $categoria['id'] . '">' . mb_strtoupper($categoria['nombre']);
+                $html.='<li class="seleccion_categoria">';
+                $html.='<a href="" data-id="' . $categoria['id'] . '">' . mb_convert_case(strtolower($categoria['nombre']), MB_CASE_TITLE, "UTF-8");
                 if (isset($categoria['subcategorias'])) {                    
                     if($categoria['padre_id']=='0'){
                         $html.='<span class="caret arrow"></span></a>';

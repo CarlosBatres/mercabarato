@@ -40,41 +40,38 @@ _________________________________________________________ -->
 <div class="container">
     <div class="row">
         <div class="col-md-9">                        
-            <div class="col-md-4">            
+            <div class="col-md-4">
+                <div class="panel panel-default sidebar-menu">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Precios</h3>                            
+                    </div>
+                    <div class="panel-body">                        
+                        <div class="precios-productos">
+                            <?php
+                            $j = 0;
+                            foreach ($precios as $precio) {
+                                $checked = ($precio['checked']) ? "checked='checked'" : "";
+                                echo '<div class="checkbox">'
+                                . '<label>'
+                                . '<input type="checkbox" name="precios" value="' . $precio['value'] . '" ' . $checked . '>&nbsp;' . $precio['text'] . ''
+                                . '</label>'
+                                . '</div>';
+                                $j++;
+                            }
+                            ?>                             
+                        </div>
+                    </div>
+                </div>
                 <div class="panel panel-default sidebar-menu">
                     <div class="panel-heading">
                         <h3 class="panel-title">Categorias</h3>
                     </div>
                     <div class="panel-body">
-                        <ul class="nav nav-pills nav-stacked metismenu" id="producto-principal-categorias">
+                        <ul class="nav nav-pills nav-stacked metismenu" id="producto-principal-categorias">                        
                             <?php echo ($subcategorias) ? $subcategorias : "No hay categorias disponibles"; ?>                        
-                        </ul>                    
+                        </ul>
                     </div>
-                </div>
-                <div class="panel panel-default sidebar-menu">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Precios</h3>                            
-                    </div>
-                    <div class="panel-body">
-                        <form>
-                            <div class="form-group">                            
-                                <?php
-                                $j = 0;
-                                foreach ($precios as $precio) {
-                                    $checked = ($precio['checked']) ? "checked='checked'" : "";
-                                    echo '<div class="checkbox">'
-                                    . '<label>'
-                                    . '<input type="checkbox" name="precios" value="' . $precio['value'] . '" ' . $checked . '>&nbsp;' . $precio['text'] . ''
-                                    . '</label>'
-                                    . '</div>';
-                                    $j++;
-                                }
-                                ?>                                                            
-                            </div>
-                            <button id="precios-search-aplicar" class="btn btn-default btn-sm btn-template-main"><i class="fa fa-pencil"></i> Aplicar</button>
-                        </form>
-                    </div>
-                </div>
+                </div>               
             </div>
             <div class="col-md-8">
                 <div class="box-simple">                                
