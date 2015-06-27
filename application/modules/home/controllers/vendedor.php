@@ -125,15 +125,15 @@ class Vendedor extends MY_Controller {
                 $this->session->unset_userdata('afiliacion_cliente');
                 $this->session->unset_userdata('afiliacion_vendedor');
 
-                $paquete = $this->paquete_model->get($paquete_id);                
-                $data = array(                    
+                $paquete = $this->paquete_model->get($paquete_id);
+                $data = array(
                     "vendedor_id" => $vendedor_id,
-                    "nombre_paquete"=>$paquete->nombre,
-                    "duracion_paquete"=>$paquete->duracion,
+                    "nombre_paquete" => $paquete->nombre,
+                    "duracion_paquete" => $paquete->duracion,
                     "fecha_comprado" => date("Y-m-d"),
                     "fecha_terminar" => null,
                     "fecha_aprobado" => null,
-                    "referencia" => "",                    
+                    "referencia" => "",
                     "limite_productos" => $paquete->limite_productos,
                     "limite_anuncios" => $paquete->limite_anuncios,
                     "monto_a_cancelar" => $paquete->costo,
@@ -202,7 +202,7 @@ class Vendedor extends MY_Controller {
             if ($this->cliente_model->es_vendedor($cliente->id)) {
                 $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
                 $vendedor_paquetes = $this->vendedor_paquete_model->get_paquetes_por_vendedor($vendedor->id);
-                                
+
                 $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => true), true);
 
                 $data = array(
@@ -233,14 +233,14 @@ class Vendedor extends MY_Controller {
 
                 $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
                 $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
-                
-                $puede_comprar=$this->vendedor_model->verificar_disponibilidad($vendedor->id);
+
+                $puede_comprar = $this->vendedor_model->verificar_disponibilidad($vendedor->id);
 
                 $data = array(
                     "html_options" => $html_options,
                     "cliente" => $cliente,
                     "paquetes" => $paquetes,
-                    "puede_comprar"=>$puede_comprar
+                    "puede_comprar" => $puede_comprar
                 );
                 $this->template->add_js('modules/home/perfil.js');
                 $this->template->load_view('home/vendedor/compra_paquete', $data);
@@ -261,15 +261,15 @@ class Vendedor extends MY_Controller {
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                 $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
 
-                $paquete = $this->paquete_model->get($paquete_id);                
-                $data = array(                    
+                $paquete = $this->paquete_model->get($paquete_id);
+                $data = array(
                     "vendedor_id" => $vendedor->id,
-                    "nombre_paquete"=>$paquete->nombre,
-                    "duracion_paquete"=>$paquete->duracion,
+                    "nombre_paquete" => $paquete->nombre,
+                    "duracion_paquete" => $paquete->duracion,
                     "fecha_comprado" => date("Y-m-d"),
                     "fecha_terminar" => null,
                     "fecha_aprobado" => null,
-                    "referencia" => "",                    
+                    "referencia" => "",
                     "limite_productos" => $paquete->limite_productos,
                     "limite_anuncios" => $paquete->limite_anuncios,
                     "monto_a_cancelar" => $paquete->costo,
@@ -287,6 +287,69 @@ class Vendedor extends MY_Controller {
         } else {
             redirect('');
         }
+    }
+
+    /*     
+     * 
+     */
+
+    public function view_buscador() {
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->add_js('modules/home/vendedores_listado.js');
+        $this->template->load_view('home/vendedores/listado');
+    }
+
+    /**
+     * 
+     */
+    public function ajax_get_listado_resultados() {
+        //$this->show_profiler();
+        $formValues = $this->input->post();
+
+        $params = array();
+        if ($formValues !== false) {
+            if ($this->input->post('search_query') != "") {
+                $params["nombre"] = $this->input->post('search_query');
+                $params["descripcion"] = $this->input->post('search_query');
+            }
+
+            $pagina = $this->input->post('pagina');
+        } else {
+            $pagina = 1;
+        }
+
+        //$limit = $this->config->item("principal_default_per_page");
+        $limit = 5;
+        $offset = $limit * ($pagina - 1);
+        $vendedores_array = $this->vendedor_model->get_site_search($params, $limit, $offset);
+        $flt = (float) ($vendedores_array["total"] / $limit);
+        $ent = (int) ($vendedores_array["total"] / $limit);
+        if ($flt > $ent || $flt < $ent) {
+            $paginas = $ent + 1;
+        } else {
+            $paginas = $ent;
+        }
+
+        if ($vendedores_array["total"] == 0) {
+            $vendedores_array["vendedores"] = array();
+        }
+
+        $search_params = array(
+            "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+            "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+            "pagina" => $pagina,
+            "total_paginas" => $paginas,
+            "por_pagina" => $limit,
+            "total" => $vendedores_array["total"],
+            "hasta" => ($pagina * $limit < $vendedores_array["total"]) ? $pagina * $limit : $vendedores_array["total"],
+            "desde" => (($pagina * $limit) - $limit) + 1);
+        $pagination = build_paginacion($search_params);
+
+        $data = array(
+            "vendedores" => $vendedores_array["vendedores"],
+            "pagination" => $pagination);
+
+        $this->template->load_view('home/vendedores/tabla_resultados', $data);
     }
 
 }

@@ -39,7 +39,7 @@ class MY_Controller extends MX_Controller {
             if ($this->uri->uri_string() != 'panel_vendedor/login') {
                 redirect('panel_vendedor/login');
             }
-        }
+        }        
     }
 
     /**

@@ -77,7 +77,7 @@ function build_paginacion($search_params) {
         if ($search_params['pagina'] + 3 + $extra >= $search_params['total_paginas']) {
             $limit_upper = $search_params['total_paginas'];
             $limit_lower-=3 - ($search_params['total_paginas'] - $search_params['pagina']);
-            if ($limit_lower <= 0 || $search_params["pagina"]<$limit_lower || $search_params['total_paginas']<=7) {
+            if ($limit_lower <= 0 || $search_params["pagina"] < $limit_lower || $search_params['total_paginas'] <= 7) {
                 $limit_lower = 1;
             }
         } else {
@@ -110,4 +110,35 @@ function build_paginacion($search_params) {
     } else {
         return "";
     }
+}
+
+function time_elapsed_string($datetime, $full = false) {
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
+
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => 'año',
+        'm' => 'mes',
+        'w' => 'semana',
+        'd' => 'dia',
+        'h' => 'hora',
+        'i' => 'minuto',
+        's' => 'segundo',
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $suff = ($v == "mes") ? 'es' : 's';
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? $suff : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full)
+        $string = array_slice($string, 0, 1);
+    return $string ? 'Hace ' . implode(', ', $string) : 'Este momento';
 }

@@ -43,3 +43,25 @@ ADD CONSTRAINT `fk_visita_anuncio1`
   REFERENCES `mercabarato_bd`.`anuncio` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+
+
+
+ALTER TABLE `mercabarato_bd`.`invitacion` 
+CHANGE COLUMN `estado` `estado` INT(1) NOT NULL DEFAULT 0 COMMENT '1=pendiente,2=aceptado,3=rechazado,4=ignorar' ,
+ADD INDEX `fk_invitacion_vendedor1_idx` (`vendedor_id` ASC),
+ADD INDEX `fk_invitacion_cliente1_idx` (`cliente_id` ASC),
+DROP INDEX `fk_invitacion_cliente1_idx` ,
+DROP INDEX `fk_invitacion_vendedor1_idx` ;
+
+ALTER TABLE `mercabarato_bd`.`grupo` 
+ADD COLUMN `identificacion` VARCHAR(255) NULL DEFAULT NULL AFTER `cliente_id`,
+ADD INDEX `fk_grupo_vendedor1_idx` (`vendedor_id` ASC),
+ADD INDEX `fk_grupo_cliente1_idx` (`cliente_id` ASC),
+DROP INDEX `fk_grupo_cliente1_idx` ,
+DROP INDEX `fk_grupo_vendedor1_idx` ;
+
+ALTER TABLE `mercabarato_bd`.`oferta` 
+ADD COLUMN `nombre` VARCHAR(255) NULL DEFAULT NULL AFTER `fecha_finaliza`,
+ADD COLUMN `descripcion` TEXT NULL DEFAULT NULL AFTER `nombre`,
+ADD INDEX `fk_oferta_producto1_idx` (`producto_id` ASC),
+DROP INDEX `fk_oferta_producto1_idx` ;

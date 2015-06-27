@@ -49,6 +49,7 @@
 
 #content {    
     padding-bottom:100px;
+    min-height: 320px;
 }
 
 .tipo_registro {
@@ -144,14 +145,7 @@ body .box_registro{
     column-count: 3;
 }
 
-#producto-principal-categorias a{
-    padding: 5px;
-}
-#producto-principal-categorias .seleccion_categoria .active>a{
-    color: #ffffff;
-    background-color: #38a7bb;
-}
-
+/**/
 .tabla-resultados-principal{
     list-style: none;
     padding: 0px;
@@ -186,18 +180,35 @@ body .box_registro{
 
 }
 
-ul.nav-stacked ul.nav-stacked > li > a {
-  padding-left: 30px;
-}
-ul.nav-stacked ul.nav-stacked ul.nav-stacked > li > a {
-  padding-left: 45px;
-}
-span.arrow {
-  float: right;
-  margin-top: 7px;
-}
 
-ul.nav-second-level>li{
+#producto-principal-categorias a{
+    font-size: 14px;
+    font-weight: bold;
+    font-family: "Roboto", Helvetica, Arial, sans-serif;
     padding-left: 10px;
 }
 
+ul.nav-stacked ul.nav-stacked > li > a {
+    padding-left: 30px;
+}
+ul.nav-stacked ul.nav-stacked ul.nav-stacked > li > a {
+    padding-left: 45px;
+}
+span.arrow {
+    float: right;
+    margin-top: 7px;
+}
+
+ul.nav-second-level>li{
+    padding-left: 5px;
+}
+
+.precios-productos{
+    padding-left: 15px;
+}
+
+.precios-productos .checkbox label{
+    color: #38a7bb !important;
+    text-decoration: none;
+    font-weight: bold;       
+}
