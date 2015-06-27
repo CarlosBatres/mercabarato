@@ -52,7 +52,11 @@
                         <?php endif; ?>
 
                         <td><?php echo $cliente->email; ?></td>
-                        <td><?php echo $cliente->ultimo_acceso; ?></td>                    
+                        <?php if ($cliente->ultimo_acceso != null): ?>
+                            <td><?php echo time_elapsed_string($cliente->ultimo_acceso); ?></td>
+                        <?php else: ?>   
+                            <td class="warning"></td>
+                        <?php endif; ?>
                         <td>
                             <div class="options">
                                 <a href="<?php echo site_url('admin/usuarios/editar') . '/' . $cliente->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>

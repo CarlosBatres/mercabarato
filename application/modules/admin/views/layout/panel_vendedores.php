@@ -37,7 +37,24 @@
                     </li>
                     <li>
                         <a href="<?php echo site_url('panel_vendedor/resumen'); ?>"><i class="fa fa-fw fa-dashboard"></i> Resumen</a>
-                    </li>                                                                            
+                    </li>                                                                                                
+                    <li>
+                        <a href="#"><i class="fa fa-user-plus fa-fw"></i> Mis Clientes<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo site_url('panel_vendedor/invitaciones/buscar'); ?>"><i class="fa fa-plus fa-fw"></i> Buscar Clientes</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('panel_vendedor/invitaciones/aceptadas'); ?>"><i class="fa fa-fw fa-user"></i> Clientes Actuales</a>
+                            </li>                                                        
+                            <li>
+                                <a href="<?php echo site_url('panel_vendedor/invitaciones/pendientes'); ?>"><i class="fa fa-fw fa-clock-o"></i> Invitaciones Pendientes</a>
+                            </li> 
+                            <li>
+                                <a href="<?php echo site_url('panel_vendedor/invitaciones/envio_email'); ?>"><i class="fa fa-mail-forward fa-fw"></i> Enviar Invitacion a Email</a>
+                            </li>                            
+                        </ul>                         
+                    </li>
                     <li>
                         <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Mis Productos<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">

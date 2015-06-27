@@ -46,15 +46,21 @@ class Visita_model extends MY_Model {
     /**
      * 
      */
-    public function get_vendedors_visitas_durante($fecha_inicio, $fecha_fin ,$vendedor_id) {
-        $this->db->select("visita.id,visita.fecha, COUNT(visita.id) as total");
+    public function get_vendedors_visitas_durante($fecha_inicio, $fecha_fin ,$vendedor_id,$group_by_month=false) {
+        $this->db->select("visita.id,visita.fecha, COUNT(visita.id) as total,EXTRACT( YEAR FROM visita.fecha) as year,EXTRACT( MONTH FROM visita.fecha) as month");
         $this->db->from("visita");
         $this->db->join("producto", "producto.id=visita.producto_id", 'INNER');
         $this->db->where('visita.fecha >=', $fecha_inicio);
         $this->db->where('visita.fecha <=', $fecha_fin);
         $this->db->where('visita.vista_producto', "1");        
         $this->db->where('producto.vendedor_id', $vendedor_id);        
-        $this->db->group_by('visita.fecha'); 
+        
+        if($group_by_month){
+            $this->db->group_by('Month(visita.fecha)'); 
+        }else{
+            $this->db->group_by('visita.fecha'); 
+        }
+        
 
         $result = $this->db->get();
 

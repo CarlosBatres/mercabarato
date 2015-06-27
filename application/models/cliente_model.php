@@ -13,19 +13,43 @@ class Cliente_model extends MY_Model {
 
     public function get_admin_search($params, $limit, $offset) {
         $this->db->start_cache();
-        $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address");
+        $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.fecha_creado");
         $this->db->from($this->_table);
         $this->db->join("usuario", "cliente.usuario_id=usuario.id", 'INNER');
+        
+        if (isset($params['incluir_invitaciones'])) {            
+            $this->db->join("invitacion", "invitacion.cliente_id=cliente.id", 'INNER');
+        }        
 
-        if (isset($params['nombre'])) {
-            // TODO: Agregar el apellido a este search
-            $this->db->like('cliente.nombres', $params['nombre'], 'both');
+        if (isset($params['nombre'])) {            
+            $this->db->like('CONCAT(cliente.nombres," ",cliente.apellidos)', $params['nombre'], 'both');
         }
         if (isset($params['sexo'])) {
             $this->db->where('cliente.sexo', $params['sexo']);
         }
         if (isset($params['email'])) {
             $this->db->like('usuario.email', $params['email'], 'both');
+        }
+        if (isset($params['es_vendedor'])) {
+            $this->db->where('cliente.es_vendedor', $params["es_vendedor"]);
+        }
+        if (isset($params['excluir_admins'])) {
+            $this->db->where('usuario.is_admin', "0");
+        }
+        if (isset($params['keywords'])) {
+            foreach($params['keywords'] as $keyword){
+                $this->db->like('cliente.keyword', $keyword, 'both');
+            }            
+        }
+        if (isset($params['excluir_cliente_ids'])) {            
+            $this->db->where_not_in('cliente.id', $params['excluir_cliente_ids']);                        
+        }        
+        if (isset($params['incluir_cliente_ids'])) {            
+            $this->db->where_in('cliente.id', $params['incluir_cliente_ids']);                        
+        }
+        
+        if (isset($params['incluir_invitaciones'])) {
+             $this->db->where('invitacion.estado', $params['invitacion::estado']);
         }
 
         $this->db->stop_cache();

@@ -76,6 +76,13 @@ $route['panel_vendedor/logout'] = 'admin/panel_vendedores/logout';
 
 $route['panel_vendedor/visitas/get_estadisticas'] = 'admin/panel_vendedores/get_visitas_estadisticas';
 
+$route['panel_vendedor/invitaciones/buscar'] = 'admin/panel_vendedores_invitaciones/buscador';
+$route['panel_vendedor/invitaciones/pendientes'] = 'admin/panel_vendedores_invitaciones/pendientes';
+$route['panel_vendedor/invitaciones/aceptadas'] = 'admin/panel_vendedores_invitaciones/aceptadas';
+$route['panel_vendedor/invitaciones/envio_email'] = 'admin/panel_vendedores_invitaciones/enviar_invitacion_email';
+$route['panel_vendedor/invitaciones/enviar/(:num)'] = 'admin/panel_vendedores_invitaciones/enviar_invitacion/$1'; 
+$route['panel_vendedor/invitaciones/ajax_get_listado_resultados'] = 'admin/panel_vendedores_invitaciones/ajax_get_listado_resultados';
+
 $route['panel_vendedor/producto/listado'] = 'admin/panel_vendedores_productos/listado';
 $route['panel_vendedor/producto/agregar'] = 'admin/panel_vendedores_productos/agregar';
 $route['panel_vendedor/producto/borrar/(:num)'] = 'admin/panel_vendedores_productos/borrar/$1'; 
