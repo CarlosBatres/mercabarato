@@ -41,7 +41,7 @@ _________________________________________________________ -->
     <div class="row">
         <div class="col-md-9">                        
             <div class="col-md-4">
-                <div class="panel panel-default sidebar-menu">
+                <div class="panel panel-default sidebar-menu principal-sidebar">
                     <div class="panel-heading">
                         <h3 class="panel-title">Precios</h3>                            
                     </div>
@@ -62,7 +62,7 @@ _________________________________________________________ -->
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-default sidebar-menu">
+                <div class="panel panel-default sidebar-menu principal-sidebar">
                     <div class="panel-heading">
                         <h3 class="panel-title">Categorias</h3>
                     </div>
@@ -77,7 +77,7 @@ _________________________________________________________ -->
                 <div class="box-simple">                                
                     <form>
                         <div class="input-group">
-                            <input type="text" name="search_query" class="form-control" placeholder="Ingrese un producto, una marca o referencia...">
+                            <input type="text" name="search_query" class="form-control" placeholder="Ingrese un producto, o alguna referencia ...">
                             <input type="hidden" value="1" name="pagina" id="pagina"/>                                
                             <span class="input-group-btn">
                                 <button class="btn btn-template-main" id="search_button" type="button"><i class="fa fa-search"></i>Buscar</button>
@@ -105,7 +105,9 @@ _________________________________________________________ -->
                                     ?>
                                     <tr>
                                         <td>
-                                            <p><strong><?php echo date("d-M-Y", strtotime($anuncio->fecha_publicacion)) ?></strong>  <?php echo $anuncio->contenido; ?></p>
+                                            <p class="text-right"><strong><?php echo date("d-M-Y", strtotime($anuncio->fecha_publicacion)) ?></strong></p>
+                                            <p><strong><?php echo $anuncio->titulo; ?></strong></p>
+                                            <p><?php echo truncate($anuncio->contenido,300); ?></p>
                                         </td>                                
                                     </tr>
                                     <?php
@@ -118,4 +120,7 @@ _________________________________________________________ -->
             </div>
         </div>
     </div>        
+    <div id="throbber" style="display:none;">
+        <img src="<?php echo assets_url('imgs/ajax-loader.gif'); ?>" />
+    </div>
 </div>

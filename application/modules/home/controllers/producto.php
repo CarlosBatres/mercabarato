@@ -11,17 +11,14 @@ class Producto extends MY_Controller {
 
     public function view_principal() {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
-        $this->template->add_js('modules/home/producto_principal_listado.js');
-
-        //$categoria = $this->categoria_model->get_by('slug', $categoria);
-        //$subcategorias = $this->categoria_model->get_many_by('padre_id', $categoria->id);
-
+        $this->template->add_js('modules/home/producto_principal_listado.js');        
         $subcategorias = $this->categoria_model->get_categorias_searchbar(0);
         $subcategorias_html = $this->_build_categorias_searchparams($subcategorias);
         $precios = precios_options();
-
-        //$data = array("subcategorias" => $subcategorias_html, "categoria" => $categoria, "precios" => $precios);
-        $data = array("productos" => array(), "anuncios" => array(), "precios" => $precios, "subcate", "subcategorias" => $subcategorias_html);
+        
+        $anuncios=$this->anuncio_model->get_ultimos_anuncios();
+        
+        $data = array("productos" => array(), "anuncios" => $anuncios, "precios" => $precios, "subcate", "subcategorias" => $subcategorias_html);
         $this->template->load_view('home/producto/listado_principal', $data);
     }
        
@@ -45,7 +42,7 @@ class Producto extends MY_Controller {
             if ($this->input->post('categoria_padre') != "") {
                 $params["categoria_general"] = $this->input->post('categoria_padre');
             }
-            if ($this->input->post('precio_tipo1') != 0) {
+            if ($this->input->post('precio_tipo1') !== "0") {
                 $params["precio_tipo1"] = $this->input->post('precio_tipo1');
             }
 
@@ -121,10 +118,10 @@ class Producto extends MY_Controller {
     private function _build_categorias_searchparams($categorias) {
         if (!empty($categorias)) {
             $html = "";
-            foreach ($categorias as $categoria) {
-                $html.='<li class="seleccion_categoria">';
-                $html.='<a href="" data-id="' . $categoria['id'] . '">' . mb_convert_case(strtolower($categoria['nombre']), MB_CASE_TITLE, "UTF-8");
+            foreach ($categorias as $categoria) {                
                 if (isset($categoria['subcategorias'])) {                    
+                    $html.='<li class="seleccion_categoria">';
+                    $html.='<a href="" data-id="' . $categoria['id'] . '">' . mb_convert_case(strtolower($categoria['nombre']), MB_CASE_TITLE, "UTF-8");
                     if($categoria['padre_id']=='0'){
                         $html.='<span class="caret arrow"></span></a>';
                     }else{
@@ -132,10 +129,12 @@ class Producto extends MY_Controller {
                     }
                     
                     $res_html = $this->_build_categorias_searchparams($categoria['subcategorias']);
-                    $html.='<ul class="nav nav-pills nav-stacked nav-second-level">';
+                    $html.='<ul class="nav nav-pills nav-stacked nav-sub-level">';
                     $html.=$res_html;
                     $html.='</ul>';
                 } else {
+                    $html.='<li class="seleccion_categoria final">';
+                    $html.='<a href="" data-id="' . $categoria['id'] . '">' . mb_convert_case(strtolower($categoria['nombre']), MB_CASE_TITLE, "UTF-8");                    
                     $html.='</a>';
                 }
                 $html.='</li>';

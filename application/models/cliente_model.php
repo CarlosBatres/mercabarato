@@ -41,13 +41,13 @@ class Cliente_model extends MY_Model {
                 $this->db->like('cliente.keyword', $keyword, 'both');
             }            
         }
+        
         if (isset($params['excluir_cliente_ids'])) {            
             $this->db->where_not_in('cliente.id', $params['excluir_cliente_ids']);                        
         }        
         if (isset($params['incluir_cliente_ids'])) {            
             $this->db->where_in('cliente.id', $params['incluir_cliente_ids']);                        
-        }
-        
+        }        
         if (isset($params['incluir_invitaciones'])) {
              $this->db->where('invitacion.estado', $params['invitacion::estado']);
         }

@@ -199,16 +199,31 @@ span.arrow {
     margin-top: 7px;
 }
 
-ul.nav-second-level>li{
-    padding-left: 5px;
+#producto-principal-categorias .nav-sub-level .active>a{
+    color: #ffffff;
+    background-color: #38a7bb;
+}
+
+#producto-principal-categorias .nav-sub-level .clicked{
+    color: #ffffff;
+    background-color: #38a7bb;
 }
 
 .precios-productos{
-    padding-left: 15px;
+    padding-left: 10px;
 }
 
 .precios-productos .checkbox label{
     color: #38a7bb !important;
     text-decoration: none;
-    font-weight: bold;       
+    font-weight: bold;  
+    vertical-align: auto;
+}
+
+.precios-productos .checkbox input[type=checkbox]{
+    margin-top:2px;
+}
+
+.principal-sidebar .panel-heading{
+    padding-left: 10px!important;
 }
