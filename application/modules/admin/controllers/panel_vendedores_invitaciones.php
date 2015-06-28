@@ -95,10 +95,10 @@ class Panel_vendedores_invitaciones extends MY_Controller {
         if ($formValues !== false) {
             $accion = $this->input->post('accion');
             if ($accion == "send-invitacion") {
-                $email=$this->input->post('email');
-                
+                $email = $this->input->post('email');
+
                 //TODO : Enviar invitacion al email , crear el usuario/cliente con el correo y crear la invitacion
-                
+
                 $this->session->set_flashdata('success', 'Invitacion Enviada');
                 redirect('panel_vendedor/invitaciones/buscar');
             } else {
@@ -107,7 +107,7 @@ class Panel_vendedores_invitaciones extends MY_Controller {
         } else {
             $this->template->set_title("Panel de Administracion - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
-            
+
             $this->template->load_view('admin/panel_vendedores/invitados/enviar_invitacion_email');
         }
     }
@@ -145,20 +145,24 @@ class Panel_vendedores_invitaciones extends MY_Controller {
             }
 
             if ($this->input->post('tipo') == "invitaciones_pendientes") {
-                $params["incluir_cliente_ids"] = $ids_array;
                 $alt_layout = true;
                 $params["incluir_invitaciones"] = true;
                 $params["invitacion::estado"] = "1";
+                if (sizeof($ids_array) > 0) {
+                    $params["incluir_cliente_ids"] = $ids_array;
+                }
             } elseif ($this->input->post('tipo') == "invitaciones_aceptadas") {
-                $params["incluir_cliente_ids"] = $ids_array;
                 $alt_layout = true;
                 $params["incluir_invitaciones"] = true;
                 $params["invitacion::estado"] = "2";
+                if (sizeof($ids_array) > 0) {
+                    $params["incluir_cliente_ids"] = $ids_array;
+                }
             } else {
-                $params["excluir_cliente_ids"] = $ids_array;
+                if (sizeof($ids_array) > 0) {
+                    $params["excluir_cliente_ids"] = $ids_array;
+                }
             }
-
-
 
             $params["es_vendedor"] = "0";
             $params["excluir_admins"] = true;
