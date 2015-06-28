@@ -296,7 +296,10 @@ class Vendedor extends MY_Controller {
     public function view_buscador() {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $this->template->add_js('modules/home/vendedores_listado.js');
-        $this->template->load_view('home/vendedores/listado');
+        $paises=$this->pais_model->get_all();
+        $data=array("paises"=>$paises);
+        
+        $this->template->load_view('home/vendedores/listado',$data);
     }
 
     /**
@@ -311,6 +314,15 @@ class Vendedor extends MY_Controller {
             if ($this->input->post('search_query') != "") {
                 $params["nombre"] = $this->input->post('search_query');
                 $params["descripcion"] = $this->input->post('search_query');
+            }
+            if ($this->input->post('pais') != "0") {
+                $params["pais"] = $this->input->post('pais');                
+            }
+            if ($this->input->post('provincia') != "0") {
+                $params["provincia"] = $this->input->post('provincia');                
+            }
+            if ($this->input->post('poblacion') != "0") {
+                $params["poblacion"] = $this->input->post('poblacion');                
             }
 
             $pagina = $this->input->post('pagina');

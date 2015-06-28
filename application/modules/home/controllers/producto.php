@@ -17,6 +17,9 @@ class Producto extends MY_Controller {
         $precios = precios_options();
         
         $anuncios=$this->anuncio_model->get_ultimos_anuncios();
+        if(!$anuncios){
+            $anuncios=array();
+        }
         
         $data = array("productos" => array(), "anuncios" => $anuncios, "precios" => $precios, "subcate", "subcategorias" => $subcategorias_html);
         $this->template->load_view('home/producto/listado_principal', $data);

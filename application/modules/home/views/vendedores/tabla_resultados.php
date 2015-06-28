@@ -14,8 +14,8 @@
                     </div>
                     <div class="col-md-8">
                         <a href="<?php echo site_url("vendedor/ficha/" . $vendedor->id) ?>"><?php echo $vendedor->nombre; ?></a>
-                        <?php if ($vendedor->direccion != ""): ?>                        
-                            <p><?php echo $vendedor->descripcion ?></p>                        
+                        <?php if ($vendedor->descripcion != ""): ?>                         
+                        <p><?php echo truncate($vendedor->descripcion,300) ?></p>                        
                         <?php endif; ?>
                     </div>                    
                 </div>
