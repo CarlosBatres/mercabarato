@@ -35,17 +35,31 @@ class Cliente extends MY_Controller {
 
                 $data = array(
                     "usuario_id" => $user_id,
-                    "nombres" => $this->input->post('nombres'),
-                    "apellidos" => $this->input->post('apellidos'),
-                    "sexo" => $this->input->post('sexo'),
-                    "fecha_nacimiento" => date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))),
-                    "codigo_postal" => $this->input->post('codigo_postal'),
-                    "direccion" => $this->input->post('direccion'),
-                    "telefono_fijo" => $this->input->post('telefono_fijo'),
-                    "telefono_movil" => $this->input->post('telefono_movil'),                    
-                    );
+                    "nombres" => ($this->input->post('nombres') != '') ? $this->input->post('nombres') : null,
+                    "apellidos" => ($this->input->post('apellidos') != '') ? $this->input->post('apellidos') : null,
+                    "sexo" => ($this->input->post('sexo') != 'X') ? $this->input->post('sexo') : null,
+                    "fecha_nacimiento" => ($this->input->post('fecha_nacimiento') != '') ? date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))) : null,
+                    "codigo_postal" => ($this->input->post('codigo_postal') != '') ? $this->input->post('codigo_postal') : null,
+                    "direccion" => ($this->input->post('direccion') != '') ? $this->input->post('direccion') : null,
+                    "telefono_fijo" => ($this->input->post('telefono_fijo') != '') ? $this->input->post('telefono_fijo') : null,
+                    "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,
+                );
 
                 $this->cliente_model->insert($data);
+                                
+                $pais = $this->input->post('pais');
+                $provincia = $this->input->post('provincia');
+                $poblacion = $this->input->post('poblacion');
+                
+                if($pais!=""){
+                    $data_localizacion=array(
+                        "usuario_id"=>$user_id,
+                        "pais_id"=>$pais,                        
+                        "provincia_id"=>($provincia=="0")?null:$provincia,
+                        "poblacion_id"=>($poblacion=="0")?null:$poblacion
+                    );
+                    $this->localizacion_model->insert($data_localizacion);
+                }
                 
                 $this->authentication->login($username, $password);
                 redirect('');

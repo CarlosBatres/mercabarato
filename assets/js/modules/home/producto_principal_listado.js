@@ -21,15 +21,23 @@ $(document).ready(function() {
         $(this).parent('li').find(".in").removeClass("in");
 
         if (!$(this).parent('li').hasClass('active') && $(this).hasClass("clicked") && !$(this).parent('li').hasClass('final')) {
-            $(this).removeClass('clicked');            
+            $(this).removeClass('clicked');
             $(this).closest('li.active').children('a').addClass("clicked");
         }
         updateResultados();
     });
 
     $('.checkbox').find("input[type='checkbox']").change(function() {
-        $('.checkbox').find("input[type='checkbox']").not(this).prop('checked', false);  
-        updateResultados();                
+        $('.checkbox').find("input[type='checkbox']").not(this).prop('checked', false);
+        updateResultados();
+    });
+
+    $('input[name="search_query"]').keydown(function(e) {
+        var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+        if (key == 13) {
+            e.preventDefault();
+            updateResultados();
+        }
     });
 
 });
@@ -52,9 +60,9 @@ function updateResultados() {
     }
 
     $('#tabla-resultados').html('');
-    $('#tabla-resultados').block({ 
+    $('#tabla-resultados').block({
         message: $('#throbber'),
-        css: { border: '0', width:'100%',height:'100px' }  });
+        css: {border: '0', width: '100%', height: '100px'}});
     $.ajax({
         type: "POST",
         url: SITE_URL + 'home/producto/ajax_get_listado_resultados',

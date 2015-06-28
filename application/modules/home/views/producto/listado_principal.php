@@ -100,7 +100,7 @@ _________________________________________________________ -->
                     <table class="table">
                         <tbody>
                             <?php
-                            if ($anuncios):
+                            if (sizeof($anuncios)>0):
                                 foreach ($anuncios as $anuncio):
                                     ?>
                                     <tr>
@@ -112,6 +112,8 @@ _________________________________________________________ -->
                                     </tr>
                                     <?php
                                 endforeach;
+                            else:
+                                echo "<tr><td> <p> No hay novedades..</p></td></tr>";
                             endif;
                             ?>                            
                         </tbody>
