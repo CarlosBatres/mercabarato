@@ -51,7 +51,7 @@ class Cliente extends MY_Controller {
                 $provincia = $this->input->post('provincia');
                 $poblacion = $this->input->post('poblacion');
                 
-                if($pais!=""){
+                if($pais!="0"){
                     $data_localizacion=array(
                         "usuario_id"=>$user_id,
                         "pais_id"=>$pais,                        
