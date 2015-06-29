@@ -16,22 +16,23 @@ $(document).ready(function() {
     });
 
     $('#form_buscar').find('select[name="pais"]').on('change', function() {
-        $('#form_buscar').find('select[name="provincia"]').html("<option value='0'>Provincia</option>");
-        $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Población</option>");
+        $('#form_buscar').find('select[name="provincia"]').html("<option value='0'>Todas las Provincias</option>");
+        $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
         var pais_id = $(this).val();
         $.ajax({
             type: "POST",
             url: SITE_URL + 'home/provincia/ajax_get_provincias_htmlselect',
             data: {pais_id: pais_id},
             dataType: 'json',
-            success: function(response) {
-                $('#form_buscar').find('select[name="provincia"]').html(response.html);
+            success: function(response) {                
+                $('#form_buscar').find('select[name="provincia"]').html(response.html);                
+                $('#form_buscar').find('select[name="provincia"]').find('option:first').text("Todas las Provincias");
             }
         });
     });
 
     $('#form_buscar').find('select[name="provincia"]').on('change', function() {
-        $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Problación</option>");
+        $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
         var provincia_id = $(this).val();
         $.ajax({
             type: "POST",
@@ -40,6 +41,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 $('#form_buscar').find('select[name="poblacion"]').html(response.html);
+                $('#form_buscar').find('select[name="poblacion"]').find('option:first').text("Todas las Poblaciones");
             }
         });
     }); 

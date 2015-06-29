@@ -209,30 +209,35 @@ class Vendedor_model extends MY_Model {
     
     public function get_site_search($params, $limit, $offset) {
         $this->db->start_cache();
-        $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address");
+        $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address,"
+                . "pais.nombre as pais,provincia.nombre as provincia,poblacion.nombre as poblacion");
         $this->db->from($this->_table);
         $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
         $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
         $this->db->join("localizacion", "usuario.id=localizacion.usuario_id", 'LEFT');
+        $this->db->join("pais", "pais.id=localizacion.pais_id", 'LEFT');
+        $this->db->join("provincia", "provincia.id=localizacion.provincia_id", 'LEFT');
+        $this->db->join("poblacion", "poblacion.id=localizacion.poblacion_id", 'LEFT');
 
         if (isset($params['nombre'])) {
             $this->db->like('vendedor.nombre', $params['nombre'], 'both');
         }             
         if (isset($params['descripcion'])) {
             $this->db->or_like('vendedor.descripcion', $params['descripcion'], 'both');
-        }
-        if (isset($params['pais'])) {
-            $this->db->where('localizacion.pais_id', $params['pais']);            
-            $this->db->or_where('localizacion.pais_id IS NULL');            
-        }
-        if (isset($params['provincia'])) {
-            $this->db->where('localizacion.provincia_id', $params['provincia']);
-            $this->db->or_where('localizacion.provincia_id IS NULL');            
-        }
+        }        
+        
         if (isset($params['poblacion'])) {
             $this->db->where('localizacion.poblacion_id', $params['poblacion']);
-            $this->db->or_where('localizacion.poblacion_id IS NULL');            
+            //$this->db->or_where('localizacion.poblacion_id IS NULL');                        
+        }elseif (isset($params['provincia'])) {
+            $this->db->where('localizacion.provincia_id', $params['provincia']);
+            //$this->db->or_where('localizacion.provincia_id IS NULL');            
+        }elseif (isset($params['pais'])) {
+            $this->db->where('localizacion.pais_id', $params['pais']);            
+            //$this->db->or_where('localizacion.pais_id IS NULL');            
         }
+        
+        
 
         $this->db->stop_cache();
         $count = $this->db->count_all_results();

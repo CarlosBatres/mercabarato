@@ -66,6 +66,8 @@ class Anuncio_model extends MY_Model {
     public function get_ultimos_anuncios() {
         $this->db->select("anuncio.*");
         $this->db->from($this->_table);
+        $this->db->order_by("fecha_publicacion", "desc");
+        $this->db->limit(5,0);
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {

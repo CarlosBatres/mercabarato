@@ -15,7 +15,7 @@
                     <div class="col-md-8">
                         <a href="<?php echo site_url("vendedor/ficha/" . $vendedor->id) ?>"><?php echo $vendedor->nombre; ?></a>
                         <?php if ($vendedor->descripcion != ""): ?>                         
-                        <p><?php echo truncate($vendedor->descripcion,300) ?></p>                        
+                            <p><?php echo truncate($vendedor->descripcion, 300) ?></p>                        
                         <?php endif; ?>
                     </div>                    
                 </div>
@@ -26,7 +26,13 @@
                         <?php endif; ?>
                         <?php if ($vendedor->telefono_fijo != ""): ?>                        
                             <p class="text-left"><i class="fa fa-phone fa-fw"></i><strong><?php echo $vendedor->telefono_fijo ?></strong></p>
-                                <?php endif; ?>
+                        <?php endif; ?>
+                        <p class="text-left">
+                            <?php echo ($vendedor->poblacion != null) ? $vendedor->poblacion.' , ' : ''; 
+                                  echo ($vendedor->provincia != null) ? $vendedor->provincia.' , ' : ''; 
+                                  echo ($vendedor->pais != null) ? $vendedor->pais: ''; 
+                            ?>
+                        </p>
                     </div>                    
                 </div>
             </li>        

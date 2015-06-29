@@ -34,14 +34,14 @@
                             <div class="col-md-4">
                                 <div class="form-group">                                
                                     <select name="provincia" class="form-control">
-                                        <option value="0">Provincia</option>                        
+                                        <option value="0">Todas las Provincias</option>                        
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">                        
                                     <select name="poblacion" class="form-control">
-                                        <option value="0">Población</option>                        
+                                        <option value="0">Todas las Poblaciónes</option>                        
                                     </select>
                                 </div>
                             </div>
