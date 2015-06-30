@@ -10,7 +10,7 @@
                 <div class="col-xs-7">                   
                     <?php if ($this->authentication->is_loggedin()) { ?>
                         <div class="login">
-                            <a href="<?php echo site_url('usuario/perfil') ?>" class="" data-toggle=""><i class="fa fa-user"></i> <?php echo $this->authentication->read('username'); ?></a>
+                            <a href="<?php echo site_url('usuario/perfil') ?>" class="" data-toggle=""><i class="fa fa-user"></i> MI PERFIL</a>
                             <a href="<?php echo site_url('logout'); ?>"><i class="fa fa-power-off"></i> Cerrar Sesión</a>
                         </div>
                     <?php } else { ?>

@@ -227,3 +227,6 @@ span.arrow {
 .principal-sidebar .panel-heading{
     padding-left: 10px!important;
 }
+
+.row-less-padding-r{padding-right:2px;}
+.row-less-padding-l{padding-left:2px;}

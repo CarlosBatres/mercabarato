@@ -102,6 +102,12 @@ class Producto_model extends MY_Model {
                 $this->db->where('p.precio <=', $precios['1']);
             }
         }
+        
+        if(isset($params["poblacion"])){
+            if ($params['poblacion'] != '0') {
+                
+            }
+        }
 
         $this->db->stop_cache();
         $count = $this->db->count_all_results();

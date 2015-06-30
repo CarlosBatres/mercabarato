@@ -1,7 +1,6 @@
 $(document).ready(function() {
-    updateResultados();
-    //$('#producto-principal-categorias').metisMenu();    
-
+    updateResultados();    
+    
     $('#search_button').on('click', function(e) {
         e.preventDefault();
         updateResultados();

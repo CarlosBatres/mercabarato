@@ -15,13 +15,14 @@ class Producto extends MY_Controller {
         $subcategorias = $this->categoria_model->get_categorias_searchbar(0);
         $subcategorias_html = $this->_build_categorias_searchparams($subcategorias);
         $precios = precios_options();
+        $paises=$this->pais_model->get_all();        
         
         $anuncios=$this->anuncio_model->get_ultimos_anuncios();
         if(!$anuncios){
             $anuncios=array();
         }
         
-        $data = array("productos" => array(), "anuncios" => $anuncios, "precios" => $precios, "subcate", "subcategorias" => $subcategorias_html);
+        $data = array("productos" => array(), "anuncios" => $anuncios, "precios" => $precios, "subcate", "subcategorias" => $subcategorias_html,"paises"=>$paises);
         $this->template->load_view('home/producto/listado_principal', $data);
     }
        
@@ -47,6 +48,9 @@ class Producto extends MY_Controller {
             }
             if ($this->input->post('precio_tipo1') !== "0") {
                 $params["precio_tipo1"] = $this->input->post('precio_tipo1');
+            }
+            if ($this->input->post('problacion') !== "0") {
+                $params["problacion"] = $this->input->post('problacion');
             }
 
             if ($this->input->post('alt_layout')) {

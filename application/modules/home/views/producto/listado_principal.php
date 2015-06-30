@@ -75,7 +75,38 @@ _________________________________________________________ -->
             </div>
             <div class="col-md-8">
                 <div class="box-simple">                                
-                    <form>
+                    <form id="form_buscar">
+                        <div class="row">
+                            <div class="col-md-4 row-less-padding-r">
+                                <div class="form-group">                                
+                                    <select name="pais" class="form-control">
+                                        <option value="0">País</option>
+                                        <?php foreach ($paises as $pais): 
+                                            $class="";
+                                            if($pais->nombre=="España"){
+                                                $class="selected";
+                                            }
+                                            ?>                                        
+                                            <option value="<?php echo $pais->id ?>" <?php echo $class?>><?php echo $pais->nombre ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>   
+                            </div> 
+                            <div class="col-md-4 row-less-padding-l row-less-padding-r">
+                                <div class="form-group">                                
+                                    <select name="provincia" class="form-control">
+                                        <option value="0">Todas las Provincias</option>                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 row-less-padding-l">
+                                <div class="form-group">                        
+                                    <select name="poblacion" class="form-control">
+                                        <option value="0">Todas las Poblaciónes</option>                        
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="input-group">
                             <input type="text" name="search_query" class="form-control" placeholder="Ingrese un producto, o alguna referencia ...">
                             <input type="hidden" value="1" name="pagina" id="pagina"/>                                

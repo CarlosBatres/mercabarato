@@ -27,11 +27,9 @@ class MY_Controller extends MX_Controller {
      * - Existe una sesion iniciada
      */
     public function _validar_conexion() {
-        $one_time_login = $this->session->userdata('one_time_login');
+        //$one_time_login = $this->session->userdata('one_time_login');
         if ($this->authentication->is_loggedin()) {
-            if (!$one_time_login && $this->uri->uri_string() != 'panel_vendedor/login') {
-                redirect('panel_vendedor/login');
-            } elseif (!$this->_usuario_es_vendedor_habilitado()) {
+            if (!$this->_usuario_es_vendedor_habilitado()) {
                 // TODO: No puedes acceder al panel todavia
                 redirect('acceso_invalido');
             }
