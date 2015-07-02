@@ -4,6 +4,12 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
+/**
+ * WARNING: Las categorias se estan manejando en cache porque son muchas y no deberian cambiar necesariamente
+ * pero si se modifican de alguna manera hay que limpiar el cache y volverlo a generar !IMPORTANTE!
+ * 
+ * Idealmente se van a modificar desde el admin solamente y mediante las funciones del sistema , NO MANUALMENTE!
+ */
 class Categoria_model extends MY_Model {
 
     function __construct() {
@@ -111,6 +117,39 @@ class Categoria_model extends MY_Model {
             return false;
         }        
         
+    }
+    /**     
+     * @param type $id
+     * @return boolean
+     */
+    public function get_all_categorias_of($id) {
+        $this->db->cache_on();
+        $query = "SELECT id,nombre FROM categoria WHERE padre_id='" . $id . "'";
+        $result = $this->db->query($query);        
+        $categorias = $result->result_array();
+        $this->db->cache_off();
+        $ids = array();
+        if ($categorias) {            
+            foreach ($categorias as $value) {
+                $row=array();
+                $row["nombre"] = $value["nombre"];
+                $row["id"] = $value["id"];
+                $res = $this->get_all_categorias_of($value['id']);
+                if ($res) {
+                    $row["children"]=$res;
+                    
+                }
+                $ids[]=$row;
+            }
+            return $ids;
+        } else {
+            return false;
+        }
+    }
+    
+    public function get_full_tree(){        
+        $categorias=$this->get_all_categorias_of("0");        
+        return $categorias;        
     }
 
 }

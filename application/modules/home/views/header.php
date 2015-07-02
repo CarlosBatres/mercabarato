@@ -2,15 +2,18 @@
     <div id="top">
         <div class="container">
             <div class="row">
-                <div class="col-xs-5 contact">
-                    <p class="hidden-sm hidden-xs">Contactenos en +00000000000  o  mail@mercabarato.com.</p>
-                    <p class="hidden-md hidden-lg"><a href="#" data-animate-hover="pulse"><i class="fa fa-phone"></i></a>  <a href="#" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
-                    </p>
+                <div class="col-xs-7 contact">
+                    <div class="input-group">
+                        <input type="text" name="search_query_header" class="form-control" placeholder="Ingrese un producto a buscar...">                                                        
+                        <span class="input-group-btn">
+                            <button class="btn btn-template-main" id="search_button_header" type="button"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div> 
                 </div>
-                <div class="col-xs-7">                   
+                <div class="col-xs-5">                   
                     <?php if ($this->authentication->is_loggedin()) { ?>
                         <div class="login">
-                            <a href="<?php echo site_url('usuario/perfil') ?>" class="" data-toggle=""><i class="fa fa-user"></i> <?php echo $this->authentication->read('username'); ?></a>
+                            <a href="<?php echo site_url('usuario/perfil') ?>" class="" data-toggle=""><i class="fa fa-user"></i> MI PERFIL</a>
                             <a href="<?php echo site_url('logout'); ?>"><i class="fa fa-power-off"></i> Cerrar Sesión</a>
                         </div>
                     <?php } else { ?>

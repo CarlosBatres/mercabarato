@@ -72,7 +72,7 @@ class Panel_vendedores extends MY_Controller {
                 $usuario->ultimo_acceso = date("Y-m-d H:i:s");
 
                 $this->usuario_model->update($user_id, $usuario);
-                $this->session->set_userdata(array('one_time_login' => true));
+                //$this->session->set_userdata(array('one_time_login' => true));
                 redirect('panel_vendedor');
             } else {
                 redirect('panel_vendedor/login');

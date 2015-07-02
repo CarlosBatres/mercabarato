@@ -66,6 +66,7 @@ class Anuncio_model extends MY_Model {
     public function get_ultimos_anuncios() {
         $this->db->select("anuncio.*");
         $this->db->from($this->_table);
+        $this->db->where("habilitado", "1");
         $this->db->order_by("fecha_publicacion", "desc");
         $this->db->limit(5,0);
         $result = $this->db->get();
@@ -124,6 +125,14 @@ class Anuncio_model extends MY_Model {
         }
         $this->db->update("anuncio", $data);
         return $this->db->affected_rows();
+    }
+    
+    public function inhabilitar($anuncio_id){
+        $this->update($anuncio_id, array("habilitado"=>"0"));
+    }
+    
+    public function habilitar($anuncio_id){
+        $this->update($anuncio_id, array("habilitado"=>"1"));
     }
 
 }

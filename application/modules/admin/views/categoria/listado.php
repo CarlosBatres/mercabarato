@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row agregar-item">
+            <div class="row agregar-item">                
                 <div class="col-md-12">            
                     <a class="btn btn-lg btn-primary pull-right" href="<?php echo site_url('admin/categorias/crear'); ?>">Nueva Categoria</a>
                 </div>                

@@ -11,20 +11,38 @@ class Producto extends MY_Controller {
 
     public function view_principal() {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
-        $this->template->add_js('modules/home/producto_principal_listado.js');        
+        $this->template->add_js('modules/home/producto_principal_listado.js');
         $subcategorias = $this->categoria_model->get_categorias_searchbar(0);
         $subcategorias_html = $this->_build_categorias_searchparams($subcategorias);
         $precios = precios_options();
-        
-        $anuncios=$this->anuncio_model->get_ultimos_anuncios();
-        if(!$anuncios){
-            $anuncios=array();
+        $paises = $this->pais_model->get_all();
+
+        $anuncios = $this->anuncio_model->get_ultimos_anuncios();
+        if (!$anuncios) {
+            $anuncios = array();
         }
-        
-        $data = array("productos" => array(), "anuncios" => $anuncios, "precios" => $precios, "subcate", "subcategorias" => $subcategorias_html);
+
+        $search_query = $this->session->userdata('search_query');
+        $this->session->unset_userdata('search_query');
+
+        $data = array(
+            "productos" => array(),
+            "anuncios" => $anuncios,
+            "precios" => $precios,
+            "subcategorias" => $subcategorias_html,
+            "paises" => $paises,
+            "search_query" => $search_query);
+
         $this->template->load_view('home/producto/listado_principal', $data);
     }
-       
+
+    public function buscar_producto($search_query) {
+        $this->session->unset_userdata('search_query');
+        $query = urldecode($search_query);
+        $this->session->set_userdata(array('search_query' => $query));
+        redirect('');
+    }
+
     /**
      *  AJAX Productos / Listado
      */
@@ -42,12 +60,21 @@ class Producto extends MY_Controller {
             if ($this->input->post('categoria_id') != "") {
                 $params["categoria_id"] = $this->input->post('categoria_id');
             }
-            if ($this->input->post('categoria_padre') != "") {
-                $params["categoria_general"] = $this->input->post('categoria_padre');
-            }
             if ($this->input->post('precio_tipo1') !== "0") {
                 $params["precio_tipo1"] = $this->input->post('precio_tipo1');
             }
+            if ($this->input->post('problacion') !== "0") {
+                $params["problacion"] = $this->input->post('problacion');
+            }
+            if ($this->input->post('provincia') !== "0") {
+                $params["provincia"] = $this->input->post('provincia');
+            }
+            if ($this->input->post('pais') !== "0") {
+                $params["pais"] = $this->input->post('pais');
+            }
+
+            $params["habilitado"] = "1";
+
 
             if ($this->input->post('alt_layout')) {
                 $alt_layout = true;
@@ -87,7 +114,7 @@ class Producto extends MY_Controller {
             $data = array(
                 "productos" => $productos["productos"],
                 "pagination" => $pagination);
-            
+
             if ($alt_layout) {
                 $this->template->load_view('home/producto/tabla_resultados_principal', $data);
             } else {
@@ -101,10 +128,10 @@ class Producto extends MY_Controller {
      * @param type $id
      */
     public function ver_producto($id) {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');        
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
         $producto = $this->producto_model->get($id);
         $producto_imagen = $this->producto_resource_model->get_producto_imagen($id);
-        
+
         $this->visita_model->nueva_visita_producto($id);
 
         $data = array(
@@ -121,23 +148,23 @@ class Producto extends MY_Controller {
     private function _build_categorias_searchparams($categorias) {
         if (!empty($categorias)) {
             $html = "";
-            foreach ($categorias as $categoria) {                
-                if (isset($categoria['subcategorias'])) {                    
+            foreach ($categorias as $categoria) {
+                if (isset($categoria['subcategorias'])) {
                     $html.='<li class="seleccion_categoria">';
                     $html.='<a href="" data-id="' . $categoria['id'] . '">' . mb_convert_case(strtolower($categoria['nombre']), MB_CASE_TITLE, "UTF-8");
-                    if($categoria['padre_id']=='0'){
+                    if ($categoria['padre_id'] == '0') {
                         $html.='<span class="caret arrow"></span></a>';
-                    }else{
+                    } else {
                         $html.='<span class="caret arrow"></span></a>';
                     }
-                    
+
                     $res_html = $this->_build_categorias_searchparams($categoria['subcategorias']);
                     $html.='<ul class="nav nav-pills nav-stacked nav-sub-level">';
                     $html.=$res_html;
                     $html.='</ul>';
                 } else {
                     $html.='<li class="seleccion_categoria final">';
-                    $html.='<a href="" data-id="' . $categoria['id'] . '">' . mb_convert_case(strtolower($categoria['nombre']), MB_CASE_TITLE, "UTF-8");                    
+                    $html.='<a href="" data-id="' . $categoria['id'] . '">' . mb_convert_case(strtolower($categoria['nombre']), MB_CASE_TITLE, "UTF-8");
                     $html.='</a>';
                 }
                 $html.='</li>';

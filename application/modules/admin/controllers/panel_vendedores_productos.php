@@ -30,7 +30,7 @@ class Panel_vendedores_productos extends MY_Controller {
                         "mostrar_producto" => $this->input->post('mostrar_producto'),
                         "mostrar_precio" => $this->input->post('mostrar_precio'),
                         "vendedor_id" => $vendedor->get_vendedor_id(),
-                        "categoria_id" => $this->input->post('categoria'),
+                        "categoria_id" => $this->input->post('categoria_id'),
                     );
 
                     $producto_id = $this->producto_model->insert($data);
@@ -55,9 +55,11 @@ class Panel_vendedores_productos extends MY_Controller {
                 $this->template->set_layout('panel_vendedores');
                 $this->template->add_js("fileupload.js");
                 $this->template->add_js("modules/admin/panel_vendedores/productos.js");
-                $categorias = $this->categoria_model->get_all();
 
-                $data = array("categorias" => $categorias);
+                $categorias_tree = $this->categoria_model->get_full_tree();
+                $categorias_tree_html = $this->_build_categorias_tree($categorias_tree, false);
+
+                $data = array("categorias_tree_html" => $categorias_tree_html);
                 $this->template->load_view('admin/panel_vendedores/producto/producto_agregar', $data);
             }
         } else {
@@ -91,7 +93,7 @@ class Panel_vendedores_productos extends MY_Controller {
                         "mostrar_producto" => $this->input->post('mostrar_producto'),
                         "mostrar_precio" => $this->input->post('mostrar_precio'),
                         "vendedor_id" => $vendedor->get_vendedor_id(),
-                        "categoria_id" => $this->input->post('categoria'),
+                        "categoria_id" => $this->input->post('categoria_id'),
                     );
 
                     $this->producto_model->update($producto_id, $data);
@@ -124,12 +126,14 @@ class Panel_vendedores_productos extends MY_Controller {
                 if ($producto) {
                     $this->template->set_title("Panel de Administracion - Mercabarato.com");
                     $this->template->add_js("modules/admin/panel_vendedores/productos.js");
-                    $categorias = $this->categoria_model->get_all();
                     $vendedor = $this->vendedor_model->get($producto->vendedor_id);
                     $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto->id);
 
+                    $categorias_tree = $this->categoria_model->get_full_tree();
+                    $categorias_tree_html = $this->_build_categorias_tree($categorias_tree, $producto->categoria_id);
+
                     $data = array(
-                        "categorias" => $categorias,
+                        "categorias_tree_html" => $categorias_tree_html,
                         "producto" => $producto,
                         "vendedor" => $vendedor,
                         "producto_imagen" => $producto_imagen);
@@ -151,10 +155,8 @@ class Panel_vendedores_productos extends MY_Controller {
     public function listado() {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
-        $this->template->add_js("modules/admin/panel_vendedores/productos_listado.js");
-        $categorias = $this->categoria_model->get_all();
-        $data = array("categorias" => $categorias);
-        $this->template->load_view('admin/panel_vendedores/producto/producto_listado', $data);
+        $this->template->add_js("modules/admin/panel_vendedores/productos_listado.js");        
+        $this->template->load_view('admin/panel_vendedores/producto/producto_listado');
     }
 
     /**
@@ -170,10 +172,9 @@ class Panel_vendedores_productos extends MY_Controller {
             if ($res == $vendedor->get_vendedor_id()) {
                 $this->producto_resource_model->cleanup_resources($id);
                 $this->producto_model->delete($id);
-                redirect('panel_vendedor/producto/listado');
+                $this->session->set_flashdata('success', 'Producto eliminado con exito..');                
             } else {
-                // TODO: Enviar mensaje de error que diga tu no puedes realizar esta accion.
-                redirect('panel_vendedor/producto/listado');
+                $this->session->set_flashdata('error', 'No puedes realizar esta accion.');                
             }
         } else {
             redirect('404');
@@ -227,13 +228,83 @@ class Panel_vendedores_productos extends MY_Controller {
             "total" => $productos_array["total"],
             "hasta" => ($pagina * $limit < $productos_array["total"]) ? $pagina * $limit : $productos_array["total"],
             "desde" => (($pagina * $limit) - $limit) + 1);
-        $pagination=  build_paginacion($search_params);        
-        
+        $pagination = build_paginacion($search_params);
+
         $data = array(
             "productos" => $productos_array["productos"],
-            "pagination"=>$pagination);
+            "pagination" => $pagination);
 
         $this->template->load_view('admin/panel_vendedores/producto/producto_tabla_resultados', $data);
+    }
+
+    /**
+     * 
+     * @param type $categorias_tree
+     * @return string
+     */
+    private function _build_categorias_tree($categorias_tree, $selected) {
+        $html = "<ul>";
+        foreach ($categorias_tree as $categoria) {
+            $class = '';
+            if ($categoria["id"] == $selected) {
+                $class = '{ "selected" : true ,';
+            } else {
+                $class = '{';
+            }
+            if (isset($categoria["children"])) {
+                $class .= '"icon":"glyphicon glyphicon-list-alt"}';
+                $html.="<li data-id='" . $categoria["id"] . "' data-jstree='" . $class . "'>" . $categoria["nombre"];
+                $html.=$this->_build_categorias_tree($categoria["children"], $selected);
+            } else {
+                $class .= '"icon":"glyphicon glyphicon-unchecked"}';
+                $html.="<li data-id='" . $categoria["id"] . "' data-jstree='" . $class . "'>" . $categoria["nombre"];
+            }
+            $html.="</li>";
+        }
+
+        $html.="</ul>";
+        return $html;
+    }
+
+    public function inhabilitar($id) {
+        if ($this->input->is_ajax_request()) {
+            $user_id = $this->authentication->read('identifier');
+            $vendedor = $this->usuario_model->get_full_identidad($user_id);
+            $producto_id = $id;
+
+            $res = $this->producto_model->get_vendedor_id_del_producto($producto_id);
+            if ($res == $vendedor->get_vendedor_id()) {
+                $this->producto_model->inhabilitar($id);
+                $this->session->set_flashdata('success', 'Producto inhabilitado con exito..');
+            } else {
+                $this->session->set_flashdata('error', 'No puedes realizar esta accion.');                
+            }
+        } else {
+            redirect('404');
+        }
+    }
+
+    public function habilitar($id) {
+        if ($this->input->is_ajax_request()) {
+            $user_id = $this->authentication->read('identifier');
+            $vendedor = $this->usuario_model->get_full_identidad($user_id);
+            $producto_id = $id;
+
+            $res = $this->producto_model->get_vendedor_id_del_producto($producto_id);
+            if ($res == $vendedor->get_vendedor_id()) {
+                $cant = $this->vendedor_model->get_cantidad_productos_por_habilitar($vendedor->get_vendedor_id());
+                if ($cant >= 1) {
+                    $this->producto_model->habilitar($id);
+                    $this->session->set_flashdata('success', 'Producto habilitado con exito..');
+                } else {
+                    $this->session->set_flashdata('error', 'Has llegado al limite de productos.');
+                }                
+            } else {                
+                $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
+            }
+        } else {
+            redirect('404');
+        }
     }
 
 }

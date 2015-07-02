@@ -191,6 +191,7 @@
         sliderHomepage();
         sliders();
         validateLogin();
+        searchButtonHeader();
     });
 
     // Execute queued scripts
@@ -307,4 +308,13 @@ function validateLogin() {
         });
     });
 }
+
+function searchButtonHeader(){
+    $('#search_button_header').on('click',function(){
+        var search_query=$('input[name="search_query_header"]').val();        
+        window.location.href = SITE_URL+'productos/buscar/'+encodeURIComponent(search_query);
+    });
+}
+
+
 

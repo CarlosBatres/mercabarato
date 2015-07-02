@@ -1,7 +1,7 @@
 <div id="question" style="display:none; cursor: default">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title">Esta seguro que desea eliminar este producto?.</h4>
+            <h4 class="modal-title">Esta seguro ?.</h4>
         </div>
         <div class="modal-body">                                    
             <p class="text-center">
@@ -28,7 +28,13 @@
                     <a class="close" data-dismiss="alert">×</a>
                     <?= $this->session->flashdata('success') ?> 
                 </div>
-            <?php } ?>            
+            <?php } ?>   
+            <?php if ($this->session->flashdata('error')) { ?>
+                <div class="alert alert-danger"> 
+                    <a class="close" data-dismiss="alert">×</a>
+                    <?= $this->session->flashdata('error') ?> 
+                </div>
+            <?php } ?>
 
             <div class="panel-group search-block" id="search-block">
                 <div class="panel panel-default">
@@ -48,20 +54,7 @@
                                                 <input type="text" name="nombre" id="nombre" value="" class="form-control"/>                                
                                             </div>
                                         </div>
-                                    </div>                                                                                                                                                
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-12" for="categoria">Categoria</label>
-                                            <div class="col-md-12">
-                                                <select name="categoria" class="form-control">
-                                                    <option value="0">Seleccione una Categoria</option>
-                                                    <?php foreach ($categorias as $categoria): ?>
-                                                        <option value="<?php echo $categoria->id ?>"><?php echo $categoria->nombre ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>                                                                         
+                                    </div>                                                                                                                                                                                    
                                 </div>                                
                                 <hr>
                                 <div class="row"> 

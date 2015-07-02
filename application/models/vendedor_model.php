@@ -169,6 +169,21 @@ class Vendedor_model extends MY_Model {
             return 0;
         }
     }
+    
+    public function get_cantidad_productos_por_habilitar($vendedor_id) {
+        $vendedor_paquete = $this->get_paquete_en_curso($vendedor_id);
+        if ($vendedor_paquete) {
+            if ($vendedor_paquete->limite_productos == -1) {
+                return 1;
+            } else {
+                $this->db->select('id')->from('producto')->where('vendedor_id', $vendedor_id)->where('habilitado','1');
+                $total = $this->db->count_all_results();
+                return ($vendedor_paquete->limite_productos - $total);
+            }
+        } else {
+            return 0;
+        }
+    }
 
     /**
      * Devuelve la cantidad de anuncios disponibles por insertar
@@ -181,6 +196,21 @@ class Vendedor_model extends MY_Model {
                 return 1;
             } else {
                 $this->db->select('id')->from('anuncio')->where('vendedor_id', $vendedor_id);
+                $total = $this->db->count_all_results();
+                return ($vendedor_paquete->limite_anuncios - $total);
+            }
+        } else {
+            return 0;
+        }
+    }
+    
+    public function get_cantidad_anuncios_por_habilitar($vendedor_id) {
+        $vendedor_paquete = $this->get_paquete_en_curso($vendedor_id);
+        if ($vendedor_paquete) {
+            if ($vendedor_paquete->limite_anuncios == -1) {
+                return 1;
+            } else {
+                $this->db->select('id')->from('anuncio')->where('vendedor_id', $vendedor_id)->where('habilitado','1');
                 $total = $this->db->count_all_results();
                 return ($vendedor_paquete->limite_anuncios - $total);
             }
@@ -206,7 +236,13 @@ class Vendedor_model extends MY_Model {
             return FALSE;
         }
     }
-    
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public function get_site_search($params, $limit, $offset) {
         $this->db->start_cache();
         $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address,"
@@ -218,7 +254,9 @@ class Vendedor_model extends MY_Model {
         $this->db->join("pais", "pais.id=localizacion.pais_id", 'LEFT');
         $this->db->join("provincia", "provincia.id=localizacion.provincia_id", 'LEFT');
         $this->db->join("poblacion", "poblacion.id=localizacion.poblacion_id", 'LEFT');
-
+        
+        $this->db->where('vendedor.habilitado', '1'); // Permitir vendedores no habilitados ??
+        
         if (isset($params['nombre'])) {
             $this->db->like('vendedor.nombre', $params['nombre'], 'both');
         }             
