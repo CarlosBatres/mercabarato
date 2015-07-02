@@ -1,19 +1,9 @@
 <div id="heading-breadcrumbs">
     <div class="container">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-md-12">
                 <h1><?php echo $producto->nombre ?></h1>
-            </div>
-            <div class="col-md-5">
-                <ul class="breadcrumb">
-                    <li><a href="<?php echo site_url('') ?>">Inicio</a>
-                    </li>
-                    <li><a href="<?php echo site_url('productos') ?>">Productos</a>
-                    </li>                    
-                    <li><?php echo $producto->nombre ?></li>
-                </ul>
-
-            </div>
+            </div>            
         </div>
     </div>
 </div>
