@@ -81,13 +81,14 @@ _________________________________________________________ -->
                                 <div class="form-group">                                
                                     <select name="pais" class="form-control">
                                         <option value="0">País</option>
-                                        <?php foreach ($paises as $pais): 
-                                            $class="";
-                                            if($pais->nombre=="España"){
-                                                $class="selected";
+                                        <?php
+                                        foreach ($paises as $pais):
+                                            $class = "";
+                                            if ($pais->nombre == "España") {
+                                                $class = "selected";
                                             }
                                             ?>                                        
-                                            <option value="<?php echo $pais->id ?>" <?php echo $class?>><?php echo $pais->nombre ?></option>
+                                            <option value="<?php echo $pais->id ?>" <?php echo $class ?>><?php echo $pais->nombre ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>   
@@ -108,7 +109,12 @@ _________________________________________________________ -->
                             </div>
                         </div>
                         <div class="input-group">
-                            <input type="text" name="search_query" class="form-control" placeholder="Ingrese un producto, o alguna referencia ...">
+                            <?php if ($search_query == ""): ?>
+                                <input type="text" name="search_query" class="form-control" placeholder="Ingrese un producto, o alguna referencia ...">
+                            <?php else: ?>
+                                <input type="text" name="search_query" class="form-control" placeholder="Ingrese un producto, o alguna referencia ..." value='<?php echo $search_query;?>'>
+                            <?php endif; ?>
+
                             <input type="hidden" value="1" name="pagina" id="pagina"/>                                
                             <span class="input-group-btn">
                                 <button class="btn btn-template-main" id="search_button" type="button"><i class="fa fa-search"></i>Buscar</button>
@@ -131,14 +137,14 @@ _________________________________________________________ -->
                     <table class="table">
                         <tbody>
                             <?php
-                            if (sizeof($anuncios)>0):
+                            if (sizeof($anuncios) > 0):
                                 foreach ($anuncios as $anuncio):
                                     ?>
                                     <tr>
                                         <td>
                                             <p class="text-right"><strong><?php echo date("d-M-Y", strtotime($anuncio->fecha_publicacion)) ?></strong></p>
                                             <p><strong><?php echo $anuncio->titulo; ?></strong></p>
-                                            <p><?php echo truncate($anuncio->contenido,300); ?></p>
+                                            <p><?php echo truncate($anuncio->contenido, 300); ?></p>
                                         </td>                                
                                     </tr>
                                     <?php

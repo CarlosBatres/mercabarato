@@ -38,12 +38,20 @@ function bind_pagination_links() {
 }
 
 function bind_borrar_links() {
-    $('.table-responsive').find('.options').find('.item_borrar').off();
-    $('.table-responsive').find('.options').find('.item_borrar').on('click', function(e) {        
+    $('.table-responsive').find('.options').find('.row_action').off();
+    $('.table-responsive').find('.options').find('.row_action').on('click', function(e) {        
         e.preventDefault();        
         var a_href = $(this).attr('href');        
         $.blockUI({message: $('#question'), css: {}});
-
+        
+        if ($(this).hasClass('borrar')) {
+            $('#question').find('.modal-title').html("Estas seguro que deseas eliminar este anuncio?.");
+        }else if($(this).hasClass('habilitar')){
+            $('#question').find('.modal-title').html("Estas seguro que deseas habilitar este anuncio?.");
+        }else{
+            $('#question').find('.modal-title').html("Estas seguro que deseas inhabilitar este anuncio?.");
+        }
+        
         $('#yes').off();
         $('#yes').click(function() {
             $.ajax({

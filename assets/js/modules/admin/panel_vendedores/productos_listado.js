@@ -24,7 +24,7 @@ function updateResultados() {
             $('#tabla-resultados').unblock();
             $('#tabla-resultados').html(response);
             bind_pagination_links();
-            bind_borrar_links();
+            bind_links();
         }
     });
 }
@@ -37,12 +37,20 @@ function bind_pagination_links() {
     });
 }
 
-function bind_borrar_links() {
-    $('.table-responsive').find('.options').find('.producto_borrar').off();
-    $('.table-responsive').find('.options').find('.producto_borrar').on('click', function(e) {        
-        e.preventDefault();        
-        var a_href = $(this).attr('href');        
+function bind_links() {
+    $('.table-responsive').find('.options').find('.row_action').off();
+    $('.table-responsive').find('.options').find('.row_action').on('click', function(e) {
+        e.preventDefault();
+        var a_href = $(this).attr('href');
         $.blockUI({message: $('#question'), css: {}});
+
+        if ($(this).hasClass('borrar')) {
+            $('#question').find('.modal-title').html("Estas seguro que deseas eliminar este producto?.");
+        }else if($(this).hasClass('habilitar')){
+            $('#question').find('.modal-title').html("Estas seguro que deseas habilitar este producto?.");
+        }else{
+            $('#question').find('.modal-title').html("Estas seguro que deseas inhabilitar este producto?.");
+        }
 
         $('#yes').off();
         $('#yes').click(function() {
@@ -60,4 +68,5 @@ function bind_borrar_links() {
             return false;
         });
     });
+
 }

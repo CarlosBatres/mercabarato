@@ -25,9 +25,9 @@
                         <div class="form-group">                            
                             <label>Nombre</label>
                             <input type="text" class="form-control" name="nombre">
-                            </div>                    
-                        </div>
+                        </div>                    
                     </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -50,45 +50,62 @@
                         <div class="form-group">                            
                             <label>Precio Venta Publico</label>
                             <input type="text" class="form-control" name="precio">
-                            </div>
                         </div>
-                    <div class="col-md-3 pull-right">
+                    </div>                    
+                    <div class="col-md-8">
+                        <div class="form-group">                            
+                            <label>Enlace externo al producto</label>
+                            <input type="text" class="form-control" name="link_externo">
+                        </div>
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <br>
-                            <label>Mostrar producto al Publico</label><br>
+                            <label>Desea mostrar el producto al publico general?</label><br>
                             <label>Si<input type="radio" name="mostrar_producto" id="mostrar_si" value="1" checked class="radioInput"></label>
                             <label>No<input type="radio" name="mostrar_producto" id="mostrar_no" value="0" class="radioInput"></label>
 
                         </div>
                     </div>   
-                    <div class="col-md-3 pull-right">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <br>
-                            <label>Mostrar Precio al Publico</label><br>
+                            <label>Desea mostrar el precio al publico general?</label><br>
                             <label>Si<input type="radio" name="mostrar_precio" id="mostrar_precio_si" value="1" checked class="radioInput"></label>
                             <label>No<input type="radio" name="mostrar_precio" id="mostrar_precio_no" value="0" class="radioInput"></label>
-
                         </div>                                                                       
                     </div>
                 </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Seleccione una Categoria:</label>
+                        <div class="alert alert-danger" id="seleccionar-categoria_alert" style="display:none;"> 
+                            <a class="close" data-dismiss="alert">×</a>
+                            Debe seleccionar una categoria.
+                        </div>
+                        <div id="categorias_jtree">                
+                            <?php echo $categorias_tree_html; ?>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Categoria</label>
-                <select name="categoria" class="form-control">                        
-                    <?php foreach ($categorias as $categoria): ?>
-                        <option value="<?php echo $categoria->id ?>"><?php echo $categoria->nombre ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+
+
             <hr>                                
             <div class="text-center">
                 <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-primary"> Agregar</button>
             </div>
+            <input type="hidden" name="categoria_id" value="">
             <input type="hidden" name="accion" value="producto-crear">
             <?php echo form_close(); ?>
         </div>
     </div>
 </div>
 <br>
-
+<div id="throbber" style="display:none;">
+    <img src="<?php echo assets_url('imgs/small-ajax-loader.gif'); ?>" />
+</div>
 </div>

@@ -82,7 +82,12 @@
                 </div>
             </div>
             <div class="row agregar-item">
-                <div class="col-md-12">            
+                <div class="col-md-6">
+                    <ul class="categorias-listado">
+                        <?php echo $categorias_arbol_html; ?>                        
+                    </ul>
+                </div>
+                <div class="col-md-6">            
                     <a class="btn btn-lg btn-primary pull-right" href="<?php echo site_url('admin/categorias/crear') . '/' . $categoria->id; ?>">Nueva Categoria</a>
                 </div>                
             </div>

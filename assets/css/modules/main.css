@@ -204,7 +204,11 @@ span.arrow {
     background-color: #38a7bb;
 }
 
-#producto-principal-categorias .nav-sub-level .clicked{
+#producto-principal-categorias .clicked{
+    border:1px solid;
+}
+
+#producto-principal-categorias .clicked>a{    
     color: #ffffff;
     background-color: #38a7bb;
 }

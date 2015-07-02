@@ -144,10 +144,15 @@ class Categoria extends MY_Controller {
         $result = $this->categoria_model->get_arbol_path($categoria->padre_id);
         $categorias_arbol = array_reverse($result);
 
+        $data = $categorias_arbol;
+        $data[] = $categoria;
+        $categorias_arbol_html = $this->_build_categorias_tree($data);
+
         $data = array(
             "categoria" => $categoria,
             "subcategorias" => $subcategorias,
-            "categorias_arbol" => $categorias_arbol);
+            "categorias_arbol" => $categorias_arbol,
+            "categorias_arbol_html" => $categorias_arbol_html);
 
         $this->template->load_view('admin/categoria/listado_sub', $data);
     }
@@ -226,6 +231,24 @@ class Categoria extends MY_Controller {
     public function upload_image() {
         $this->load->config('upload', TRUE);
         $this->load->library('UploadHandler', $this->config->item('categoria', 'upload'));
+    }
+
+    private function _build_categorias_tree($categorias) {
+        $html = "";
+        $temp_array = $categorias;
+        foreach ($categorias as $key => $categoria) {
+            unset($temp_array[$key]);
+            if (sizeof($categorias) == 1) {
+                $class = "fa fa-circle-o";
+            } else {
+                $class = "fa fa-circle-thin";
+            }
+            $html.='<li><i class="' . $class . '"></i> <a href="' . site_url("admin/categoria") . '/' . $categoria->slug . '">' . $categoria->nombre . '</a>'
+                    . '<ul>' . $this->_build_categorias_tree($temp_array) . '</ul>'
+                    . '</li>';
+            break;
+        }
+        return $html;
     }
 
 }

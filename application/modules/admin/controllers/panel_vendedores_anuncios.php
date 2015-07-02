@@ -126,9 +126,9 @@ class Panel_vendedores_anuncios extends MY_Controller {
             $res = $this->anuncio_model->get_vendedor_id_del_anuncio($anuncio_id);
             if ($res == $vendedor->get_vendedor_id()) {
                 $this->anuncio_model->delete($id);
-                redirect('panel_vendedor/anuncio/listado');
+                $this->session->set_flashdata('success', 'Anuncio eliminado con exito..');
             } else {                
-                redirect('panel_vendedor/anuncio/listado');
+                $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
             }
         } else {
             redirect('404');
@@ -185,5 +185,45 @@ class Panel_vendedores_anuncios extends MY_Controller {
 
         $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_tabla_resultados', $data);
     }
+    
+    public function inhabilitar($id) {
+        if ($this->input->is_ajax_request()) {
+            $user_id = $this->authentication->read('identifier');
+            $vendedor = $this->usuario_model->get_full_identidad($user_id);
+            $anuncio_id = $id;
 
+            $res = $this->anuncio_model->get_vendedor_id_del_anuncio($anuncio_id);
+            if ($res == $vendedor->get_vendedor_id()) {
+                $this->anuncio_model->inhabilitar($id);
+                $this->session->set_flashdata('success', 'Anuncio inhabilitado con exito..');
+            } else {
+                $this->session->set_flashdata('error', 'No puedes realizar esta accion.');                
+            }
+        } else {
+            redirect('404');
+        }
+    }
+
+    public function habilitar($id) {
+        if ($this->input->is_ajax_request()) {
+            $user_id = $this->authentication->read('identifier');
+            $vendedor = $this->usuario_model->get_full_identidad($user_id);
+            $anuncio_id = $id;
+
+            $res = $this->anuncio_model->get_vendedor_id_del_anuncio($anuncio_id);
+            if ($res == $vendedor->get_vendedor_id()) {
+                $cant = $this->vendedor_model->get_cantidad_anuncios_por_habilitar($vendedor->get_vendedor_id());
+                if ($cant >= 1) {
+                    $this->anuncio_model->habilitar($id);
+                    $this->session->set_flashdata('success', 'Anuncio habilitado con exito..');
+                } else {
+                    $this->session->set_flashdata('error', 'Has llegado al limite de productos.');
+                }                
+            } else {                
+                $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
+            }
+        } else {
+            redirect('404');
+        }
+    }
 }

@@ -14,15 +14,15 @@ $(document).ready(function() {
         e.preventDefault();
         $('#pagina').val("1");
 
-        $('#producto-principal-categorias').find('a.clicked').removeClass('clicked');
-        $(this).toggleClass("clicked");
+        $('#producto-principal-categorias').find('.clicked').removeClass('clicked');
+        $(this).parent('li').toggleClass("clicked");
 
         $(this).parent('li').find(".active").removeClass("active");
         $(this).parent('li').find(".in").removeClass("in");
 
-        if (!$(this).parent('li').hasClass('active') && $(this).hasClass("clicked") && !$(this).parent('li').hasClass('final')) {
-            $(this).removeClass('clicked');
-            $(this).closest('li.active').children('a').addClass("clicked");
+        if (!$(this).parent('li').hasClass('active') && $(this).parent('li').hasClass("clicked") && !$(this).parent('li').hasClass('final')) {
+            $(this).parent('li').removeClass('clicked');
+            $(this).closest('li.active').addClass("clicked");
         }
         updateResultados();
     });
@@ -77,7 +77,7 @@ $(document).ready(function() {
 
 function updateResultados() {
     var search_query = $('input[name="search_query"]').val();
-    var categoria_id = $('#producto-principal-categorias').find('.clicked').data('id');
+    var categoria_id = $('#producto-principal-categorias').find('.clicked').find('a').data('id');
     var pais = $('select[name="pais"]').val();
     var provincia = $('select[name="provincia"]').val();
     var poblacion = $('select[name="poblacion"]').val();

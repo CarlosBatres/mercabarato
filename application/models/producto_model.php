@@ -72,16 +72,22 @@ class Producto_model extends MY_Model {
         $this->db->select('p.*,pr.filename as imagen_nombre');
         $this->db->from('producto p');
         $this->db->join('producto_resource pr', 'pr.producto_id = p.id AND pr.tipo="imagen_principal"', 'left');
+        $this->db->join('productos_localizacion pl', 'pl.producto_id = p.id', 'inner');
 
         if (isset($params['nombre'])) {
             $this->db->like('p.nombre', $params['nombre'], 'both');
         }
-        if (isset($params['categoria_id'])) {            
-            $array = $this->get_categorias_arbol($params['categoria_id']);
-            $array[]=$params['categoria_id'];
-            if ($array) {
-                $this->db->where_in('p.categoria_id', $array);
+        if (isset($params['categoria_id'])) {
+            //$arriba = $this->get_categorias_arbol($params['categoria_id']);
+            $arriba[] = $params['categoria_id'];
+            $abajo = $this->get_all_categorias_of($params['categoria_id']);
+            if ($abajo) {
+                $categorias_array = array_merge($arriba, $abajo);
+            }else{
+                $categorias_array = $arriba;
             }
+            
+            $this->db->where_in('p.categoria_id', $categorias_array);
         }
         if (isset($params['categoria_general'])) {
             if (isset($params['categoria_id'])) {
@@ -102,11 +108,27 @@ class Producto_model extends MY_Model {
                 $this->db->where('p.precio <=', $precios['1']);
             }
         }
-        
-        if(isset($params["poblacion"])){
+
+        if (isset($params["poblacion"])) {
             if ($params['poblacion'] != '0') {
-                
+                $this->db->where('pl.problacion_id', $params['poblacion']);
             }
+        }
+
+        if (isset($params["provincia"])) {
+            if ($params['provincia'] != '0') {
+                $this->db->where('pl.provincia_id', $params['provincia']);
+            }
+        }
+
+        if (isset($params["pais"])) {
+            if ($params['pais'] != '0') {
+                $this->db->where('pl.pais_id', $params['pais']);
+            }
+        }
+        
+        if(isset($params["habilitado"])){
+            $this->db->where('p.habilitado',$params['habilitado']);
         }
 
         $this->db->stop_cache();
@@ -130,9 +152,11 @@ class Producto_model extends MY_Model {
      * @return boolean
      */
     public function get_all_categorias_of($id) {
+        $this->db->cache_on();
         $query = "SELECT id FROM categoria WHERE padre_id='" . $id . "'";
         $result = $this->db->query($query);
         $categorias = $result->result_array();
+        $this->db->cache_off();
         $ids = array();
         if ($categorias) {
             foreach ($categorias as $value) {
@@ -242,6 +266,14 @@ class Producto_model extends MY_Model {
     protected function pre_insertado($producto) {
         $producto['fecha_insertado'] = date('Y-m-d');
         return $producto;
+    }
+    
+    public function inhabilitar($producto_id){
+        $this->update($producto_id, array("habilitado"=>"0"));
+    }
+    
+    public function habilitar($producto_id){
+        $this->update($producto_id, array("habilitado"=>"1"));
     }
 
 }

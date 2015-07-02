@@ -1,57 +1,74 @@
-<?php if (sizeof($productos)==0): ?>
-<div>
-    <p> No se encontraron productos...</p>    
-</div>
+<?php if (sizeof($productos) == 0): ?>
+    <div>
+        <p> No se encontraron productos...</p>    
+    </div>
 <?php else: ?>
 
-<div class="table-responsive">
-    <table class="table table-bordered table-hover table-striped">
-        <thead>
-            <tr>                
-                <th style="width: 15%">Nombre del Producto</th>
-                <th style="width: 5%;text-align: center">Precio Venta Publico</th>
-                <th style="width: 10%">Categoria</th>                
-                <th style="width: 5%;text-align: center">Visible al Publico</th>                                            
-                <th style="width: 5%;text-align: center">PVP Visible</th>
-                <th style="width: 5%;text-align: center">Habilitado</th>
-                <th style="width: 5%;text-align: center">&nbsp; Acciones</th> 
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($productos as $producto): ?>
-                <tr>                    
-                    <td><?php echo $producto->nombre; ?></td>
-                    <td style="text-align: center"><?php echo $producto->precio; ?></td>                                                                
-                    <td><?php echo $producto->Categoria; ?></td>                    
-                    <td style="text-align: center"><?php
-                        if ($producto->mostrar_producto == 1): echo "<span class='label label-success'>Si</span>";
-                        else: echo "<span class='label label-danger'>No</span>";
-                        endif;
-                        ?>
-                    </td>                    
-                    <td style="text-align: center"><?php
-                        if ($producto->mostrar_precio == 1): echo "<span class='label label-success'>Si</span>";
-                        else: echo "<span class='label label-danger'>No</span>";
-                        endif;
-                        ?>
-                    </td>                                                                
-                    <td style="text-align: center"><?php
-                        if ($producto->habilitado == 1): echo "<span class='label label-success'>Si</span>";
-                        else: echo "<span class='label label-danger'>No</span>";
-                        endif;
-                        ?>
-                    </td>                                                                
-                    <td>
-                        <div class="options">
-                            <a href="<?php echo site_url('panel_vendedor/producto/editar') . '/' . $producto->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>
-                            <a class="producto_borrar" href="<?php echo site_url('panel_vendedor/producto/borrar') . '/' . $producto->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
-                        </div>                           
-                    </td>
+    <div class="table-responsive">
+        <?php if ($this->session->flashdata('success')) { ?>
+                <div class="alert alert-success"> 
+                    <a class="close" data-dismiss="alert">×</a>
+                    <?= $this->session->flashdata('success') ?> 
+                </div>
+            <?php } ?>   
+            <?php if ($this->session->flashdata('error')) { ?>
+                <div class="alert alert-danger"> 
+                    <a class="close" data-dismiss="alert">×</a>
+                    <?= $this->session->flashdata('error') ?> 
+                </div>
+            <?php } ?>
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>                
+                    <th style="width: 15%">Nombre del Producto</th>
+                    <th style="width: 5%;text-align: center">Precio Venta Publico</th>
+                    <th style="width: 10%">Categoria</th>                
+                    <th style="width: 5%;text-align: center">Visible al Publico</th>                                            
+                    <th style="width: 5%;text-align: center">PVP Visible</th>
+                    <th style="width: 5%;text-align: center">Habilitado</th>
+                    <th style="width: 5%;text-align: center">&nbsp; Acciones</th> 
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($productos as $producto): ?>
+                    <tr>                    
+                        <td><?php echo $producto->nombre; ?></td>
+                        <td style="text-align: center"><?php echo $producto->precio; ?></td>                                                                
+                        <td><?php echo $producto->Categoria; ?></td>                    
+                        <td style="text-align: center"><?php
+                            if ($producto->mostrar_producto == 1): echo "<span class='label label-success'>Si</span>";
+                            else: echo "<span class='label label-danger'>No</span>";
+                            endif;
+                            ?>
+                        </td>                    
+                        <td style="text-align: center"><?php
+                            if ($producto->mostrar_precio == 1): echo "<span class='label label-success'>Si</span>";
+                            else: echo "<span class='label label-danger'>No</span>";
+                            endif;
+                            ?>
+                        </td>                                                                
+                        <td style="text-align: center"><?php
+                            if ($producto->habilitado == 1): echo "<span class='label label-success'>Si</span>";
+                            else: echo "<span class='label label-danger'>No</span>";
+                            endif;
+                            ?>
+                        </td>                                                                
+                        <td>
+                            <div class="options">
+                                <?php if ($producto->habilitado == 0): ?>
+                                    <a class="row_action habilitar" href="<?php echo site_url('panel_vendedor/producto/habilitar') . '/' . $producto->id ?>" data-toogle="tooltip"  title="Habilitar"><i class="glyphicon glyphicon-ok"></i></a>
+                                <?php else: ?>
+                                    <a class="row_action inhabilitar" href="<?php echo site_url('panel_vendedor/producto/inhabilitar') . '/' . $producto->id ?>" data-toogle="tooltip"  title="Inhabilitar"><i class="glyphicon glyphicon-remove"></i></a>
+                                <?php endif; ?>
+                                <a href="<?php echo site_url('panel_vendedor/producto/editar') . '/' . $producto->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>
+                                <a class="row_action borrar" href="<?php echo site_url('panel_vendedor/producto/borrar') . '/' . $producto->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
+                            </div>                           
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
 
-   <?php echo $pagination; ?>
-</div> 
+        <?php echo $pagination; ?>
+    </div> 
 <?php endif; ?>

@@ -46,3 +46,7 @@
 #cerrar-sesion{
     color:#000;
 }
+
+.categorias-listado ul,li{
+    list-style-type: none;    
+}

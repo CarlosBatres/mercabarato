@@ -35,62 +35,73 @@
                             <textarea class="form-control" name="descripcion" rows="3"><?php echo $producto->descripcion; ?></textarea>
                         </div>
                     </div>
-                </div>                
+                </div> 
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Imagen del Producto</label>
+                            <?php if ($producto_imagen): ?>
+                                <div class="preview_imagen thumbnail">                        
+                                    <img src="<?php echo assets_url($this->config->item('productos_img_path')) . '/' . $producto_imagen->filename ?>"/>
+                                </div>
+                                <br>
+                                <button type="button" id="cambiar_imagen" class="btn btn-lg btn-primary"> Cambiar Imagen</button>
+                                <div class='fileupload_button' style='display:none'>
+                                    <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('panel_vendedor/producto/upload_image') ?>">
+                                </div>
+                            <?php else:; ?>
+                                <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('panel_vendedor/producto/upload_image') ?>">                                
+                            <?php endif; ?>
+
+                            <input type="hidden" name="file_name" id="file_name" value="">                    
+                        </div> 
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Precio Venta Publico</label>
                             <input type="text" class="form-control" name="precio" value="<?php echo $producto->precio; ?>">
                         </div>
-                    </div>                    
-                    <div class="col-md-3 pull-right">
+                    </div>    
+                    <div class="col-md-8">
+                        <div class="form-group">                            
+                            <label>Enlace externo al producto</label>
+                            <input type="text" class="form-control" name="link_externo" value="<?php echo $producto->link_externo; ?>">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <br>
-                            <label>Mostrar producto al Publico</label><br>
-                            <label>Si<input type="radio" name="mostrar_producto" id="mostrar_si" value="1" class="radioInput" <?php echo ($producto->mostrar_producto == 1)?"checked":"";?>></label>
-                            <label>No<input type="radio" name="mostrar_producto" id="mostrar_no" value="0" class="radioInput" <?php echo ($producto->mostrar_producto == 0)?"checked":"";?>></label>
+                            <label>Desea mostrar el producto al publico general?</label><br>
+                            <label>Si<input type="radio" name="mostrar_producto" id="mostrar_si" value="1" class="radioInput" <?php echo ($producto->mostrar_producto == 1) ? "checked" : ""; ?>></label>
+                            <label>No<input type="radio" name="mostrar_producto" id="mostrar_no" value="0" class="radioInput" <?php echo ($producto->mostrar_producto == 0) ? "checked" : ""; ?>></label>
 
                         </div>
                     </div>   
-                    <div class="col-md-3 pull-right">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <br>
-                            <label>Mostrar Precio al Publico</label><br>
-                            <label>Si<input type="radio" name="mostrar_precio" id="mostrar_precio_si" value="1" class="radioInput" <?php echo ($producto->mostrar_precio == 1)?"checked":"";?>></label>
-                            <label>No<input type="radio" name="mostrar_precio" id="mostrar_precio_no" value="0" class="radioInput" <?php echo ($producto->mostrar_precio == 0)?"checked":"";?>></label>
+                            <label>Desea mostrar el precio al publico general?</label><br>
+                            <label>Si<input type="radio" name="mostrar_precio" id="mostrar_precio_si" value="1" class="radioInput" <?php echo ($producto->mostrar_precio == 1) ? "checked" : ""; ?>></label>
+                            <label>No<input type="radio" name="mostrar_precio" id="mostrar_precio_no" value="0" class="radioInput" <?php echo ($producto->mostrar_precio == 0) ? "checked" : ""; ?>></label>
 
                         </div>                                                                       
                     </div>
                 </div>
-                
-                <div class="form-group">
-                    <label>Categoria</label>
-                    <select name="categoria" class="form-control">                        
-                        <?php foreach ($categorias as $categoria): ?>
-                            <option value="<?php echo $categoria->id ?>" <?php
-                            if ($producto->categoria_id == $categoria->id): echo "selected";
-                            endif;
-                            ?>><?php echo $categoria->nombre ?></option>
-                                <?php endforeach; ?>
-                    </select>
-                </div>
-                
+                <br>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Imagen del Producto</label>
-                            <?php if ($producto_imagen): ?>
-                                <div class="preview_imagen">                        
-                                    <img src="<?php echo assets_url($this->config->item('productos_img_path')) . '/' . $producto_imagen->filename ?>" width="250"/>
-                                </div>
-                                <br>
-                            <?php endif; ?>
-                            <button type="button" id="cambiar_imagen" class="btn btn-lg btn-primary"> Cambiar Imagen</button>
-                            <div class='fileupload_button' style='display:none'>
-                                <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('panel_vendedor/producto/upload_image') ?>">
-                            </div>
-                            <input type="hidden" name="file_name" id="file_name" value="">                    
-                        </div> 
+                        <label>Seleccione una Categoria:</label>
+                        <div class="alert alert-danger" id="seleccionar-categoria_alert" style="display:none;"> 
+                            <a class="close" data-dismiss="alert">×</a>
+                            Debe seleccionar una categoria.
+                        </div>
+                        <div id="categorias_jtree">                
+                            <?php echo $categorias_tree_html; ?>
+                        </div>
                     </div>
                 </div>
                 <hr>                
@@ -98,10 +109,13 @@
                     <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-primary"> Confirmar Cambios</button>
                 </div>
                 <input type="hidden" name="accion" value="producto-editar">                
+                <input type="hidden" name="categoria_id" value="<?php echo $producto->categoria_id; ?>">
                 <?php echo form_close(); ?>
             </div>
         </div>
     </div>
     <br>
-
+    <div id="throbber" style="display:none;">
+        <img src="<?php echo assets_url('imgs/small-ajax-loader.gif'); ?>" />
+    </div>
 </div>
