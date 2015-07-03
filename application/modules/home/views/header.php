@@ -47,13 +47,13 @@
                     if ($this->uri->uri_string() == ''): echo "active";
                     endif;
                     ?>" >
-                        <a href="<?php echo site_url(); ?>">Inicio <b class="caret"></b></a>                            
+                        <a href="<?php echo site_url(); ?>">Inicio</a>                            
                     </li>                    
                     <li class="dropdown <?php
                     if ($this->uri->uri_string() == 'vendedores'): echo "active";
                     endif;
                     ?>" >
-                        <a href="<?php echo site_url('vendedores'); ?>">Vendedores <b class="caret"></b></a>                            
+                        <a href="<?php echo site_url('vendedores'); ?>">Vendedores</a>                            
                     </li>
                     <li class="dropdown <?php
                     if ($this->uri->uri_string() == 'seguros'): echo "active";

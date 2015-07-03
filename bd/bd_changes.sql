@@ -11,3 +11,8 @@ left join `localizacion` `l` on((`l`.`usuario_id` = `u`.`id`)))
 left join `pais` `pa` on((`pa`.`id` = `l`.`pais_id`))) 
 left join `provincia` `pr` on((`pr`.`id` = `l`.`provincia_id`))) 
 left join `poblacion` `pb` on((`pb`.`id` = `l`.`poblacion_id`)));
+
+
+
+ALTER TABLE `mercabarato_bd`.`vendedor` 
+ADD COLUMN `filename` VARCHAR(255) NULL DEFAULT NULL AFTER `keyword`;

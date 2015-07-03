@@ -132,7 +132,7 @@
                         </div> 
 
                     <?php else: ?>  
-                    <?php echo form_open('usuario/datos-personales/modificar', 'id="form_datos_2"'); ?>
+                        <?php echo form_open('usuario/datos-personales/modificar', 'id="form_datos_2"'); ?>
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="form-group">                                    
@@ -182,11 +182,37 @@
                                         <span class="input-group-addon"><i class="fa fa-mobile-phone fa-fw"></i></span>
                                     </div>
                                 </div>
+                            </div>                           
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">                                    
+                                    <?php if ($vendedor->filename != null): ?>
+                                        <div class="row">
+                                            <hr>
+                                            <div class="preview_imagen_empresa">                        
+                                                <img class="thumbnail" src="<?php echo assets_url($this->config->item('vendedores_img_path')) . '/' . $vendedor->filename ?>"/>
+                                            </div>                                        
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <button type="button" id="cambiar_imagen" class="btn btn-lg btn-default"> Cambiar Imagen</button>
+                                            <div class='fileupload_button' style='display:none'>
+                                                <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('home/vendedor/upload_image') ?>">                                        
+                                            </div>
+                                        </div>
+                                    <?php else: ?>
+                                        <label><strong>Seleccione una imagen que lo represente.</strong></label>                    
+                                        <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('home/vendedor/upload_image') ?>">                                        
+                                    <?php endif; ?>
+                                    <input type="hidden" name="file_name" id="file_name" value="">                                                            
+                                </div> 
                             </div>
                             <div class="col-sm-12 text-center">
                                 <button type="submit" class="btn btn-template-main"><i class="fa fa-save"></i> Guardar Cambios</button>
                             </div>
-                        </div> 
+                        </div>
 
 
                     <?php endif; ?>

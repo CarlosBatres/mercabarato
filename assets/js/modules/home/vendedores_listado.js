@@ -57,10 +57,11 @@ function updateResultados() {
     var provincia = $('select[name="provincia"]').val();
     var poblacion = $('select[name="poblacion"]').val();
 
-    $('#tabla-resultados').html('');
-    /*$('#tabla-resultados').block({
-        message: $('#throbber'),
-        css: {border: '0', width: '100%', height: '100px'}});*/
+    $('#tabla-resultados').css('opacity', '0.5');
+    $('#tabla-resultados').block({message: $('#throbber'),
+        css: {width: '4%', border: '0px solid #FFFFFF', cursor: 'wait', backgroundColor: '#FFFFFF', top: '50px'},
+        overlayCSS: {backgroundColor: '#FFFFFF', opacity: 0.0, cursor: 'wait'}
+    });
     $.ajax({
         type: "POST",
         url: SITE_URL + 'home/vendedor/ajax_get_listado_resultados',
@@ -73,7 +74,8 @@ function updateResultados() {
         },
         dataType: "html",
         success: function(response) {
-            /*$('#tabla-resultados').unblock();*/
+            $('#tabla-resultados').css('opacity', '1');
+            $('#tabla-resultados').unblock();
             $('#tabla-resultados').html(response);
             bind_pagination_links();
         }

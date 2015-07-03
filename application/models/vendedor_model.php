@@ -169,14 +169,14 @@ class Vendedor_model extends MY_Model {
             return 0;
         }
     }
-    
+
     public function get_cantidad_productos_por_habilitar($vendedor_id) {
         $vendedor_paquete = $this->get_paquete_en_curso($vendedor_id);
         if ($vendedor_paquete) {
             if ($vendedor_paquete->limite_productos == -1) {
                 return 1;
             } else {
-                $this->db->select('id')->from('producto')->where('vendedor_id', $vendedor_id)->where('habilitado','1');
+                $this->db->select('id')->from('producto')->where('vendedor_id', $vendedor_id)->where('habilitado', '1');
                 $total = $this->db->count_all_results();
                 return ($vendedor_paquete->limite_productos - $total);
             }
@@ -203,14 +203,14 @@ class Vendedor_model extends MY_Model {
             return 0;
         }
     }
-    
+
     public function get_cantidad_anuncios_por_habilitar($vendedor_id) {
         $vendedor_paquete = $this->get_paquete_en_curso($vendedor_id);
         if ($vendedor_paquete) {
             if ($vendedor_paquete->limite_anuncios == -1) {
                 return 1;
             } else {
-                $this->db->select('id')->from('anuncio')->where('vendedor_id', $vendedor_id)->where('habilitado','1');
+                $this->db->select('id')->from('anuncio')->where('vendedor_id', $vendedor_id)->where('habilitado', '1');
                 $total = $this->db->count_all_results();
                 return ($vendedor_paquete->limite_anuncios - $total);
             }
@@ -236,6 +236,7 @@ class Vendedor_model extends MY_Model {
             return FALSE;
         }
     }
+
     /**
      * 
      * @param type $params
@@ -254,28 +255,28 @@ class Vendedor_model extends MY_Model {
         $this->db->join("pais", "pais.id=localizacion.pais_id", 'LEFT');
         $this->db->join("provincia", "provincia.id=localizacion.provincia_id", 'LEFT');
         $this->db->join("poblacion", "poblacion.id=localizacion.poblacion_id", 'LEFT');
-        
+
         $this->db->where('vendedor.habilitado', '1'); // Permitir vendedores no habilitados ??
-        
+
         if (isset($params['nombre'])) {
             $this->db->like('vendedor.nombre', $params['nombre'], 'both');
-        }             
+        }
         if (isset($params['descripcion'])) {
             $this->db->or_like('vendedor.descripcion', $params['descripcion'], 'both');
-        }        
-        
+        }
+
         if (isset($params['poblacion'])) {
             $this->db->where('localizacion.poblacion_id', $params['poblacion']);
             //$this->db->or_where('localizacion.poblacion_id IS NULL');                        
-        }elseif (isset($params['provincia'])) {
+        } elseif (isset($params['provincia'])) {
             $this->db->where('localizacion.provincia_id', $params['provincia']);
             //$this->db->or_where('localizacion.provincia_id IS NULL');            
-        }elseif (isset($params['pais'])) {
-            $this->db->where('localizacion.pais_id', $params['pais']);            
+        } elseif (isset($params['pais'])) {
+            $this->db->where('localizacion.pais_id', $params['pais']);
             //$this->db->or_where('localizacion.pais_id IS NULL');            
         }
-        
-        
+
+
 
         $this->db->stop_cache();
         $count = $this->db->count_all_results();
@@ -290,6 +291,15 @@ class Vendedor_model extends MY_Model {
             $this->db->flush_cache();
             return array("total" => 0);
         }
+    }
+
+    public function cleanup_image($vendedor_id) {
+        $vendedor = $this->get($vendedor_id);
+        if ($vendedor->filename != null) {
+            unlink('./assets/' . $this->config->item('vendedores_img_path') . '/' . $vendedor->filename);
+            unlink('./assets/' . $this->config->item('vendedores_img_path') . '/thumbnail/' . $vendedor->filename);
+        }
+        $this->update($vendedor_id, array("filename" => null));
     }
 
 }

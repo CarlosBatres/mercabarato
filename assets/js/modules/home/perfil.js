@@ -54,6 +54,32 @@ $(document).ready(function() {
         }
     }); 
     
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        replaceFileInput: false,
+        method: "post",
+        autoUpload: "false",        
+        add: function(e, data) {                                    
+            $("#form_datos_2").find('button').off('click').on('click', function(e) {
+                e.preventDefault();
+                data.submit();
+            });
+        },
+        done: function(e, data) {            
+            $.each(data.result.files, function(index, file) {
+                $('#file_name').val(file.name);                
+            });
+            $('#form_datos_2').submit();
+        }
+    });
+    
+    $('#cambiar_imagen').on('click',function(e){
+        e.preventDefault();
+        $('.fileupload_button').css('display','block');
+        $('.preview_imagen_empresa').html('');
+        $('.preview_imagen_empresa').css('display','none');
+        $(this).css('display','none');
+    });
     
     
 });

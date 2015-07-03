@@ -297,7 +297,12 @@ class Vendedor extends MY_Controller {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $this->template->add_js('modules/home/vendedores_listado.js');
         $paises=$this->pais_model->get_all();
-        $data=array("paises"=>$paises);
+        $anuncios = $this->anuncio_model->get_ultimos_anuncios();
+        if (!$anuncios) {
+            $anuncios = array();
+        }
+        
+        $data=array("paises"=>$paises,"anuncios"=>$anuncios);
         
         $this->template->load_view('home/vendedores/listado',$data);
     }
@@ -392,5 +397,10 @@ class Vendedor extends MY_Controller {
             "localizacion" => $localizacion);        
         
         $this->template->load_view('home/vendedores/ficha', $data);
+    }
+    
+    public function upload_image(){        
+        $this->load->config('upload', TRUE);
+        $this->load->library('UploadHandler', $this->config->item('vendedor', 'upload'));                        
     }
 }

@@ -23,7 +23,7 @@ class Panel_vendedores extends MY_Controller {
 
         $mis_productos = $this->producto_model->get_many_by("vendedor_id", $vendedor->get_vendedor_id());
         $mis_anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vendedor->get_vendedor_id());
-        $mis_clientes = $this->invitacion_model->get_many_by(array("vendedor_id"=>$vendedor->get_vendedor_id(),"estado"=>"2"));
+        $mis_clientes = $this->invitacion_model->get_many_by(array("vendedor_id" => $vendedor->get_vendedor_id(), "estado" => "2"));
 
         $paquete_vigente = $this->vendedor_model->get_paquete_en_curso($vendedor->get_vendedor_id());
         $paquete_pendiente = $this->vendedor_model->get_paquete_pendiente($vendedor->get_vendedor_id());
@@ -111,27 +111,24 @@ class Panel_vendedores extends MY_Controller {
             $formValues = $this->input->post();
             if ($formValues !== false) {
                 $tipo = $this->input->post('tipo');
-                
+
                 $user_id = $this->authentication->read('identifier');
                 $vendedor = $this->usuario_model->get_full_identidad($user_id);
 
-                if ($tipo == "mensual") {
-                    $visitas = $this->visita_model->get_vendedors_visitas_durante(date("Y-m-1"), date("Y-m-t"),$vendedor->get_vendedor_id(),false);
+                if ($tipo == "mensual") {                    
+                    $visitas=$this->visita_model->generar_estadisticas_visitas(date("Y-m-1"), date("Y-m-t"), $vendedor->get_vendedor_id(), false);                    
+                    if(!$visitas){
+                        $data="empty";
+                    } 
+                } elseif ($tipo == "anual") {                    
+                    $visitas=$this->visita_model->generar_estadisticas_visitas(date("Y-1-1"), date("Y-12-31"), $vendedor->get_vendedor_id(), true);                    
                     $data = array();
-
-                    foreach ($visitas as $visita) {
-                        $data[] = array("date" => $visita->fecha, "value" => $visita->total);
-                    }
-                } elseif ($tipo == "anual") {
-                    $visitas = $this->visita_model->get_vendedors_visitas_durante(date("Y-1-1"), date("Y-12-31"),$vendedor->get_vendedor_id(),true);
-                    $data = array();
-
-                    foreach ($visitas as $visita) {
-                        $data[] = array("month" => $visita->year.'-'.$visita->month, "value" => $visita->total);
+                    if(!$visitas){
+                        $data="empty";
                     }
                 }
             }
-            echo json_encode($data);
+            echo json_encode($visitas);
         }
     }
 
