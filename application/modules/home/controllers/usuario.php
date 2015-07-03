@@ -24,6 +24,7 @@ class Usuario extends MY_Controller {
             redirect('');
         }
     }
+
     /**
      * 
      */
@@ -48,6 +49,7 @@ class Usuario extends MY_Controller {
     public function view_datos_personales() {
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->add_js("fileupload.js");
             $user_id = $this->authentication->read('identifier');
             $usuario = $this->usuario_model->get($user_id);
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
@@ -116,11 +118,20 @@ class Usuario extends MY_Controller {
 
                 if ($this->input->post('nombre_empresa')) {
                     $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
+
+                    if ($this->input->post('file_name') !== "") {
+                        $filename = $this->input->post('file_name');
+                        $this->vendedor_model->cleanup_image($vendedor->id);
+                    } else {
+                        $filename = null;                        
+                    }
+
                     $data_vendedor = array(
                         "nombre" => ($this->input->post('nombre_empresa') != '') ? $this->input->post('nombre_empresa') : null,
                         "descripcion" => ($this->input->post('descripcion') != '') ? $this->input->post('descripcion') : null,
                         "sitio_web" => ($this->input->post('sitio_web') != '') ? $this->input->post('sitio_web') : null,
                         "actividad" => ($this->input->post('actividad') != '') ? $this->input->post('actividad') : null,
+                        "filename" => $filename
                     );
                     $this->vendedor_model->update($vendedor->id, $data_vendedor);
                 }

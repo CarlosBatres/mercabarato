@@ -19,8 +19,8 @@ $config['producto'] = array(
     'min_height' => 1,
     'image_versions' => array(
         '' => array(
-            'max_width' => 450,
-            'max_height' => 450,
+            'max_width' => 500,
+            'max_height' => 500,
             'jpeg_quality' => 95
         ),
         'thumbnail' => array(
@@ -53,6 +53,33 @@ $config['categoria'] = array(
         ),
         'thumbnail' => array(
             'crop' => TRUE,
+            'max_width' => 50,
+            'max_height' => 50
+        )
+    )
+);
+
+$config['vendedor'] = array(
+    'upload_dir' => absolute_path() . '/assets/'.$this->config['vendedores_img_path'],
+    'upload_url' => assets_url($this->config['vendedores_img_path']),
+// Defines which files (based on their names) are accepted for upload:
+    'accept_file_types' => '/(\.|\/)(gif|jpe?g|png)$/i',
+    // The php.ini settings upload_max_filesize and post_max_size
+// take precedence over the following max_file_size setting:
+    'max_file_size' => NULL,
+    'min_file_size' => 1,
+    // Image resolution restrictions:
+    'max_width' => NULL,
+    'max_height' => NULL,
+    'min_width' => 1,
+    'min_height' => 1,
+    'image_versions' => array(
+        '' => array(
+            'max_width' => 300,
+            'max_height' => 300,
+            'jpeg_quality' => 95
+        ),
+        'thumbnail' => array(            
             'max_width' => 50,
             'max_height' => 50
         )

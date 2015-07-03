@@ -367,6 +367,7 @@ $config["money_sign"]='€';
 $config["admin_default_per_page"]='10';
 $config["productos_img_path"]='/uploads/productos/';
 $config["categorias_img_path"]='/uploads/categorias/';
+$config["vendedores_img_path"]='/uploads/vendedores/';
 $config["principal_default_per_page"]='10';
 
 /* End of file config.php */

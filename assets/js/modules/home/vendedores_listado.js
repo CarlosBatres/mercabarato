@@ -17,6 +17,7 @@ $(document).ready(function() {
     $('#form_buscar').find('select[name="pais"]').on('change', function() {
         $('#form_buscar').find('select[name="provincia"]').html("<option value='0'>Todas las Provincias</option>");
         $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
+        $('#pagina').val("1");
         var pais_id = $(this).val();
         $.ajax({
             type: "POST",
@@ -33,6 +34,7 @@ $(document).ready(function() {
     $('#form_buscar').find('select[name="provincia"]').on('change', function() {
         $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
         var provincia_id = $(this).val();
+        $('#pagina').val("1");
         $.ajax({
             type: "POST",
             url: SITE_URL + 'home/poblacion/ajax_get_poblaciones_htmlselect',
@@ -55,10 +57,11 @@ function updateResultados() {
     var provincia = $('select[name="provincia"]').val();
     var poblacion = $('select[name="poblacion"]').val();
 
-    $('#tabla-resultados').html('');
-    /*$('#tabla-resultados').block({
-        message: $('#throbber'),
-        css: {border: '0', width: '100%', height: '100px'}});*/
+    $('#tabla-resultados').css('opacity', '0.5');
+    $('#tabla-resultados').block({message: $('#throbber'),
+        css: {width: '4%', border: '0px solid #FFFFFF', cursor: 'wait', backgroundColor: '#FFFFFF', top: '50px'},
+        overlayCSS: {backgroundColor: '#FFFFFF', opacity: 0.0, cursor: 'wait'}
+    });
     $.ajax({
         type: "POST",
         url: SITE_URL + 'home/vendedor/ajax_get_listado_resultados',
@@ -71,7 +74,8 @@ function updateResultados() {
         },
         dataType: "html",
         success: function(response) {
-            /*$('#tabla-resultados').unblock();*/
+            $('#tabla-resultados').css('opacity', '1');
+            $('#tabla-resultados').unblock();
             $('#tabla-resultados').html(response);
             bind_pagination_links();
         }

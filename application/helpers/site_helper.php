@@ -143,10 +143,18 @@ function time_elapsed_string($datetime, $full = false) {
     return $string ? 'Hace ' . implode(', ', $string) : 'Este momento';
 }
 
-function truncate($text, $chars = 25) {
+function truncate($text, $chars = 25) {        
+    $flag=false;
+    if(strlen($text)>$chars){    
+        $flag=true;
+    }    
     $text = $text." ";
     $text = substr($text,0,$chars);
     $text = substr($text,0,strrpos($text,' '));
-    $text = $text."...";
+    
+    if($flag){
+        $text = $text."...";
+    }
+    
     return $text;
 }

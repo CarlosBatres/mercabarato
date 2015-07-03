@@ -39,7 +39,7 @@ $(document).ready(function() {
             updateResultados();
         }
     });
-    
+
     $('#form_buscar').find('select[name="pais"]').on('change', function() {
         $('#form_buscar').find('select[name="provincia"]').html("<option value='0'>Todas las Provincias</option>");
         $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
@@ -49,8 +49,8 @@ $(document).ready(function() {
             url: SITE_URL + 'home/provincia/ajax_get_provincias_htmlselect',
             data: {pais_id: pais_id},
             dataType: 'json',
-            success: function(response) {                
-                $('#form_buscar').find('select[name="provincia"]').html(response.html);                
+            success: function(response) {
+                $('#form_buscar').find('select[name="provincia"]').html(response.html);
                 $('#form_buscar').find('select[name="provincia"]').find('option:first').text("Todas las Provincias");
             }
         });
@@ -69,8 +69,8 @@ $(document).ready(function() {
                 $('#form_buscar').find('select[name="poblacion"]').find('option:first').text("Todas las Poblaciones");
             }
         });
-    }); 
-    
+    });
+
     $('#form_buscar').find('select[name="pais"]').trigger('change');
 
 });
@@ -94,10 +94,15 @@ function updateResultados() {
         categoria_id = "";
     }
 
-    $('#tabla-resultados').html('');
-    $('#tabla-resultados').block({
+    $('#tabla-resultados').css('opacity', '0.5');
+    $('#tabla-resultados').block({message: $('#throbber'),
+        css: {width: '4%', border: '0px solid #FFFFFF', cursor: 'wait', backgroundColor: '#FFFFFF', top: '50px'},
+        overlayCSS: {backgroundColor: '#FFFFFF', opacity: 0.0, cursor: 'wait'}
+    });
+
+    /*$('#tabla-resultados').block({
         message: $('#throbber'),
-        css: {border: '0', width: '100%', height: '100px'}});
+        css: {border: '0'}});*/
     $.ajax({
         type: "POST",
         url: SITE_URL + 'home/producto/ajax_get_listado_resultados',
@@ -107,12 +112,13 @@ function updateResultados() {
             pagina: pagina_id,
             precio_tipo1: precio,
             alt_layout: true,
-            pais : pais,
-            provincia : provincia,
-            poblacion : poblacion
+            pais: pais,
+            provincia: provincia,
+            poblacion: poblacion
         },
         dataType: "html",
         success: function(response) {
+            $('#tabla-resultados').css('opacity', '1');
             $('#tabla-resultados').unblock();
             $('#tabla-resultados').html(response);
             bind_pagination_links();

@@ -297,7 +297,12 @@ class Vendedor extends MY_Controller {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $this->template->add_js('modules/home/vendedores_listado.js');
         $paises=$this->pais_model->get_all();
-        $data=array("paises"=>$paises);
+        $anuncios = $this->anuncio_model->get_ultimos_anuncios();
+        if (!$anuncios) {
+            $anuncios = array();
+        }
+        
+        $data=array("paises"=>$paises,"anuncios"=>$anuncios);
         
         $this->template->load_view('home/vendedores/listado',$data);
     }
@@ -364,4 +369,38 @@ class Vendedor extends MY_Controller {
         $this->template->load_view('home/vendedores/tabla_resultados', $data);
     }
 
+    
+     public function ver_vendedor($id) {
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $vendedor = $this->vendedor_model->get_vendedor($id);
+        $localizacion = $this->localizacion_model->get_by("usuario_id",$vendedor->usuario_id);              
+        
+        if($localizacion->pais_id!=null){
+            $res=$this->pais_model->get($localizacion->pais_id);
+            $localizacion->pais=$res->nombre;
+        }
+        if($localizacion->provincia_id!=null){
+            $res=$this->provincia_model->get($localizacion->provincia_id);
+            $localizacion->provincia=$res->nombre;
+        }
+        if($localizacion->poblacion_id!=null){
+            $res=$this->poblacion_model->get($localizacion->poblacion_id);
+            $localizacion->poblacion=$res->nombre;
+        }
+        
+        $vendedor_image = false;
+        
+        
+        $data = array(
+            "vendedor" => $vendedor,
+            "vendedor_image"=>$vendedor_image,
+            "localizacion" => $localizacion);        
+        
+        $this->template->load_view('home/vendedores/ficha', $data);
+    }
+    
+    public function upload_image(){        
+        $this->load->config('upload', TRUE);
+        $this->load->library('UploadHandler', $this->config->item('vendedor', 'upload'));                        
+    }
 }

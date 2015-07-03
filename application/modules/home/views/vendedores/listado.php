@@ -62,12 +62,39 @@
 
                 <div id="tabla-resultados"></div>
             </div>                   
-            <div class="col-md-3">                       
-
-            </div> 
+            <div class="col-md-3">
+            <div class="box box-anuncios">
+                <div class="box-header">
+                    <h4 class="text-center">Anuncios</h4>                
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <?php
+                            if (sizeof($anuncios) > 0):
+                                foreach ($anuncios as $anuncio):
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <p class="text-right"><strong><?php echo date("d-M-Y", strtotime($anuncio->fecha_publicacion)) ?></strong></p>
+                                            <p><strong><?php echo $anuncio->titulo; ?></strong></p>
+                                            <p><?php echo truncate($anuncio->contenido, 300); ?></p>
+                                        </td>                                
+                                    </tr>
+                                    <?php
+                                endforeach;
+                            else:
+                                echo "<tr><td> <p> No hay novedades..</p></td></tr>";
+                            endif;
+                            ?>                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
     <div id="throbber" style="display:none;">
-        <img src="<?php echo assets_url('imgs/ajax-loader.gif'); ?>" />
+        <img src="<?php echo assets_url('imgs/loader_on_white_nb_big.gif'); ?>" />
     </div>
 </div>
