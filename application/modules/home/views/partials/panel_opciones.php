@@ -42,6 +42,9 @@
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/password') ? "active" : "" ?>">
                     <a href="<?php echo site_url('usuario/password') ?>"><i class="fa fa-lock"></i> Contraseña</a>
                 </li>
+                <li class="<?php echo ($this->uri->uri_string() == 'usuario/invitaciones') ? "active" : "" ?>">
+                    <a href="<?php echo site_url('usuario/invitaciones') ?>"><i class="fa fa-plus"></i> Invitaciónes</a>
+                </li>
 
                 <?php
                 $active = "";

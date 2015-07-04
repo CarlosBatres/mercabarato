@@ -8,7 +8,7 @@ class Cliente extends MY_Controller {
     public function __construct() {
         parent::__construct();
     }
-    
+
     /**
      * Crear un nuevo cliente     
      * POST
@@ -31,7 +31,18 @@ class Cliente extends MY_Controller {
                 $usuario->activo = 1;
                 $usuario->is_admin = 0;
 
-                $this->usuario_model->update($user_id,$usuario);
+                $this->usuario_model->update($user_id, $usuario);
+
+                $keywords = $this->input->post('keywords');
+                if ($keywords) {
+                    $keywords_text = '';
+                    foreach ($keywords as $key) {
+                        $keywords_text.=$key . ';';
+                    }
+                    $keywords_text = substr($keywords_text, 0, -1);
+                } else {
+                    $keywords_text = null;
+                }
 
                 $data = array(
                     "usuario_id" => $user_id,
@@ -43,34 +54,83 @@ class Cliente extends MY_Controller {
                     "direccion" => ($this->input->post('direccion') != '') ? $this->input->post('direccion') : null,
                     "telefono_fijo" => ($this->input->post('telefono_fijo') != '') ? $this->input->post('telefono_fijo') : null,
                     "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,
+                    "keyword" => $keywords_text
                 );
 
                 $this->cliente_model->insert($data);
-                                
+
                 $pais = $this->input->post('pais');
                 $provincia = $this->input->post('provincia');
                 $poblacion = $this->input->post('poblacion');
-                
-                if($pais!="0"){
-                    $data_localizacion=array(
-                        "usuario_id"=>$user_id,
-                        "pais_id"=>$pais,                        
-                        "provincia_id"=>($provincia=="0")?null:$provincia,
-                        "poblacion_id"=>($poblacion=="0")?null:$poblacion
+
+                if ($pais != "0") {
+                    $data_localizacion = array(
+                        "usuario_id" => $user_id,
+                        "pais_id" => $pais,
+                        "provincia_id" => ($provincia == "0") ? null : $provincia,
+                        "poblacion_id" => ($poblacion == "0") ? null : $poblacion
                     );
                     $this->localizacion_model->insert($data_localizacion);
                 }
-                
+
                 $this->authentication->login($username, $password);
                 redirect('');
             } else {
                 // There was an ERROR creating the user
                 redirect('');
             }
-        }else{
+        } else {
+            redirect('');
+        }
+    }
+
+    public function view_invitaciones() {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+
+            $invitaciones = $this->invitacion_model->get_invitaciones_pendientes($cliente->id);
+
+            $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+            $this->template->add_js('modules/home/invitaciones.js');
+            $this->template->load_view('home/cliente/invitaciones', array("html_options" => $html_options, "invitaciones" => $invitaciones));
+        } else {
+            redirect('');
+        }
+    }
+
+    public function aceptar_invitacion() {
+        if ($this->authentication->is_loggedin()) {
+            $formValues = $this->input->post();
+
+            if ($formValues !== false) {
+                $invitacion_id = $this->input->post('invitacion_id');
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $this->invitacion_model->aceptar_invitacion($invitacion_id, $cliente->id);
+                echo json_encode(array("success"=>true));
+            }
+        } else {
             redirect('');
         }
     }
     
-}
+    public function rechazar_invitacion() {
+        if ($this->authentication->is_loggedin()) {
+            $formValues = $this->input->post();
 
+            if ($formValues !== false) {
+                $invitacion_id = $this->input->post('invitacion_id');
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $this->invitacion_model->rechazar_invitacion($invitacion_id, $cliente->id);                
+                echo json_encode(array("success"=>true));
+            }
+        } else {
+            redirect('');
+        }
+    }
+
+}

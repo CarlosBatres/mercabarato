@@ -6,8 +6,25 @@ if (!defined('BASEPATH'))
 function vendedor_actividad_dropdown($pos = null) {
     $data = array(
         'No Especificada' => 'Actividad',
-        'Informatica' => 'Informatica',
-        'Seguros' => 'Seguros',
+        'Moda y Complementos' => 'Moda y Complementos',
+        'Salud, ortopedia y belleza' => 'Salud, ortopedia y belleza',
+        'Agropecuaria y Pesca'=> 'Agropecuaria y Pesca',
+        'Motor y Accesorios' => 'Motor y Accesorioas',
+        'Edición y Artes Gráficas' => 'Edición y Artes Gráficas',
+        'Alimentación y Bebidas' => 'Alimentación y Bebidas',
+        'Decoración' => 'Decoración',
+        'Química, Limpieza e Higiene' => 'Química, Limpieza e Higiene',
+        'Salud, Ortopedia y Belleza' => 'Salud, Ortopedia y Belleza',
+        'Regalos, Disfraces y Juegos' => 'Regalos, Disfraces y Juegos',
+        'Oficina, Lectura y Escuela' => 'Oficina, Lectura y Escuela',
+        'Maquinaria y Suministros Industriales' => 'Maquinaria y Suministros Industriales',
+        'Ocio, Deportes y Aficiones' => 'Ocio, Deportes y Aficiones',
+        'Puericultura y Premamá' => 'Puericultura y Premamá',
+        'Servicios Varios' => 'Servicios Varios',
+        'Turismo, Alojamiento y Hostelería' => 'Turismo, Alojamiento y Hostelería',
+        'Transporte' => 'Transporte',
+        'Seguros' => 'Seguros'
+        
     );
     $result = null;
 
@@ -157,4 +174,27 @@ function truncate($text, $chars = 25) {
     }
     
     return $text;
+}
+
+function keywords_listado() {
+    $data = array(       
+        'Construcción'=>'Construcción',        
+        'Moda' => 'Moda',
+        'Tecnologia' => 'Tecnologia',
+        'Salud y Belleza' => 'Salud y Belleza',
+        'Casa y Jardin' => 'Casa y Jardin',
+        'Inmobiliaria' => 'Inmobiliaria',
+        'Mascotas' => 'Mascotas',
+        'Limpieza e Higiene'=>'Limpieza e Higiene',
+        'Artes Graficas'=>'Artes Graficas',
+        'Servicios'=>'Servicios',
+        'Regalos'=>'Regalos',
+        'Disfraces'=>'Disfraces',
+        'Motor'=>'Motor',
+        'Alimentación'=>'Alimentación',
+        'Suministros Industriales'=>'Suministros Industriales',
+        'Musica'=>'Musica',
+        'Internet'=>'Internet'
+    );   
+    return $data;
 }

@@ -117,18 +117,22 @@ class Panel_vendedores extends MY_Controller {
 
                 if ($tipo == "mensual") {                    
                     $visitas=$this->visita_model->generar_estadisticas_visitas(date("Y-m-1"), date("Y-m-t"), $vendedor->get_vendedor_id(), false);                    
-                    if(!$visitas){
+                    if($visitas){
+                        $data=$visitas;
+                    } else{
                         $data="empty";
-                    } 
+                    }
                 } elseif ($tipo == "anual") {                    
                     $visitas=$this->visita_model->generar_estadisticas_visitas(date("Y-1-1"), date("Y-12-31"), $vendedor->get_vendedor_id(), true);                    
                     $data = array();
-                    if(!$visitas){
+                    if($visitas){
+                        $data=$visitas;
+                    } else{
                         $data="empty";
                     }
                 }
             }
-            echo json_encode($visitas);
+            echo json_encode($data);
         }
     }
 

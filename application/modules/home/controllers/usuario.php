@@ -17,7 +17,8 @@ class Usuario extends MY_Controller {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
             $this->template->add_js('modules/home/registro.js');
             $paises = $this->pais_model->get_all();
-            $data = array("paises" => $paises);
+            $keywords = keywords_listado();
+            $data = array("paises" => $paises ,"keywords"=>$keywords);
 
             $this->template->load_view('home/usuario/registro', $data);
         } else {
@@ -123,7 +124,7 @@ class Usuario extends MY_Controller {
                         $filename = $this->input->post('file_name');
                         $this->vendedor_model->cleanup_image($vendedor->id);
                     } else {
-                        $filename = null;                        
+                        $filename = null;
                     }
 
                     $data_vendedor = array(

@@ -19,7 +19,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#">
+                    <a href="<?php echo site_url('admin/usuarios')?>">
                         <div class="panel-footer">
                             <span class="pull-left">Ver Detalles</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -41,7 +41,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#">
+                    <a href="<?php echo site_url('admin/vendedores')?>">
                         <div class="panel-footer">
                             <span class="pull-left">Ver Detalles</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -63,7 +63,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#">
+                    <a href="<?php echo site_url('admin/productos')?>">
                         <div class="panel-footer">
                             <span class="pull-left">Ver Detalles</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -87,7 +87,7 @@
                     </div>
                     <a href="#">
                         <div class="panel-footer">
-                            <span class="pull-left">Ver Detalles</span>
+                            <span class="pull-left"></span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                             <div class="clearfix"></div>
                         </div>

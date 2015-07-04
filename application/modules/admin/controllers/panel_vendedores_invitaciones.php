@@ -142,8 +142,8 @@ class Panel_vendedores_invitaciones extends MY_Controller {
             if ($this->input->post('keywords') != "") {
                 $keywords = explode(",", $this->input->post('keywords'));
                 $params["keywords"] = $keywords;
-            }
-
+            }                                    
+            
             if ($this->input->post('tipo') == "invitaciones_pendientes") {
                 $alt_layout = true;
                 $params["incluir_invitaciones"] = true;
@@ -163,7 +163,8 @@ class Panel_vendedores_invitaciones extends MY_Controller {
                     $params["excluir_cliente_ids"] = $ids_array;
                 }
             }
-
+            
+            $params["vendedor_id"] = $this->identidad->get_vendedor_id();
             $params["es_vendedor"] = "0";
             $params["excluir_admins"] = true;
             $pagina = $this->input->post('pagina');

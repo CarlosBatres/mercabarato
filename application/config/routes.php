@@ -53,6 +53,7 @@ $route['usuario/afiliacion-paso2'] = 'home/vendedor/view_seleccionar_paquete';
 $route['usuario/afiliacion-final/(:num)'] = 'home/vendedor/submit_afiliacion/$1';
 $route['usuario/completado'] = 'home/vendedor/view_completado';
 $route['usuario/panel_vendedor'] = 'home/vendedor/ir_panel_vendedor';
+$route['usuario/invitaciones'] = 'home/cliente/view_invitaciones';
 
 $route['usuario/mis-paquetes'] = 'home/vendedor/mis_paquetes';
 $route['usuario/paquetes/comprar'] = 'home/vendedor/comprar_paquetes';

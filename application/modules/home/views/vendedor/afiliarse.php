@@ -31,7 +31,7 @@
                         <h3 class="text-uppercase">Datos del Vendedor</h3>
                     </div>
                     <p class="lead">Complete el formulario a continuación, esta informacion sera la que veran los clientes que visiten sus productos y su apartado personal.</p>                    
-                    <?php echo form_open('usuario/afiliacion/registrar','id="form_afiliarse"'); ?>                 
+                    <?php echo form_open('usuario/afiliacion/registrar', 'id="form_afiliarse"'); ?>                 
                     <div class="col-md-12">
                         <div class="row">
                             <div class="form-group">                                
@@ -82,7 +82,20 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="lead">Indica a continuación de manera general que tipos de productos vas a vender.</p>
+                            <?php foreach ($keywords as $keyword): ?>
+                                <div class="col-md-3">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="keywords[]" value="<?php echo $keyword ?>"><?php echo $keyword ?></label>
+                                    </div>
+                                </div> 
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
                     <div class="box-footer">
                         <div class="pull-left">
 

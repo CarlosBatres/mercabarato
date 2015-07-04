@@ -12,6 +12,7 @@ class Cliente_model extends MY_Model {
     }
 
     public function get_admin_search($params, $limit, $offset) {
+        
         $this->db->start_cache();
         $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.fecha_creado");
         $this->db->from($this->_table);
@@ -35,6 +36,9 @@ class Cliente_model extends MY_Model {
         }
         if (isset($params['excluir_admins'])) {
             $this->db->where('usuario.is_admin', "0");
+        }
+        if (isset($params['vendedor_id'])) {
+            $this->db->where('invitacion.vendedor_id', $params["vendedor_id"]);
         }
         if (isset($params['keywords'])) {
             foreach($params['keywords'] as $keyword){
