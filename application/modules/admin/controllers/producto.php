@@ -95,8 +95,7 @@ class Producto extends MY_Controller {
     public function borrar($id) {
         if ($this->input->is_ajax_request()) {
             $this->producto_resource_model->cleanup_resources($id);
-            $this->producto_model->delete($id);
-            redirect('admin/productos');
+            $this->producto_model->delete($id);           
         }
     }
 

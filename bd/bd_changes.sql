@@ -16,3 +16,19 @@ left join `poblacion` `pb` on((`pb`.`id` = `l`.`poblacion_id`)));
 
 ALTER TABLE `mercabarato_bd`.`vendedor` 
 ADD COLUMN `filename` VARCHAR(255) NULL DEFAULT NULL AFTER `keyword`;
+
+
+CREATE TABLE IF NOT EXISTS `mercabarato_bd`.`tarifa` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `producto_id` INT(10) UNSIGNED NOT NULL,  
+  `monto` FLOAT(10,2) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_tarifa_producto1_idx` (`producto_id` ASC),
+  CONSTRAINT `fk_tarifa_producto1`
+    FOREIGN KEY (`producto_id`)
+    REFERENCES `mercabarato_bd`.`producto` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;

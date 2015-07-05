@@ -47,7 +47,7 @@ class Cliente extends MY_Controller {
                 $data = array(
                     "usuario_id" => $user_id,
                     "nombres" => ($this->input->post('nombres') != '') ? $this->input->post('nombres') : null,
-                    "apellidos" => ($this->input->post('apellidos') != '') ? $this->input->post('apellidos') : null,
+                    "apellidos" => ($this->input->post('apellidos') != '') ? $this->input->post('apellidos') : '',
                     "sexo" => ($this->input->post('sexo') != 'X') ? $this->input->post('sexo') : null,
                     "fecha_nacimiento" => ($this->input->post('fecha_nacimiento') != '') ? date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))) : null,
                     "codigo_postal" => ($this->input->post('codigo_postal') != '') ? $this->input->post('codigo_postal') : null,
@@ -91,11 +91,11 @@ class Cliente extends MY_Controller {
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
 
-            $invitaciones = $this->invitacion_model->get_invitaciones_pendientes($cliente->id);
+            //$invitaciones = $this->invitacion_model->get_invitaciones_pendientes($cliente->id);
 
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
             $this->template->add_js('modules/home/invitaciones.js');
-            $this->template->load_view('home/cliente/invitaciones', array("html_options" => $html_options, "invitaciones" => $invitaciones));
+            $this->template->load_view('home/cliente/invitaciones', array("html_options" => $html_options));
         } else {
             redirect('');
         }
@@ -110,13 +110,13 @@ class Cliente extends MY_Controller {
                 $user_id = $this->authentication->read('identifier');
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                 $this->invitacion_model->aceptar_invitacion($invitacion_id, $cliente->id);
-                echo json_encode(array("success"=>true));
+                echo json_encode(array("success" => true));
             }
         } else {
             redirect('');
         }
     }
-    
+
     public function rechazar_invitacion() {
         if ($this->authentication->is_loggedin()) {
             $formValues = $this->input->post();
@@ -125,8 +125,83 @@ class Cliente extends MY_Controller {
                 $invitacion_id = $this->input->post('invitacion_id');
                 $user_id = $this->authentication->read('identifier');
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                $this->invitacion_model->rechazar_invitacion($invitacion_id, $cliente->id);                
-                echo json_encode(array("success"=>true));
+                $this->invitacion_model->rechazar_invitacion($invitacion_id, $cliente->id);
+                echo json_encode(array("success" => true));
+            }
+        } else {
+            redirect('');
+        }
+    }
+
+    public function ajax_get_listado_resultados() {
+        //$this->show_profiler();
+        $formValues = $this->input->post();
+        $user_id = $this->authentication->read('identifier');
+        $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+
+        $params = array();
+        if ($formValues !== false) {
+            $pagina = $this->input->post('pagina');
+
+            $params["pagina"] = $pagina;
+            $params["cliente_id"] = $cliente->id;
+            $params["from_vendedor"] = "1";
+            $params["estado"] = "1";
+
+            $limit = 5;
+            $offset = $limit * ($pagina - 1);
+            $invitaciones = $this->invitacion_model->get_site_search($params, $limit, $offset);
+            $flt = (float) ($invitaciones["total"] / $limit);
+            $ent = (int) ($invitaciones["total"] / $limit);
+            if ($flt > $ent || $flt < $ent) {
+                $paginas = $ent + 1;
+            } else {
+                $paginas = $ent;
+            }
+
+            if ($invitaciones["total"] == 0) {
+                $invitaciones["invitaciones"] = array();
+            }
+
+            $search_params = array(
+                "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+                "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+                "pagina" => $pagina,
+                "total_paginas" => $paginas,
+                "por_pagina" => $limit,
+                "total" => $invitaciones["total"],
+                "hasta" => ($pagina * $limit < $invitaciones["total"]) ? $pagina * $limit : $invitaciones["total"],
+                "desde" => (($pagina * $limit) - $limit) + 1);
+
+            $pagination = build_paginacion($search_params);
+            $data = array(
+                "invitaciones" => $invitaciones["invitaciones"],
+                "pagination" => $pagination);
+
+            $this->template->load_view('home/cliente/tabla_invitaciones', $data);
+        }
+    }
+
+    public function enviar_invitacion() {
+        if ($this->authentication->is_loggedin()) {
+            $formValues = $this->input->post();
+
+            if ($formValues !== false) {
+                $vendedor_id = $this->input->post('vendedor_id');                                
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+
+                $data = array(
+                    "vendedor_id" => $vendedor_id,
+                    "cliente_id" => $cliente->id,
+                    "titulo" => ($this->input->post('titulo') != '') ? $this->input->post('titulo') : null,                    
+                    "comentario"=>($this->input->post('mensaje') != '') ? $this->input->post('mensaje') : null, 
+                    "estado" => "1",
+                    "from_vendedor" => "0"
+                );
+
+                $this->invitacion_model->insert($data);
+                redirect('vendedores/ficha/'.$vendedor_id);
             }
         } else {
             redirect('');

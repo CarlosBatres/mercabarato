@@ -12,17 +12,12 @@ class Cliente_model extends MY_Model {
     }
 
     public function get_admin_search($params, $limit, $offset) {
-        
         $this->db->start_cache();
         $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.fecha_creado");
         $this->db->from($this->_table);
         $this->db->join("usuario", "cliente.usuario_id=usuario.id", 'INNER');
-        
-        if (isset($params['incluir_invitaciones'])) {            
-            $this->db->join("invitacion", "invitacion.cliente_id=cliente.id", 'INNER');
-        }        
 
-        if (isset($params['nombre'])) {            
+        if (isset($params['nombre'])) {
             $this->db->like('CONCAT(cliente.nombres," ",cliente.apellidos)', $params['nombre'], 'both');
         }
         if (isset($params['sexo'])) {
@@ -37,25 +32,17 @@ class Cliente_model extends MY_Model {
         if (isset($params['excluir_admins'])) {
             $this->db->where('usuario.is_admin', "0");
         }
-        if (isset($params['vendedor_id'])) {
-            $this->db->where('invitacion.vendedor_id', $params["vendedor_id"]);
-        }
+
         if (isset($params['keywords'])) {
-            foreach($params['keywords'] as $keyword){
+            foreach ($params['keywords'] as $keyword) {
                 $this->db->like('cliente.keyword', $keyword, 'both');
-            }            
-        }
-        
-        if (isset($params['excluir_cliente_ids'])) {            
-            $this->db->where_not_in('cliente.id', $params['excluir_cliente_ids']);                        
-        }        
-        if (isset($params['incluir_cliente_ids'])) {            
-            $this->db->where_in('cliente.id', $params['incluir_cliente_ids']);                        
-        }        
-        if (isset($params['incluir_invitaciones'])) {
-             $this->db->where('invitacion.estado', $params['invitacion::estado']);
+            }
         }
 
+        if (isset($params['excluir_cliente_ids'])) {
+            $this->db->where_not_in('cliente.id', $params['excluir_cliente_ids']);
+        }
+                
         $this->db->stop_cache();
         $count = $this->db->count_all_results();
 
@@ -71,7 +58,7 @@ class Cliente_model extends MY_Model {
         }
     }
 
-    public function es_vendedor($cliente_id) {        
+    public function es_vendedor($cliente_id) {
         $this->db->where('cliente_id', $cliente_id);
         $query = $this->db->get('vendedor');
         if ($query->num_rows() > 0) {

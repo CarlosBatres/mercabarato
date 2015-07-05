@@ -129,7 +129,8 @@ $autoload['model'] = array(
     'mensaje_model',
     'oferta_model',
     'solicitud_seguro_model',
-    'visita_model');
+    'visita_model',
+    'tarifa_model');
 
 
 /* End of file autoload.php */

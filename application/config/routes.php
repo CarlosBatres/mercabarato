@@ -82,10 +82,14 @@ $route['panel_vendedor/visitas/get_estadisticas'] = 'admin/panel_vendedores/get_
 
 $route['panel_vendedor/invitaciones/buscar'] = 'admin/panel_vendedores_invitaciones/buscador';
 $route['panel_vendedor/invitaciones/pendientes'] = 'admin/panel_vendedores_invitaciones/pendientes';
+$route['panel_vendedor/invitaciones/recibidas'] = 'admin/panel_vendedores_invitaciones/recibidas';
 $route['panel_vendedor/invitaciones/aceptadas'] = 'admin/panel_vendedores_invitaciones/aceptadas';
 $route['panel_vendedor/invitaciones/envio_email'] = 'admin/panel_vendedores_invitaciones/enviar_invitacion_email';
+$route['panel_vendedor/invitaciones/aceptar/(:num)'] = 'admin/panel_vendedores_invitaciones/aceptar_invitacion/$1'; 
+$route['panel_vendedor/invitaciones/rechazar/(:num)'] = 'admin/panel_vendedores_invitaciones/rechazar_invitacion/$1'; 
 $route['panel_vendedor/invitaciones/enviar/(:num)'] = 'admin/panel_vendedores_invitaciones/enviar_invitacion/$1'; 
 $route['panel_vendedor/invitaciones/ajax_get_listado_resultados'] = 'admin/panel_vendedores_invitaciones/ajax_get_listado_resultados';
+$route['panel_vendedor/invitaciones/ajax_get_listado_clientes'] = 'admin/panel_vendedores_invitaciones/ajax_get_listado_clientes';
 
 $route['panel_vendedor/producto/listado'] = 'admin/panel_vendedores_productos/listado';
 $route['panel_vendedor/producto/agregar'] = 'admin/panel_vendedores_productos/agregar';
@@ -104,6 +108,9 @@ $route['panel_vendedor/anuncio/habilitar/(:num)'] = 'admin/panel_vendedores_anun
 $route['panel_vendedor/anuncio/inhabilitar/(:num)'] = 'admin/panel_vendedores_anuncios/inhabilitar/$1'; 
 $route['panel_vendedor/anuncio/ajax_get_listado_resultados'] = 'admin/panel_vendedores_anuncios/ajax_get_listado_resultados'; 
 
+$route['panel_vendedor/tarifas'] = 'admin/panel_vendedores_tarifas/listado';
+$route['panel_vendedor/tarifas/modificar'] = 'admin/panel_vendedores_tarifas/modificar'; 
+$route['panel_vendedor/tarifas/ajax_get_listado_resultados'] = 'admin/panel_vendedores_tarifas/ajax_get_listado_resultados'; 
 
 /* Admin */
 $route['admin'] = 'admin/main';

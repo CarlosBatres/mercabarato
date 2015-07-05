@@ -48,10 +48,13 @@
                                 <a href="<?php echo site_url('panel_vendedor/invitaciones/aceptadas'); ?>"><i class="fa fa-fw fa-user"></i> Clientes Actuales</a>
                             </li>                                                        
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/invitaciones/pendientes'); ?>"><i class="fa fa-fw fa-clock-o"></i> Invitaciones Pendientes</a>
+                                <a href="<?php echo site_url('panel_vendedor/invitaciones/pendientes'); ?>"><i class="fa fa-fw fa-mail-forward"></i> Invitaciones Pendientes</a>
+                            </li>                             
+                            <li>
+                                <a href="<?php echo site_url('panel_vendedor/invitaciones/recibidas'); ?>"><i class="fa fa-fw fa-mail-reply"></i> Invitaciones Recibidas</a>
                             </li> 
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/invitaciones/envio_email'); ?>"><i class="fa fa-mail-forward fa-fw"></i> Enviar Invitacion a Email</a>
+                                <a href="<?php echo site_url('panel_vendedor/invitaciones/envio_email'); ?>"><i class="fa fa-fw fa-envelope-o"></i> Enviar Invitacion a Email</a>
                             </li>                            
                         </ul>                         
                     </li>
@@ -76,6 +79,9 @@
                                 <a href="<?php echo site_url('panel_vendedor/anuncio/listado'); ?>"><i class="fa fa-fw fa-calendar"></i> Mis anuncios</a>
                             </li>                            
                         </ul>                         
+                    </li>
+                    <li>
+                        <a href="<?php echo site_url('panel_vendedor/tarifas'); ?>"><i class="fa fa-fw fa-money"></i> Tarifas</a>
                     </li>
                     <li>
                         <a href="<?php echo site_url('panel_vendedor/regresar'); ?>"><i class="fa fa-fw fa-arrow-left"></i> Regresar al Sitio</a>

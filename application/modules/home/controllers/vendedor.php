@@ -63,13 +63,13 @@ class Vendedor extends MY_Controller {
                 "actividad" => $this->input->post('actividad'),
                 "sitio_web" => $this->input->post('sitio_web'),
                 "habilitado" => 0,
-                "keyword"=>$keywords_text    
+                "keyword" => $keywords_text
             );
 
             $data_cliente = array(
                 "direccion" => $this->input->post('direccion'),
                 "telefono_fijo" => $this->input->post('telefono_fijo'),
-                "telefono_movil" => $this->input->post('telefono_movil')                
+                "telefono_movil" => $this->input->post('telefono_movil')
             );
 
             $this->session->unset_userdata('afiliacion_cliente');
@@ -310,7 +310,15 @@ class Vendedor extends MY_Controller {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $this->template->add_js('modules/home/vendedores_listado.js');
         $paises = $this->pais_model->get_all();
-        $anuncios = $this->anuncio_model->get_ultimos_anuncios();
+        
+        if ($this->authentication->is_loggedin()) {           
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $anuncios = $this->anuncio_model->get_anuncios_para_cliente($cliente->id);            
+        }else{
+            $anuncios = $this->anuncio_model->get_ultimos_anuncios();
+        }  
+                
         if (!$anuncios) {
             $anuncios = array();
         }
@@ -403,11 +411,19 @@ class Vendedor extends MY_Controller {
 
         $vendedor_image = false;
 
+        if ($this->authentication->is_loggedin()) {
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $invitacion = $this->invitacion_model->get_by(array("cliente_id"=>$cliente->id,"vendedor_id"=>$vendedor->id));            
+        }else{
+            $invitacion=true;
+        }
 
         $data = array(
             "vendedor" => $vendedor,
             "vendedor_image" => $vendedor_image,
-            "localizacion" => $localizacion);
+            "localizacion" => $localizacion,
+            "invitacion" => $invitacion);
 
         $this->template->load_view('home/vendedores/ficha', $data);
     }
