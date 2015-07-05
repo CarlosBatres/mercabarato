@@ -17,7 +17,14 @@ class Producto extends MY_Controller {
         $precios = precios_options();
         $paises = $this->pais_model->get_all();
 
-        $anuncios = $this->anuncio_model->get_ultimos_anuncios();
+        if ($this->authentication->is_loggedin()) {
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $anuncios = $this->anuncio_model->get_anuncios_para_cliente($cliente->id);
+        } else {
+            $anuncios = $this->anuncio_model->get_ultimos_anuncios();
+        }
+
         if (!$anuncios) {
             $anuncios = array();
         }
@@ -73,8 +80,13 @@ class Producto extends MY_Controller {
                 $params["pais"] = $this->input->post('pais');
             }
 
-            $params["habilitado"] = "1";
+            if ($this->authentication->is_loggedin()) {
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $params["cliente_id"] = $cliente->id;
+            }
 
+            $params["habilitado"] = "1";
 
             if ($this->input->post('alt_layout')) {
                 $alt_layout = true;

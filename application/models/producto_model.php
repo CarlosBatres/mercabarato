@@ -275,5 +275,39 @@ class Producto_model extends MY_Model {
     public function habilitar($producto_id){
         $this->update($producto_id, array("habilitado"=>"1"));
     }
+    
+    public function get_tarifas_search($params, $limit, $offset) {
+        $this->db->start_cache();
+        $this->db->select("producto.*,categoria.nombre AS Categoria,tarifa.monto as precio_tarifa");
+        $this->db->from($this->_table);
+        $this->db->join("categoria", "categoria.id=producto.categoria_id", 'INNER');
+        $this->db->join("vendedor", "vendedor.id=producto.vendedor_id", 'INNER');
+        $this->db->join("tarifa", "tarifa.producto_id=producto.id", 'LEFT');
+
+        if (isset($params['nombre'])) {
+            $this->db->like('producto.nombre', $params['nombre'], 'both');
+        }
+        if (isset($params['categoria_id'])) {
+            $this->db->where('producto.categoria_id', $params['categoria_id']);
+        }        
+        if (isset($params['vendedor_id'])) {
+            $this->db->where('vendedor.id', $params['vendedor_id']);
+        }
+
+
+        $this->db->stop_cache();
+        $count = $this->db->count_all_results();
+
+        if ($count > 0) {
+            $this->db->order_by('id', 'asc');
+            $this->db->limit($limit, $offset);
+            $productos = $this->db->get()->result();
+            $this->db->flush_cache();
+            return array("productos" => $productos, "total" => $count);
+        } else {
+            $this->db->flush_cache();
+            return array("total" => 0);
+        }
+    }
 
 }

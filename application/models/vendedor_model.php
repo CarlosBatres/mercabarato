@@ -259,10 +259,13 @@ class Vendedor_model extends MY_Model {
         $this->db->where('vendedor.habilitado', '1'); // Permitir vendedores no habilitados ??
 
         if (isset($params['nombre'])) {
-            $this->db->like('vendedor.nombre', $params['nombre'], 'both');
+            $this->db->or_like('vendedor.nombre', $params['nombre'], 'both');
         }
         if (isset($params['descripcion'])) {
             $this->db->or_like('vendedor.descripcion', $params['descripcion'], 'both');
+        }
+        if (isset($params['keyword'])) {
+            $this->db->or_like('vendedor.keyword', $params['keyword'], 'both');
         }
 
         if (isset($params['poblacion'])) {

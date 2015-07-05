@@ -26,7 +26,7 @@ class Anuncio_model extends MY_Model {
             $this->db->like('usuario.email', $params['email'], 'both');
         }
         if (isset($params['vendedor'])) {
-            $this->db->like('vendedor.nombre', $params['vendedor'],'both');
+            $this->db->like('vendedor.nombre', $params['vendedor'], 'both');
         }
         if (isset($params['vendedor_id'])) {
             $this->db->where('anuncio.vendedor_id', $params['vendedor_id']);
@@ -63,12 +63,12 @@ class Anuncio_model extends MY_Model {
         }
     }
 
-    public function get_ultimos_anuncios() {
+    public function get_ultimos_anuncios($count = 5) {
         $this->db->select("anuncio.*");
         $this->db->from($this->_table);
         $this->db->where("habilitado", "1");
         $this->db->order_by("fecha_publicacion", "desc");
-        $this->db->limit(5,0);
+        $this->db->limit($count, 0);
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {
@@ -86,6 +86,7 @@ class Anuncio_model extends MY_Model {
             return FALSE;
         }
     }
+
     /**
      * 
      * @param type $vendedor_id
@@ -126,13 +127,53 @@ class Anuncio_model extends MY_Model {
         $this->db->update("anuncio", $data);
         return $this->db->affected_rows();
     }
-    
-    public function inhabilitar($anuncio_id){
-        $this->update($anuncio_id, array("habilitado"=>"0"));
+
+    public function inhabilitar($anuncio_id) {
+        $this->update($anuncio_id, array("habilitado" => "0"));
     }
-    
-    public function habilitar($anuncio_id){
-        $this->update($anuncio_id, array("habilitado"=>"1"));
+
+    public function habilitar($anuncio_id) {
+        $this->update($anuncio_id, array("habilitado" => "1"));
+    }
+
+    public function get_anuncios_para_cliente($cliente_id) {
+        $this->db->select("anuncio.*");
+        $this->db->from($this->_table);
+        $this->db->join("vendedor", "vendedor.id=anuncio.vendedor_id", 'INNER');
+        $this->db->join("invitacion", "invitacion.vendedor_id=anuncio.vendedor_id AND invitacion.estado='2' AND invitacion.cliente_id=" . $cliente_id, 'INNER');
+        $this->db->where("anuncio.habilitado", "1");        
+        $this->db->order_by("anuncio.fecha_publicacion", "desc");
+
+        $this->db->limit(5, 0);
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            $anuncios = $result->result();
+            if ($result->num_rows() < 5) {
+                $ids = array();
+                foreach ($anuncios as $anuncio) {
+                    $ids[] = $anuncio->id;
+                }
+
+                $diff = 5 - $result->num_rows();
+
+                $this->db->select("anuncio.*");
+                $this->db->from($this->_table);
+                $this->db->where("habilitado", "1");
+                $this->db->where_not_in("anuncio.id", $ids);
+                $this->db->order_by("fecha_publicacion", "desc");
+                $this->db->limit($diff, 0);
+                $query = $this->db->get();
+
+                if ($query->num_rows() > 0) {
+                    $anuncios_extra = $query->result();
+                    $anuncios = array_merge($anuncios,$anuncios_extra);
+                }
+            }
+            return $anuncios;
+        } else {
+            return $this->get_ultimos_anuncios(5);
+        }
     }
 
 }

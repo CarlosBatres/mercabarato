@@ -12,7 +12,7 @@
     <div class="row" id="productMain">
         <div class="col-sm-4">
             <div id="mainImage">
-                <?php if ($vendedor->filename!=null): ?>
+                <?php if ($vendedor->filename != null): ?>
                     <img src="<?php echo assets_url($this->config->item('vendedores_img_path')) . '/' . $vendedor->filename ?>" alt="" class="img-responsive center-block">
                 <?php else: ?>   
                     <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="img-responsive center-block">
@@ -24,11 +24,19 @@
             <div class="box">
                 <?php if ($vendedor->descripcion != ""): ?> 
                     <p class="lead"><?php echo $vendedor->descripcion ?></p>                                    
-                <?php else:?>    
+                <?php else: ?>    
                     <p>No hay información adicional disponible.</p>
-                <?php endif;?>
-                    <br>
-                    <hr>
+                <?php endif; ?>
+                <?php if (!$invitacion): ?>
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-template-primary" data-toggle="modal" data-target="#myModal"> Solicitar Invitación</button>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <br>
+                <hr>
                 <?php if ($vendedor->sitio_web != ""): ?>                        
                     <p class="text-left"><strong><a href="http://<?php echo $vendedor->sitio_web ?>"><?php echo $vendedor->sitio_web ?></a></strong></p>                    
                 <?php endif; ?>
@@ -61,5 +69,41 @@
             <a href="#" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
             <a href="#" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
         </p>
+    </div>
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Enviar Solicitud de Invitación</h4>
+            </div>
+            <div class="modal-body">
+                <?php echo form_open('home/cliente/enviar_invitacion'); ?>
+                <div class="row">  
+                    <div class="col-md-12">
+                        <div class="form-group">                                
+                            <label>Titulo</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="titulo">                                
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Mensaje</label>
+                            <textarea class="form-control" name="mensaje" rows="5" cols="20"></textarea>                    
+                        </div>                                                        
+                    </div>
+                </div>
+                <input type="hidden" name="vendedor_id" value="<?php echo $vendedor->id ?>">                                
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-template-main">Enviar</button>
+                <button type="button" class="btn btn-template-main" data-dismiss="modal">Cancelar</button>
+                <?php echo form_close(); ?>
+            </div>
+        </div>
+
     </div>
 </div>

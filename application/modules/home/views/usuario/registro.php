@@ -142,13 +142,32 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>                 
-                        <div class="form-group">                        
-                            <select name="poblacion" class="form-control">
-                                <option value="0">Población</option>                        
-                            </select>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">                        
+                                    <select name="poblacion" class="form-control">
+                                        <option value="0">Población</option>                        
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <br>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="lead">Indica a continuación lo que te interesaria comprar.</p>
+                                <?php foreach ($keywords as $keyword): ?>
+                                    <div class="col-md-3">
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" name="keywords[]" value="<?php echo $keyword ?>"><?php echo $keyword ?></label>
+                                        </div>
+                                    </div> 
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+
+                        <br>
+                        <hr>
                         <div class="row">
                             <div class="col-md-12 text-center">
                                 <p>Al crear una cuenta confirmas que has leído y aceptas los <a href="<?php echo site_url("") ?>">Términos del Servicio y Condiciones de Uso</a></p>

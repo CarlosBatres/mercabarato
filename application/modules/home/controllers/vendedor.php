@@ -17,6 +17,7 @@ class Vendedor extends MY_Controller {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $keywords = keywords_listado();
 
             if (!$this->cliente_model->es_vendedor($cliente->id)) {
                 $this->session->unset_userdata('afiliacion_cliente');
@@ -25,7 +26,7 @@ class Vendedor extends MY_Controller {
                 $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
                 $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
                 $this->template->add_js('modules/home/perfil.js');
-                $this->template->load_view('home/vendedor/afiliarse', array("cliente" => $cliente, "html_options" => $html_options));
+                $this->template->load_view('home/vendedor/afiliarse', array("cliente" => $cliente, "html_options" => $html_options, "keywords" => $keywords));
             } else {
                 redirect('usuario/perfil');
             }
@@ -44,13 +45,25 @@ class Vendedor extends MY_Controller {
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
+            $keywords = $this->input->post('keywords');
+            if ($keywords) {
+                $keywords_text = '';
+                foreach ($keywords as $key) {
+                    $keywords_text.=$key . ';';
+                }
+                $keywords_text = substr($keywords_text, 0, -1);
+            } else {
+                $keywords_text = null;
+            }
+
             $data = array(
                 "cliente_id" => $cliente->id,
                 "nombre" => $this->input->post('nombre_empresa'),
                 "descripcion" => $this->input->post('descripcion'),
                 "actividad" => $this->input->post('actividad'),
                 "sitio_web" => $this->input->post('sitio_web'),
-                "habilitado" => 0
+                "habilitado" => 0,
+                "keyword" => $keywords_text
             );
 
             $data_cliente = array(
@@ -289,22 +302,30 @@ class Vendedor extends MY_Controller {
         }
     }
 
-    /*     
+    /*
      * 
      */
 
     public function view_buscador() {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $this->template->add_js('modules/home/vendedores_listado.js');
-        $paises=$this->pais_model->get_all();
-        $anuncios = $this->anuncio_model->get_ultimos_anuncios();
+        $paises = $this->pais_model->get_all();
+        
+        if ($this->authentication->is_loggedin()) {           
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $anuncios = $this->anuncio_model->get_anuncios_para_cliente($cliente->id);            
+        }else{
+            $anuncios = $this->anuncio_model->get_ultimos_anuncios();
+        }  
+                
         if (!$anuncios) {
             $anuncios = array();
         }
-        
-        $data=array("paises"=>$paises,"anuncios"=>$anuncios);
-        
-        $this->template->load_view('home/vendedores/listado',$data);
+
+        $data = array("paises" => $paises, "anuncios" => $anuncios);
+
+        $this->template->load_view('home/vendedores/listado', $data);
     }
 
     /**
@@ -319,15 +340,16 @@ class Vendedor extends MY_Controller {
             if ($this->input->post('search_query') != "") {
                 $params["nombre"] = $this->input->post('search_query');
                 $params["descripcion"] = $this->input->post('search_query');
+                $params["keyword"] = $this->input->post('search_query');
             }
             if ($this->input->post('pais') != "0") {
-                $params["pais"] = $this->input->post('pais');                
+                $params["pais"] = $this->input->post('pais');
             }
             if ($this->input->post('provincia') != "0") {
-                $params["provincia"] = $this->input->post('provincia');                
+                $params["provincia"] = $this->input->post('provincia');
             }
             if ($this->input->post('poblacion') != "0") {
-                $params["poblacion"] = $this->input->post('poblacion');                
+                $params["poblacion"] = $this->input->post('poblacion');
             }
 
             $pagina = $this->input->post('pagina');
@@ -369,38 +391,46 @@ class Vendedor extends MY_Controller {
         $this->template->load_view('home/vendedores/tabla_resultados', $data);
     }
 
-    
-     public function ver_vendedor($id) {
+    public function ver_vendedor($id) {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $vendedor = $this->vendedor_model->get_vendedor($id);
-        $localizacion = $this->localizacion_model->get_by("usuario_id",$vendedor->usuario_id);              
-        
-        if($localizacion->pais_id!=null){
-            $res=$this->pais_model->get($localizacion->pais_id);
-            $localizacion->pais=$res->nombre;
+        $localizacion = $this->localizacion_model->get_by("usuario_id", $vendedor->usuario_id);
+
+        if ($localizacion->pais_id != null) {
+            $res = $this->pais_model->get($localizacion->pais_id);
+            $localizacion->pais = $res->nombre;
         }
-        if($localizacion->provincia_id!=null){
-            $res=$this->provincia_model->get($localizacion->provincia_id);
-            $localizacion->provincia=$res->nombre;
+        if ($localizacion->provincia_id != null) {
+            $res = $this->provincia_model->get($localizacion->provincia_id);
+            $localizacion->provincia = $res->nombre;
         }
-        if($localizacion->poblacion_id!=null){
-            $res=$this->poblacion_model->get($localizacion->poblacion_id);
-            $localizacion->poblacion=$res->nombre;
+        if ($localizacion->poblacion_id != null) {
+            $res = $this->poblacion_model->get($localizacion->poblacion_id);
+            $localizacion->poblacion = $res->nombre;
         }
-        
+
         $vendedor_image = false;
-        
-        
+
+        if ($this->authentication->is_loggedin()) {
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $invitacion = $this->invitacion_model->get_by(array("cliente_id"=>$cliente->id,"vendedor_id"=>$vendedor->id));            
+        }else{
+            $invitacion=true;
+        }
+
         $data = array(
             "vendedor" => $vendedor,
-            "vendedor_image"=>$vendedor_image,
-            "localizacion" => $localizacion);        
-        
+            "vendedor_image" => $vendedor_image,
+            "localizacion" => $localizacion,
+            "invitacion" => $invitacion);
+
         $this->template->load_view('home/vendedores/ficha', $data);
     }
-    
-    public function upload_image(){        
+
+    public function upload_image() {
         $this->load->config('upload', TRUE);
-        $this->load->library('UploadHandler', $this->config->item('vendedor', 'upload'));                        
+        $this->load->library('UploadHandler', $this->config->item('vendedor', 'upload'));
     }
+
 }
