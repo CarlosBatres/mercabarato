@@ -70,6 +70,8 @@ $route['vendedores/ficha/(:any)'] = 'home/vendedor/ver_vendedor/$1';
 $route['productos/ficha/(:any)'] = 'home/producto/ver_producto/$1';
 $route['productos/buscar/(:any)'] = 'home/producto/buscar_producto/$1';
 
+$route['seguros'] = 'home/seguro/view_seguros';
+
 /* Apartado para vendedores */
  
 $route['panel_vendedor'] = 'admin/panel_vendedores/resumen';
