@@ -163,7 +163,7 @@ class Producto extends MY_Controller {
             foreach ($categorias as $categoria) {
                 if (isset($categoria['subcategorias'])) {
                     $html.='<li class="seleccion_categoria">';
-                    $html.='<a href="" data-id="' . $categoria['id'] . '">' . mb_convert_case(strtolower($categoria['nombre']), MB_CASE_TITLE, "UTF-8");
+                    $html.='<a href="" data-id="' . $categoria['id'] . '">' . fix_category_text($categoria['nombre']);
                     if ($categoria['padre_id'] == '0') {
                         $html.='<span class="caret arrow"></span></a>';
                     } else {
@@ -176,7 +176,7 @@ class Producto extends MY_Controller {
                     $html.='</ul>';
                 } else {
                     $html.='<li class="seleccion_categoria final">';
-                    $html.='<a href="" data-id="' . $categoria['id'] . '">' . mb_convert_case(strtolower($categoria['nombre']), MB_CASE_TITLE, "UTF-8");
+                    $html.='<a href="" data-id="' . $categoria['id'] . '">' . fix_category_text($categoria['nombre']);
                     $html.='</a>';
                 }
                 $html.='</li>';

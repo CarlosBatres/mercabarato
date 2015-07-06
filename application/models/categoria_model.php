@@ -33,7 +33,7 @@ class Categoria_model extends MY_Model {
         $count = $this->db->count_all_results();
 
         if ($count > 0) {
-            $this->db->order_by('categoria.nombre', 'asc');
+            $this->db->order_by('categoria.id', 'asc');
             $this->db->limit($limit, $offset);
             $categorias = $this->db->get()->result();
             $this->db->flush_cache();

@@ -8,7 +8,7 @@ function vendedor_actividad_dropdown($pos = null) {
         'No Especificada' => 'Actividad',
         'Moda y Complementos' => 'Moda y Complementos',
         'Salud, ortopedia y belleza' => 'Salud, ortopedia y belleza',
-        'Agropecuaria y Pesca'=> 'Agropecuaria y Pesca',
+        'Agropecuaria y Pesca' => 'Agropecuaria y Pesca',
         'Motor y Accesorios' => 'Motor y Accesorioas',
         'Edición y Artes Gráficas' => 'Edición y Artes Gráficas',
         'Alimentación y Bebidas' => 'Alimentación y Bebidas',
@@ -24,7 +24,6 @@ function vendedor_actividad_dropdown($pos = null) {
         'Turismo, Alojamiento y Hostelería' => 'Turismo, Alojamiento y Hostelería',
         'Transporte' => 'Transporte',
         'Seguros' => 'Seguros'
-        
     );
     $result = null;
 
@@ -160,41 +159,56 @@ function time_elapsed_string($datetime, $full = false) {
     return $string ? 'Hace ' . implode(', ', $string) : 'Este momento';
 }
 
-function truncate($text, $chars = 25) {        
-    $flag=false;
-    if(strlen($text)>$chars){    
-        $flag=true;
-    }    
-    $text = $text." ";
-    $text = substr($text,0,$chars);
-    $text = substr($text,0,strrpos($text,' '));
-    
-    if($flag){
-        $text = $text."...";
+function truncate($text, $chars = 25) {
+    $flag = false;
+    if (strlen($text) > $chars) {
+        $flag = true;
     }
-    
+    $text = $text . " ";
+    $text = substr($text, 0, $chars);
+    $text = substr($text, 0, strrpos($text, ' '));
+
+    if ($flag) {
+        $text = $text . "...";
+    }
+
     return $text;
 }
 
 function keywords_listado() {
-    $data = array(       
-        'Construcción'=>'Construcción',        
+    $data = array(
+        'Construcción' => 'Construcción',
         'Moda' => 'Moda',
         'Tecnologia' => 'Tecnologia',
         'Salud y Belleza' => 'Salud y Belleza',
         'Casa y Jardin' => 'Casa y Jardin',
         'Inmobiliaria' => 'Inmobiliaria',
         'Mascotas' => 'Mascotas',
-        'Limpieza e Higiene'=>'Limpieza e Higiene',
-        'Artes Graficas'=>'Artes Graficas',
-        'Servicios'=>'Servicios',
-        'Regalos'=>'Regalos',
-        'Disfraces'=>'Disfraces',
-        'Motor'=>'Motor',
-        'Alimentación'=>'Alimentación',
-        'Suministros Industriales'=>'Suministros Industriales',
-        'Musica'=>'Musica',
-        'Internet'=>'Internet'
-    );   
+        'Limpieza e Higiene' => 'Limpieza e Higiene',
+        'Artes Graficas' => 'Artes Graficas',
+        'Servicios' => 'Servicios',
+        'Regalos' => 'Regalos',
+        'Disfraces' => 'Disfraces',
+        'Motor' => 'Motor',
+        'Alimentación' => 'Alimentación',
+        'Suministros Industriales' => 'Suministros Industriales',
+        'Musica' => 'Musica',
+        'Internet' => 'Internet'
+    );
     return $data;
+}
+
+function fix_category_text($text) {
+    $array = explode(" ", $text);
+    $final = "";
+    foreach ($array as $word) {
+        if (strlen($word) > 1) {
+            $final.= mb_convert_case(strtolower($word), MB_CASE_TITLE, "UTF-8");
+        } else {
+            $final.= $word;
+        }
+        $final.=" ";
+    }
+    
+    return trim($final, " ");
 }

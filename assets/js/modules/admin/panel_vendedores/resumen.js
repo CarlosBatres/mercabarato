@@ -14,12 +14,13 @@ function getVisitasDataMensual() {
             if (data === "empty") {
                 $('#morris_mensual').html("No se encontraron resultados..");
             } else {
-                Morris.Line({                    
+                Morris.Line({
                     element: 'morris_mensual',
                     data: data,
                     xkey: 'date',
                     ykeys: ['value'],
-                    labels: ['Visitas']
+                    labels: ['Visitas'],
+                    yLabelFormat: function(y){return y !== Math.round(y)?'':y;}
                 });
             }
 
@@ -43,10 +44,11 @@ function getVisitasDataAnual() {
                     data: data,
                     xkey: 'month',
                     ykeys: ['value'],
-                    labels: ['Visitas'],
+                    labels: ['Visitas'],                    
                     xLabelFormat: function(x) {
                         return months[x.getMonth()];
-                    }
+                    },
+                    yLabelFormat: function(y){return y !== Math.round(y)?'':y;}
                 });
             }
         }

@@ -26,6 +26,6 @@ class Main extends MY_Controller {
     public function acceso_invalido(){
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $this->template->load_view('home/acceso_invalido');
-    }
+    }        
 
 }

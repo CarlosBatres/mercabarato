@@ -20,8 +20,8 @@
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/paquetes/comprar') ? "active" : "" ?>">
                     <a href="<?php echo site_url('usuario/paquetes/comprar') ?>"><i class="fa fa-money"></i> Adquirir Paquetes</a>
                 </li>                
-                <li class="<?php echo ($this->uri->uri_string() == 'usuario/panel_vendedor') ? "active" : "" ?>">
-                    <a href="<?php echo site_url('usuario/panel_vendedor') ?>"><i class="fa fa-cogs"></i> Ir a tu pagina de control</a>
+                <li class="<?php echo ($this->uri->uri_string() == 'panel_vendedor') ? "active" : "" ?>">
+                    <a href="<?php echo site_url('panel_vendedor') ?>"><i class="fa fa-cogs"></i> Manejar tus Productos</a>
                 </li>                                
             </ul>
         </div>
