@@ -1,15 +1,14 @@
 $(document).ready(function() {
     updateResultados();
 
-    $('#listado-item').on('submit', function(e) {
+    $('#listado-items').on('submit', function(e) {
         e.preventDefault();
         var form = $(this);
         $.ajax({
             type: "POST",
-            url: SITE_URL +'panel_vendedor/tarifas/ajax_get_productos',
+            url: SITE_URL +'panel_vendedor/tarifas/ajax_get_clientes',
             data: form.serialize(),            
-            complete: function() {
-                $('#myModal').modal('hide');
+            complete: function() {                
                 updateResultados();           
             }
         });        
@@ -17,7 +16,7 @@ $(document).ready(function() {
 });
 
 function updateResultados() {
-    var form = $('#listado-item');
+    var form = $('#listado-items');
     $('#tabla-resultados').html('<br><br><br>');
     $('#tabla-resultados').block({
         message: '<h4>Procesando espere un momento..</h4>',
@@ -25,7 +24,7 @@ function updateResultados() {
     });
     $.ajax({
         type: "POST",
-        url: SITE_URL + 'panel_vendedor/tarifas/ajax_get_productos',
+        url: SITE_URL + 'panel_vendedor/tarifas/ajax_get_clientes',
         data: form.serialize(),
         dataType: "html",
         success: function(response) {

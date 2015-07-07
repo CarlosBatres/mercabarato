@@ -130,6 +130,7 @@ class Panel_vendedores_anuncios extends MY_Controller {
             } else {                
                 $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
             }
+            echo json_encode(array("success"=>true));
         } else {
             redirect('404');
         }
@@ -168,6 +169,18 @@ class Panel_vendedores_anuncios extends MY_Controller {
         if ($anuncios_array["total"] == 0) {
             $anuncios_array["anuncios"] = array();            
         }
+        
+        $paquete_en_curso=$this->vendedor_model->get_paquete_en_curso($vendedor->get_vendedor_id());
+        $ilimitado=false;
+        $limite_anuncios=0;
+        if($paquete_en_curso){
+            if($paquete_en_curso->limite_anuncios==-1){
+                $ilimitado=true;
+            }else{
+                $limite_anuncios=$paquete_en_curso->limite_anuncios;
+            }
+        }
+        
         $search_params=array(
                 "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
                 "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
@@ -181,7 +194,10 @@ class Panel_vendedores_anuncios extends MY_Controller {
         
         $data = array(
             "anuncios" => $anuncios_array["anuncios"],
-            "pagination"=>$pagination);
+            "pagination"=>$pagination,
+            "anuncios_total"=>$anuncios_array["total"],
+            "ilimitado"=>$ilimitado,
+            "limite_anuncios"=>$limite_anuncios);
 
         $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_tabla_resultados', $data);
     }

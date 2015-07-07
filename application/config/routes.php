@@ -110,9 +110,10 @@ $route['panel_vendedor/anuncio/habilitar/(:num)'] = 'admin/panel_vendedores_anun
 $route['panel_vendedor/anuncio/inhabilitar/(:num)'] = 'admin/panel_vendedores_anuncios/inhabilitar/$1'; 
 $route['panel_vendedor/anuncio/ajax_get_listado_resultados'] = 'admin/panel_vendedores_anuncios/ajax_get_listado_resultados'; 
 
-$route['panel_vendedor/tarifas'] = 'admin/panel_vendedores_tarifas/listado';
-$route['panel_vendedor/tarifas/modificar'] = 'admin/panel_vendedores_tarifas/modificar'; 
-$route['panel_vendedor/tarifas/ajax_get_listado_resultados'] = 'admin/panel_vendedores_tarifas/ajax_get_listado_resultados'; 
+$route['panel_vendedor/tarifas/nueva'] = 'admin/panel_vendedores_tarifas/nueva_tarifa_paso1';
+$route['panel_vendedor/tarifas/producto/(:num)'] = 'admin/panel_vendedores_tarifas/nueva_tarifa_producto/$1'; 
+$route['panel_vendedor/tarifas/ajax_get_productos'] = 'admin/panel_vendedores_tarifas/ajax_get_productos'; 
+$route['panel_vendedor/tarifas/ajax_get_clientes'] = 'admin/panel_vendedores_tarifas/ajax_get_invitados'; 
 
 /* Admin */
 $route['admin'] = 'admin/main';

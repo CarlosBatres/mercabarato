@@ -81,8 +81,13 @@
                         </ul>                         
                     </li>
                     <li>
-                        <a href="<?php echo site_url('panel_vendedor/tarifas'); ?>"><i class="fa fa-fw fa-money"></i> Tarifas</a>
-                    </li>
+                        <a href="#"><i class="fa fa-money fa-fw"></i> Mis Tarifas<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo site_url('panel_vendedor/tarifas/nueva'); ?>"><i class="fa fa-plus fa-fw"></i> Nueva Tarifa</a>
+                            </li>                                                        
+                        </ul>                         
+                    </li>                    
                     <li>
                         <a href="<?php echo site_url('panel_vendedor/regresar'); ?>"><i class="fa fa-fw fa-arrow-left"></i> Regresar al Sitio</a>
                     </li> 

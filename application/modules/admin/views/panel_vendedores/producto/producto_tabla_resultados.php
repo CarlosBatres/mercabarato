@@ -6,17 +6,28 @@
 
     <div class="table-responsive">
         <?php if ($this->session->flashdata('success')) { ?>
-                <div class="alert alert-success"> 
-                    <a class="close" data-dismiss="alert">×</a>
-                    <?= $this->session->flashdata('success') ?> 
-                </div>
-            <?php } ?>   
-            <?php if ($this->session->flashdata('error')) { ?>
-                <div class="alert alert-danger"> 
-                    <a class="close" data-dismiss="alert">×</a>
-                    <?= $this->session->flashdata('error') ?> 
-                </div>
-            <?php } ?>
+            <div class="alert alert-success"> 
+                <a class="close" data-dismiss="alert">×</a>
+                <?= $this->session->flashdata('success') ?> 
+            </div>
+        <?php } ?>   
+        <?php if ($this->session->flashdata('error')) { ?>
+            <div class="alert alert-danger"> 
+                <a class="close" data-dismiss="alert">×</a>
+                <?= $this->session->flashdata('error') ?> 
+            </div>
+        <?php } ?>
+        
+        <?php if ($ilimitado): ?>
+            <div class="alert alert-info">                 
+                <p> Puedes insertar productos sin limites</p>
+            </div>
+        <?php else:?>
+            <div class="alert alert-info">                 
+                <p> Puedes insertar <?php echo $limite_productos-$productos_total?> productos mas de un maximo de <?php echo $limite_productos?> productos.</p>
+            </div>
+        <?php endif; ?>
+
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>                

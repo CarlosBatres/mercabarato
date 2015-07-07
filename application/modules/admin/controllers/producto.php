@@ -93,8 +93,7 @@ class Producto extends MY_Controller {
      * @param type $id
      */
     public function borrar($id) {
-        if ($this->input->is_ajax_request()) {
-            $this->producto_resource_model->cleanup_resources($id);
+        if ($this->input->is_ajax_request()) {            
             $this->producto_model->delete($id);           
         }
     }
