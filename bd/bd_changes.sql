@@ -2,31 +2,41 @@
 -- Vistra productos_localizacion
 --------------------------------
 
-create view `productos_localizacion` 
-AS select `p`.`id` AS `producto_id`,`v`.`id` AS `vendedor_id`,`pa`.`id` AS `pais_id`,`pr`.`id` AS `provincia_id`,`pb`.`id` AS `poblacion_id` 
-from (((((((`producto` `p` join `vendedor` `v` on((`v`.`id` = `p`.`vendedor_id`))) 
-join `cliente` `c` on((`c`.`id` = `v`.`cliente_id`))) 
-join `usuario` `u` on((`u`.`id` = `c`.`usuario_id`))) 
-left join `localizacion` `l` on((`l`.`usuario_id` = `u`.`id`))) 
-left join `pais` `pa` on((`pa`.`id` = `l`.`pais_id`))) 
-left join `provincia` `pr` on((`pr`.`id` = `l`.`provincia_id`))) 
-left join `poblacion` `pb` on((`pb`.`id` = `l`.`poblacion_id`)));
-
-
-
-ALTER TABLE `mercabarato_bd`.`vendedor` 
-ADD COLUMN `filename` VARCHAR(255) NULL DEFAULT NULL AFTER `keyword`;
-
+ALTER TABLE `mercabarato_bd`.`grupo` 
+DROP COLUMN `identificacion`;
 
 CREATE TABLE IF NOT EXISTS `mercabarato_bd`.`tarifa` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `producto_id` INT(10) UNSIGNED NOT NULL,  
-  `monto` FLOAT(10,2) NULL DEFAULT NULL,
+  `producto_id` INT(10) UNSIGNED NOT NULL,
+  `nuevo_costo` FLOAT(10,2) NOT NULL,
+  `porcentaje` INT(11) NULL DEFAULT NULL,
+  `comentario` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_tarifa_producto1_idx` (`producto_id` ASC),
   CONSTRAINT `fk_tarifa_producto1`
     FOREIGN KEY (`producto_id`)
     REFERENCES `mercabarato_bd`.`producto` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
+
+CREATE TABLE IF NOT EXISTS `mercabarato_bd`.`grupo_tarifa` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `tarifa_id` INT(10) UNSIGNED NOT NULL,
+  `grupo_id` INT(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_grupo_tarifa_tarifa1_idx` (`tarifa_id` ASC),
+  INDEX `fk_grupo_tarifa_grupo1_idx` (`grupo_id` ASC),
+  CONSTRAINT `fk_grupo_tarifa_tarifa1`
+    FOREIGN KEY (`tarifa_id`)
+    REFERENCES `mercabarato_bd`.`tarifa` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_grupo_tarifa_grupo1`
+    FOREIGN KEY (`grupo_id`)
+    REFERENCES `mercabarato_bd`.`grupo` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB

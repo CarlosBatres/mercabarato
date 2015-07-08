@@ -153,6 +153,7 @@ class Vendedor_model extends MY_Model {
 
     /**
      * Devuelve la cantidad de productos disponibles por insertar
+     * OJO Devuelve 1 si es un paquete ilimitado
      * @param type $vendedor_id
      */
     public function get_cantidad_productos_disp($vendedor_id) {
@@ -170,6 +171,12 @@ class Vendedor_model extends MY_Model {
         }
     }
 
+    /**
+     * Devuelve la cantidad de productos que falta por habilitar
+     * Devuelve 1 si es ilimitado
+     * @param type $vendedor_id
+     * @return int
+     */
     public function get_cantidad_productos_por_habilitar($vendedor_id) {
         $vendedor_paquete = $this->get_paquete_en_curso($vendedor_id);
         if ($vendedor_paquete) {
@@ -204,6 +211,12 @@ class Vendedor_model extends MY_Model {
         }
     }
 
+    /**
+     * Devuelve la cantidad de anuncios disponibles por habilitar
+     * Devielve 1 si es ilimitado
+     * @param type $vendedor_id
+     * @return int
+     */
     public function get_cantidad_anuncios_por_habilitar($vendedor_id) {
         $vendedor_paquete = $this->get_paquete_en_curso($vendedor_id);
         if ($vendedor_paquete) {
@@ -236,7 +249,7 @@ class Vendedor_model extends MY_Model {
             return FALSE;
         }
     }
-
+    
     /**
      * 
      * @param type $params

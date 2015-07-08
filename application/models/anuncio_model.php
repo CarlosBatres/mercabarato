@@ -175,5 +175,13 @@ class Anuncio_model extends MY_Model {
             return $this->get_ultimos_anuncios(5);
         }
     }
+    /**
+     * Full Delete de un anuncio
+     * @param type $id
+     */
+    public function delete($id) {        
+        $this->visita_model->delete_by("anuncio_id",$id);
+        parent::delete($id);
+    }
 
 }

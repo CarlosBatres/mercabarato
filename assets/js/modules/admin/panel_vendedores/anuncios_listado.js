@@ -1,7 +1,7 @@
 $(document).ready(function() {
     updateResultados();
 
-    $('#listado-productos').on('submit', function(e) {
+    $('#listado-items').on('submit', function(e) {
         e.preventDefault();
         $('#pagina').val('1');
         updateResultados();

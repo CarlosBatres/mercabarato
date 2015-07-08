@@ -155,7 +155,7 @@ class Panel_vendedores_productos extends MY_Controller {
     public function listado() {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
-        $this->template->add_js("modules/admin/panel_vendedores/productos_listado.js");        
+        $this->template->add_js("modules/admin/panel_vendedores/productos_listado.js");                        
         $this->template->load_view('admin/panel_vendedores/producto/producto_listado');
     }
 
@@ -169,13 +169,13 @@ class Panel_vendedores_productos extends MY_Controller {
             $producto_id = $id;
 
             $res = $this->producto_model->get_vendedor_id_del_producto($producto_id);
-            if ($res == $vendedor->get_vendedor_id()) {
-                $this->producto_resource_model->cleanup_resources($id);
+            if ($res == $vendedor->get_vendedor_id()) {                
                 $this->producto_model->delete($id);
                 $this->session->set_flashdata('success', 'Producto eliminado con exito..');                
             } else {
                 $this->session->set_flashdata('error', 'No puedes realizar esta accion.');                
             }
+            echo json_encode(array("success"=>true));
         } else {
             redirect('404');
         }
@@ -218,6 +218,17 @@ class Panel_vendedores_productos extends MY_Controller {
         if ($productos_array["total"] == 0) {
             $productos_array["productos"] = array();
         }
+        
+        $paquete_en_curso=$this->vendedor_model->get_paquete_en_curso($vendedor->get_vendedor_id());
+        $ilimitado=false;
+        $limite_productos=0;
+        if($paquete_en_curso){
+            if($paquete_en_curso->limite_productos==-1){
+                $ilimitado=true;
+            }else{
+                $limite_productos=$paquete_en_curso->limite_productos;
+            }
+        }
 
         $search_params = array(
             "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
@@ -232,7 +243,10 @@ class Panel_vendedores_productos extends MY_Controller {
 
         $data = array(
             "productos" => $productos_array["productos"],
-            "pagination" => $pagination);
+            "pagination" => $pagination,
+            "productos_total"=>$productos_array["total"],
+            "ilimitado"=>$ilimitado,
+            "limite_productos"=>$limite_productos);
 
         $this->template->load_view('admin/panel_vendedores/producto/producto_tabla_resultados', $data);
     }

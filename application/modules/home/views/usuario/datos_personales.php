@@ -190,7 +190,7 @@
                                 <div class="form-group">                                    
                                     <?php if ($vendedor->filename != null): ?>
                                         <div class="row">
-                                            <hr>
+                                            <hr> 
                                             <div class="preview_imagen_empresa">                        
                                                 <img class="thumbnail" src="<?php echo assets_url($this->config->item('vendedores_img_path')) . '/' . $vendedor->filename ?>"/>
                                             </div>                                        
@@ -220,12 +220,14 @@
                     <input type="hidden" name="accion" value="form-editar">
                     <?php echo form_close(); ?>                    
                     <?php if (!$es_vendedor): ?>
+                        <br>
+                        <hr>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12 text-center">
                                 <div class="heading">
-                                    <h3 class="text-uppercase">Afilicación</h3>
-                                </div>                            
-                                <p>Desea afiliarse a nuestro sitio y ofertar sus productos aqui? Acceda al siguiente apartado y sigua los pasos:</p>                            
+                                    <h3 class="text-uppercase">Deseas ofertar sus productos en este Sitio?</h3>
+                                </div>                                                
+                                <p class="lead">Si desea afiliarse a nuestro sitio y ofertar sus productos aqui, acceda al siguiente apartado y sigua los pasos:</p>                            
                                 <br>
                                 <a href="<?php echo site_url('usuario/afiliacion') ?>" class="btn btn-template-main" ><i class="fa fa-money"></i> Afiliación</a>                            
                             </div>

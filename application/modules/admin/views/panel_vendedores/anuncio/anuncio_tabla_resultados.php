@@ -17,6 +17,17 @@
                 <?= $this->session->flashdata('error') ?> 
             </div>
         <?php } ?>
+        
+        <?php if ($ilimitado): ?>
+            <div class="alert alert-info">                 
+                <p> Puedes insertar anuncios sin limites</p>
+            </div>
+        <?php else:?>
+            <div class="alert alert-info">                 
+                <p> Puedes insertar <?php echo $limite_anuncios-$anuncios_total?> anuncios mas de un maximo de <?php echo $limite_anuncios?> anuncios.</p>
+            </div>
+        <?php endif; ?>
+        
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>                

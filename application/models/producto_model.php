@@ -278,7 +278,7 @@ class Producto_model extends MY_Model {
     
     public function get_tarifas_search($params, $limit, $offset) {
         $this->db->start_cache();
-        $this->db->select("producto.*,categoria.nombre AS Categoria,tarifa.monto as precio_tarifa");
+        $this->db->select("producto.*,categoria.nombre AS Categoria,tarifa.nuevo_costo as precio_tarifa");
         $this->db->from($this->_table);
         $this->db->join("categoria", "categoria.id=producto.categoria_id", 'INNER');
         $this->db->join("vendedor", "vendedor.id=producto.vendedor_id", 'INNER');
@@ -292,6 +292,12 @@ class Producto_model extends MY_Model {
         }        
         if (isset($params['vendedor_id'])) {
             $this->db->where('vendedor.id', $params['vendedor_id']);
+        }
+        if (isset($params['incluir_ids'])) {
+            $this->db->where_in('producto.id', $params['incluir_ids']);
+        }
+        if (isset($params['excluir_ids'])) {
+            $this->db->where_not_in('producto.id', $params['excluir_ids']);
         }
 
 
@@ -308,6 +314,15 @@ class Producto_model extends MY_Model {
             $this->db->flush_cache();
             return array("total" => 0);
         }
+    }
+    /**
+     * Full Delete de un producto
+     * @param type $id
+     */
+    public function delete($id) {
+        $this->producto_resource_model->cleanup_resources($id);
+        $this->visita_model->delete_by("producto_id",$id);
+        parent::delete($id);
     }
 
 }

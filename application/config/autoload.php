@@ -123,14 +123,15 @@ $autoload['model'] = array(
     'paquete_model',
     'vendedor_paquete_model',
     'grupo_model',
-    'grupo_oferta_model',
+    'grupo_oferta_model',    
+    'grupo_tarifa_model',
+    'oferta_model',
+    'tarifa_model',
     'invitacion_model',
     'localizacion_model',
-    'mensaje_model',
-    'oferta_model',
+    'mensaje_model',    
     'solicitud_seguro_model',
-    'visita_model',
-    'tarifa_model');
+    'visita_model');
 
 
 /* End of file autoload.php */
