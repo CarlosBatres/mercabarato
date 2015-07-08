@@ -50,3 +50,14 @@
 .categorias-listado ul,li{
     list-style-type: none;    
 }
+
+tr.draggable > td > div.ui-state-default
+{
+    cursor: move;
+}
+
+.ghost
+{
+    background-color: Gray;
+    opacity: 0.5;
+}

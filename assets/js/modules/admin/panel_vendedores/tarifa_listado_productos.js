@@ -2,7 +2,7 @@ $(document).ready(function() {
     updateResultados();
     bind_botones();
 
-    $('#listado-items').on('submit', function(e) {
+    $('#listado-item').on('submit', function(e) {
         e.preventDefault();
         $('#pagina').val('1');
         updateResultados();
@@ -10,18 +10,18 @@ $(document).ready(function() {
 });
 
 function updateResultados() {
-    var form = $('#listado-items');
+    var form = $('#listado-item');
     var string = get_selected_checkboxes();
     form.append('<input type="hidden" name="excluir_ids" value="' + string + '">');
     form.append('<input type="hidden" name="search_main" value="true">');
-    $('#tabla-resultados').html('<br><br><br>');
+    $('#tabla-resultados').html('<br><br><br><br>');
     $('#tabla-resultados').block({
         message: '<h4>Procesando espere un momento..</h4>',
         css: {border: '3px solid #a00'}
     });
     $.ajax({
         type: "POST",
-        url: SITE_URL + 'panel_vendedor/tarifas/ajax_get_clientes',
+        url: SITE_URL + 'panel_vendedor/tarifas/ajax_get_productos',
         data: form.serialize(),
         dataType: "html",
         success: function(response) {
@@ -41,11 +41,10 @@ function updateResultadosTab2() {
     });
     $.ajax({
         type: "POST",
-        url: SITE_URL + 'panel_vendedor/tarifas/ajax_get_clientes',
+        url: SITE_URL + 'panel_vendedor/tarifas/ajax_get_productos',
         data: {
             incluir_ids: incluir_ids,
-            pagina: $('#pagina_tab2').val(),
-            sexo: "X"
+            pagina: $('#pagina_tab2').val()
         },
         dataType: "html",
         success: function(response) {
@@ -80,6 +79,7 @@ function bind_botones() {
             $('#pagina').val("1");
             updateResultados();
         }
+
     });
 }
 
@@ -97,5 +97,4 @@ function get_selected_checkboxes() {
     } else {
         return string;
     }
-
 }

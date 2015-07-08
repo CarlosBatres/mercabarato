@@ -293,6 +293,12 @@ class Producto_model extends MY_Model {
         if (isset($params['vendedor_id'])) {
             $this->db->where('vendedor.id', $params['vendedor_id']);
         }
+        if (isset($params['incluir_ids'])) {
+            $this->db->where_in('producto.id', $params['incluir_ids']);
+        }
+        if (isset($params['excluir_ids'])) {
+            $this->db->where_not_in('producto.id', $params['excluir_ids']);
+        }
 
 
         $this->db->stop_cache();
