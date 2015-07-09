@@ -69,10 +69,22 @@ class Producto_model extends MY_Model {
      */
     public function get_site_search($params, $limit, $offset, $order_by, $order) {
         $this->db->start_cache();
-        $this->db->select('p.*,pr.filename as imagen_nombre');
-        $this->db->from('producto p');
-        $this->db->join('producto_resource pr', 'pr.producto_id = p.id AND pr.tipo="imagen_principal"', 'left');
-        $this->db->join('productos_localizacion pl', 'pl.producto_id = p.id', 'inner');
+
+        if (isset($params['cliente_id'])) {
+            $this->db->select('p.*,pr.filename as imagen_nombre,ta.nuevo_costo as tarifa_monto');
+            $this->db->from('producto p');
+            $this->db->join('producto_resource pr', 'pr.producto_id = p.id AND pr.tipo="imagen_principal"', 'left');
+            $this->db->join('productos_localizacion pl', 'pl.producto_id = p.id', 'inner');
+            $this->db->join('tarifa ta', 'ta.producto_id = p.id', 'left');
+            $this->db->join('grupo_tarifa gta', 'gta.tarifa_id = ta.id', 'left');
+            $this->db->join('grupo g', 'g.id = gta.grupo_id AND g.cliente_id=' . $params["cliente_id"], 'left');
+        } else {
+            $this->db->select('p.*,pr.filename as imagen_nombre');
+            $this->db->from('producto p');
+            $this->db->join('producto_resource pr', 'pr.producto_id = p.id AND pr.tipo="imagen_principal"', 'left');
+            $this->db->join('productos_localizacion pl', 'pl.producto_id = p.id', 'inner');
+        }
+
 
         if (isset($params['nombre'])) {
             $this->db->like('p.nombre', $params['nombre'], 'both');
@@ -83,10 +95,10 @@ class Producto_model extends MY_Model {
             $abajo = $this->get_all_categorias_of($params['categoria_id']);
             if ($abajo) {
                 $categorias_array = array_merge($arriba, $abajo);
-            }else{
+            } else {
                 $categorias_array = $arriba;
             }
-            
+
             $this->db->where_in('p.categoria_id', $categorias_array);
         }
         if (isset($params['categoria_general'])) {
@@ -126,9 +138,9 @@ class Producto_model extends MY_Model {
                 $this->db->where('pl.pais_id', $params['pais']);
             }
         }
-        
-        if(isset($params["habilitado"])){
-            $this->db->where('p.habilitado',$params['habilitado']);
+
+        if (isset($params["habilitado"])) {
+            $this->db->where('p.habilitado', $params['habilitado']);
         }
 
         $this->db->stop_cache();
@@ -267,29 +279,32 @@ class Producto_model extends MY_Model {
         $producto['fecha_insertado'] = date('Y-m-d');
         return $producto;
     }
-    
-    public function inhabilitar($producto_id){
-        $this->update($producto_id, array("habilitado"=>"0"));
+
+    public function inhabilitar($producto_id) {
+        $this->update($producto_id, array("habilitado" => "0"));
     }
-    
-    public function habilitar($producto_id){
-        $this->update($producto_id, array("habilitado"=>"1"));
+
+    public function habilitar($producto_id) {
+        $this->update($producto_id, array("habilitado" => "1"));
     }
-    
+
     public function get_tarifas_search($params, $limit, $offset) {
         $this->db->start_cache();
-        $this->db->select("producto.*,categoria.nombre AS Categoria,tarifa.nuevo_costo as precio_tarifa");
+        $this->db->select("DISTINCT producto.id,producto.*,categoria.nombre AS Categoria", false);
         $this->db->from($this->_table);
         $this->db->join("categoria", "categoria.id=producto.categoria_id", 'INNER');
         $this->db->join("vendedor", "vendedor.id=producto.vendedor_id", 'INNER');
-        $this->db->join("tarifa", "tarifa.producto_id=producto.id", 'LEFT');
+
+        if (isset($params['solo_tarifados'])) {
+            $this->db->join("tarifa", "tarifa.producto_id=producto.id", 'INNER');
+        }
 
         if (isset($params['nombre'])) {
             $this->db->like('producto.nombre', $params['nombre'], 'both');
         }
         if (isset($params['categoria_id'])) {
             $this->db->where('producto.categoria_id', $params['categoria_id']);
-        }        
+        }
         if (isset($params['vendedor_id'])) {
             $this->db->where('vendedor.id', $params['vendedor_id']);
         }
@@ -300,12 +315,11 @@ class Producto_model extends MY_Model {
             $this->db->where_not_in('producto.id', $params['excluir_ids']);
         }
 
-
         $this->db->stop_cache();
-        $count = $this->db->count_all_results();
+        $count = count($this->db->get()->result());
 
         if ($count > 0) {
-            $this->db->order_by('id', 'asc');
+            $this->db->order_by('producto.id', 'asc');
             $this->db->limit($limit, $offset);
             $productos = $this->db->get()->result();
             $this->db->flush_cache();
@@ -315,13 +329,14 @@ class Producto_model extends MY_Model {
             return array("total" => 0);
         }
     }
+
     /**
      * Full Delete de un producto
      * @param type $id
      */
     public function delete($id) {
         $this->producto_resource_model->cleanup_resources($id);
-        $this->visita_model->delete_by("producto_id",$id);
+        $this->visita_model->delete_by("producto_id", $id);
         parent::delete($id);
     }
 

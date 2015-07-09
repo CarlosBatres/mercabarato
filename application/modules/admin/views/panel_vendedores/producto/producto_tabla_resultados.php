@@ -44,7 +44,7 @@
                 <?php foreach ($productos as $producto): ?>
                     <tr>                    
                         <td><?php echo $producto->nombre; ?></td>
-                        <td style="text-align: center"><?php echo $producto->precio; ?></td>                                                                
+                        <td style="text-align: center"><?php echo $producto->precio. ' ' . $this->config->item('money_sign'); ?></td>                                                                
                         <td><?php echo $producto->Categoria; ?></td>                    
                         <td style="text-align: center"><?php
                             if ($producto->mostrar_producto == 1): echo "<span class='label label-success'>Si</span>";

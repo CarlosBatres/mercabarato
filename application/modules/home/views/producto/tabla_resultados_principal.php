@@ -24,10 +24,20 @@
                             <a class="nombre-productos" href="<?php echo site_url("productos/ficha/" . $producto->id) ?>"><?php echo truncate($producto->nombre, 100); ?></a>
                             <p><?php echo truncate($producto->descripcion, 100); ?></p>
                         </div>
-                        <div class="row">                            
-                            <p class="precio"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
 
-                        </div>
+                        <?php if (isset($producto->tarifa_monto)): ?>
+                            <div class="row">
+                                <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                            </div>
+                            <div class="row">                            
+                                <p class="precio"><?php echo $producto->tarifa_monto . ' ' . $this->config->item('money_sign') ?></p>
+                            </div>                            
+                        <?php else: ?>
+                            <div class="row">
+                                <p class="precio"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
+                            </div>
+                        <?php endif; ?>
+
                     </div>
                 </div>
             </li>        
