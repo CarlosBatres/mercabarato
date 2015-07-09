@@ -21,7 +21,7 @@
                             <td><input type="checkbox" name="mover" value="ON" /></td>
                             <td><?php echo $producto->nombre; ?></td>
                             <td><?php echo $producto->Categoria; ?></td>                    
-                            <td style="text-align: center"><?php echo $producto->precio; ?></td>                                                                                                                                        
+                            <td style="text-align: center"><?php echo $producto->precio. ' ' . $this->config->item('money_sign'); ?></td>                                                                                                                                        
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -44,7 +44,7 @@
                         <tr data-id="<?php echo $producto->id; ?>">                                                
                             <td><?php echo $producto->nombre; ?></td>
                             <td><?php echo $producto->Categoria; ?></td>                    
-                            <td style="text-align: center"><?php echo $producto->precio; ?></td>                                                                                                                                        
+                            <td style="text-align: center"><?php echo $producto->precio. ' ' . $this->config->item('money_sign'); ?></td>                                                                                                                                        
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

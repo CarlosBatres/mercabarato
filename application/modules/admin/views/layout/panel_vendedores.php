@@ -65,7 +65,7 @@
                                 <a href="<?php echo site_url('panel_vendedor/producto/agregar'); ?>"><i class="fa fa-plus fa-fw"></i> Agregar un producto</a>
                             </li>                            
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/producto/listado'); ?>"><i class="fa fa-fw fa-calendar"></i> Mis Productos</a>
+                                <a href="<?php echo site_url('panel_vendedor/producto/listado'); ?>"><i class="fa fa-fw fa-list"></i> Listado de Productos</a>
                             </li>                            
                         </ul>                         
                     </li>
@@ -76,7 +76,7 @@
                                 <a href="<?php echo site_url('panel_vendedor/anuncio/agregar'); ?>"><i class="fa fa-plus fa-fw"></i> Agregar un anuncio</a>
                             </li>                            
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/anuncio/listado'); ?>"><i class="fa fa-fw fa-calendar"></i> Mis anuncios</a>
+                                <a href="<?php echo site_url('panel_vendedor/anuncio/listado'); ?>"><i class="fa fa-fw fa-list"></i> Listado de anuncios</a>
                             </li>                            
                         </ul>                         
                     </li>
@@ -85,6 +85,9 @@
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="<?php echo site_url('panel_vendedor/tarifas/nueva'); ?>"><i class="fa fa-plus fa-fw"></i> Nueva Tarifa</a>
+                            </li>                                                        
+                            <li>
+                                <a href="<?php echo site_url('panel_vendedor/tarifas/listado'); ?>"><i class="fa fa-list fa-fw"></i> Listado de Tarifas</a>
                             </li>                                                        
                         </ul>                         
                     </li>                    

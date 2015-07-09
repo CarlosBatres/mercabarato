@@ -114,8 +114,12 @@ $route['panel_vendedor/tarifas/nueva'] = 'admin/panel_vendedores_tarifas/nueva_t
 $route['panel_vendedor/tarifas/seleccion_clientes'] = 'admin/panel_vendedores_tarifas/nueva_seleccion_clientes'; 
 $route['panel_vendedor/tarifas/detalles'] = 'admin/panel_vendedores_tarifas/detalles_tarifa'; 
 $route['panel_vendedor/tarifas/crear'] = 'admin/panel_vendedores_tarifas/crear_tarifa'; 
+$route['panel_vendedor/tarifas/borrar/(:num)'] = 'admin/panel_vendedores_tarifas/borrar/$1'; 
 $route['panel_vendedor/tarifas/ajax_get_productos'] = 'admin/panel_vendedores_tarifas/ajax_get_productos'; 
 $route['panel_vendedor/tarifas/ajax_get_clientes'] = 'admin/panel_vendedores_tarifas/ajax_get_invitados'; 
+$route['panel_vendedor/tarifas/ajax_get_productos_tarifados'] = 'admin/panel_vendedores_tarifas/ajax_get_productos_tarifados'; 
+$route['panel_vendedor/tarifas/ajax_get_tarifa_detalles'] = 'admin/panel_vendedores_tarifas/ajax_get_tarifa_detalles'; 
+$route['panel_vendedor/tarifas/listado'] = 'admin/panel_vendedores_tarifas/view_listado';
 
 /* Admin */
 $route['admin'] = 'admin/main';
