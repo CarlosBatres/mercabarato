@@ -1,5 +1,6 @@
 $(document).ready(function() {
     updateResultados();
+    $('[data-toggle="tooltip"]').tooltip();    
     $('#producto-principal-categorias').metisMenu();
 
     $('#search_button').on('click', function(e) {

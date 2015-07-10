@@ -9,7 +9,7 @@
             <table class="table table-bordered table-hover table-striped">
                 <thead>
                     <tr>              
-                        <th style="width: 1%"> <input type="checkbox" name="seleccion_all" value="ON" /></th>              
+                        <th style="width: 1%"> <input type="checkbox" name="select_all" value="ON" /></th>              
                         <th style="width: 35%">Nombre Completo</th>                
                         <th style="width: 9%">Sexo</th>                    
                         <th style="width: 20%">Miembro Desde</th>                    

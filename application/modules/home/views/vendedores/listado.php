@@ -20,13 +20,14 @@
                                 <div class="form-group">                                
                                     <select name="pais" class="form-control">
                                         <option value="0">País</option>
-                                        <?php foreach ($paises as $pais): 
-                                            $class="";
-                                            if($pais->nombre=="España"){
-                                                $class="selected";
+                                        <?php
+                                        foreach ($paises as $pais):
+                                            $class = "";
+                                            if ($pais->nombre == "España") {
+                                                $class = "selected";
                                             }
                                             ?>                                        
-                                            <option value="<?php echo $pais->id ?>" <?php echo $class?>><?php echo $pais->nombre ?></option>
+                                            <option value="<?php echo $pais->id ?>" <?php echo $class ?>><?php echo $pais->nombre ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>   
@@ -63,38 +64,73 @@
                 <div id="tabla-resultados"></div>
             </div>                   
             <div class="col-md-3">
-            <div class="box box-anuncios">
-                <div class="box-header">
-                    <h4 class="text-center">Anuncios</h4>                
-                </div>
-                <div class="table-responsive">
-                    <table class="table">
-                        <tbody>
-                            <?php
-                            if (sizeof($anuncios) > 0):
-                                foreach ($anuncios as $anuncio):
-                                    ?>
-                                    <tr>
-                                        <td>
-                                            <p class="text-right"><strong><?php echo date("d-M-Y", strtotime($anuncio->fecha_publicacion)) ?></strong></p>
-                                            <p><strong><?php echo $anuncio->titulo; ?></strong></p>
-                                            <p><?php echo truncate($anuncio->contenido, 300); ?></p>
-                                        </td>                                
-                                    </tr>
-                                    <?php
-                                endforeach;
-                            else:
-                                echo "<tr><td> <p> No hay novedades..</p></td></tr>";
-                            endif;
-                            ?>                            
-                        </tbody>
-                    </table>
+                <div class="box box-anuncios">
+                    <div class="box-header">
+                        <h4 class="text-center">Anuncios</h4>                
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <?php
+                                if (sizeof($anuncios) > 0):
+                                    foreach ($anuncios as $anuncio):
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <p class="text-right"><strong><?php echo date("d-M-Y", strtotime($anuncio->fecha_publicacion)) ?></strong></p>
+                                                <p><strong><?php echo $anuncio->titulo; ?></strong></p>
+                                                <p><?php echo truncate($anuncio->contenido, 300); ?></p>
+                                            </td>                                
+                                        </tr>
+                                        <?php
+                                    endforeach;
+                                else:
+                                    echo "<tr><td> <p> No hay novedades..</p></td></tr>";
+                                endif;
+                                ?>                            
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
     <div id="throbber" style="display:none;">
         <img src="<?php echo assets_url('imgs/loader_on_white_nb_big.gif'); ?>" />
+    </div>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Invitacion a Vendedor</h4>
+                </div>
+                <div class="modal-body">
+                    <?php echo form_open('home/cliente/enviar_invitacion'); ?>
+                    <div class="row">  
+                        <div class="col-md-12">
+                            <div class="form-group">                                
+                                <label>Titulo</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="titulo">                                
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Mensaje</label>
+                                <textarea class="form-control" name="mensaje" rows="5" cols="20"></textarea>                    
+                            </div>                                                        
+                        </div>
+                    </div>
+                    <input type="hidden" name="vendedor_id" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-template-main">Enviar</button>
+                    <button type="button" class="btn btn-template-main" data-dismiss="modal">Cancelar</button>
+                    <?php echo form_close(); ?>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>

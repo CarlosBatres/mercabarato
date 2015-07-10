@@ -32,21 +32,42 @@
                     </div>
                     <p class="lead">Complete el formulario a continuación, esta informacion sera la que veran los clientes que visiten sus productos y su apartado personal.</p>                    
                     <?php echo form_open('usuario/afiliacion/registrar', 'id="form_afiliarse"'); ?>                 
-                    <div class="col-md-12">
-                        <div class="row">
+
+                    <div class="row">
+                        <div class="col-md-12">
                             <div class="form-group">                                
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="nombre_empresa" placeholder="Nombre de la Empresa">
                                     <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label>Descripcion</label>
                                 <textarea class="form-control" name="descripcion" rows="4" cols="20"></textarea>                    
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-group"> 
                                 <?php echo form_dropdown('actividad', vendedor_actividad_dropdown(), null, 'id="actividad" class="form-control"') ?>
                             </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">                                
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="nif_cif" placeholder="N.I.F / C.I.F">
+                                    <span class="input-group-addon"><i class="fa fa-briefcase fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
                             <div class="form-group">                                
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="sitio_web" placeholder="Sitio Web">
@@ -55,6 +76,8 @@
                             </div>
                         </div>
                     </div>
+
+
                     <div class='row'>
                         <div class="col-md-12">
                             <div class="form-group">                                

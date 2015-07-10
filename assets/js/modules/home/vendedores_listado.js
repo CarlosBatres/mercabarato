@@ -1,12 +1,12 @@
 $(document).ready(function() {
-    updateResultados();    
-    
+    updateResultados();
+
     $('#search_button').on('click', function(e) {
         e.preventDefault();
         updateResultados();
     });
-    
-     $('input[name="search_query"]').keydown(function(e) {
+
+    $('input[name="search_query"]').keydown(function(e) {
         var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
         if (key == 13) {
             e.preventDefault();
@@ -24,8 +24,8 @@ $(document).ready(function() {
             url: SITE_URL + 'home/provincia/ajax_get_provincias_htmlselect',
             data: {pais_id: pais_id},
             dataType: 'json',
-            success: function(response) {                
-                $('#form_buscar').find('select[name="provincia"]').html(response.html);                
+            success: function(response) {
+                $('#form_buscar').find('select[name="provincia"]').html(response.html);
                 $('#form_buscar').find('select[name="provincia"]').find('option:first').text("Todas las Provincias");
             }
         });
@@ -45,13 +45,18 @@ $(document).ready(function() {
                 $('#form_buscar').find('select[name="poblacion"]').find('option:first').text("Todas las Poblaciones");
             }
         });
-    }); 
-    
+    });
+
     $('#form_buscar').find('select[name="pais"]').trigger('change');
+
+    $('#myModal').on('shown.bs.modal', function(e) {
+        var invoker = $(e.relatedTarget);        
+        $('input[name="vendedor_id"]').val(invoker.data('id'));
+    });
 });
 
 function updateResultados() {
-    var search_query = $('input[name="search_query"]').val();    
+    var search_query = $('input[name="search_query"]').val();
     var pagina_id = $('#pagina').val();
     var pais = $('select[name="pais"]').val();
     var provincia = $('select[name="provincia"]').val();
@@ -67,10 +72,10 @@ function updateResultados() {
         url: SITE_URL + 'home/vendedor/ajax_get_listado_resultados',
         data: {
             search_query: search_query,
-            pagina: pagina_id, 
-            pais : pais,
-            provincia : provincia,
-            poblacion : poblacion
+            pagina: pagina_id,
+            pais: pais,
+            provincia: provincia,
+            poblacion: poblacion
         },
         dataType: "html",
         success: function(response) {

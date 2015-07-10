@@ -41,21 +41,20 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Indica el Porcentaje</label>
+                            <label>Porcentaje que deseas descontar</label>
                             <input type="text" class="form-control" name="porcentaje">
                         </div>
                     </div>
-                    <div class="col-md-4 text-center">
-                        <div class="form-group">
-                            <label>O puedes indicar un</label>
-                        </div> 
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Monto Especifico</label>
-                            <input type="text" class="form-control" name="nuevo_costo">
+                    <div class="col-md-4"></div>
+
+                    <?php if (!$mas_de_uno): ?>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Monto especifico</label>
+                                <input type="text" class="form-control" name="nuevo_costo">
+                            </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
                 </div>
                 <div class="row">
                     <div class="col-md-12">

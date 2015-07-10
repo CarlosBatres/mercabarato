@@ -141,7 +141,7 @@ class Anuncio_model extends MY_Model {
         $this->db->from($this->_table);
         $this->db->join("vendedor", "vendedor.id=anuncio.vendedor_id", 'INNER');
         $this->db->join("invitacion", "invitacion.vendedor_id=anuncio.vendedor_id AND invitacion.estado='2' AND invitacion.cliente_id=" . $cliente_id, 'INNER');
-        $this->db->where("anuncio.habilitado", "1");        
+        $this->db->where("anuncio.habilitado", "1");
         $this->db->order_by("anuncio.fecha_publicacion", "desc");
 
         $this->db->limit(5, 0);
@@ -167,7 +167,7 @@ class Anuncio_model extends MY_Model {
 
                 if ($query->num_rows() > 0) {
                     $anuncios_extra = $query->result();
-                    $anuncios = array_merge($anuncios,$anuncios_extra);
+                    $anuncios = array_merge($anuncios, $anuncios_extra);
                 }
             }
             return $anuncios;
@@ -175,13 +175,30 @@ class Anuncio_model extends MY_Model {
             return $this->get_ultimos_anuncios(5);
         }
     }
+
     /**
      * Full Delete de un anuncio
      * @param type $id
      */
-    public function delete($id) {        
-        $this->visita_model->delete_by("anuncio_id",$id);
+    public function delete($id) {
+        $this->visita_model->delete_by("anuncio_id", $id);
         parent::delete($id);
+    }
+
+    
+    public function get_anuncios_del_vendedor($vendedor_id, $count=5) {
+        $this->db->select('*');
+        $this->db->from('anuncio');
+        $this->db->where("vendedor_id", $vendedor_id);
+        $this->db->order_by("id", "desc");
+        $this->db->limit($count, 0);
+        $response = $this->db->get()->result();
+
+        if ($response) {            
+            return $response;
+        } else {
+            return false;
+        }
     }
 
 }

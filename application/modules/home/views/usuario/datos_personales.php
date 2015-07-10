@@ -132,23 +132,43 @@
                         </div> 
 
                     <?php else: ?>  
-                        <?php echo form_open('usuario/datos-personales/modificar', 'id="form_datos_2"'); ?>
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="form-group">                                    
+                        <?php echo form_open('usuario/datos-personales/modificar', 'id="form_datos_2"'); ?>                                                                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">                                
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="nombre_empresa" placeholder="Nombre de la Empresa" value="<?php echo $vendedor->nombre ?>">
                                         <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Descripcion</label>
                                     <textarea class="form-control" name="descripcion" rows="4" cols="20"><?php echo $vendedor->descripcion ?></textarea>                    
                                 </div>
-                                <div class="form-group">                                    
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group"> 
                                     <?php echo form_dropdown('actividad', vendedor_actividad_dropdown(), $vendedor->actividad, 'id="actividad" class="form-control"') ?>
                                 </div>
-                                <div class="form-group">                                    
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">                                
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="nif_cif" placeholder="N.I.F / C.I.F" value="<?php echo $vendedor->nif_cif ?>">
+                                        <span class="input-group-addon"><i class="fa fa-briefcase fa-fw"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">                                
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="sitio_web" placeholder="Sitio Web" value="<?php echo $vendedor->sitio_web ?>">
                                         <span class="input-group-addon"><i class="fa fa-sitemap fa-fw"></i></span>
@@ -156,6 +176,8 @@
                                 </div>
                             </div>
                         </div>
+
+
                         <div class='row'>
                             <div class="col-md-12">
                                 <div class="form-group">

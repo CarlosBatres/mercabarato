@@ -223,6 +223,11 @@ class Producto_model extends MY_Model {
                     $sub_query.=$text;
                 }
             }
+            if (isset($params['vendedor_id'])) {
+                $text = " AND p.vendedor_id=".$params['vendedor_id'];
+                $query.=$text;
+                $sub_query.=$text;
+            }
 
             $query.=") ";            
             
@@ -429,7 +434,12 @@ class Producto_model extends MY_Model {
         $this->visita_model->delete_by("producto_id", $id);
         parent::delete($id);
     }
-    
+    /**
+     * 
+     * @param type $producto_id
+     * @param type $cliente_id
+     * @return boolean
+     */
     public function get_tarifas_from_producto($producto_id,$cliente_id){
         $this->db->select('*');
         $this->db->from('productos_precios pp');
@@ -443,6 +453,6 @@ class Producto_model extends MY_Model {
         }else{
             return false;
         }
-    }
+    }    
 
 }
