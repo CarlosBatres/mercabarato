@@ -156,6 +156,10 @@ body .box_registro{
     color: #cccccc;
 }
 
+#productMain .price del{
+    color:#ccc;
+}
+
 .tabla-resultados-principal .nombre-producto{
     font-size: 16px;
     font-weight: bold;
@@ -227,4 +231,3 @@ span.arrow {
 .row-less-padding-l{padding-left:2px;}
 
 .preview_imagen_empresa{max-height: 300px;}
-

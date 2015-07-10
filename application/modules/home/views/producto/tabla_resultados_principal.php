@@ -25,12 +25,12 @@
                             <p><?php echo truncate($producto->descripcion, 100); ?></p>
                         </div>
 
-                        <?php if (isset($producto->tarifa_monto)): ?>
+                        <?php if (isset($producto->tarifa_costo)): ?>
                             <div class="row">
                                 <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                             </div>
                             <div class="row">                            
-                                <p class="precio"><?php echo $producto->tarifa_monto . ' ' . $this->config->item('money_sign') ?></p>
+                                <p class="precio"><?php echo number_format($producto->tarifa_costo,'2') . ' ' . $this->config->item('money_sign') ?></p>
                             </div>                            
                         <?php else: ?>
                             <div class="row">

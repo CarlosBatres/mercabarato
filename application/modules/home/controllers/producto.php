@@ -54,7 +54,7 @@ class Producto extends MY_Controller {
      *  AJAX Productos / Listado
      */
     public function ajax_get_listado_resultados() {
-        $this->show_profiler();
+        //$this->show_profiler();
         $formValues = $this->input->post();
 
         $params = array();
@@ -83,7 +83,9 @@ class Producto extends MY_Controller {
             if ($this->authentication->is_loggedin()) {
                 $user_id = $this->authentication->read('identifier');
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                $params["cliente_id"] = $cliente->id;
+                if ($cliente->es_vendedor == '0') {
+                    $params["cliente_id"] = $cliente->id;
+                }
             }
 
             $params["habilitado"] = "1";
@@ -99,7 +101,7 @@ class Producto extends MY_Controller {
 
             $limit = $this->config->item("principal_default_per_page");
             $offset = $limit * ($pagina - 1);
-            $productos = $this->producto_model->get_site_search($params, $limit, $offset, "id", "ASC");
+            $productos = $this->producto_model->get_site_search($params, $limit, $offset, "p.id", "ASC");
             $flt = (float) ($productos["total"] / $limit);
             $ent = (int) ($productos["total"] / $limit);
             if ($flt > $ent || $flt < $ent) {
@@ -145,10 +147,24 @@ class Producto extends MY_Controller {
         $producto_imagen = $this->producto_resource_model->get_producto_imagen($id);
 
         $this->visita_model->nueva_visita_producto($id);
+        if ($this->authentication->is_loggedin()) {
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);            
+            $producto_tarifa=$this->producto_model->get_tarifas_from_producto($id,$cliente->id);
+            if($producto_tarifa){
+                $tarifa=$producto_tarifa->tarifa_costo;
+            }else{
+                $tarifa=false;
+            }            
+        } else{
+            $tarifa=false;
+        }
+        
 
         $data = array(
             "producto" => $producto,
-            "producto_imagen" => $producto_imagen);
+            "producto_imagen" => $producto_imagen,
+            "tarifa"=>$tarifa);
         $this->template->load_view('home/producto/ficha', $data);
     }
 

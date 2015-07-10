@@ -66,95 +66,185 @@ class Producto_model extends MY_Model {
      * @param type $order_by
      * @param type $order
      * @return type
-     */
+     */    
     public function get_site_search($params, $limit, $offset, $order_by, $order) {
-        $this->db->start_cache();
-
         if (isset($params['cliente_id'])) {
-            $this->db->select('p.*,pr.filename as imagen_nombre,ta.nuevo_costo as tarifa_monto');
-            $this->db->from('producto p');
-            $this->db->join('producto_resource pr', 'pr.producto_id = p.id AND pr.tipo="imagen_principal"', 'left');
-            $this->db->join('productos_localizacion pl', 'pl.producto_id = p.id', 'inner');
-            $this->db->join('tarifa ta', 'ta.producto_id = p.id', 'left');
-            $this->db->join('grupo_tarifa gta', 'gta.tarifa_id = ta.id', 'left');
-            $this->db->join('grupo g', 'g.id = gta.grupo_id AND g.cliente_id=' . $params["cliente_id"], 'left');
-        } else {
-            $this->db->select('p.*,pr.filename as imagen_nombre');
-            $this->db->from('producto p');
-            $this->db->join('producto_resource pr', 'pr.producto_id = p.id AND pr.tipo="imagen_principal"', 'left');
-            $this->db->join('productos_localizacion pl', 'pl.producto_id = p.id', 'inner');
-        }
+            /**-------------------------------------------------------------------------
+             * 
+             * Busqueda cuando se haya iniciado session, se hace en base a un cliente_id
+             *
+             * ------------------------------------------------------------------------- 
+             */
+            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre FROM (productos_precios p) ";
+            $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
+            $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
 
-
-        if (isset($params['nombre'])) {
-            $this->db->like('p.nombre', $params['nombre'], 'both');
-        }
-        if (isset($params['categoria_id'])) {
-            //$arriba = $this->get_categorias_arbol($params['categoria_id']);
-            $arriba[] = $params['categoria_id'];
-            $abajo = $this->get_all_categorias_of($params['categoria_id']);
-            if ($abajo) {
-                $categorias_array = array_merge($arriba, $abajo);
-            } else {
-                $categorias_array = $arriba;
+            $query.="WHERE ( p.cliente_id =" . $params['cliente_id'];
+            $sub_query = "";
+            if (isset($params['nombre'])) {
+                $text = " AND p.nombre LIKE '%" . $params['nombre'] . "%'";
+                $query.=$text;
+                $sub_query.=$text;
             }
-
-            $this->db->where_in('p.categoria_id', $categorias_array);
-        }
-        if (isset($params['categoria_general'])) {
             if (isset($params['categoria_id'])) {
-                $cat = $params['categoria_id'];
+                //$arriba = $this->get_categorias_arbol($params['categoria_id']);
+                $arriba[] = $params['categoria_id'];
+                $abajo = $this->get_all_categorias_of($params['categoria_id']);
+                if ($abajo) {
+                    $categorias_array = array_merge($arriba, $abajo);
+                } else {
+                    $categorias_array = $arriba;
+                }
+                
+                $text = " AND p.categoria_id IN(" . implode(",",$categorias_array) . ")";
+                $query.=$text;
+                $sub_query.=$text;                
+            }
+            if (isset($params['precio_tipo1'])) {
+                if ($params['precio_tipo1'] != '0') {
+                    $precios = explode(";;", $params['precio_tipo1']);
+                    // TODO : Aqui el precio puede ser precio oferta o una tarifa especifica. Resolver dependiendo de quien este conectado haciendo la busqueda
+                    $text = " AND p.precio >" . $precios['0'];
+                    $text.=" AND p.precio <=" . $precios['1'];
+                    $query.=$text;
+                    $sub_query.=$text;
+                }
+            }
+            if (isset($params["poblacion"])) {
+                if ($params['poblacion'] != '0') {
+                    $text = " AND pl.poblacion_id=" . $params['poblacion'];
+                    $query.=$text;
+                    $sub_query.=$text;
+                }
+            }
+            if (isset($params["provincia"])) {
+                if ($params['provincia'] != '0') {
+                    $text = " AND pl.provincia_id=" . $params['provincia'];
+                    $query.=$text;
+                    $sub_query.=$text;
+                }
+            }
+            if (isset($params["pais"])) {
+                if ($params['pais'] != '0') {
+                    $text = " AND pl.pais_id=" . $params['pais'];
+                    $query.=$text;
+                    $sub_query.=$text;
+                }
+            }
+
+            $query.=") ";
+
+            $query.="OR (p.cliente_id IS NULL ";
+            if ($sub_query != "") {
+                $query.=$sub_query;
+            }
+
+            $query.=") ";
+
+            if (isset($params["habilitado"])) {
+                $query.=" AND p.habilitado=" . $params['habilitado'];
+            }
+            $query.=" GROUP BY p.id";
+            $query.=" ORDER BY ".$order_by ." ".$order;
+            $query.=" LIMIT " . $offset . " , " . $limit;
+
+            $result = $this->db->query($query);
+            $productos = $result->result();
+
+            $query_total = "SELECT FOUND_ROWS() as rows;";
+            $result_total = $this->db->query($query_total);
+            $total = $result_total->row();
+
+            if ($total->rows > 0) {
+                return array("productos" => $productos, "total" => $total->rows);
             } else {
-                $cat = $params['categoria_general'];
+                return array("total" => 0);
             }
-            $array = $this->get_all_categorias_of($cat);
-            $array[] = $cat;
-            $this->db->where_in('p.categoria_id', $array);
-        }
-
-        if (isset($params['precio_tipo1'])) {
-            if ($params['precio_tipo1'] != '0') {
-                $precios = explode(";;", $params['precio_tipo1']);
-                // TODO : Aqui el precio puede ser precio oferta o una tarifa especifica. Resolver dependiendo de quien este conectado haciendo la busqueda
-                $this->db->where('p.precio >', $precios['0']);
-                $this->db->where('p.precio <=', $precios['1']);
-            }
-        }
-
-        if (isset($params["poblacion"])) {
-            if ($params['poblacion'] != '0') {
-                $this->db->where('pl.problacion_id', $params['poblacion']);
-            }
-        }
-
-        if (isset($params["provincia"])) {
-            if ($params['provincia'] != '0') {
-                $this->db->where('pl.provincia_id', $params['provincia']);
-            }
-        }
-
-        if (isset($params["pais"])) {
-            if ($params['pais'] != '0') {
-                $this->db->where('pl.pais_id', $params['pais']);
-            }
-        }
-
-        if (isset($params["habilitado"])) {
-            $this->db->where('p.habilitado', $params['habilitado']);
-        }
-
-        $this->db->stop_cache();
-        $count = $this->db->count_all_results();
-
-        if ($count > 0) {
-            $this->db->order_by($order_by, $order);
-            $this->db->limit($limit, $offset);
-            $productos = $this->db->get()->result();
-            $this->db->flush_cache();
-            return array("productos" => $productos, "total" => $count);
         } else {
-            $this->db->flush_cache();
-            return array("total" => 0);
+           /**-------------------------------------------------------------------------
+             * 
+             * Busqueda cuando no se haya iniciado sesion, no incluimos ni tarifas ni ofertas
+             *
+             * ------------------------------------------------------------------------- 
+             */            
+            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre FROM (producto p) ";
+            $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
+            $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
+
+            $query.="WHERE ( 1";
+            $sub_query = "";
+            if (isset($params['nombre'])) {
+                $text = " AND p.nombre LIKE '%" . $params['nombre'] . "%'";
+                $query.=$text;
+                $sub_query.=$text;
+            }
+            if (isset($params['categoria_id'])) {
+                //$arriba = $this->get_categorias_arbol($params['categoria_id']);
+                $arriba[] = $params['categoria_id'];
+                $abajo = $this->get_all_categorias_of($params['categoria_id']);
+                if ($abajo) {
+                    $categorias_array = array_merge($arriba, $abajo);
+                } else {
+                    $categorias_array = $arriba;
+                }
+                
+                $text = " AND p.categoria_id IN(" . implode(",",$categorias_array) . ")";
+                $query.=$text;
+                $sub_query.=$text;                
+            }
+            if (isset($params['precio_tipo1'])) {
+                if ($params['precio_tipo1'] != '0') {
+                    $precios = explode(";;", $params['precio_tipo1']);
+                    // TODO : Aqui el precio puede ser precio oferta o una tarifa especifica. Resolver dependiendo de quien este conectado haciendo la busqueda
+                    $text = " AND p.precio >" . $precios['0'];
+                    $text.=" AND p.precio <=" . $precios['1'];
+                    $query.=$text;
+                    $sub_query.=$text;
+                }
+            }
+            if (isset($params["poblacion"])) {
+                if ($params['poblacion'] != '0') {
+                    $text = " AND pl.poblacion_id=" . $params['poblacion'];
+                    $query.=$text;
+                    $sub_query.=$text;
+                }
+            }
+            if (isset($params["provincia"])) {
+                if ($params['provincia'] != '0') {
+                    $text = " AND pl.provincia_id=" . $params['provincia'];
+                    $query.=$text;
+                    $sub_query.=$text;
+                }
+            }
+            if (isset($params["pais"])) {
+                if ($params['pais'] != '0') {
+                    $text = " AND pl.pais_id=" . $params['pais'];
+                    $query.=$text;
+                    $sub_query.=$text;
+                }
+            }
+
+            $query.=") ";            
+            
+            if (isset($params["habilitado"])) {
+                $query.=" AND p.habilitado=" . $params['habilitado'];
+            }
+            $query.=" GROUP BY p.id";
+            $query.=" ORDER BY ".$order_by ." ".$order;
+            $query.=" LIMIT " . $offset . " , " . $limit;
+
+            $result = $this->db->query($query);
+            $productos = $result->result();
+
+            $query_total = "SELECT FOUND_ROWS() as rows;";
+            $result_total = $this->db->query($query_total);
+            $total = $result_total->row();
+
+            if ($total->rows > 0) {
+                return array("productos" => $productos, "total" => $total->rows);
+            } else {
+                return array("total" => 0);
+            }            
         }
     }
 
@@ -338,6 +428,21 @@ class Producto_model extends MY_Model {
         $this->producto_resource_model->cleanup_resources($id);
         $this->visita_model->delete_by("producto_id", $id);
         parent::delete($id);
+    }
+    
+    public function get_tarifas_from_producto($producto_id,$cliente_id){
+        $this->db->select('*');
+        $this->db->from('productos_precios pp');
+        $this->db->where('pp.id',$producto_id);
+        $this->db->where('pp.cliente_id',$cliente_id);
+        $this->db->where_not_in('pp.tarifa_costo',null);
+        
+        $tarifas = $this->db->get()->row();
+        if (count($tarifas) > 0) {
+            return $tarifas;
+        }else{
+            return false;
+        }
     }
 
 }
