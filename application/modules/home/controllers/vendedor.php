@@ -63,6 +63,7 @@ class Vendedor extends MY_Controller {
                 "actividad" => $this->input->post('actividad'),
                 "sitio_web" => $this->input->post('sitio_web'),
                 "habilitado" => 0,
+                "nif_cif" => $this->input->post('nif_cif'),
                 "keyword" => $keywords_text
             );
 
@@ -310,15 +311,15 @@ class Vendedor extends MY_Controller {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $this->template->add_js('modules/home/vendedores_listado.js');
         $paises = $this->pais_model->get_all();
-        
-        if ($this->authentication->is_loggedin()) {           
+
+        if ($this->authentication->is_loggedin()) {
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-            $anuncios = $this->anuncio_model->get_anuncios_para_cliente($cliente->id);            
-        }else{
+            $anuncios = $this->anuncio_model->get_anuncios_para_cliente($cliente->id);
+        } else {
             $anuncios = $this->anuncio_model->get_ultimos_anuncios();
-        }  
-                
+        }
+
         if (!$anuncios) {
             $anuncios = array();
         }
@@ -357,6 +358,12 @@ class Vendedor extends MY_Controller {
             $pagina = 1;
         }
 
+        if ($this->authentication->is_loggedin()) {
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $params["cliente_id"] = $cliente->id;
+        }
+
         //$limit = $this->config->item("principal_default_per_page");
         $limit = 5;
         $offset = $limit * ($pagina - 1);
@@ -391,6 +398,10 @@ class Vendedor extends MY_Controller {
         $this->template->load_view('home/vendedores/tabla_resultados', $data);
     }
 
+    /**
+     * 
+     * @param type $id
+     */
     public function ver_vendedor($id) {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $vendedor = $this->vendedor_model->get_vendedor($id);
@@ -409,25 +420,41 @@ class Vendedor extends MY_Controller {
             $localizacion->poblacion = $res->nombre;
         }
 
+        $anuncios = $this->anuncio_model->get_anuncios_del_vendedor($id, 3);
+        $params = array(
+            "vendedor_id" => $id
+        );
+        $productos = $this->producto_model->get_site_search($params, 4, 0, "p.id", "ASC");
+        if ($productos["total"] > 0) {
+            $prods = $productos["productos"];
+        } else {
+            $prods = false;
+        }
+
         $vendedor_image = false;
 
         if ($this->authentication->is_loggedin()) {
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-            $invitacion = $this->invitacion_model->get_by(array("cliente_id"=>$cliente->id,"vendedor_id"=>$vendedor->id));            
-        }else{
-            $invitacion=true;
+            $invitacion = $this->invitacion_model->get_by(array("cliente_id" => $cliente->id, "vendedor_id" => $vendedor->id));
+        } else {
+            $invitacion = true;
         }
 
         $data = array(
             "vendedor" => $vendedor,
             "vendedor_image" => $vendedor_image,
             "localizacion" => $localizacion,
-            "invitacion" => $invitacion);
+            "invitacion" => $invitacion,
+            "anuncios" => $anuncios,
+            "productos" => $prods);
 
         $this->template->load_view('home/vendedores/ficha', $data);
     }
 
+    /**
+     * 
+     */
     public function upload_image() {
         $this->load->config('upload', TRUE);
         $this->load->library('UploadHandler', $this->config->item('vendedor', 'upload'));

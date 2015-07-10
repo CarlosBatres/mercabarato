@@ -132,6 +132,7 @@ class Usuario extends MY_Controller {
                         "descripcion" => ($this->input->post('descripcion') != '') ? $this->input->post('descripcion') : null,
                         "sitio_web" => ($this->input->post('sitio_web') != '') ? $this->input->post('sitio_web') : null,
                         "actividad" => ($this->input->post('actividad') != '') ? $this->input->post('actividad') : null,
+                        "nif_cif" => ($this->input->post('nif_cif') != '') ? $this->input->post('nif_cif') : null,
                         "filename" => $filename
                     );
                     $this->vendedor_model->update($vendedor->id, $data_vendedor);

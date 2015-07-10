@@ -54,9 +54,17 @@ class Panel_vendedores_tarifas extends MY_Controller {
     public function detalles_tarifa() {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
+        
+        $productos_seleccionados = $this->session->userdata('pv_tarifas_incluir_ids_productos');
+        $mas_de_uno=false;
+        if($productos_seleccionados){
+            if(sizeof($productos_seleccionados)>1){
+                $mas_de_uno=true;
+            }
+        }
 
         $this->template->add_js("modules/admin/panel_vendedores/tarifa_detalles.js");
-        $this->template->load_view('admin/panel_vendedores/tarifas/detalles_tarifa');
+        $this->template->load_view('admin/panel_vendedores/tarifas/detalles_tarifa',array("mas_de_uno"=>$mas_de_uno));
     }
 
     /**
@@ -106,10 +114,23 @@ class Panel_vendedores_tarifas extends MY_Controller {
                 $clientes_ids = $this->session->userdata('pv_tarifas_incluir_ids_clientes');
 
                 foreach ($productos_ids as $producto) {
+                    $producto_obj=$this->producto_model->get($producto);
+                    if($this->input->post('porcentaje') != ''){
+                        $monto_a_deducir=$producto_obj->precio*($this->input->post('porcentaje')/100);
+                        $nuevo_costo=$producto_obj->precio-$monto_a_deducir;
+                        $porcentaje=$this->input->post('porcentaje');
+                    }elseif($this->input->post('nuevo_costo') != ''){
+                        $nuevo_costo=$this->input->post('nuevo_costo');
+                        $porcentaje=0;
+                    }else{
+                        $nuevo_costo=0;
+                        $porcentaje=0;
+                    }
+                    
                     $data_tarifa = array(
                         "comentario" => ($this->input->post('comentario') != '') ? $this->input->post('comentario') : null,
-                        "nuevo_costo" => ($this->input->post('nuevo_costo') != '') ? $this->input->post('nuevo_costo') : "0",
-                        "porcentaje" => ($this->input->post('porcentaje') != '') ? $this->input->post('porcentaje') : null,
+                        "nuevo_costo" => $nuevo_costo,
+                        "porcentaje" => $porcentaje,
                         "producto_id" => $producto
                     );
 

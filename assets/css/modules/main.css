@@ -180,7 +180,7 @@ body .box_registro{
     font-size: 14px;
     font-weight: bold;
     font-family: "Roboto", Helvetica, Arial, sans-serif;
-    padding-left: 10px;
+    padding-left: 10px;        
 }
 
 ul.nav-stacked ul.nav-stacked > li > a {
@@ -231,3 +231,4 @@ span.arrow {
 .row-less-padding-l{padding-left:2px;}
 
 .preview_imagen_empresa{max-height: 300px;}
+

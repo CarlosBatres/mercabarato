@@ -28,6 +28,19 @@ function updateResultados() {
             $('#tabla-resultados').unblock();
             $('#tabla-resultados').html(response);
             bind_pagination_links();
+
+            $("input[name='select_all']").click(function() {
+                if ($(this).is(':checked')) {
+                    $("input[name='mover']").each(function() {
+                        $(this).prop("checked", true);
+                    });
+
+                } else {
+                    $("input[name='mover']").each(function() {
+                        $(this).prop("checked", false);
+                    });
+                }
+            });
         }
     });
 }

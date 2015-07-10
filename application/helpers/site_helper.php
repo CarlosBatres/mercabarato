@@ -175,6 +175,23 @@ function truncate($text, $chars = 25) {
     return $text;
 }
 
+function truncate_simple($text, $chars = 25) {
+    $flag = false;
+    if (strlen($text) > $chars) {
+        $flag = true;
+    }
+    
+    $text = $text . " ";
+    $text = substr($text, 0, $chars);    
+
+    if ($flag) {
+        $text = $text . "...";
+    }
+
+    return $text;
+    
+}
+
 function keywords_listado() {
     $data = array(
         'Construcción' => 'Construcción',

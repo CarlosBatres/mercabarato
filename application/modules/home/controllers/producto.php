@@ -176,10 +176,11 @@ class Producto extends MY_Controller {
     private function _build_categorias_searchparams($categorias) {
         if (!empty($categorias)) {
             $html = "";
-            foreach ($categorias as $categoria) {
-                if (isset($categoria['subcategorias'])) {
+            foreach ($categorias as $categoria) {                
+                $texto=fix_category_text($categoria['nombre']);
+                if (isset($categoria['subcategorias'])) {                    
                     $html.='<li class="seleccion_categoria">';
-                    $html.='<a href="" data-id="' . $categoria['id'] . '">' . fix_category_text($categoria['nombre']);
+                    $html.='<a href="" data-id="' . $categoria['id'] . '">' . $texto;
                     if ($categoria['padre_id'] == '0') {
                         $html.='<span class="caret arrow"></span></a>';
                     } else {
@@ -192,7 +193,7 @@ class Producto extends MY_Controller {
                     $html.='</ul>';
                 } else {
                     $html.='<li class="seleccion_categoria final">';
-                    $html.='<a href="" data-id="' . $categoria['id'] . '">' . fix_category_text($categoria['nombre']);
+                    $html.='<a href="" data-id="' . $categoria['id'] . '">' . $texto;
                     $html.='</a>';
                 }
                 $html.='</li>';
