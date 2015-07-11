@@ -5,5 +5,5 @@ $config['protocol'] = 'smtp';
 $config['smtp_host'] = 'mail.micesc-dev.com';
 $config['smtp_user'] = 'administrator@micesc-dev.com';
 $config['smtp_pass'] = 'enIFInxheOyy';
-$config['smtp_port'] = '465';
+$config['smtp_port'] = '25';
 $config['mailtype'] = 'html';
