@@ -46,7 +46,7 @@
                                 ?>
                             </p>
                         </div>
-                        <?php if (!isset($vendedor->invitacion_cliente_id)):  ?>
+                        <?php if (!isset($vendedor->invitacion_cliente_id) && $logged_in):  ?>
                         <div class="row">
                             <div class="text-center">
                                 <button type="button" class="btn btn-template-primary" data-id="<?php echo $vendedor->id ?>" data-toggle="modal" data-target="#myModal"> Solicitar Invitación</button>

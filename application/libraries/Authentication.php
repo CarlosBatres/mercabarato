@@ -164,12 +164,14 @@ class Authentication {
             $user = $this->ci->db
                     ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username, ' . $this->password_field . ' as password')
                     ->where($this->username_field, $username)
+                    ->where('activo', '1')
                     ->where('is_admin', '1')
                     ->get($this->user_table);
         } else {
             $user = $this->ci->db
                     ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username, ' . $this->password_field . ' as password')
                     ->where($this->username_field, $username)
+                    ->where('activo', '1')
                     ->get($this->user_table);
         }
 

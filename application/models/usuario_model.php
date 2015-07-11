@@ -33,13 +33,13 @@ class Usuario_model extends MY_Model {
      */
     public function get_full_identidad($usuario_id) {
         $identidad_obj = new Identidad();
-        
+
         $this->db->select("id,email,activo,fecha_creado,ultimo_acceso,ip_address,is_admin");
         $this->db->from("usuario");
         $this->db->where("id", $usuario_id);
         $result = $this->db->get();
 
-        if ($result->num_rows() > 0) {            
+        if ($result->num_rows() > 0) {
             $identidad_obj->usuario = $result->row();
         } else {
             return false;
@@ -50,7 +50,7 @@ class Usuario_model extends MY_Model {
         $this->db->where("usuario_id", $usuario_id);
         $result_cliente = $this->db->get();
 
-        if ($result_cliente->num_rows() > 0) {            
+        if ($result_cliente->num_rows() > 0) {
             $identidad_obj->cliente = $result_cliente->row();
 
             $this->db->select("*");
@@ -59,7 +59,7 @@ class Usuario_model extends MY_Model {
             $result_vendedor = $this->db->get();
 
             if ($result_vendedor->num_rows() > 0) {
-                $identidad_obj->vendedor = $result_vendedor->row();                
+                $identidad_obj->vendedor = $result_vendedor->row();
             }
         }
 
@@ -93,6 +93,15 @@ class Usuario_model extends MY_Model {
             return false;
         }
     }
+    
+    public function verificar_email($secret_key) {
+        $this->usuario_model->update_by(array("secret_key" => $secret_key), array("activo"=> "1","secret_key"=>null));
+        if($this->db->affected_rows()>=1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 }
 
@@ -107,6 +116,7 @@ class Identidad {
         $this->usuario = null;
         $this->vendedor = null;
     }
+
     /**
      * 
      * @return boolean
@@ -157,6 +167,5 @@ class Identidad {
         } else {
             return false;
         }
-    }
-
+    }    
 }

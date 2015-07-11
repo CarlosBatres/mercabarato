@@ -315,9 +315,9 @@ class Vendedor extends MY_Controller {
         if ($this->authentication->is_loggedin()) {
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-            $anuncios = $this->anuncio_model->get_anuncios_para_cliente($cliente->id);
+            $anuncios = $this->anuncio_model->get_anuncios_para_cliente($cliente->id);            
         } else {
-            $anuncios = $this->anuncio_model->get_ultimos_anuncios();
+            $anuncios = $this->anuncio_model->get_ultimos_anuncios();            
         }
 
         if (!$anuncios) {
@@ -362,6 +362,9 @@ class Vendedor extends MY_Controller {
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $params["cliente_id"] = $cliente->id;
+            $logged_in=true;
+        }else{
+            $logged_in=false;
         }
 
         //$limit = $this->config->item("principal_default_per_page");
@@ -393,7 +396,8 @@ class Vendedor extends MY_Controller {
 
         $data = array(
             "vendedores" => $vendedores_array["vendedores"],
-            "pagination" => $pagination);
+            "pagination" => $pagination,
+            "logged_in"=>$logged_in);
 
         $this->template->load_view('home/vendedores/tabla_resultados', $data);
     }

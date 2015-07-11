@@ -18,9 +18,18 @@ class Usuario extends MY_Controller {
             $this->template->add_js('modules/home/registro.js');
             $paises = $this->pais_model->get_all();
             $keywords = keywords_listado();
-            $data = array("paises" => $paises ,"keywords"=>$keywords);
+            $data = array("paises" => $paises, "keywords" => $keywords);
 
             $this->template->load_view('home/usuario/registro', $data);
+        } else {
+            redirect('');
+        }
+    }
+
+    public function view_registro_exito() {
+        if (!$this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->load_view('home/usuario/registro_exito');
         } else {
             redirect('');
         }
@@ -225,6 +234,19 @@ class Usuario extends MY_Controller {
                 } else {
                     echo json_encode(TRUE);
                 }
+            }
+        } else {
+            redirect('404');
+        }
+    }
+
+    public function verificar_email($secret_key) {        
+        if ($this->usuario_model->verificar_email($secret_key)) {
+            if (!$this->authentication->is_loggedin()) {
+                $this->template->set_title('Mercabarato - Anuncios y subastas');
+                $this->template->load_view('home/usuario/registro_completado');
+            } else {
+                redirect('');
             }
         } else {
             redirect('404');
