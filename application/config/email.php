@@ -2,8 +2,8 @@
 
 /*EMAIL CONFIG*/
 $config['protocol'] = 'smtp';
-$config['smtp_host'] = 'ssl://smtp.googlemail.com';
-$config['smtp_user'] = 'username';
-$config['smtp_pass'] = 'pass';
+$config['smtp_host'] = 'mail.micesc-dev.com';
+$config['smtp_user'] = 'administrator@micesc-dev.com';
+$config['smtp_pass'] = 'enIFInxheOyy';
 $config['smtp_port'] = '465';
 $config['mailtype'] = 'html';
