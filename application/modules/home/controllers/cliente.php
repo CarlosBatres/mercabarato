@@ -85,6 +85,7 @@ class Cliente extends MY_Controller {
                     $this->email->subject('Active su cuenta');
                     $data_email = array("link" => site_url('confirmar_registro').'/'.$secret_key);
                     $this->email->message($this->load->view('home/emails/confirmar_registro', $data_email, true));
+                    $this->email->send();
                 }
                 redirect('registro_exitoso');
             } else {
