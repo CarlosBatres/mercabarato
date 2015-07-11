@@ -23,13 +23,16 @@ class Cliente extends MY_Controller {
             $user_id = $this->authentication->create_user($username, $password);
 
             if ($user_id !== FALSE) {
+                $secret_key = substr(md5(uniqid(mt_rand(), true)), 0, 30);
+
                 $ip_address = $this->session->userdata('ip_address');
                 $usuario = $this->usuario_model->get($user_id);
                 $usuario->ip_address = $ip_address;
                 $usuario->fecha_creado = date("Y-m-d H:i:s");
                 $usuario->ultimo_acceso = date("Y-m-d H:i:s");
-                $usuario->activo = 1;
+                $usuario->activo = 0;
                 $usuario->is_admin = 0;
+                $usuario->secret_key = $secret_key;
 
                 $this->usuario_model->update($user_id, $usuario);
 
@@ -73,8 +76,17 @@ class Cliente extends MY_Controller {
                     $this->localizacion_model->insert($data_localizacion);
                 }
 
-                $this->authentication->login($username, $password);
-                redirect('');
+                //$this->authentication->login($username, $password);
+                if ($this->config->item('emails_enabled')) {
+                    $this->load->library('email');
+                    $this->email->from($this->config->item('site_admin_email'), 'Mercabarato.com');
+                    $this->email->to($username);
+
+                    $this->email->subject('Active su cuenta');
+                    $data_email = array("link" => site_url('confirmar_registro').'/'.$secret_key);
+                    $this->email->message($this->load->view('home/emails/confirmar_registro', $data_email, true));
+                }
+                redirect('registro_exitoso');
             } else {
                 // There was an ERROR creating the user
                 redirect('');
@@ -187,21 +199,21 @@ class Cliente extends MY_Controller {
             $formValues = $this->input->post();
 
             if ($formValues !== false) {
-                $vendedor_id = $this->input->post('vendedor_id');                                
+                $vendedor_id = $this->input->post('vendedor_id');
                 $user_id = $this->authentication->read('identifier');
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
                 $data = array(
                     "vendedor_id" => $vendedor_id,
                     "cliente_id" => $cliente->id,
-                    "titulo" => ($this->input->post('titulo') != '') ? $this->input->post('titulo') : null,                    
-                    "comentario"=>($this->input->post('mensaje') != '') ? $this->input->post('mensaje') : null, 
+                    "titulo" => ($this->input->post('titulo') != '') ? $this->input->post('titulo') : null,
+                    "comentario" => ($this->input->post('mensaje') != '') ? $this->input->post('mensaje') : null,
                     "estado" => "1",
                     "from_vendedor" => "0"
                 );
 
                 $this->invitacion_model->insert($data);
-                redirect('vendedores/ficha/'.$vendedor_id);
+                redirect('vendedores/ficha/' . $vendedor_id);
             }
         } else {
             redirect('');

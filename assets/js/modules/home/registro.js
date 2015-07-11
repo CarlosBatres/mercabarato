@@ -57,6 +57,7 @@ function validateForms() {
             password: {required: true},
             password_confirmar: {required: true, equalTo: password_comprador},
             nombres: {required: true},
+            apellidos: {required: true},
         },
         messages: {
             email: {
@@ -72,8 +73,11 @@ function validateForms() {
                 equalTo: "Las contraseñas tienen que ser iguales"
             },
             nombres: {
-                required: "El nombre es requerido."
+                required: "Ingresa tu Nombre(s)."
             },
+            apellidos: {
+                required: "Ingresa tu(s) Apellido(s)."
+            }
         }
     });   
     
