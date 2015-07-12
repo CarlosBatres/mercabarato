@@ -33,13 +33,15 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">                                                                        
-                                    <?php echo form_open('', 'id=""'); ?>                 
+                                    <?php echo form_open('seguros/registrar', 'id="seguro_hogar"'); ?>                 
+                                    <input type="hidden" name="tipo" value="seguro_hogar">
                                     <div class="row">
                                         <h3>Tipo de Vivienda</h3>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Edificio (Piso / Apartamento )</label>
                                                 <select class="form-control" name="edificio_apartamento">
+                                                    <option value="">Seleccione Uno</option>
                                                     <option value="Intermedio">Intermedio</option>
                                                     <option value="Atico">Atico</option>
                                                     <option value="Bajo">Bajo</option>
@@ -51,6 +53,7 @@
                                             <div class="form-group">
                                                 <label>Edificio (Vivienda unifamiliar)</label>
                                                 <select class="form-control" name="edificio_vivienda">
+                                                    <option value="">Seleccione Uno</option>
                                                     <option value="Adosada">Adosada</option>
                                                     <option value="Individual">Individual</option>
                                                     <option value="Pareada">Pareada</option>                                                    
@@ -76,6 +79,7 @@
                                             <div class="form-group">
                                                 <label>Uso</label>
                                                 <select class="form-control" name="uso">
+                                                    <option value="">Seleccione Uno</option>
                                                     <option value="Habitual">Habitual</option>
                                                     <option value="Temporada">Temporada</option>                                                    
                                                 </select>
@@ -85,6 +89,7 @@
                                             <div class="form-group">
                                                 <label>Régimen de Vivienda</label>
                                                 <select class="form-control" name="regimen_vivienda">
+                                                    <option value="">Seleccione Uno</option>
                                                     <option value="Inquilino Alquiler">Inquilino Alquiler</option>
                                                     <option value="Propiedad en Alquiler">Propiedad en Alquiler</option>
                                                     <option value="Propiedad / Propietario">Propiedad / Propietario</option>                                                    
@@ -94,7 +99,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Número de Baños</label>
-                                                <input type="text" class="form-control" name="numero_baños">
+                                                <input type="text" class="form-control" name="numero_banos">
                                             </div>
                                         </div>
                                     </div>
@@ -107,6 +112,7 @@
                                             <div class="form-group">
                                                 <label>Vivienda de construcción estandar</label>
                                                 <select class="form-control" name="construccion_estandar">
+                                                    <option value="">Seleccione Uno</option>
                                                     <option value="Si">Si</option>
                                                     <option value="No">No</option>                                                    
                                                 </select>
@@ -116,21 +122,24 @@
                                             <div class="form-group">
                                                 <label>Calidad de construcción</label>
                                                 <select class="form-control" name="calidad_construccion">
+                                                    <option value="">Seleccione Uno</option>
                                                     <option value="Media">Media</option>
                                                     <option value="Alta">Alta</option>                                                    
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>  
+                                    <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Año de construcción</label>
-                                                <input type="text" class="form-control" name="año_construccion">
+                                                <input type="text" class="form-control" name="year_construccion">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Año última reforma (si procede)</label>
-                                                <input type="text" class="form-control" name="año_ultima_reforma">
+                                                <input type="text" class="form-control" name="year_ultima_reforma">
                                             </div>
                                         </div>
                                     </div>
@@ -141,16 +150,16 @@
                                         <h3>Seguridad</h3>
                                         <div class="col-md-12">
                                             <div class="checkbox">
-                                                <label><input type="checkbox" name="sistema_seguridad" value="">Sistema de alarmas conectado a central de alarmas</label>
+                                                <label><input type="checkbox" name="sistema_seguridad" value="true">Sistema de alarmas conectado a central de alarmas</label>
                                             </div>
                                             <div class="checkbox">
-                                                <label><input type="checkbox" name="rejas_ventana" value="">Rejas en ventanas</label>
+                                                <label><input type="checkbox" name="rejas_ventana" value="true">Rejas en ventanas</label>
                                             </div>
                                             <div class="checkbox">
-                                                <label><input type="checkbox" name="puerta_acorazada" value="">Puerta acorazada</label>
+                                                <label><input type="checkbox" name="puerta_acorazada" value="true">Puerta acorazada</label>
                                             </div>
                                             <div class="checkbox">
-                                                <label><input type="checkbox" name="prestamo_hipotecario" value="">Marque si tiene un prestamo hipotecario</label>
+                                                <label><input type="checkbox" name="prestamo_hipotecario" value="true">Marque si tiene un prestamo hipotecario</label>
                                             </div>
                                         </div>
                                     </div>
@@ -186,7 +195,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Daños estéticos</label>
-                                                <input type="text" class="form-control" name="daños_esteticos">
+                                                <input type="text" class="form-control" name="danos_esteticos">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -254,7 +263,8 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">                                                                        
-                                    <?php echo form_open('', 'id=""'); ?>                 
+                                    <?php echo form_open('seguros/registrar', 'id="seguro_riesgo"'); ?>                 
+                                    <input type="hidden" name="tipo" value="seguro_riesgo">
                                     <div class="row">
                                         <h3>Datos Personales</h3>
                                         <div class="col-md-4">
@@ -267,6 +277,7 @@
                                             <div class="form-group">
                                                 <label>Sexo</label>
                                                 <select class="form-control" name="sexo">
+                                                    <option value="">Seleccione Uno</option>
                                                     <option value="Hombre">Hombre</option>
                                                     <option value="Mujer">Mujer</option>                                                   
                                                 </select>
@@ -342,7 +353,8 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">                                                                        
-                                    <?php echo form_open('', 'id=""'); ?>                 
+                                    <?php echo form_open('seguros/registrar', 'id="seguro_salud"'); ?>                 
+                                    <input type="hidden" name="tipo" value="seguro_salud">
                                     <div class="row">
                                         <h3>Datos de los Asegurados</h3>
                                         <div class="col-md-4">
@@ -355,6 +367,7 @@
                                             <div class="form-group">
                                                 <label>Numero de Personas</label>
                                                 <select class="form-control" name="numero_personas">
+                                                    <option value="">Seleccione Uno</option>
                                                     <?php for ($i = 1; $i <= 12; $i++): ?>
                                                         <option value="<?php echo $i ?>"><?php echo $i; ?></option>
                                                     <?php endfor; ?>                                                                                                        
@@ -368,13 +381,13 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Nombres</label>
-                                                <input type="text" class="form-control" name="nombres">
+                                                <input type="text" class="form-control" name="nombres_titular">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Apellidos</label>
-                                                <input type="text" class="form-control" name="apellidos">
+                                                <input type="text" class="form-control" name="apellidos_titular">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -387,6 +400,7 @@
                                             <div class="form-group">
                                                 <label>Sexo</label>
                                                 <select class="form-control" name="sexo">
+                                                    <option value="">Seleccione Uno</option>
                                                     <option value="Hombre">Hombre</option>
                                                     <option value="Mujer">Mujer</option>                                                   
                                                 </select>
@@ -396,6 +410,7 @@
                                             <div class="form-group">
                                                 <label>Tiene trabajo remunerado?</label>
                                                 <select class="form-control" name="trabajo_remunerado">
+                                                    <option value="">Seleccione Uno</option>
                                                     <option value="Si">Si</option>
                                                     <option value="No">No</option>                                                   
                                                 </select>
@@ -405,11 +420,11 @@
                                     <div class="row">
                                         <h3>Modalidad de contratación</h3>
                                         <div class="col-md-12">
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" name="extrahospitalaria" value="">Reembolso Extrahospitalaria</label>
+                                            <div class="radio">
+                                                <label><input type="radio" name="modalidad_contratacion" value="extrahospitalaria">Reembolso Extrahospitalaria</label>
                                             </div>
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" name="hospitalaria" value="">Reembolso Hospitalaria</label>
+                                            <div class="radio">
+                                                <label><input type="radio" name="modalidad_contratacion" value="hospitalaria">Reembolso Hospitalaria</label>
                                             </div>                                            
                                         </div>
                                     </div>
@@ -469,13 +484,15 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">                                                                        
-                                    <?php echo form_open('', 'id=""'); ?>                 
+                                    <?php echo form_open('seguros/registrar', 'id="seguro_vehiculos"'); ?>                 
+                                    <input type="hidden" name="tipo" value="seguro_vehiculos">
                                     <div class="row">
                                         <h3>Tipo de Vehiculo</h3>                                        
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Tipo de vehiculo</label>
                                                 <select class="form-control" name="tipo_vehiculo">
+                                                    <option value="">Seleccione Uno</option>
                                                     <option value="Turismo">Turismo</option>
                                                     <option value="Motocicleta Ciclomotor">Motocicleta Ciclomotor</option>
                                                     <option value="Camión">Camión</option>
@@ -500,6 +517,7 @@
                                             <div class="form-group">
                                                 <label>Combustible</label>
                                                 <select class="form-control" name="vehiculo_combustible">
+                                                    <option value="">Seleccione Uno</option>
                                                     <option value="Gasoil-Diesel">Gasoil-Diesel</option>
                                                     <option value="Gasolina">Gasolina</option>
                                                     <option value="Electricidad">Electricidad</option>
@@ -514,6 +532,7 @@
                                             <div class="form-group">
                                                 <label>Combustible</label>
                                                 <select class="form-control" name="vehiculo_nro_puertas">
+                                                    <option value="">Seleccione Uno</option>
                                                     <option value="0">Sin puertas</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -538,78 +557,91 @@
                                     <hr>
                                     <div class="row">
                                         <h3>Conductor habitual</h3> 
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Fecha nacimiento</label>
-                                                <input type="text" class="form-control" name="fecha_nacimiento">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Fecha nacimiento</label>
+                                                        <input type="text" class="form-control" name="fecha_nacimiento">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Sexo</label>
+                                                        <select class="form-control" name="sexo">
+                                                            <option value="">Seleccione Uno</option>
+                                                            <option value="Hombre">Hombre</option>
+                                                            <option value="Mujer">Mujer</option>                                                   
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Estado civil</label>
+                                                        <select class="form-control" name="estado_civil">
+                                                            <option value="">Seleccione Uno</option>
+                                                            <option value="Soltero/a">Soltero/a</option>
+                                                            <option value="Casado/a">Casado/a</option>
+                                                            <option value="Divorciado/a">Divorciado/a</option>
+                                                            <option value="Separado/a">Separado/a</option>
+                                                            <option value="Viudo/a">Viudo/a</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Sexo</label>
-                                                <select class="form-control" name="sexo">
-                                                    <option value="Hombre">Hombre</option>
-                                                    <option value="Mujer">Mujer</option>                                                   
-                                                </select>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Tipo de documento</label>
+                                                        <select class="form-control" name="tipo_documento">
+                                                            <option value="">Seleccione Uno</option>
+                                                            <option value="NIF">NIF</option>
+                                                            <option value="DNI (Otros Paises)">DNI (Otros Paises)</option>
+                                                            <option value="NIE">NIE</option>                                                    
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>N° Documento</label>
+                                                        <input type="text" class="form-control" name="numero_documento">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Fecha de permiso</label>
+                                                        <input type="text" class="form-control" name="fecha_permiso">
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Estado civil</label>
-                                                <select class="form-control" name="estado_civil">
-                                                    <option value="Soltero/a">Soltero/a</option>
-                                                    <option value="Casado/a">Casado/a</option>
-                                                    <option value="Divorciado/a">Divorciado/a</option>
-                                                    <option value="Separado/a">Separado/a</option>
-                                                    <option value="Viudo/a">Viudo/a</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Tipo de documento</label>
-                                                <select class="form-control" name="tipo_documento">
-                                                    <option value="NIF">NIF</option>
-                                                    <option value="DNI (Otros Paises)">DNI (Otros Paises)</option>
-                                                    <option value="NIE">NIE</option>                                                    
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>N° Documento</label>
-                                                <input type="text" class="form-control" name="numero_documento">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Fecha de permiso</label>
-                                                <input type="text" class="form-control" name="fecha_permiso">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Clase</label>
-                                                <select class="form-control" name="conductor_clase">
-                                                    <option value="LCC">LCC</option>
-                                                    <option value="A1">A1</option>
-                                                    <option value="A">A</option>
-                                                    <option value="B">B</option>
-                                                    <option value="A2">A2</option>
-                                                    <option value="AM">AM</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Codigo postal</label>
-                                                <input type="text" class="form-control" name="codigo_postal">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Provincia</label>
-                                                <input type="text" class="form-control" name="provincia">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Clase</label>
+                                                        <select class="form-control" name="conductor_clase">
+                                                            <option value="">Seleccione Uno</option>
+                                                            <option value="LCC">LCC</option>
+                                                            <option value="A1">A1</option>
+                                                            <option value="A">A</option>
+                                                            <option value="B">B</option>
+                                                            <option value="A2">A2</option>
+                                                            <option value="AM">AM</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Codigo postal</label>
+                                                        <input type="text" class="form-control" name="codigo_postal">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Provincia</label>
+                                                        <input type="text" class="form-control" name="provincia">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -669,28 +701,29 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">
                                 <div class="panel-body">                                                                        
-                                    <?php echo form_open('', 'id=""'); ?>                 
+                                    <?php echo form_open('seguros/registrar', 'id="seguro_otros"'); ?>                 
+                                    <input type="hidden" name="tipo" value="seguro_otros">
                                     <div class="row">
                                         <h3>Seleccione el tipo</h3>                                        
                                         <div class="col-md-12">
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" name="ahorro" value="">Ahorro</label>
+                                            <div class="radio">
+                                                <label><input type="radio" name="otros" value="ahorro">Ahorro</label>
                                             </div>
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" name="agropecuaria" value="">Agropecuaria</label>
+                                            <div class="radio">
+                                                <label><input type="radio" name="otros" value="agropecuaria">Agropecuaria</label>
                                             </div>
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" name="caza_pesca" value="">Caza y Pesca</label>
+                                            <div class="radio">
+                                                <label><input type="radio" name="otros" value="caza_pesca">Caza y Pesca</label>
                                             </div>
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" name="agroseguro" value="">Agroseguro</label>
+                                            <div class="radio">
+                                                <label><input type="radio" name="otros" value="agroseguro">Agroseguro</label>
                                             </div>
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" name="maquinaria" value="">Maquinaria</label>
+                                            <div class="radio">
+                                                <label><input type="radio" name="otros" value="maquinaria">Maquinaria</label>
                                             </div>
-                                            <div class="checkbox">
-                                                <label><input type="checkbox" name="otros" value="">Otros</label>
-                                            </div>
+                                            <div class="radio">
+                                                <label><input type="radio" name="otros" value="otros">Otros</label>
+                                            </div>                                            
                                         </div>
                                     </div>
                                     <hr>                                                                      

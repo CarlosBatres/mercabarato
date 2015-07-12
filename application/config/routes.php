@@ -73,6 +73,9 @@ $route['productos/ficha/(:any)'] = 'home/producto/ver_producto/$1';
 $route['productos/buscar/(:any)'] = 'home/producto/buscar_producto/$1';
 
 $route['seguros'] = 'home/seguro/view_seguros';
+$route['seguros/registrar'] = 'home/seguro/registrar_seguro';
+$route['seguros/terminar'] = 'home/seguro/crear_solicitud_seguro';
+$route['seguros/ajax_get_listado_resultados_prestadores'] = 'home/seguro/ajax_get_listado_resultados_prestadores';
 
 /* Apartado para vendedores */
  

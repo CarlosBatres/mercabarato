@@ -28,7 +28,7 @@
                     <td><?php echo $vendedor->ultimo_acceso; ?></td>                    
                     <td>
                         <div class="options">
-                            <a href="<?php echo site_url('admin/vendedores/editar') . '/' . $vendedor->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>
+<!--                            <a href="<?php echo site_url('admin/vendedores/editar') . '/' . $vendedor->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>-->
                             <a class="vendedor_borrar" href="<?php echo site_url('admin/vendedores/borrar') . '/' . $vendedor->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
                         </div>                           
                     </td>

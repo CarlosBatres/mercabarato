@@ -37,8 +37,11 @@
                         <a href="<?php echo site_url('admin/resumen'); ?>"><i class="fa fa-fw fa-dashboard"></i> Resumen</a>
                     </li>                                                        
                     <li>
-                        <a href="<?php echo site_url('admin/vendedor_paquetes/listado_por_activar'); ?>"><i class="fa fa-money fa-fw"></i> Aprobar Paquete</a>
-                    </li>                    
+                        <a href="<?php echo site_url('admin/vendedor_paquetes/listado_por_activar'); ?>"><i class="fa fa-money fa-fw"></i> Activación de paquete</a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo site_url('admin/paquetes'); ?>"><i class="fa fa-fw fa-suitcase"></i> Paquetes</a>
+                    </li>
                     <li>
                         <a href="#"><i class="fa fa-tasks fa-fw"></i> Opciones Avanzadas<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
@@ -56,10 +59,7 @@
                             </li> 
                             <li>
                                 <a href="<?php echo site_url('admin/categorias'); ?>"><i class="fa fa-fw fa-tasks"></i> Categorias</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url('admin/paquetes'); ?>"><i class="fa fa-fw fa-suitcase"></i> Paquetes</a>
-                            </li>
+                            </li>                            
                         </ul>                         
                     </li>
 
@@ -76,7 +76,7 @@
     </div>
     <!-- /#page-wrapper -->
 
-     <footer id="footer">
+    <footer id="footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">

@@ -30,17 +30,15 @@ class Paquete extends MY_Controller {
      */
     public function crear() {
         $formValues = $this->input->post();
-
         if ($formValues !== false) {
-            $accion = $this->input->post('accion');
-            if ($accion === "item-crear") {
-                // TODO: Como transormar la cantidad de meses en datetime para sumarlo                
-                if ($this->input->post('limite_productos') == "" or $this->input->post('limite_productos') == 0) {
+            $tipo = $this->input->post('tipo');
+            if ($tipo == "productos") {
+                if ($this->input->post('limite_productos') == "") {
                     $limite_productos = -1;
                 } else {
                     $limite_productos = $this->input->post('limite_productos');
                 }
-                if ($this->input->post('limite_anuncios') == "" or $this->input->post('limite_anuncios') == 0) {
+                if ($this->input->post('limite_anuncios') == "") {
                     $limite_anuncios = -1;
                 } else {
                     $limite_anuncios = $this->input->post('limite_anuncios');
@@ -52,21 +50,31 @@ class Paquete extends MY_Controller {
                     "limite_anuncios" => $limite_anuncios,
                     "duracion" => $this->input->post('duracion'),
                     "costo" => $this->input->post('costo'),
-                    "orden" => $this->input->post('orden'),
+                    "orden" => ($this->input->post('orden') != '') ? $this->input->post('orden') : 0,
                     "activo" => 1,
                     "mostrar" => $this->input->post('mostrar'),
+                    "infocompra"=>0
                 );
-
-                $this->paquete_model->insert($data);
-                redirect('admin/paquetes');
             } else {
-                redirect('admin');
+                $data = array(
+                    "nombre" => $this->input->post('nombre'),
+                    "descripcion" => $this->input->post('descripcion'),
+                    "limite_productos" => 0,
+                    "limite_anuncios" => 0,
+                    "duracion" => $this->input->post('duracion'),
+                    "costo" => $this->input->post('costo'),
+                    "orden" => ($this->input->post('orden') != '') ? $this->input->post('orden') : 0,
+                    "activo" => 1,
+                    "mostrar" => $this->input->post('mostrar'),
+                    "infocompra"=>1
+                );
             }
-        } else {
-            $this->template->set_title("Panel de Administracion - Mercabarato.com");
-            //$this->template->add_js("fileupload.js");
-            //$this->template->add_js("modules/admin/paquetes.js");
 
+            $this->paquete_model->insert($data);
+            redirect('admin/paquetes');
+        } else {
+            $this->template->set_title("Panel de Administracion - Mercabarato.com");            
+            $this->template->add_js("modules/admin/paquetes.js");
             $this->template->load_view('admin/paquete/nuevo');
         }
     }
@@ -122,11 +130,11 @@ class Paquete extends MY_Controller {
             "total" => $paquetes_array["total"],
             "hasta" => ($pagina * $limit < $paquetes_array["total"]) ? $pagina * $limit : $paquetes_array["total"],
             "desde" => (($pagina * $limit) - $limit) + 1);
-        $pagination=  build_paginacion($search_params);
-        
+        $pagination = build_paginacion($search_params);
+
         $data = array(
             "paquetes" => $paquetes_array["paquetes"],
-            "pagination"=>$pagination);
+            "pagination" => $pagination);
 
         $this->template->load_view('admin/paquete/tabla_resultados', $data);
     }
