@@ -94,5 +94,53 @@ class Vendedor_paquete_model extends MY_Model {
         } else {
             return FALSE;
         }
-    }              
+    }  
+    
+    
+    public function buscar_vendedores($params, $limit, $offset) {
+        $this->db->start_cache();
+        $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address,"
+                . "pais.nombre as pais,provincia.nombre as provincia,poblacion.nombre as poblacion");
+        $this->db->from("vendedor");
+        $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
+        $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
+        $this->db->join("localizacion", "usuario.id=localizacion.usuario_id", 'LEFT');
+        $this->db->join("pais", "pais.id=localizacion.pais_id", 'LEFT');
+        $this->db->join("provincia", "provincia.id=localizacion.provincia_id", 'LEFT');
+        $this->db->join("poblacion", "poblacion.id=localizacion.poblacion_id", 'LEFT');
+        $this->db->join("vendedor_paquete", "vendedor_paquete.vendedor_id=vendedor.id", 'INNER');                        
+        
+        $this->db->where('vendedor.habilitado', '1'); // Permitir vendedores no habilitados ??
+
+        if (isset($params['infocompra'])) {
+            $this->db->where('vendedor_paquete.infocompra', $params['infocompra']);
+        }   
+        if (isset($params['paquete_vigente'])) {            
+            $this->db->where('vendedor_paquete.aprobado', '1');
+            $this->db->where('vendedor_paquete.fecha_terminar >', date('Y-m-d'));
+        }
+
+        if (isset($params['poblacion'])) {
+            $this->db->where('localizacion.poblacion_id', $params['poblacion']);         
+        } elseif (isset($params['provincia'])) {
+            $this->db->where('localizacion.provincia_id', $params['provincia']);        
+        } elseif (isset($params['pais'])) {
+            $this->db->where('localizacion.pais_id', $params['pais']);            
+        }        
+
+
+        $this->db->stop_cache();
+        $count = $this->db->count_all_results();
+
+        if ($count > 0) {
+            $this->db->order_by('vendedor.id', 'asc');
+            $this->db->limit($limit, $offset);
+            $vendedores = $this->db->get()->result();
+            $this->db->flush_cache();
+            return array("vendedores" => $vendedores, "total" => $count);
+        } else {
+            $this->db->flush_cache();
+            return array("total" => 0);
+        }
+    }
 }

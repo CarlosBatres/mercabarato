@@ -352,7 +352,7 @@ class Vendedor extends MY_Controller {
             if ($this->input->post('poblacion') != "0") {
                 $params["poblacion"] = $this->input->post('poblacion');
             }
-
+                        
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;

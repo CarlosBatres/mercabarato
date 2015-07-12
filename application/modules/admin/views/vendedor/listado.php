@@ -95,12 +95,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row agregar-item">
-                <div class="col-md-12">            
-                    <a class="btn btn-lg btn-primary pull-right" href="<?php echo site_url('admin/vendedores/crear'); ?>">Nuevo Usuario</a>
-                </div>                
-            </div>
+            </div>            
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">

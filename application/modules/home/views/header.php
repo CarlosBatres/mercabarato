@@ -13,6 +13,9 @@
                 <div class="col-xs-5">                   
                     <?php if ($this->authentication->is_loggedin()) { ?>
                         <div class="login">
+                            <?php if ($this->authentication->user_is_admin()): ?>
+                            <a href="<?php echo site_url('admin') ?>" class="" data-toggle=""><i class="fa fa-cogs"></i> ADMIN</a>
+                            <?php endif;?>
                             <a href="<?php echo site_url('usuario/perfil') ?>" class="" data-toggle=""><i class="fa fa-user"></i> MI PERFIL</a>
                             <a href="<?php echo site_url('logout'); ?>"><i class="fa fa-power-off"></i> Cerrar Sesión</a>
                         </div>
