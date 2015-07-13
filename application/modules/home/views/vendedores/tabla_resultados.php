@@ -10,7 +10,7 @@
                     <div class="col-md-4 vendedor-img-container">
                         <div class="frame">
                             <span class="helper"></span>
-                            <a href="<?php echo site_url("vendedores/ficha/" . $vendedor->id) ?>">                                                
+                            <a href="<?php echo site_url("vendedores/" . $vendedor->unique_slug) ?>">                                                
                                 <?php if ($vendedor->filename == null): ?>
                                     <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="vendedor-img">
                                 <?php else: ?>
@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="row">
-                            <a href="<?php echo site_url("vendedores/ficha/" . $vendedor->id) ?>"><?php echo $vendedor->nombre; ?></a>
+                            <a href="<?php echo site_url("vendedores/" . $vendedor->unique_slug) ?>"><?php echo $vendedor->nombre; ?></a>
                             <?php if ($vendedor->descripcion != ""): ?>                         
                                 <p><?php echo truncate($vendedor->descripcion, 300) ?></p>  
                             <?php else: ?>

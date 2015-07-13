@@ -50,6 +50,7 @@ function bind_borrar_links() {
                 url: a_href,
                 cache: false,
                 complete: function() {
+                    $('#pagina').val('1');
                     updateResultados();
                     $.unblockUI();
                 }

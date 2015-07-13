@@ -117,6 +117,14 @@ class Vendedor extends MY_Controller {
      */
     public function submit_afiliacion($paquete_id) {
         if ($this->authentication->is_loggedin()) {
+            $config = array(
+                'table' => 'vendedor',
+                'id' => 'id',
+                'field' => 'unique_slug',
+                'title' => 'nombre',
+                'replacement' => 'dash' // Either dash or underscore
+            );
+            $this->load->library('slug', $config);
             $this->template->set_title('Mercabarato - Anuncios y subastas');
 
             if ($this->paquete_model->validar_paquete($paquete_id)) {
@@ -126,6 +134,7 @@ class Vendedor extends MY_Controller {
                 $data_cliente = $this->session->userdata('afiliacion_cliente');
                 $data_vendedor = $this->session->userdata('afiliacion_vendedor');
                 $this->cliente_model->update($cliente->id, $data_cliente);
+                $data_vendedor["unique_slug"] = $this->slug->create_uri($data_vendedor["nombre"]);
 
                 $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
                 if (!$vendedor) {
@@ -315,9 +324,9 @@ class Vendedor extends MY_Controller {
         if ($this->authentication->is_loggedin()) {
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-            $anuncios = $this->anuncio_model->get_anuncios_para_cliente($cliente->id);            
+            $anuncios = $this->anuncio_model->get_anuncios_para_cliente($cliente->id);
         } else {
-            $anuncios = $this->anuncio_model->get_ultimos_anuncios();            
+            $anuncios = $this->anuncio_model->get_ultimos_anuncios();
         }
 
         if (!$anuncios) {
@@ -352,7 +361,7 @@ class Vendedor extends MY_Controller {
             if ($this->input->post('poblacion') != "0") {
                 $params["poblacion"] = $this->input->post('poblacion');
             }
-                        
+
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
@@ -362,9 +371,9 @@ class Vendedor extends MY_Controller {
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $params["cliente_id"] = $cliente->id;
-            $logged_in=true;
-        }else{
-            $logged_in=false;
+            $logged_in = true;
+        } else {
+            $logged_in = false;
         }
 
         //$limit = $this->config->item("principal_default_per_page");
@@ -397,7 +406,7 @@ class Vendedor extends MY_Controller {
         $data = array(
             "vendedores" => $vendedores_array["vendedores"],
             "pagination" => $pagination,
-            "logged_in"=>$logged_in);
+            "logged_in" => $logged_in);
 
         $this->template->load_view('home/vendedores/tabla_resultados', $data);
     }
@@ -406,55 +415,60 @@ class Vendedor extends MY_Controller {
      * 
      * @param type $id
      */
-    public function ver_vendedor($id) {
+    public function ver_vendedor($slug) {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
-        $vendedor = $this->vendedor_model->get_vendedor($id);
-        $localizacion = $this->localizacion_model->get_by("usuario_id", $vendedor->usuario_id);
 
-        if ($localizacion->pais_id != null) {
-            $res = $this->pais_model->get($localizacion->pais_id);
-            $localizacion->pais = $res->nombre;
-        }
-        if ($localizacion->provincia_id != null) {
-            $res = $this->provincia_model->get($localizacion->provincia_id);
-            $localizacion->provincia = $res->nombre;
-        }
-        if ($localizacion->poblacion_id != null) {
-            $res = $this->poblacion_model->get($localizacion->poblacion_id);
-            $localizacion->poblacion = $res->nombre;
-        }
+        $vendedor = $this->vendedor_model->get_vendedor_by_slug($slug);
+        if ($vendedor) {
+            $localizacion = $this->localizacion_model->get_by("usuario_id", $vendedor->usuario_id);
 
-        $anuncios = $this->anuncio_model->get_anuncios_del_vendedor($id, 3);
-        $params = array(
-            "vendedor_id" => $id,
-            "mostrar_producto"=>"1"
-        );
-        $productos = $this->producto_model->get_site_search($params, 4, 0, "p.id", "ASC");
-        if ($productos["total"] > 0) {
-            $prods = $productos["productos"];
+            if ($localizacion->pais_id != null) {
+                $res = $this->pais_model->get($localizacion->pais_id);
+                $localizacion->pais = $res->nombre;
+            }
+            if ($localizacion->provincia_id != null) {
+                $res = $this->provincia_model->get($localizacion->provincia_id);
+                $localizacion->provincia = $res->nombre;
+            }
+            if ($localizacion->poblacion_id != null) {
+                $res = $this->poblacion_model->get($localizacion->poblacion_id);
+                $localizacion->poblacion = $res->nombre;
+            }
+
+            $anuncios = $this->anuncio_model->get_anuncios_del_vendedor($vendedor->id, 3);
+            $params = array(
+                "vendedor_id" => $vendedor->id,
+                "mostrar_producto" => "1"
+            );
+            $productos = $this->producto_model->get_site_search($params, 4, 0, "p.id", "ASC");
+            if ($productos["total"] > 0) {
+                $prods = $productos["productos"];
+            } else {
+                $prods = false;
+            }
+
+            $vendedor_image = false;
+
+            if ($this->authentication->is_loggedin()) {
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $invitacion = $this->invitacion_model->get_by(array("cliente_id" => $cliente->id, "vendedor_id" => $vendedor->id));
+            } else {
+                $invitacion = true;
+            }
+
+            $data = array(
+                "vendedor" => $vendedor,
+                "vendedor_image" => $vendedor_image,
+                "localizacion" => $localizacion,
+                "invitacion" => $invitacion,
+                "anuncios" => $anuncios,
+                "productos" => $prods);
+
+            $this->template->load_view('home/vendedores/ficha', $data);
         } else {
-            $prods = false;
+            redirect("404");
         }
-
-        $vendedor_image = false;
-
-        if ($this->authentication->is_loggedin()) {
-            $user_id = $this->authentication->read('identifier');
-            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-            $invitacion = $this->invitacion_model->get_by(array("cliente_id" => $cliente->id, "vendedor_id" => $vendedor->id));
-        } else {
-            $invitacion = true;
-        }
-
-        $data = array(
-            "vendedor" => $vendedor,
-            "vendedor_image" => $vendedor_image,
-            "localizacion" => $localizacion,
-            "invitacion" => $invitacion,
-            "anuncios" => $anuncios,
-            "productos" => $prods);
-
-        $this->template->load_view('home/vendedores/ficha', $data);
     }
 
     /**
