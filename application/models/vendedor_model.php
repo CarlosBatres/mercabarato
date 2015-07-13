@@ -93,6 +93,21 @@ class Vendedor_model extends MY_Model {
             return FALSE;
         }
     }
+    
+    public function get_vendedor_by_slug($slug) {
+        $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address");
+        $this->db->from($this->_table);
+        $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
+        $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
+        $this->db->where('vendedor.unique_slug', $slug);
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            return $result->row();
+        } else {
+            return FALSE;
+        }
+    }
 
     /**
      * Habilitar un vendedor

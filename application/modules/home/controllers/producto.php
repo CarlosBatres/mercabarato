@@ -147,29 +147,33 @@ class Producto extends MY_Controller {
         $producto = $this->producto_model->get($id);
         $producto_imagen = $this->producto_resource_model->get_producto_imagen($id);
 
-        if (!$this->authentication->is_loggedin() && $producto->mostrar_producto == '1') {
+        if ($this->authentication->is_loggedin()) {
             $this->visita_model->nueva_visita_producto($id);
-            if ($this->authentication->is_loggedin()) {
-                $user_id = $this->authentication->read('identifier');
-                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                $producto_tarifa = $this->producto_model->get_tarifas_from_producto($id, $cliente->id);
-                if ($producto_tarifa) {
-                    $tarifa = $producto_tarifa->tarifa_costo;
-                } else {
-                    $tarifa = false;
-                }
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $producto_tarifa = $this->producto_model->get_tarifas_from_producto($id, $cliente->id);
+            if ($producto_tarifa) {
+                $tarifa = $producto_tarifa->tarifa_costo;
             } else {
                 $tarifa = false;
             }
-
-
             $data = array(
                 "producto" => $producto,
                 "producto_imagen" => $producto_imagen,
                 "tarifa" => $tarifa);
             $this->template->load_view('home/producto/ficha', $data);
         } else {
-            redirect('404');
+            if ($producto->mostrar_producto == 1) {
+                $tarifa = false;
+
+                $data = array(
+                    "producto" => $producto,
+                    "producto_imagen" => $producto_imagen,
+                    "tarifa" => $tarifa);
+                $this->template->load_view('home/producto/ficha', $data);
+            }else{
+                redirect('404');
+            }
         }
     }
 

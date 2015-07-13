@@ -67,7 +67,7 @@ $route['registro_exitoso'] = 'home/usuario/view_registro_exito';
 $route['registrar_cliente'] = 'home/cliente/crear';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
 $route['vendedores'] = 'home/vendedor/view_buscador';
-$route['vendedores/ficha/(:any)'] = 'home/vendedor/ver_vendedor/$1';
+$route['vendedores/(:any)'] = 'home/vendedor/ver_vendedor/$1';
 
 $route['productos/ficha/(:any)'] = 'home/producto/ver_producto/$1';
 $route['productos/buscar/(:any)'] = 'home/producto/buscar_producto/$1';

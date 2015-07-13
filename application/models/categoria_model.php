@@ -11,7 +11,11 @@ if (!defined('BASEPATH')) {
  * Idealmente se van a modificar desde el admin solamente y mediante las funciones del sistema , NO MANUALMENTE!
  */
 class Categoria_model extends MY_Model {
-
+    
+     public $after_create = array( 'clear_cache' );
+     public $after_update = array( 'clear_cache' );
+     public $after_delete = array( 'clear_cache' );
+    
     function __construct() {
         parent::__construct();
         $this->_table = "categoria";
@@ -152,6 +156,10 @@ class Categoria_model extends MY_Model {
     public function get_full_tree(){        
         $categorias=$this->get_all_categorias_of("0");        
         return $categorias;        
+    }
+    
+    public function clear_cache(){
+        $this->db->cache_delete_all();
     }
 
 }

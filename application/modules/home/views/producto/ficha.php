@@ -24,7 +24,7 @@
             <div class="box">
                 <p class="lead"><?php echo $producto->descripcion ?></p>
                 <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
-                
+
                 <?php else: ?>
                     <?php if ($tarifa): ?>                    
                         <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
@@ -34,6 +34,9 @@
                     <?php endif; ?>                                                        
                 <?php endif; ?>                                                        
             </div>            
+            <?php if ($producto->link_externo != ""): ?>                        
+                <p class="text-right"><strong><a href="http://<?php echo $producto->link_externo ?>"><?php echo $producto->link_externo ?></a></strong></p>                    
+            <?php endif; ?>
         </div>
 
     </div>
