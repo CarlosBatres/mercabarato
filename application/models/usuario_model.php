@@ -16,11 +16,16 @@ class Usuario_model extends MY_Model {
      * @param type $email
      * @return boolean
      */
-    public function email_exists($email) {
-        $this->db->where('email', $email);
+    public function email_exists($email,$ignore_temporal=false) {
+        $this->db->where('email', $email);        
         $query = $this->db->get('usuario');
         if ($query->num_rows() > 0) {
-            return TRUE;
+            $user=$query->row();
+            if($user->temporal=="0"){
+                return TRUE;
+            }else{
+                return FALSE;
+            }            
         } else {
             return FALSE;
         }

@@ -50,7 +50,8 @@ function validateForms() {
 			url: SITE_URL+"home/usuario/check_email",
 			type: "post",
 			data: {
-				email: function(){ return email_comprador.val(); }
+				email: function(){ return email_comprador.val(); },
+                                ignore_temporal : true
 			}
 		}
             },

@@ -286,7 +286,7 @@ function bind_botones() {
         var id = $(this).data('id');
 
         $.post(SITE_URL + "seguros/terminar", {id: id}).done(function() {
-           // window.location.href = SITE_URL;
+            window.location.href = SITE_URL;
         });
     });
 }

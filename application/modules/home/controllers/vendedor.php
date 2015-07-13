@@ -426,7 +426,8 @@ class Vendedor extends MY_Controller {
 
         $anuncios = $this->anuncio_model->get_anuncios_del_vendedor($id, 3);
         $params = array(
-            "vendedor_id" => $id
+            "vendedor_id" => $id,
+            "mostrar_producto"=>"1"
         );
         $productos = $this->producto_model->get_site_search($params, 4, 0, "p.id", "ASC");
         if ($productos["total"] > 0) {

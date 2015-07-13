@@ -145,6 +145,7 @@ class Panel_vendedores_invitaciones extends MY_Controller {
                 $params["excluir_cliente_ids"] = $ids_array;
             }
             
+            $params["usuario_activo"] = "1"; // Solo usuarios activos
             $params["es_vendedor"] = "0";
             $params["excluir_admins"] = true;
             $pagina = $this->input->post('pagina');

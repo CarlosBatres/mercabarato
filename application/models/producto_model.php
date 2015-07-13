@@ -66,10 +66,10 @@ class Producto_model extends MY_Model {
      * @param type $order_by
      * @param type $order
      * @return type
-     */    
+     */
     public function get_site_search($params, $limit, $offset, $order_by, $order) {
         if (isset($params['cliente_id'])) {
-            /**-------------------------------------------------------------------------
+            /*             * -------------------------------------------------------------------------
              * 
              * Busqueda cuando se haya iniciado session, se hace en base a un cliente_id
              *
@@ -95,10 +95,10 @@ class Producto_model extends MY_Model {
                 } else {
                     $categorias_array = $arriba;
                 }
-                
-                $text = " AND p.categoria_id IN(" . implode(",",$categorias_array) . ")";
+
+                $text = " AND p.categoria_id IN(" . implode(",", $categorias_array) . ")";
                 $query.=$text;
-                $sub_query.=$text;                
+                $sub_query.=$text;
             }
             if (isset($params['precio_tipo1'])) {
                 if ($params['precio_tipo1'] != '0') {
@@ -130,7 +130,7 @@ class Producto_model extends MY_Model {
                     $query.=$text;
                     $sub_query.=$text;
                 }
-            }
+            }            
 
             $query.=") ";
 
@@ -145,7 +145,7 @@ class Producto_model extends MY_Model {
                 $query.=" AND p.habilitado=" . $params['habilitado'];
             }
             $query.=" GROUP BY p.id";
-            $query.=" ORDER BY ".$order_by ." ".$order;
+            $query.=" ORDER BY " . $order_by . " " . $order;
             $query.=" LIMIT " . $offset . " , " . $limit;
 
             $result = $this->db->query($query);
@@ -161,12 +161,12 @@ class Producto_model extends MY_Model {
                 return array("total" => 0);
             }
         } else {
-           /**-------------------------------------------------------------------------
+            /*             * -------------------------------------------------------------------------
              * 
              * Busqueda cuando no se haya iniciado sesion, no incluimos ni tarifas ni ofertas
              *
              * ------------------------------------------------------------------------- 
-             */            
+             */
             $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre FROM (producto p) ";
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
             $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
@@ -187,10 +187,10 @@ class Producto_model extends MY_Model {
                 } else {
                     $categorias_array = $arriba;
                 }
-                
-                $text = " AND p.categoria_id IN(" . implode(",",$categorias_array) . ")";
+
+                $text = " AND p.categoria_id IN(" . implode(",", $categorias_array) . ")";
                 $query.=$text;
-                $sub_query.=$text;                
+                $sub_query.=$text;
             }
             if (isset($params['precio_tipo1'])) {
                 if ($params['precio_tipo1'] != '0') {
@@ -224,18 +224,23 @@ class Producto_model extends MY_Model {
                 }
             }
             if (isset($params['vendedor_id'])) {
-                $text = " AND p.vendedor_id=".$params['vendedor_id'];
+                $text = " AND p.vendedor_id=" . $params['vendedor_id'];
+                $query.=$text;
+                $sub_query.=$text;
+            }
+            if (isset($params['mostrar_producto'])) {
+                $text = " AND p.mostrar_producto=" . $params['mostrar_producto'];
                 $query.=$text;
                 $sub_query.=$text;
             }
 
-            $query.=") ";            
-            
+            $query.=") ";
+
             if (isset($params["habilitado"])) {
                 $query.=" AND p.habilitado=" . $params['habilitado'];
             }
             $query.=" GROUP BY p.id";
-            $query.=" ORDER BY ".$order_by ." ".$order;
+            $query.=" ORDER BY " . $order_by . " " . $order;
             $query.=" LIMIT " . $offset . " , " . $limit;
 
             $result = $this->db->query($query);
@@ -249,7 +254,7 @@ class Producto_model extends MY_Model {
                 return array("productos" => $productos, "total" => $total->rows);
             } else {
                 return array("total" => 0);
-            }            
+            }
         }
     }
 
@@ -434,25 +439,26 @@ class Producto_model extends MY_Model {
         $this->visita_model->delete_by("producto_id", $id);
         parent::delete($id);
     }
+
     /**
      * 
      * @param type $producto_id
      * @param type $cliente_id
      * @return boolean
      */
-    public function get_tarifas_from_producto($producto_id,$cliente_id){
+    public function get_tarifas_from_producto($producto_id, $cliente_id) {
         $this->db->select('*');
         $this->db->from('productos_precios pp');
-        $this->db->where('pp.id',$producto_id);
-        $this->db->where('pp.cliente_id',$cliente_id);
-        $this->db->where_not_in('pp.tarifa_costo',null);
-        
+        $this->db->where('pp.id', $producto_id);
+        $this->db->where('pp.cliente_id', $cliente_id);
+        $this->db->where_not_in('pp.tarifa_costo', null);
+
         $tarifas = $this->db->get()->row();
         if (count($tarifas) > 0) {
             return $tarifas;
-        }else{
+        } else {
             return false;
         }
-    }    
+    }
 
 }

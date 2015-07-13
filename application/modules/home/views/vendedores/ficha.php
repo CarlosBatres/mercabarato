@@ -79,17 +79,23 @@
                                         <a class="nombre-productos" href="<?php echo site_url("productos/ficha/" . $producto->id) ?>"><?php echo truncate($producto->nombre, 100); ?></a>                                    
                                     </div>
 
-                                    <?php if (isset($producto->tarifa_costo)): ?>
+                                    <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
                                         <div class="row">
-                                            <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                                            <p class="precio"></p>
                                         </div>
-                                        <div class="row">                            
-                                            <p class="precio"><?php echo number_format($producto->tarifa_costo, '2') . ' ' . $this->config->item('money_sign') ?></p>
-                                        </div>                            
                                     <?php else: ?>
-                                        <div class="row">
-                                            <p class="precio"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
-                                        </div>
+                                        <?php if (isset($producto->tarifa_costo)): ?>
+                                            <div class="row">
+                                                <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                                            </div>
+                                            <div class="row">                            
+                                                <p class="precio"><strong><?php echo number_format($producto->tarifa_costo, '2') . ' ' . $this->config->item('money_sign') ?></strong></p>
+                                            </div>                            
+                                        <?php else: ?>
+                                            <div class="row">
+                                                <p class="precio"><strong><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></strong></p>
+                                            </div>
+                                        <?php endif; ?>
                                     <?php endif; ?>
 
                                 </div>

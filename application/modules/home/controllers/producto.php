@@ -89,6 +89,7 @@ class Producto extends MY_Controller {
             }
 
             $params["habilitado"] = "1";
+            $params["mostrar_producto"] = "1";
 
             if ($this->input->post('alt_layout')) {
                 $alt_layout = true;
@@ -146,26 +147,30 @@ class Producto extends MY_Controller {
         $producto = $this->producto_model->get($id);
         $producto_imagen = $this->producto_resource_model->get_producto_imagen($id);
 
-        $this->visita_model->nueva_visita_producto($id);
-        if ($this->authentication->is_loggedin()) {
-            $user_id = $this->authentication->read('identifier');
-            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);            
-            $producto_tarifa=$this->producto_model->get_tarifas_from_producto($id,$cliente->id);
-            if($producto_tarifa){
-                $tarifa=$producto_tarifa->tarifa_costo;
-            }else{
-                $tarifa=false;
-            }            
-        } else{
-            $tarifa=false;
-        }
-        
+        if (!$this->authentication->is_loggedin() && $producto->mostrar_producto == '1') {
+            $this->visita_model->nueva_visita_producto($id);
+            if ($this->authentication->is_loggedin()) {
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $producto_tarifa = $this->producto_model->get_tarifas_from_producto($id, $cliente->id);
+                if ($producto_tarifa) {
+                    $tarifa = $producto_tarifa->tarifa_costo;
+                } else {
+                    $tarifa = false;
+                }
+            } else {
+                $tarifa = false;
+            }
 
-        $data = array(
-            "producto" => $producto,
-            "producto_imagen" => $producto_imagen,
-            "tarifa"=>$tarifa);
-        $this->template->load_view('home/producto/ficha', $data);
+
+            $data = array(
+                "producto" => $producto,
+                "producto_imagen" => $producto_imagen,
+                "tarifa" => $tarifa);
+            $this->template->load_view('home/producto/ficha', $data);
+        } else {
+            redirect('404');
+        }
     }
 
     /**
@@ -176,9 +181,9 @@ class Producto extends MY_Controller {
     private function _build_categorias_searchparams($categorias) {
         if (!empty($categorias)) {
             $html = "";
-            foreach ($categorias as $categoria) {                
-                $texto=fix_category_text($categoria['nombre']);
-                if (isset($categoria['subcategorias'])) {                    
+            foreach ($categorias as $categoria) {
+                $texto = fix_category_text($categoria['nombre']);
+                if (isset($categoria['subcategorias'])) {
                     $html.='<li class="seleccion_categoria">';
                     $html.='<a href="" data-id="' . $categoria['id'] . '">' . $texto;
                     if ($categoria['padre_id'] == '0') {
