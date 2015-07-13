@@ -437,6 +437,14 @@ class Producto_model extends MY_Model {
     public function delete($id) {
         $this->producto_resource_model->cleanup_resources($id);
         $this->visita_model->delete_by("producto_id", $id);
+        
+        $tarifas=$this->tarifa_model->get_many_by("producto_id",$id);
+        if($tarifas){
+            foreach($tarifas as $tarifa){
+                $this->tarifa_model->delete($tarifa->id);
+            }
+        }
+        
         parent::delete($id);
     }
 

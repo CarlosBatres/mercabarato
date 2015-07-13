@@ -249,7 +249,7 @@ class Vendedor_model extends MY_Model {
             return FALSE;
         }
     }
-    
+
     /**
      * 
      * @param type $params
@@ -268,13 +268,13 @@ class Vendedor_model extends MY_Model {
         $this->db->join("pais", "pais.id=localizacion.pais_id", 'LEFT');
         $this->db->join("provincia", "provincia.id=localizacion.provincia_id", 'LEFT');
         $this->db->join("poblacion", "poblacion.id=localizacion.poblacion_id", 'LEFT');
-        
+
         if (isset($params['cliente_id'])) {
-            $this->db->join("invitacion", "invitacion.vendedor_id=vendedor.id AND invitacion.cliente_id=".$params['cliente_id'], 'LEFT');
-        }else{
+            $this->db->join("invitacion", "invitacion.vendedor_id=vendedor.id AND invitacion.cliente_id=" . $params['cliente_id'], 'LEFT');
+        } else {
             $this->db->join("invitacion", "invitacion.vendedor_id=vendedor.id AND invitacion.cliente_id='0'", 'LEFT');
         }
-        
+
 
         $this->db->where('vendedor.habilitado', '1'); // Permitir vendedores no habilitados ??
 
@@ -298,7 +298,7 @@ class Vendedor_model extends MY_Model {
             $this->db->where('localizacion.pais_id', $params['pais']);
             //$this->db->or_where('localizacion.pais_id IS NULL');            
         }
-        
+
 
 
 
@@ -324,6 +324,37 @@ class Vendedor_model extends MY_Model {
             unlink('./assets/' . $this->config->item('vendedores_img_path') . '/thumbnail/' . $vendedor->filename);
         }
         $this->update($vendedor_id, array("filename" => null));
+    }
+
+    /**
+     * FULL DELETE
+     * @param type $id
+     */
+    public function delete($id) {
+        $vendedor = $this->get($id);
+        if ($vendedor) {                        
+            $this->invitacion_model->delete_by("vendedor_id", $id);
+            $this->solicitud_seguro_model->delete_by("vendedor_id",$id);
+            $this->vendedor_paquete_model->delete_by("vendedor_id", $id);
+                                    
+            $anuncios=$this->anuncio_model->get_many_by("vendedor_id",$id);
+            if($anuncios){
+                foreach($anuncios as $anuncio){
+                    $this->anuncio_model->delete($anuncio->id);
+                }
+            }
+            $productos=$this->producto_model->get_many_by("vendedor_id",$id);
+            if($productos){
+                foreach($productos as $producto){
+                    $this->producto_model->delete($producto->id);
+                }
+            }                        
+            
+            parent::delete($id);
+            $this->cliente_model->delete($vendedor->cliente_id);            
+        } else {
+            return false;
+        }
     }
 
 }

@@ -32,7 +32,7 @@ class Cliente_model extends MY_Model {
         if (isset($params['excluir_admins'])) {
             $this->db->where('usuario.is_admin', "0");
         }
-        if(isset($params['usuario_activo'])){
+        if (isset($params['usuario_activo'])) {
             $this->db->where('usuario.activo', $params['usuario_activo']);
         }
 
@@ -45,7 +45,7 @@ class Cliente_model extends MY_Model {
         if (isset($params['excluir_cliente_ids'])) {
             $this->db->where_not_in('cliente.id', $params['excluir_cliente_ids']);
         }
-                
+
         $this->db->stop_cache();
         $count = $this->db->count_all_results();
 
@@ -68,6 +68,40 @@ class Cliente_model extends MY_Model {
             return TRUE;
         } else {
             return FALSE;
+        }
+    }
+
+    /**
+     * Full Delete de un producto
+     * @param type $id
+     */
+    public function delete($id) {
+        $cliente = $this->get($id);
+        if ($cliente) {
+            $usuario = $this->usuario_model->get($cliente->usuario_id);
+            $this->localizacion_model->delete_by("usuario_id", $usuario->id);
+            $this->invitacion_model->delete_by("cliente_id", $cliente->id);
+            $this->solicitud_seguro_model->delete_by("cliente_id",$id);
+            $this->visita_model->delete_by("cliente_id", $id);
+            
+            $grupos = $this->grupo_model->get_many_by("cliente_id", $id);
+            if ($grupos) {
+                foreach($grupos as $grupo){
+                    $this->grupo_tarifa_model->delete_by("grupo_id",$grupo->id);
+                    $this->grupo_oferta_model->delete_by("grupo_id",$grupo->id);
+                }
+                $this->grupo_model->delete_by("cliente_id",$id);
+            }
+            
+            
+            
+            $vendedor=$this->vendedor_model->get_by("cliente_id",$id);
+            if($vendedor){
+             $this->vendedor_model->delete($vendedor->id);                 
+            }            
+            parent::delete($id);
+        } else {
+            return false;
         }
     }
 

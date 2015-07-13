@@ -52,7 +52,10 @@ class Tarifa_model extends MY_Model {
             return FALSE;
         }
     }
-
+    /**
+     * 
+     * @param type $id
+     */
     public function delete($id) {
         $grupos = $this->grupo_tarifa_model->get_many_by("tarifa_id", $id);
         if ($grupos) {

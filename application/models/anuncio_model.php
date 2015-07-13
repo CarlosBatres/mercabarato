@@ -183,7 +183,7 @@ class Anuncio_model extends MY_Model {
     public function delete($id) {
         $this->visita_model->delete_by("anuncio_id", $id);
         parent::delete($id);
-    }
+    }        
 
     
     public function get_anuncios_del_vendedor($vendedor_id, $count=5) {
