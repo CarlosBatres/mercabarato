@@ -94,7 +94,7 @@ class Cliente extends MY_Controller {
                 if ($usuario) {
                     $cliente = $this->cliente_model->get_by(array("usuario_id" => $usuario->id));
                     $this->usuario_model->update($usuario->id, array("temporal" => "0"));
-                    $this->authentication->change_password($usuario->id, $password);
+                    $this->authentication->change_password($password,$username);
 
                     $keywords = $this->input->post('keywords');
                     if ($keywords) {
