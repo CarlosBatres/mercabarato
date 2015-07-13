@@ -14,8 +14,9 @@ class Seguro extends MY_Controller {
      */
     public function view_seguros() {
 
+        $this->session->unset_userdata('seguros_tipo');
         $this->session->unset_userdata('seguros_datos_contacto');
-        $this->session->unset_userdata('seguros_otros');
+        $this->session->unset_userdata('seguros_informacion');
 
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
@@ -40,92 +41,106 @@ class Seguro extends MY_Controller {
     public function registrar_seguro() {
         $formValues = $this->input->post();
         if ($formValues !== false) {
-            // datos contacto            
-            $nombres = ($this->input->post('nombres') != '') ? $this->input->post('nombres') : null;
-            $apellidos = ($this->input->post('apellidos') != '') ? $this->input->post('apellidos') : null;
-            $telefono_contacto = ($this->input->post('telefono_contacto') != '') ? $this->input->post('telefono_contacto') : null;
-            $email = ($this->input->post('email') != '') ? $this->input->post('email') : null;
-            $observaciones = ($this->input->post('observaciones') != '') ? $this->input->post('observaciones') : null;
-
-            //hogar
-            $edificio_apartamento = ($this->input->post('edificio_apartamento') != '') ? $this->input->post('edificio_apartamento') : null;
-            $edificio_vivienda = ($this->input->post('edificio_vivienda') != '') ? $this->input->post('edificio_vivienda') : null;
-            $metros_construidos = ($this->input->post('metros_construidos') != '') ? $this->input->post('metros_construidos') : null;
-            $numero_habitantes = ($this->input->post('numero_habitantes') != '') ? $this->input->post('numero_habitantes') : null;
-            $uso = ($this->input->post('uso') != '') ? $this->input->post('uso') : null;
-            $regimen_vivienda = ($this->input->post('regimen_vivienda') != '') ? $this->input->post('regimen_vivienda') : null;
-            $numero_banos = ($this->input->post('numero_banos') != '') ? $this->input->post('numero_banos') : null;
-            $construccion_estandar = ($this->input->post('construccion_estandar') != '') ? $this->input->post('construccion_estandar') : null;
-            $calidad_construccion = ($this->input->post('calidad_construccion') != '') ? $this->input->post('calidad_construccion') : null;
-            $año_construccion = ($this->input->post('year_construccion') != '') ? $this->input->post('year_construccion') : null;
-            $año_ultima_reforma = ($this->input->post('year_ultima_reforma') != '') ? $this->input->post('year_ultima_reforma') : null;
-
-            $sistema_seguridad = ($this->input->post('sistema_seguridad') != '') ? $this->input->post('sistema_seguridad') : null;
-            $rejas_ventana = ($this->input->post('rejas_ventana') != '') ? $this->input->post('rejas_ventana') : null;
-            $puerta_acorazada = ($this->input->post('puerta_acorazada') != '') ? $this->input->post('puerta_acorazada') : null;
-            $prestamo_hipotecario = ($this->input->post('prestamo_hipotecario') != '') ? $this->input->post('prestamo_hipotecario') : null;
-
-            $contiene = ($this->input->post('contiene') != '') ? $this->input->post('contiene') : null;
-            $contenido_mobiliario = ($this->input->post('contenido_mobiliario') != '') ? $this->input->post('contenido_mobiliario') : null;
-            $joyas = ($this->input->post('joyas') != '') ? $this->input->post('joyas') : null;
-            $valor_especial = ($this->input->post('valor_especial') != '') ? $this->input->post('valor_especial') : null;
-            $daños_esteticos = ($this->input->post('danos_esteticos') != '') ? $this->input->post('danos_esteticos') : null;
-            $responsibilidad_civil = ($this->input->post('responsibilidad_civil') != '') ? $this->input->post('responsibilidad_civil') : null;
-
-
-            // RIESGO
-            $nif_nie = ($this->input->post('nif_nie') != '') ? $this->input->post('nif_nie') : null;
-            $sexo = ($this->input->post('sexo') != '') ? $this->input->post('sexo') : null;
-            $fecha_nacimiento = ($this->input->post('fecha_nacimiento') != '') ? $this->input->post('fecha_nacimiento') : null;
-            $profesion = ($this->input->post('profesion') != '') ? $this->input->post('profesion') : null;
-
-            // SALUD
-
-            $provincia_grupo_familiar = ($this->input->post('provincia_grupo_familiar') != '') ? $this->input->post('provincia_grupo_familiar') : null;
-            $numero_personas = ($this->input->post('numero_personas') != '') ? $this->input->post('numero_personas') : null;
-            $nombres_titular = ($this->input->post('nombres_titular') != '') ? $this->input->post('nombres_titular') : null;
-            $apellidos_titular = ($this->input->post('apellidos_titular') != '') ? $this->input->post('apellidos_titular') : null;
-            $fecha_nacimiento = ($this->input->post('fecha_nacimiento') != '') ? $this->input->post('fecha_nacimiento') : null;
-            $sexo = ($this->input->post('sexo') != '') ? $this->input->post('sexo') : null;
-            $trabajo_remunerado = ($this->input->post('trabajo_remunerado') != '') ? $this->input->post('trabajo_remunerado') : null;
-            $modalidad_contratacion = ($this->input->post('modalidad_contratacion') != '') ? $this->input->post('modalidad_contratacion') : null;
-
-            // VEHICULO
-            $tipo_vehiculo = ($this->input->post('tipo_vehiculo') != '') ? $this->input->post('tipo_vehiculo') : null;
-            $marca = ($this->input->post('marca') != '') ? $this->input->post('marca') : null;
-            $modelo = ($this->input->post('modelo') != '') ? $this->input->post('modelo') : null;
-            $vehiculo_combustible = ($this->input->post('vehiculo_combustible') != '') ? $this->input->post('vehiculo_combustible') : null;
-            $vehiculo_nro_puertas = ($this->input->post('vehiculo_nro_puertas') != '') ? $this->input->post('vehiculo_nro_puertas') : null;
-            $fecha_matriculacion = ($this->input->post('fecha_matriculacion') != '') ? $this->input->post('fecha_matriculacion') : null;
-            $matricula = ($this->input->post('matricula') != '') ? $this->input->post('matricula') : null;
-            $fecha_nacimiento = ($this->input->post('fecha_nacimiento') != '') ? $this->input->post('fecha_nacimiento') : null;
-            $sexo = ($this->input->post('sexo') != '') ? $this->input->post('sexo') : null;
-            $estado_civil = ($this->input->post('estado_civil') != '') ? $this->input->post('estado_civil') : null;
-            $tipo_documento = ($this->input->post('tipo_documento') != '') ? $this->input->post('tipo_documento') : null;
-            $numero_documento = ($this->input->post('numero_documento') != '') ? $this->input->post('numero_documento') : null;
-            $fecha_permiso = ($this->input->post('fecha_permiso') != '') ? $this->input->post('fecha_permiso') : null;
-            $conductor_clase = ($this->input->post('conductor_clase') != '') ? $this->input->post('conductor_clase') : null;
-            $codigo_postal = ($this->input->post('codigo_postal') != '') ? $this->input->post('codigo_postal') : null;
-            $provicia = ($this->input->post('provicia') != '') ? $this->input->post('provicia') : null;
-
-            //OTROS
-            $otros = ($this->input->post('otros') != '') ? $this->input->post('otros') : null;
-
             $tipo = ($this->input->post('tipo') != '') ? $this->input->post('tipo') : null;
 
             $datos_contacto = array(
-                "nombre" => $nombres,
-                "apellidos" => $apellidos,
-                "telefono_contacto" => $telefono_contacto,
-                "email" => $email,
-                "observaciones" => $observaciones
+                "nombres" => ($this->input->post('nombres') != '') ? $this->input->post('nombres') : null,
+                "apellidos" => ($this->input->post('apellidos') != '') ? $this->input->post('apellidos') : null,
+                "telefono_contacto" => ($this->input->post('telefono_contacto') != '') ? $this->input->post('telefono_contacto') : null,
+                "email" => ($this->input->post('email') != '') ? $this->input->post('email') : null,
+                "observaciones" => ($this->input->post('observaciones') != '') ? $this->input->post('observaciones') : null
             );
+
+            $datos_hogar = array(
+                "edificio_apartamento" => ($this->input->post('edificio_apartamento') != '') ? $this->input->post('edificio_apartamento') : null,
+                "edificio_vivienda" => ($this->input->post('edificio_vivienda') != '') ? $this->input->post('edificio_vivienda') : null,
+                "metros_construidos" => ($this->input->post('metros_construidos') != '') ? $this->input->post('metros_construidos') : null,
+                "numero_habitantes" => ($this->input->post('numero_habitantes') != '') ? $this->input->post('numero_habitantes') : null,
+                "uso" => ($this->input->post('uso') != '') ? $this->input->post('uso') : null,
+                "regimen_vivienda" => ($this->input->post('regimen_vivienda') != '') ? $this->input->post('regimen_vivienda') : null,
+                "numero_banos" => ($this->input->post('numero_banos') != '') ? $this->input->post('numero_banos') : null,
+                "construccion_estandar" => ($this->input->post('construccion_estandar') != '') ? $this->input->post('construccion_estandar') : null,
+                "calidad_construccion" => ($this->input->post('calidad_construccion') != '') ? $this->input->post('calidad_construccion') : null,
+                "año_construccion" => ($this->input->post('year_construccion') != '') ? $this->input->post('year_construccion') : null,
+                "año_ultima_reforma" => ($this->input->post('year_ultima_reforma') != '') ? $this->input->post('year_ultima_reforma') : null,
+                "sistema_seguridad" => ($this->input->post('sistema_seguridad') != '') ? $this->input->post('sistema_seguridad') : null,
+                "rejas_ventana" => ($this->input->post('rejas_ventana') != '') ? $this->input->post('rejas_ventana') : null,
+                "puerta_acorazada" => ($this->input->post('puerta_acorazada') != '') ? $this->input->post('puerta_acorazada') : null,
+                "prestamo_hipotecario" => ($this->input->post('prestamo_hipotecario') != '') ? $this->input->post('prestamo_hipotecario') : null,
+                "contiene" => ($this->input->post('contiene') != '') ? $this->input->post('contiene') : null,
+                "contenido_mobiliario" => ($this->input->post('contenido_mobiliario') != '') ? $this->input->post('contenido_mobiliario') : null,
+                "joyas" => ($this->input->post('joyas') != '') ? $this->input->post('joyas') : null,
+                "valor_especial" => ($this->input->post('valor_especial') != '') ? $this->input->post('valor_especial') : null,
+                "daños_esteticos" => ($this->input->post('danos_esteticos') != '') ? $this->input->post('danos_esteticos') : null,
+                "responsibilidad_civil" => ($this->input->post('responsibilidad_civil') != '') ? $this->input->post('responsibilidad_civil') : null
+            );
+
+            $datos_riesgo = array(
+                "nif_nie" => ($this->input->post('nif_nie') != '') ? $this->input->post('nif_nie') : null,
+                "sexo" => ($this->input->post('sexo') != '') ? $this->input->post('sexo') : null,
+                "fecha_nacimiento" => ($this->input->post('fecha_nacimiento') != '') ? $this->input->post('fecha_nacimiento') : null,
+                "profesion" => ($this->input->post('profesion') != '') ? $this->input->post('profesion') : null
+            );
+
+            $datos_salud = array(
+                "provincia_grupo_familiar" => ($this->input->post('provincia_grupo_familiar') != '') ? $this->input->post('provincia_grupo_familiar') : null,
+                "numero_personas" => ($this->input->post('numero_personas') != '') ? $this->input->post('numero_personas') : null,
+                "nombres_titular" => ($this->input->post('nombres_titular') != '') ? $this->input->post('nombres_titular') : null,
+                "apellidos_titular" => ($this->input->post('apellidos_titular') != '') ? $this->input->post('apellidos_titular') : null,
+                "fecha_nacimiento" => ($this->input->post('fecha_nacimiento') != '') ? $this->input->post('fecha_nacimiento') : null,
+                "sexo" => ($this->input->post('sexo') != '') ? $this->input->post('sexo') : null,
+                "trabajo_remunerado" => ($this->input->post('trabajo_remunerado') != '') ? $this->input->post('trabajo_remunerado') : null,
+                "modalidad_contratacion" => ($this->input->post('modalidad_contratacion') != '') ? $this->input->post('modalidad_contratacion') : null
+            );
+
+            $datos_vehiculo = array(
+                "tipo_vehiculo" => ($this->input->post('tipo_vehiculo') != '') ? $this->input->post('tipo_vehiculo') : null,
+                "marca" => ($this->input->post('marca') != '') ? $this->input->post('marca') : null,
+                "modelo" => ($this->input->post('modelo') != '') ? $this->input->post('modelo') : null,
+                "vehiculo_combustible" => ($this->input->post('vehiculo_combustible') != '') ? $this->input->post('vehiculo_combustible') : null,
+                "vehiculo_nro_puertas" => ($this->input->post('vehiculo_nro_puertas') != '') ? $this->input->post('vehiculo_nro_puertas') : null,
+                "fecha_matriculacion" => ($this->input->post('fecha_matriculacion') != '') ? $this->input->post('fecha_matriculacion') : null,
+                "matricula" => ($this->input->post('matricula') != '') ? $this->input->post('matricula') : null,
+                "fecha_nacimiento" => ($this->input->post('fecha_nacimiento') != '') ? $this->input->post('fecha_nacimiento') : null,
+                "sexo" => ($this->input->post('sexo') != '') ? $this->input->post('sexo') : null,
+                "estado_civil" => ($this->input->post('estado_civil') != '') ? $this->input->post('estado_civil') : null,
+                "tipo_documento" => ($this->input->post('tipo_documento') != '') ? $this->input->post('tipo_documento') : null,
+                "numero_documento" => ($this->input->post('numero_documento') != '') ? $this->input->post('numero_documento') : null,
+                "fecha_permiso" => ($this->input->post('fecha_permiso') != '') ? $this->input->post('fecha_permiso') : null,
+                "conductor_clase" => ($this->input->post('conductor_clase') != '') ? $this->input->post('conductor_clase') : null,
+                "codigo_postal" => ($this->input->post('codigo_postal') != '') ? $this->input->post('codigo_postal') : null,
+                "provicia" => ($this->input->post('provicia') != '') ? $this->input->post('provicia') : null
+            );
+
+            $datos_otros = array(
+                "otros" => ($this->input->post('otros') != '') ? $this->input->post('otros') : null
+            );
+
+
+            $this->session->set_userdata(array(
+                'seguros_tipo' => $tipo,
+                'seguros_datos_contacto' => $datos_contacto,
+            ));
 
             if ($tipo == "seguro_otros") {
                 $this->session->set_userdata(array(
-                    'seguros_tipo' => $tipo,
-                    'seguros_datos_contacto' => $datos_contacto,
-                    'seguros_otros' => array('otros', $otros),
+                    'seguros_informacion' => $datos_otros,
+                ));
+            } elseif ($tipo == "seguro_hogar") {
+                $this->session->set_userdata(array(
+                    'seguros_informacion' => $datos_hogar,
+                ));
+            } elseif ($tipo == "seguro_riesgo") {
+                $this->session->set_userdata(array(
+                    'seguros_informacion' => $datos_riesgo,
+                ));
+            } elseif ($tipo == "seguro_salud") {
+                $this->session->set_userdata(array(
+                    'seguros_informacion' => $datos_salud,
+                ));
+            } elseif ($tipo == "seguro_vehiculo") {
+                $this->session->set_userdata(array(
+                    'seguros_informacion' => $datos_vehiculo,
                 ));
             }
 
@@ -206,38 +221,73 @@ class Seguro extends MY_Controller {
         $formValues = $this->input->post();
         if ($formValues !== false) {
             $vendedor_id = $this->input->post('id');
-            
-            // TODO: $cliente_id si no existe el cliente hay que crearlo
-            if ($this->authentication->is_loggedin()) {                
-                $user_id = $this->authentication->read('identifier');
-                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                $cliente_id=$cliente->id;
-            }else{                
-                $cliente_id="XXX";
-            }
-            
+
             $tipo = $this->session->userdata('seguros_tipo');
             $datos_contacto = $this->session->userdata('seguros_datos_contacto');
 
-            if ($tipo == "seguro_otros") {
-                $otros = $this->session->userdata('seguros_otros');
+            if ($this->authentication->is_loggedin()) {
+                /**
+                 * Si existe el cliente
+                 */
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $cliente_id = $cliente->id;
+            } else {
+                /**
+                 * Si no existe el cliente lo creo temporal para que se pueda registrar despues
+                 */
+                $user_id = $this->authentication->create_user($datos_contacto["email"], "passwordtemporal");
+                if ($user_id !== FALSE) {
+                    $secret_key = substr(md5(uniqid(mt_rand(), true)), 0, 30);
+                    $ip_address = $this->session->userdata('ip_address');
+                    $usuario = $this->usuario_model->get($user_id);
+                    $usuario->ip_address = $ip_address;
+                    $usuario->fecha_creado = date("Y-m-d H:i:s");
+                    $usuario->ultimo_acceso = date("Y-m-d H:i:s");
+                    $usuario->activo = 0;
+                    $usuario->is_admin = 0;
+                    $usuario->temporal = 1;
+                    $usuario->secret_key = $secret_key;
+                    $this->usuario_model->update($user_id, $usuario);
+                }
+
                 $data = array(
-                    'tipo' => $tipo,
-                    'datos_contacto' => $datos_contacto,
-                    'otros' => $otros
+                    "usuario_id" => $user_id,
+                    "nombres" => $datos_contacto["nombres"],
+                    "apellidos" => $datos_contacto["apellidos"],
+                    "sexo" => null,
+                    "fecha_nacimiento" => null,
+                    "codigo_postal" => null,
+                    "direccion" => null,
+                    "telefono_fijo" => null,
+                    "telefono_movil" => null,
+                    "keyword" => null
                 );
-                
-                $solicitud_seguro = array(
-                    "vendedor_id" => $vendedor_id,
-                    "cliente_id" => $cliente_id,
-                    "datos" => serialize($data),
-                    "fecha_solicitud" => date("Y-m-d"),
-                    "estado" => 0,
-                );
-                
-                $this->solicitud_seguro_model->insert($solicitud_seguro);
-                
+
+                $cliente_id = $this->cliente_model->insert($data);
             }
+
+
+            $informacion = $this->session->userdata('seguros_informacion');
+            $data = array(
+                'tipo' => $tipo,
+                'datos_contacto' => $datos_contacto,
+                'informacion' => $informacion
+            );
+
+            $solicitud_seguro = array(
+                "vendedor_id" => $vendedor_id,
+                "cliente_id" => $cliente_id,
+                "datos" => serialize($data),
+                "fecha_solicitud" => date("Y-m-d"),
+                "estado" => 0,
+            );
+
+            $this->solicitud_seguro_model->insert($solicitud_seguro);
+            $this->session->unset_userdata('seguros_tipo');
+            $this->session->unset_userdata('seguros_datos_contacto');
+            $this->session->unset_userdata('seguros_informacion');
+            // TODO : Enviar email a vendedor de que tiene una nueva solicitud de presupuesto            
         }
     }
 

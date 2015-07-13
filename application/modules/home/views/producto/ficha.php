@@ -23,11 +23,15 @@
             <h3><?php echo $producto->nombre ?></h3>
             <div class="box">
                 <p class="lead"><?php echo $producto->descripcion ?></p>
-                <?php if ($tarifa): ?>                    
-                    <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
-                    <p class="price"><?php echo number_format($tarifa, '2') . ' ' . $this->config->item('money_sign') ?></p>
+                <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
+                
                 <?php else: ?>
-                    <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
+                    <?php if ($tarifa): ?>                    
+                        <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                        <p class="price"><?php echo number_format($tarifa, '2') . ' ' . $this->config->item('money_sign') ?></p>
+                    <?php else: ?>
+                        <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
+                    <?php endif; ?>                                                        
                 <?php endif; ?>                                                        
             </div>            
         </div>

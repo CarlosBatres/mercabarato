@@ -32,6 +32,7 @@ class Cliente extends MY_Controller {
                 $usuario->ultimo_acceso = date("Y-m-d H:i:s");
                 $usuario->activo = 0;
                 $usuario->is_admin = 0;
+                $usuario->temporal = 0;
                 $usuario->secret_key = $secret_key;
 
                 $this->usuario_model->update($user_id, $usuario);
@@ -83,14 +84,73 @@ class Cliente extends MY_Controller {
                     $this->email->to($username);
 
                     $this->email->subject('Active su cuenta');
-                    $data_email = array("link" => site_url('confirmar_registro').'/'.$secret_key);
+                    $data_email = array("link" => site_url('confirmar_registro') . '/' . $secret_key);
                     $this->email->message($this->load->view('home/emails/confirmar_registro', $data_email, true));
                     $this->email->send();
                 }
                 redirect('registro_exitoso');
             } else {
-                // There was an ERROR creating the user
-                redirect('');
+                $usuario = $this->usuario_model->get_by(array("email" => $username));
+                if ($usuario) {
+                    $cliente = $this->cliente_model->get_by(array("usuario_id" => $usuario->id));
+                    $this->usuario_model->update($usuario->id, array("temporal" => "0"));
+                    $this->authentication->change_password($usuario->id, $password);
+
+                    $keywords = $this->input->post('keywords');
+                    if ($keywords) {
+                        $keywords_text = '';
+                        foreach ($keywords as $key) {
+                            $keywords_text.=$key . ';';
+                        }
+                        $keywords_text = substr($keywords_text, 0, -1);
+                    } else {
+                        $keywords_text = null;
+                    }
+
+                    $data = array(
+                        "usuario_id" => $usuario->id,
+                        "nombres" => ($this->input->post('nombres') != '') ? $this->input->post('nombres') : null,
+                        "apellidos" => ($this->input->post('apellidos') != '') ? $this->input->post('apellidos') : '',
+                        "sexo" => ($this->input->post('sexo') != 'X') ? $this->input->post('sexo') : null,
+                        "fecha_nacimiento" => ($this->input->post('fecha_nacimiento') != '') ? date("Y-m-d", strtotime($this->input->post('fecha_nacimiento'))) : null,
+                        "codigo_postal" => ($this->input->post('codigo_postal') != '') ? $this->input->post('codigo_postal') : null,
+                        "direccion" => ($this->input->post('direccion') != '') ? $this->input->post('direccion') : null,
+                        "telefono_fijo" => ($this->input->post('telefono_fijo') != '') ? $this->input->post('telefono_fijo') : null,
+                        "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,
+                        "keyword" => $keywords_text
+                    );
+
+                    $this->cliente_model->update($cliente->id, $data);
+
+                    $pais = $this->input->post('pais');
+                    $provincia = $this->input->post('provincia');
+                    $poblacion = $this->input->post('poblacion');
+
+                    if ($pais != "0") {
+                        $data_localizacion = array(
+                            "usuario_id" => $usuario->id,
+                            "pais_id" => $pais,
+                            "provincia_id" => ($provincia == "0") ? null : $provincia,
+                            "poblacion_id" => ($poblacion == "0") ? null : $poblacion
+                        );
+                        $this->localizacion_model->insert($data_localizacion);
+                    }
+
+                    //$this->authentication->login($username, $password);
+                    if ($this->config->item('emails_enabled')) {
+                        $this->load->library('email');
+                        $this->email->from($this->config->item('site_admin_email'), 'Mercabarato.com');
+                        $this->email->to($username);
+
+                        $this->email->subject('Active su cuenta');
+                        $data_email = array("link" => site_url('confirmar_registro') . '/' . $usuario->secret_key);
+                        $this->email->message($this->load->view('home/emails/confirmar_registro', $data_email, true));
+                        $this->email->send();
+                    }
+                    redirect('registro_exitoso');
+                } else {
+                    redirect('');
+                }
             }
         } else {
             redirect('');

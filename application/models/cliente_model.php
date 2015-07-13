@@ -32,6 +32,9 @@ class Cliente_model extends MY_Model {
         if (isset($params['excluir_admins'])) {
             $this->db->where('usuario.is_admin', "0");
         }
+        if(isset($params['usuario_activo'])){
+            $this->db->where('usuario.activo', $params['usuario_activo']);
+        }
 
         if (isset($params['keywords'])) {
             foreach ($params['keywords'] as $keyword) {

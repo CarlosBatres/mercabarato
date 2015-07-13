@@ -229,7 +229,7 @@ class Usuario extends MY_Controller {
         if ($this->input->is_ajax_request()) {
             $formValues = $this->input->post();
             if ($formValues !== false) {
-                if ($this->usuario_model->email_exists($this->input->post('email')) == TRUE) {
+                if ($this->usuario_model->email_exists($this->input->post('email'),$this->input->post('ignore_temporal')) == TRUE) {
                     echo json_encode(FALSE);
                 } else {
                     echo json_encode(TRUE);
