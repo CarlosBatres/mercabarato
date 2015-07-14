@@ -342,73 +342,77 @@ class Vendedor extends MY_Controller {
      * 
      */
     public function ajax_get_listado_resultados() {
-        //$this->show_profiler();
-        $formValues = $this->input->post();
+        if ($this->input->is_ajax_request()) {
+            //$this->show_profiler();
+            $formValues = $this->input->post();
 
-        $params = array();
-        if ($formValues !== false) {
-            if ($this->input->post('search_query') != "") {
-                $params["nombre"] = $this->input->post('search_query');
-                $params["descripcion"] = $this->input->post('search_query');
-                $params["keyword"] = $this->input->post('search_query');
-            }
-            if ($this->input->post('pais') != "0") {
-                $params["pais"] = $this->input->post('pais');
-            }
-            if ($this->input->post('provincia') != "0") {
-                $params["provincia"] = $this->input->post('provincia');
-            }
-            if ($this->input->post('poblacion') != "0") {
-                $params["poblacion"] = $this->input->post('poblacion');
+            $params = array();
+            if ($formValues !== false) {
+                if ($this->input->post('search_query') != "") {
+                    $params["nombre"] = $this->input->post('search_query');
+                    $params["descripcion"] = $this->input->post('search_query');
+                    $params["keyword"] = $this->input->post('search_query');
+                }
+                if ($this->input->post('pais') != "0") {
+                    $params["pais"] = $this->input->post('pais');
+                }
+                if ($this->input->post('provincia') != "0") {
+                    $params["provincia"] = $this->input->post('provincia');
+                }
+                if ($this->input->post('poblacion') != "0") {
+                    $params["poblacion"] = $this->input->post('poblacion');
+                }
+
+                $pagina = $this->input->post('pagina');
+            } else {
+                $pagina = 1;
             }
 
-            $pagina = $this->input->post('pagina');
+            if ($this->authentication->is_loggedin()) {
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $params["cliente_id"] = $cliente->id;
+                $logged_in = true;
+            } else {
+                $logged_in = false;
+            }
+
+            //$limit = $this->config->item("principal_default_per_page");
+            $limit = 5;
+            $offset = $limit * ($pagina - 1);
+            $vendedores_array = $this->vendedor_model->get_site_search($params, $limit, $offset);
+            $flt = (float) ($vendedores_array["total"] / $limit);
+            $ent = (int) ($vendedores_array["total"] / $limit);
+            if ($flt > $ent || $flt < $ent) {
+                $paginas = $ent + 1;
+            } else {
+                $paginas = $ent;
+            }
+
+            if ($vendedores_array["total"] == 0) {
+                $vendedores_array["vendedores"] = array();
+            }
+
+            $search_params = array(
+                "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+                "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+                "pagina" => $pagina,
+                "total_paginas" => $paginas,
+                "por_pagina" => $limit,
+                "total" => $vendedores_array["total"],
+                "hasta" => ($pagina * $limit < $vendedores_array["total"]) ? $pagina * $limit : $vendedores_array["total"],
+                "desde" => (($pagina * $limit) - $limit) + 1);
+            $pagination = build_paginacion($search_params);
+
+            $data = array(
+                "vendedores" => $vendedores_array["vendedores"],
+                "pagination" => $pagination,
+                "logged_in" => $logged_in);
+
+            $this->template->load_view('home/vendedores/tabla_resultados', $data);
         } else {
-            $pagina = 1;
+             redirect('');
         }
-
-        if ($this->authentication->is_loggedin()) {
-            $user_id = $this->authentication->read('identifier');
-            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-            $params["cliente_id"] = $cliente->id;
-            $logged_in = true;
-        } else {
-            $logged_in = false;
-        }
-
-        //$limit = $this->config->item("principal_default_per_page");
-        $limit = 5;
-        $offset = $limit * ($pagina - 1);
-        $vendedores_array = $this->vendedor_model->get_site_search($params, $limit, $offset);
-        $flt = (float) ($vendedores_array["total"] / $limit);
-        $ent = (int) ($vendedores_array["total"] / $limit);
-        if ($flt > $ent || $flt < $ent) {
-            $paginas = $ent + 1;
-        } else {
-            $paginas = $ent;
-        }
-
-        if ($vendedores_array["total"] == 0) {
-            $vendedores_array["vendedores"] = array();
-        }
-
-        $search_params = array(
-            "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
-            "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
-            "pagina" => $pagina,
-            "total_paginas" => $paginas,
-            "por_pagina" => $limit,
-            "total" => $vendedores_array["total"],
-            "hasta" => ($pagina * $limit < $vendedores_array["total"]) ? $pagina * $limit : $vendedores_array["total"],
-            "desde" => (($pagina * $limit) - $limit) + 1);
-        $pagination = build_paginacion($search_params);
-
-        $data = array(
-            "vendedores" => $vendedores_array["vendedores"],
-            "pagination" => $pagination,
-            "logged_in" => $logged_in);
-
-        $this->template->load_view('home/vendedores/tabla_resultados', $data);
     }
 
     /**
@@ -478,5 +482,7 @@ class Vendedor extends MY_Controller {
         $this->load->config('upload', TRUE);
         $this->load->library('UploadHandler', $this->config->item('vendedor', 'upload'));
     }
+    
+    
 
 }

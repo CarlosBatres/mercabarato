@@ -376,7 +376,17 @@ class Producto_model extends MY_Model {
      * @return type
      */
     protected function pre_insertado($producto) {
+        $config = array(
+            'table' => 'producto',
+            'id' => 'id',
+            'field' => 'unique_slug',
+            'title' => 'nombre',
+            'replacement' => 'dash' // Either dash or underscore
+        );
+        $this->load->library('slug', $config);
+        
         $producto['fecha_insertado'] = date('Y-m-d');
+        $producto['unique_slug'] = $this->slug->create_uri($producto['nombre']);
         return $producto;
     }
 

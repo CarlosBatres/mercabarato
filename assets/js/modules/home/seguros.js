@@ -7,7 +7,7 @@ $(document).ready(function() {
         updateResultados();
         $.ajax({
             type: "POST",
-            url: SITE_URL + 'home/provincia/ajax_get_provincias_htmlselect',
+            url: SITE_URL + 'util/get_provincias',
             data: {pais_id: pais_id},
             dataType: 'json',
             success: function(response) {
@@ -23,7 +23,7 @@ $(document).ready(function() {
         updateResultados();
         $.ajax({
             type: "POST",
-            url: SITE_URL + 'home/poblacion/ajax_get_poblaciones_htmlselect',
+            url: SITE_URL + 'util/get_poblaciones',
             data: {provincia_id: provincia_id},
             dataType: 'json',
             success: function(response) {
@@ -50,7 +50,7 @@ function validateForms() {
                 required: true,
                 email: true,
                 remote: {
-                    url: SITE_URL + "home/usuario/check_email",
+                    url: SITE_URL + "util/verificar_email",
                     type: "post",
                     data: {
                         email: function() {
@@ -91,7 +91,7 @@ function validateForms() {
                 required: true,
                 email: true,
                 remote: {
-                    url: SITE_URL + "home/usuario/check_email",
+                    url: SITE_URL + "util/verificar_email",
                     type: "post",
                     data: {
                         email: function() {
@@ -124,7 +124,7 @@ function validateForms() {
                 required: true,
                 email: true,
                 remote: {
-                    url: SITE_URL + "home/usuario/check_email",
+                    url: SITE_URL + "util/verificar_email",
                     type: "post",
                     data: {
                         email: function() {
@@ -161,7 +161,7 @@ function validateForms() {
                 required: true,
                 email: true,
                 remote: {
-                    url: SITE_URL + "home/usuario/check_email",
+                    url: SITE_URL + "util/verificar_email",
                     type: "post",
                     data: {
                         email: function() {
@@ -204,7 +204,7 @@ function validateForms() {
                 required: true,
                 email: true,
                 remote: {
-                    url: SITE_URL + "home/usuario/check_email",
+                    url: SITE_URL + "util/verificar_email",
                     type: "post",
                     data: {
                         email: function() {
@@ -254,7 +254,7 @@ function updateResultados() {
     });
     $.ajax({
         type: "POST",
-        url: SITE_URL + 'seguros/ajax_get_listado_resultados_prestadores',
+        url: SITE_URL + 'seguros/buscar_prestadores',
         data: {
             pagina: pagina_id,
             pais: pais,

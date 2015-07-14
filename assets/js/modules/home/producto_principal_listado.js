@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    updateResultados();
+    //updateResultados();
     $('[data-toggle="tooltip"]').tooltip();    
     $('#producto-principal-categorias').metisMenu();
 
@@ -45,9 +45,10 @@ $(document).ready(function() {
         $('#form_buscar').find('select[name="provincia"]').html("<option value='0'>Todas las Provincias</option>");
         $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
         var pais_id = $(this).val();
+        updateResultados();
         $.ajax({
             type: "POST",
-            url: SITE_URL + 'home/provincia/ajax_get_provincias_htmlselect',
+            url: SITE_URL + 'util/get_provincias',
             data: {pais_id: pais_id},
             dataType: 'json',
             success: function(response) {
@@ -60,9 +61,10 @@ $(document).ready(function() {
     $('#form_buscar').find('select[name="provincia"]').on('change', function() {
         $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
         var provincia_id = $(this).val();
+        updateResultados();
         $.ajax({
             type: "POST",
-            url: SITE_URL + 'home/poblacion/ajax_get_poblaciones_htmlselect',
+            url: SITE_URL + 'util/get_poblaciones',
             data: {provincia_id: provincia_id},
             dataType: 'json',
             success: function(response) {
@@ -70,6 +72,10 @@ $(document).ready(function() {
                 $('#form_buscar').find('select[name="poblacion"]').find('option:first').text("Todas las Poblaciones");
             }
         });
+    });
+    
+    $('#form_buscar').find('select[name="poblacion"]').on('change', function() {
+        updateResultados();
     });
 
     $('#form_buscar').find('select[name="pais"]').trigger('change');
@@ -106,7 +112,7 @@ function updateResultados() {
         css: {border: '0'}});*/
     $.ajax({
         type: "POST",
-        url: SITE_URL + 'home/producto/ajax_get_listado_resultados',
+        url: SITE_URL + 'productos/buscar',
         data: {
             search_query: search_query,
             categoria_id: categoria_id,
