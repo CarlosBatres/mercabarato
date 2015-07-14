@@ -221,12 +221,12 @@
                                         <div class="row">
                                             <button type="button" id="cambiar_imagen" class="btn btn-lg btn-default"> Cambiar Imagen</button>
                                             <div class='fileupload_button' style='display:none'>
-                                                <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('home/vendedor/upload_image') ?>">                                        
+                                                <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('util/upload_vendedor_image') ?>">                                        
                                             </div>
                                         </div>
                                     <?php else: ?>
                                         <label><strong>Seleccione una imagen que lo represente.</strong></label>                    
-                                        <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('home/vendedor/upload_image') ?>">                                        
+                                        <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('util/upload_vendedor_image') ?>">                                        
                                     <?php endif; ?>
                                     <input type="hidden" name="file_name" id="file_name" value="">                                                            
                                 </div> 

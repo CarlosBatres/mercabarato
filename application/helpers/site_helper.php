@@ -180,16 +180,15 @@ function truncate_simple($text, $chars = 25) {
     if (strlen($text) > $chars) {
         $flag = true;
     }
-    
+
     $text = $text . " ";
-    $text = substr($text, 0, $chars);    
+    $text = substr($text, 0, $chars);
 
     if ($flag) {
         $text = $text . "...";
     }
 
     return $text;
-    
 }
 
 function keywords_listado() {
@@ -226,6 +225,17 @@ function fix_category_text($text) {
         }
         $final.=" ";
     }
-    
+
     return trim($final, " ");
+}
+
+function blacklisted_words($word) {
+    $list = array("login", "logout", "registro", "buscar", "buscar_producto", "vendedores", "registro_exitoso", "registrar_cliente", "registrar_vendedor", "seguros", "usuarios",
+        "acceso_invalido", "buscar_prestadores", "password", "util", "panel_vendedor", "admin");
+    
+    if(in_array($word, $list)){
+        return true;
+    }else{
+        return false;
+    }        
 }

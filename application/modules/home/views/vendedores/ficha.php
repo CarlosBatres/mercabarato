@@ -65,7 +65,7 @@
                                 <div class="producto-img-container">
                                     <div class="frame">
                                         <span class="helper"></span>
-                                        <a href="<?php echo site_url("productos/ficha/" . $producto->id) ?>">                    
+                                        <a href="<?php echo site_url("productos/" . $producto->unique_slug) ?>">                    
                                             <?php if ($producto->imagen_nombre === null): ?>
                                                 <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="producto-img">
                                             <?php else: ?>
@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="text-center">
                                     <div class="row">
-                                        <a class="nombre-productos" href="<?php echo site_url("productos/ficha/" . $producto->id) ?>"><?php echo truncate($producto->nombre, 100); ?></a>                                    
+                                        <a class="nombre-productos" href="<?php echo site_url("productos/" . $producto->unique_slug) ?>"><?php echo truncate($producto->nombre, 100); ?></a>                                    
                                     </div>
 
                                     <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>

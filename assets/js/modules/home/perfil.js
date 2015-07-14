@@ -14,13 +14,13 @@ $(document).ready(function() {
 
     $("#form_datos_2").validate({
         rules: {
-            nombre_empresa: {required: true},            
-            nif_cif :{required:true}
+            nombre_empresa: {required: true},
+            nif_cif: {required: true}
         },
         messages: {
             nombre_empresa: {
                 required: "Ingresa el nombre de tu empresa o compañia."
-            },             
+            },
             nif_cif: {
                 required: "Ingresa tu N.I.F o C.I.F"
             }
@@ -49,12 +49,24 @@ $(document).ready(function() {
 
     $("#form_afiliarse").validate({
         rules: {
-            nombre_empresa: {required: true},
-            nif_cif :{required:true}
+            nombre_empresa: {
+                required: true,
+                remote: {
+                    url: SITE_URL + "util/verificar_nombre",
+                    type: "post",
+                    data: {
+                        nombre: function() {
+                            return $("#form_afiliarse").find("input[name='nombre_empresa']").val();
+                        }                        
+                    }
+                }
+            },
+            nif_cif: {required: true}
         },
         messages: {
             nombre_empresa: {
-                required: "Ingresa el nombre de tu empresa o compañia."
+                required: "Ingresa el nombre de tu empresa o compañia.",
+                remote : "Este es un nombre invalido, intente con uno diferente."
             },
             nif_cif: {
                 required: "Ingresa tu N.I.F o C.I.F"
