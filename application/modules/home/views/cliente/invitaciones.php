@@ -27,9 +27,9 @@
             <div class="col-md-9 clearfix">                                                
                 <div class="col-md-12">
                     <div class="heading">
-                        <h3>Invitaciones</h3>                        
+                        <h3>Contactos</h3>                        
                     </div>                                       
-                    <p class="lead">A continuacion se muestran las invitaciones que tienes pendientes de parte de los Vendedores.</p>
+                    <p class="lead">A continuacion se muestran tus contactos e invitaciones pendientes.</p>
 
                     <div class="row">
                         <div class="col-md-12">

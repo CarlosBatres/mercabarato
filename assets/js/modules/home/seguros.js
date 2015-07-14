@@ -285,8 +285,8 @@ function bind_botones() {
         e.preventDefault();
         var id = $(this).data('id');
 
-        $.post(SITE_URL + "seguros/terminar", {id: id}).done(function() {
-            window.location.href = SITE_URL;
+        $.post(SITE_URL + "seguros/enviar", {id: id}).done(function() {            
+            updateResultados();
         });
     });
 }

@@ -205,6 +205,22 @@ class Cliente extends MY_Controller {
             redirect('');
         }
     }
+    
+     public function eliminar_invitacion() {
+        if ($this->authentication->is_loggedin()) {
+            $formValues = $this->input->post();
+
+            if ($formValues !== false) {
+                $invitacion_id = $this->input->post('invitacion_id');
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $this->invitacion_model->rechazar_invitacion($invitacion_id, $cliente->id);
+                echo json_encode(array("success" => true));
+            }
+        } else {
+            redirect('');
+        }
+    }
 
     public function ajax_get_listado_resultados() {
         //$this->show_profiler();
@@ -220,6 +236,7 @@ class Cliente extends MY_Controller {
             $params["cliente_id"] = $cliente->id;
             $params["from_vendedor"] = "1";
             $params["estado"] = "1";
+            $params["or_estado"] = "2";
 
             $limit = 5;
             $offset = $limit * ($pagina - 1);
@@ -272,9 +289,9 @@ class Cliente extends MY_Controller {
                     "estado" => "1",
                     "from_vendedor" => "0"
                 );
-
+                $vendedor=$this->vendedor_model->get($vendedor_id);
                 $this->invitacion_model->insert($data);
-                redirect('vendedores/ficha/' . $vendedor_id);
+                redirect($vendedor->unique_slug);
             }
         } else {
             redirect('');

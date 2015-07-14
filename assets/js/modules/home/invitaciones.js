@@ -13,7 +13,7 @@ function updateResultados() {
     
     $.ajax({
         type: "POST",
-        url: SITE_URL + 'home/cliente/ajax_get_listado_resultados',
+        url: SITE_URL + 'usuario/buscar_invitaciones',
         data: {            
             pagina: pagina_id            
         },
@@ -23,6 +23,7 @@ function updateResultados() {
             $('#tabla-resultados').unblock();
             $('#tabla-resultados').html(response);
             bind_links();
+            bind_pagination_links();
         },
         error: function(){
             $('#tabla-resultados').css('opacity', '1');
@@ -38,23 +39,48 @@ function bind_links() {
         if ($(this).hasClass('aceptar')) {
             $.ajax({
                 type: "POST",
-                url: SITE_URL + 'home/cliente/aceptar_invitacion',
+                url: SITE_URL + 'usuario/contactos/aceptar_invitacion',
                 data: {invitacion_id: invitacion_id},
                 dataType: 'json',
                 success: function(response) {
                     updateResultados();
+                    var counter = parseInt($('#invitaciones-counter').html(), 10);
+                    --counter;
+                    $('#invitaciones-counter').html(counter);                    
                 }
             });
-        } else {
+        } else if($(this).hasClass('rechazar')) {
             $.ajax({
                 type: "POST",
-                url: SITE_URL + 'home/cliente/rechazar_invitacion',
+                url: SITE_URL + 'usuario/contactos/rechazar_invitacion',
+                data: {invitacion_id: invitacion_id},
+                dataType: 'json',
+                success: function(response) {
+                    updateResultados();
+                    var counter = parseInt($('#invitaciones-counter').html(), 10);
+                    --counter;
+                    $('#invitaciones-counter').html(counter);                    
+                }
+            });
+        } else if($(this).hasClass('eliminar')) {
+            $.ajax({
+                type: "POST",
+                url: SITE_URL + 'usuario/contactos/eliminar',
                 data: {invitacion_id: invitacion_id},
                 dataType: 'json',
                 success: function(response) {
                     updateResultados();
                 }
-            });
+            });                        
         }
+    });
+}
+
+
+function bind_pagination_links() {
+    $('.pagination a').on('click', function(e) {
+        e.preventDefault();
+        $('#pagina').val($(this).data('id'));
+        updateResultados();
     });
 }

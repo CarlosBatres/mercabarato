@@ -193,7 +193,7 @@ class Producto extends MY_Controller {
         if (!empty($categorias)) {
             $html = "";
             foreach ($categorias as $categoria) {
-                $texto = fix_category_text($categoria['nombre']);
+                $texto = truncate_simple(fix_category_text($categoria['nombre']),32);
                 if (isset($categoria['subcategorias'])) {
                     $html.='<li class="seleccion_categoria">';
                     $html.='<a href="" data-id="' . $categoria['id'] . '">' . $texto;

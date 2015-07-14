@@ -107,7 +107,7 @@
                     <h4 class="modal-title">Invitacion a Vendedor</h4>
                 </div>
                 <div class="modal-body">
-                    <?php echo form_open('home/cliente/enviar_invitacion'); ?>
+                    <?php echo form_open('usuario/enviar_invitacion'); ?>
                     <div class="row">  
                         <div class="col-md-12">
                             <div class="form-group">                                

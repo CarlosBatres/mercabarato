@@ -52,7 +52,7 @@ class Invitacion_model extends MY_Model {
 
     public function get_site_search($params, $limit, $offset) {
         $this->db->start_cache();
-        $this->db->select("invitacion.id,invitacion.titulo,invitacion.comentario,vendedor.nombre,vendedor.descripcion");
+        $this->db->select("invitacion.id,invitacion.titulo,invitacion.comentario,invitacion.estado,vendedor.unique_slug,vendedor.nombre,vendedor.descripcion");
         $this->db->from($this->_table);
         $this->db->join("cliente", "cliente.id=invitacion.cliente_id", 'INNER');
 
@@ -67,12 +67,15 @@ class Invitacion_model extends MY_Model {
         if (isset($params['estado'])) {
             $this->db->where('invitacion.estado', $params['estado']);
         }
+        if (isset($params['or_estado'])) {
+            $this->db->or_where('invitacion.estado', $params['or_estado']);
+        }
 
         $this->db->stop_cache();
         $count = $this->db->count_all_results();
 
         if ($count > 0) {
-            $this->db->order_by('invitacion.id', 'desc');
+            $this->db->order_by('invitacion.estado', 'asc');
             $this->db->limit($limit, $offset);
             $invitaciones = $this->db->get()->result();
             $this->db->flush_cache();
@@ -90,7 +93,7 @@ class Invitacion_model extends MY_Model {
         $this->db->join("cliente", "cliente.id=invitacion.cliente_id", 'INNER');
         $this->db->join("usuario", "cliente.usuario_id=usuario.id", 'INNER');
         $this->db->join("vendedor", "vendedor.id=invitacion.vendedor_id", 'INNER');
-        
+
         if (isset($params['nombre'])) {
             $this->db->like('CONCAT(cliente.nombres," ",cliente.apellidos)', $params['nombre'], 'both');
         }
@@ -99,14 +102,14 @@ class Invitacion_model extends MY_Model {
         }
         if (isset($params['email'])) {
             $this->db->like('usuario.email', $params['email'], 'both');
-        }                
+        }
 
         if (isset($params['keywords'])) {
             foreach ($params['keywords'] as $keyword) {
                 $this->db->like('cliente.keyword', $keyword, 'both');
             }
-        }        
-        
+        }
+
         if (isset($params['vendedor_id'])) {
             $this->db->where('invitacion.vendedor_id', $params["vendedor_id"]);
         }
@@ -115,10 +118,10 @@ class Invitacion_model extends MY_Model {
         }
         if (isset($params['estado'])) {
             $this->db->where('invitacion.estado', $params['estado']);
-        }        
+        }
         if (isset($params['cliente_id'])) {
             $this->db->where('invitacion.cliente_id', $params['cliente_id']);
-        }        
+        }
         if (isset($params['excluir_admins'])) {
             $this->db->where('usuario.is_admin', "0");
         }
@@ -141,6 +144,31 @@ class Invitacion_model extends MY_Model {
         } else {
             $this->db->flush_cache();
             return array("total" => 0);
+        }
+    }
+
+    public function get_count_invitaciones() {
+        if ($this->authentication->is_loggedin()) {
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+
+            $this->db->select("COUNT(invitacion.id) as num");
+            $this->db->from($this->_table);
+            $this->db->join("vendedor", "vendedor.id=invitacion.vendedor_id", 'INNER');
+            $this->db->where('invitacion.cliente_id', $cliente->id);
+            $this->db->where('invitacion.from_vendedor', '1');
+            $this->db->where('invitacion.estado', '1');
+
+            $result = $this->db->get();
+
+            if ($result->num_rows() > 0) {
+                $res=$result->row();
+                return $res->num;
+            } else {
+                return 0;
+            }
+        }else{
+            return 0;
         }
     }
 

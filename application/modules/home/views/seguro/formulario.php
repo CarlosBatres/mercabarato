@@ -213,25 +213,25 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Nombres</label>
-                                                <input type="text" class="form-control" name="nombres">
+                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->nombres : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Apellidos</label>
-                                                <input type="text" class="form-control" name="apellidos">
+                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->apellidos : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Telefono de Contacto</label>
-                                                <input type="text" class="form-control" name="telefono_contacto">
+                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->telefono_fijo : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Correo Electronico</label>
-                                                <input type="text" class="form-control" name="email">
+                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto))? $datos_contacto->usuario->email : ""?>" <?php echo (isset($datos_contacto))?"disabled":""?>>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -302,25 +302,25 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Nombres</label>
-                                                <input type="text" class="form-control" name="nombres">
+                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->nombres : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Apellidos</label>
-                                                <input type="text" class="form-control" name="apellidos">
+                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->apellidos : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Telefono de Contacto</label>
-                                                <input type="text" class="form-control" name="telefono_contacto">
+                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->telefono_fijo : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Correo Electronico</label>
-                                                <input type="text" class="form-control" name="email">
+                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto))? $datos_contacto->usuario->email : ""?>" <?php echo (isset($datos_contacto))?"disabled":""?>>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -329,7 +329,6 @@
                                                 <textarea class="form-control" rows="8" name="observaciones"></textarea>
                                             </div>
                                         </div>
-
                                     </div>
 
                                     <br>
@@ -434,25 +433,25 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Nombres</label>
-                                                <input type="text" class="form-control" name="nombres">
+                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->nombres : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Apellidos</label>
-                                                <input type="text" class="form-control" name="apellidos">
+                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->apellidos : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Telefono de Contacto</label>
-                                                <input type="text" class="form-control" name="telefono_contacto">
+                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->telefono_fijo : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Correo Electronico</label>
-                                                <input type="text" class="form-control" name="email">
+                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto))? $datos_contacto->usuario->email : ""?>" <?php echo (isset($datos_contacto))?"disabled":""?>>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -461,7 +460,6 @@
                                                 <textarea class="form-control" rows="8" name="observaciones"></textarea>
                                             </div>
                                         </div>
-
                                     </div>
 
                                     <br>
@@ -651,25 +649,25 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Nombres</label>
-                                                <input type="text" class="form-control" name="nombres">
+                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->nombres : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Apellidos</label>
-                                                <input type="text" class="form-control" name="apellidos">
+                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->apellidos : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Telefono de Contacto</label>
-                                                <input type="text" class="form-control" name="telefono_contacto">
+                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->telefono_fijo : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Correo Electronico</label>
-                                                <input type="text" class="form-control" name="email">
+                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto))? $datos_contacto->usuario->email : ""?>" <?php echo (isset($datos_contacto))?"disabled":""?>>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -678,7 +676,6 @@
                                                 <textarea class="form-control" rows="8" name="observaciones"></textarea>
                                             </div>
                                         </div>
-
                                     </div>
 
                                     <br>
@@ -732,25 +729,25 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Nombres</label>
-                                                <input type="text" class="form-control" name="nombres">
+                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->nombres : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Apellidos</label>
-                                                <input type="text" class="form-control" name="apellidos">
+                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->apellidos : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Telefono de Contacto</label>
-                                                <input type="text" class="form-control" name="telefono_contacto">
+                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->telefono_fijo : ""?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Correo Electronico</label>
-                                                <input type="text" class="form-control" name="email">
+                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto))? $datos_contacto->usuario->email : ""?>" <?php echo (isset($datos_contacto))?"disabled":""?>>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -759,7 +756,6 @@
                                                 <textarea class="form-control" rows="8" name="observaciones"></textarea>
                                             </div>
                                         </div>
-
                                     </div>
 
                                     <br>
