@@ -119,6 +119,9 @@ class Vendedor_paquete_model extends MY_Model {
             $this->db->where('vendedor_paquete.aprobado', '1');
             $this->db->where('vendedor_paquete.fecha_terminar >', date('Y-m-d'));
         }
+        if (isset($params['not_vendedor'])) {            
+            $this->db->where_not_in('vendedor.id', $params["not_vendedor"]);
+        }        
 
         if (isset($params['poblacion'])) {
             $this->db->where('localizacion.poblacion_id', $params['poblacion']);         

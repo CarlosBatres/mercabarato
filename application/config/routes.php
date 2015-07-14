@@ -56,8 +56,9 @@ $route['vendedores/buscar'] = 'home/vendedor/ajax_get_listado_resultados';
 
 $route['seguros'] = 'home/seguro/view_seguros';
 $route['seguros/registrar'] = 'home/seguro/registrar_seguro';
-$route['seguros/terminar'] = 'home/seguro/crear_solicitud_seguro';
+$route['seguros/enviar'] = 'home/seguro/crear_solicitud_seguro';
 $route['seguros/buscar_prestadores'] = 'home/seguro/ajax_get_listado_resultados_prestadores';
+$route['seguros/finalizar'] = 'home/seguro/finalizar';
 $route['acceso_invalido'] = 'home/main/acceso_invalido';
 $route['usuario/perfil'] = 'home/usuario/view_perfil';
 $route['usuario/datos-personales'] = 'home/usuario/view_datos_personales';
@@ -70,10 +71,15 @@ $route['usuario/afiliacion-paso2'] = 'home/vendedor/view_seleccionar_paquete';
 $route['usuario/afiliacion-final/(:num)'] = 'home/vendedor/submit_afiliacion/$1';
 $route['usuario/completado'] = 'home/vendedor/view_completado';
 $route['usuario/panel_vendedor'] = 'home/vendedor/ir_panel_vendedor';
-$route['usuario/invitaciones'] = 'home/cliente/view_invitaciones';
+$route['usuario/contactos'] = 'home/cliente/view_invitaciones';
+$route['usuario/contactos/aceptar_invitacion'] = 'home/cliente/aceptar_invitacion';
+$route['usuario/contactos/rechazar_invitacion'] = 'home/cliente/rechazar_invitacion';
+$route['usuario/contactos/eliminar'] = 'home/cliente/eliminar_invitacion';
+$route['usuario/enviar_invitacion'] = 'home/cliente/enviar_invitacion';
 $route['usuario/mis-paquetes'] = 'home/vendedor/mis_paquetes';
 $route['usuario/paquetes/comprar'] = 'home/vendedor/comprar_paquetes';
 $route['usuario/paquetes/comprar_paquete/(:any)'] = 'home/vendedor/submit_comprar_paquetes/$1';
+$route['usuario/buscar_invitaciones'] = 'home/cliente/ajax_get_listado_resultados';
 
 $route['util/verificar_email'] = 'home/usuario/check_email';
 $route['util/verificar_nombre'] = 'home/main/verificar_palabra';

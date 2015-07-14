@@ -53,8 +53,8 @@
             </div>
             <div class="col-md-12">
                 <div class="row">
-                    <div class="pull-right">
-                        <button type="button" class="btn btn-template-primary" id="enviar_todos"> Enviar a Todos</button>
+                    <div class="pull-right">                        
+                        <a href="<?php echo site_url('seguros/finalizar') ?>" class="btn btn-template-primary" id="terminar-seguros"> Terminar</a>
                     </div>
                 </div>
             </div>

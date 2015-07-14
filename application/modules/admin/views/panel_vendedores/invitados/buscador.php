@@ -36,7 +36,7 @@
                                 <div class="row">                                    
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label col-md-12" for="nombre">Nombre del Cliente</label>
+                                            <label class="control-label col-md-12" for="nombre">Identificacion</label>
                                             <div class="col-md-12">
                                                 <input type="text" name="nombre" id="nombre" value="" class="form-control"/>                                
                                             </div>
@@ -51,19 +51,7 @@
                                         </div>
                                     </div>
                                 </div>  
-                                <div class="row">       
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-12" for="sexo">Sexo</label>
-                                            <div class="col-md-12">
-                                                <select name="sexo" class="form-control">
-                                                    <option value="X">Seleccione uno</option>
-                                                    <option value="H">Hombre</option>
-                                                    <option value="M">Mujer</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>                                     
+                                <div class="row">                                                                               
                                     <div class="col-md-8">
                                         <div class="form-group">
                                             <label class="control-label col-md-12" for="email">Email</label>

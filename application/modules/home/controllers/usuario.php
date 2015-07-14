@@ -42,12 +42,15 @@ class Usuario extends MY_Controller {
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
             $user_id = $this->authentication->read('identifier');
-            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
-
+            $cliente = $this->usuario_model->get_full_identidad($user_id);
+            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->cliente->id);
+            $localizacion=$this->localizacion_model->get_by("usuario_id",$user_id);
+            
+            $full_localizacion=$this->localizacion_model->get_full_localizacion($localizacion->id);
+            
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
             //$this->template->add_js('modules/home/perfil.js');
-            $this->template->load_view('home/usuario/perfil', array("html_options" => $html_options));
+            $this->template->load_view('home/usuario/perfil', array("html_options" => $html_options,"info"=>$cliente ,"full_localizacion"=>$full_localizacion));
         } else {
             redirect('');
         }

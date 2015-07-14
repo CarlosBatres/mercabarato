@@ -13,18 +13,18 @@ class Seguro extends MY_Controller {
      * 
      */
     public function view_seguros() {
-
         $this->session->unset_userdata('seguros_tipo');
         $this->session->unset_userdata('seguros_datos_contacto');
         $this->session->unset_userdata('seguros_informacion');
-
+        $this->session->unset_userdata('seguros_ignore_list');
+        
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
             $user_id = $this->authentication->read('identifier');
-            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $cliente = $this->usuario_model->get_full_identidad($user_id);
 
             $this->template->add_js('modules/home/seguros.js');
-            $data = array();
+            $data = array("datos_contacto" => $cliente);
             $this->template->load_view('home/seguro/formulario', $data);
         } else {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
@@ -175,6 +175,12 @@ class Seguro extends MY_Controller {
             }
             $params["infocompra"] = 1;
             $params["paquete_vigente"] = true;
+            
+            $ignore_list=$this->session->userdata('seguros_ignore_list');
+            if($ignore_list){
+                $params["not_vendedor"]=$ignore_list;
+            }
+            
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
@@ -282,13 +288,27 @@ class Seguro extends MY_Controller {
                 "fecha_solicitud" => date("Y-m-d"),
                 "estado" => 0,
             );
-
+            
+            $ignore_list=$this->session->userdata('seguros_ignore_list');
+            if(!$ignore_list){
+                $ignore_list=array();
+            }
+            $ignore_list[]=$vendedor_id;
+            $this->session->set_userdata(array(
+                'seguros_ignore_list' => $ignore_list,
+            ));
+            
             $this->solicitud_seguro_model->insert($solicitud_seguro);
-            $this->session->unset_userdata('seguros_tipo');
-            $this->session->unset_userdata('seguros_datos_contacto');
-            $this->session->unset_userdata('seguros_informacion');
             // TODO : Enviar email a vendedor de que tiene una nueva solicitud de presupuesto            
         }
+    }
+    
+    public function finalizar(){
+        $this->session->unset_userdata('seguros_tipo');
+        $this->session->unset_userdata('seguros_datos_contacto');
+        $this->session->unset_userdata('seguros_informacion');
+        $this->session->unset_userdata('seguros_ignore_list');
+        redirect('');
     }
 
 }

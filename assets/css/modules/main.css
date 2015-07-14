@@ -175,6 +175,10 @@ body .box_registro{
 
 }
 
+.invitaciones-list li{
+    min-height: 127px;
+}
+
 
 #producto-principal-categorias a{
     font-size: 14px;
@@ -233,3 +237,6 @@ span.arrow {
 .preview_imagen_empresa{max-height: 300px;}
 
 #seguros-otros div.group label.error {float:right;padding-left:10px;}
+.contacto-invitado{
+    border: 2px solid #38a7bb !important;
+}

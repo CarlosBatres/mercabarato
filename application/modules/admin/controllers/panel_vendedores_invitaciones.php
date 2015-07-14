@@ -120,6 +120,7 @@ class Panel_vendedores_invitaciones extends MY_Controller {
 
         $invitaciones = $this->invitacion_model->get_many_by(array("vendedor_id" => $this->identidad->get_vendedor_id()));
         $ids_array = array();
+        $ids_array[]=$this->identidad->cliente->id;
         if ($invitaciones) {
             foreach ($invitaciones as $val) {
                 $ids_array[] = $val->cliente_id;
@@ -129,6 +130,7 @@ class Panel_vendedores_invitaciones extends MY_Controller {
         if ($formValues !== false) {
             if ($this->input->post('nombre') != "") {
                 $params["nombre"] = $this->input->post('nombre');
+                $params["nombre_vendedor"] = $this->input->post('nombre');
             }
             if ($this->input->post('sexo') != 'X') {
                 $params["sexo"] = $this->input->post('sexo');
@@ -146,7 +148,8 @@ class Panel_vendedores_invitaciones extends MY_Controller {
             }
             
             $params["usuario_activo"] = "1"; // Solo usuarios activos
-            $params["es_vendedor"] = "0";
+            //$params["es_vendedor"] = "0";
+            $params["join_vendedor"] =true;
             $params["excluir_admins"] = true;
             $pagina = $this->input->post('pagina');
         } else {
@@ -155,7 +158,7 @@ class Panel_vendedores_invitaciones extends MY_Controller {
 
         $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
-        $clientes_array = $this->cliente_model->get_admin_search($params, $limit, $offset);
+        $clientes_array = $this->cliente_model->get_admin_search($params, $limit, $offset,"vendedor.nombre","asc");
         $flt = (float) ($clientes_array["total"] / $limit);
         $ent = (int) ($clientes_array["total"] / $limit);
         if ($flt > $ent || $flt < $ent) {

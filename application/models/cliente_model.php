@@ -11,14 +11,25 @@ class Cliente_model extends MY_Model {
         $this->_table = "cliente";
     }
 
-    public function get_admin_search($params, $limit, $offset) {
+    public function get_admin_search($params, $limit, $offset,$order_by="cliente.id",$order="asc") {
         $this->db->start_cache();
-        $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.fecha_creado");
-        $this->db->from($this->_table);
-        $this->db->join("usuario", "cliente.usuario_id=usuario.id", 'INNER');
+
+        if ($params["join_vendedor"]) {
+            $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.fecha_creado,vendedor.nombre as nombre_vendedor");
+            $this->db->from($this->_table);
+            $this->db->join("usuario", "cliente.usuario_id=usuario.id", 'INNER');
+            $this->db->join("vendedor", "vendedor.cliente_id=cliente.id", 'LEFT');
+        } else {
+            $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.fecha_creado");
+            $this->db->from($this->_table);
+            $this->db->join("usuario", "cliente.usuario_id=usuario.id", 'INNER');
+        }
 
         if (isset($params['nombre'])) {
             $this->db->like('CONCAT(cliente.nombres," ",cliente.apellidos)', $params['nombre'], 'both');
+        }
+        if (isset($params['nombre_vendedor'])) {
+            $this->db->or_like('vendedor.nombre', $params['nombre_vendedor'], 'both');
         }
         if (isset($params['sexo'])) {
             $this->db->where('cliente.sexo', $params['sexo']);
@@ -50,7 +61,7 @@ class Cliente_model extends MY_Model {
         $count = $this->db->count_all_results();
 
         if ($count > 0) {
-            $this->db->order_by('cliente.id', 'asc');
+            $this->db->order_by($order_by, $order);
             $this->db->limit($limit, $offset);
             $clientes = $this->db->get()->result();
             $this->db->flush_cache();
@@ -81,24 +92,24 @@ class Cliente_model extends MY_Model {
             $usuario = $this->usuario_model->get($cliente->usuario_id);
             $this->localizacion_model->delete_by("usuario_id", $usuario->id);
             $this->invitacion_model->delete_by("cliente_id", $cliente->id);
-            $this->solicitud_seguro_model->delete_by("cliente_id",$id);
+            $this->solicitud_seguro_model->delete_by("cliente_id", $id);
             $this->visita_model->delete_by("cliente_id", $id);
-            
+
             $grupos = $this->grupo_model->get_many_by("cliente_id", $id);
             if ($grupos) {
-                foreach($grupos as $grupo){
-                    $this->grupo_tarifa_model->delete_by("grupo_id",$grupo->id);
-                    $this->grupo_oferta_model->delete_by("grupo_id",$grupo->id);
+                foreach ($grupos as $grupo) {
+                    $this->grupo_tarifa_model->delete_by("grupo_id", $grupo->id);
+                    $this->grupo_oferta_model->delete_by("grupo_id", $grupo->id);
                 }
-                $this->grupo_model->delete_by("cliente_id",$id);
+                $this->grupo_model->delete_by("cliente_id", $id);
             }
-            
-            
-            
-            $vendedor=$this->vendedor_model->get_by("cliente_id",$id);
-            if($vendedor){
-             $this->vendedor_model->delete($vendedor->id);                 
-            }            
+
+
+
+            $vendedor = $this->vendedor_model->get_by("cliente_id", $id);
+            if ($vendedor) {
+                $this->vendedor_model->delete($vendedor->id);
+            }
             parent::delete($id);
         } else {
             return false;
