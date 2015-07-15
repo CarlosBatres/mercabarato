@@ -79,7 +79,7 @@ $route['usuario/enviar_invitacion'] = 'home/cliente/enviar_invitacion';
 $route['usuario/mis-paquetes'] = 'home/vendedor/mis_paquetes';
 $route['usuario/paquetes/comprar'] = 'home/vendedor/comprar_paquetes';
 $route['usuario/paquetes/comprar_paquete/(:any)'] = 'home/vendedor/submit_comprar_paquetes/$1';
-$route['usuario/buscar_invitaciones'] = 'home/cliente/ajax_get_listado_resultados';
+$route['usuario/buscar_invitaciones'] = 'home/cliente/ajax_get_listado_resultados_invitaciones';
 
 $route['util/verificar_email'] = 'home/usuario/check_email';
 $route['util/verificar_nombre'] = 'home/main/verificar_palabra';

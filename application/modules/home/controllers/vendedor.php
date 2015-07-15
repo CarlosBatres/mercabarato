@@ -370,8 +370,8 @@ class Vendedor extends MY_Controller {
 
             if ($this->authentication->is_loggedin()) {
                 $user_id = $this->authentication->read('identifier');
-                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                $params["cliente_id"] = $cliente->id;
+                //$cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $params["usuario_id"] = $user_id;
                 $logged_in = true;
             } else {
                 $logged_in = false;

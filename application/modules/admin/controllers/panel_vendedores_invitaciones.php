@@ -53,9 +53,10 @@ class Panel_vendedores_invitaciones extends MY_Controller {
      * @param type $id
      */
     public function enviar_invitacion($id) {
-        $cliente = $this->cliente_model->get($id);
-        $exists = $this->invitacion_model->get_by(array("cliente_id" => $id, "vendedor_id" => $this->identidad->get_vendedor_id()));
-
+        $cliente = $this->cliente_model->get($id);        
+        
+        $exists=$this->invitacion_model->invitacion_existe($this->identidad->usuario->id,$cliente->usuario_id);
+        
         if ($cliente && !$exists) {
             $formValues = $this->input->post();
             if ($formValues !== false) {
@@ -64,9 +65,8 @@ class Panel_vendedores_invitaciones extends MY_Controller {
                     $data = array(
                         "titulo" => ($this->input->post('titulo') != '') ? $this->input->post('titulo') : null,
                         "comentario" => ($this->input->post('comentario') != '') ? $this->input->post('comentario') : null,
-                        "cliente_id" => $cliente->id,
-                        "vendedor_id" => $this->identidad->get_vendedor_id(),
-                        "from_vendedor" => "1",
+                        "invitar_desde" => $this->identidad->usuario->id,
+                        "invitar_para" => $cliente->usuario_id,                        
                         "estado" => "1"
                     );
                     // estado=1 - Pendiente                    
@@ -117,15 +117,23 @@ class Panel_vendedores_invitaciones extends MY_Controller {
     public function ajax_get_listado_clientes() {
         //$this->show_profiler();
         $formValues = $this->input->post();
-
-        $invitaciones = $this->invitacion_model->get_many_by(array("vendedor_id" => $this->identidad->get_vendedor_id()));
+        
+        $invitar_desde = $this->invitacion_model->get_many_by("invitar_desde",$this->identidad->usuario->id);
+        $invitar_para = $this->invitacion_model->get_many_by("invitar_para",$this->identidad->usuario->id);
+        
         $ids_array = array();
-        $ids_array[]=$this->identidad->cliente->id;
-        if ($invitaciones) {
-            foreach ($invitaciones as $val) {
-                $ids_array[] = $val->cliente_id;
+        $ids_array[]=$this->identidad->usuario->id;
+        if ($invitar_desde) {
+            foreach ($invitar_desde as $val) {
+                $ids_array[] = $val->invitar_para;
             }
         }
+        if ($invitar_para) {
+            foreach ($invitar_para as $val) {
+                $ids_array[] = $val->invitar_desde;
+            }
+        }
+        
         $params = array();        
         if ($formValues !== false) {
             if ($this->input->post('nombre') != "") {
@@ -144,12 +152,10 @@ class Panel_vendedores_invitaciones extends MY_Controller {
             }
 
             if (sizeof($ids_array) > 0) {
-                $params["excluir_cliente_ids"] = $ids_array;
+                $params["excluir_usuarios_ids"] = $ids_array;
             }
             
-            $params["usuario_activo"] = "1"; // Solo usuarios activos
-            //$params["es_vendedor"] = "0";
-            $params["join_vendedor"] =true;
+            $params["usuario_activo"] = "1"; // Solo usuarios activos                        
             $params["excluir_admins"] = true;
             $pagina = $this->input->post('pagina');
         } else {
@@ -158,7 +164,7 @@ class Panel_vendedores_invitaciones extends MY_Controller {
 
         $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
-        $clientes_array = $this->cliente_model->get_admin_search($params, $limit, $offset,"vendedor.nombre","asc");
+        $clientes_array = $this->cliente_model->get_clientes_invitados($params, $limit, $offset,"v.nombre","asc");
         $flt = (float) ($clientes_array["total"] / $limit);
         $ent = (int) ($clientes_array["total"] / $limit);
         if ($flt > $ent || $flt < $ent) {
@@ -213,18 +219,20 @@ class Panel_vendedores_invitaciones extends MY_Controller {
 
             if ($this->input->post('tipo') == "invitaciones_recibidas") {
                 $layout = 'admin/panel_vendedores/invitados/tabla_resultados_recibidas';
-                $params["from_vendedor"] = "0";
+                $params["invitaciones_recibidas"]=true;
+                $params["invitar_para"] = $this->identidad->usuario->id;
                 $params["estado"] = "1";
             } elseif ($this->input->post('tipo') == "invitaciones_aceptadas") {
-                $layout = 'admin/panel_vendedores/invitados/tabla_resultados_pendiente';
+                $layout = 'admin/panel_vendedores/invitados/tabla_resultados_aceptadas';
                 $params["estado"] = "2";
             } elseif ($this->input->post('tipo') == "invitaciones_pendientes") {
                 $layout = 'admin/panel_vendedores/invitados/tabla_resultados_pendiente';
-                $params["from_vendedor"] = "1";
+                $params["invitaciones_pendientes"]=true;
+                $params["invitar_desde"] = $this->identidad->usuario->id;                
                 $params["estado"] = "1";
             }
 
-            $params["vendedor_id"] = $this->identidad->get_vendedor_id();
+            //$params["vendedor_id"] = $this->identidad->get_vendedor_id();
             $params["excluir_admins"] = true;
             $pagina = $this->input->post('pagina');
         } else {

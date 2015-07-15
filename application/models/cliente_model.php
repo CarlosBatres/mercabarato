@@ -11,7 +11,7 @@ class Cliente_model extends MY_Model {
         $this->_table = "cliente";
     }
 
-    public function get_admin_search($params, $limit, $offset,$order_by="cliente.id",$order="asc") {
+    public function get_admin_search($params, $limit, $offset, $order_by = "cliente.id", $order = "asc") {
         $this->db->start_cache();
 
         if ($params["join_vendedor"]) {
@@ -113,6 +113,82 @@ class Cliente_model extends MY_Model {
             parent::delete($id);
         } else {
             return false;
+        }
+    }
+
+    public function get_clientes_invitados($params, $limit, $offset, $order_by = "c.id", $order = "asc") {
+
+        $query = "SELECT SQL_CALC_FOUND_ROWS c.*,u.email,u.ultimo_acceso,u.ip_address,u.fecha_creado,v.nombre as nombre_vendedor ";
+        $query.="FROM cliente c ";
+        $query.="INNER JOIN usuario u ON c.usuario_id = u.id ";
+        $query.="LEFT JOIN vendedor v ON v.cliente_id = c.id ";
+
+        $query.="WHERE ( 1 ";
+
+        if (isset($params['nombre'])) {
+            $text = " AND CONCAT(c.nombres,' ',c.apellidos) LIKE '%" . $params['nombre'] . "%'";
+            $query.=$text;
+        }
+
+        if (isset($params['nombre_vendedor'])) {
+            $text = " OR v.nombre LIKE '%" . $params['nombre_vendedor'] . "%'";
+            $query.=$text;
+        }
+
+        $query.=" ) AND ( 1";
+
+        if (isset($params['email'])) {
+            $text = " AND u.email LIKE '%" . $params['email'] . "%'";
+            $query.=$text;
+        }
+
+        if (isset($params['es_vendedor'])) {
+            $text = " AND c.es_vendedor = '" . $params['es_vendedor'] . "'";
+            $query.=$text;
+        }
+
+        if (isset($params['excluir_admins'])) {
+            $text = " AND u.is_admin = '0'";
+            $query.=$text;
+        }
+
+        if (isset($params['usuario_activo'])) {
+            $text = " AND u.activo = '" . $params["usuario_activo"] . "'";
+            $query.=$text;
+        }
+
+        if (isset($params['keywords'])) {
+            foreach ($params['keywords'] as $keyword) {
+                $text = " AND c.keyword LIKE '%" . $keyword . "%'";
+                $query.=$text;
+            }
+        }
+
+        $query.=" ) AND ( 1";
+
+        if (isset($params['excluir_usuarios_ids'])) {
+            $ex_ids = implode(",", $params["excluir_usuarios_ids"]);
+            $text = " AND u.id NOT IN (" . $ex_ids . ")";
+            $query.=$text;
+        }
+
+
+        $query.=") ";
+        
+        $query.=" ORDER BY " . $order_by . " " . $order;
+        $query.=" LIMIT " . $offset . " , " . $limit;
+
+        $result = $this->db->query($query);
+        $clientes = $result->result();
+
+        $query_total = "SELECT FOUND_ROWS() as rows;";
+        $result_total = $this->db->query($query_total);
+        $total = $result_total->row();
+
+        if ($total->rows > 0) {
+            return array("clientes" => $clientes, "total" => $total->rows);
+        } else {
+            return array("total" => 0);
         }
     }
 

@@ -181,8 +181,8 @@ class Cliente extends MY_Controller {
             if ($formValues !== false) {
                 $invitacion_id = $this->input->post('invitacion_id');
                 $user_id = $this->authentication->read('identifier');
-                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                $this->invitacion_model->aceptar_invitacion($invitacion_id, $cliente->id);
+                //$cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $this->invitacion_model->aceptar_invitacion($invitacion_id,$user_id);
                 echo json_encode(array("success" => true));
             }
         } else {
@@ -222,25 +222,22 @@ class Cliente extends MY_Controller {
         }
     }
 
-    public function ajax_get_listado_resultados() {
-        //$this->show_profiler();
+    public function ajax_get_listado_resultados_invitaciones() {
+        $this->show_profiler();
         $formValues = $this->input->post();
         $user_id = $this->authentication->read('identifier');
-        $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+        //$cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
         $params = array();
         if ($formValues !== false) {
             $pagina = $this->input->post('pagina');
 
             $params["pagina"] = $pagina;
-            $params["cliente_id"] = $cliente->id;
-            $params["from_vendedor"] = "1";
-            $params["estado"] = "1";
-            $params["or_estado"] = "2";
+            $params["usuario_id"] = $user_id;                        
 
             $limit = 5;
             $offset = $limit * ($pagina - 1);
-            $invitaciones = $this->invitacion_model->get_site_search($params, $limit, $offset);
+            $invitaciones = $this->invitacion_model->find_mis_invitaciones($params, $limit, $offset);
             $flt = (float) ($invitaciones["total"] / $limit);
             $ent = (int) ($invitaciones["total"] / $limit);
             if ($flt > $ent || $flt < $ent) {
