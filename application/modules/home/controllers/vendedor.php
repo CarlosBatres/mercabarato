@@ -370,11 +370,17 @@ class Vendedor extends MY_Controller {
 
             if ($this->authentication->is_loggedin()) {
                 $user_id = $this->authentication->read('identifier');
-                //$cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $identidad = $this->usuario_model->get_full_identidad($user_id);
+                if ($identidad->es_vendedor()) {
+                    $vendedor_id_logged = $identidad->get_vendedor_id();
+                } else {
+                    $vendedor_id_logged = -1;
+                }
                 $params["usuario_id"] = $user_id;
                 $logged_in = true;
             } else {
                 $logged_in = false;
+                $vendedor_id_logged = -1;
             }
 
             //$limit = $this->config->item("principal_default_per_page");
@@ -407,11 +413,12 @@ class Vendedor extends MY_Controller {
             $data = array(
                 "vendedores" => $vendedores_array["vendedores"],
                 "pagination" => $pagination,
-                "logged_in" => $logged_in);
+                "logged_in" => $logged_in,
+                "vendedor_id_logged" => $vendedor_id_logged);
 
             $this->template->load_view('home/vendedores/tabla_resultados', $data);
         } else {
-             redirect('');
+            redirect('');
         }
     }
 
@@ -455,8 +462,8 @@ class Vendedor extends MY_Controller {
 
             if ($this->authentication->is_loggedin()) {
                 $user_id = $this->authentication->read('identifier');
-                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                $invitacion = $this->invitacion_model->get_by(array("cliente_id" => $cliente->id, "vendedor_id" => $vendedor->id));
+                $cliente_vendedor = $this->cliente_model->get($vendedor->cliente_id);
+                $invitacion = $this->invitacion_model->invitacion_existe($user_id, $cliente_vendedor->usuario_id);
             } else {
                 $invitacion = true;
             }
@@ -482,7 +489,5 @@ class Vendedor extends MY_Controller {
         $this->load->config('upload', TRUE);
         $this->load->library('UploadHandler', $this->config->item('vendedor', 'upload'));
     }
-    
-    
 
 }

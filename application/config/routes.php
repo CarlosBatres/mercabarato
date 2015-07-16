@@ -104,7 +104,10 @@ $route['panel_vendedor/invitaciones/envio_email'] = 'admin/panel_vendedores_invi
 $route['panel_vendedor/invitaciones/aceptar/(:num)'] = 'admin/panel_vendedores_invitaciones/aceptar_invitacion/$1'; 
 $route['panel_vendedor/invitaciones/rechazar/(:num)'] = 'admin/panel_vendedores_invitaciones/rechazar_invitacion/$1'; 
 $route['panel_vendedor/invitaciones/enviar/(:num)'] = 'admin/panel_vendedores_invitaciones/enviar_invitacion/$1'; 
-$route['panel_vendedor/invitaciones/ajax_get_listado_resultados'] = 'admin/panel_vendedores_invitaciones/ajax_get_listado_resultados';
+$route['panel_vendedor/invitaciones/ajax_invitaciones_aceptadas'] = 'admin/panel_vendedores_invitaciones/ajax_invitaciones_aceptadas';
+$route['panel_vendedor/invitaciones/ajax_invitaciones_pendientes'] = 'admin/panel_vendedores_invitaciones/ajax_invitaciones_pendientes';
+$route['panel_vendedor/invitaciones/ajax_invitaciones_recibidas'] = 'admin/panel_vendedores_invitaciones/ajax_invitaciones_recibidas';
+
 $route['panel_vendedor/invitaciones/ajax_get_listado_clientes'] = 'admin/panel_vendedores_invitaciones/ajax_get_listado_clientes';
 $route['panel_vendedor/producto/listado'] = 'admin/panel_vendedores_productos/listado';
 $route['panel_vendedor/producto/agregar'] = 'admin/panel_vendedores_productos/agregar';

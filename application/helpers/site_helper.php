@@ -193,23 +193,14 @@ function truncate_simple($text, $chars = 25) {
 
 function keywords_listado() {
     $data = array(
-        'Construcción' => 'Construcción',
-        'Moda' => 'Moda',
-        'Tecnologia' => 'Tecnologia',
-        'Salud y Belleza' => 'Salud y Belleza',
-        'Casa y Jardin' => 'Casa y Jardin',
-        'Inmobiliaria' => 'Inmobiliaria',
-        'Mascotas' => 'Mascotas',
-        'Limpieza e Higiene' => 'Limpieza e Higiene',
-        'Artes Graficas' => 'Artes Graficas',
-        'Servicios' => 'Servicios',
-        'Regalos' => 'Regalos',
-        'Disfraces' => 'Disfraces',
-        'Motor' => 'Motor',
         'Alimentación' => 'Alimentación',
-        'Suministros Industriales' => 'Suministros Industriales',
-        'Musica' => 'Musica',
-        'Internet' => 'Internet'
+        'Hogar' => 'Hogar',
+        'Moda y Belleza' => 'Moda y Belleza',
+        'Tecnologia y Motor' => 'Tecnologia y Motor',        
+        'Campo y Mar' => 'Campo y Mar',
+        'Deporte y Diversión' => 'Deporte y Diversión',
+        'Servicios' => 'Servicios',
+        'Suministros Industriales y Profesionales' => 'Suministros Industriales y Profesionales',
     );
     return $data;
 }
@@ -232,10 +223,10 @@ function fix_category_text($text) {
 function blacklisted_words($word) {
     $list = array("login", "logout", "registro", "buscar", "buscar_producto", "vendedores", "registro_exitoso", "registrar_cliente", "registrar_vendedor", "seguros", "usuarios",
         "acceso_invalido", "buscar_prestadores", "password", "util", "panel_vendedor", "admin");
-    
-    if(in_array($word, $list)){
+
+    if (in_array($word, $list)) {
         return true;
-    }else{
+    } else {
         return false;
-    }        
+    }
 }

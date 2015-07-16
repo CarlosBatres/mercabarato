@@ -135,7 +135,11 @@ class Anuncio_model extends MY_Model {
     public function habilitar($anuncio_id) {
         $this->update($anuncio_id, array("habilitado" => "1"));
     }
-
+    /**
+     * 
+     * @param type $cliente_id
+     * @return type
+     */
     public function get_anuncios_para_cliente($cliente_id) {
         $cliente = $this->cliente_model->get($cliente_id);
 
@@ -145,9 +149,11 @@ class Anuncio_model extends MY_Model {
         if (sizeof($invitaciones_ids) > 0) {
             $this->db->select("anuncio.*");
             $this->db->from($this->_table);
-            $this->db->join("vendedor", "vendedor.id=anuncio.vendedor_id", 'INNER');            
+            $this->db->join("vendedor", "vendedor.id=anuncio.vendedor_id", 'INNER');
+            $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');            
+            $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');            
             $this->db->where("anuncio.habilitado", "1");
-            $this->db->where_in("vendedor.id", $invitaciones_ids);
+            $this->db->where_in("usuario.id", $invitaciones_ids);
             $this->db->order_by("anuncio.fecha_publicacion", "desc");
 
             $this->db->limit(5, 0);

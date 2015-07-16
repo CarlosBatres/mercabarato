@@ -316,6 +316,10 @@ class Vendedor_model extends MY_Model {
             $this->db->where('localizacion.pais_id', $params['pais']);
             //$this->db->or_where('localizacion.pais_id IS NULL');            
         }
+        
+        /*if(isset($params["ignore_vendedor_id"])){
+            $this->db->where("vendedor.id !=",$params["ignore_vendedor_id"]);
+        }*/
 
 
 

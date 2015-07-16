@@ -46,12 +46,14 @@
                                 ?>
                             </p>
                         </div>
-                        <?php if (!isset($vendedor->invitacion_cliente_id) && $logged_in):  ?>
-                        <div class="row">
-                            <div class="text-center">
-                                <button type="button" class="btn btn-template-primary" data-id="<?php echo $vendedor->id ?>" data-toggle="modal" data-target="#myModal"> Solicitar Invitación</button>
-                            </div>
-                        </div>
+                        <?php if ($logged_in): ?>                                                
+                            <?php if ($vendedor->invitacion_id1 == null && $vendedor->invitacion_id2 == null && $vendedor_id_logged != $vendedor->id): ?>
+                                <div class="row">
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-template-primary" data-id="<?php echo $vendedor->id ?>" data-toggle="modal" data-target="#myModal"> Solicitar Invitación</button>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </div>                    
                 </div>

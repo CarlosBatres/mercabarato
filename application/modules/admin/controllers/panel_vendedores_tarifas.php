@@ -326,9 +326,8 @@ class Panel_vendedores_tarifas extends MY_Controller {
                     $params['excluir_ids_clientes']=  array_unique(array_merge($params['excluir_ids_clientes'],$clientes_arr));
                 }
             }
-
-            $params["estado"] = "2";
-            $params["vendedor_id"] = $this->identidad->get_vendedor_id();
+            
+            $params["usuario_id"] = $this->identidad->usuario->id;
             $params["excluir_admins"] = true;
             $pagina = $this->input->post('pagina');
         } else {
@@ -337,7 +336,7 @@ class Panel_vendedores_tarifas extends MY_Controller {
 
         $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
-        $clientes_array = $this->invitacion_model->get_admin_search($params, $limit, $offset);
+        $clientes_array = $this->invitacion_model->get_invitaciones_aceptadas($params, $limit, $offset);
         $flt = (float) ($clientes_array["total"] / $limit);
         $ent = (int) ($clientes_array["total"] / $limit);
         if ($flt > $ent || $flt < $ent) {

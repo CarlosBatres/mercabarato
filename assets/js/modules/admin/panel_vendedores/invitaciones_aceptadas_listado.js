@@ -17,7 +17,7 @@ function updateResultados() {
     });
     $.ajax({
         type: "POST",
-        url: SITE_URL + 'panel_vendedor/invitaciones/ajax_get_listado_resultados',
+        url: SITE_URL + 'panel_vendedor/invitaciones/ajax_invitaciones_aceptadas',
         data: form.serialize(),
         dataType: "html",
         success: function(response) {

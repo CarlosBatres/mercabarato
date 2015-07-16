@@ -180,8 +180,7 @@ class Cliente extends MY_Controller {
 
             if ($formValues !== false) {
                 $invitacion_id = $this->input->post('invitacion_id');
-                $user_id = $this->authentication->read('identifier');
-                //$cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $user_id = $this->authentication->read('identifier');                
                 $this->invitacion_model->aceptar_invitacion($invitacion_id,$user_id);
                 echo json_encode(array("success" => true));
             }
@@ -196,9 +195,8 @@ class Cliente extends MY_Controller {
 
             if ($formValues !== false) {
                 $invitacion_id = $this->input->post('invitacion_id');
-                $user_id = $this->authentication->read('identifier');
-                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                $this->invitacion_model->rechazar_invitacion($invitacion_id, $cliente->id);
+                $user_id = $this->authentication->read('identifier');                
+                $this->invitacion_model->rechazar_invitacion($invitacion_id, $user_id);
                 echo json_encode(array("success" => true));
             }
         } else {
@@ -223,11 +221,10 @@ class Cliente extends MY_Controller {
     }
 
     public function ajax_get_listado_resultados_invitaciones() {
-        $this->show_profiler();
+        //$this->show_profiler();
         $formValues = $this->input->post();
         $user_id = $this->authentication->read('identifier');
-        //$cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-
+        
         $params = array();
         if ($formValues !== false) {
             $pagina = $this->input->post('pagina');
@@ -275,18 +272,18 @@ class Cliente extends MY_Controller {
 
             if ($formValues !== false) {
                 $vendedor_id = $this->input->post('vendedor_id');
-                $user_id = $this->authentication->read('identifier');
-                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $vendedor = $this->vendedor_model->get($vendedor_id);
+                $cliente = $this->cliente_model->get($vendedor->cliente_id);
+                
+                $user_id = $this->authentication->read('identifier');                
 
                 $data = array(
-                    "vendedor_id" => $vendedor_id,
-                    "cliente_id" => $cliente->id,
+                    "invitar_desde" => $user_id,
+                    "invitar_para" => $cliente->usuario_id,
                     "titulo" => ($this->input->post('titulo') != '') ? $this->input->post('titulo') : null,
                     "comentario" => ($this->input->post('mensaje') != '') ? $this->input->post('mensaje') : null,
-                    "estado" => "1",
-                    "from_vendedor" => "0"
-                );
-                $vendedor=$this->vendedor_model->get($vendedor_id);
+                    "estado" => "1"                    
+                );                
                 $this->invitacion_model->insert($data);
                 redirect($vendedor->unique_slug);
             }

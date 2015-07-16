@@ -7,13 +7,13 @@
         <?php foreach ($invitaciones as $invitacion): ?>
             <?php
             if ($invitacion->estado == 2) {
-                $class="contacto-invitado";
-            }else{
-                $class="";
+                $class = "contacto-invitado";
+            } else {
+                $class = "";
             }
             ?>
 
-            <li class="<?php echo $class;?>">                
+            <li class="<?php echo $class; ?>">                
                 <div class="col-md-8">                                                        
                     <div class="row invitaciones">                    
                         <a href="<?php echo site_url($invitacion->unique_slug) ?>"><p><strong><?php echo $invitacion->nombre ?></strong></p></a>
@@ -35,32 +35,44 @@
 
                     </div>
                 </div>
-                <?php if ($invitacion->estado == 1): ?>
-                    <div class="col-md-4">
-                        <br>
-                        <div class="row">
-                            <div class="pull-right">
-                                <button type="button" class="btn btn-success accion aceptar" data-id="<?php echo $invitacion->id ?>"> &nbsp;Aceptar&nbsp;</button>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="pull-right">
-                                <button type="button" class="btn btn-danger accion rechazar" data-id="<?php echo $invitacion->id ?>"> Rechazar</button>
-                            </div>
-                        </div>
-                    </div>
-                <?php else: ?>
+                <?php if ($invitacion->enviado == 1): ?>
                     <div class="col-md-4">                    
                         <br>
                         <br>
                         <div class="row">
                             <div class="pull-right">
-                                <button type="button" class="btn btn-warning accion eliminar" data-id="<?php echo $invitacion->id ?>"> &nbsp;Eliminar Contacto&nbsp;</button>
+                                <button type="button" class="btn btn-info accion" data-id="<?php echo $invitacion->id ?>">Esperando Respuesta</button>
                             </div>
                         </div>                        
                     </div>
-                <?php endif; ?>                
+                <?php else: ?>
+                    <?php if ($invitacion->estado == 1): ?>
+                        <div class="col-md-4">
+                            <br>
+                            <div class="row">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-success accion aceptar" data-id="<?php echo $invitacion->id ?>"> &nbsp;Aceptar&nbsp;</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-danger accion rechazar" data-id="<?php echo $invitacion->id ?>"> Rechazar</button>
+                                </div>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <div class="col-md-4">                    
+                            <br>
+                            <br>
+                            <div class="row">
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-warning accion eliminar" data-id="<?php echo $invitacion->id ?>"> &nbsp;&nbsp;Eliminar Contacto&nbsp;&nbsp;</button>
+                                </div>
+                            </div>                        
+                        </div>
+                    <?php endif; ?>                
+                <?php endif; ?> 
             </li>        
         <?php endforeach; ?>
     </ul>
