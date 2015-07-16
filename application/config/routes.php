@@ -87,6 +87,8 @@ $route['util/get_poblaciones'] = 'home/poblacion/ajax_get_poblaciones_htmlselect
 $route['util/get_provincias'] = 'home/provincia/ajax_get_provincias_htmlselect';
 $route['util/upload_vendedor_image'] = 'home/vendedor/upload_image';
 
+$route['site/contacto'] = 'home/main/contacto';
+$route['site/contacto/submit'] = 'home/main/contacto_submit';
 
 /* Apartado para vendedores */
  

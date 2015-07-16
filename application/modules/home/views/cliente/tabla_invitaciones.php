@@ -1,6 +1,6 @@
 <?php if (sizeof($invitaciones) == 0): ?>
     <div>
-        <p> No se encontraron invitaciones pendientes...</p>    
+        <p> No tienes contactos ni invitaciones pendientes...</p>    
     </div>
 <?php else: ?>
     <ul class="tabla-resultados-principal invitaciones-list">
