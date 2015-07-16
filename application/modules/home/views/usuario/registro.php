@@ -170,7 +170,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <p>Al crear una cuenta confirmas que has leído y aceptas los <a href="<?php echo site_url("") ?>">Términos del Servicio y Condiciones de Uso</a></p>
+                                <p>Al crear una cuenta confirmas que has leído y aceptas los <a href="<?php echo site_url("site/terminos-de-uso") ?>">Términos del Servicio y Condiciones de Uso</a></p>
                             </div>
                         </div>
                         <br>

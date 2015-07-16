@@ -213,25 +213,25 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Nombres</label>
-                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->nombres : ""?>">
+                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->nombres : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Apellidos</label>
-                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->apellidos : ""?>">
+                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->apellidos : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Telefono de Contacto</label>
-                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->telefono_fijo : ""?>">
+                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->telefono_fijo : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Correo Electronico</label>
-                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto))? $datos_contacto->usuario->email : ""?>" <?php echo (isset($datos_contacto))?"disabled":""?>>
+                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->usuario->email : "" ?>" <?php echo (isset($datos_contacto)) ? "disabled" : "" ?>>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -241,7 +241,11 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <p>Al presionar siguiente confirmas que has leído y aceptas los <a href="<?php echo site_url("site/terminos-de-uso") ?>">Términos del Servicio y Condiciones de Uso</a></p>
+                                        </div>
+                                    </div>
 
                                     <br>
                                     <div class="pull-right">
@@ -302,25 +306,25 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Nombres</label>
-                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->nombres : ""?>">
+                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->nombres : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Apellidos</label>
-                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->apellidos : ""?>">
+                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->apellidos : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Telefono de Contacto</label>
-                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->telefono_fijo : ""?>">
+                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->telefono_fijo : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Correo Electronico</label>
-                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto))? $datos_contacto->usuario->email : ""?>" <?php echo (isset($datos_contacto))?"disabled":""?>>
+                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->usuario->email : "" ?>" <?php echo (isset($datos_contacto)) ? "disabled" : "" ?>>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -328,6 +332,11 @@
                                                 <label for="comment">Observaciones</label>
                                                 <textarea class="form-control" rows="8" name="observaciones"></textarea>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <p>Al presionar siguiente confirmas que has leído y aceptas los <a href="<?php echo site_url("site/terminos-de-uso") ?>">Términos del Servicio y Condiciones de Uso</a></p>
                                         </div>
                                     </div>
 
@@ -433,25 +442,25 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Nombres</label>
-                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->nombres : ""?>">
+                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->nombres : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Apellidos</label>
-                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->apellidos : ""?>">
+                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->apellidos : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Telefono de Contacto</label>
-                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->telefono_fijo : ""?>">
+                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->telefono_fijo : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Correo Electronico</label>
-                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto))? $datos_contacto->usuario->email : ""?>" <?php echo (isset($datos_contacto))?"disabled":""?>>
+                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->usuario->email : "" ?>" <?php echo (isset($datos_contacto)) ? "disabled" : "" ?>>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -459,6 +468,11 @@
                                                 <label for="comment">Observaciones</label>
                                                 <textarea class="form-control" rows="8" name="observaciones"></textarea>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <p>Al presionar siguiente confirmas que has leído y aceptas los <a href="<?php echo site_url("site/terminos-de-uso") ?>">Términos del Servicio y Condiciones de Uso</a></p>
                                         </div>
                                     </div>
 
@@ -649,25 +663,25 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Nombres</label>
-                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->nombres : ""?>">
+                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->nombres : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Apellidos</label>
-                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->apellidos : ""?>">
+                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->apellidos : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Telefono de Contacto</label>
-                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->telefono_fijo : ""?>">
+                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->telefono_fijo : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Correo Electronico</label>
-                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto))? $datos_contacto->usuario->email : ""?>" <?php echo (isset($datos_contacto))?"disabled":""?>>
+                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->usuario->email : "" ?>" <?php echo (isset($datos_contacto)) ? "disabled" : "" ?>>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -675,6 +689,11 @@
                                                 <label for="comment">Observaciones</label>
                                                 <textarea class="form-control" rows="8" name="observaciones"></textarea>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <p>Al presionar siguiente confirmas que has leído y aceptas los <a href="<?php echo site_url("site/terminos-de-uso") ?>">Términos del Servicio y Condiciones de Uso</a></p>
                                         </div>
                                     </div>
 
@@ -729,25 +748,25 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Nombres</label>
-                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->nombres : ""?>">
+                                                <input type="text" class="form-control" name="nombres" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->nombres : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Apellidos</label>
-                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->apellidos : ""?>">
+                                                <input type="text" class="form-control" name="apellidos" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->apellidos : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Telefono de Contacto</label>
-                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto))? $datos_contacto->cliente->telefono_fijo : ""?>">
+                                                <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->telefono_fijo : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Correo Electronico</label>
-                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto))? $datos_contacto->usuario->email : ""?>" <?php echo (isset($datos_contacto))?"disabled":""?>>
+                                                <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->usuario->email : "" ?>" <?php echo (isset($datos_contacto)) ? "disabled" : "" ?>>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -755,6 +774,11 @@
                                                 <label for="comment">Observaciones</label>
                                                 <textarea class="form-control" rows="8" name="observaciones"></textarea>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <p>Al presionar siguiente confirmas que has leído y aceptas los <a href="<?php echo site_url("site/terminos-de-uso") ?>">Términos del Servicio y Condiciones de Uso</a></p>
                                         </div>
                                     </div>
 

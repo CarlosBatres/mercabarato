@@ -42,26 +42,46 @@ class Main extends MY_Controller {
     }
 
     public function contacto_submit() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');        
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
         $formValues = $this->input->post();
 
         if ($formValues !== false) {
             $email = $this->input->post('email');
             $mensaje = $this->input->post('mensaje');
-            
+
             if ($this->config->item('emails_enabled')) {
                 $this->load->library('email');
-                $this->email->from($email);
+                $this->email->from($this->config->item('site_info_email'), 'Formulario de Contacto');
                 $this->email->to($this->config->item('site_info_email'));
 
-                $this->email->subject('Nuevo mensaje desde Mercabarato.com');  
-                $data_email=array("email"=>$email,"mensaje"=>$mensaje);
+                $this->email->subject('Nuevo mensaje desde Mercabarato.com');
+                $data_email = array("email" => $email, "mensaje" => $mensaje);
                 $this->email->message($this->load->view('home/emails/contacto', $data_email, true));
                 $this->email->send();
             }
         }
 
         $this->template->load_view('home/paginas/contacto_mensaje_recibido');
+    }
+
+    public function quienes_somos() {
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->load_view('home/paginas/quienes_somos');
+    }
+
+    public function como_funciona() {
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->load_view('home/paginas/como_funciona');
+    }
+
+    public function aviso_legal() {
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->load_view('home/paginas/aviso_legal');
+    }
+
+    public function terminos_de_uso() {
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->load_view('home/paginas/terminos_de_uso');
     }
 
 }
