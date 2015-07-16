@@ -10,8 +10,7 @@
                 <thead>
                     <tr>              
                         <th style="width: 1%"> <input type="checkbox" name="select_all" value="ON" /></th>              
-                        <th style="width: 35%">Nombre Completo</th>                
-                        <th style="width: 9%">Sexo</th>                    
+                        <th style="width: 35%">Identificacion</th>                                                         
                         <th style="width: 20%">Miembro Desde</th>                    
                         <th style="width: 15%">Ultima Actividad</th>                      
                     </tr>
@@ -20,17 +19,11 @@
                     <?php foreach ($clientes as $cliente): ?>
                         <tr data-id="<?php echo $cliente->id; ?>">                    
                             <td><input type="checkbox" name="mover" value="ON" /></td>
-                            <?php if ($cliente->nombres != null): ?>
-                                <td><?php echo $cliente->nombres . ' ' . $cliente->apellidos; ?></td>                                                                                    
+                            <?php if ($cliente->nombre_vendedor != null): ?>
+                                <td><?php echo $cliente->nombre_vendedor; ?></td>
                             <?php else: ?>   
-                                <td class="warning"></td>
-                            <?php endif; ?>
-
-                            <?php if ($cliente->sexo != null): ?>
-                                <td><?php echo ($cliente->sexo == 'H') ? 'Hombre' : 'Mujer'; ?></td>
-                            <?php else: ?>   
-                                <td class="warning"></td>
-                            <?php endif; ?>                        
+                                <td><?php echo $cliente->nombres . ' ' . $cliente->apellidos; ?></td>
+                            <?php endif; ?>  
                             <?php if ($cliente->fecha_creado != null): ?>
                                 <td><?php echo mdate('%d %F %Y', strtotime($cliente->fecha_creado)); ?></td>
                             <?php else: ?>   
@@ -53,8 +46,7 @@
             <table class="table table-bordered table-hover table-striped">
                 <thead>
                     <tr>                                      
-                        <th style="width: 35%">Nombre Completo</th>                
-                        <th style="width: 9%">Sexo</th>                    
+                        <th style="width: 35%">Identificacion</th>                                        
                         <th style="width: 20%">Miembro Desde</th>                    
                         <th style="width: 15%">Ultima Actividad</th>                      
                     </tr>
@@ -62,17 +54,11 @@
                 <tbody>
                     <?php foreach ($clientes as $cliente): ?>
                         <tr data-id="<?php echo $cliente->id; ?>">                    
-                            <?php if ($cliente->nombres != null): ?>
-                                <td><?php echo $cliente->nombres . ' ' . $cliente->apellidos; ?></td>                                                                                    
+                            <?php if ($cliente->nombre_vendedor != null): ?>
+                                <td><?php echo $cliente->nombre_vendedor; ?></td>
                             <?php else: ?>   
-                                <td class="warning"></td>
-                            <?php endif; ?>
-
-                            <?php if ($cliente->sexo != null): ?>
-                                <td><?php echo ($cliente->sexo == 'H') ? 'Hombre' : 'Mujer'; ?></td>
-                            <?php else: ?>   
-                                <td class="warning"></td>
-                            <?php endif; ?>                        
+                                <td><?php echo $cliente->nombres . ' ' . $cliente->apellidos; ?></td>
+                            <?php endif; ?>                             
                             <?php if ($cliente->fecha_creado != null): ?>
                                 <td><?php echo mdate('%d %F %Y', strtotime($cliente->fecha_creado)); ?></td>
                             <?php else: ?>   

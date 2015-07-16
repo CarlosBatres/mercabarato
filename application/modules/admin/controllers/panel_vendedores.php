@@ -23,7 +23,10 @@ class Panel_vendedores extends MY_Controller {
 
         $mis_productos = $this->producto_model->get_many_by("vendedor_id", $vendedor->get_vendedor_id());
         $mis_anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vendedor->get_vendedor_id());
-        $mis_clientes = $this->invitacion_model->get_many_by(array("vendedor_id" => $vendedor->get_vendedor_id(), "estado" => "2"));
+        
+        $invitar_desde = $this->invitacion_model->get_many_by(array("invitar_desde" => $vendedor->usuario->id, "estado" => "2"));
+        $invitar_para = $this->invitacion_model->get_many_by(array("invitar_para" => $vendedor->usuario->id, "estado" => "2"));
+        $mis_clientes = array_merge($invitar_desde,$invitar_para);
 
         $paquete_vigente = $this->vendedor_model->get_paquete_en_curso($vendedor->get_vendedor_id());
         $paquete_pendiente = $this->vendedor_model->get_paquete_pendiente($vendedor->get_vendedor_id());

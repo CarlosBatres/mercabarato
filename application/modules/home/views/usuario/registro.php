@@ -157,7 +157,7 @@
                             <div class="col-md-12">
                                 <p class="lead">Indica a continuación lo que te interesaria comprar.</p>
                                 <?php foreach ($keywords as $keyword): ?>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="checkbox">
                                             <label><input type="checkbox" name="keywords[]" value="<?php echo $keyword ?>"><?php echo $keyword ?></label>
                                         </div>

@@ -275,7 +275,7 @@ class Vendedor_model extends MY_Model {
     public function get_site_search($params, $limit, $offset) {
         $this->db->start_cache();
         $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address,"
-                . "pais.nombre as pais,provincia.nombre as provincia,poblacion.nombre as poblacion,invitacion.cliente_id as invitacion_cliente_id");
+                . "pais.nombre as pais,provincia.nombre as provincia,poblacion.nombre as poblacion,i1.id as invitacion_id1,i2.id as invitacion_id2"); //invitacion.cliente_id as invitacion_cliente_id
         $this->db->from($this->_table);
         $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
         $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
@@ -284,10 +284,13 @@ class Vendedor_model extends MY_Model {
         $this->db->join("provincia", "provincia.id=localizacion.provincia_id", 'LEFT');
         $this->db->join("poblacion", "poblacion.id=localizacion.poblacion_id", 'LEFT');
 
-        if (isset($params['cliente_id'])) {
-            $this->db->join("invitacion", "invitacion.vendedor_id=vendedor.id AND invitacion.cliente_id=" . $params['cliente_id'], 'LEFT');
+        if (isset($params['usuario_id'])) {
+            $this->db->join("invitacion i1", "i1.invitar_desde=usuario.id AND i1.invitar_para=" . $params['usuario_id'], 'LEFT');
+            $this->db->join("invitacion i2", "i2.invitar_para=usuario.id AND i2.invitar_desde=" . $params['usuario_id'], 'LEFT');
+            
         } else {
-            $this->db->join("invitacion", "invitacion.vendedor_id=vendedor.id AND invitacion.cliente_id='0'", 'LEFT');
+            $this->db->join("invitacion i1", "i1.invitar_desde=usuario.id AND i1.invitar_para='0'", 'LEFT');
+            $this->db->join("invitacion i2", "i2.invitar_para=usuario.id AND i2.invitar_desde='0'", 'LEFT');
         }
 
 
@@ -313,6 +316,10 @@ class Vendedor_model extends MY_Model {
             $this->db->where('localizacion.pais_id', $params['pais']);
             //$this->db->or_where('localizacion.pais_id IS NULL');            
         }
+        
+        /*if(isset($params["ignore_vendedor_id"])){
+            $this->db->where("vendedor.id !=",$params["ignore_vendedor_id"]);
+        }*/
 
 
 

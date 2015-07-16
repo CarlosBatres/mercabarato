@@ -3,3 +3,23 @@ CREATE VIEW `productos_precios` AS select `p`.`id` AS `id`,`p`.`categoria_id` AS
 
 ALTER TABLE `mercabarato_bd`.`producto` 
 ADD COLUMN `unique_slug` VARCHAR(255) NULL DEFAULT NULL AFTER `link_externo`;
+
+
+ALTER TABLE `mercabarato_bd`.`invitacion` 
+DROP COLUMN `from_vendedor`,
+ADD COLUMN `enviado_por` INT(11) NOT NULL AFTER `cliente_id`;
+
+/* ULTIMO FALTA */
+
+ALTER TABLE `mercabarato_bd`.`invitacion` 
+DROP FOREIGN KEY `fk_invitacion_vendedor1`,
+DROP FOREIGN KEY `fk_invitacion_cliente1`;
+
+ALTER TABLE `mercabarato_bd`.`invitacion` 
+DROP COLUMN `enviado_por`,
+DROP COLUMN `cliente_id`,
+DROP COLUMN `vendedor_id`,
+ADD COLUMN `invitar_desde` INT(11) NOT NULL AFTER `estado`,
+ADD COLUMN `invitar_para` INT(11) NOT NULL AFTER `invitar_desde`,
+DROP INDEX `fk_invitacion_cliente1_idx` ,
+DROP INDEX `fk_invitacion_vendedor1_idx` ;

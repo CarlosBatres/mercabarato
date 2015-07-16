@@ -43,7 +43,7 @@
                     <a href="<?php echo site_url('usuario/password') ?>"><i class="fa fa-lock"></i> Contraseña</a>
                 </li>
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/contactos') ? "active" : "" ?>">
-                    <a href="<?php echo site_url('usuario/contactos') ?>"><i class="fa fa-plus"></i> Contactos <span class="badge" id="invitaciones-counter"><?php echo $this->invitacion_model->get_count_invitaciones() ?></span></a>
+                    <a href="<?php echo site_url('usuario/contactos') ?>"><i class="fa fa-plus"></i> Contactos <span class="badge" id="invitaciones-counter"><?php echo $this->invitacion_model->count_invitaciones_pendientes() ?></span></a>
                 </li>
 
                 <?php

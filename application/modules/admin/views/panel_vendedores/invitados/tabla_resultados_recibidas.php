@@ -20,8 +20,7 @@
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>                    
-                    <th style="width: 15%">Nombre Completo</th>                
-                    <th style="width: 5%">Sexo</th>                    
+                    <th style="width: 15%">Identificacion</th>                                    
                     <th style="width: 10%">Miembro Desde</th>                    
                     <th style="width: 10%">Ultima Actividad</th>                                        
                     <th style="width: 5%;text-align: center">Acciones</th>                                        
@@ -30,17 +29,11 @@
             <tbody>
                 <?php foreach ($clientes as $cliente): ?>
                     <tr>                        
-                        <?php if ($cliente->nombres != null): ?>
-                            <td><?php echo $cliente->nombres . ' ' . $cliente->apellidos; ?></td>                                                                                    
+                        <?php if ($cliente->nombre_vendedor != null): ?>
+                            <td><?php echo $cliente->nombre_vendedor; ?></td>
                         <?php else: ?>   
-                            <td class="warning"></td>
-                        <?php endif; ?>
-
-                        <?php if ($cliente->sexo != null): ?>
-                            <td><?php echo ($cliente->sexo == 'H') ? 'Hombre' : 'Mujer'; ?></td>
-                        <?php else: ?>   
-                            <td class="warning"></td>
-                        <?php endif; ?>                        
+                            <td><?php echo $cliente->nombres . ' ' . $cliente->apellidos; ?></td>
+                        <?php endif; ?>                                              
                         <?php if ($cliente->fecha_creado != null): ?>
                             <td><?php echo mdate('%d %F %Y', strtotime($cliente->fecha_creado)); ?></td>
                         <?php else: ?>   

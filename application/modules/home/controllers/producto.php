@@ -83,9 +83,10 @@ class Producto extends MY_Controller {
                 if ($this->authentication->is_loggedin()) {
                     $user_id = $this->authentication->read('identifier');
                     $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                    if ($cliente->es_vendedor == '0') {
-                        $params["cliente_id"] = $cliente->id;
-                    }
+                    $params["cliente_id"] = $cliente->id;
+                    //if ($cliente->es_vendedor == '0') {
+                        
+                    //}
                 }
 
                 $params["habilitado"] = "1";
