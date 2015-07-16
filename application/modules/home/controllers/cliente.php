@@ -80,7 +80,7 @@ class Cliente extends MY_Controller {
                 //$this->authentication->login($username, $password);
                 if ($this->config->item('emails_enabled')) {
                     $this->load->library('email');
-                    $this->email->from($this->config->item('site_admin_email'), 'Mercabarato.com');
+                    $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                     $this->email->to($username);
 
                     $this->email->subject('Active su cuenta');
@@ -139,7 +139,7 @@ class Cliente extends MY_Controller {
                     //$this->authentication->login($username, $password);
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
-                        $this->email->from($this->config->item('site_admin_email'), 'Mercabarato.com');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($username);
 
                         $this->email->subject('Active su cuenta');

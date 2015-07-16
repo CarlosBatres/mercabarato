@@ -6,16 +6,7 @@ if (!defined('BASEPATH'))
 class Main extends MY_Controller {
 
     public function index() {
-
-        /* $this->template->set_title('Mercabarato - Anuncios y subastas');
-          $productos = $this->producto_model->get_site_search(array(), 8, 0, "id", "DESC");
-          $anuncios = $this->anuncio_model->get_ultimos_anuncios();
-          if ($productos['total'] == 0) {
-          $productos["productos"] = array();
-          }
-          $this->template->load_view('home/index', array(
-          "productos" => $productos["productos"],
-          "anuncios" => $anuncios)); */
+        
     }
 
     public function not_found() {
@@ -42,6 +33,35 @@ class Main extends MY_Controller {
         } else {
             redirect('404');
         }
+    }
+
+    public function contacto() {
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->add_js('modules/home/contacto.js');
+        $this->template->load_view('home/paginas/contacto');
+    }
+
+    public function contacto_submit() {
+        $this->template->set_title('Mercabarato - Anuncios y subastas');        
+        $formValues = $this->input->post();
+
+        if ($formValues !== false) {
+            $email = $this->input->post('email');
+            $mensaje = $this->input->post('mensaje');
+            
+            if ($this->config->item('emails_enabled')) {
+                $this->load->library('email');
+                $this->email->from($email);
+                $this->email->to($this->config->item('site_info_email'));
+
+                $this->email->subject('Nuevo mensaje desde Mercabarato.com');  
+                $data_email=array("email"=>$email,"mensaje"=>$mensaje);
+                $this->email->message($this->load->view('home/emails/contacto', $data_email, true));
+                $this->email->send();
+            }
+        }
+
+        $this->template->load_view('home/paginas/contacto_mensaje_recibido');
     }
 
 }

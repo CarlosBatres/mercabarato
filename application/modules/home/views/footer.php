@@ -1,42 +1,5 @@
 <!-- *** FOOTER ***
 _________________________________________________________ -->
-<!--<footer id="footer">
-    <div class="container">
-        <div class="col-md-3 col-sm-6">
-            <h4>Sobre Mercabarato</h4>
-            <a href="<?php echo site_url(); ?>">Quienes somos</a><br>
-            <a href="<?php echo site_url(); ?>">Como funciona?</a><br>
-            <a href="<?php echo site_url(); ?>">Aviso legal</a><br>
-            <a href="<?php echo site_url(); ?>">Confindencialidad</a><br>
-        </div>
-
-        <div class="col-md-3 col-sm-6">
-            <h4>&nbsp;</h4>
-            <a href="<?php echo site_url(); ?>">Seguros</a><br>
-            <a href="<?php echo site_url(); ?>">InfoCompras</a><br>
-            <a href="<?php echo site_url(); ?>">Tarifas</a><br>
-            <a href="<?php echo site_url(); ?>">Vendedores</a><br>            
-        </div>
-
-        <div class="col-md-3 col-sm-6"></div>
-
-        <div class="col-md-3 col-sm-6">            
-            <img class="logo_footer" src="<?php echo assets_url('imgs/logo_footer.png') ?>" alt="mercabarato logo footer" >
-        </div>                  
-    </div>
-<!-- /.container -->    
-<!--</footer>-->
-<!-- /#footer -->
-<!-- *** FOOTER END *** -->
-
-
-
-
-<!-- *** GET IT END *** -->
-
-
-<!-- *** FOOTER ***
-_________________________________________________________ -->
 
 <footer id="footer">
     <div class="container">
@@ -49,13 +12,12 @@ _________________________________________________________ -->
             <div class="col-md-7 col-sm-10 col-sm-offset-1">  
                 <ul>
                     <li class="footer-link"><a href="<?php echo site_url(); ?>">Quienes somos</a></li>
-                    <li class="footer-link"><a href="<?php echo site_url(); ?>">Como funciona?</a></li>                
+                    <li class="footer-link"><a href="<?php echo site_url(); ?>">Como funciona?</a></li>                                    
                     <li class="footer-link"><a href="<?php echo site_url(); ?>">Aviso legal</a></li>
                     <li class="footer-link"><a href="<?php echo site_url(); ?>">Confindencialidad</a></li>
-                    <li class="footer-link"><a href="<?php echo site_url(); ?>">Seguros</a></li>
-                    <li class="footer-link"><a href="<?php echo site_url(); ?>">InfoCompras</a></li>
-                    <li class="footer-link"><a href="<?php echo site_url(); ?>">Tarifas</a></li>
-                    <li class="footer-link"><a href="<?php echo site_url(); ?>">Vendedores</a></li>
+                    <li class="footer-link"><a href="<?php echo site_url('site/contacto'); ?>">Contacto</a></li>
+                    <li class="footer-link"><a href="<?php echo site_url('seguros'); ?>">Seguros</a></li>                                           
+                    <li class="footer-link"><a href="<?php echo site_url('vendedores'); ?>">Vendedores</a></li>                    
                 </ul>
             </div>
             <div class="col-md-2 col-sm-1">            
