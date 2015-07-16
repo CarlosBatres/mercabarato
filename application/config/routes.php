@@ -89,6 +89,10 @@ $route['util/upload_vendedor_image'] = 'home/vendedor/upload_image';
 
 $route['site/contacto'] = 'home/main/contacto';
 $route['site/contacto/submit'] = 'home/main/contacto_submit';
+$route['site/quienes-somos'] = 'home/main/quienes_somos';
+$route['site/como-funciona'] = 'home/main/como_funciona';
+$route['site/aviso-legal'] = 'home/main/aviso_legal';
+$route['site/terminos-de-uso'] = 'home/main/terminos_de_uso';
 
 /* Apartado para vendedores */
  
