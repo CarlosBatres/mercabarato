@@ -46,16 +46,21 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+                        </div>  
+                        <div class="row pull-left">
                             <div class="col-md-12">
-                                <div class="input-group">
-                                    <input type="text" name="search_query" class="form-control" placeholder="Ingrese un nombre, alguna referencia o palabras clave...">
+                                <label class="text-left"><strong>Buscar Vendedores</strong></label>
+                            </div>
+                        </div>
+                        <div class="row">                            
+                            <div class="col-md-12">                                                                  
+                                <div class="input-group">                                    
+                                    <input type="text" name="search_query" class="form-control" placeholder="Ingrese un nombre, o palabras clave...">
                                     <input type="hidden" value="1" name="pagina" id="pagina"/>                                
                                     <span class="input-group-btn">
                                         <button class="btn btn-template-main" id="search_button" type="button"><i class="fa fa-search"></i>Buscar</button>
                                     </span>
-                                </div>                    
+                                </div>                                                    
                             </div>  
                         </div> 
                     </form>

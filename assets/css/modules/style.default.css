@@ -238,6 +238,7 @@ ul.list-style-none {
   background: #555555;
   color: #eeeeee;
   padding: 10px 0;
+  min-height: 54px;
 }
 #top p {
   margin: 0;

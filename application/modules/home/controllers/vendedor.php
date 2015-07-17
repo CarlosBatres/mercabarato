@@ -451,7 +451,7 @@ class Vendedor extends MY_Controller {
                 "vendedor_id" => $vendedor->id,
                 "mostrar_producto" => "1"
             );
-            $productos = $this->producto_model->get_site_search($params, 4, 0, "p.id", "ASC");
+            $productos = $this->producto_model->get_site_search($params, 4, 0, "p.id", "DESC");
             if ($productos["total"] > 0) {
                 $prods = $productos["productos"];
             } else {

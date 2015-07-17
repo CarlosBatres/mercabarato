@@ -85,7 +85,6 @@ class Producto extends MY_Controller {
                     $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                     $params["cliente_id"] = $cliente->id;
                     //if ($cliente->es_vendedor == '0') {
-                        
                     //}
                 }
 
@@ -162,10 +161,36 @@ class Producto extends MY_Controller {
                 } else {
                     $tarifa = false;
                 }
+
+                $params = array(
+                    "vendedor_id" => $producto->vendedor_id,
+                    "cliente_id" => $cliente->id
+                );
+                $otros_productos = $this->producto_model->get_site_search($params, 4, 0, "p.id", "desc");
+                if ($otros_productos["total"] > 0) {
+                    $prods = $otros_productos["productos"];
+                } else {
+                    $prods = false;
+                }
+                
+                $params = array(                    
+                    "cliente_id" => $cliente->id,
+                    "categoria_id" => $producto->categoria_id
+                );
+                $otros_productos_categoria = $this->producto_model->get_site_search($params, 4, 0, "p.id", "desc");
+                if ($otros_productos_categoria["total"] > 0) {
+                    $prods2 = $otros_productos_categoria["productos"];
+                } else {
+                    $prods2 = false;
+                }
+                
+
                 $data = array(
                     "producto" => $producto,
                     "producto_imagen" => $producto_imagen,
-                    "tarifa" => $tarifa);
+                    "tarifa" => $tarifa,
+                    "otros_productos" => $prods,
+                    "otros_productos_categoria" => $prods2);
                 $this->template->load_view('home/producto/ficha', $data);
             } else {
                 if ($producto->mostrar_producto == 1) {
@@ -194,7 +219,7 @@ class Producto extends MY_Controller {
         if (!empty($categorias)) {
             $html = "";
             foreach ($categorias as $categoria) {
-                $texto = truncate_simple(fix_category_text($categoria['nombre']),32);
+                $texto = truncate_simple(fix_category_text($categoria['nombre']), 32);
                 if (isset($categoria['subcategorias'])) {
                     $html.='<li class="seleccion_categoria">';
                     $html.='<a href="" data-id="' . $categoria['id'] . '">' . $texto;

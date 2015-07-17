@@ -130,7 +130,12 @@ class Producto_model extends MY_Model {
                     $query.=$text;
                     $sub_query.=$text;
                 }
-            }            
+            }
+            if (isset($params["vendedor_id"])) {
+                $text = " AND p.vendedor_id=" . $params['vendedor_id'];
+                $query.=$text;
+                $sub_query.=$text;
+            }
 
             $query.=") ";
 
@@ -384,7 +389,7 @@ class Producto_model extends MY_Model {
             'replacement' => 'dash' // Either dash or underscore
         );
         $this->load->library('slug', $config);
-        
+
         $producto['fecha_insertado'] = date('Y-m-d');
         $producto['unique_slug'] = $this->slug->create_uri($producto['nombre']);
         return $producto;
@@ -447,14 +452,14 @@ class Producto_model extends MY_Model {
     public function delete($id) {
         $this->producto_resource_model->cleanup_resources($id);
         $this->visita_model->delete_by("producto_id", $id);
-        
-        $tarifas=$this->tarifa_model->get_many_by("producto_id",$id);
-        if($tarifas){
-            foreach($tarifas as $tarifa){
+
+        $tarifas = $this->tarifa_model->get_many_by("producto_id", $id);
+        if ($tarifas) {
+            foreach ($tarifas as $tarifa) {
                 $this->tarifa_model->delete($tarifa->id);
             }
         }
-        
+
         parent::delete($id);
     }
 
