@@ -3,19 +3,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-7 contact">
-                    <div class="input-group">
-                        <input type="text" name="search_query_header" class="form-control" placeholder="Ingrese un producto a buscar...">                                                        
-                        <span class="input-group-btn">
-                            <button class="btn btn-template-main" id="search_button_header" type="button"><i class="fa fa-search"></i></button>
-                        </span>
-                    </div> 
+                    <?php if ($this->uri->uri_string() != ''): ?>
+                        <div class="input-group">
+                            <input type="text" name="search_query_header" class="form-control" placeholder="Ingrese un producto a buscar...">                                                        
+                            <span class="input-group-btn">
+                                <button class="btn btn-template-main" id="search_button_header" type="button"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div> 
+                    <?php endif; ?>
                 </div>
                 <div class="col-xs-5">                   
                     <?php if ($this->authentication->is_loggedin()) { ?>
                         <div class="login">
                             <?php if ($this->authentication->user_is_admin()): ?>
-                            <a href="<?php echo site_url('admin') ?>" class="" data-toggle=""><i class="fa fa-cogs"></i> ADMIN</a>
-                            <?php endif;?>
+                                <a href="<?php echo site_url('admin') ?>" class="" data-toggle=""><i class="fa fa-cogs"></i> ADMIN</a>
+                            <?php endif; ?>
                             <a href="<?php echo site_url('usuario/perfil') ?>" class="" data-toggle=""><i class="fa fa-user"></i> MI PERFIL</a>
                             <a href="<?php echo site_url('logout'); ?>"><i class="fa fa-power-off"></i> Cerrar Sesión</a>
                         </div>
