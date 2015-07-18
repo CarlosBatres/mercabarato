@@ -1,41 +1,12 @@
-<section>
-    <!-- *** HOMEPAGE CAROUSEL ***
-_________________________________________________________ -->
-    <div class="home-carousel">
-        <div class="dark-mask"></div>
-        <div class="container">
-            <div class="homepage owl-carousel">
-
-                <div class="item">
-                    <div class="row">
-                        <div class="col-sm-5 right">                                                        
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sem orci, sodales condimentum nulla non, lobortis consequat quam. Proin porta dui leo. Nulla sed justo vitae diam finibus aliquet nec a justo.</p>
-                        </div>
-                        <div class="col-sm-7">
-                            <img class="img-responsive" src="<?php echo assets_url('imgs/slider/1.jpg') ?>" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="row">
-
-                        <div class="col-sm-7 text-center">
-                            <img class="img-responsive" src="<?php echo assets_url('imgs/slider/2.jpg') ?>" alt="">
-                        </div>
-
-                        <div class="col-sm-5">                            
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sem orci, sodales condimentum nulla non, lobortis consequat quam. Proin porta dui leo. Nulla sed justo vitae diam finibus aliquet nec a justo.</p>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-            <!-- /.project owl-slider -->
+<div id="heading-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>&nbsp;</h1>
+            </div>            
         </div>
     </div>
-    <!-- *** HOMEPAGE CAROUSEL END *** -->
-</section>
+</div>
 <div id="content" class="clearfix">
     <div class="container">
         <div class="row">
@@ -51,7 +22,7 @@ _________________________________________________________ -->
                                 $j = 0;
                                 foreach ($precios as $precio) {
                                     $checked = ($precio['checked']) ? "checked='checked'" : "";
-                                    echo '<div class="checkbox">'
+                                    echo '<div class="checkbox precios_checkbox">'
                                     . '<label>'
                                     . '<input type="checkbox" name="precios" value="' . $precio['value'] . '" ' . $checked . '>&nbsp;' . $precio['text'] . ''
                                     . '</label>'
@@ -119,9 +90,17 @@ _________________________________________________________ -->
                                 <span class="input-group-btn">
                                     <button class="btn btn-template-main" id="search_button" type="button"><i class="fa fa-search"></i><span class="hidden-xs">Buscar</span></button>
                                 </span>
-                            </div>                    
+                            </div>                            
+                            <div class="col-md-12 text-right">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="mostrar_mis_tarifas" value="1"> Solo mostrar mis tarifas 
+                                    </label>
+                                </div>
+                            </div>
                         </form>
                     </div>
+                    <br>
 
                     <div id="tabla-resultados"></div>
                 </div>

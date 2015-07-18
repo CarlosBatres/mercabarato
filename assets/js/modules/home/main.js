@@ -188,8 +188,8 @@
             e.preventDefault();
         });
 
-        sliderHomepage();
-        sliders();
+//        sliderHomepage();
+//        sliders();
         validateLogin();
         searchButtonHeader();
 
@@ -265,42 +265,42 @@
     });
 })(window);
 
-function sliderHomepage() {
-    if ($('#slider').length) {
-        var owl = $("#slider");
-
-        $("#slider").owlCarousel({
-            autoPlay: 3000,
-            items: 4,
-            itemsDesktopSmall: [900, 3],
-            itemsTablet: [600, 3],
-            itemsMobile: [500, 2]
-        });
-    }
-
-}
+//function sliderHomepage() {
+//    if ($('#slider').length) {
+//        var owl = $("#slider");
+//
+//        $("#slider").owlCarousel({
+//            autoPlay: 3000,
+//            items: 4,
+//            itemsDesktopSmall: [900, 3],
+//            itemsTablet: [600, 3],
+//            itemsMobile: [500, 2]
+//        });
+//    }
+//
+//}
 /* sliders */
-function sliders() {
-    if ($('.owl-carousel').length) {
-        $('.homepage').owlCarousel({
-            navigation: false, // Show next and prev buttons
-            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
-            slideSpeed: 2000,
-            paginationSpeed: 1000,
-            autoPlay: true,
-            stopOnHover: true,
-            singleItem: true,
-            lazyLoad: false,
-            addClassActive: true,
-            afterInit: function() {
-                //animationsSlider();
-            },
-            afterMove: function() {
-                //animationsSlider();
-            }
-        });
-    }
-}
+//function sliders() {
+//    if ($('.owl-carousel').length) {
+//        $('.homepage').owlCarousel({
+//            navigation: false, // Show next and prev buttons
+//            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
+//            slideSpeed: 2000,
+//            paginationSpeed: 1000,
+//            autoPlay: true,
+//            stopOnHover: true,
+//            singleItem: true,
+//            lazyLoad: false,
+//            addClassActive: true,
+//            afterInit: function() {
+//                //animationsSlider();
+//            },
+//            afterMove: function() {
+//                //animationsSlider();
+//            }
+//        });
+//    }
+//}
 
 function validateLogin() {
     $("#loginForm").validate({

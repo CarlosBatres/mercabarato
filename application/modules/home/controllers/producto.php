@@ -8,7 +8,10 @@ class Producto extends MY_Controller {
     public function __construct() {
         parent::__construct();
     }
-
+    
+    /**
+     * 
+     */
     public function view_principal() {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $this->template->add_js('modules/home/producto_principal_listado.js');
@@ -42,7 +45,10 @@ class Producto extends MY_Controller {
 
         $this->template->load_view('home/producto/listado_principal', $data);
     }
-
+    /**
+     * 
+     * @param type $search_query
+     */
     public function buscar_producto($search_query) {
         $this->session->unset_userdata('search_query');
         $query = urldecode($search_query);
@@ -86,6 +92,9 @@ class Producto extends MY_Controller {
                     $params["cliente_id"] = $cliente->id;
                     //if ($cliente->es_vendedor == '0') {
                     //}
+                }                
+                if ($this->input->post('mostrar_solo_tarifas')=="true") {
+                    $params["mostrar_solo_tarifas"] = true;
                 }
 
                 $params["habilitado"] = "1";

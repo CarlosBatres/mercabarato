@@ -28,8 +28,8 @@ $(document).ready(function() {
         updateResultados();
     });
 
-    $('.checkbox').find("input[type='checkbox']").change(function() {
-        $('.checkbox').find("input[type='checkbox']").not(this).prop('checked', false);
+    $('.precios_checkbox').find("input[type='checkbox']").change(function() {
+        $('.precios_checkbox').find("input[type='checkbox']").not(this).prop('checked', false);
         updateResultados();
     });
 
@@ -89,8 +89,10 @@ function updateResultados() {
     var provincia = $('select[name="provincia"]').val();
     var poblacion = $('select[name="poblacion"]').val();
     var pagina_id = $('#pagina').val();
+    var mostrar_solo_tarifas = $('input[name="mostrar_mis_tarifas"]').is(":checked");
     var precio = 0;
-
+    
+    
     $.each($('input[name="precios"]'), function(index, checkbox) {
         if ($(this).is(":checked")) {
             precio = checkbox.value;
@@ -121,7 +123,8 @@ function updateResultados() {
             alt_layout: true,
             pais: pais,
             provincia: provincia,
-            poblacion: poblacion
+            poblacion: poblacion,
+            mostrar_solo_tarifas:mostrar_solo_tarifas
         },
         dataType: "html",
         success: function(response) {

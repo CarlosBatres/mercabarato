@@ -17,6 +17,7 @@ class Seguro extends MY_Controller {
         $this->session->unset_userdata('seguros_datos_contacto');
         $this->session->unset_userdata('seguros_informacion');
         $this->session->unset_userdata('seguros_ignore_list');
+        $this->session->unset_userdata('seguros_new_user');
 
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
@@ -238,6 +239,11 @@ class Seguro extends MY_Controller {
                 $user_id = $this->authentication->read('identifier');
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                 $cliente_id = $cliente->id;
+                
+            } else if($this->session->userdata('seguros_new_user')){
+                
+                $cliente_id=$this->session->userdata('seguros_new_user');
+                
             } else {
                 /**
                  * Si no existe el cliente lo creo temporal para que se pueda registrar despues
@@ -271,6 +277,9 @@ class Seguro extends MY_Controller {
                 );
 
                 $cliente_id = $this->cliente_model->insert($data);
+                $this->session->set_userdata(array(
+                    'seguros_new_user' => $cliente_id,
+                ));
             }
 
 
@@ -299,12 +308,12 @@ class Seguro extends MY_Controller {
             ));
 
             $this->solicitud_seguro_model->insert($solicitud_seguro);
-            
+
             if ($this->config->item('emails_enabled')) {
-                $vendedor=$this->vendedor_model->get($vendedor_id);
-                $cliente=$this->cliente_model->get($vendedor->cliente_id);
-                $usuario=$this->usuario_model->get($cliente->usuario_id);
-                
+                $vendedor = $this->vendedor_model->get($vendedor_id);
+                $cliente = $this->cliente_model->get($vendedor->cliente_id);
+                $usuario = $this->usuario_model->get($cliente->usuario_id);
+
                 $this->load->library('email');
                 $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                 $this->email->to($usuario->email);
@@ -321,6 +330,7 @@ class Seguro extends MY_Controller {
         $this->session->unset_userdata('seguros_datos_contacto');
         $this->session->unset_userdata('seguros_informacion');
         $this->session->unset_userdata('seguros_ignore_list');
+        $this->session->unset_userdata('seguros_new_user');
         redirect('');
     }
 
