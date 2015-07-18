@@ -162,10 +162,10 @@ class Vendedor extends MY_Controller {
                     "limite_anuncios" => $paquete->limite_anuncios,
                     "monto_a_cancelar" => $paquete->costo,
                     "aprobado" => 0
-                );                
+                );
                 $this->vendedor_paquete_model->insert($data);
-                
-                if ($this->config->item('emails_enabled')) {                                                                                
+
+                if ($this->config->item('emails_enabled')) {
                     $this->load->library('email');
                     $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                     $this->email->to($usuario->email);
@@ -174,7 +174,7 @@ class Vendedor extends MY_Controller {
                     $this->email->message($this->load->view('home/emails/informacion_de_compra', $data_email, true));
                     $this->email->send();
                 }
-                
+
                 redirect('usuario/completado');
             } else {
                 redirect('usuario/afiliacion-paso2');
@@ -294,6 +294,7 @@ class Vendedor extends MY_Controller {
                 $user_id = $this->authentication->read('identifier');
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                 $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
+                $usuario = $this->usuario_model->get($cliente->usuario_id);
 
                 $paquete = $this->paquete_model->get($paquete_id);
                 $data = array(
@@ -310,8 +311,16 @@ class Vendedor extends MY_Controller {
                     "aprobado" => 0
                 );
                 $result = $this->vendedor_model->verificar_disponibilidad($vendedor->id);
-                if ($result) {
-                    // TODO: (NUEVA COMPRA DE PAQUETE) Enviar correo a mercabarato con la informacion de compra y enviarle un correo al email del cliente                                                
+                if ($result) {                    
+                    if ($this->config->item('emails_enabled')) {
+                        $this->load->library('email');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($usuario->email);
+                        $this->email->subject('Informacion para pago del paquete');
+                        $data_email = array("paquete" => $data);
+                        $this->email->message($this->load->view('home/emails/informacion_de_compra', $data_email, true));
+                        $this->email->send();
+                    }
                     $this->vendedor_paquete_model->insert($data);
                 }
                 redirect('usuario/mis-paquetes');
@@ -488,7 +497,7 @@ class Vendedor extends MY_Controller {
                 "productos" => $prods);
 
             $this->template->load_view('home/vendedores/ficha', $data);
-        } else {            
+        } else {
             show_404();
         }
     }

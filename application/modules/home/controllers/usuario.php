@@ -46,7 +46,11 @@ class Usuario extends MY_Controller {
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->cliente->id);
             $localizacion = $this->localizacion_model->get_by("usuario_id", $user_id);
 
-            $full_localizacion = $this->localizacion_model->get_full_localizacion($localizacion->id);
+            if($localizacion){
+                $full_localizacion = $this->localizacion_model->get_full_localizacion($localizacion->id);
+            }else{
+                $full_localizacion = false;
+            }
 
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
             //$this->template->add_js('modules/home/perfil.js');

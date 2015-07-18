@@ -17,7 +17,7 @@ class Seguro extends MY_Controller {
         $this->session->unset_userdata('seguros_datos_contacto');
         $this->session->unset_userdata('seguros_informacion');
         $this->session->unset_userdata('seguros_ignore_list');
-        
+
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
             $user_id = $this->authentication->read('identifier');
@@ -175,12 +175,12 @@ class Seguro extends MY_Controller {
             }
             $params["infocompra"] = 1;
             $params["paquete_vigente"] = true;
-            
-            $ignore_list=$this->session->userdata('seguros_ignore_list');
-            if($ignore_list){
-                $params["not_vendedor"]=$ignore_list;
+
+            $ignore_list = $this->session->userdata('seguros_ignore_list');
+            if ($ignore_list) {
+                $params["not_vendedor"] = $ignore_list;
             }
-            
+
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
@@ -288,22 +288,35 @@ class Seguro extends MY_Controller {
                 "fecha_solicitud" => date("Y-m-d"),
                 "estado" => 0,
             );
-            
-            $ignore_list=$this->session->userdata('seguros_ignore_list');
-            if(!$ignore_list){
-                $ignore_list=array();
+
+            $ignore_list = $this->session->userdata('seguros_ignore_list');
+            if (!$ignore_list) {
+                $ignore_list = array();
             }
-            $ignore_list[]=$vendedor_id;
+            $ignore_list[] = $vendedor_id;
             $this->session->set_userdata(array(
                 'seguros_ignore_list' => $ignore_list,
             ));
-            
+
             $this->solicitud_seguro_model->insert($solicitud_seguro);
-            // TODO : Enviar email a vendedor de que tiene una nueva solicitud de presupuesto            
+            
+            if ($this->config->item('emails_enabled')) {
+                $vendedor=$this->vendedor_model->get($vendedor_id);
+                $cliente=$this->cliente_model->get($vendedor->cliente_id);
+                $usuario=$this->usuario_model->get($cliente->usuario_id);
+                
+                $this->load->library('email');
+                $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                $this->email->to($usuario->email);
+                $this->email->subject('Nueva solicitud de presupuesto');
+                $data_email = array("data" => $data);
+                $this->email->message($this->load->view('home/emails/solicitud_presupuesto', $data_email, true));
+                $this->email->send();
+            }
         }
     }
-    
-    public function finalizar(){
+
+    public function finalizar() {
         $this->session->unset_userdata('seguros_tipo');
         $this->session->unset_userdata('seguros_datos_contacto');
         $this->session->unset_userdata('seguros_informacion');
