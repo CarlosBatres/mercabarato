@@ -3,17 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Categoria extends MY_Controller {
+class Categoria extends ADController {
 
     public function __construct() {
         parent::__construct();
-        if (!$this->authentication->is_loggedin()) {
-            redirect('admin/login');
-        } else {
-            if (!$this->authentication->user_is_admin()) {
-                redirect('admin/sin_permiso');
-            }
-        }
+        $this->_validar_conexion();
     }
 
     /**

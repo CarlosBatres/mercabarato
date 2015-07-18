@@ -247,7 +247,7 @@ class Invitacion_model extends MY_Model {
         }
 
         if (isset($params['excluir_admins'])) {
-            $this->db->where('usuario.is_admin', "0");
+            $this->db->where('(usuario.permisos_id!="1" AND usuario.permisos_id!="2")');   // TODO: Hardcode Ids 
         }
 
         /* if (isset($params['incluir_ids_clientes'])) {
@@ -309,7 +309,7 @@ class Invitacion_model extends MY_Model {
         }
 
         if (isset($params['excluir_admins'])) {
-            $this->db->where('usuario.is_admin', "0");
+            $this->db->where('(usuario.permisos_id!="1" AND usuario.permisos_id!="2")');   // TODO: Hardcode Ids 
         }
 
         /* if (isset($params['incluir_ids_clientes'])) {

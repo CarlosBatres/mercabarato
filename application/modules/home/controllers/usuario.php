@@ -44,13 +44,13 @@ class Usuario extends MY_Controller {
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->usuario_model->get_full_identidad($user_id);
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->cliente->id);
-            $localizacion=$this->localizacion_model->get_by("usuario_id",$user_id);
-            
-            $full_localizacion=$this->localizacion_model->get_full_localizacion($localizacion->id);
-            
+            $localizacion = $this->localizacion_model->get_by("usuario_id", $user_id);
+
+            $full_localizacion = $this->localizacion_model->get_full_localizacion($localizacion->id);
+
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
             //$this->template->add_js('modules/home/perfil.js');
-            $this->template->load_view('home/usuario/perfil', array("html_options" => $html_options,"info"=>$cliente ,"full_localizacion"=>$full_localizacion));
+            $this->template->load_view('home/usuario/perfil', array("html_options" => $html_options, "info" => $cliente, "full_localizacion" => $full_localizacion));
         } else {
             redirect('');
         }
@@ -232,18 +232,18 @@ class Usuario extends MY_Controller {
         if ($this->input->is_ajax_request()) {
             $formValues = $this->input->post();
             if ($formValues !== false) {
-                if ($this->usuario_model->email_exists($this->input->post('email'),$this->input->post('ignore_temporal')) == TRUE) {
+                if ($this->usuario_model->email_exists($this->input->post('email'), $this->input->post('ignore_temporal')) == TRUE) {
                     echo json_encode(FALSE);
                 } else {
                     echo json_encode(TRUE);
                 }
             }
         } else {
-            redirect('404');
+            show_404();
         }
     }
 
-    public function verificar_email($secret_key) {        
+    public function verificar_email($secret_key) {
         if ($this->usuario_model->verificar_email($secret_key)) {
             if (!$this->authentication->is_loggedin()) {
                 $this->template->set_title('Mercabarato - Anuncios y subastas');
@@ -252,7 +252,7 @@ class Usuario extends MY_Controller {
                 redirect('');
             }
         } else {
-            redirect('404');
+            show_404();
         }
     }
 

@@ -251,7 +251,7 @@ class Seguro extends MY_Controller {
                     $usuario->fecha_creado = date("Y-m-d H:i:s");
                     $usuario->ultimo_acceso = date("Y-m-d H:i:s");
                     $usuario->activo = 0;
-                    $usuario->is_admin = 0;
+                    //$usuario->is_admin = 0;
                     $usuario->temporal = 1;
                     $usuario->secret_key = $secret_key;
                     $this->usuario_model->update($user_id, $usuario);

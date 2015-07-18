@@ -40,6 +40,17 @@
                         <a href="<?php echo site_url('admin/vendedor_paquetes/listado_por_activar'); ?>"><i class="fa fa-money fa-fw"></i> Activación de paquete</a>
                     </li> 
                     <li>
+                        <a href="<?php echo site_url('#'); ?>"><i class="fa fa-users fa-fw"></i> Administrar Vendedores<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo site_url('admin/vendedores_admin/asignar_listado'); ?>"><i class="fa fa-plus fa-fw"></i> Asignar Nuevo</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo site_url('admin/vendedores_admin/listado_actual'); ?>"><i class="fa fa-list fa-fw"></i> Listado Actual</a>
+                            </li>                                                        
+                        </ul> 
+                    </li> 
+                    <li>
                         <a href="<?php echo site_url('admin/paquetes'); ?>"><i class="fa fa-fw fa-suitcase"></i> Paquetes</a>
                     </li>
                     <li>

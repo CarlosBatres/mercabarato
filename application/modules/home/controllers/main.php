@@ -14,9 +14,9 @@ class Main extends MY_Controller {
         $this->template->load_view('home/404');
     }
 
-    public function acceso_invalido() {
+    public function acceso_restringido() {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
-        $this->template->load_view('home/acceso_invalido');
+        $this->template->load_view('home/acceso_restringido');
     }
 
     public function verificar_palabra() {
@@ -31,7 +31,7 @@ class Main extends MY_Controller {
                 }
             }
         } else {
-            redirect('404');
+            show_404();
         }
     }
 

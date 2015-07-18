@@ -202,11 +202,11 @@ class Producto extends MY_Controller {
                         "tarifa" => $tarifa);
                     $this->template->load_view('home/producto/ficha', $data);
                 } else {
-                    redirect('404');
+                    show_404();
                 }
             }
         } else {
-            redirect('404');
+            show_404();
         }
     }
 

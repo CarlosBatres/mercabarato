@@ -6,7 +6,7 @@
                     <strong> Inicie sesión para continuar</strong>
                 </div>
                 <div class="panel-body">
-                    <?php echo form_open('admin/do_login', 'id="loginAdmin"'); ?>
+                    <?php echo form_open('admin/login', 'id="loginAdmin"'); ?>
                     <fieldset>                       
                         <div class="form-group">
                             <div class="input-group">

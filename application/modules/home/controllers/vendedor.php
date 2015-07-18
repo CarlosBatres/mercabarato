@@ -477,8 +477,8 @@ class Vendedor extends MY_Controller {
                 "productos" => $prods);
 
             $this->template->load_view('home/vendedores/ficha', $data);
-        } else {
-            redirect("404");
+        } else {            
+            show_404();
         }
     }
 

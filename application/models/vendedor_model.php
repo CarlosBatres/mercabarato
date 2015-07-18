@@ -114,11 +114,18 @@ class Vendedor_model extends MY_Model {
      * @param type $id
      */
     public function habilitar_vendedor($id) {
+        $vendedor=$this->get($id);
+        $cliente=$this->cliente_model->get($vendedor->cliente_id);
+        $usuario=$this->usuario_model->get($cliente->usuario_id);
+        
         $data = array(
             "habilitado" => 1,
         );
 
         $this->update($id, $data);
+        
+        $permiso=$this->permisos_model->get_permiso_vendedor_afiliado();
+        $this->usuario_model->update($usuario->id,array("permisos_id"=>$permiso->id));        
     }
 
     /**

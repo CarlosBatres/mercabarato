@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Panel_vendedores_tarifas extends MY_Controller {
+class Panel_vendedores_tarifas extends ADController {
 
     var $identidad;
 
@@ -97,7 +97,7 @@ class Panel_vendedores_tarifas extends MY_Controller {
             }
             echo json_encode(array("success" => true));
         } else {
-            redirect('404');
+            show_404();
         }
     }
 
