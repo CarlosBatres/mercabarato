@@ -159,5 +159,33 @@ class Visita_model extends MY_Model {
             return FALSE;
         }
     }
+    
+    
+    public function nueva_visita_anuncio($anuncio_id) {
+        $user_id = $this->authentication->read('identifier');
+        if ($user_id) {
+            $usuario = $this->usuario_model->get_full_identidad($user_id);
+            $ip_address = $this->session->userdata('ip_address');
+            if (!$usuario->es_vendedor()) {
+                $visita = $this->get_by(array(
+                    "fecha" => date("Y-m-d"),
+                    "anuncio_id" => $anuncio_id,
+                    "cliente_id" => $usuario->get_cliente_id(),
+                    "vista_anuncio" => "1"));
+
+                if (!$visita) {
+                    $data = array(
+                        "anuncio_id" => $anuncio_id,
+                        "cliente_id" => $usuario->get_cliente_id(),
+                        "vista_anuncio" => "1",
+                        "vista_producto" => "1",
+                        "ip_address" => $ip_address,
+                        "fecha" => date("Y-m-d")
+                    );
+                    $this->insert($data);
+                }
+            }
+        }
+    }
 
 }

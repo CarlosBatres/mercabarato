@@ -59,7 +59,19 @@ class Panel_vendedores_productos extends ADController {
                 $categorias_tree = $this->categoria_model->get_full_tree();
                 $categorias_tree_html = $this->_build_categorias_tree($categorias_tree, false);
 
+                $this->load->helper('ckeditor');
+
                 $data = array("categorias_tree_html" => $categorias_tree_html);
+                $data['ckeditor'] = array(
+                    //ID of the textarea that will be replaced
+                    'id' => 'content',
+                    'path' => 'assets/js/ckeditor',
+                    //Optionnal values
+                    'config' => array(
+                        'toolbar' => "Full", //Using the Full toolbar                        
+                        'height' => '200px', //Setting a custom height
+                    ),
+                );
                 $this->template->load_view('admin/panel_vendedores/producto/producto_agregar', $data);
             }
         } else {
@@ -125,6 +137,7 @@ class Panel_vendedores_productos extends ADController {
                 $producto = $this->producto_model->get($id);
                 if ($producto) {
                     $this->template->set_title("Panel de Administracion - Mercabarato.com");
+                    $this->template->set_layout('panel_vendedores');
                     $this->template->add_js("modules/admin/panel_vendedores/productos.js");
                     $vendedor = $this->vendedor_model->get($producto->vendedor_id);
                     $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto->id);
@@ -137,8 +150,20 @@ class Panel_vendedores_productos extends ADController {
                         "producto" => $producto,
                         "vendedor" => $vendedor,
                         "producto_imagen" => $producto_imagen);
-
-                    $this->template->set_layout('panel_vendedores');
+                    
+                    $this->load->helper('ckeditor');
+                    
+                    $data['ckeditor'] = array(
+                        //ID of the textarea that will be replaced
+                        'id' => 'content',
+                        'path' => 'assets/js/ckeditor',
+                        //Optionnal values
+                        'config' => array(
+                            'toolbar' => "Full", //Using the Full toolbar                        
+                            'height' => '200px', //Setting a custom height
+                        ),
+                    );
+                    
                     $this->template->load_view('admin/panel_vendedores/producto/producto_editar', $data);
                 } else {
                     redirect('panel_vendedor/producto/listado');
@@ -155,7 +180,7 @@ class Panel_vendedores_productos extends ADController {
     public function listado() {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
-        $this->template->add_js("modules/admin/panel_vendedores/productos_listado.js");                        
+        $this->template->add_js("modules/admin/panel_vendedores/productos_listado.js");
         $this->template->load_view('admin/panel_vendedores/producto/producto_listado');
     }
 
@@ -169,13 +194,13 @@ class Panel_vendedores_productos extends ADController {
             $producto_id = $id;
 
             $res = $this->producto_model->get_vendedor_id_del_producto($producto_id);
-            if ($res == $vendedor->get_vendedor_id()) {                
+            if ($res == $vendedor->get_vendedor_id()) {
                 $this->producto_model->delete($id);
-                $this->session->set_flashdata('success', 'Producto eliminado con exito..');                
+                $this->session->set_flashdata('success', 'Producto eliminado con exito..');
             } else {
-                $this->session->set_flashdata('error', 'No puedes realizar esta accion.');                
+                $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
             }
-            echo json_encode(array("success"=>true));
+            echo json_encode(array("success" => true));
         } else {
             show_404();
         }
@@ -218,15 +243,15 @@ class Panel_vendedores_productos extends ADController {
         if ($productos_array["total"] == 0) {
             $productos_array["productos"] = array();
         }
-        
-        $paquete_en_curso=$this->vendedor_model->get_paquete_en_curso($vendedor->get_vendedor_id());
-        $ilimitado=false;
-        $limite_productos=0;
-        if($paquete_en_curso){
-            if($paquete_en_curso->limite_productos==-1){
-                $ilimitado=true;
-            }else{
-                $limite_productos=$paquete_en_curso->limite_productos;
+
+        $paquete_en_curso = $this->vendedor_model->get_paquete_en_curso($vendedor->get_vendedor_id());
+        $ilimitado = false;
+        $limite_productos = 0;
+        if ($paquete_en_curso) {
+            if ($paquete_en_curso->limite_productos == -1) {
+                $ilimitado = true;
+            } else {
+                $limite_productos = $paquete_en_curso->limite_productos;
             }
         }
 
@@ -244,9 +269,9 @@ class Panel_vendedores_productos extends ADController {
         $data = array(
             "productos" => $productos_array["productos"],
             "pagination" => $pagination,
-            "productos_total"=>$productos_array["total"],
-            "ilimitado"=>$ilimitado,
-            "limite_productos"=>$limite_productos);
+            "productos_total" => $productos_array["total"],
+            "ilimitado" => $ilimitado,
+            "limite_productos" => $limite_productos);
 
         $this->template->load_view('admin/panel_vendedores/producto/producto_tabla_resultados', $data);
     }
@@ -291,7 +316,7 @@ class Panel_vendedores_productos extends ADController {
                 $this->producto_model->inhabilitar($id);
                 $this->session->set_flashdata('success', 'Producto inhabilitado con exito..');
             } else {
-                $this->session->set_flashdata('error', 'No puedes realizar esta accion.');                
+                $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
             }
         } else {
             show_404();
@@ -312,8 +337,8 @@ class Panel_vendedores_productos extends ADController {
                     $this->session->set_flashdata('success', 'Producto habilitado con exito..');
                 } else {
                     $this->session->set_flashdata('error', 'Has llegado al limite de productos.');
-                }                
-            } else {                
+                }
+            } else {
                 $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
             }
         } else {

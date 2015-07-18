@@ -41,7 +41,7 @@
                 <?php foreach ($anuncios as $anuncio): ?>
                     <tr>                
                         <td><?php echo $anuncio->titulo; ?></td>                    
-                        <td><?php echo $anuncio->contenido; ?></td>                                        
+                        <td><?php echo strip_tags(truncate($anuncio->contenido, 300)); ?></td>                                        
                         <td style="text-align: center"><?php
                             if ($anuncio->habilitado == 1): echo "<span class='label label-success'>Si</span>";
                             else: echo "<span class='label label-danger'>No</span>";

@@ -31,7 +31,7 @@ class Panel_vendedores_anuncios extends ADController {
                         "destacada" => 0,
                         "vendedor_id" => $vendedor->get_vendedor_id(),
                         "imagen" => null,
-                        "habilitado"=>1
+                        "habilitado" => 1
                     );
 
                     $this->anuncio_model->insert($data);
@@ -44,8 +44,20 @@ class Panel_vendedores_anuncios extends ADController {
                 $this->template->set_layout('panel_vendedores');
                 //$this->template->add_js("fileupload.js");
                 //$this->template->add_js("modules/admin/panel_vendedores/productos.js");
+                $this->load->helper('ckeditor');
 
-                $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_agregar');
+                $data['ckeditor'] = array(
+                    //ID of the textarea that will be replaced
+                    'id' => 'content',
+                    'path' => 'assets/js/ckeditor',
+                    //Optionnal values
+                    'config' => array(
+                        'toolbar' => "Full", //Using the Full toolbar                        
+                        'height' => '400px', //Setting a custom height
+                    ),
+                );
+
+                $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_agregar', $data);
             }
         } else {
             $this->template->set_title("Panel de Control - Mercabarato.com");
@@ -92,6 +104,19 @@ class Panel_vendedores_anuncios extends ADController {
                     $data = array(
                         "anuncio" => $anuncio);
 
+                    $this->load->helper('ckeditor');
+
+                    $data['ckeditor'] = array(
+                        //ID of the textarea that will be replaced
+                        'id' => 'content',
+                        'path' => 'assets/js/ckeditor',
+                        //Optionnal values
+                        'config' => array(
+                            'toolbar' => "Full", //Using the Full toolbar                        
+                            'height' => '400px', //Setting a custom height
+                        ),
+                    );
+
 
                     $this->template->set_layout('panel_vendedores');
                     $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_editar', $data);
@@ -99,7 +124,7 @@ class Panel_vendedores_anuncios extends ADController {
                     redirect('panel_vendedor/anuncio/listado');
                 }
             }
-        } else {            
+        } else {
             redirect('panel_vendedor/anuncio/listado');
         }
     }
@@ -127,10 +152,10 @@ class Panel_vendedores_anuncios extends ADController {
             if ($res == $vendedor->get_vendedor_id()) {
                 $this->anuncio_model->delete($id);
                 $this->session->set_flashdata('success', 'Anuncio eliminado con exito..');
-            } else {                
+            } else {
                 $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
             }
-            echo json_encode(array("success"=>true));
+            echo json_encode(array("success" => true));
         } else {
             show_404();
         }
@@ -164,44 +189,44 @@ class Panel_vendedores_anuncios extends ADController {
             $paginas = $ent + 1;
         } else {
             $paginas = $ent;
-        }        
+        }
 
         if ($anuncios_array["total"] == 0) {
-            $anuncios_array["anuncios"] = array();            
+            $anuncios_array["anuncios"] = array();
         }
-        
-        $paquete_en_curso=$this->vendedor_model->get_paquete_en_curso($vendedor->get_vendedor_id());
-        $ilimitado=false;
-        $limite_anuncios=0;
-        if($paquete_en_curso){
-            if($paquete_en_curso->limite_anuncios==-1){
-                $ilimitado=true;
-            }else{
-                $limite_anuncios=$paquete_en_curso->limite_anuncios;
+
+        $paquete_en_curso = $this->vendedor_model->get_paquete_en_curso($vendedor->get_vendedor_id());
+        $ilimitado = false;
+        $limite_anuncios = 0;
+        if ($paquete_en_curso) {
+            if ($paquete_en_curso->limite_anuncios == -1) {
+                $ilimitado = true;
+            } else {
+                $limite_anuncios = $paquete_en_curso->limite_anuncios;
             }
         }
-        
-        $search_params=array(
-                "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
-                "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
-                "pagina" => $pagina,
-                "total_paginas" => $paginas,
-                "por_pagina" => $limit,
-                "total" => $anuncios_array["total"],
-                "hasta" => ($pagina * $limit < $anuncios_array["total"]) ? $pagina * $limit : $anuncios_array["total"],
-                "desde" => (($pagina * $limit) - $limit) + 1);
-        $pagination=  build_paginacion($search_params);
-        
+
+        $search_params = array(
+            "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+            "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+            "pagina" => $pagina,
+            "total_paginas" => $paginas,
+            "por_pagina" => $limit,
+            "total" => $anuncios_array["total"],
+            "hasta" => ($pagina * $limit < $anuncios_array["total"]) ? $pagina * $limit : $anuncios_array["total"],
+            "desde" => (($pagina * $limit) - $limit) + 1);
+        $pagination = build_paginacion($search_params);
+
         $data = array(
             "anuncios" => $anuncios_array["anuncios"],
-            "pagination"=>$pagination,
-            "anuncios_total"=>$anuncios_array["total"],
-            "ilimitado"=>$ilimitado,
-            "limite_anuncios"=>$limite_anuncios);
+            "pagination" => $pagination,
+            "anuncios_total" => $anuncios_array["total"],
+            "ilimitado" => $ilimitado,
+            "limite_anuncios" => $limite_anuncios);
 
         $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_tabla_resultados', $data);
     }
-    
+
     public function inhabilitar($id) {
         if ($this->input->is_ajax_request()) {
             $user_id = $this->authentication->read('identifier');
@@ -213,7 +238,7 @@ class Panel_vendedores_anuncios extends ADController {
                 $this->anuncio_model->inhabilitar($id);
                 $this->session->set_flashdata('success', 'Anuncio inhabilitado con exito..');
             } else {
-                $this->session->set_flashdata('error', 'No puedes realizar esta accion.');                
+                $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
             }
         } else {
             show_404();
@@ -234,12 +259,13 @@ class Panel_vendedores_anuncios extends ADController {
                     $this->session->set_flashdata('success', 'Anuncio habilitado con exito..');
                 } else {
                     $this->session->set_flashdata('error', 'Has llegado al limite de productos.');
-                }                
-            } else {                
+                }
+            } else {
                 $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
             }
         } else {
             show_404();
         }
     }
+
 }

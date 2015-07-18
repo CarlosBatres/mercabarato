@@ -52,11 +52,11 @@ $route['registrar_cliente'] = 'home/cliente/crear';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
 $route['vendedores'] = 'home/vendedor/view_buscador';
 $route['acceso_restringido'] = 'home/main/acceso_restringido';
-//$route['productos/ficha/(:any)'] = 'home/producto/ver_producto/$1';
 $route['productos/buscar'] = 'home/producto/ajax_get_listado_resultados';
 $route['productos/buscar_producto/(:any)'] = 'home/producto/buscar_producto/$1';
 $route['productos/(:any)'] = 'home/producto/ver_producto/$1';
 $route['vendedores/buscar'] = 'home/vendedor/ajax_get_listado_resultados';
+$route['anuncios/(:num)'] = 'home/anuncio/ver_anuncio/$1';
 
 $route['seguros'] = 'home/seguro/view_seguros';
 $route['seguros/registrar'] = 'home/seguro/registrar_seguro';

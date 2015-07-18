@@ -54,9 +54,9 @@ class Anuncio extends ADController {
         } else {
             $this->template->set_title("Panel de Administracion - Mercabarato.com");
             //$this->template->add_js("fileupload.js");
-            $this->template->add_js("modules/admin/anuncios.js");
+            $this->template->add_js("modules/admin/anuncios.js");            
 
-            $this->template->load_view('admin/anuncio/nuevo');
+            $this->template->load_view('admin/anuncio/nuevo',$data);
         }
     }
 
@@ -138,9 +138,9 @@ class Anuncio extends ADController {
                 $params["vendedor"] = $this->input->post('vendedor');
             }
             $user_id = $this->authentication->read('identifier');
-            $restriccion=$this->restriccion_model->get_by("usuario_id",$user_id);
-            if($restriccion){
-                $params["autorizado_por"]=$user_id;                
+            $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
+            if ($restriccion) {
+                $params["autorizado_por"] = $user_id;
             }
             $pagina = $this->input->post('pagina');
         } else {
@@ -171,11 +171,11 @@ class Anuncio extends ADController {
             "total" => $anuncios_array["total"],
             "hasta" => ($pagina * $limit < $anuncios_array["total"]) ? $pagina * $limit : $anuncios_array["total"],
             "desde" => (($pagina * $limit) - $limit) + 1);
-        $pagination=  build_paginacion($search_params);
-        
+        $pagination = build_paginacion($search_params);
+
         $data = array(
             "anuncios" => $anuncios_array["anuncios"],
-            "pagination"=>$pagination);
+            "pagination" => $pagination);
 
         $this->template->load_view('admin/anuncio/tabla_resultados', $data);
     }
