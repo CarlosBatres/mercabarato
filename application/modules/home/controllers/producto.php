@@ -200,6 +200,7 @@ class Producto extends MY_Controller {
 
                     $params = array(
                         "vendedor_id" => $producto->vendedor_id,                        
+                        "excluir_producto_id" => array($producto->id)
                     );
                     $otros_productos = $this->producto_model->get_site_search($params, 4, 0, "p.id", "desc");
                     if ($otros_productos["total"] > 0) {
@@ -209,7 +210,8 @@ class Producto extends MY_Controller {
                     }
 
                     $params = array(                        
-                        "categoria_id" => $producto->categoria_id
+                        "categoria_id" => $producto->categoria_id,
+                        "excluir_producto_id" => array($producto->id)
                     );
                     $otros_productos_categoria = $this->producto_model->get_site_search($params, 4, 0, "p.id", "desc");
                     if ($otros_productos_categoria["total"] > 0) {

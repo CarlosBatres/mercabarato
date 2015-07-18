@@ -140,8 +140,8 @@ class Producto_model extends MY_Model {
                 $query.=$text;
                 $sub_query.=$text;
             }
-            if (isset($params['excluir_productos'])) {
-                $ids = implode(",", $params['excluir_productos']);
+            if (isset($params['excluir_producto_id'])) {
+                $ids = implode(",", $params['excluir_producto_id']);
                 $text = " AND p.id NOT IN(" .$ids.")";                
                 $query.=$text;
                 $sub_query.=$text;
