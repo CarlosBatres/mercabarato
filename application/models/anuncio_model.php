@@ -18,6 +18,7 @@ class Anuncio_model extends MY_Model {
         $this->db->join("vendedor", "vendedor.id=anuncio.vendedor_id", 'INNER');
         $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
         $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
+        $this->db->join("vendedor_paquete", "vendedor.id=vendedor_paquete.vendedor_id", 'LEFT');
 
         if (isset($params['titulo'])) {
             $this->db->like('anuncio.titulo', $params['titulo'], 'both');
@@ -30,6 +31,9 @@ class Anuncio_model extends MY_Model {
         }
         if (isset($params['vendedor_id'])) {
             $this->db->where('anuncio.vendedor_id', $params['vendedor_id']);
+        }
+         if (isset($params['autorizado_por'])) {
+            $this->db->where('vendedor_paquete.autorizado_por', $params['autorizado_por']);
         }
 
         $this->db->stop_cache();

@@ -83,5 +83,10 @@ class Main extends MY_Controller {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $this->template->load_view('home/paginas/terminos_de_uso');
     }
+    
+    public function cookies() {
+        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->load_view('home/paginas/cookies');
+    }
 
 }

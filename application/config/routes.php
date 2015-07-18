@@ -96,6 +96,7 @@ $route['site/quienes-somos'] = 'home/main/quienes_somos';
 $route['site/como-funciona'] = 'home/main/como_funciona';
 $route['site/aviso-legal'] = 'home/main/aviso_legal';
 $route['site/terminos-de-uso'] = 'home/main/terminos_de_uso';
+$route['site/politica-de-cookies'] = 'home/main/cookies';
 
 /* Apartado para vendedores */
 

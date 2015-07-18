@@ -2,7 +2,7 @@
     <div id="top">
         <div class="container">
             <div class="row">
-                <div class="col-xs-7 contact">
+                <div class="col-md-7 col-xs-12 contact">
                     <?php if ($this->uri->uri_string() != ''): ?>
                         <div class="input-group">
                             <input type="text" name="search_query_header" class="form-control" placeholder="Ingrese un producto a buscar...">                                                        
@@ -12,14 +12,14 @@
                         </div> 
                     <?php endif; ?>
                 </div>
-                <div class="col-xs-5">                   
+                <div class="col-md-5 col-xs-8 col-sm-8">                   
                     <?php if ($this->authentication->is_loggedin()) { ?>
                         <div class="login">
                             <?php if ($this->authentication->user_is_admin()): ?>
-                                <a href="<?php echo site_url('admin') ?>" class="" data-toggle=""><i class="fa fa-cogs"></i> ADMIN</a>
+                            <a href="<?php echo site_url('admin') ?>"><i class="fa fa-cogs"></i> <span class="hidden-xs text-uppercase">Admin</span></a>
                             <?php endif; ?>
-                            <a href="<?php echo site_url('usuario/perfil') ?>" class="" data-toggle=""><i class="fa fa-user"></i> MI PERFIL</a>
-                            <a href="<?php echo site_url('logout'); ?>"><i class="fa fa-power-off"></i> Cerrar Sesión</a>
+                            <a href="<?php echo site_url('usuario/perfil') ?>"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Mi Perfil</span></a>
+                            <a href="<?php echo site_url('logout'); ?>"><i class="fa fa-power-off"></i><span class="hidden-xs text-uppercase"> Cerrar Sesión</span></a>
                         </div>
                     <?php } else { ?>
                         <div class="login">
@@ -39,6 +39,7 @@
                     <img class="hidden-xs hidden-sm" src="<?php echo assets_url('imgs/logo.png') ?>" alt="mercabarato logo" >
                 </a>
                 <div class="navbar-buttons">
+                    <p class="navbar-text visible-xs-inline-block" id="navbar-menu-principal-text">Menu Principal &nbsp;&nbsp;</p>
                     <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
                         <span class="sr-only">Toggle navigation</span>
                         <i class="fa fa-align-justify"></i>
