@@ -1,7 +1,7 @@
 <h1>Felicidades has comprado el siguiente paquete</h1>
 
 <p><strong>Paquete:</strong> <?php echo $paquete["nombre_paquete"]?></p>
-<p><strong>Comprado el:</strong><?php echo $paquete["fecha_comprado"]?></p>
+<p><strong>Comprado el:</strong><?php echo date("d-m-Y",strtotime($paquete["fecha_comprado"]))?></p>
 <p><strong>Monto a cancelar:</strong><?php echo $paquete["monto_a_cancelar"]?></p>
 
 <br>
