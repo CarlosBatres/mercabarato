@@ -129,6 +129,7 @@ class Vendedor extends MY_Controller {
 
             if ($this->paquete_model->validar_paquete($paquete_id)) {
                 $user_id = $this->authentication->read('identifier');
+                $usuario = $this->usuario_model->get($user_id);
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
                 $data_cliente = $this->session->userdata('afiliacion_cliente');
@@ -161,9 +162,19 @@ class Vendedor extends MY_Controller {
                     "limite_anuncios" => $paquete->limite_anuncios,
                     "monto_a_cancelar" => $paquete->costo,
                     "aprobado" => 0
-                );
-                // TODO: (NUEVA AFILIACION) Enviar correo a mercabarato con la informacion de compra y enviarle un correo al email del cliente
+                );                
                 $this->vendedor_paquete_model->insert($data);
+                
+                if ($this->config->item('emails_enabled')) {                                                                                
+                    $this->load->library('email');
+                    $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                    $this->email->to($usuario->email);
+                    $this->email->subject('Informacion para pago del paquete');
+                    $data_email = array("paquete" => $data);
+                    $this->email->message($this->load->view('home/emails/informacion_de_compra', $data_email, true));
+                    $this->email->send();
+                }
+                
                 redirect('usuario/completado');
             } else {
                 redirect('usuario/afiliacion-paso2');

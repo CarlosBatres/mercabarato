@@ -172,8 +172,8 @@ class Producto extends MY_Controller {
                 } else {
                     $prods = false;
                 }
-                
-                $params = array(                    
+
+                $params = array(
                     "cliente_id" => $cliente->id,
                     "categoria_id" => $producto->categoria_id
                 );
@@ -183,7 +183,7 @@ class Producto extends MY_Controller {
                 } else {
                     $prods2 = false;
                 }
-                
+
 
                 $data = array(
                     "producto" => $producto,
@@ -196,10 +196,32 @@ class Producto extends MY_Controller {
                 if ($producto->mostrar_producto == 1) {
                     $tarifa = false;
 
+                    $params = array(
+                        "vendedor_id" => $producto->vendedor_id,                        
+                    );
+                    $otros_productos = $this->producto_model->get_site_search($params, 4, 0, "p.id", "desc");
+                    if ($otros_productos["total"] > 0) {
+                        $prods = $otros_productos["productos"];
+                    } else {
+                        $prods = false;
+                    }
+
+                    $params = array(                        
+                        "categoria_id" => $producto->categoria_id
+                    );
+                    $otros_productos_categoria = $this->producto_model->get_site_search($params, 4, 0, "p.id", "desc");
+                    if ($otros_productos_categoria["total"] > 0) {
+                        $prods2 = $otros_productos_categoria["productos"];
+                    } else {
+                        $prods2 = false;
+                    }
+
                     $data = array(
                         "producto" => $producto,
                         "producto_imagen" => $producto_imagen,
-                        "tarifa" => $tarifa);
+                        "tarifa" => $tarifa,
+                        "otros_productos" => $prods,
+                        "otros_productos_categoria" => $prods2);
                     $this->template->load_view('home/producto/ficha', $data);
                 } else {
                     show_404();
