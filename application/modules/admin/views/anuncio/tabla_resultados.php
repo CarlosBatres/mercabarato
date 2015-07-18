@@ -20,7 +20,7 @@
                 <tr>
                     <td><?php echo $anuncio->id; ?></td>
                     <td><?php echo $anuncio->titulo; ?></td>                    
-                    <td><?php echo $anuncio->contenido; ?></td>                    
+                    <td><?php echo strip_tags(truncate($anuncio->contenido, 300)) ?></td>                    
                     <td><?php echo $anuncio->Vendedor; ?></td>                                                                                   
                     <td>
                         <div class="options">

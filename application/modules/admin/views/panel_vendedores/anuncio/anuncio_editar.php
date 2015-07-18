@@ -21,12 +21,13 @@
                 <?php } ?>
                 <?php echo form_open('panel_vendedor/anuncio/editar/' . $anuncio->id, 'id="admin_edit_form"'); ?>                                 
                 <div class="form-group">
-                    <label>Nombre</label>
+                    <label>Titulo</label>
                     <input type="text" class="form-control" name="titulo" value="<?php echo $anuncio->titulo; ?>">
                 </div>
                 <div class="form-group">
-                    <label>Descripcion</label>                    
-                    <textarea class="form-control" name="contenido" rows="10"><?php echo $anuncio->contenido; ?></textarea>
+                    <label>Descripcion</label>                                                            
+                    <textarea class="form-control" id="content" name="contenido" rows="10"><?php echo $anuncio->contenido; ?></textarea>                                        
+                    <?php echo display_ckeditor($ckeditor); ?>
                 </div>                                                                                             
                 <div class="text-center">
                     <button type="submit" id="admin_submit" class="btn btn-lg btn-primary"> Confirmar Cambios</button>

@@ -19,16 +19,22 @@ class Vendedor extends MY_Controller {
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $keywords = keywords_listado();
 
-            if (!$this->cliente_model->es_vendedor($cliente->id)) {
-                $this->session->unset_userdata('afiliacion_cliente');
-                $this->session->unset_userdata('afiliacion_vendedor');
+            if (!$this->permisos_model->usuario_es_admin($user_id)) {
+                if (!$this->cliente_model->es_vendedor($cliente->id)) {
+                    $this->session->unset_userdata('afiliacion_cliente');
+                    $this->session->unset_userdata('afiliacion_vendedor');
 
+                    $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+                    $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+                    $this->template->add_js('modules/home/perfil.js');
+                    $this->template->load_view('home/vendedor/afiliarse', array("cliente" => $cliente, "html_options" => $html_options, "keywords" => $keywords));
+                } else {
+                    redirect('usuario/perfil');
+                }
+            } else {
                 $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
                 $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
-                $this->template->add_js('modules/home/perfil.js');
-                $this->template->load_view('home/vendedor/afiliarse', array("cliente" => $cliente, "html_options" => $html_options, "keywords" => $keywords));
-            } else {
-                redirect('usuario/perfil');
+                $this->template->load_view('home/usuario/no_afiliable', array("cliente" => $cliente, "html_options" => $html_options));
             }
         } else {
             redirect('');
@@ -311,7 +317,7 @@ class Vendedor extends MY_Controller {
                     "aprobado" => 0
                 );
                 $result = $this->vendedor_model->verificar_disponibilidad($vendedor->id);
-                if ($result) {                    
+                if ($result) {
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');

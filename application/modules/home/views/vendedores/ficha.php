@@ -122,8 +122,8 @@
                                     <tr>
                                         <td>
                                             <p class="text-right"><strong><?php echo date("d-M-Y", strtotime($anuncio->fecha_publicacion)) ?></strong></p>
-                                            <p><strong><?php echo $anuncio->titulo; ?></strong></p>
-                                            <p><?php echo truncate($anuncio->contenido, 300); ?></p>
+                                            <p><a href="<?php echo site_url("anuncios/" . $anuncio->id) ?>"><strong><?php echo $anuncio->titulo; ?></strong></a></p>
+                                            <p><?php echo strip_tags(truncate($anuncio->contenido, 300)); ?></p>
                                         </td>                                
                                     </tr>
                                 <?php endforeach; ?>                            

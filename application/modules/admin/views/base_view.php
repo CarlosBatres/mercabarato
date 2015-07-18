@@ -58,6 +58,7 @@
         <script src="<?php echo assets_url('js/morris.min.js'); ?>"></script>                                        
         <script src="<?php echo assets_url('js/jstree.min.js'); ?>"></script>                                        
         
+        
         <script src="<?php echo assets_url('js/modules/admin/admin.js'); ?>"></script>                
         <!-- Extra javascript -->
         <?php echo $js; ?>
