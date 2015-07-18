@@ -9,4 +9,4 @@
 
 <p>Tu cuenta se encuentra habilitada puedes iniciar ya ingresando al siguiente link</p>
 
-<p class="text-right"><strong><a href="<?php echo site_url('panel_vendedores')?>"><?php echo site_url('panel_vendedores')?></a></strong></p>                    
+<p class="text-right"><strong><a href="<?php echo site_url('panel_vendedor')?>"><?php echo site_url('panel_vendedor')?></a></strong></p>                    
