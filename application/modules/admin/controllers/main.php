@@ -16,14 +16,35 @@ class Main extends ADController {
 
     public function dashboard() {
         $this->template->set_title("Panel de Administracion - Mercabarato.com");
-        $paquetes_por_aprobacion = $this->vendedor_paquete_model->count_by("aprobado", '0');
+        $user_id = $this->authentication->read('identifier');
+        $vendedor = $this->usuario_model->get_full_identidad($user_id);
+                
+        $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
+        $params = array("pagina" => "1");
+        if ($restriccion) {
+            if ($restriccion->pais_id != null) {
+                $params["pais_id"] = $restriccion->pais_id;
+            }
+            if ($restriccion->provincia_id != null) {
+                unset($params["pais_id"]);
+                $params["provincia_id"] = $restriccion->provincia_id;
+            }
+            if ($restriccion->poblacion_id != null) {
+                unset($params["pais_id"]);
+                unset($params["provincia_id"]);
+                $params["poblacion_id"] = $restriccion->poblacion_id;
+            }
+        }        
+        $vendedor_paquetes_array = $this->vendedor_paquete_model->get_admin_search($params, 1, 0);
+        $paquetes_por_aprobacion = $vendedor_paquetes_array['total'];
+
+        //$paquetes_por_aprobacion = $this->vendedor_paquete_model->count_by("aprobado", '0');
         $paquetes_comprados = $this->vendedor_paquete_model->count_by("aprobado", '1');
         $usuarios = $this->usuario_model->count_by("activo", "1");
         $productos = $this->producto_model->count_by("habilitado", "1");
         $vendedores = $this->vendedor_model->count_by("habilitado", "1");
 
-        $user_id = $this->authentication->read('identifier');
-        $vendedor = $this->usuario_model->get_full_identidad($user_id);
+        
 
         $data = array(
             "paquetes_por_aprobacion" => $paquetes_por_aprobacion,

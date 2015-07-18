@@ -164,6 +164,8 @@ class Cliente extends ADController {
                 $params["email"] = $this->input->post('email');
             }
             $pagina = $this->input->post('pagina');
+            $params["excluir_admins"]=true;            
+            $params["es_vendedor"]="0";
         } else {
             $pagina = 1;
         }

@@ -15,7 +15,7 @@
         <!-- /.navbar-header -->
 
         <ul class="nav navbar-top-links navbar-right">            
-            <li><a id="cerrar-sesion" href="<?php echo site_url('admin/do_logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
+            <li><a id="cerrar-sesion" href="<?php echo site_url('admin/logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
         </ul>
         <!-- /.navbar-top-links -->
 
@@ -37,44 +37,37 @@
                         <a href="<?php echo site_url('admin/resumen'); ?>"><i class="fa fa-fw fa-dashboard"></i> Resumen</a>
                     </li>                                                        
                     <li>
-                        <a href="<?php echo site_url('admin/vendedor_paquetes/listado_por_activar'); ?>"><i class="fa fa-money fa-fw"></i> Activación de paquete</a>
-                    </li> 
+                        <a href="<?php echo site_url('admin/vendedor_paquetes/listado_por_activar'); ?>"><i class="fa fa-money fa-fw"></i> Activación de Paquete</a>
+                    </li>                     
                     <li>
-                        <a href="<?php echo site_url('#'); ?>"><i class="fa fa-users fa-fw"></i> Administrar Vendedores<span class="fa arrow"></span></a>
+                        <a href="<?php echo site_url('admin/usuarios'); ?>"><i class="fa fa-user fa-fw"></i> Ver Clientes</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo site_url('admin/vendedores'); ?>"><i class="fa fa-money fa-fw"></i> Ver Vendedores</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo site_url('admin/anuncios'); ?>"><i class="fa fa-fw fa-calendar"></i> Ver Anuncios</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo site_url('admin/productos'); ?>"><i class="fa fa-fw fa-inbox"></i> Ver Productos</a>
+                    </li>                    
+                    <li>
+                        <a href="<?php echo site_url('#'); ?>"><i class="fa fa-users fa-fw"></i> Vendedores/Administradores<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo site_url('admin/vendedores_admin/asignar_listado'); ?>"><i class="fa fa-plus fa-fw"></i> Asignar Nuevo</a>
+                                <a href="<?php echo site_url('admin/vendedores_admin/asignar_listado'); ?>"> Asignar Nuevo</a>
                             </li>
                             <li>
-                                <a href="<?php echo site_url('admin/vendedores_admin/listado_actual'); ?>"><i class="fa fa-list fa-fw"></i> Listado Actual</a>
+                                <a href="<?php echo site_url('admin/vendedores_admin/listado_actual'); ?>"> Listado Actual</a>
                             </li>                                                        
                         </ul> 
                     </li> 
                     <li>
-                        <a href="<?php echo site_url('admin/paquetes'); ?>"><i class="fa fa-fw fa-suitcase"></i> Paquetes</a>
+                        <a href="<?php echo site_url('admin/paquetes'); ?>"><i class="fa fa-fw fa-suitcase"></i> Administrar Paquetes</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-tasks fa-fw"></i> Opciones Avanzadas<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="<?php echo site_url('admin/usuarios'); ?>"><i class="fa fa-user fa-fw"></i> Usuarios</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url('admin/vendedores'); ?>"><i class="fa fa-money fa-fw"></i> Vendedores</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url('admin/anuncios'); ?>"><i class="fa fa-fw fa-calendar"></i> Anuncios</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo site_url('admin/productos'); ?>"><i class="fa fa-fw fa-inbox"></i> Productos</a>
-                            </li> 
-                            <li>
-                                <a href="<?php echo site_url('admin/categorias'); ?>"><i class="fa fa-fw fa-tasks"></i> Categorias</a>
-                            </li>                            
-                        </ul>                         
-                    </li>
-
-
+                        <a href="<?php echo site_url('admin/categorias'); ?>"><i class="fa fa-fw fa-tasks"></i> Administrar Categorias</a>
+                    </li>                                                
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

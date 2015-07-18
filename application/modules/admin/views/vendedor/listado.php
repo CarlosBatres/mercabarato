@@ -103,6 +103,12 @@
                             Listado de Usuarios Vendedores
                         </div>
                         <div class="panel-body">
+                            <?php if ($pais): ?>
+                                <div class="alert alert-danger">                                                                 
+                                    <p> Estas restringido a la siguiente zona:</p>
+                                    <p> <strong><?php echo $pais->nombre; ?><?php echo ($provincia)? " / ".$provincia->nombre:""?><?php echo ($poblacion)? " / ".$poblacion->nombre:""?></strong></p>                                
+                                </div>
+                            <?php endif; ?>
                             <div id="tabla-resultados"></div>
                         </div>
                     </div>

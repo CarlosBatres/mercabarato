@@ -45,6 +45,7 @@ class Vendedor_model extends MY_Model {
         $this->db->from($this->_table);
         $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
         $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
+        $this->db->join("localizacion", "localizacion.usuario_id=usuario.id", 'INNER');
 
         if (isset($params['nombre'])) {
             $this->db->like('vendedor.nombre', $params['nombre'], 'both');
@@ -57,6 +58,16 @@ class Vendedor_model extends MY_Model {
         }
         if (isset($params['sitio_web'])) {
             $this->db->like('vendedor.sitio_web', $params['sitio_web'], 'both');
+        }
+        
+        if (isset($params['pais_id'])) {
+            $this->db->where('localizacion.pais_id', $params['pais_id']);
+        }
+        if (isset($params['provincia_id'])) {
+            $this->db->where('localizacion.provincia_id', $params['provincia_id']);
+        }
+        if (isset($params['poblacion_id'])) {
+            $this->db->where('localizacion.poblacion_id', $params['poblacion_id']);
         }
 
         $this->db->stop_cache();

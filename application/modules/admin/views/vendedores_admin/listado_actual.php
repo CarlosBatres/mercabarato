@@ -17,7 +17,8 @@
         <div class="col-md-12">
             <h1 class="page-header">
                 Vendedores / Administradores
-            </h1>            
+            </h1> 
+            <p class="lead">Listado actual de los usuarios que tienen privilegios Vendedor/Administrador.</p>
         </div>
     </div>
     <!-- /.row -->
@@ -54,7 +55,7 @@
                                 <hr>
                                 <div class="row"> 
                                     <div class="col-md-12">
-                                        <div class="form-buttons">
+                                        <div class="form-buttons text-left">
                                             <button type="submit" id="btn-search" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Buscar</button>
                                             <input type="hidden" value="1" name="pagina" id="pagina"/>                                        
                                         </div>

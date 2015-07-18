@@ -33,7 +33,7 @@
                         <?php endif; ?>
                         <td>
                             <div class="options">
-                                <a href="<?php echo site_url('admin/vendedores_admin/ver_informacion') . '/' . $cliente->id ?>" data-toogle="tooltip"  title="Ver Informacion"><i class="glyphicon glyphicon-edit"></i></a>
+                                <a href="<?php echo site_url('admin/vendedores_admin/ver_informacion') . '/' . $cliente->usuario_id ?>" data-toogle="tooltip"  title="Ver Informacion"><i class="glyphicon glyphicon-edit"></i></a>
                                 <a class="item_cancelar" href="<?php echo site_url('admin/vendedores_admin/cancelar') . '/' . $cliente->usuario_id ?>" data-toogle="tooltip"  title="Quitar Privilegios"><i class="glyphicon glyphicon-remove"></i></a>
                             </div>                           
                         </td>

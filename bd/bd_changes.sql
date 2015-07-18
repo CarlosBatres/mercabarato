@@ -50,3 +50,19 @@ CREATE TABLE IF NOT EXISTS `mercabarato_bd`.`restriccion` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
+
+
+ALTER TABLE `mercabarato_bd`.`restriccion` 
+DROP FOREIGN KEY `fk_restriccion_localizacion1`;
+
+ALTER TABLE `mercabarato_bd`.`restriccion` 
+DROP COLUMN `localizacion_id`,
+ADD COLUMN `pais_id` INT(10) UNSIGNED NULL DEFAULT NULL AFTER `usuario_id`,
+ADD COLUMN `provincia_id` INT(10) UNSIGNED NULL DEFAULT NULL AFTER `pais_id`,
+ADD COLUMN `poblacion_id` INT(10) UNSIGNED NULL DEFAULT NULL AFTER `provincia_id`;
+
+ALTER TABLE `mercabarato_bd`.`vendedor_paquete` 
+ADD COLUMN `autorizado_por` INT(11) NOT NULL COMMENT 'usuario_id de quien autoriza' AFTER `infocompra`;
+
+ALTER TABLE `mercabarato_bd`.`vendedor_paquete` 
+CHANGE COLUMN `autorizado_por` `autorizado_por` INT(11) NULL DEFAULT NULL COMMENT 'usuario_id de quien autoriza' ;

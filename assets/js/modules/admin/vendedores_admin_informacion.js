@@ -17,7 +17,7 @@ function updateResultados() {
     });
     $.ajax({
         type: "POST",
-        url: SITE_URL + 'admin/vendedores_admin/ajax_get_listado_resultados',
+        url: SITE_URL + 'admin/vendedores_admin/ajax_find_paquetes',
         data: form.serialize(),
         dataType: "html",
         success: function(response) {

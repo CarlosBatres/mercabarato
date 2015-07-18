@@ -1,23 +1,11 @@
-<div id="question" style="display:none; cursor: default">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title">Esta seguro que desea promover este usuario a Vendedor/Administrador?.</h4>
-        </div>
-        <div class="modal-body">                                    
-            <p class="text-center">
-                <button class="btn btn-success" type="button" id="yes"><i class="fa fa-check"></i> Si</button>
-                <button class="btn btn-danger" type="button" id="no"><i class="fa fa-close"></i> No</button>
-            </p>                                            
-        </div>        
-    </div>
-</div> 
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="row">
         <div class="col-md-12">
             <h1 class="page-header">
                 Vendedores / Administradores
-            </h1>            
+            </h1> 
+            <p class="lead">A continuacion se muestra el listado de usuarios potenciales a ser asignados como Vendedor/Administrador.</p>
         </div>
     </div>
     <!-- /.row -->

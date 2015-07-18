@@ -33,7 +33,7 @@
                         <?php endif; ?>
                         <td>
                             <div class="options">
-                                <a class="item_nuevo" href="<?php echo site_url('admin/vendedores_admin/asignar') . '/' . $cliente->usuario_id ?>" data-toogle="tooltip"  title="Asignar"><i class="glyphicon glyphicon-plus"></i></a>
+                                <a href="<?php echo site_url('admin/vendedores_admin/asignar') . '/' . $cliente->usuario_id ?>"  title="Asignar"><i class="glyphicon glyphicon-plus"></i></a>
                             </div>                           
                         </td>
                     </tr>

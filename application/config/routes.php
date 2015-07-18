@@ -148,7 +148,7 @@ $route['panel_vendedor/tarifas/listado'] = 'admin/panel_vendedores_tarifas/view_
 $route['admin'] = 'admin/main';
 $route['admin/resumen'] = 'admin/main/dashboard';
 $route['admin/login'] = 'admin/usuario/login';
-$route['admin/do_logout'] = 'admin/usuario/logout';
+$route['admin/logout'] = 'admin/usuario/logout';
 $route['admin/sin_permiso'] = 'admin/usuario/sin_permiso';
 $route['admin/productos'] = 'admin/producto/view_listado';
 $route['admin/productos/crear'] = 'admin/producto/crear';
@@ -194,6 +194,7 @@ $route['admin/vendedores_admin/listado_actual'] = 'admin/vendedores_admin/listad
 $route['admin/vendedores_admin/cancelar/(:num)'] = 'admin/vendedores_admin/cancelar/$1';
 $route['admin/vendedores_admin/ver_informacion/(:num)'] = 'admin/vendedores_admin/ver_informacion/$1';
 $route['admin/vendedores_admin/ajax_get_listado_resultados'] = 'admin/vendedores_admin/ajax_get_listado_resultados';
+$route['admin/vendedores_admin/ajax_find_paquetes'] = 'admin/vendedores_admin/ajax_find_paquetes';
 $route['admin/acceso_restringido'] = 'admin/main/acceso_restringido';
 
 $route['default_controller'] = 'home/producto/view_principal';

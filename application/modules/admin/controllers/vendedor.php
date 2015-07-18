@@ -16,7 +16,32 @@ class Vendedor extends ADController {
     public function view_listado() {
         $this->template->set_title("Panel de Administracion - Mercabarato.com");
         $this->template->add_js("modules/admin/vendedores_listado.js");
-        $this->template->load_view('admin/vendedor/listado');
+
+        $user_id = $this->authentication->read('identifier');
+        $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
+        $data = array();
+        if ($restriccion) {
+            if ($restriccion->pais_id != null) {
+                $data["pais"] = $this->pais_model->get($restriccion->pais_id);
+            } else {
+                $data["pais"] = false;
+            }
+            if ($restriccion->provincia_id != null) {
+                $data["provincia"] = $this->provincia_model->get($restriccion->provincia_id);
+            } else {
+                $data["provincia"] = false;
+            }
+            if ($restriccion->poblacion_id != null) {
+                $data["poblacion"] = $this->poblacion_model->get($restriccion->poblacion_id);
+            } else {
+                $data["poblacion"] = false;
+            }
+        }else{
+            $data["pais"] = false;
+        }
+
+
+        $this->template->load_view('admin/vendedor/listado', $data);
     }
 
     /**
@@ -163,6 +188,25 @@ class Vendedor extends ADController {
             if ($this->input->post('sitio_web') != "") {
                 $params["sitio_web"] = $this->input->post('sitio_web');
             }
+
+            $user_id = $this->authentication->read('identifier');
+            $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
+            if ($restriccion) {
+                if ($restriccion->pais_id != null) {
+                    $params["pais_id"] = $restriccion->pais_id;
+                }
+                if ($restriccion->provincia_id != null) {
+                    unset($params["pais_id"]);
+                    $params["provincia_id"] = $restriccion->provincia_id;
+                }
+                if ($restriccion->poblacion_id != null) {
+                    unset($params["pais_id"]);
+                    unset($params["provincia_id"]);
+                    $params["poblacion_id"] = $restriccion->poblacion_id;
+                }
+            }
+
+
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
@@ -192,11 +236,11 @@ class Vendedor extends ADController {
             "total" => $vendedores_array["total"],
             "hasta" => ($pagina * $limit < $vendedores_array["total"]) ? $pagina * $limit : $vendedores_array["total"],
             "desde" => (($pagina * $limit) - $limit) + 1);
-        $pagination=  build_paginacion($search_params);
-        
+        $pagination = build_paginacion($search_params);
+
         $data = array(
             "vendedores" => $vendedores_array["vendedores"],
-            "pagination"=>$pagination);
+            "pagination" => $pagination);
 
         $this->template->load_view('admin/vendedor/tabla_resultados', $data);
     }
