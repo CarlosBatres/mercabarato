@@ -49,7 +49,20 @@ class Vendedor_paquete extends ADController {
             $this->anuncio_model->habilitar_anuncios(array('vendedor_id' => $vendedor_paquete->vendedor_id, "limit" => $vendedor_paquete->limite_anuncios));
         }
 
-        // TODO: (PAQUETE-APROBADO) Enviar correo al cliente para informarle que ya esta activo su paquete y el esta habilitado        
+        if ($this->config->item('emails_enabled')) {
+            $vendedor_paqueted = $this->vendedor_paquete_model->get($id);
+            $vendedor=$this->vendedor_model->get($vendedor_paquete->vendedor_id);
+            $cliente=$this->cliente_model->get($vendedor->cliente_id);
+            $usuario=$this->usuario_model->get($cliente->usuario_id);
+                    
+            $this->load->library('email');
+            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+            $this->email->to($usuario->email);
+            $this->email->subject('Paquete Aprobado');
+            $data_email = array("paquete" => $vendedor_paqueted);
+            $this->email->message($this->load->view('home/emails/paquete_aprobado', $data_email, true));
+            $this->email->send();
+        }
         $this->session->set_flashdata('success', 'El paquete ha sido aprobado y el Vendedor habilitado.');
         redirect('admin/vendedor_paquetes/listado_por_activar');
     }
@@ -147,14 +160,14 @@ class Vendedor_paquete extends ADController {
                 $html.='<tr>';
                 $html.='<th style="width: 15%;text-align:center;">Vendedor / Empresa</th>';
                 $html.='<th style="width: 15%;text-align:center;">Monto a Cancelar</th>';
-                $html.='<th style="width: 15%;text-align:center;">Paquete</th>';
+                $html.='<th style="width: 15%;text-align:center;">NIF/CIF</th>';
                 $html.='</tr>';
                 $html.='</thead>';
                 $html.='<tbody>';
                 $html.='<tr>';
                 $html.='<td>' . $vendedor->nombre . '</td>';
                 $html.='<td>' . $vendedor_paquete->monto_a_cancelar . ' ' . $this->config->item('money_sign') . '</td>';
-                $html.='<td>' . $vendedor_paquete->nombre_paquete . '</td>';
+                $html.='<td>' . $vendedor->nif_cif . '</td>';
                 $html.='</tr>';
                 $html.='</tbody>';
                 $html.='</table>';

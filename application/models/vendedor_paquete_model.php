@@ -20,7 +20,7 @@ class Vendedor_paquete_model extends MY_Model {
      */
     public function get_admin_search($params, $limit, $offset) {
         $this->db->start_cache();
-        $this->db->select("vendedor_paquete.*,vendedor.nombre AS Vendedor,usuario.email");
+        $this->db->select("vendedor_paquete.*,vendedor.nombre AS Vendedor,usuario.email,vendedor.nif_cif");
         $this->db->from($this->_table);
         $this->db->join("vendedor", "vendedor.id=vendedor_paquete.vendedor_id", 'INNER');
         $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');

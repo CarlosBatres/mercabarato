@@ -10,6 +10,7 @@
             <tr>
                 <th style="width: 5%">ID</th>                
                 <th style="width: 15%">Vendedor / Empresa</th>
+                <th style="width: 15%">NIF / CIF</th>
                 <th style="width: 15%">Email</th>
                 <th style="width: 15%">Monto a Cancelar</th>
                 <th style="width: 15%">Paquete</th>
@@ -22,6 +23,7 @@
                 <tr>
                     <td><?php echo $vendedor_paquete->id; ?></td>                    
                     <td><?php echo $vendedor_paquete->Vendedor; ?></td>
+                    <td><?php echo $vendedor_paquete->nif_cif; ?></td>
                     <td><?php echo $vendedor_paquete->email; ?></td>
                     <td><?php echo $vendedor_paquete->monto_a_cancelar .' '.$this->config->item('money_sign'); ?></td>                    
                     <td><?php echo $vendedor_paquete->nombre_paquete; ?></td>
