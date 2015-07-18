@@ -28,6 +28,7 @@ class Producto_model extends MY_Model {
         $this->db->from($this->_table);
         $this->db->join("categoria", "categoria.id=producto.categoria_id", 'INNER');
         $this->db->join("vendedor", "vendedor.id=producto.vendedor_id", 'INNER');
+        $this->db->join("vendedor_paquete", "vendedor.id=vendedor_paquete.vendedor_id", 'LEFT');
 
         if (isset($params['nombre'])) {
             $this->db->like('producto.nombre', $params['nombre'], 'both');
@@ -40,6 +41,9 @@ class Producto_model extends MY_Model {
         }
         if (isset($params['vendedor_id'])) {
             $this->db->where('vendedor.id', $params['vendedor_id']);
+        }
+        if (isset($params['autorizado_por'])) {
+            $this->db->where('vendedor_paquete.autorizado_por', $params['autorizado_por']);
         }
 
 

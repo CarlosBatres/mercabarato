@@ -240,3 +240,19 @@ span.arrow {
 .contacto-invitado{
     border: 2px solid #38a7bb !important;
 }
+
+
+#cookie_directive_container .navbar{
+    background: #ddd;
+    color: #666;
+    height: 45px!important;
+    min-height: 45px!important
+}
+#cookie_directive_container .credit{padding-top: 10px;}
+#cookie_accept a{margin-top: 5px;}
+#copyright{margin-bottom: 45px;}
+
+#navbar-menu-principal-text{
+    color:#fff;
+    font-weight: bold;
+}

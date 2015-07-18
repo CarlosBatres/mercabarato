@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Panel_vendedores_invitaciones extends MY_Controller {
+class Panel_vendedores_invitaciones extends ADController {
 
     var $identidad;
 

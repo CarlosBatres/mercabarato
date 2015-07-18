@@ -51,6 +51,23 @@
                         </div>
                         <hr>                    
                         <br>
+<!--                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="nickname" placeholder="Nombre de Usuario">
+                                        <span class="input-group-addon"><i class="fa fa-user-secret fa-fw"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">                                    
+                                    <div class="col-sm-10">
+                                        <p class="form-control-static">Se usara para identificarte en el sitio</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

@@ -3,17 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Cliente extends MY_Controller {
+class Cliente extends ADController {
 
     public function __construct() {
         parent::__construct();
-        if (!$this->authentication->is_loggedin()) {
-            redirect('admin/login');
-        } else {
-            if (!$this->authentication->user_is_admin()) {
-                redirect('admin/sin_permiso');
-            }
-        }
+        $this->_validar_conexion();
     }
 
     /**
@@ -46,7 +40,7 @@ class Cliente extends MY_Controller {
                     $usuario->fecha_creado = date("Y-m-d H:i:s");
                     $usuario->ultimo_acceso = date("Y-m-d H:i:s");
                     $usuario->activo = 1;
-                    $usuario->is_admin = 0;
+                    //$usuario->is_admin = 0;
 
                     $this->usuario_model->update($user_id, $usuario);
                 }
@@ -170,6 +164,8 @@ class Cliente extends MY_Controller {
                 $params["email"] = $this->input->post('email');
             }
             $pagina = $this->input->post('pagina');
+            $params["excluir_admins"]=true;            
+            $params["es_vendedor"]="0";
         } else {
             $pagina = 1;
         }

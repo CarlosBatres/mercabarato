@@ -14,7 +14,7 @@ class Cliente_model extends MY_Model {
     public function get_admin_search($params, $limit, $offset, $order_by = "cliente.id", $order = "asc") {
         $this->db->start_cache();
 
-        if ($params["join_vendedor"]) {
+        if (isset($params["join_vendedor"])) {
             $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.fecha_creado,vendedor.nombre as nombre_vendedor");
             $this->db->from($this->_table);
             $this->db->join("usuario", "cliente.usuario_id=usuario.id", 'INNER');
@@ -41,7 +41,7 @@ class Cliente_model extends MY_Model {
             $this->db->where('cliente.es_vendedor', $params["es_vendedor"]);
         }
         if (isset($params['excluir_admins'])) {
-            $this->db->where('usuario.is_admin', "0");
+            $this->db->where('(usuario.permisos_id!="1" AND usuario.permisos_id!="2")');   // TODO: Hardcode Ids 
         }
         if (isset($params['usuario_activo'])) {
             $this->db->where('usuario.activo', $params['usuario_activo']);
@@ -148,7 +148,7 @@ class Cliente_model extends MY_Model {
         }
 
         if (isset($params['excluir_admins'])) {
-            $text = " AND u.is_admin = '0'";
+            $text = " AND (u.permisos_id != '1' AND u.permisos_id != '2')";
             $query.=$text;
         }
 

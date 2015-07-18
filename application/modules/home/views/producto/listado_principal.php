@@ -40,7 +40,7 @@ _________________________________________________________ -->
     <div class="container">
         <div class="row">
             <div class="col-md-9">                        
-                <div class="col-md-4">
+                <div class="col-md-4 hidden-xs hidden-sm">
                     <div class="panel panel-default sidebar-menu principal-sidebar">
                         <div class="panel-heading">
                             <h3 class="panel-title">Precios</h3>                            
@@ -76,7 +76,7 @@ _________________________________________________________ -->
                 <div class="col-md-8">
                     <div class="box-simple">                                
                         <form id="form_buscar">
-                            <div class="row">
+                            <div class="row hidden-xs hidden-sm">
                                 <div class="col-md-4 row-less-padding-r">
                                     <div class="form-group">                                
                                         <select name="pais" class="form-control">
@@ -117,7 +117,7 @@ _________________________________________________________ -->
 
                                 <input type="hidden" value="1" name="pagina" id="pagina"/>                                
                                 <span class="input-group-btn">
-                                    <button class="btn btn-template-main" id="search_button" type="button"><i class="fa fa-search"></i>Buscar</button>
+                                    <button class="btn btn-template-main" id="search_button" type="button"><i class="fa fa-search"></i><span class="hidden-xs">Buscar</span></button>
                                 </span>
                             </div>                    
                         </form>

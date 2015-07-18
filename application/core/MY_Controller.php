@@ -21,33 +21,7 @@ class MY_Controller extends MX_Controller {
         $this->output->enable_profiler(TRUE);
     }
 
-    /**
-     * Verifico si es una conexion valida al panel de vendedores
-     * - Es Vendedor
-     * - Existe una sesion iniciada
-     */
-    public function _validar_conexion() {
-        //$one_time_login = $this->session->userdata('one_time_login');
-        if ($this->authentication->is_loggedin()) {
-            if (!$this->_usuario_es_vendedor_habilitado()) {
-                // TODO: No puedes acceder al panel todavia
-                redirect('acceso_invalido');
-            }
-        } else {
-            if ($this->uri->uri_string() != 'panel_vendedor/login') {
-                redirect('panel_vendedor/login');
-            }
-        }        
-    }
-
-    /**
-     * Validar si el usuario actualmente logeado es Vendedor y esta habilitado
-     * @return boolean
-     */
-    public function _usuario_es_vendedor_habilitado() {
-        $user_id = $this->authentication->read('identifier');
-        return $this->usuario_model->usuario_es_vendedor_habilitado($user_id);
-    }        
+       
 
     /**
      * Load Javascript inside the page's body

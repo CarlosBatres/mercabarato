@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Panel_vendedores_anuncios extends MY_Controller {
+class Panel_vendedores_anuncios extends ADController {
 
     public function __construct() {
         parent::__construct();
@@ -132,7 +132,7 @@ class Panel_vendedores_anuncios extends MY_Controller {
             }
             echo json_encode(array("success"=>true));
         } else {
-            redirect('404');
+            show_404();
         }
     }
 
@@ -216,7 +216,7 @@ class Panel_vendedores_anuncios extends MY_Controller {
                 $this->session->set_flashdata('error', 'No puedes realizar esta accion.');                
             }
         } else {
-            redirect('404');
+            show_404();
         }
     }
 
@@ -239,7 +239,7 @@ class Panel_vendedores_anuncios extends MY_Controller {
                 $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
             }
         } else {
-            redirect('404');
+            show_404();
         }
     }
 }

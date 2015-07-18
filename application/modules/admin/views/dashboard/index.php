@@ -104,8 +104,15 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        
-                        
+                        <p class="lead">Bienvenido al panel de administracion del sitio Mercabarato.com</p>                        
+                        <div class="col-md-8">
+                            <ul class="list-group">
+                                <li class="list-group-item text-muted" contenteditable="false">Perfil</li>
+                                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Email</strong></span> <?php echo $vendedor_logged->usuario->email; ?></li>                                                                
+                                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Miembro desde</strong></span> <?php echo date("d-m-Y", strtotime($vendedor_logged->usuario->fecha_creado)); ?></li>                                                                
+                                </li>
+                            </ul>
+                        </div>
                         
                     </div>
                     <!-- /.panel-body -->

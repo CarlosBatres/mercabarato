@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Panel_vendedores extends MY_Controller {
+class Panel_vendedores extends ADController {
 
     public function __construct() {
         parent::__construct();

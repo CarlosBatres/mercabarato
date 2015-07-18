@@ -39,7 +39,7 @@ class Usuario_model extends MY_Model {
     public function get_full_identidad($usuario_id) {
         $identidad_obj = new Identidad();
 
-        $this->db->select("id,email,activo,fecha_creado,ultimo_acceso,ip_address,is_admin");
+        $this->db->select("id,email,activo,fecha_creado,ultimo_acceso,ip_address,permisos_id");
         $this->db->from("usuario");
         $this->db->where("id", $usuario_id);
         $result = $this->db->get();
@@ -114,7 +114,7 @@ class Identidad {
 
     public $cliente;
     public $usuario;
-    public $vendedor;
+    public $vendedor;    
 
     function __construct() {
         $this->cliente = null;

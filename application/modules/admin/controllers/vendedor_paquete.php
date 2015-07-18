@@ -3,17 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Vendedor_paquete extends MY_Controller {
+class Vendedor_paquete extends ADController {
 
     public function __construct() {
         parent::__construct();
-        if (!$this->authentication->is_loggedin()) {
-            redirect('admin/login');
-        } else {
-            if (!$this->authentication->user_is_admin()) {
-                redirect('admin/sin_permiso');
-            }
-        }
+        $this->_validar_conexion();
     }
 
     /**
@@ -33,7 +27,9 @@ class Vendedor_paquete extends MY_Controller {
      */
     public function aprobar($id) {
         $vendedor_paquete = $this->vendedor_paquete_model->get($id);
-        $this->vendedor_paquete_model->aprobar_paquete($id);
+        // TODO : Validar la restriccion por si acaso
+        $user_id = $this->authentication->read('identifier');
+        $this->vendedor_paquete_model->aprobar_paquete($id, $user_id);
         $this->vendedor_model->habilitar_vendedor($vendedor_paquete->vendedor_id);
 
         $productos = $this->producto_model->get_many_by("vendedor_id", $vendedor_paquete->vendedor_id);
@@ -78,6 +74,24 @@ class Vendedor_paquete extends MY_Controller {
             if ($this->input->post('actividad') != "No Especificada") {
                 $params["actividad"] = $this->input->post('actividad');
             }
+
+            $user_id = $this->authentication->read('identifier');
+            $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
+            if ($restriccion) {
+                if ($restriccion->pais_id != null) {
+                    $params["pais_id"] = $restriccion->pais_id;
+                }
+                if ($restriccion->provincia_id != null) {
+                    unset($params["pais_id"]);
+                    $params["provincia_id"] = $restriccion->provincia_id;
+                }
+                if ($restriccion->poblacion_id != null) {
+                    unset($params["pais_id"]);
+                    unset($params["provincia_id"]);
+                    $params["poblacion_id"] = $restriccion->poblacion_id;
+                }
+            }
+
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
@@ -106,11 +120,11 @@ class Vendedor_paquete extends MY_Controller {
             "total" => $vendedor_paquetes_array["total"],
             "hasta" => ($pagina * $limit < $vendedor_paquetes_array["total"]) ? $pagina * $limit : $vendedor_paquetes_array["total"],
             "desde" => (($pagina * $limit) - $limit) + 1);
-        $pagination=  build_paginacion($search_params);
-                        
+        $pagination = build_paginacion($search_params);
+
         $data = array(
             "vendedor_paquetes" => $vendedor_paquetes_array["vendedor_paquetes"],
-            "pagination"=>$pagination);
+            "pagination" => $pagination);
 
         $this->template->load_view('admin/vendedor_paquete/tabla_resultados', $data);
     }

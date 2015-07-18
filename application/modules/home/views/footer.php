@@ -1,3 +1,19 @@
+<div id="cookie_directive_container" class="container" style="display: none">
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+            <div class="col-md-12 text-center">
+                <div class="navbar-inner navbar-content-center" id="cookie_accept">                
+                    <a href="#" class="btn btn-default pull-right">Acepto</a>
+                    <p class="text-muted credit">
+                        Al hacer clic en «Acepto» o continuar navegando por la web, entendemos que estás de acuerdo con nuestra política de <a href="<?php site_url('site/politica-de-cookies') ?>"> cookies</a>.
+                    </p>                
+                </div>
+            </div>
+        </div>
+
+    </nav>
+</div>
+
 <!-- *** FOOTER ***
 _________________________________________________________ -->
 
@@ -16,6 +32,7 @@ _________________________________________________________ -->
                     <li class="footer-link"><a href="<?php echo site_url('site/aviso-legal'); ?>">Aviso legal</a></li>                    
                     <li class="footer-link"><a href="<?php echo site_url('site/terminos-de-uso'); ?>">Terminos de Uso</a></li>
                     <li class="footer-link"><a href="<?php echo site_url('site/contacto'); ?>">Contacto</a></li>
+                    <li class="footer-link"><a href="<?php echo site_url('site/politica-de-cookies'); ?>">Politica de Cookies</a></li>
                     <li class="footer-link"><a href="<?php echo site_url('seguros'); ?>">Seguros</a></li>                                           
                     <li class="footer-link"><a href="<?php echo site_url('vendedores'); ?>">Vendedores</a></li>                    
                 </ul>

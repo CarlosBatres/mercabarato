@@ -3,17 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Vendedor extends MY_Controller {
+class Vendedor extends ADController {
 
     public function __construct() {
         parent::__construct();
-        if (!$this->authentication->is_loggedin()) {
-            redirect('admin/login');
-        } else {
-            if (!$this->authentication->user_is_admin()) {
-                redirect('admin/sin_permiso');
-            }
-        }
+        $this->_validar_conexion();
     }
 
     /**
@@ -22,7 +16,32 @@ class Vendedor extends MY_Controller {
     public function view_listado() {
         $this->template->set_title("Panel de Administracion - Mercabarato.com");
         $this->template->add_js("modules/admin/vendedores_listado.js");
-        $this->template->load_view('admin/vendedor/listado');
+
+        $user_id = $this->authentication->read('identifier');
+        $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
+        $data = array();
+        if ($restriccion) {
+            if ($restriccion->pais_id != null) {
+                $data["pais"] = $this->pais_model->get($restriccion->pais_id);
+            } else {
+                $data["pais"] = false;
+            }
+            if ($restriccion->provincia_id != null) {
+                $data["provincia"] = $this->provincia_model->get($restriccion->provincia_id);
+            } else {
+                $data["provincia"] = false;
+            }
+            if ($restriccion->poblacion_id != null) {
+                $data["poblacion"] = $this->poblacion_model->get($restriccion->poblacion_id);
+            } else {
+                $data["poblacion"] = false;
+            }
+        }else{
+            $data["pais"] = false;
+        }
+
+
+        $this->template->load_view('admin/vendedor/listado', $data);
     }
 
     /**
@@ -46,7 +65,7 @@ class Vendedor extends MY_Controller {
                     $usuario->fecha_creado = date("Y-m-d H:i:s");
                     $usuario->ultimo_acceso = date("Y-m-d H:i:s");
                     $usuario->activo = 1;
-                    $usuario->is_admin = 0;
+                    //$usuario->is_admin = 0;
 
                     $this->usuario_model->update($user_id, $usuario);
                 }
@@ -169,6 +188,25 @@ class Vendedor extends MY_Controller {
             if ($this->input->post('sitio_web') != "") {
                 $params["sitio_web"] = $this->input->post('sitio_web');
             }
+
+            $user_id = $this->authentication->read('identifier');
+            $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
+            if ($restriccion) {
+                if ($restriccion->pais_id != null) {
+                    $params["pais_id"] = $restriccion->pais_id;
+                }
+                if ($restriccion->provincia_id != null) {
+                    unset($params["pais_id"]);
+                    $params["provincia_id"] = $restriccion->provincia_id;
+                }
+                if ($restriccion->poblacion_id != null) {
+                    unset($params["pais_id"]);
+                    unset($params["provincia_id"]);
+                    $params["poblacion_id"] = $restriccion->poblacion_id;
+                }
+            }
+
+
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
@@ -198,11 +236,11 @@ class Vendedor extends MY_Controller {
             "total" => $vendedores_array["total"],
             "hasta" => ($pagina * $limit < $vendedores_array["total"]) ? $pagina * $limit : $vendedores_array["total"],
             "desde" => (($pagina * $limit) - $limit) + 1);
-        $pagination=  build_paginacion($search_params);
-        
+        $pagination = build_paginacion($search_params);
+
         $data = array(
             "vendedores" => $vendedores_array["vendedores"],
-            "pagination"=>$pagination);
+            "pagination" => $pagination);
 
         $this->template->load_view('admin/vendedor/tabla_resultados', $data);
     }

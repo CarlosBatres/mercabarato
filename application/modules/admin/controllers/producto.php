@@ -3,17 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Producto extends MY_Controller {
+class Producto extends ADController {
 
     public function __construct() {
         parent::__construct();
-        if (!$this->authentication->is_loggedin()) {
-            redirect('admin/login');
-        } else {
-            if (!$this->authentication->user_is_admin()) {
-                redirect('admin/sin_permiso');
-            }
-        }
+        $this->_validar_conexion();        
     }
 
     /**
@@ -191,6 +185,13 @@ class Producto extends MY_Controller {
             if ($this->input->post('vendedor') != "") {
                 $params["vendedor"] = $this->input->post('vendedor');
             }
+            
+            $user_id = $this->authentication->read('identifier');
+            $restriccion=$this->restriccion_model->get_by("usuario_id",$user_id);
+            if($restriccion){
+                $params["autorizado_por"]=$user_id;                
+            }
+            
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
