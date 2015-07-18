@@ -146,6 +146,11 @@ class Producto_model extends MY_Model {
                 $query.=$text;
                 $sub_query.=$text;
             }
+            if (isset($params['mostrar_solo_tarifas'])) {
+                $text = " AND p.tarifa_costo IS NOT NULL ";
+                $query.=$text;
+                $sub_query.=$text;
+            }
 
             $query.=") ";
 

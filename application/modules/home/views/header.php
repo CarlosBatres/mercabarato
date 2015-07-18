@@ -12,19 +12,19 @@
                         </div> 
                     <?php endif; ?>
                 </div>
-                <div class="col-md-5 col-xs-8 col-sm-8">                   
+                <div class="col-md-5 col-xs-12 col-sm-8">                   
                     <?php if ($this->authentication->is_loggedin()) { ?>
                         <div class="login">
                             <?php if ($this->authentication->user_is_admin()): ?>
-                            <a href="<?php echo site_url('admin') ?>"><i class="fa fa-cogs"></i> <span class="hidden-xs text-uppercase">Admin</span></a>
+                            <a href="<?php echo site_url('admin') ?>"><i class="fa fa-cogs"></i> <span class="text-uppercase">Admin</span></a>
                             <?php endif; ?>
-                            <a href="<?php echo site_url('usuario/perfil') ?>"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Mi Perfil</span></a>
-                            <a href="<?php echo site_url('logout'); ?>"><i class="fa fa-power-off"></i><span class="hidden-xs text-uppercase"> Cerrar Sesión</span></a>
+                            <a href="<?php echo site_url('usuario/perfil') ?>"><i class="fa fa-user"></i> <span class="text-uppercase">Mi Perfil</span></a>
+                            <a href="<?php echo site_url('logout'); ?>"><i class="fa fa-power-off"></i><span class="text-uppercase"> Cerrar Sesión</span></a>
                         </div>
                     <?php } else { ?>
                         <div class="login">
-                            <a href="" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Acceso</span></a>
-                            <a href="<?php echo site_url('registro'); ?>"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Registro</span></a>
+                            <a href="" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="text-uppercase">Acceso</span></a>
+                            <a href="<?php echo site_url('registro'); ?>"><i class="fa fa-user"></i> <span class="text-uppercase">Registro</span></a>
                         </div>
                     <?php } ?>
                 </div>
@@ -37,6 +37,7 @@
             <div class="navbar-header">
                 <a class="navbar-brand home" href="<?php echo site_url(); ?>">                        
                     <img class="hidden-xs hidden-sm" src="<?php echo assets_url('imgs/logo.png') ?>" alt="mercabarato logo" >
+                    <img class="hidden-md hidden-lg logo_header_small" src="<?php echo assets_url('imgs/logo_small.png') ?>" alt="mercabarato logo" >                    
                 </a>
                 <div class="navbar-buttons">
                     <p class="navbar-text visible-xs-inline-block" id="navbar-menu-principal-text">Menu Principal &nbsp;&nbsp;</p>

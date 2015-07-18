@@ -256,3 +256,9 @@ span.arrow {
     color:#fff;
     font-weight: bold;
 }
+
+.logo_header_small{
+    width: 70px;
+    height: 70px;
+    margin-top: 7px!important;
+}
