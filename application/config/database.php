@@ -48,10 +48,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'mysql.micesc-dev.com';
-$db['default']['username'] = 'micesc';
-$db['default']['password'] = 'enIFInxheOyy';
-$db['default']['database'] = 'mercabarato_bd';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'mercabarat_bd';
+$db['default']['password'] = 'j1DckXsb6wGpXITYr8vl';
+$db['default']['database'] = 'mercabarat_bd';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

@@ -19,7 +19,7 @@ if (!defined('BASEPATH'))
   | environments.
   |
  */
-$config['base_url'] = 'http://www.micesc-dev.com/mercabarato/';
+$config['base_url'] = 'http://www.mercabarato.com/';
 
 /*
   |--------------------------------------------------------------------------
@@ -371,7 +371,7 @@ $config["vendedores_img_path"]='/uploads/vendedores/';
 $config["principal_default_per_page"]='10';
 $config["emails_enabled"]=true;
 
-$config["site_info_email"]="info@micesc-dev.com";
+$config["site_info_email"]="info@mercabarato.com";
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
