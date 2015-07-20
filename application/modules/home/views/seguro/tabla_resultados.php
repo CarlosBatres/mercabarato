@@ -3,6 +3,12 @@
         <p> No se encontraron resultados...</p>    
     </div>
 <?php else: ?>
+    <?php if ($this->session->flashdata('success')) { ?>
+        <div class="alert alert-success"> 
+            <a class="close" data-dismiss="alert">×</a>
+            <?= $this->session->flashdata('success') ?> 
+        </div>
+    <?php } ?> 
     <ul class="tabla-resultados-principal">
         <?php foreach ($vendedores as $key => $vendedor): ?>
             <li>                

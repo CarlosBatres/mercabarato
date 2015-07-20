@@ -111,7 +111,7 @@ class Producto extends MY_Controller {
 
                 $limit = $this->config->item("principal_default_per_page");
                 $offset = $limit * ($pagina - 1);
-                $productos = $this->producto_model->get_site_search($params, $limit, $offset, "p.id", "ASC");
+                $productos = $this->producto_model->get_site_search($params, $limit, $offset, "p.fecha_insertado", "DESC");
                 $flt = (float) ($productos["total"] / $limit);
                 $ent = (int) ($productos["total"] / $limit);
                 if ($flt > $ent || $flt < $ent) {

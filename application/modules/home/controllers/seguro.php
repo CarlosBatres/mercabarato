@@ -308,9 +308,9 @@ class Seguro extends MY_Controller {
             ));
 
             $this->solicitud_seguro_model->insert($solicitud_seguro);
-
-            if ($this->config->item('emails_enabled')) {
-                $vendedor = $this->vendedor_model->get($vendedor_id);
+            $vendedor = $this->vendedor_model->get($vendedor_id);
+            
+            if ($this->config->item('emails_enabled')) {                
                 $cliente = $this->cliente_model->get($vendedor->cliente_id);
                 $usuario = $this->usuario_model->get($cliente->usuario_id);
 
@@ -322,6 +322,8 @@ class Seguro extends MY_Controller {
                 $this->email->message($this->load->view('home/emails/solicitud_presupuesto', $data_email, true));
                 $this->email->send();
             }
+            
+            $this->session->set_flashdata('success', 'La solicitud ha sido enviada con exito.<br> Se envio al vendedor <strong>'.$vendedor->nombre.'</strong>');
         }
     }
 
