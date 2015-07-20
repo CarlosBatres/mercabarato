@@ -373,7 +373,8 @@ class Vendedor_model extends MY_Model {
     public function delete($id) {
         $vendedor = $this->get($id);
         if ($vendedor) {                        
-            $this->invitacion_model->delete_by("vendedor_id", $id);
+            $this->invitacion_model->delete_by("invitar_desde", $id);
+            $this->invitacion_model->delete_by("invitar_para", $id);
             $this->solicitud_seguro_model->delete_by("vendedor_id",$id);
             $this->vendedor_paquete_model->delete_by("vendedor_id", $id);
                                     

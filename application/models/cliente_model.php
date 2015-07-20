@@ -91,7 +91,8 @@ class Cliente_model extends MY_Model {
         if ($cliente) {
             $usuario = $this->usuario_model->get($cliente->usuario_id);
             $this->localizacion_model->delete_by("usuario_id", $usuario->id);
-            $this->invitacion_model->delete_by("cliente_id", $cliente->id);
+            $this->invitacion_model->delete_by("invitar_para", $cliente->id);
+            $this->invitacion_model->delete_by("invitar_desde", $cliente->id);
             $this->solicitud_seguro_model->delete_by("cliente_id", $id);
             $this->visita_model->delete_by("cliente_id", $id);
 

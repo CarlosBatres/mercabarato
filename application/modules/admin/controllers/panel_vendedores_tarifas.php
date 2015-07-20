@@ -25,14 +25,22 @@ class Panel_vendedores_tarifas extends ADController {
     /**
      * 
      */
-    public function nueva_tarifa_paso1() {
-        $this->template->set_title("Panel de Control - Mercabarato.com");
-        $this->template->set_layout('panel_vendedores');
-        $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado_productos.js");
+    public function nueva_tarifa_paso1() {                
+        $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());
 
-        $this->session->unset_userdata('pv_tarifas_incluir_ids_productos');
+        if ($paquete->limite_productos != "0") {
+            $this->template->set_title("Panel de Control - Mercabarato.com");
+            $this->template->set_layout('panel_vendedores');
+            $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado_productos.js");
 
-        $this->template->load_view('admin/panel_vendedores/tarifas/listado_productos');
+            $this->session->unset_userdata('pv_tarifas_incluir_ids_productos');
+
+            $this->template->load_view('admin/panel_vendedores/tarifas/listado_productos');
+        } else {
+            $this->template->set_title("Panel de Control - Mercabarato.com");
+            $this->template->set_layout('panel_vendedores');
+            $this->template->load_view('admin/panel_vendedores/producto/producto_limite');
+        }
     }
 
     /**
@@ -54,30 +62,38 @@ class Panel_vendedores_tarifas extends ADController {
     public function detalles_tarifa() {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
-        
+
         $productos_seleccionados = $this->session->userdata('pv_tarifas_incluir_ids_productos');
-        $mas_de_uno=false;
-        if($productos_seleccionados){
-            if(sizeof($productos_seleccionados)>1){
-                $mas_de_uno=true;
+        $mas_de_uno = false;
+        if ($productos_seleccionados) {
+            if (sizeof($productos_seleccionados) > 1) {
+                $mas_de_uno = true;
             }
         }
 
         $this->template->add_js("modules/admin/panel_vendedores/tarifa_detalles.js");
-        $this->template->load_view('admin/panel_vendedores/tarifas/detalles_tarifa',array("mas_de_uno"=>$mas_de_uno));
+        $this->template->load_view('admin/panel_vendedores/tarifas/detalles_tarifa', array("mas_de_uno" => $mas_de_uno));
     }
 
     /**
      * 
      */
     public function view_listado() {
-        $this->template->set_title("Panel de Control - Mercabarato.com");
-        $this->template->set_layout('panel_vendedores');
+        $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());        
 
-        $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado.js");
-        $categorias = $this->categoria_model->get_all();
-        $data = array("categorias" => $categorias);
-        $this->template->load_view('admin/panel_vendedores/tarifas/listado', $data);
+        if ($paquete->limite_productos != "0") {
+            $this->template->set_title("Panel de Control - Mercabarato.com");
+            $this->template->set_layout('panel_vendedores');
+
+            $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado.js");
+            $categorias = $this->categoria_model->get_all();
+            $data = array("categorias" => $categorias);
+            $this->template->load_view('admin/panel_vendedores/tarifas/listado', $data);
+        } else {
+            $this->template->set_title("Panel de Control - Mercabarato.com");
+            $this->template->set_layout('panel_vendedores');
+            $this->template->load_view('admin/panel_vendedores/producto/producto_limite');
+        }
     }
 
     /**
@@ -85,7 +101,7 @@ class Panel_vendedores_tarifas extends ADController {
      * @param type $id
      */
     public function borrar($id) {
-        if ($this->input->is_ajax_request()) {                        
+        if ($this->input->is_ajax_request()) {
             $tarifa_id = $id;
 
             $res = $this->tarifa_model->get_vendedor_id_de_tarifa($tarifa_id);
@@ -114,19 +130,19 @@ class Panel_vendedores_tarifas extends ADController {
                 $clientes_ids = $this->session->userdata('pv_tarifas_incluir_ids_clientes');
 
                 foreach ($productos_ids as $producto) {
-                    $producto_obj=$this->producto_model->get($producto);
-                    if($this->input->post('porcentaje') != ''){
-                        $monto_a_deducir=$producto_obj->precio*($this->input->post('porcentaje')/100);
-                        $nuevo_costo=$producto_obj->precio-$monto_a_deducir;
-                        $porcentaje=$this->input->post('porcentaje');
-                    }elseif($this->input->post('nuevo_costo') != ''){
-                        $nuevo_costo=$this->input->post('nuevo_costo');
-                        $porcentaje=0;
-                    }else{
-                        $nuevo_costo=0;
-                        $porcentaje=0;
+                    $producto_obj = $this->producto_model->get($producto);
+                    if ($this->input->post('porcentaje') != '') {
+                        $monto_a_deducir = $producto_obj->precio * ($this->input->post('porcentaje') / 100);
+                        $nuevo_costo = $producto_obj->precio - $monto_a_deducir;
+                        $porcentaje = $this->input->post('porcentaje');
+                    } elseif ($this->input->post('nuevo_costo') != '') {
+                        $nuevo_costo = $this->input->post('nuevo_costo');
+                        $porcentaje = 0;
+                    } else {
+                        $nuevo_costo = 0;
+                        $porcentaje = 0;
                     }
-                    
+
                     $data_tarifa = array(
                         "comentario" => ($this->input->post('comentario') != '') ? $this->input->post('comentario') : null,
                         "nuevo_costo" => $nuevo_costo,
@@ -216,7 +232,7 @@ class Panel_vendedores_tarifas extends ADController {
 
 
 
-        $limit = $this->config->item("admin_default_per_page");        
+        $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
         $productos_array = $this->producto_model->get_tarifas_search($params, $limit, $offset);
         $flt = (float) ($productos_array["total"] / $limit);
@@ -318,15 +334,15 @@ class Panel_vendedores_tarifas extends ADController {
                 }
                 $flag_left_panel = false;
             }
-            
-            $producto_seleccionado_ids=$this->session->userdata('pv_tarifas_incluir_ids_productos');
-            if($producto_seleccionado_ids){
-                $clientes_arr=$this->tarifa_model->get_clientes_for_productos($producto_seleccionado_ids);
-                if(isset($params['excluir_ids_clientes']) && $clientes_arr){
-                    $params['excluir_ids_clientes']=  array_unique(array_merge($params['excluir_ids_clientes'],$clientes_arr));
+
+            $producto_seleccionado_ids = $this->session->userdata('pv_tarifas_incluir_ids_productos');
+            if ($producto_seleccionado_ids) {
+                $clientes_arr = $this->tarifa_model->get_clientes_for_productos($producto_seleccionado_ids);
+                if (isset($params['excluir_ids_clientes']) && $clientes_arr) {
+                    $params['excluir_ids_clientes'] = array_unique(array_merge($params['excluir_ids_clientes'], $clientes_arr));
                 }
             }
-            
+
             $params["usuario_id"] = $this->identidad->usuario->id;
             $params["excluir_admins"] = true;
             $pagina = $this->input->post('pagina');
@@ -388,14 +404,14 @@ class Panel_vendedores_tarifas extends ADController {
             if ($this->input->post('solo_tarifados') != "") {
                 $params["solo_tarifados"] = $this->input->post('solo_tarifados');
             }
-            
+
             $params["group_by_producto_id"] = true;
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
         }
 
-        $limit = $this->config->item("admin_default_per_page");        
+        $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
         $productos_array = $this->producto_model->get_tarifas_search($params, $limit, $offset);
         $flt = (float) ($productos_array["total"] / $limit);
@@ -449,7 +465,7 @@ class Panel_vendedores_tarifas extends ADController {
             $pagina = 1;
         }
 
-        $limit = $this->config->item("admin_default_per_page");        
+        $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
         $detalles_array = $this->tarifa_model->get_tarifas_detalles($params, $limit, $offset);
         $flt = (float) ($detalles_array["total"] / $limit);
