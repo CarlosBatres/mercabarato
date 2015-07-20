@@ -62,10 +62,10 @@
                         <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Mis Productos<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/producto/agregar'); ?>"><i class="fa fa-plus fa-fw"></i> Agregar un producto</a>
+                                <a href="<?php echo site_url('panel_vendedor/producto/agregar'); ?>"> Agregar un producto</a>
                             </li>                            
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/producto/listado'); ?>"><i class="fa fa-fw fa-list"></i> Listado de Productos</a>
+                                <a href="<?php echo site_url('panel_vendedor/producto/listado'); ?>"> Listado de Productos</a>
                             </li>                            
                         </ul>                         
                     </li>
@@ -73,10 +73,10 @@
                         <a href="#"><i class="fa fa-newspaper-o fa-fw"></i> Mis Anuncios<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/anuncio/agregar'); ?>"><i class="fa fa-plus fa-fw"></i> Agregar un anuncio</a>
+                                <a href="<?php echo site_url('panel_vendedor/anuncio/agregar'); ?>"> Agregar un anuncio</a>
                             </li>                            
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/anuncio/listado'); ?>"><i class="fa fa-fw fa-list"></i> Listado de anuncios</a>
+                                <a href="<?php echo site_url('panel_vendedor/anuncio/listado'); ?>"> Listado de anuncios</a>
                             </li>                            
                         </ul>                         
                     </li>
@@ -84,13 +84,32 @@
                         <a href="#"><i class="fa fa-money fa-fw"></i> Mis Tarifas<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/tarifas/nueva'); ?>"><i class="fa fa-plus fa-fw"></i> Nueva Tarifa</a>
+                                <a href="<?php echo site_url('panel_vendedor/tarifas/nueva'); ?>"> Nueva Tarifa</a>
                             </li>                                                        
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/tarifas/listado'); ?>"><i class="fa fa-list fa-fw"></i> Listado de Tarifas</a>
+                                <a href="<?php echo site_url('panel_vendedor/tarifas/listado'); ?>"> Listado de Tarifas</a>
                             </li>                                                        
                         </ul>                         
-                    </li>                    
+                    </li>  
+                    <li>
+                        <a href="#"><i class="fa fa-area-chart fa-fw"></i> Mis Ofertas<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo site_url('panel_vendedor/ofertas/nueva'); ?>"> Nueva Oferta</a>
+                            </li>                            
+                            <li>
+                                <a href="<?php echo site_url('panel_vendedor/ofertas/listado'); ?>"> Listado de Ofertas</a>
+                            </li>                            
+                        </ul>                         
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-tasks fa-fw"></i> Infocompras<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo site_url('panel_vendedor/infocompras/seguros'); ?>"> Seguros</a>
+                            </li>                                                        
+                        </ul>                         
+                    </li>
                     <li>
                         <a href="<?php echo site_url('panel_vendedor/regresar'); ?>"><i class="fa fa-fw fa-arrow-left"></i> Regresar al Sitio</a>
                     </li> 

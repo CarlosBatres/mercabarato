@@ -167,7 +167,8 @@ class Vendedor extends MY_Controller {
                     "limite_productos" => $paquete->limite_productos,
                     "limite_anuncios" => $paquete->limite_anuncios,
                     "monto_a_cancelar" => $paquete->costo,
-                    "aprobado" => 0
+                    "aprobado" => 0,
+                    "infocompra"=>$paquete->infocompra
                 );
                 $this->vendedor_paquete_model->insert($data);
 
@@ -314,7 +315,8 @@ class Vendedor extends MY_Controller {
                     "limite_productos" => $paquete->limite_productos,
                     "limite_anuncios" => $paquete->limite_anuncios,
                     "monto_a_cancelar" => $paquete->costo,
-                    "aprobado" => 0
+                    "aprobado" => 0,
+                    "infocompra"=>$paquete->infocompra
                 );
                 $result = $this->vendedor_model->verificar_disponibilidad($vendedor->id);
                 if ($result) {

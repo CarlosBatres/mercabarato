@@ -37,8 +37,14 @@
                 <?php if ($producto->link_externo != ""): ?>                        
                     <p class="text-right"><strong><a href="http://<?php echo $producto->link_externo ?>"><?php echo $producto->link_externo ?></a></strong></p>                    
                 <?php endif; ?>
-            </div>        
-        </div>   
+            </div>
+            <div class="col-md-12">
+                <div class="text-right">
+                    <button type="button" class="btn btn-template-primary" data-id="<?php echo $producto->vendedor_id ?>" data-toggle="modal" data-target="#myModal"> Enviar Mensaje</button>
+                </div>
+
+            </div>
+        </div>        
         <?php if ($otros_productos): ?>
             <div class="row">
                 <hr>

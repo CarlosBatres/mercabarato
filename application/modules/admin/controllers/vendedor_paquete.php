@@ -88,7 +88,7 @@ class Vendedor_paquete extends ADController {
                 $params["actividad"] = $this->input->post('actividad');
             }
 
-            $user_id = $this->authentication->read('identifier');
+            /*$user_id = $this->authentication->read('identifier');
             $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
             if ($restriccion) {
                 if ($restriccion->pais_id != null) {
@@ -103,7 +103,7 @@ class Vendedor_paquete extends ADController {
                     unset($params["provincia_id"]);
                     $params["poblacion_id"] = $restriccion->poblacion_id;
                 }
-            }
+            }*/
 
             $pagina = $this->input->post('pagina');
         } else {
