@@ -1,6 +1,12 @@
 <?php if (sizeof($vendedores) == 0): ?>
     <div>
-        <p> No se encontraron resultados...</p>    
+        <?php if ($this->session->flashdata('success')) { ?>
+            <div class="alert alert-success"> 
+                <a class="close" data-dismiss="alert">×</a>
+                <?= $this->session->flashdata('success') ?> 
+            </div>
+        <?php } ?> 
+        <p> No se encontraron mas proveedores...</p>    
     </div>
 <?php else: ?>
     <?php if ($this->session->flashdata('success')) { ?>

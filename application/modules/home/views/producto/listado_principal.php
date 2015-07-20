@@ -91,13 +91,15 @@
                                     <button class="btn btn-template-main" id="search_button" type="button"><i class="fa fa-search"></i><span class="hidden-xs">Buscar</span></button>
                                 </span>
                             </div>                            
-                            <div class="col-md-12 text-right">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="mostrar_mis_tarifas" value="1"> Solo mostrar mis tarifas 
-                                    </label>
+                            <?php if ($this->authentication->is_loggedin()): ?>
+                                <div class="col-md-12 text-right">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="mostrar_mis_tarifas" value="1"> Solo mostrar mis tarifas 
+                                        </label>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
                         </form>
                     </div>
                     <br>
