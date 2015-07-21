@@ -203,6 +203,40 @@ class Cliente_model extends MY_Model {
         $query.="LEFT JOIN vendedor v ON v.cliente_id = c.id ";
         $query.="WHERE ( 1 ";
         
+        if (isset($params['nombre'])) {
+            $text = " AND CONCAT(c.nombres,' ',c.apellidos) LIKE '%" . $params['nombre'] . "%'";
+            $query.=$text;
+        }
+
+        if (isset($params['nombre_vendedor'])) {
+            $text = " OR v.nombre LIKE '%" . $params['nombre_vendedor'] . "%'";
+            $query.=$text;
+        }
+
+        $query.=" ) AND ( 1";
+        
+        if (isset($params['email'])) {
+            $text = " AND u.email LIKE '%" . $params['email'] . "%'";
+            $query.=$text;
+        }
+        
+        if (isset($params['usuario_activo'])) {
+            $text = " AND u.activo = '" . $params["usuario_activo"] . "'";
+            $query.=$text;
+        }
+
+        if (isset($params['keywords'])) {
+            foreach ($params['keywords'] as $keyword) {
+                $text = " AND c.keyword LIKE '%" . $keyword . "%'";
+                $query.=$text;
+            }
+        }
+        
+        if (isset($params['excluir_admins'])) {
+            $text = " AND (u.permisos_id != '1' AND u.permisos_id != '2')";
+            $query.=$text;
+        }
+        
         if (isset($params['excluir_ids_clientes'])) {
             $ids=implode(",",$params['excluir_ids_clientes']);
             $query.=" AND c.id NOT IN(".$ids.")";
@@ -211,7 +245,7 @@ class Cliente_model extends MY_Model {
         if (isset($params['incluir_ids_clientes'])) {
             $ids=implode(",",$params['incluir_ids_clientes']);
             $query.=" AND c.id IN(".$ids.")";
-        }
+        }                
         
         $query.=")";                
 

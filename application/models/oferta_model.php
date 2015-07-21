@@ -22,6 +22,7 @@ class Oferta_model extends MY_Model {
         $this->db->join("oferta", "oferta.id=grupo_oferta.oferta_id", 'INNER');
         
         $this->db->where_in("oferta.producto_id", $producto_ids);
+        $this->db->where("oferta.fecha_finaliza >", date("Y-m-d"));
         
         $result = $this->db->get();
 

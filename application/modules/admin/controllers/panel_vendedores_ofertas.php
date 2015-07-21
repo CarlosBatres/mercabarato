@@ -144,7 +144,9 @@ class Panel_vendedores_ofertas extends ADController {
                         "descripcion" => ($this->input->post('descripcion') != '') ? $this->input->post('descripcion') : null,
                         "nuevo_costo" => $nuevo_costo,
                         "porcentaje" => $porcentaje,
-                        "producto_id" => $producto
+                        "producto_id" => $producto,
+                        "fecha_inicio" => ($this->input->post('fecha_inicio') != '') ? date("Y-m-d", strtotime($this->input->post('fecha_inicio'))) : null,
+                        "fecha_finaliza" => ($this->input->post('fecha_finaliza') != '') ? date("Y-m-d", strtotime($this->input->post('fecha_finaliza'))) : null,
                     );
 
                     $oferta_id = $this->oferta_model->insert($data_oferta);
@@ -276,6 +278,7 @@ class Panel_vendedores_ofertas extends ADController {
         if ($formValues !== false) {
             if ($this->input->post('nombre') != "") {
                 $params["nombre"] = $this->input->post('nombre');
+                $params["nombre_vendedor"] = $this->input->post('nombre');
                 $flag_query = true;
             }
             if ($this->input->post('sexo') != 'X') {
@@ -342,6 +345,7 @@ class Panel_vendedores_ofertas extends ADController {
 
             $params["usuario_id"] = $this->identidad->usuario->id;
             $params["excluir_admins"] = true;
+            $params["usuario_activo"] = "1";
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;

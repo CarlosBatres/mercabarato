@@ -23,7 +23,7 @@
                                 <div class="row">                                    
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label col-md-12" for="nombre">Nombre del Cliente</label>
+                                            <label class="control-label col-md-12" for="nombre">Nombre o Identificacion</label>
                                             <div class="col-md-12">
                                                 <input type="text" name="nombre" id="nombre" value="" class="form-control"/>                                
                                             </div>
@@ -31,7 +31,7 @@
                                     </div>                                                                                                                                                                                                                                                             
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label col-md-12">Palabras Clave. Ejm: Informatica,Servicios,Moda etc.</label>
+                                            <label class="control-label col-md-12">Busqueda por Intereses Ejm: Informatica,Servicios,Moda etc.</label>
                                             <div class="col-md-12">
                                                 <input type="text" name="keywords" id="keywords" value="" class="form-control"/>                                
                                             </div>

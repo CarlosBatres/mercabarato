@@ -1,6 +1,20 @@
 $(document).ready(function() {
     updateResultadosProductos();
     updateResultadosClientes();
+    
+    $("#datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "dd-mm-yy",
+        yearRange: "1900:-nn"
+    });
+    
+    $("#datepicker2").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "dd-mm-yy",
+        yearRange: "1900:-nn"
+    });
 });
 
 function updateResultadosProductos() {            
