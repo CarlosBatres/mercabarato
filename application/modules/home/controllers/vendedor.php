@@ -479,21 +479,24 @@ class Vendedor extends MY_Controller {
                 "vendedor_id" => $vendedor->id,
                 "mostrar_producto" => "1"
             );
-            $productos = $this->producto_model->get_site_search($params, 4, 0, "p.id", "DESC");
-            if ($productos["total"] > 0) {
-                $prods = $productos["productos"];
-            } else {
-                $prods = false;
-            }
-
+            
             $vendedor_image = false;
 
             if ($this->authentication->is_loggedin()) {
                 $user_id = $this->authentication->read('identifier');
                 $cliente_vendedor = $this->cliente_model->get($vendedor->cliente_id);
                 $invitacion = $this->invitacion_model->invitacion_existe($user_id, $cliente_vendedor->usuario_id);
+                $cliente=$this->cliente_model->get_by("usuario_id",$user_id);
+                $params["cliente_id"]=$cliente->id;
             } else {
                 $invitacion = true;
+            }
+            
+            $productos = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "DESC");
+            if ($productos["total"] > 0) {
+                $prods = $productos["productos"];
+            } else {
+                $prods = false;
             }
 
             $data = array(

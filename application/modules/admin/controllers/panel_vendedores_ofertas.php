@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Panel_vendedores_tarifas extends ADController {
+class Panel_vendedores_ofertas extends ADController {
 
     var $identidad;
 
@@ -22,48 +22,45 @@ class Panel_vendedores_tarifas extends ADController {
         $this->identidad = $vendedor;
     }
 
-    /**
-     * 
-     */
-    public function nueva_tarifa_paso1() {                
+    public function nueva_oferta_paso1() {                
         $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());
 
         if ($paquete->limite_productos != "0") {
             $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
-            $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado_productos.js");
+            $this->template->add_js("modules/admin/panel_vendedores/ofertas_listado_productos.js");
 
-            $this->session->unset_userdata('pv_tarifas_incluir_ids_productos');
+            $this->session->unset_userdata('pv_ofertas_incluir_ids_productos');
 
-            $this->template->load_view('admin/panel_vendedores/tarifas/listado_productos');
+            $this->template->load_view('admin/panel_vendedores/ofertas/listado_productos');
         } else {
             $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
             $this->template->load_view('admin/panel_vendedores/producto/producto_limite');
         }
     }
-
+    
     /**
      * 
      */
     public function nueva_seleccion_clientes() {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
-        $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado_clientes.js");
+        $this->template->add_js("modules/admin/panel_vendedores/ofertas_listado_clientes.js");
 
-        $this->session->unset_userdata('pv_tarifas_incluir_ids_clientes');
+        $this->session->unset_userdata('pv_ofertas_incluir_ids_clientes');
 
-        $this->template->load_view('admin/panel_vendedores/tarifas/listado_clientes');
+        $this->template->load_view('admin/panel_vendedores/ofertas/listado_clientes');
     }
 
     /**
      * 
      */
-    public function detalles_tarifa() {
+    public function detalles_oferta() {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
 
-        $productos_seleccionados = $this->session->userdata('pv_tarifas_incluir_ids_productos');
+        $productos_seleccionados = $this->session->userdata('pv_ofertas_incluir_ids_productos');
         $mas_de_uno = false;
         if ($productos_seleccionados) {
             if (sizeof($productos_seleccionados) > 1) {
@@ -71,8 +68,8 @@ class Panel_vendedores_tarifas extends ADController {
             }
         }
 
-        $this->template->add_js("modules/admin/panel_vendedores/tarifa_detalles.js");
-        $this->template->load_view('admin/panel_vendedores/tarifas/detalles_tarifa', array("mas_de_uno" => $mas_de_uno));
+        $this->template->add_js("modules/admin/panel_vendedores/ofertas_detalles.js");
+        $this->template->load_view('admin/panel_vendedores/ofertas/detalles_oferta', array("mas_de_uno" => $mas_de_uno));
     }
 
     /**
@@ -85,10 +82,10 @@ class Panel_vendedores_tarifas extends ADController {
             $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
 
-            $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado.js");
+            $this->template->add_js("modules/admin/panel_vendedores/ofertas_listado.js");
             $categorias = $this->categoria_model->get_all();
             $data = array("categorias" => $categorias);
-            $this->template->load_view('admin/panel_vendedores/tarifas/listado', $data);
+            $this->template->load_view('admin/panel_vendedores/ofertas/listado', $data);
         } else {
             $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
@@ -102,11 +99,11 @@ class Panel_vendedores_tarifas extends ADController {
      */
     public function borrar($id) {
         if ($this->input->is_ajax_request()) {
-            $tarifa_id = $id;
+            $oferta_id = $id;
 
-            $res = $this->tarifa_model->get_vendedor_id_de_tarifa($tarifa_id);
+            $res = $this->oferta_model->get_vendedor_id_de_oferta($oferta_id);
             if ($res == $this->identidad->get_vendedor_id()) {
-                $this->tarifa_model->delete($tarifa_id);
+                $this->oferta_model->delete($oferta_id);
                 $this->session->set_flashdata('success', 'Tarifa eliminada con exito..');
             } else {
                 $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
@@ -120,14 +117,14 @@ class Panel_vendedores_tarifas extends ADController {
     /**
      * 
      */
-    public function crear_tarifa() {
+    public function crear_oferta() {
         $formValues = $this->input->post();
         if ($formValues !== false) {
             $accion = $this->input->post('accion');
             if ($accion === "item-crear") {
 
-                $productos_ids = $this->session->userdata('pv_tarifas_incluir_ids_productos');
-                $clientes_ids = $this->session->userdata('pv_tarifas_incluir_ids_clientes');
+                $productos_ids = $this->session->userdata('pv_ofertas_incluir_ids_productos');
+                $clientes_ids = $this->session->userdata('pv_ofertas_incluir_ids_clientes');
 
                 foreach ($productos_ids as $producto) {
                     $producto_obj = $this->producto_model->get($producto);
@@ -143,14 +140,16 @@ class Panel_vendedores_tarifas extends ADController {
                         $porcentaje = 0;
                     }
 
-                    $data_tarifa = array(
-                        "comentario" => ($this->input->post('comentario') != '') ? $this->input->post('comentario') : null,
+                    $data_oferta = array(
+                        "descripcion" => ($this->input->post('descripcion') != '') ? $this->input->post('descripcion') : null,
                         "nuevo_costo" => $nuevo_costo,
                         "porcentaje" => $porcentaje,
-                        "producto_id" => $producto
+                        "producto_id" => $producto,
+                        "fecha_inicio" => ($this->input->post('fecha_inicio') != '') ? date("Y-m-d", strtotime($this->input->post('fecha_inicio'))) : null,
+                        "fecha_finaliza" => ($this->input->post('fecha_finaliza') != '') ? date("Y-m-d", strtotime($this->input->post('fecha_finaliza'))) : null,
                     );
 
-                    $tarifa_id = $this->tarifa_model->insert($data_tarifa);
+                    $oferta_id = $this->oferta_model->insert($data_oferta);
 
                     foreach ($clientes_ids as $cliente) {
                         $data_grupo = array(
@@ -158,16 +157,16 @@ class Panel_vendedores_tarifas extends ADController {
                             "cliente_id" => $cliente
                         );
                         $grupo_id = $this->grupo_model->insert($data_grupo);
-                        $grupo_tarifa = array(
+                        $grupo_oferta = array(
                             "grupo_id" => $grupo_id,
-                            "tarifa_id" => $tarifa_id);
+                            "oferta_id" => $oferta_id);
 
-                        $this->grupo_tarifa_model->insert($grupo_tarifa);
+                        $this->grupo_oferta_model->insert($grupo_oferta);
                     }
                 }
-                $this->session->unset_userdata('pv_tarifas_incluir_ids_clientes');
-                $this->session->unset_userdata('pv_tarifas_incluir_ids_productos');
-                redirect('panel_vendedor/tarifas/listado');
+                $this->session->unset_userdata('pv_ofertas_incluir_ids_clientes');
+                $this->session->unset_userdata('pv_ofertas_incluir_ids_productos');
+                redirect('panel_vendedor/ofertas/listado');
             }
         }
     }
@@ -184,7 +183,7 @@ class Panel_vendedores_tarifas extends ADController {
         if ($formValues !== false) {
             if ($this->input->post('nombre') != "") {
                 $params["nombre"] = $this->input->post('nombre');
-                $ids_old = $this->session->userdata('pv_tarifas_incluir_ids_productos');
+                $ids_old = $this->session->userdata('pv_ofertas_incluir_ids_productos');
                 if ($ids_old) {
                     $params["excluir_ids"] = $ids_old;
                 }
@@ -192,18 +191,18 @@ class Panel_vendedores_tarifas extends ADController {
 
             if ($this->input->post('incluir_ids') != "") {
                 $ids = explode(";;", $this->input->post('incluir_ids'));
-                $ids_old = $this->session->userdata('pv_tarifas_incluir_ids_productos');
+                $ids_old = $this->session->userdata('pv_ofertas_incluir_ids_productos');
                 if ($ids_old) {
                     $ids = array_unique(array_merge($ids, $ids_old));
                 }
                 $params["incluir_ids"] = $ids;
-                $this->session->set_userdata(array('pv_tarifas_incluir_ids_productos' => $ids));
+                $this->session->set_userdata(array('pv_ofertas_incluir_ids_productos' => $ids));
             }
 
 
             if ($this->input->post('excluir_ids') != "") {
                 $ids = explode(";;", $this->input->post('excluir_ids'));
-                $ids_old = $this->session->userdata('pv_tarifas_incluir_ids_productos');
+                $ids_old = $this->session->userdata('pv_ofertas_incluir_ids_productos');
                 if ($ids_old) {
                     $ids = array_unique(array_merge($ids, $ids_old));
                 }
@@ -211,13 +210,13 @@ class Panel_vendedores_tarifas extends ADController {
             }
 
             if ($this->input->post('search_main') != "") {
-                $check_ids_old = $this->session->userdata('pv_tarifas_incluir_ids_productos');
+                $check_ids_old = $this->session->userdata('pv_ofertas_incluir_ids_productos');
                 if ($check_ids_old && !isset($params["excluir_ids"])) {
                     $params["excluir_ids"] = $check_ids_old;
                 }
                 $flag_left_panel = true;
             } else {
-                $check_ids_old = $this->session->userdata('pv_tarifas_incluir_ids_productos');
+                $check_ids_old = $this->session->userdata('pv_ofertas_incluir_ids_productos');
                 if ($check_ids_old && !isset($params["incluir_ids"])) {
                     $params["incluir_ids"] = $check_ids_old;
                 }
@@ -263,13 +262,13 @@ class Panel_vendedores_tarifas extends ADController {
             "pagination" => $pagination,
             "left_panel" => $flag_left_panel);
 
-        $this->template->load_view('admin/panel_vendedores/tarifas/tabla_resultados_productos', $data);
+        $this->template->load_view('admin/panel_vendedores/ofertas/tabla_resultados_productos', $data);
     }
 
     /**
      * ajax_get_clientes
      */
-    public function ajax_get_invitados() {
+    public function ajax_get_clientes() {
         //$this->show_profiler();
         $formValues = $this->input->post();
         $params = array();
@@ -279,6 +278,7 @@ class Panel_vendedores_tarifas extends ADController {
         if ($formValues !== false) {
             if ($this->input->post('nombre') != "") {
                 $params["nombre"] = $this->input->post('nombre');
+                $params["nombre_vendedor"] = $this->input->post('nombre');
                 $flag_query = true;
             }
             if ($this->input->post('sexo') != 'X') {
@@ -296,7 +296,7 @@ class Panel_vendedores_tarifas extends ADController {
             }
 
             if ($flag_query) {
-                $ids_old = $this->session->userdata('pv_tarifas_incluir_ids_clientes');
+                $ids_old = $this->session->userdata('pv_ofertas_incluir_ids_clientes');
                 if ($ids_old) {
                     $params["excluir_ids_clientes"] = $ids_old;
                 }
@@ -304,17 +304,17 @@ class Panel_vendedores_tarifas extends ADController {
 
             if ($this->input->post('incluir_ids') != "") {
                 $ids = explode(";;", $this->input->post('incluir_ids'));
-                $ids_old = $this->session->userdata('pv_tarifas_incluir_ids_clientes');
+                $ids_old = $this->session->userdata('pv_ofertas_incluir_ids_clientes');
                 if ($ids_old) {
                     $ids = array_unique(array_merge($ids, $ids_old));
                 }
                 $params["incluir_ids_clientes"] = $ids;
-                $this->session->set_userdata(array('pv_tarifas_incluir_ids_clientes' => $ids));
+                $this->session->set_userdata(array('pv_ofertas_incluir_ids_clientes' => $ids));
             }
 
             if ($this->input->post('excluir_ids') != "") {
                 $ids = explode(";;", $this->input->post('excluir_ids'));
-                $ids_old = $this->session->userdata('pv_tarifas_incluir_ids_clientes');
+                $ids_old = $this->session->userdata('pv_ofertas_incluir_ids_clientes');
                 if ($ids_old) {
                     $ids = array_unique(array_merge($ids, $ids_old));
                 }
@@ -322,22 +322,22 @@ class Panel_vendedores_tarifas extends ADController {
             }
 
             if ($this->input->post('search_main') != "") {
-                $check_ids_old = $this->session->userdata('pv_tarifas_incluir_ids_clientes');
+                $check_ids_old = $this->session->userdata('pv_ofertas_incluir_ids_clientes');
                 if ($check_ids_old && !isset($params["excluir_ids"])) {
                     $params["excluir_ids_clientes"] = $check_ids_old;
                 }
                 $flag_left_panel = true;
             } else {
-                $check_ids_old = $this->session->userdata('pv_tarifas_incluir_ids_clientes');
+                $check_ids_old = $this->session->userdata('pv_ofertas_incluir_ids_clientes');
                 if ($check_ids_old && !isset($params["incluir_ids"])) {
                     $params["incluir_ids_clientes"] = $check_ids_old;
                 }
                 $flag_left_panel = false;
             }
 
-            $producto_seleccionado_ids = $this->session->userdata('pv_tarifas_incluir_ids_productos');
+            $producto_seleccionado_ids = $this->session->userdata('pv_ofertas_incluir_ids_productos');
             if ($producto_seleccionado_ids) {
-                $clientes_arr = $this->tarifa_model->get_clientes_for_productos($producto_seleccionado_ids);
+                $clientes_arr = $this->oferta_model->get_clientes_for_productos($producto_seleccionado_ids);
                 if (isset($params['excluir_ids_clientes']) && $clientes_arr) {
                     $params['excluir_ids_clientes'] = array_unique(array_merge($params['excluir_ids_clientes'], $clientes_arr));
                 }
@@ -345,6 +345,7 @@ class Panel_vendedores_tarifas extends ADController {
 
             $params["usuario_id"] = $this->identidad->usuario->id;
             $params["excluir_admins"] = true;
+            $params["usuario_activo"] = "1";
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
@@ -352,7 +353,7 @@ class Panel_vendedores_tarifas extends ADController {
 
         $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
-        $clientes_array = $this->invitacion_model->get_invitaciones_aceptadas($params, $limit, $offset);
+        $clientes_array = $this->cliente_model->get_clientes_ofertas($params, $limit, $offset);
         $flt = (float) ($clientes_array["total"] / $limit);
         $ent = (int) ($clientes_array["total"] / $limit);
         if ($flt > $ent || $flt < $ent) {
@@ -364,7 +365,7 @@ class Panel_vendedores_tarifas extends ADController {
         if ($clientes_array["total"] == 0) {
             $clientes_array["clientes"] = array();
         } else {
-            $clientes_array["clientes"] = $clientes_array["invitaciones"];
+            $clientes_array["clientes"] = $clientes_array["clientes"];
         }
 
         $search_params = array(
@@ -384,13 +385,13 @@ class Panel_vendedores_tarifas extends ADController {
             "left_panel" => $flag_left_panel);
 
 
-        $this->template->load_view("admin/panel_vendedores/tarifas/tabla_resultados_clientes", $data);
+        $this->template->load_view("admin/panel_vendedores/ofertas/tabla_resultados_clientes", $data);
     }
 
     /**
      * 
      */
-    public function ajax_get_productos_tarifados() {
+    public function ajax_get_productos_ofertados() {
         //$this->show_profiler();
         $formValues = $this->input->post();
         $params = array();
@@ -401,8 +402,8 @@ class Panel_vendedores_tarifas extends ADController {
             if ($this->input->post('nombre') != "") {
                 $params["nombre"] = $this->input->post('nombre');
             }
-            if ($this->input->post('solo_tarifados') != "") {
-                $params["solo_tarifados"] = $this->input->post('solo_tarifados');
+            if ($this->input->post('solo_ofertados') != "") {
+                $params["solo_ofertados"] = $this->input->post('solo_ofertados');
             }
 
             $params["group_by_producto_id"] = true;
@@ -413,7 +414,7 @@ class Panel_vendedores_tarifas extends ADController {
 
         $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
-        $productos_array = $this->producto_model->get_tarifas_search($params, $limit, $offset);
+        $productos_array = $this->producto_model->get_ofertas_search($params, $limit, $offset);
         $flt = (float) ($productos_array["total"] / $limit);
         $ent = (int) ($productos_array["total"] / $limit);
         if ($flt > $ent || $flt < $ent) {
@@ -442,13 +443,13 @@ class Panel_vendedores_tarifas extends ADController {
             "pagination" => $pagination,
             "left_panel" => $flag_left_panel);
 
-        $this->template->load_view('admin/panel_vendedores/tarifas/tabla_resultados_tarifa_prod', $data);
+        $this->template->load_view('admin/panel_vendedores/ofertas/tabla_resultados_oferta_prod', $data);
     }
 
     /**
      * 
      */
-    public function ajax_get_tarifa_detalles() {
+    public function ajax_get_oferta_detalles() {
         //$this->show_profiler();
         $formValues = $this->input->post();
         $params = array();
@@ -467,7 +468,7 @@ class Panel_vendedores_tarifas extends ADController {
 
         $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
-        $detalles_array = $this->tarifa_model->get_tarifas_detalles($params, $limit, $offset);
+        $detalles_array = $this->oferta_model->get_ofertas_detalles($params, $limit, $offset);
         $flt = (float) ($detalles_array["total"] / $limit);
         $ent = (int) ($detalles_array["total"] / $limit);
         if ($flt > $ent || $flt < $ent) {
@@ -477,7 +478,7 @@ class Panel_vendedores_tarifas extends ADController {
         }
 
         if ($detalles_array["total"] == 0) {
-            $detalles_array["tarifas"] = array();
+            $detalles_array["ofertas"] = array();
         }
 
         $search_params = array(
@@ -492,11 +493,11 @@ class Panel_vendedores_tarifas extends ADController {
         $pagination = build_paginacion($search_params);
 
         $data = array(
-            "tarifas" => $detalles_array["tarifas"],
+            "ofertas" => $detalles_array["ofertas"],
             "pagination" => $pagination,
             "left_panel" => $flag_left_panel);
 
-        $this->template->load_view('admin/panel_vendedores/tarifas/tabla_resultados_tarifa_prod', $data);
+        $this->template->load_view('admin/panel_vendedores/ofertas/tabla_resultados_oferta_prod', $data);
     }
 
 }

@@ -61,7 +61,7 @@ class Producto extends MY_Controller {
      */
     public function ajax_get_listado_resultados() {
         if ($this->input->is_ajax_request()) {
-            //$this->show_profiler();
+            $this->show_profiler();
             $formValues = $this->input->post();
             $params = array();
             if ($formValues !== false) {
@@ -166,17 +166,24 @@ class Producto extends MY_Controller {
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                 $producto_tarifa = $this->producto_model->get_tarifas_from_producto($producto->id, $cliente->id);
                 if ($producto_tarifa) {
-                    $tarifa = $producto_tarifa->tarifa_costo;
+                    $tarifa = (float)$producto_tarifa->nuevo_costo;
                 } else {
-                    $tarifa = false;
+                    $tarifa = 0;
                 }
+                $producto_oferta = $this->producto_model->get_ofertas_from_producto($producto->id, $cliente->id);
+                if ($producto_oferta) {
+                    $oferta = (float)$producto_oferta->nuevo_costo;
+                } else {
+                    $oferta = 0;
+                }
+                
 
                 $params = array(
                     "vendedor_id" => $producto->vendedor_id,
                     "cliente_id" => $cliente->id,
                     "excluir_producto_id" => array($producto->id)
                 );
-                $otros_productos = $this->producto_model->get_site_search($params, 4, 0, "p.id", "desc");
+                $otros_productos = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "desc");
                 if ($otros_productos["total"] > 0) {
                     $prods = $otros_productos["productos"];
                 } else {
@@ -188,7 +195,7 @@ class Producto extends MY_Controller {
                     "categoria_id" => $producto->categoria_id,
                     "excluir_producto_id" => array($producto->id)
                 );
-                $otros_productos_categoria = $this->producto_model->get_site_search($params, 4, 0, "p.id", "desc");
+                $otros_productos_categoria = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "desc");
                 if ($otros_productos_categoria["total"] > 0) {
                     $prods2 = $otros_productos_categoria["productos"];
                 } else {
@@ -200,6 +207,7 @@ class Producto extends MY_Controller {
                     "producto" => $producto,
                     "producto_imagen" => $producto_imagen,
                     "tarifa" => $tarifa,
+                    "oferta" => $oferta,
                     "otros_productos" => $prods,
                     "otros_productos_categoria" => $prods2);
                 $this->template->load_view('home/producto/ficha', $data);
@@ -211,7 +219,7 @@ class Producto extends MY_Controller {
                         "vendedor_id" => $producto->vendedor_id,                        
                         "excluir_producto_id" => array($producto->id)
                     );
-                    $otros_productos = $this->producto_model->get_site_search($params, 4, 0, "p.id", "desc");
+                    $otros_productos = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "desc");
                     if ($otros_productos["total"] > 0) {
                         $prods = $otros_productos["productos"];
                     } else {
@@ -222,7 +230,7 @@ class Producto extends MY_Controller {
                         "categoria_id" => $producto->categoria_id,
                         "excluir_producto_id" => array($producto->id)
                     );
-                    $otros_productos_categoria = $this->producto_model->get_site_search($params, 4, 0, "p.id", "desc");
+                    $otros_productos_categoria = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "desc");
                     if ($otros_productos_categoria["total"] > 0) {
                         $prods2 = $otros_productos_categoria["productos"];
                     } else {

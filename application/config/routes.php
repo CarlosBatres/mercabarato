@@ -145,6 +145,20 @@ $route['panel_vendedor/tarifas/ajax_get_productos_tarifados'] = 'admin/panel_ven
 $route['panel_vendedor/tarifas/ajax_get_tarifa_detalles'] = 'admin/panel_vendedores_tarifas/ajax_get_tarifa_detalles';
 $route['panel_vendedor/tarifas/listado'] = 'admin/panel_vendedores_tarifas/view_listado';
 
+$route['panel_vendedor/infocompras/seguros'] = 'admin/panel_vendedores_infocompras/view_listado_seguros';
+$route['panel_vendedor/infocompras/ajax_get_seguros'] = 'admin/panel_vendedores_infocompras/ajax_get_seguros';
+
+$route['panel_vendedor/ofertas/nueva'] = 'admin/panel_vendedores_ofertas/nueva_oferta_paso1';
+$route['panel_vendedor/ofertas/seleccion_clientes'] = 'admin/panel_vendedores_ofertas/nueva_seleccion_clientes';
+$route['panel_vendedor/ofertas/detalles'] = 'admin/panel_vendedores_ofertas/detalles_oferta';
+$route['panel_vendedor/ofertas/crear'] = 'admin/panel_vendedores_ofertas/crear_oferta';
+$route['panel_vendedor/ofertas/borrar/(:num)'] = 'admin/panel_vendedores_ofertas/borrar/$1';
+$route['panel_vendedor/ofertas/ajax_get_productos'] = 'admin/panel_vendedores_ofertas/ajax_get_productos';
+$route['panel_vendedor/ofertas/ajax_get_clientes'] = 'admin/panel_vendedores_ofertas/ajax_get_clientes';
+$route['panel_vendedor/ofertas/ajax_get_productos_ofertados'] = 'admin/panel_vendedores_ofertas/ajax_get_productos_ofertados';
+$route['panel_vendedor/ofertas/ajax_get_oferta_detalles'] = 'admin/panel_vendedores_ofertas/ajax_get_oferta_detalles';
+$route['panel_vendedor/ofertas/listado'] = 'admin/panel_vendedores_ofertas/view_listado';
+
 /* Admin */
 $route['admin'] = 'admin/main';
 $route['admin/resumen'] = 'admin/main/dashboard';

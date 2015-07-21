@@ -91,7 +91,8 @@ class Cliente_model extends MY_Model {
         if ($cliente) {
             $usuario = $this->usuario_model->get($cliente->usuario_id);
             $this->localizacion_model->delete_by("usuario_id", $usuario->id);
-            $this->invitacion_model->delete_by("cliente_id", $cliente->id);
+            $this->invitacion_model->delete_by("invitar_para", $cliente->id);
+            $this->invitacion_model->delete_by("invitar_desde", $cliente->id);
             $this->solicitud_seguro_model->delete_by("cliente_id", $id);
             $this->visita_model->delete_by("cliente_id", $id);
 
@@ -175,6 +176,79 @@ class Cliente_model extends MY_Model {
 
         $query.=") ";
         
+        $query.=" ORDER BY " . $order_by . " " . $order;
+        $query.=" LIMIT " . $offset . " , " . $limit;
+
+        $result = $this->db->query($query);
+        $clientes = $result->result();
+
+        $query_total = "SELECT FOUND_ROWS() as rows;";
+        $result_total = $this->db->query($query_total);
+        $total = $result_total->row();
+
+        if ($total->rows > 0) {
+            return array("clientes" => $clientes, "total" => $total->rows);
+        } else {
+            return array("total" => 0);
+        }
+    }
+    
+    
+    
+    public function get_clientes_ofertas($params, $limit, $offset, $order_by = "id", $order = "desc") {
+        $query = "SELECT SQL_CALC_FOUND_ROWS ";
+        $query.="c.id,c.nombres,c.apellidos,v.nombre as nombre_vendedor,u.fecha_creado,u.ultimo_acceso ";
+        $query.="FROM cliente c ";
+        $query.="INNER JOIN usuario u ON u.id=c.usuario_id ";        
+        $query.="LEFT JOIN vendedor v ON v.cliente_id = c.id ";
+        $query.="WHERE ( 1 ";
+        
+        if (isset($params['nombre'])) {
+            $text = " AND CONCAT(c.nombres,' ',c.apellidos) LIKE '%" . $params['nombre'] . "%'";
+            $query.=$text;
+        }
+
+        if (isset($params['nombre_vendedor'])) {
+            $text = " OR v.nombre LIKE '%" . $params['nombre_vendedor'] . "%'";
+            $query.=$text;
+        }
+
+        $query.=" ) AND ( 1";
+        
+        if (isset($params['email'])) {
+            $text = " AND u.email LIKE '%" . $params['email'] . "%'";
+            $query.=$text;
+        }
+        
+        if (isset($params['usuario_activo'])) {
+            $text = " AND u.activo = '" . $params["usuario_activo"] . "'";
+            $query.=$text;
+        }
+
+        if (isset($params['keywords'])) {
+            foreach ($params['keywords'] as $keyword) {
+                $text = " AND c.keyword LIKE '%" . $keyword . "%'";
+                $query.=$text;
+            }
+        }
+        
+        if (isset($params['excluir_admins'])) {
+            $text = " AND (u.permisos_id != '1' AND u.permisos_id != '2')";
+            $query.=$text;
+        }
+        
+        if (isset($params['excluir_ids_clientes'])) {
+            $ids=implode(",",$params['excluir_ids_clientes']);
+            $query.=" AND c.id NOT IN(".$ids.")";
+        }
+        
+        if (isset($params['incluir_ids_clientes'])) {
+            $ids=implode(",",$params['incluir_ids_clientes']);
+            $query.=" AND c.id IN(".$ids.")";
+        }                
+        
+        $query.=")";                
+
         $query.=" ORDER BY " . $order_by . " " . $order;
         $query.=" LIMIT " . $offset . " , " . $limit;
 

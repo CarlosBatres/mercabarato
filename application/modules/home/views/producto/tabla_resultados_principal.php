@@ -25,18 +25,25 @@
                             <p><?php echo truncate(($producto->descripcion), 100); ?></p>
                         </div>
 
-                        <?php if ($producto->mostrar_precio==0 && !$this->authentication->is_loggedin()): ?>
+                        <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
                             <div class="row">
                                 <p class="precio">Consulte con el vendedor </p>
                             </div>
                         <?php else: ?>
-                            <?php if (isset($producto->tarifa_costo)): ?>
+                            <?php if ($producto->tipo == 'tarifa'): ?>
                                 <div class="row">
                                     <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                                 </div>
                                 <div class="row">                            
-                                    <p class="precio"><?php echo number_format($producto->tarifa_costo, '2') . ' ' . $this->config->item('money_sign') ?></p>
+                                    <p class="precio"><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?></p>
                                 </div>                                                                        
+                            <?php elseif ($producto->tipo == 'oferta'): ?>
+                                <div class="row">
+                                    <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                                </div>
+                                <div class="row">                            
+                                    <p class="precio"><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?></p>
+                                </div> 
                             <?php else: ?>
                                 <div class="row">
                                     <p class="precio"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>

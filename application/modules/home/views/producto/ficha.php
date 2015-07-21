@@ -26,11 +26,14 @@
                     <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
 
                     <?php else: ?>
-                        <?php if ($tarifa): ?>                    
+                        <?php if ($tarifa==0 && $oferta==0): ?>                    
+                            <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
+                        <?php elseif ($tarifa < $oferta || $oferta==0): ?>                    
                             <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                             <p class="price"><?php echo number_format($tarifa, '2') . ' ' . $this->config->item('money_sign') ?></p>
-                        <?php else: ?>
-                            <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
+                        <?php elseif ($tarifa > $oferta || $tarifa==0): ?>
+                            <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                            <p class="price"><?php echo number_format($oferta, '2') . ' ' . $this->config->item('money_sign') ?></p>                                                    
                         <?php endif; ?>                                                        
                     <?php endif; ?>                                                        
                 </div>            
@@ -74,13 +77,20 @@
                                         <p class="precio"></p>
                                     </div>
                                 <?php else: ?>
-                                    <?php if (isset($producto->tarifa_costo)): ?>
+                                    <?php if ($producto->tipo == 'tarifa'): ?>
                                         <div class="row">
                                             <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                                         </div>
                                         <div class="row">                            
-                                            <p class="precio"><strong><?php echo number_format($producto->tarifa_costo, '2') . ' ' . $this->config->item('money_sign') ?></strong></p>
-                                        </div>                            
+                                            <p class="precio"><strong><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?></strong></p>
+                                        </div> 
+                                    <?php elseif ($producto->tipo == 'oferta'): ?>
+                                        <div class="row">
+                                            <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                                        </div>
+                                        <div class="row">                            
+                                            <p class="precio"><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?></p>
+                                        </div>  
                                     <?php else: ?>
                                         <div class="row">
                                             <p class="precio"><strong><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></strong></p>
@@ -123,13 +133,20 @@
                                         <p class="precio"></p>
                                     </div>
                                 <?php else: ?>
-                                    <?php if (isset($producto->tarifa_costo)): ?>
+                                    <?php if ($producto->tipo == 'tarifa'): ?>
                                         <div class="row">
                                             <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                                         </div>
                                         <div class="row">                            
-                                            <p class="precio"><strong><?php echo number_format($producto->tarifa_costo, '2') . ' ' . $this->config->item('money_sign') ?></strong></p>
-                                        </div>                            
+                                            <p class="precio"><strong><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?></strong></p>
+                                        </div>
+                                    <?php elseif ($producto->tipo == 'oferta'): ?>
+                                        <div class="row">
+                                            <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                                        </div>
+                                        <div class="row">                            
+                                            <p class="precio"><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?></p>
+                                        </div> 
                                     <?php else: ?>
                                         <div class="row">
                                             <p class="precio"><strong><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></strong></p>

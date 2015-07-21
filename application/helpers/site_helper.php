@@ -201,6 +201,7 @@ function keywords_listado() {
         'Deporte y Diversión' => 'Deporte y Diversión',
         'Servicios' => 'Servicios',
         'Suministros Industriales y Profesionales' => 'Suministros Industriales y Profesionales',
+        'Otros' => 'Otros'
     );
     return $data;
 }
