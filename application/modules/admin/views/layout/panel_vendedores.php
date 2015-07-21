@@ -95,10 +95,10 @@
                         <a href="#"><i class="fa fa-area-chart fa-fw"></i> Mis Ofertas<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo site_url(''); ?>"> Nueva Oferta</a>
+                                <a href="<?php echo site_url('panel_vendedor/ofertas/nueva'); ?>"> Nueva Oferta</a>
                             </li>                            
                             <li>
-                                <a href="<?php echo site_url(''); ?>"> Listado de Ofertas</a>
+                                <a href="<?php echo site_url('panel_vendedor/ofertas/listado'); ?>"> Listado de Ofertas</a>
                             </li>                            
                         </ul>                         
                     </li>

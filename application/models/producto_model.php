@@ -498,5 +498,47 @@ class Producto_model extends MY_Model {
             return false;
         }
     }
+    
+     public function get_ofertas_search($params, $limit, $offset) {
+        $this->db->start_cache();
+        $this->db->select("DISTINCT producto.id,producto.*,categoria.nombre AS Categoria", false);
+        $this->db->from($this->_table);
+        $this->db->join("categoria", "categoria.id=producto.categoria_id", 'INNER');
+        $this->db->join("vendedor", "vendedor.id=producto.vendedor_id", 'INNER');
+
+        if (isset($params['solo_ofertados'])) {
+            $this->db->join("oferta", "oferta.producto_id=producto.id", 'INNER');
+        }
+
+        if (isset($params['nombre'])) {
+            $this->db->like('producto.nombre', $params['nombre'], 'both');
+        }
+        if (isset($params['categoria_id'])) {
+            $this->db->where('producto.categoria_id', $params['categoria_id']);
+        }
+        if (isset($params['vendedor_id'])) {
+            $this->db->where('vendedor.id', $params['vendedor_id']);
+        }
+        if (isset($params['incluir_ids'])) {
+            $this->db->where_in('producto.id', $params['incluir_ids']);
+        }
+        if (isset($params['excluir_ids'])) {
+            $this->db->where_not_in('producto.id', $params['excluir_ids']);
+        }
+
+        $this->db->stop_cache();
+        $count = count($this->db->get()->result());
+
+        if ($count > 0) {
+            $this->db->order_by('producto.id', 'asc');
+            $this->db->limit($limit, $offset);
+            $productos = $this->db->get()->result();
+            $this->db->flush_cache();
+            return array("productos" => $productos, "total" => $count);
+        } else {
+            $this->db->flush_cache();
+            return array("total" => 0);
+        }
+    }
 
 }

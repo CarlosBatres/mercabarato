@@ -192,5 +192,44 @@ class Cliente_model extends MY_Model {
             return array("total" => 0);
         }
     }
+    
+    
+    
+    public function get_clientes_ofertas($params, $limit, $offset, $order_by = "id", $order = "desc") {
+        $query = "SELECT SQL_CALC_FOUND_ROWS ";
+        $query.="c.id,c.nombres,c.apellidos,v.nombre as nombre_vendedor,u.fecha_creado,u.ultimo_acceso ";
+        $query.="FROM cliente c ";
+        $query.="INNER JOIN usuario u ON u.id=c.usuario_id ";        
+        $query.="LEFT JOIN vendedor v ON v.cliente_id = c.id ";
+        $query.="WHERE ( 1 ";
+        
+        if (isset($params['excluir_ids_clientes'])) {
+            $ids=implode(",",$params['excluir_ids_clientes']);
+            $query.=" AND c.id NOT IN(".$ids.")";
+        }
+        
+        if (isset($params['incluir_ids_clientes'])) {
+            $ids=implode(",",$params['incluir_ids_clientes']);
+            $query.=" AND c.id IN(".$ids.")";
+        }
+        
+        $query.=")";                
+
+        $query.=" ORDER BY " . $order_by . " " . $order;
+        $query.=" LIMIT " . $offset . " , " . $limit;
+
+        $result = $this->db->query($query);
+        $clientes = $result->result();
+
+        $query_total = "SELECT FOUND_ROWS() as rows;";
+        $result_total = $this->db->query($query_total);
+        $total = $result_total->row();
+
+        if ($total->rows > 0) {
+            return array("clientes" => $clientes, "total" => $total->rows);
+        } else {
+            return array("total" => 0);
+        }
+    }
 
 }

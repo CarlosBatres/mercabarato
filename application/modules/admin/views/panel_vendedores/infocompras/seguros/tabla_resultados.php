@@ -7,8 +7,7 @@
 <div class="table-responsive">
     <table class="table table-bordered table-hover table-striped">
         <thead>
-            <tr>
-                <th style="width: 5%">ID</th>
+            <tr>                
                 <th style="width: 30%">Nombre Cliente</th>
                 <th style="width: 30%">Fecha Solicitud</th>
                 <th style="width: 30%;text-align: center">Respuesta</th>
@@ -17,8 +16,7 @@
         </thead>
         <tbody>
             <?php foreach ($solicitud_seguros as $solicitud): ?>
-                <tr>
-                    <td><?php echo $solicitud->id; ?></td>                    
+                <tr>                    
                     <td><?php echo $solicitud->nombres .' '.$solicitud->apellidos; ?></td>                    
                     <td><?php echo date('d-m-Y',strtotime($solicitud->fecha_solicitud)); ?></td>                    
                     <td style="text-align: center"><?php
