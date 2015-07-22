@@ -220,6 +220,11 @@ class Cliente_model extends MY_Model {
             $query.=$text;
         }
         
+         if (isset($params['sexo'])) {
+            $text = " AND c.sexo = '" . $params['sexo'] . "'";
+            $query.=$text;
+        }
+        
         if (isset($params['usuario_activo'])) {
             $text = " AND u.activo = '" . $params["usuario_activo"] . "'";
             $query.=$text;

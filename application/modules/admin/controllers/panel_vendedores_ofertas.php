@@ -22,7 +22,7 @@ class Panel_vendedores_ofertas extends ADController {
         $this->identidad = $vendedor;
     }
 
-    public function nueva_oferta_paso1() {                
+    public function nueva_oferta_paso1() {
         $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());
 
         if ($paquete->limite_productos != "0") {
@@ -39,7 +39,7 @@ class Panel_vendedores_ofertas extends ADController {
             $this->template->load_view('admin/panel_vendedores/producto/producto_limite');
         }
     }
-    
+
     /**
      * 
      */
@@ -60,23 +60,30 @@ class Panel_vendedores_ofertas extends ADController {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
 
-        $productos_seleccionados = $this->session->userdata('pv_ofertas_incluir_ids_productos');
-        $mas_de_uno = false;
-        if ($productos_seleccionados) {
-            if (sizeof($productos_seleccionados) > 1) {
-                $mas_de_uno = true;
-            }
-        }
+        $ids_clientes = $this->session->userdata('pv_ofertas_incluir_ids_clientes');
+        $ids_productos = $this->session->userdata('pv_ofertas_incluir_ids_productos');
 
-        $this->template->add_js("modules/admin/panel_vendedores/ofertas_detalles.js");
-        $this->template->load_view('admin/panel_vendedores/ofertas/detalles_oferta', array("mas_de_uno" => $mas_de_uno));
+        if ($ids_clientes && $ids_productos) {
+            $productos_seleccionados = $ids_productos;
+            $mas_de_uno = false;
+            if ($productos_seleccionados) {
+                if (sizeof($productos_seleccionados) > 1) {
+                    $mas_de_uno = true;
+                }
+            }
+
+            $this->template->add_js("modules/admin/panel_vendedores/ofertas_detalles.js");
+            $this->template->load_view('admin/panel_vendedores/ofertas/detalles_oferta', array("mas_de_uno" => $mas_de_uno));
+        } else {
+            redirect('panel_vendedor');
+        }
     }
 
     /**
      * 
      */
     public function view_listado() {
-        $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());        
+        $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());
 
         if ($paquete->limite_productos != "0") {
             $this->template->set_title("Panel de Control - Mercabarato.com");
@@ -128,19 +135,18 @@ class Panel_vendedores_ofertas extends ADController {
 
                 foreach ($productos_ids as $producto) {
                     $producto_obj = $this->producto_model->get($producto);
-                    if ($this->input->post('porcentaje') != '') {
-                        $monto_a_deducir = $producto_obj->precio * ($this->input->post('porcentaje') / 100);
+
+                    if ($this->input->post('tipo') == 'porcentaje') {
+                        $monto_a_deducir = $producto_obj->precio * ($this->input->post('valor') / 100);
                         $nuevo_costo = $producto_obj->precio - $monto_a_deducir;
-                        $porcentaje = $this->input->post('porcentaje');
-                    } elseif ($this->input->post('nuevo_costo') != '') {
-                        $nuevo_costo = $this->input->post('nuevo_costo');
-                        $porcentaje = 0;
+                        $porcentaje = $this->input->post('valor');
                     } else {
-                        $nuevo_costo = 0;
+                        $nuevo_costo = $this->input->post('valor');
                         $porcentaje = 0;
                     }
 
                     $data_oferta = array(
+                        "nombre" => ($this->input->post('comentario') != '') ? $this->input->post('comentario') : null,
                         "descripcion" => ($this->input->post('descripcion') != '') ? $this->input->post('descripcion') : null,
                         "nuevo_costo" => $nuevo_costo,
                         "porcentaje" => $porcentaje,
@@ -190,13 +196,22 @@ class Panel_vendedores_ofertas extends ADController {
             }
 
             if ($this->input->post('incluir_ids') != "") {
-                $ids = explode(";;", $this->input->post('incluir_ids'));
-                $ids_old = $this->session->userdata('pv_ofertas_incluir_ids_productos');
-                if ($ids_old) {
-                    $ids = array_unique(array_merge($ids, $ids_old));
+                if ($this->input->post('incluir_ids') != "false") {
+                    $ids = explode(";;", $this->input->post('incluir_ids'));
+                    $ids_old = $this->session->userdata('pv_ofertas_incluir_ids_productos');
+                    if ($ids_old) {
+                        $ids = array_unique(array_merge($ids, $ids_old));
+                    }
+                    $params["incluir_ids"] = $ids;
+                    $this->session->set_userdata(array('pv_ofertas_incluir_ids_productos' => $ids));
+                } else {
+                    $ids_old = $this->session->userdata('pv_ofertas_incluir_ids_productos');
+                    if (!$ids_old) {
+                        $params["incluir_ids"] = array("0");
+                    } else {
+                        $params["incluir_ids"] = $ids_old;
+                    }
                 }
-                $params["incluir_ids"] = $ids;
-                $this->session->set_userdata(array('pv_ofertas_incluir_ids_productos' => $ids));
             }
 
 
@@ -233,7 +248,7 @@ class Panel_vendedores_ofertas extends ADController {
 
         $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
-        $productos_array = $this->producto_model->get_tarifas_search($params, $limit, $offset);
+        $productos_array = $this->producto_model->get_ofertas_search($params, $limit, $offset);
         $flt = (float) ($productos_array["total"] / $limit);
         $ent = (int) ($productos_array["total"] / $limit);
         if ($flt > $ent || $flt < $ent) {
@@ -303,13 +318,22 @@ class Panel_vendedores_ofertas extends ADController {
             }
 
             if ($this->input->post('incluir_ids') != "") {
-                $ids = explode(";;", $this->input->post('incluir_ids'));
-                $ids_old = $this->session->userdata('pv_ofertas_incluir_ids_clientes');
-                if ($ids_old) {
-                    $ids = array_unique(array_merge($ids, $ids_old));
+                if ($this->input->post('incluir_ids') != "false") {
+                    $ids = explode(";;", $this->input->post('incluir_ids'));
+                    $ids_old = $this->session->userdata('pv_ofertas_incluir_ids_clientes');
+                    if ($ids_old) {
+                        $ids = array_unique(array_merge($ids, $ids_old));
+                    }
+                    $params["incluir_ids_clientes"] = $ids;
+                    $this->session->set_userdata(array('pv_ofertas_incluir_ids_clientes' => $ids));
+                } else {
+                    $ids_old = $this->session->userdata('pv_tarifas_incluir_ids_productos');
+                    if (!$ids_old) {
+                        $params["incluir_ids_clientes"] = array("0");
+                    } else {
+                        $params["incluir_ids_clientes"] = $ids_old;
+                    }
                 }
-                $params["incluir_ids_clientes"] = $ids;
-                $this->session->set_userdata(array('pv_ofertas_incluir_ids_clientes' => $ids));
             }
 
             if ($this->input->post('excluir_ids') != "") {

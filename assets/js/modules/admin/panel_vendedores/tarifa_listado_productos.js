@@ -1,5 +1,6 @@
 $(document).ready(function() {
     updateResultados();
+    updateResultadosTab2();
     bind_botones();
 
     $('#listado-item').on('submit', function(e) {
