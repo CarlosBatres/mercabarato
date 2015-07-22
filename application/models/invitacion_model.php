@@ -310,7 +310,7 @@ class Invitacion_model extends MY_Model {
         if (isset($params['nombre'])) {
             $this->db->like('CONCAT(cliente.nombres," ",cliente.apellidos)', $params['nombre'], 'both');
         }
-        if ($params['sexo'] != '0') {
+        if (isset($params['nombre'])) {
             $this->db->where('cliente.sexo', $params['sexo']);
         }
         if (isset($params['email'])) {
@@ -372,7 +372,7 @@ class Invitacion_model extends MY_Model {
         if (isset($params['nombre'])) {
             $this->db->like('CONCAT(cliente.nombres," ",cliente.apellidos)', $params['nombre'], 'both');
         }
-        if ($params['sexo'] != '0') {
+        if (isset($params['sexo'])) {
             $this->db->where('cliente.sexo', $params['sexo']);
         }
         if (isset($params['email'])) {

@@ -248,7 +248,7 @@ class Panel_vendedores_invitaciones extends ADController {
             if ($this->input->post('nombre') != "") {
                 $params["nombre"] = $this->input->post('nombre');
             }
-            if ($this->input->post('sexo') != 'X') {
+            if ($this->input->post('sexo') != 'X' && $this->input->post('sexo')) {
                 $params["sexo"] = $this->input->post('sexo');
             }
             if ($this->input->post('email') != "") {
@@ -314,7 +314,7 @@ class Panel_vendedores_invitaciones extends ADController {
             if ($this->input->post('nombre') != "") {
                 $params["nombre"] = $this->input->post('nombre');
             }
-            if ($this->input->post('sexo') != 'X') {
+            if ($this->input->post('sexo') != 'X' && $this->input->post('sexo')) {
                 $params["sexo"] = $this->input->post('sexo');
             }
             if ($this->input->post('email') != "") {
@@ -380,7 +380,8 @@ class Panel_vendedores_invitaciones extends ADController {
             if ($this->input->post('nombre') != "") {
                 $params["nombre"] = $this->input->post('nombre');
             }
-            if ($this->input->post('sexo') != 'X') {
+            if ($this->input->post('sexo') != 'X' && $this->input->post('sexo')) {
+                $var = $this->input->post('sexo');
                 $params["sexo"] = $this->input->post('sexo');
             }
             if ($this->input->post('email') != "") {
