@@ -26,12 +26,12 @@
                     <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
 
                     <?php else: ?>
-                        <?php if ($tarifa==0 && $oferta==0): ?>                    
+                        <?php if ($tarifa == 0 && $oferta == 0): ?>                    
                             <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
-                        <?php elseif ($oferta==0 || ($tarifa<$oferta && ($tarifa!=0 && $oferta!=0))): ?>                    
+                        <?php elseif ($oferta == 0 || ($tarifa < $oferta && ($tarifa != 0 && $oferta != 0))): ?>                    
                             <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                             <p class="price"><?php echo number_format($tarifa, '2') . ' ' . $this->config->item('money_sign') ?></p>
-                        <?php elseif ($tarifa==0 || ($tarifa>$oferta && ($tarifa!=0 && $oferta!=0))): ?>
+                        <?php elseif ($tarifa == 0 || ($tarifa > $oferta && ($tarifa != 0 && $oferta != 0))): ?>
                             <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                             <p class="price"><?php echo number_format($oferta, '2') . ' ' . $this->config->item('money_sign') ?></p>                                                    
                         <?php endif; ?>                                                        
@@ -41,11 +41,19 @@
                     <p class="text-right"><strong><a href="http://<?php echo $producto->link_externo ?>"><?php echo $producto->link_externo ?></a></strong></p>                    
                 <?php endif; ?>
             </div>
-            <div class="col-md-12">
-                <div class="text-right">
-                    <button type="button" class="btn btn-template-primary" data-id="<?php echo $producto->vendedor_id ?>" data-toggle="modal" data-target="#myModal"> Enviar Mensaje</button>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-3 pull-right">
+                        <div class="">
+                            <button type="button" class="btn btn-template-primary" data-id="<?php echo $producto->vendedor_id ?>" data-toggle="modal" data-target="#myModal"> Enviar Mensaje</button>
+                        </div>                
+                    </div>
+                    <div class="col-md-3 pull-right">
+                        <div class="">                        
+                            <a class="btn btn-template-primary" href="<?php echo site_url($vendedor_slug) ?>">Ir a la pagina del Vendedor</a>
+                        </div>                
+                    </div>
                 </div>
-
             </div>
         </div>        
         <?php if ($otros_productos): ?>

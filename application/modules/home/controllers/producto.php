@@ -8,7 +8,7 @@ class Producto extends MY_Controller {
     public function __construct() {
         parent::__construct();
     }
-    
+
     /**
      * 
      */
@@ -45,6 +45,7 @@ class Producto extends MY_Controller {
 
         $this->template->load_view('home/producto/listado_principal', $data);
     }
+
     /**
      * 
      * @param type $search_query
@@ -92,8 +93,8 @@ class Producto extends MY_Controller {
                     $params["cliente_id"] = $cliente->id;
                     //if ($cliente->es_vendedor == '0') {
                     //}
-                }                
-                if ($this->input->post('mostrar_solo_tarifas')=="true") {
+                }
+                if ($this->input->post('mostrar_solo_tarifas') == "true") {
                     $params["mostrar_solo_tarifas"] = true;
                 }
 
@@ -166,17 +167,17 @@ class Producto extends MY_Controller {
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                 $producto_tarifa = $this->producto_model->get_tarifas_from_producto($producto->id, $cliente->id);
                 if ($producto_tarifa) {
-                    $tarifa = (float)$producto_tarifa->nuevo_costo;
+                    $tarifa = (float) $producto_tarifa->nuevo_costo;
                 } else {
                     $tarifa = 0;
                 }
                 $producto_oferta = $this->producto_model->get_ofertas_from_producto($producto->id, $cliente->id);
                 if ($producto_oferta) {
-                    $oferta = (float)$producto_oferta->nuevo_costo;
+                    $oferta = (float) $producto_oferta->nuevo_costo;
                 } else {
                     $oferta = 0;
                 }
-                
+
 
                 $params = array(
                     "vendedor_id" => $producto->vendedor_id,
@@ -190,18 +191,18 @@ class Producto extends MY_Controller {
                     $prods = false;
                 }
 
-                $params = array(
+                $params2 = array(
                     "cliente_id" => $cliente->id,
                     "categoria_id" => $producto->categoria_id,
                     "excluir_producto_id" => array($producto->id)
                 );
-                $otros_productos_categoria = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "desc");
+                $otros_productos_categoria = $this->producto_model->get_site_search($params2, 4, 0, "p.fecha_insertado", "desc");
                 if ($otros_productos_categoria["total"] > 0) {
                     $prods2 = $otros_productos_categoria["productos"];
                 } else {
                     $prods2 = false;
                 }
-
+                $vendedor = $this->vendedor_model->get($producto->vendedor_id);
 
                 $data = array(
                     "producto" => $producto,
@@ -209,14 +210,15 @@ class Producto extends MY_Controller {
                     "tarifa" => $tarifa,
                     "oferta" => $oferta,
                     "otros_productos" => $prods,
-                    "otros_productos_categoria" => $prods2);
+                    "otros_productos_categoria" => $prods2,
+                    "vendedor_slug" => $vendedor->unique_slug);
                 $this->template->load_view('home/producto/ficha', $data);
             } else {
                 if ($producto->mostrar_producto == 1) {
                     $tarifa = false;
 
                     $params = array(
-                        "vendedor_id" => $producto->vendedor_id,                        
+                        "vendedor_id" => $producto->vendedor_id,
                         "excluir_producto_id" => array($producto->id)
                     );
                     $otros_productos = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "desc");
@@ -226,7 +228,7 @@ class Producto extends MY_Controller {
                         $prods = false;
                     }
 
-                    $params = array(                        
+                    $params = array(
                         "categoria_id" => $producto->categoria_id,
                         "excluir_producto_id" => array($producto->id)
                     );
@@ -242,7 +244,8 @@ class Producto extends MY_Controller {
                         "producto_imagen" => $producto_imagen,
                         "tarifa" => $tarifa,
                         "otros_productos" => $prods,
-                        "otros_productos_categoria" => $prods2);
+                        "otros_productos_categoria" => $prods2,
+                        "vendedor_slug" => "");
                     $this->template->load_view('home/producto/ficha', $data);
                 } else {
                     show_404();

@@ -9,7 +9,10 @@
                     <a href="<?php echo site_url('usuario/perfil') ?>"><i class="fa fa-user"></i> Perfil</a>
                 </li>
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/datos-personales') ? "active" : "" ?>">
-                    <a href="<?php echo site_url('usuario/datos-personales') ?>"><i class="fa fa-user"></i> Datos Personales</a>
+                    <a href="<?php echo site_url('usuario/datos-personales') ?>"><i class="fa fa-user-plus"></i> Datos Personales</a>
+                </li>
+                <li class="<?php echo ($this->uri->uri_string() == 'usuario/datos-vendedor') ? "active" : "" ?>">
+                    <a href="<?php echo site_url('usuario/datos-vendedor') ?>"><i class="fa fa-briefcase"></i> Datos Vendedor</a>
                 </li>
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/password') ? "active" : "" ?>">
                     <a href="<?php echo site_url('usuario/password') ?>"><i class="fa fa-lock"></i> Contraseña</a>
@@ -18,7 +21,7 @@
                     <a href="<?php echo site_url('usuario/mis-paquetes') ?>"><i class="fa fa-money"></i> Mis Paquetes</a>
                 </li>                
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/paquetes/comprar') ? "active" : "" ?>">
-                    <a href="<?php echo site_url('usuario/paquetes/comprar') ?>"><i class="fa fa-money"></i> Adquirir Paquetes</a>
+                    <a href="<?php echo site_url('usuario/paquetes/comprar') ?>"><i class="fa fa-plus"></i> Adquirir Paquetes</a>
                 </li>                
                 <li class="<?php echo ($this->uri->uri_string() == 'panel_vendedor') ? "active" : "" ?>">
                     <a href="<?php echo site_url('panel_vendedor') ?>"><i class="fa fa-cogs"></i> Manejar tus Productos</a>

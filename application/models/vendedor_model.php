@@ -106,7 +106,7 @@ class Vendedor_model extends MY_Model {
     }
     
     public function get_vendedor_by_slug($slug) {
-        $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address");
+        $this->db->select("vendedor.*,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address");
         $this->db->from($this->_table);
         $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
         $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
@@ -292,7 +292,7 @@ class Vendedor_model extends MY_Model {
      */
     public function get_site_search($params, $limit, $offset) {
         $this->db->start_cache();
-        $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address,"
+        $this->db->select("vendedor.*,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address,"
                 . "pais.nombre as pais,provincia.nombre as provincia,poblacion.nombre as poblacion,i1.id as invitacion_id1,i2.id as invitacion_id2"); //invitacion.cliente_id as invitacion_cliente_id
         $this->db->from($this->_table);
         $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');

@@ -57,7 +57,7 @@ $(document).ready(function() {
                     data: {
                         nombre: function() {
                             return $("#form_afiliarse").find("input[name='nombre_empresa']").val();
-                        }                        
+                        }
                     }
                 }
             },
@@ -66,7 +66,7 @@ $(document).ready(function() {
         messages: {
             nombre_empresa: {
                 required: "Ingresa el nombre de tu empresa o compañia.",
-                remote : "Este es un nombre invalido, intente con uno diferente."
+                remote: "Este es un nombre invalido, intente con uno diferente."
             },
             nif_cif: {
                 required: "Ingresa tu N.I.F o C.I.F"
@@ -102,4 +102,11 @@ $(document).ready(function() {
             $(this).css('display', 'none');
         });
     }
+
+    $("#datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "dd-mm-yy",
+        yearRange: "1900:-nn"
+    });
 });
