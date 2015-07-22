@@ -97,19 +97,59 @@ class Invitacion_model extends MY_Model {
         $query.="INNER JOIN usuario u ON u.id = i.invitar_desde AND i.invitar_para='" . $params["usuario_id"] . "' ";
         $query.="INNER JOIN cliente c ON c.usuario_id = u.id ";
         $query.="LEFT JOIN vendedor v ON v.cliente_id = c.id ";
-        $query.="WHERE (i.estado='2' ";
-        
+        $query.="WHERE ( 1";
+
+        if (isset($params['nombre'])) {
+            $text = " AND CONCAT(c.nombres,' ',c.apellidos) LIKE '%" . $params['nombre'] . "%'";
+            $query.=$text;
+        }
+
+        if (isset($params['nombre_vendedor'])) {
+            $text = " OR v.nombre LIKE '%" . $params['nombre_vendedor'] . "%'";
+            $query.=$text;
+        }
+
+        $query.=") AND i.estado='2' ";
+
+        if (isset($params['email'])) {
+            $text = " AND u.email LIKE '%" . $params['email'] . "%'";
+            $query.=$text;
+        }
+
+        if (isset($params['sexo'])) {
+            $text = " AND c.sexo = '" . $params['sexo'] . "'";
+            $query.=$text;
+        }
+
+
+        if (isset($params['usuario_activo'])) {
+            $text = " AND u.activo = '" . $params["usuario_activo"] . "'";
+            $query.=$text;
+        }
+
+        if (isset($params['keywords'])) {
+            foreach ($params['keywords'] as $keyword) {
+                $text = " AND c.keyword LIKE '%" . $keyword . "%'";
+                $query.=$text;
+            }
+        }
+
+        if (isset($params['excluir_admins'])) {
+            $text = " AND ( u.permisos_id != '1' AND u.permisos_id != '2' )";
+            $query.=$text;
+        }
+
+
         if (isset($params['excluir_ids_clientes'])) {
-            $ids=implode(",",$params['excluir_ids_clientes']);
-            $query.=" AND c.id NOT IN(".$ids.")";
+            $ids = implode(",", $params['excluir_ids_clientes']);
+            $query.=" AND c.id NOT IN(" . $ids . ")";
         }
-        
+
         if (isset($params['incluir_ids_clientes'])) {
-            $ids=implode(",",$params['incluir_ids_clientes']);
-            $query.=" AND c.id IN(".$ids.")";
+            $ids = implode(",", $params['incluir_ids_clientes']);
+            $query.=" AND c.id IN(" . $ids . ")";
         }
-        
-        $query.=")";        
+        //$query.=" )";
         $query.=" UNION ALL ";
 
         $query.="SELECT i.id as invitacion_id,c.id,c.nombres,c.apellidos,v.nombre as nombre_vendedor,u.fecha_creado,u.ultimo_acceso ";
@@ -117,19 +157,59 @@ class Invitacion_model extends MY_Model {
         $query.="INNER JOIN usuario u ON u.id = i.invitar_para AND i.invitar_desde='" . $params["usuario_id"] . "' ";
         $query.="INNER JOIN cliente c ON c.usuario_id = u.id ";
         $query.="LEFT JOIN vendedor v ON v.cliente_id = c.id ";
-        $query.="WHERE (i.estado='2'";
+        $query.="WHERE ( 1";
         
-        if (isset($params['excluir_ids_clientes'])) {
-            $ids=implode(",",$params['excluir_ids_clientes']);
-            $query.=" AND c.id NOT IN(".$ids.")";
-        }        
-        if (isset($params['incluir_ids_clientes'])) {
-            $ids=implode(",",$params['incluir_ids_clientes']);
-            $query.=" AND c.id IN(".$ids.")";
+        if (isset($params['nombre'])) {
+            $text = " AND CONCAT(c.nombres,' ',c.apellidos) LIKE '%" . $params['nombre'] . "%'";
+            $query.=$text;
+        }
+
+        if (isset($params['nombre_vendedor'])) {
+            $text = " OR v.nombre LIKE '%" . $params['nombre_vendedor'] . "%'";
+            $query.=$text;
+        }
+
+        $query.=") AND i.estado='2' ";
+
+        if (isset($params['email'])) {
+            $text = " AND u.email LIKE '%" . $params['email'] . "%'";
+            $query.=$text;
+        }
+
+        if (isset($params['sexo'])) {
+            $text = " AND c.sexo = '" . $params['sexo'] . "'";
+            $query.=$text;
+        }
+
+
+        if (isset($params['usuario_activo'])) {
+            $text = " AND u.activo = '" . $params["usuario_activo"] . "'";
+            $query.=$text;
+        }
+
+        if (isset($params['keywords'])) {
+            foreach ($params['keywords'] as $keyword) {
+                $text = " AND c.keyword LIKE '%" . $keyword . "%'";
+                $query.=$text;
+            }
+        }
+
+        if (isset($params['excluir_admins'])) {
+            $text = " AND ( u.permisos_id != '1' AND u.permisos_id != '2' )";
+            $query.=$text;
         }
         
-        $query.=")"; 
-        $query.=") temp"; 
+        if (isset($params['excluir_ids_clientes'])) {
+            $ids = implode(",", $params['excluir_ids_clientes']);
+            $query.=" AND c.id NOT IN(" . $ids . ")";
+        }
+        if (isset($params['incluir_ids_clientes'])) {
+            $ids = implode(",", $params['incluir_ids_clientes']);
+            $query.=" AND c.id IN(" . $ids . ")";
+        }
+
+        //$query.=")";
+        $query.=") temp";
 
         $query.=" ORDER BY " . $order_by . " " . $order;
         $query.=" LIMIT " . $offset . " , " . $limit;

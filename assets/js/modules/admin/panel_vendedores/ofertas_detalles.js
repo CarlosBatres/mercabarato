@@ -15,6 +15,20 @@ $(document).ready(function() {
         dateFormat: "dd-mm-yy",
         yearRange: "1900:-nn"
     });
+    
+    $("#detalles_oferta").validate({        
+        rules: {            
+            valor: {required: true,number:true},
+            fecha_inicio: {required: true},
+            fecha_finaliza: {required: true},            
+        },
+        messages: {            
+            valor: {required: "Este campo es necesario.",number:"Este campo tiene que ser un numero"},
+            fecha_inicio: {required:"Indica una fecha de inicio de la oferta",date:"Ingresa una fecha valida"},
+            fecha_finaliza: {required:"Indica una fecha de finalizacion de la oferta",date:"Ingresa una fecha valida"},
+        }
+    });
+    
 });
 
 function updateResultadosProductos() {            

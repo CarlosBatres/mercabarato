@@ -84,7 +84,7 @@ class Producto_model extends MY_Model {
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
             $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
 
-            $query.="WHERE ( p.cliente_id =" . $params['cliente_id'];
+            $query.="WHERE ( p.cliente_id ='" . $params['cliente_id']."'";
             $query.= " AND (p.fecha_finaliza > '".date("Y-m-d")."' OR p.fecha_finaliza IS NULL)"; // NO Incluimos las ofertas VENCIDAS CUIDADO con fecha_finaliza//
                 
             $sub_query = "";

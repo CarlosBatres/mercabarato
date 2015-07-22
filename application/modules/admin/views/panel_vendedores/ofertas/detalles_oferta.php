@@ -33,28 +33,29 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-8 col-md-offset-2 col-sm-12">
             <div class="box box_registro">
                 <h2 class="text-uppercase">Detalles de la Oferta</h2>                                        
                 <hr>                
-                <?php echo form_open('panel_vendedor/ofertas/crear'); ?>                                 
+                <?php echo form_open('panel_vendedor/ofertas/crear' , "id='detalles_oferta'"); ?>                                 
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Porcentaje que deseas descontar</label>
-                            <input type="text" class="form-control" name="porcentaje">
+                            <label>Valor de la Oferta</label>
+                            <input type="text" class="form-control" name="valor">
                         </div>
                     </div>
-                    <div class="col-md-4"></div>
-
-                    <?php if (!$mas_de_uno): ?>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Monto especifico</label>
-                                <input type="text" class="form-control" name="nuevo_costo">
-                            </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Porcentaje o Monto Especifico</label>
+                            <select class="form-control" name="tipo">                                
+                                <option value="porcentaje">Porcentaje ( % )</option>
+                                <?php if (!$mas_de_uno): ?>
+                                    <option value="valor">Monto Especifico ( <?php echo $this->config->item("money_sign") ?> )</option>                                
+                                <?php endif; ?>
+                            </select>
                         </div>
-                    <?php endif; ?>
+                    </div>                                        
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -76,12 +77,18 @@
                         </div>
                     </div> 
                 </div>
-                <hr>
+                <hr>                
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Descipcion</label>                    
-                            <textarea class="form-control" name="descripcion" rows="10"></textarea>
+                            <label>Nombre</label>
+                            <input type="text" class="form-control" name="nombre">                                
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Breve Descipcion</label>                    
+                            <textarea class="form-control" name="descripcion" rows="5"></textarea>
                         </div>
                     </div>                 
                 </div>

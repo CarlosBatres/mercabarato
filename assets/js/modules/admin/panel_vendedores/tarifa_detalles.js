@@ -1,6 +1,15 @@
 $(document).ready(function() {
     updateResultadosProductos();
     updateResultadosClientes();
+    
+    $("#detalles_tarifa").validate({        
+        rules: {            
+            valor: {required: true,number:true},            
+        },
+        messages: {            
+            valor: {required: "Este campo es necesario.",number:"Este campo tiene que ser un numero"},            
+        }
+    });
 });
 
 function updateResultadosProductos() {            

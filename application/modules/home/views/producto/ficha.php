@@ -28,10 +28,10 @@
                     <?php else: ?>
                         <?php if ($tarifa==0 && $oferta==0): ?>                    
                             <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
-                        <?php elseif ($tarifa < $oferta || $oferta==0): ?>                    
+                        <?php elseif ($oferta==0 || ($tarifa<$oferta && ($tarifa!=0 && $oferta!=0))): ?>                    
                             <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                             <p class="price"><?php echo number_format($tarifa, '2') . ' ' . $this->config->item('money_sign') ?></p>
-                        <?php elseif ($tarifa > $oferta || $tarifa==0): ?>
+                        <?php elseif ($tarifa==0 || ($tarifa>$oferta && ($tarifa!=0 && $oferta!=0))): ?>
                             <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                             <p class="price"><?php echo number_format($oferta, '2') . ' ' . $this->config->item('money_sign') ?></p>                                                    
                         <?php endif; ?>                                                        
