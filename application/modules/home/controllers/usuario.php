@@ -17,7 +17,8 @@ class Usuario extends MY_Controller {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
             $this->template->add_js('modules/home/registro.js');
             $paises = $this->pais_model->get_all();
-            $keywords = keywords_listado();
+            //$keywords = keywords_listado();
+            $keywords = $this->categoria_model->get_keywords_from_categorias();
             $data = array("paises" => $paises, "keywords" => $keywords);
 
             $this->template->load_view('home/usuario/registro', $data);
@@ -46,9 +47,9 @@ class Usuario extends MY_Controller {
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->cliente->id);
             $localizacion = $this->localizacion_model->get_by("usuario_id", $user_id);
 
-            if($localizacion){
+            if ($localizacion) {
                 $full_localizacion = $this->localizacion_model->get_full_localizacion($localizacion->id);
-            }else{
+            } else {
                 $full_localizacion = false;
             }
 
@@ -78,13 +79,17 @@ class Usuario extends MY_Controller {
                 $vendedor = array();
             }
 
+            $keywords = $this->categoria_model->get_keywords_from_categorias();
+            $mis_intereses = explode(";", $cliente->keyword);
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
             $this->template->add_js('modules/home/perfil.js');
             $this->template->load_view('home/usuario/datos_personales', array(
                 "usuario" => $usuario,
                 "cliente" => $cliente,
                 "vendedor" => $vendedor,
-                "html_options" => $html_options)
+                "html_options" => $html_options,
+                "keywords" => $keywords,
+                "mis_intereses" => $mis_intereses)
             );
         } else {
             redirect('');
@@ -120,6 +125,18 @@ class Usuario extends MY_Controller {
                 $user_id = $this->authentication->read('identifier');
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
+                $keywords = $this->input->post('keywords');
+                if ($keywords) {
+                    $keywords_text = '';
+                    foreach ($keywords as $key) {
+                        $keywords_text.=$key . ';';
+                    }
+                    $keywords_text = substr($keywords_text, 0, -1);
+                } else {
+                    $keywords_text = null;
+                }
+
+
                 $data = array(
                     "nombres" => ($this->input->post('nombres') != '') ? $this->input->post('nombres') : null,
                     "apellidos" => ($this->input->post('apellidos') != '') ? $this->input->post('apellidos') : null,
@@ -129,6 +146,7 @@ class Usuario extends MY_Controller {
                     "direccion" => ($this->input->post('direccion') != '') ? $this->input->post('direccion') : null,
                     "telefono_fijo" => ($this->input->post('telefono_fijo') != '') ? $this->input->post('telefono_fijo') : null,
                     "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,
+                    "keyword" => $keywords_text
                 );
 
                 $this->cliente_model->update($cliente->id, $data);

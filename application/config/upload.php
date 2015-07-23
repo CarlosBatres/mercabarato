@@ -23,10 +23,9 @@ $config['producto'] = array(
             'max_height' => 500,
             'jpeg_quality' => 95
         ),
-        'thumbnail' => array(
-            'crop' => TRUE,
-            'max_width' => 50,
-            'max_height' => 50
+        'thumbnail' => array(            
+            'max_width' => 100,
+            'max_height' => 100
         )
     )
 );
@@ -51,8 +50,7 @@ $config['categoria'] = array(
             'max_height' => 140,
             'jpeg_quality' => 95
         ),
-        'thumbnail' => array(
-            'crop' => TRUE,
+        'thumbnail' => array(            
             'max_width' => 50,
             'max_height' => 50
         )

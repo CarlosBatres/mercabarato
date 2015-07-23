@@ -35,17 +35,35 @@ class Panel_vendedores_productos extends ADController {
 
                     $producto_id = $this->producto_model->insert($data);
 
-                    if ($this->input->post('file_name') !== "") {
-                        $data_img = array(
-                            "producto_id" => $producto_id,
-                            "nombre" => "Producto: " . $data["nombre"],
-                            "descripcion" => "Imagen principal del producto " . $data["nombre"],
-                            "tipo" => "imagen_principal",
-                            "filename" => $this->input->post('file_name'),
-                            "orden" => 0,
-                        );
-                        $this->producto_resource_model->insert($data_img);
+                    if ($this->input->post('file_name') != "") {
+                        $filenames = explode(";;", $this->input->post('file_name'));
+                        if (sizeof($filenames) > 0) {
+                            foreach ($filenames as $key => $filename) {
+                                if ($key == 0) {
+                                    $data_img = array(
+                                        "producto_id" => $producto_id,
+                                        "nombre" => "Producto: " . $data["nombre"],
+                                        "descripcion" => "Imagen principal del producto " . $data["nombre"],
+                                        "tipo" => "imagen_principal",
+                                        "filename" => $filename,
+                                        "orden" => 0,
+                                    );
+                                    $this->producto_resource_model->insert($data_img);
+                                } else {
+                                    $data_img = array(
+                                        "producto_id" => $producto_id,
+                                        "nombre" => "Producto: " . $data["nombre"],
+                                        "descripcion" => "Imagen del producto " . $data["nombre"],
+                                        "tipo" => "imagen_alternativas",
+                                        "filename" => $filename,
+                                        "orden" => $key,
+                                    );
+                                    $this->producto_resource_model->insert($data_img);
+                                }
+                            }
+                        }
                     }
+
                     redirect('panel_vendedor/producto/listado');
                 } else {
                     redirect('panel_vendedor');
@@ -150,9 +168,9 @@ class Panel_vendedores_productos extends ADController {
                         "producto" => $producto,
                         "vendedor" => $vendedor,
                         "producto_imagen" => $producto_imagen);
-                    
+
                     $this->load->helper('ckeditor');
-                    
+
                     $data['ckeditor'] = array(
                         //ID of the textarea that will be replaced
                         'id' => 'content',
@@ -163,7 +181,7 @@ class Panel_vendedores_productos extends ADController {
                             'height' => '200px', //Setting a custom height
                         ),
                     );
-                    
+
                     $this->template->load_view('admin/panel_vendedores/producto/producto_editar', $data);
                 } else {
                     redirect('panel_vendedor/producto/listado');

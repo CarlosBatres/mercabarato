@@ -168,7 +168,7 @@ class Vendedor extends MY_Controller {
                     "limite_anuncios" => $paquete->limite_anuncios,
                     "monto_a_cancelar" => $paquete->costo,
                     "aprobado" => 0,
-                    "infocompra"=>$paquete->infocompra
+                    "infocompra" => $paquete->infocompra
                 );
                 $this->vendedor_paquete_model->insert($data);
 
@@ -316,7 +316,7 @@ class Vendedor extends MY_Controller {
                     "limite_anuncios" => $paquete->limite_anuncios,
                     "monto_a_cancelar" => $paquete->costo,
                     "aprobado" => 0,
-                    "infocompra"=>$paquete->infocompra
+                    "infocompra" => $paquete->infocompra
                 );
                 $result = $this->vendedor_model->verificar_disponibilidad($vendedor->id);
                 if ($result) {
@@ -479,19 +479,19 @@ class Vendedor extends MY_Controller {
                 "vendedor_id" => $vendedor->id,
                 "mostrar_producto" => "1"
             );
-            
+
             $vendedor_image = false;
 
             if ($this->authentication->is_loggedin()) {
                 $user_id = $this->authentication->read('identifier');
                 $cliente_vendedor = $this->cliente_model->get($vendedor->cliente_id);
                 $invitacion = $this->invitacion_model->invitacion_existe($user_id, $cliente_vendedor->usuario_id);
-                $cliente=$this->cliente_model->get_by("usuario_id",$user_id);
-                $params["cliente_id"]=$cliente->id;
+                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $params["cliente_id"] = $cliente->id;
             } else {
                 $invitacion = true;
             }
-            
+
             $productos = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "DESC");
             if ($productos["total"] > 0) {
                 $prods = $productos["productos"];
@@ -519,6 +519,103 @@ class Vendedor extends MY_Controller {
     public function upload_image() {
         $this->load->config('upload', TRUE);
         $this->load->library('UploadHandler', $this->config->item('vendedor', 'upload'));
+    }
+
+    /**
+     *  usuario / perfil
+     */
+    public function view_datos_vendedor() {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->add_js("fileupload.js");
+            $user_id = $this->authentication->read('identifier');
+            $usuario = $this->usuario_model->get($user_id);
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+
+            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+            if ($cliente_es_vendedor) {
+                $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
+            } else {
+                $vendedor = array();
+            }
+
+            $keywords = $this->categoria_model->get_keywords_from_categorias();
+            $mis_intereses = explode(";", $cliente->keyword);
+            $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+            $this->template->add_js('modules/home/perfil.js');
+            $this->template->load_view('home/vendedor/datos_vendedor', array(
+                "usuario" => $usuario,
+                "cliente" => $cliente,
+                "vendedor" => $vendedor,
+                "html_options" => $html_options,
+                "keywords" => $keywords,
+                "mis_intereses" => $mis_intereses)
+            );
+        } else {
+            redirect('');
+        }
+    }
+
+    public function modificar_datos() {
+        $formValues = $this->input->post();
+        $config = array(
+            'table' => 'vendedor',
+            'id' => 'id',
+            'field' => 'unique_slug',
+            'title' => 'nombre',
+            'replacement' => 'dash' // Either dash or underscore
+        );
+        $this->load->library('slug', $config);
+        if ($formValues !== false) {
+            $accion = $this->input->post('accion');
+            if ($accion === "form-editar") {
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+
+                $keywords = $this->input->post('keywords');
+                if ($keywords) {
+                    $keywords_text = '';
+                    foreach ($keywords as $key) {
+                        $keywords_text.=$key . ';';
+                    }
+                    $keywords_text = substr($keywords_text, 0, -1);
+                } else {
+                    $keywords_text = null;
+                }                                
+                
+
+                $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
+
+                if ($this->input->post('file_name') !== "") {
+                    $filename = $this->input->post('file_name');
+                    $this->vendedor_model->cleanup_image($vendedor->id);
+                } else {
+                    $filename = null;
+                }                
+
+                $data_vendedor = array(
+                    "nombre" => ($this->input->post('nombre_empresa') != '') ? $this->input->post('nombre_empresa') : null,
+                    "descripcion" => ($this->input->post('descripcion') != '') ? $this->input->post('descripcion') : null,
+                    "sitio_web" => ($this->input->post('sitio_web') != '') ? $this->input->post('sitio_web') : null,
+                    "actividad" => ($this->input->post('actividad') != '') ? $this->input->post('actividad') : null,
+                    "nif_cif" => ($this->input->post('nif_cif') != '') ? $this->input->post('nif_cif') : null,
+                    "direccion" => ($this->input->post('direccion') != '') ? $this->input->post('direccion') : null,
+                    "telefono_fijo" => ($this->input->post('telefono_fijo') != '') ? $this->input->post('telefono_fijo') : null,
+                    "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,
+                    "filename" => $filename,
+                    "keyword" => $keywords_text
+                );
+                
+                $data_vendedor["unique_slug"] = $this->slug->create_uri($data_vendedor["nombre"]);
+                $this->vendedor_model->update($vendedor->id, $data_vendedor);
+
+
+                $this->session->set_flashdata('success', 'Tus datos han sido modificados con exito.');
+            }
+            redirect('usuario/perfil');
+        } else {
+            redirect('usuario/perfil');
+        }
     }
 
 }

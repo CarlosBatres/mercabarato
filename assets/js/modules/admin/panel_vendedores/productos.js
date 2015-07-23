@@ -1,25 +1,30 @@
-$(document).ready(function() {
-
+$(document).ready(function() {    
+    
     $('#fileupload').fileupload({
         dataType: 'json',
         replaceFileInput: false,
         method: "post",
         autoUpload: "false",
+        singleFileUploads: false,
         add: function(e, data) {
             $("#admin_producto_submit").off('click').on('click', function(e) {
                 e.preventDefault();
                 data.submit();
-            });
+            });           
         },
-        start: function(e, data) {            
+        start: function(e, data) {
             $.blockUI({
                 message: $('#throbber'),
                 css: {border: '0'}});
         },
         done: function(e, data) {
-            $.each(data.result.files, function(index, file) {
-                $('#file_name').val(file.name);
+            var files="";
+            $.each(data.result.files, function(index, file) {                
+                files=files+file.name;
+                files=files+";;";                
             });
+            files=files.slice(0,-2);
+            $('#file_name').val(files);
             $.unblockUI();
             $('#admin_producto_form').submit();
         }

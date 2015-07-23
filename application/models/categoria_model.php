@@ -161,5 +161,18 @@ class Categoria_model extends MY_Model {
     public function clear_cache(){
         $this->db->cache_delete_all();
     }
+    
+    public function get_keywords_from_categorias(){
+        $categorias=$this->get_many_by("padre_id","0");
+        $keywords=array();
+        if($categorias){
+            foreach ($categorias as $cat){
+                $keywords[]=$cat->nombre;
+            }
+            return $keywords;
+        }else{
+            return false;
+        }
+    }
 
 }

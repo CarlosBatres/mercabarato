@@ -161,6 +161,8 @@
                                 <input type="text" class="form-control" name="titulo">                                
                             </div>
                         </div>
+                    </div>
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label>Mensaje</label>
                             <textarea class="form-control" name="mensaje" rows="5" cols="20"></textarea>                    
