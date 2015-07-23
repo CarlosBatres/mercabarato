@@ -158,8 +158,14 @@ class Producto extends MY_Controller {
     public function ver_producto($slug) {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $producto = $this->producto_model->get_by("unique_slug", $slug);
-        if ($producto) {
+        if ($producto) {  
+            
+            
+            $this->template->add_js('modules/home/producto.js');            
+            
             $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto->id);
+            $producto_imagenes = $this->producto_resource_model->get_producto_imagenes($producto->id);
+            
 
             if ($this->authentication->is_loggedin()) {
                 $this->visita_model->nueva_visita_producto($producto->id);
@@ -207,6 +213,7 @@ class Producto extends MY_Controller {
                 $data = array(
                     "producto" => $producto,
                     "producto_imagen" => $producto_imagen,
+                    "producto_imagenes"=>$producto_imagenes,
                     "tarifa" => $tarifa,
                     "oferta" => $oferta,
                     "otros_productos" => $prods,
@@ -242,6 +249,7 @@ class Producto extends MY_Controller {
                     $data = array(
                         "producto" => $producto,
                         "producto_imagen" => $producto_imagen,
+                        "producto_imagenes"=>$producto_imagenes,
                         "tarifa" => $tarifa,
                         "otros_productos" => $prods,
                         "otros_productos_categoria" => $prods2,

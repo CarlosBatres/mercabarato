@@ -10,19 +10,49 @@
 <div id="content">
     <div class="container">    
         <div class="row" id="productMain">
-            <div class="col-sm-4">
-                <div id="mainImage">
-                    <?php if ($producto_imagen): ?>
-                        <img src="<?php echo assets_url($this->config->item('productos_img_path')) . '/' . $producto_imagen->filename ?>" alt="" class="img-responsive center-block">
-                    <?php else: ?>   
-                        <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="img-responsive center-block">
-                    <?php endif; ?>
-                </div>            
-            </div>
-            <div class="col-sm-8">
+            <div class="col-md-4 producto-img-container">                
+                <?php if ($producto_imagen): ?>
+                    <div class="row">
+                        <div class="frame-ficha">
+                            <span class="helper"></span>
+                            <a href="<?php echo site_url("") ?>">                                                                
+                                <img src="<?php echo assets_url($this->config->item('productos_img_path')) . '/' . $producto_imagen->filename ?>" alt="" class="producto-img-ficha">                                            
+                            </a>                        
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="gallery-container">
+                            <?php foreach ($producto_imagenes as $imagen): ?>
+                                <div class="col-md-4 producto-img-container">
+                                    <div class="frame-ficha-thumbnail">
+                                        <span class="helper"></span>
+                                        <a href="" data-id="<?php echo assets_url($this->config->item('productos_img_path')) . '/' . $imagen->filename ?>">                                                                
+                                            <img src="<?php echo assets_url($this->config->item('productos_img_path')) . '/thumbnail/' . $imagen->filename ?>" alt="" class="producto-img">                                            
+                                        </a>                        
+                                    </div>
+                                </div>                                
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php else: ?> 
+                    <div class="row">
+                        <div class="frame-ficha">
+                            <span class="helper"></span>
+                            <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="producto-img-ficha">
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+            </div>        
+            <div class="col-md-8">
                 <h3><?php echo $producto->nombre ?></h3>
-                <div class="box">
-                    <p class="lead"><?php echo $producto->descripcion ?></p>
+                <div class="box ficha-producto">
+                    <?php if ($producto->descripcion != ""): ?>
+                        <p class="lead"><?php echo $producto->descripcion ?></p>
+                    <?php else: ?>
+                        <p class="lead">No hay descripcion disponible.</p>
+                    <?php endif; ?>
+
                     <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
 
                     <?php else: ?>
@@ -43,13 +73,13 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-3 pull-right">
-                        <div class="">
+                    <div class="col-md-2 pull-right">
+                        <div class="text-right">
                             <button type="button" class="btn btn-template-primary" data-id="<?php echo $producto->vendedor_id ?>" data-toggle="modal" data-target="#myModal"> Enviar Mensaje</button>
                         </div>                
                     </div>
                     <div class="col-md-3 pull-right">
-                        <div class="">                        
+                        <div class="text-right">                        
                             <a class="btn btn-template-primary" href="<?php echo site_url($vendedor_slug) ?>">Ir a la pagina del Vendedor</a>
                         </div>                
                     </div>

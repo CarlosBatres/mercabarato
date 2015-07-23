@@ -19,7 +19,7 @@
                         <?= $this->session->flashdata('error') ?> 
                     </div>
                 <?php } ?>
-                <?php echo form_open('panel_vendedor/producto/agregar', 'id="admin_producto_form"'); ?>                 
+                <?php echo form_open('panel_vendedor/producto/agregar', 'id="admin_producto_form" enctype="multipart/form-data"' ); ?>                 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">                            
@@ -37,11 +37,12 @@
                         </div>
                     </div>
                 </div>
+                <hr>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Imagen del Producto</label>                    
-                            <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('panel_vendedor/producto/upload_image') ?>">
+                            <label>Seleccione varias imagenes para el producto</label>                    
+                            <input id="fileupload" type="file" name="files[]" multiple data-url="<?php echo site_url('panel_vendedor/producto/upload_image') ?>">
                             <input type="hidden" name="file_name" id="file_name" value="">                                                            
                         </div> 
                     </div> 
