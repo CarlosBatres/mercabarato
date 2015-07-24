@@ -23,10 +23,10 @@ class Panel_vendedores extends ADController {
 
         $mis_productos = $this->producto_model->get_many_by("vendedor_id", $vendedor->get_vendedor_id());
         $mis_anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vendedor->get_vendedor_id());
-        
+
         $invitar_desde = $this->invitacion_model->get_many_by(array("invitar_desde" => $vendedor->usuario->id, "estado" => "2"));
         $invitar_para = $this->invitacion_model->get_many_by(array("invitar_para" => $vendedor->usuario->id, "estado" => "2"));
-        $mis_clientes = array_merge($invitar_desde,$invitar_para);
+        $mis_clientes = array_merge($invitar_desde, $invitar_para);
 
         $paquete_vigente = $this->vendedor_model->get_paquete_en_curso($vendedor->get_vendedor_id());
         $paquete_pendiente = $this->vendedor_model->get_paquete_pendiente($vendedor->get_vendedor_id());
@@ -44,13 +44,23 @@ class Panel_vendedores extends ADController {
             $paquete_vigente = false;
         }
 
+        $localizacion = $this->localizacion_model->get_by("usuario_id", $vendedor->cliente->usuario_id);
+
+        if ($localizacion) {
+            $full_localizacion = $this->localizacion_model->get_full_localizacion($localizacion->id);
+        } else {
+            $full_localizacion = false;
+        }
+
         $data = array(
             "mis_productos" => sizeof($mis_productos),
             "mis_anuncios" => sizeof($mis_anuncios),
             "mis_clientes" => sizeof($mis_clientes),
             "paquete_vigente" => $paquete_vigente,
             "paquete_pendiente" => $paquete_pendiente,
-            "paquete" => $paquete
+            "paquete" => $paquete,
+            "info" => $vendedor,
+            "full_localizacion" => $full_localizacion
         );
 
         $this->template->load_view('admin/panel_vendedores/resumen', $data);
@@ -118,20 +128,20 @@ class Panel_vendedores extends ADController {
                 $user_id = $this->authentication->read('identifier');
                 $vendedor = $this->usuario_model->get_full_identidad($user_id);
 
-                if ($tipo == "mensual") {                    
-                    $visitas=$this->visita_model->generar_estadisticas_visitas(date("Y-m-1"), date("Y-m-t"), $vendedor->get_vendedor_id(), false);                    
-                    if($visitas){
-                        $data=$visitas;
-                    } else{
-                        $data="empty";
+                if ($tipo == "mensual") {
+                    $visitas = $this->visita_model->generar_estadisticas_visitas(date("Y-m-1"), date("Y-m-t"), $vendedor->get_vendedor_id(), false);
+                    if ($visitas) {
+                        $data = $visitas;
+                    } else {
+                        $data = "empty";
                     }
-                } elseif ($tipo == "anual") {                    
-                    $visitas=$this->visita_model->generar_estadisticas_visitas(date("Y-1-1"), date("Y-12-31"), $vendedor->get_vendedor_id(), true);                    
+                } elseif ($tipo == "anual") {
+                    $visitas = $this->visita_model->generar_estadisticas_visitas(date("Y-1-1"), date("Y-12-31"), $vendedor->get_vendedor_id(), true);
                     $data = array();
-                    if($visitas){
-                        $data=$visitas;
-                    } else{
-                        $data="empty";
+                    if ($visitas) {
+                        $data = $visitas;
+                    } else {
+                        $data = "empty";
                     }
                 }
             }

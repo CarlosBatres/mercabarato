@@ -39,8 +39,12 @@ $(document).ready(function() {
 
     $('#form_buscar').find('select[name="pais"]').trigger('change');
 
-
-
+    $(".datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "dd-mm-yy",
+        yearRange: "1900:-nn"
+    });        
 });
 
 function validateForms() {

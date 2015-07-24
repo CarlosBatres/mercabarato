@@ -8,7 +8,7 @@
     <table class="table table-bordered table-hover table-striped">
         <thead>
             <tr>                
-                <th style="width: 30%">Nombre Cliente</th>
+                <th style="width: 30%">Nombre Solicitante</th>
                 <th style="width: 30%">Fecha Solicitud</th>
                 <th style="width: 30%;text-align: center">Respuesta</th>
                 <th style="width: 5%;text-align: center">&nbsp; Acciones</th> 
@@ -27,7 +27,7 @@
                     </td>
                     <td>
                         <div class="options">
-                            <!--<a href="<?php echo site_url('admin/anuncios/editar') . '/' . $solicitud->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>-->
+                            <a href="<?php echo site_url('panel_vendedor/infocompras/seguros/responder') . '/' . $solicitud->id ?>" data-toogle="tooltip"  title="Responder"><i class="glyphicon glyphicon-forward"></i></a>
                             <!--<a class="item_borrar" href="<?php echo site_url('admin/anuncios/borrar') . '/' . $solicitud->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>-->
                         </div>                           
                     </td>
