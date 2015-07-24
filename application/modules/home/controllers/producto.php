@@ -164,6 +164,22 @@ class Producto extends MY_Controller {
             $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto->id);
             $producto_imagenes = $this->producto_resource_model->get_producto_imagenes($producto->id);
             $vendedor = $this->vendedor_model->get($producto->vendedor_id);
+            $vendedor_cliente= $this->cliente_model->get($vendedor->cliente_id);
+            
+            $localizacion = $this->localizacion_model->get_by("usuario_id", $vendedor_cliente->usuario_id);
+
+            if ($localizacion->pais_id != null) {
+                $res = $this->pais_model->get($localizacion->pais_id);
+                $localizacion->pais = $res->nombre;
+            }
+            if ($localizacion->provincia_id != null) {
+                $res = $this->provincia_model->get($localizacion->provincia_id);
+                $localizacion->provincia = $res->nombre;
+            }
+            if ($localizacion->poblacion_id != null) {
+                $res = $this->poblacion_model->get($localizacion->poblacion_id);
+                $localizacion->poblacion = $res->nombre;
+            }
             
             /**
              * Usuario Loggedin
@@ -222,10 +238,12 @@ class Producto extends MY_Controller {
                     "tarifa" => $tarifa,
                     "oferta" => $oferta,
                     "otros_productos" => $prods,
-                    "otros_productos_categoria" => $prods2,
-                    "vendedor_slug" => $vendedor->unique_slug,
+                    "otros_productos_categoria" => $prods2,                    
+                    "vendedor"=>$vendedor,
                     "son_contactos" => $son_contactos,
-                    "fecha_finaliza"=>$fecha_finaliza);
+                    "fecha_finaliza"=>$fecha_finaliza,
+                    "localizacion" => $localizacion,
+                        );
                 $this->template->load_view('home/producto/ficha', $data);
             } else {
             /**
@@ -263,8 +281,10 @@ class Producto extends MY_Controller {
                         "oferta" => 0,
                         "otros_productos" => $prods,
                         "otros_productos_categoria" => $prods2,
-                        "vendedor_slug" => $vendedor->unique_slug,
-                        "son_contactos" => false);
+                        "vendedor"=>$vendedor,
+                        "son_contactos" => false,
+                        "localizacion" => $localizacion,
+                        );
                     $this->template->load_view('home/producto/ficha', $data);
                 } else {
                     show_404();

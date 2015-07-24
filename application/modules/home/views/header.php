@@ -66,7 +66,7 @@
                     if ($this->uri->uri_string() == 'seguros'): echo "active";
                     endif;
                     ?>" >
-                        <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Infocompras <b class="caret"></b></a>                           
+                        <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Infocompras<b class="caret"></b><span>Seguros</span></a>                           
                         <ul class="dropdown-menu">
                             <li class="sub-opcion-menu"><a href="<?php echo site_url('seguros'); ?>"> Seguros</a></li>                     
                         </ul>

@@ -65,7 +65,7 @@
                             <?php elseif ($tarifa == 0 || ($tarifa > $oferta && ($tarifa != 0 && $oferta != 0))): ?>
                                 <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                                 <p class="price"><?php echo number_format($oferta, '2') . ' ' . $this->config->item('money_sign') ?></p>
-                                <p class="price-oferta text-center">Oferta valida hasta el <?php echo $fecha_finaliza?></p>                                                    
+                                <p class="price-oferta text-center">Oferta valida hasta el <?php echo $fecha_finaliza ?></p>                                                    
                             <?php endif; ?>                                                        
                         <?php endif; ?>
                     </div>
@@ -76,18 +76,30 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <?php if ($son_contactos): ?>
-                        <div class="col-md-2 pull-right">
-                            <div class="text-right">                                
-                                <a href="<?php echo site_url('productos/enviar_mensaje/'.$producto->id) ?>" data-toggle="modal" data-target="#myModal" class="btn btn-template-primary" > Enviar Mensaje</a>
-                            </div>                
-                        </div>
-                    <?php endif; ?>
-                    <div class="col-md-3 pull-right">
+                    <div class="col-md-6 pull-right">
                         <div class="text-right">                        
-                            <a class="btn btn-template-primary" href="<?php echo site_url($vendedor_slug) ?>">Ir a la pagina del Vendedor</a>
+                            <!--<a class="btn btn-template-primary" href="<?php echo site_url($vendedor->unique_slug) ?>">Ir a la pagina del Vendedor</a>-->                            
+                            <a href="<?php echo site_url($vendedor->unique_slug) ?>"><strong><?php echo $vendedor->nombre ?></strong></a>
+                            <?php if ($vendedor->direccion != ""): ?>                        
+                                <p class="text-right"><i class="fa fa-map-marker fa-fw"></i><strong><?php echo $vendedor->direccion ?></strong></p>
+                            <?php endif; ?>
+                            <p class="text-right">
+                                <?php
+                                echo (isset($localizacion->poblacion)) ? $localizacion->poblacion . ' , ' : '';
+                                echo (isset($localizacion->provincia)) ? $localizacion->provincia . ' , ' : '';
+                                echo (isset($localizacion->pais)) ? $localizacion->pais : '';
+                                ?>
+                            </p>
+
                         </div>                
                     </div>
+                    <?php if ($son_contactos): ?>
+                        <div class="col-md-12 pull-right">
+                            <div class="text-right">                                
+                                <a href="<?php echo site_url('productos/enviar_mensaje/' . $producto->id) ?>" data-toggle="modal" data-target="#myModal" class="btn btn-template-primary" > Enviar Mensaje</a>
+                            </div>                
+                        </div>
+                    <?php endif; ?>                    
                 </div>
             </div>
         </div>        
@@ -212,6 +224,6 @@
             <div class="modal-content">                
             </div>
         </div>
-        
+
     </div>
 </div>

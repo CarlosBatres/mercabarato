@@ -7,6 +7,13 @@
     padding-top: 0;
 }
 
+.navbar-nav li.dropdown a>span {
+    font-size: 14px;
+    position: absolute;
+    left:40%;
+    top:25%;
+}
+
 .navbar-custom {
     background: #ec9c29; /* Old browsers */
     background: -moz-linear-gradient(top,  #ec9c29 0%, #d99327 100%); /* FF3.6+ */
@@ -163,7 +170,7 @@ body .box_registro{
 
 .tabla-resultados-principal .precio>span{
     font-size: 14px;
-    font-weight: normal;
+    font-weight: bold;
     padding-left: 15px;
 }
 
