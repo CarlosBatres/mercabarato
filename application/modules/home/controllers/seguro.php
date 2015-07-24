@@ -110,7 +110,7 @@ class Seguro extends MY_Controller {
                 "fecha_permiso" => ($this->input->post('fecha_permiso') != '') ? $this->input->post('fecha_permiso') : null,
                 "conductor_clase" => ($this->input->post('conductor_clase') != '') ? $this->input->post('conductor_clase') : null,
                 "codigo_postal" => ($this->input->post('codigo_postal') != '') ? $this->input->post('codigo_postal') : null,
-                "provicia" => ($this->input->post('provicia') != '') ? $this->input->post('provicia') : null
+                "provincia" => ($this->input->post('provincia') != '') ? $this->input->post('provincia') : null
             );
 
             $datos_otros = array(
@@ -139,7 +139,7 @@ class Seguro extends MY_Controller {
                 $this->session->set_userdata(array(
                     'seguros_informacion' => $datos_salud,
                 ));
-            } elseif ($tipo == "seguro_vehiculo") {
+            } elseif ($tipo == "seguro_vehiculos") {
                 $this->session->set_userdata(array(
                     'seguros_informacion' => $datos_vehiculo,
                 ));

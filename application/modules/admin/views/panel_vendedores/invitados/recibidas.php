@@ -1,13 +1,15 @@
 <div id="question" style="display:none; cursor: default">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title">Esta seguro?.</h4>
+            <h4 class="modal-title">Invitacion Recibida</h4>
         </div>
-        <div class="modal-body">                                    
+        <div class="modal-body">                                                
+            <div class="contenido-mensaje box-simple"></div>
             <p class="text-center">
+                <p class="lead"> Estas seguro que deseas aceptar la invitacion?.</p>
                 <button class="btn btn-success" type="button" id="yes"><i class="fa fa-check"></i> Si</button>
                 <button class="btn btn-danger" type="button" id="no"><i class="fa fa-close"></i> No</button>
-            </p>                                            
+            </p>
         </div>        
     </div>
 </div>

@@ -126,6 +126,54 @@
                             </div>
                         <?php endif; ?>
                     </div>
+                    <div class="col-md-12 clearfix">                                                
+                        <div class="panel panel-default">
+                            <div class="panel-body">  
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">                                
+                                        <div class="panel-body">
+                                            <p class="lead">Bienvenido a tu apartado personal desde donde puedes controlar todo lo relacionado con tu cuenta.</p> 
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <?php if ($info->vendedor->filename != null): ?>
+                                        <img src="<?php echo assets_url($this->config->item('vendedores_img_path')) . '/' . $info->vendedor->filename ?>" alt="" class="img-responsive center-block">
+                                    <?php else: ?>   
+                                        <img src="<?php echo assets_url('imgs/avatar1.gif') ?>" class="img-responsive"/>
+                                    <?php endif; ?>
+                                    
+                                </div>
+
+                                <div class="col-md-8">
+                                    <ul class="list-group">
+                                        <li class="list-group-item text-muted" contenteditable="false">Perfil</li>
+                                        <li class="list-group-item text-right"><span class="pull-left"><strong class="">Miembro desde</strong></span> <?php echo date("d-m-Y", strtotime($info->usuario->fecha_creado)); ?></li>                                
+                                        <li class="list-group-item text-right"><span class="pull-left"><strong class="">Nombre</strong></span> 
+                                            <?php
+                                            if ($info->es_vendedor_habilitado()):
+                                                echo $info->vendedor->nombre;
+                                            elseif ($info->cliente->nombres != ''):
+                                                echo $info->cliente->nombres . ' ' . $info->cliente->apellidos;
+                                            else:
+                                                echo "Sin nombre";
+                                            endif;
+                                            ?>                                
+
+                                        </li>
+                                        <li class="list-group-item text-right"><span class="pull-left"><strong class="">Email: </strong></span> <?php echo $info->usuario->email; ?>                                        
+                                        <li class="list-group-item text-right"><span class="pull-left"><strong class="">Pais: </strong></span> <?php echo ($full_localizacion["pais"] != null) ? $full_localizacion["pais"]->nombre : "No especificado"; ?>                                    
+                                        <li class="list-group-item text-right"><span class="pull-left"><strong class="">Provincia: </strong></span> <?php echo ($full_localizacion["provincia"] != null) ? $full_localizacion["provincia"]->nombre : "No especificado"; ?>                                    
+                                        <li class="list-group-item text-right"><span class="pull-left"><strong class="">Poblacion: </strong></span> <?php echo ($full_localizacion["poblacion"] != null) ? $full_localizacion["poblacion"]->nombre : "No especificado"; ?>                                    
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <hr>
                 <br>                
@@ -140,12 +188,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>                                        
+                                        <li><a href="#">Action</a></li>                                        
                                     </ul>
                                 </div>
                             </div>
@@ -167,15 +210,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Action</a>
-                                        </li>
-                                        <li><a href="#">Another action</a>
-                                        </li>
-                                        <li><a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
+                                        <li><a href="#">Action</a></li>                                        
                                     </ul>
                                 </div>
                             </div>
@@ -196,7 +231,7 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="list-group">
-
+                             Funcion no disponible.
                         </div>                                                
                     </div>
                 </div>

@@ -50,6 +50,16 @@ class Panel_vendedores_invitaciones extends ADController {
         $this->template->add_js("modules/admin/panel_vendedores/invitaciones_recibidas_listado.js");
         $this->template->load_view('admin/panel_vendedores/invitados/recibidas');
     }
+    
+    public function get_mensaje_invitacion($invitacion_id){
+        $invitacion=$this->invitacion_model->get($invitacion_id);
+        if($invitacion){            
+            echo "<p><strong>".$invitacion->titulo."</strong></p>";            
+            echo "<br>";
+            echo "<p>".$invitacion->comentario."</p>";            
+            echo "<hr>";
+        }
+    }
 
     public function aceptadas() {
         $this->template->set_title("Panel de Control - Mercabarato.com");

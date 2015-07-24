@@ -82,9 +82,11 @@
                                         ?>
                                         <tr>
                                             <td>
-                                                <p class="text-right"><strong><?php echo date("d-M-Y", strtotime($anuncio->fecha_publicacion)) ?></strong></p>                                                
-                                                <p><a href="<?php echo site_url("anuncios/" . $anuncio->id) ?>"><strong><?php echo $anuncio->titulo; ?></strong></a></p>
-                                                <p><?php echo strip_tags(truncate($anuncio->contenido, 300)); ?></p>
+                                                <div class="anuncio-contenido">
+                                                    <p class="text-right"><strong><?php echo date("d-M-Y", strtotime($anuncio->fecha_publicacion)) ?></strong></p>                                                
+                                                    <p><a href="<?php echo site_url("anuncios/" . $anuncio->id) ?>"><strong><?php echo $anuncio->titulo; ?></strong></a></p>
+                                                    <p><?php echo strip_tags(truncate($anuncio->contenido, 300)); ?></p>
+                                                </div>
                                             </td>                                
                                         </tr>
                                         <?php

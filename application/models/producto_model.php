@@ -478,6 +478,13 @@ class Producto_model extends MY_Model {
                 $this->tarifa_model->delete($tarifa->id);
             }
         }
+        
+        $ofertas = $this->oferta_model->get_many_by("producto_id", $id);
+        if ($ofertas) {
+            foreach ($ofertas as $oferta) {
+                $this->oferta_model->delete($oferta->id);
+            }
+        }
 
         parent::delete($id);
     }

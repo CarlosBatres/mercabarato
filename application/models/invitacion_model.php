@@ -413,5 +413,24 @@ class Invitacion_model extends MY_Model {
             return array("total" => 0);
         }
     }
+    
+    public function son_contactos($persona, $invitado) {
+        $recibi_invitacion = $this->invitacion_model->get_by(array("invitar_desde" => $persona, "invitar_para" => $invitado));
+        $result=false;
+        if($recibi_invitacion){
+            if($recibi_invitacion->estado=="2"){
+                return true;
+            }
+        }
+        
+        $envie_invitacion = $this->invitacion_model->get_by(array("invitar_para" => $persona, "invitar_desde" => $invitado));
+        if($envie_invitacion){
+            if($envie_invitacion->estado=="2"){
+                return true;
+            }
+        }   
+        
+        return $result;
+    }
 
 }

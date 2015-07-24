@@ -52,6 +52,7 @@ $route['registrar_cliente'] = 'home/cliente/crear';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
 $route['vendedores'] = 'home/vendedor/view_buscador';
 $route['acceso_restringido'] = 'home/main/acceso_restringido';
+$route['productos/enviar_mensaje/(:num)'] = 'home/producto/enviar_mensaje/$1';
 $route['productos/buscar'] = 'home/producto/ajax_get_listado_resultados';
 $route['productos/buscar_producto/(:any)'] = 'home/producto/buscar_producto/$1';
 $route['productos/(:any)'] = 'home/producto/ver_producto/$1';
@@ -85,6 +86,9 @@ $route['usuario/mis-paquetes'] = 'home/vendedor/mis_paquetes';
 $route['usuario/paquetes/comprar'] = 'home/vendedor/comprar_paquetes';
 $route['usuario/paquetes/comprar_paquete/(:any)'] = 'home/vendedor/submit_comprar_paquetes/$1';
 $route['usuario/buscar_invitaciones'] = 'home/cliente/ajax_get_listado_resultados_invitaciones';
+$route['usuario/infocompras-seguros'] = 'home/cliente/view_infocompras_seguros';
+$route['usuario/infocompras-seguros/respuesta/(:num)'] = 'home/cliente/view_seguros_respuesta/$1';
+$route['usuario/buscar-solicitudes-seguros'] = 'home/cliente/ajax_get_listado_seguros';
 
 $route['util/verificar_email'] = 'home/usuario/check_email';
 $route['util/verificar_nombre'] = 'home/main/verificar_palabra';
@@ -109,6 +113,7 @@ $route['panel_vendedor/login'] = 'admin/panel_vendedores/login';
 $route['panel_vendedor/logout'] = 'admin/panel_vendedores/logout';
 $route['panel_vendedor/visitas/get_estadisticas'] = 'admin/panel_vendedores/get_visitas_estadisticas';
 $route['panel_vendedor/invitaciones/buscar'] = 'admin/panel_vendedores_invitaciones/buscador';
+$route['panel_vendedor/invitaciones/get_mensaje_invitacion/(:num)'] = 'admin/panel_vendedores_invitaciones/get_mensaje_invitacion/$1';
 $route['panel_vendedor/invitaciones/pendientes'] = 'admin/panel_vendedores_invitaciones/pendientes';
 $route['panel_vendedor/invitaciones/recibidas'] = 'admin/panel_vendedores_invitaciones/recibidas';
 $route['panel_vendedor/invitaciones/aceptadas'] = 'admin/panel_vendedores_invitaciones/aceptadas';
@@ -148,6 +153,7 @@ $route['panel_vendedor/tarifas/ajax_get_tarifa_detalles'] = 'admin/panel_vendedo
 $route['panel_vendedor/tarifas/listado'] = 'admin/panel_vendedores_tarifas/view_listado';
 
 $route['panel_vendedor/infocompras/seguros'] = 'admin/panel_vendedores_infocompras/view_listado_seguros';
+$route['panel_vendedor/infocompras/seguros/responder/(:num)'] = 'admin/panel_vendedores_infocompras/responder_seguros/$1';
 $route['panel_vendedor/infocompras/ajax_get_seguros'] = 'admin/panel_vendedores_infocompras/ajax_get_seguros';
 
 $route['panel_vendedor/ofertas/nueva'] = 'admin/panel_vendedores_ofertas/nueva_oferta_paso1';

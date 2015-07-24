@@ -93,10 +93,15 @@ body .box_registro{
     border-right: solid 1px #ccc;
 }
 .box-anuncios>.box-header,.box-productos>.box-header{
-    background-color: #ec9c29;    
+    background-color: #ec9c29;
+    margin-bottom: 0px;
 }
 .box-productos{
     border: 0;
+}
+
+.anuncio-contenido{
+    min-height: 150px;
 }
 
 .producto-img-container .frame {height: 150px;width: 100%;white-space: nowrap;text-align: center;}
@@ -156,12 +161,26 @@ body .box_registro{
     font-weight: bold;
 }
 
+.tabla-resultados-principal .precio>span{
+    font-size: 14px;
+    font-weight: normal;
+    padding-left: 15px;
+}
+
 .tabla-resultados-principal .precio del{
     color: #cccccc;
 }
 
 #productMain .price del{
     color:#ccc;
+}
+#productMain .price{
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+#productMain .price-oferta{
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .tabla-resultados-principal .nombre-producto{
@@ -269,5 +288,5 @@ span.arrow {
 .label-datos{
     font-weight: 700;
 }
-.ficha-producto{min-height: 400px;}
+.ficha-producto-descripcion{min-height: 250px;}
 .gallery-container{padding-top: 50px;}

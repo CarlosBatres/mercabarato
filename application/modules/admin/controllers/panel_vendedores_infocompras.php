@@ -12,43 +12,73 @@ class Panel_vendedores_infocompras extends ADController {
         $this->_validar_conexion();
         $this->get_identidad();
     }
-    
-      
+
     private function get_identidad() {
         $user_id = $this->authentication->read('identifier');
         $vendedor = $this->usuario_model->get_full_identidad($user_id);
         $this->identidad = $vendedor;
     }
-    
-    public function view_listado_seguros(){
-        $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());        
+
+    public function view_listado_seguros() {
+        $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());
 
         if ($paquete->infocompra == "1") {
             $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
 
-            $this->template->add_js("modules/admin/panel_vendedores/seguros_listado.js");                        
+            $this->template->add_js("modules/admin/panel_vendedores/seguros_listado.js");
             $this->template->load_view('admin/panel_vendedores/infocompras/seguros/listado');
-            
         } else {
             $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
             $this->template->load_view('admin/panel_vendedores/infocompras/sin_acceso');
         }
     }
-    
+
+    public function responder_seguros($solicitud_seguro_id) {
+        $this->template->set_title("Panel de Control - Mercabarato.com");
+        $this->template->set_layout('panel_vendedores');
+
+        $solicitud_seguro = $this->solicitud_seguro_model->get($solicitud_seguro_id);
+        if ($solicitud_seguro) {
+            $formValues = $this->input->post();
+            if ($formValues !== false) {
+                $respuesta=$this->input->post('respuesta');
+                $data=array("estado"=>"2","respuesta"=>$respuesta,"fecha_respuesta"=>date("Y-m-d"));
+                
+                $this->solicitud_seguro_model->update($solicitud_seguro->id,$data);
+                redirect("panel_vendedor/infocompras/seguros");
+                
+            } else {
+                $this->load->helper('ckeditor');
+
+                $data = array("solicitud_seguro" => $solicitud_seguro);
+                $data['ckeditor'] = array(
+                    //ID of the textarea that will be replaced
+                    'id' => 'content',
+                    'path' => 'assets/js/ckeditor',
+                    //Optionnal values
+                    'config' => array(
+                        'toolbar' => "Full", //Using the Full toolbar                        
+                        'height' => '300px', //Setting a custom height
+                    ),
+                );
+                $data["informacion"] = unserialize($solicitud_seguro->datos);
+
+                //$this->template->add_js("modules/admin/panel_vendedores/seguros_listado.js");
+                $this->template->load_view('admin/panel_vendedores/infocompras/seguros/responder_seguro', $data);
+            }
+        }
+    }
+
     public function ajax_get_seguros() {
         //$this->show_profiler();
         $formValues = $this->input->post();
         $params = array();
-        $params["vendedor_id"] = $this->identidad->get_vendedor_id();
-        $flag_left_panel = false;
+        $params["vendedor_id"] = $this->identidad->get_vendedor_id();        
 
-        if ($formValues !== false) {
-            if ($this->input->post('producto_id') != "") {
-                $params["producto_id"] = $this->input->post('producto_id');
-            }
-
+        if ($formValues !== false) {                       
+            
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
@@ -86,5 +116,5 @@ class Panel_vendedores_infocompras extends ADController {
 
         $this->template->load_view('admin/panel_vendedores/infocompras/seguros/tabla_resultados', $data);
     }
-    
+
 }

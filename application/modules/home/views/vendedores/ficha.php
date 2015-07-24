@@ -122,6 +122,9 @@
         <div class="col-md-3">
             <?php if ($anuncios): ?>
                 <div class="box box-anuncios">            
+                    <div class="box-header">
+                        <h4 class="text-center">Anuncios</h4>                
+                    </div>
                     <div class="table-responsive">
                         <table class="table">
                             <tbody>

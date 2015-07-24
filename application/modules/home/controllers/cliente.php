@@ -95,7 +95,7 @@ class Cliente extends MY_Controller {
                 if ($usuario) {
                     $cliente = $this->cliente_model->get_by(array("usuario_id" => $usuario->id));
                     $this->usuario_model->update($usuario->id, array("temporal" => "0"));
-                    $this->authentication->change_password($password,$usuario->id);
+                    $this->authentication->change_password($password, $usuario->id);
 
                     $keywords = $this->input->post('keywords');
                     if ($keywords) {
@@ -181,8 +181,8 @@ class Cliente extends MY_Controller {
 
             if ($formValues !== false) {
                 $invitacion_id = $this->input->post('invitacion_id');
-                $user_id = $this->authentication->read('identifier');                
-                $this->invitacion_model->aceptar_invitacion($invitacion_id,$user_id);
+                $user_id = $this->authentication->read('identifier');
+                $this->invitacion_model->aceptar_invitacion($invitacion_id, $user_id);
                 echo json_encode(array("success" => true));
             }
         } else {
@@ -196,7 +196,7 @@ class Cliente extends MY_Controller {
 
             if ($formValues !== false) {
                 $invitacion_id = $this->input->post('invitacion_id');
-                $user_id = $this->authentication->read('identifier');                
+                $user_id = $this->authentication->read('identifier');
                 $this->invitacion_model->rechazar_invitacion($invitacion_id, $user_id);
                 echo json_encode(array("success" => true));
             }
@@ -204,8 +204,8 @@ class Cliente extends MY_Controller {
             redirect('');
         }
     }
-    
-     public function eliminar_invitacion() {
+
+    public function eliminar_invitacion() {
         if ($this->authentication->is_loggedin()) {
             $formValues = $this->input->post();
 
@@ -225,13 +225,13 @@ class Cliente extends MY_Controller {
         //$this->show_profiler();
         $formValues = $this->input->post();
         $user_id = $this->authentication->read('identifier');
-        
+
         $params = array();
         if ($formValues !== false) {
             $pagina = $this->input->post('pagina');
 
             $params["pagina"] = $pagina;
-            $params["usuario_id"] = $user_id;                        
+            $params["usuario_id"] = $user_id;
 
             $limit = 5;
             $offset = $limit * ($pagina - 1);
@@ -275,18 +275,100 @@ class Cliente extends MY_Controller {
                 $vendedor_id = $this->input->post('vendedor_id');
                 $vendedor = $this->vendedor_model->get($vendedor_id);
                 $cliente = $this->cliente_model->get($vendedor->cliente_id);
-                
-                $user_id = $this->authentication->read('identifier');                
+
+                $user_id = $this->authentication->read('identifier');
 
                 $data = array(
                     "invitar_desde" => $user_id,
                     "invitar_para" => $cliente->usuario_id,
                     "titulo" => ($this->input->post('titulo') != '') ? $this->input->post('titulo') : null,
                     "comentario" => ($this->input->post('mensaje') != '') ? $this->input->post('mensaje') : null,
-                    "estado" => "1"                    
-                );                
+                    "estado" => "1"
+                );
                 $this->invitacion_model->insert($data);
                 redirect($vendedor->unique_slug);
+            }
+        } else {
+            redirect('');
+        }
+    }
+
+    public function view_infocompras_seguros() {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+
+            //$invitaciones = $this->invitacion_model->get_invitaciones_pendientes($cliente->id);
+
+            $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+            $this->template->add_js('modules/home/infocompras_seguros.js');
+            $this->template->load_view('home/cliente/infocompras_seguros', array("html_options" => $html_options));
+        } else {
+            redirect('');
+        }
+    }
+
+    public function ajax_get_listado_seguros() {
+        //$this->show_profiler();
+        $formValues = $this->input->post();
+        $user_id = $this->authentication->read('identifier');
+        $cliente = $this->usuario_model->get_full_identidad($user_id);
+        $params = array();
+        if ($formValues !== false) {
+            $pagina = $this->input->post('pagina');
+
+            $params["pagina"] = $pagina;
+            $params["cliente_id"] = $cliente->cliente->id;
+
+            $limit = 5;
+            $offset = $limit * ($pagina - 1);
+            $resultado = $this->solicitud_seguro_model->get_solicitudes_seguro_cliente($params, $limit, $offset);
+            $flt = (float) ($resultado["total"] / $limit);
+            $ent = (int) ($resultado["total"] / $limit);
+            if ($flt > $ent || $flt < $ent) {
+                $paginas = $ent + 1;
+            } else {
+                $paginas = $ent;
+            }
+
+            if ($resultado["total"] == 0) {
+                $resultado["solicitud_seguros"] = array();
+            }
+
+            $search_params = array(
+                "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+                "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+                "pagina" => $pagina,
+                "total_paginas" => $paginas,
+                "por_pagina" => $limit,
+                "total" => $resultado["total"],
+                "hasta" => ($pagina * $limit < $resultado["total"]) ? $pagina * $limit : $resultado["total"],
+                "desde" => (($pagina * $limit) - $limit) + 1);
+
+            $pagination = build_paginacion($search_params);
+            $data = array(
+                "solicitud_seguros" => $resultado["solicitud_seguros"],
+                "pagination" => $pagination);
+
+            $this->template->load_view('home/cliente/infocompras_seguros_tabla', $data);
+        }
+    }
+
+    public function view_seguros_respuesta($solicitud_seguro_id) {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);            
+
+            $solicitud_seguro = $this->solicitud_seguro_model->get($solicitud_seguro_id);
+            // TODO : Validar que yo pueda acceder a esta
+            if ($solicitud_seguro) {                
+                //$this->template->add_js('modules/home/infocompras_seguros.js');
+                $this->template->load_view('home/cliente/infocompras_seguros_respuesta', array("seguro"=>$solicitud_seguro));
+            } else {
+                redirect('');
             }
         } else {
             redirect('');

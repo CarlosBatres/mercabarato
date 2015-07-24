@@ -290,7 +290,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Fecha de Nacimiento</label>
-                                                <input type="text" class="form-control" name="fecha_nacimiento">
+                                                <input type="text" class="form-control datepicker" name="fecha_nacimiento">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -401,7 +401,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Fecha de Nacimiento</label>
-                                                <input type="text" class="form-control" name="fecha_nacimiento">
+                                                <input type="text" class="form-control datepicker" name="fecha_nacimiento">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -542,7 +542,7 @@
                                         </div> 
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                <label>Combustible</label>
+                                                <label>Numero de Puertas</label>
                                                 <select class="form-control" name="vehiculo_nro_puertas">
                                                     <option value="">Seleccione Uno</option>
                                                     <option value="0">Sin puertas</option>
@@ -556,7 +556,7 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Fecha 1ª Matriculación</label>
-                                                <input type="text" class="form-control" name="fecha_matriculacion">
+                                                <input type="text" class="form-control datepicker" name="fecha_matriculacion">
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -574,7 +574,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Fecha nacimiento</label>
-                                                        <input type="text" class="form-control" name="fecha_nacimiento">
+                                                        <input type="text" class="form-control datepicker" name="fecha_nacimiento">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
@@ -622,7 +622,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Fecha de permiso</label>
-                                                        <input type="text" class="form-control" name="fecha_permiso">
+                                                        <input type="text" class="form-control datepicker" name="fecha_permiso">
                                                     </div>
                                                 </div>
                                             </div>
@@ -723,22 +723,22 @@
                                         <h3>Seleccione el tipo</h3>                                        
                                         <div class="col-md-12">
                                             <div class="radio">
-                                                <label><input type="radio" name="otros" value="ahorro">Ahorro</label>
+                                                <label><input type="radio" name="otros" value="Ahorro">Ahorro</label>
                                             </div>
                                             <div class="radio">
-                                                <label><input type="radio" name="otros" value="agropecuaria">Agropecuaria</label>
+                                                <label><input type="radio" name="otros" value="Agropecuaria">Agropecuaria</label>
                                             </div>
                                             <div class="radio">
-                                                <label><input type="radio" name="otros" value="caza_pesca">Caza y Pesca</label>
+                                                <label><input type="radio" name="otros" value="Caza y Pesca">Caza y Pesca</label>
                                             </div>
                                             <div class="radio">
-                                                <label><input type="radio" name="otros" value="agroseguro">Agroseguro</label>
+                                                <label><input type="radio" name="otros" value="Agroseguro">Agroseguro</label>
                                             </div>
                                             <div class="radio">
-                                                <label><input type="radio" name="otros" value="maquinaria">Maquinaria</label>
+                                                <label><input type="radio" name="otros" value="Maquinaria">Maquinaria</label>
                                             </div>
                                             <div class="radio">
-                                                <label><input type="radio" name="otros" value="otros">Otros</label>
+                                                <label><input type="radio" name="otros" value="Otros">Otros</label>
                                             </div>                                            
                                         </div>
                                     </div>

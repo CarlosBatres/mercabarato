@@ -158,14 +158,12 @@ class Producto extends MY_Controller {
     public function ver_producto($slug) {
         $this->template->set_title('Mercabarato - Anuncios y subastas');
         $producto = $this->producto_model->get_by("unique_slug", $slug);
-        if ($producto) {  
-            
-            
-            $this->template->add_js('modules/home/producto.js');            
-            
+        if ($producto) {
+            $this->template->add_js('modules/home/producto.js');
+
             $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto->id);
             $producto_imagenes = $this->producto_resource_model->get_producto_imagenes($producto->id);
-            
+            $vendedor = $this->vendedor_model->get($producto->vendedor_id);
 
             if ($this->authentication->is_loggedin()) {
                 $this->visita_model->nueva_visita_producto($producto->id);
@@ -180,8 +178,10 @@ class Producto extends MY_Controller {
                 $producto_oferta = $this->producto_model->get_ofertas_from_producto($producto->id, $cliente->id);
                 if ($producto_oferta) {
                     $oferta = (float) $producto_oferta->nuevo_costo;
+                    $fecha_finaliza=date("d-m-Y",strtotime($producto_oferta->fecha_finaliza));
                 } else {
                     $oferta = 0;
+                    $fecha_finaliza="";
                 }
 
 
@@ -208,22 +208,24 @@ class Producto extends MY_Controller {
                 } else {
                     $prods2 = false;
                 }
-                $vendedor = $this->vendedor_model->get($producto->vendedor_id);
+
+                $cc = $this->cliente_model->get($vendedor->cliente_id);
+                $son_contactos = $this->invitacion_model->son_contactos($user_id, $cc->usuario_id);
 
                 $data = array(
                     "producto" => $producto,
                     "producto_imagen" => $producto_imagen,
-                    "producto_imagenes"=>$producto_imagenes,
+                    "producto_imagenes" => $producto_imagenes,
                     "tarifa" => $tarifa,
                     "oferta" => $oferta,
                     "otros_productos" => $prods,
                     "otros_productos_categoria" => $prods2,
-                    "vendedor_slug" => $vendedor->unique_slug);
+                    "vendedor_slug" => $vendedor->unique_slug,
+                    "son_contactos" => $son_contactos,
+                    "fecha_finaliza"=>$fecha_finaliza);
                 $this->template->load_view('home/producto/ficha', $data);
             } else {
                 if ($producto->mostrar_producto == 1) {
-                    $tarifa = false;
-
                     $params = array(
                         "vendedor_id" => $producto->vendedor_id,
                         "excluir_producto_id" => array($producto->id)
@@ -249,11 +251,13 @@ class Producto extends MY_Controller {
                     $data = array(
                         "producto" => $producto,
                         "producto_imagen" => $producto_imagen,
-                        "producto_imagenes"=>$producto_imagenes,
-                        "tarifa" => $tarifa,
+                        "producto_imagenes" => $producto_imagenes,
+                        "tarifa" => 0,
+                        "oferta" => 0,
                         "otros_productos" => $prods,
                         "otros_productos_categoria" => $prods2,
-                        "vendedor_slug" => "");
+                        "vendedor_slug" => $vendedor->unique_slug,
+                        "son_contactos" => false);
                     $this->template->load_view('home/producto/ficha', $data);
                 } else {
                     show_404();
@@ -297,6 +301,40 @@ class Producto extends MY_Controller {
             return $html;
         } else {
             return false;
+        }
+    }
+
+    public function enviar_mensaje($producto_id) {
+        if ($this->authentication->is_loggedin()) {
+            $formValues = $this->input->post();
+            $user_id = $this->authentication->read('identifier');
+            $identidad = $this->usuario_model->get_full_identidad($user_id);
+            $producto = $this->producto_model->get($producto_id);
+
+            if ($formValues !== false) {
+                $asunto = $this->input->post("asunto");
+                $mensaje = $this->input->post("mensaje");
+                $vendedor_cliente = $this->cliente_model->get($producto->cliente_id);
+                $vendedor_usuario = $this->usuario_model->get($vendedor_cliente->usuario_id);
+
+                if ($this->invitacion_model->son_contactos($vendedor_cliente->usuario_id, $user_id)) {
+                    if ($this->config->item('emails_enabled')) {
+                        $this->load->library('email');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($vendedor_usuario->email);
+                        $this->email->subject('Tienes un nuevo mensaje');
+                        $data_email = array("asunto" => $asunto, "mensaje" => $mensaje);
+                        $this->email->message($this->load->view('home/emails/enviar_mensaje', $data_email, true));
+                        $this->email->send();
+                    }
+                }
+            } else {
+                $this->template->set_title('Mercabarato - Anuncios y subastas');
+                $data = array("producto" => $producto);                
+                $this->template->load_view('home/producto/enviar_mensaje', $data);
+            }
+        } else {
+            redirect('');
         }
     }
 

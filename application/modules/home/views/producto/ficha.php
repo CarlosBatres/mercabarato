@@ -44,28 +44,31 @@
                 <?php endif; ?>
 
             </div>        
-            <div class="col-md-8">
+            <div class="col-md-7 col-md-offset-1">
                 <h3><?php echo $producto->nombre ?></h3>
                 <div class="box ficha-producto">
-                    <?php if ($producto->descripcion != ""): ?>
-                        <p class="lead"><?php echo $producto->descripcion ?></p>
-                    <?php else: ?>
-                        <p class="lead">No hay descripcion disponible.</p>
-                    <?php endif; ?>
-
-                    <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
-
-                    <?php else: ?>
-                        <?php if ($tarifa == 0 && $oferta == 0): ?>                    
-                            <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
-                        <?php elseif ($oferta == 0 || ($tarifa < $oferta && ($tarifa != 0 && $oferta != 0))): ?>                    
-                            <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
-                            <p class="price"><?php echo number_format($tarifa, '2') . ' ' . $this->config->item('money_sign') ?></p>
-                        <?php elseif ($tarifa == 0 || ($tarifa > $oferta && ($tarifa != 0 && $oferta != 0))): ?>
-                            <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
-                            <p class="price"><?php echo number_format($oferta, '2') . ' ' . $this->config->item('money_sign') ?></p>                                                    
-                        <?php endif; ?>                                                        
-                    <?php endif; ?>                                                        
+                    <div class="ficha-producto-descripcion">
+                        <?php if ($producto->descripcion != ""): ?>
+                            <p class="lead"><?php echo $producto->descripcion ?></p>
+                        <?php else: ?>
+                            <p class="lead">No hay descripcion disponible.</p>
+                        <?php endif; ?>
+                    </div>
+                    <div class="ficha-producto-precios">
+                        <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
+                        <?php else: ?>
+                            <?php if ($tarifa == 0 && $oferta == 0): ?>                    
+                                <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
+                            <?php elseif ($oferta == 0 || ($tarifa < $oferta && ($tarifa != 0 && $oferta != 0))): ?>                    
+                                <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                                <p class="price"><?php echo number_format($tarifa, '2') . ' ' . $this->config->item('money_sign') ?></p>
+                            <?php elseif ($tarifa == 0 || ($tarifa > $oferta && ($tarifa != 0 && $oferta != 0))): ?>
+                                <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                                <p class="price"><?php echo number_format($oferta, '2') . ' ' . $this->config->item('money_sign') ?></p>
+                                <p class="price-oferta text-center">Oferta valida hasta el <?php echo $fecha_finaliza?></p>                                                    
+                            <?php endif; ?>                                                        
+                        <?php endif; ?>
+                    </div>
                 </div>            
                 <?php if ($producto->link_externo != ""): ?>                        
                     <p class="text-right"><strong><a href="http://<?php echo $producto->link_externo ?>"><?php echo $producto->link_externo ?></a></strong></p>                    
@@ -73,11 +76,13 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="col-md-2 pull-right">
-                        <div class="text-right">
-                            <button type="button" class="btn btn-template-primary" data-id="<?php echo $producto->vendedor_id ?>" data-toggle="modal" data-target="#myModal"> Enviar Mensaje</button>
-                        </div>                
-                    </div>
+                    <?php if ($son_contactos): ?>
+                        <div class="col-md-2 pull-right">
+                            <div class="text-right">                                
+                                <a href="<?php echo site_url('productos/enviar_mensaje/'.$producto->id) ?>" data-toggle="modal" data-target="#myModal" class="btn btn-template-primary" > Enviar Mensaje</a>
+                            </div>                
+                        </div>
+                    <?php endif; ?>
                     <div class="col-md-3 pull-right">
                         <div class="text-right">                        
                             <a class="btn btn-template-primary" href="<?php echo site_url($vendedor_slug) ?>">Ir a la pagina del Vendedor</a>
@@ -86,6 +91,7 @@
                 </div>
             </div>
         </div>        
+        <br><br>
         <?php if ($otros_productos): ?>
             <div class="row">
                 <hr>
@@ -199,5 +205,13 @@
             </div>
             <hr>            
         <?php endif; ?>
+    </div>
+    <div id="myModal" class="modal fade" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">                
+            </div>
+        </div>
+        
     </div>
 </div>
