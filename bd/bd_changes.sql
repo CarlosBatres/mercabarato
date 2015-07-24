@@ -21,16 +21,3 @@ from `producto` `p`
 
 
 /* FALTAN por poner*/
-
-
-
-ALTER TABLE `mercabarato_bd`.`vendedor` 
-ADD COLUMN `direccion` VARCHAR(255) NULL DEFAULT NULL AFTER `unique_slug`,
-ADD COLUMN `telefono_fijo` VARCHAR(50) NULL DEFAULT NULL AFTER `direccion`,
-ADD COLUMN `telefono_movil` VARCHAR(50) NULL DEFAULT NULL AFTER `telefono_fijo`;
-
-
-
-
-
-
