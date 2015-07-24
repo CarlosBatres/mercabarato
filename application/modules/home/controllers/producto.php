@@ -164,7 +164,10 @@ class Producto extends MY_Controller {
             $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto->id);
             $producto_imagenes = $this->producto_resource_model->get_producto_imagenes($producto->id);
             $vendedor = $this->vendedor_model->get($producto->vendedor_id);
-
+            
+            /**
+             * Usuario Loggedin
+             */
             if ($this->authentication->is_loggedin()) {
                 $this->visita_model->nueva_visita_producto($producto->id);
                 $user_id = $this->authentication->read('identifier');
@@ -225,6 +228,10 @@ class Producto extends MY_Controller {
                     "fecha_finaliza"=>$fecha_finaliza);
                 $this->template->load_view('home/producto/ficha', $data);
             } else {
+            /**
+             * Anonimo
+             */    
+                
                 if ($producto->mostrar_producto == 1) {
                     $params = array(
                         "vendedor_id" => $producto->vendedor_id,

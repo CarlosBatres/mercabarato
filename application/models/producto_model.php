@@ -252,6 +252,12 @@ class Producto_model extends MY_Model {
                 $query.=$text;
                 $sub_query.=$text;
             }
+            if (isset($params['excluir_producto_id'])) {
+                $ids = implode(",", $params['excluir_producto_id']);
+                $text = " AND p.id NOT IN(" . $ids . ")";
+                $query.=$text;
+                $sub_query.=$text;
+            }
             if (isset($params['mostrar_producto'])) {
                 $text = " AND p.mostrar_producto=" . $params['mostrar_producto'];
                 $query.=$text;
