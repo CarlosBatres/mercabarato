@@ -41,17 +41,17 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Valor de la Oferta</label>
+                            <label>Descuento</label>
                             <input type="text" class="form-control" name="valor">
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label>Porcentaje o Monto Especifico</label>
+                            <label>&nbsp;</label>
                             <select class="form-control" name="tipo">                                
-                                <option value="porcentaje">Porcentaje ( % )</option>
+                                <option value="porcentaje">( % )</option>
                                 <?php if (!$mas_de_uno): ?>
-                                    <option value="valor">Monto Especifico ( <?php echo $this->config->item("money_sign") ?> )</option>                                
+                                    <option value="valor">( <?php echo $this->config->item("money_sign") ?> )</option>                                
                                 <?php endif; ?>
                             </select>
                         </div>
@@ -59,10 +59,16 @@
                 </div>
                 <hr>
                 <div class="row">                    
+                     <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Titulo</label>                    
+                            <input type="text" class="form-control" name="nombre">
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Comentario</label>                    
-                            <textarea class="form-control" name="comentario" rows="10"></textarea>
+                            <label>Descripcion</label>                    
+                            <textarea class="form-control" name="descripcion" rows="10"></textarea>
                         </div>
                     </div>                 
                 </div>

@@ -39,43 +39,42 @@ class Tarifa_model extends MY_Model {
         }
     }
 
-    public function get_vendedor_id_de_tarifa($tarifa_id) {
-        $tarifa = $this->get($tarifa_id);
-        if ($tarifa) {
-            $producto = $this->producto_model->get($tarifa->producto_id);
-            if ($producto) {
-                return $producto->vendedor_id;
-            } else {
-                return FALSE;
-            }
-        } else {
-            return FALSE;
-        }
-    }
+//    public function get_vendedor_id_de_tarifa($tarifa_id) {
+//        $tarifa = $this->get($tarifa_id);
+//        if ($tarifa) {
+//            $producto = $this->producto_model->get($tarifa->producto_id);
+//            if ($producto) {
+//                return $producto->vendedor_id;
+//            } else {
+//                return FALSE;
+//            }
+//        } else {
+//            return FALSE;
+//        }
+//    }
     /**
      * 
      * @param type $id
      */
-    public function delete($id) {
-        $grupos = $this->grupo_tarifa_model->get_many_by("tarifa_id", $id);
-        if ($grupos) {
-            $this->grupo_tarifa_model->delete_by("tarifa_id", $id);
-            foreach ($grupos as $grupo) {
-                $this->grupo_model->delete($grupo->id);
-            }
-        }
-        parent::delete($id);
-    }
+//    public function delete($id) {
+//        $grupos = $this->grupo_tarifa_model->get_many_by("tarifa_id", $id);
+//        if ($grupos) {
+//            $this->grupo_tarifa_model->delete_by("tarifa_id", $id);
+//            foreach ($grupos as $grupo) {
+//                $this->grupo_model->delete($grupo->id);
+//            }
+//        }
+//        parent::delete($id);
+//    }
 
     /**
      * Devuelve los clientes que ya tienen tarifas en base a un array de productos.
      * @param type $producto_ids
      */
     public function get_clientes_for_productos($producto_ids) {
-        $this->db->select("grupo.cliente_id");
-        $this->db->from("grupo");        
-        $this->db->join("grupo_tarifa", "grupo_tarifa.grupo_id=grupo.id", 'INNER');
-        $this->db->join("tarifa", "tarifa.id=grupo_tarifa.tarifa_id", 'INNER');
+        $this->db->select("grupo_tarifa.cliente_id");
+        $this->db->from("grupo_tarifa");                
+        $this->db->join("tarifa", "tarifa.tarifa_general_id=grupo_tarifa.tarifa_general_id", 'INNER');
         
         $this->db->where_in("tarifa.producto_id", $producto_ids);
         

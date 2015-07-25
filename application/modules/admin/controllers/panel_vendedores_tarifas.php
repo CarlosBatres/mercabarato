@@ -111,9 +111,9 @@ class Panel_vendedores_tarifas extends ADController {
         if ($this->input->is_ajax_request()) {
             $tarifa_id = $id;
 
-            $res = $this->tarifa_model->get_vendedor_id_de_tarifa($tarifa_id);
+            $res = $this->tarifa_general_model->get_vendedor_id_de_tarifa($tarifa_id);
             if ($res == $this->identidad->get_vendedor_id()) {
-                $this->tarifa_model->delete($tarifa_id);
+                $this->tarifa_general_model->delete($tarifa_id);
                 $this->session->set_flashdata('success', 'Tarifa eliminada con exito..');
             } else {
                 $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
@@ -136,39 +136,47 @@ class Panel_vendedores_tarifas extends ADController {
                 $productos_ids = $this->session->userdata('pv_tarifas_incluir_ids_productos');
                 $clientes_ids = $this->session->userdata('pv_tarifas_incluir_ids_clientes');
 
+                if ($this->input->post('tipo') == 'porcentaje') {
+                    $porcentaje = $this->input->post('valor');
+                } else {
+                    $porcentaje = 0;
+                }
+
+                $data_tarifa_general = array(
+                    "nombre" => ($this->input->post('nombre') != '') ? $this->input->post('nombre') : null,
+                    "descripcion" => ($this->input->post('descripcion') != '') ? $this->input->post('descripcion') : null,
+                    "porcentaje" => $porcentaje,
+                    "fecha_creado" => date("Y-m-d")
+                );
+
+                $tarifa_general_id = $this->tarifa_general_model->insert($data_tarifa_general);
+
                 foreach ($productos_ids as $producto) {
                     $producto_obj = $this->producto_model->get($producto);
-                    if ($this->input->post('tipo') == 'porcentaje') {
-                        $monto_a_deducir = $producto_obj->precio * ($this->input->post('valor') / 100);
-                        $nuevo_costo = $producto_obj->precio - $monto_a_deducir;
-                        $porcentaje = $this->input->post('valor');
-                    } else {
+                    if ($porcentaje == 0) {
                         $nuevo_costo = $this->input->post('valor');
-                        $porcentaje = 0;
+                    } else {
+                        $monto_a_deducir = $producto_obj->precio * ($porcentaje / 100);
+                        $nuevo_costo = $producto_obj->precio - $monto_a_deducir;
                     }
 
                     $data_tarifa = array(
-                        "comentario" => ($this->input->post('comentario') != '') ? $this->input->post('comentario') : null,
-                        "nuevo_costo" => $nuevo_costo,
-                        "porcentaje" => $porcentaje,
-                        "producto_id" => $producto
+                        "tarifa_general_id" => $tarifa_general_id,
+                        "producto_id" => $producto,
+                        "nuevo_costo" => $nuevo_costo
                     );
 
-                    $tarifa_id = $this->tarifa_model->insert($data_tarifa);
-
-                    foreach ($clientes_ids as $cliente) {
-                        $data_grupo = array(
-                            "vendedor_id" => $this->identidad->get_vendedor_id(),
-                            "cliente_id" => $cliente
-                        );
-                        $grupo_id = $this->grupo_model->insert($data_grupo);
-                        $grupo_tarifa = array(
-                            "grupo_id" => $grupo_id,
-                            "tarifa_id" => $tarifa_id);
-
-                        $this->grupo_tarifa_model->insert($grupo_tarifa);
-                    }
+                    $this->tarifa_model->insert($data_tarifa);
                 }
+
+                foreach ($clientes_ids as $cliente) {
+                    $data_grupo = array(                        
+                        "cliente_id" => $cliente,
+                        "tarifa_general_id"=>$tarifa_general_id
+                    );
+                    $this->grupo_tarifa_model->insert($data_grupo);                    
+                }
+
                 $this->session->unset_userdata('pv_tarifas_incluir_ids_clientes');
                 $this->session->unset_userdata('pv_tarifas_incluir_ids_productos');
                 redirect('panel_vendedor/tarifas/listado');
@@ -413,22 +421,17 @@ class Panel_vendedores_tarifas extends ADController {
     /**
      * 
      */
-    public function ajax_get_productos_tarifados() {
+    public function ajax_get_tarifas() {
         //$this->show_profiler();
         $formValues = $this->input->post();
         $params = array();
-        $params["vendedor_id"] = $this->identidad->get_vendedor_id();
-        $flag_left_panel = true;
+        $params["vendedor_id"] = $this->identidad->get_vendedor_id();        
 
         if ($formValues !== false) {
             if ($this->input->post('nombre') != "") {
                 $params["nombre"] = $this->input->post('nombre');
             }
-            if ($this->input->post('solo_tarifados') != "") {
-                $params["solo_tarifados"] = $this->input->post('solo_tarifados');
-            }
-
-            $params["group_by_producto_id"] = true;
+                        
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
@@ -436,17 +439,17 @@ class Panel_vendedores_tarifas extends ADController {
 
         $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
-        $productos_array = $this->producto_model->get_tarifas_search($params, $limit, $offset);
-        $flt = (float) ($productos_array["total"] / $limit);
-        $ent = (int) ($productos_array["total"] / $limit);
+        $results_array = $this->tarifa_general_model->get_tarifas($params, $limit, $offset);
+        $flt = (float) ($results_array["total"] / $limit);
+        $ent = (int) ($results_array["total"] / $limit);
         if ($flt > $ent || $flt < $ent) {
             $paginas = $ent + 1;
         } else {
             $paginas = $ent;
         }
 
-        if ($productos_array["total"] == 0) {
-            $productos_array["productos"] = array();
+        if ($results_array["total"] == 0) {
+            $results_array["tarifas"] = array();
         }
 
         $search_params = array(
@@ -455,15 +458,14 @@ class Panel_vendedores_tarifas extends ADController {
             "pagina" => $pagina,
             "total_paginas" => $paginas,
             "por_pagina" => $limit,
-            "total" => $productos_array["total"],
-            "hasta" => ($pagina * $limit < $productos_array["total"]) ? $pagina * $limit : $productos_array["total"],
+            "total" => $results_array["total"],
+            "hasta" => ($pagina * $limit < $results_array["total"]) ? $pagina * $limit : $results_array["total"],
             "desde" => (($pagina * $limit) - $limit) + 1);
         $pagination = build_paginacion($search_params);
 
         $data = array(
-            "productos" => $productos_array["productos"],
-            "pagination" => $pagination,
-            "left_panel" => $flag_left_panel);
+            "tarifas" => $results_array["tarifas"],
+            "pagination" => $pagination);
 
         $this->template->load_view('admin/panel_vendedores/tarifas/tabla_resultados_tarifa_prod', $data);
     }

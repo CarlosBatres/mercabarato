@@ -1,66 +1,36 @@
-<?php if ($left_panel): ?>
-    <?php if (sizeof($productos) == 0): ?>
-        <div>
-            <p> No se encontraron mas productos...</p>    
-        </div>
-    <?php else: ?>
-        <div class="table-responsive">        
-            <table class="table table-bordered table-hover table-striped">
-                <thead>
-                    <tr>                                                                  
-                        <th style="width: 40%">Nombre del Producto</th>
-                        <th style="width: 30%">Categoria</th>                
-                        <th style="width: 19%;text-align: center">P.V.P.</th>                                                                                     
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($productos as $producto): ?>
-                        <tr class="producto-tarifado" data-id="<?php echo $producto->id; ?>">                                                
-                            <td><?php echo $producto->nombre; ?></td>
-                            <td><?php echo $producto->Categoria; ?></td>                    
-                            <td style="text-align: center"><?php echo $producto->precio. ' ' . $this->config->item('money_sign'); ?></td>                                                                                                                                        
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <?php echo $pagination; ?>
-        </div>
-    <?php endif; ?>
-
+<?php if (sizeof($tarifas) == 0): ?>
+    <div>
+        <p> No se encontraron tarifas...</p>    
+    </div>
 <?php else: ?>
-    <?php if (sizeof($tarifas) == 0): ?>
-        <div>
-            <p> Seleccione un producto primero...</p>    
-        </div>
-    <?php else: ?>
-        <div class="table-responsive">        
-            <table class="table table-bordered table-hover table-striped">
-                <thead>
-                    <tr>                                                                  
-                        <th style="width: 20%;text-align: center;">P.V.P.</th>
-                        <th style="width: 20%;text-align: center;">Nueva Tarifa</th>
-                        <th style="width: 20%;text-align: center;">Total Clientes</th>                                        
-                        <th style="width: 5%;text-align: center">&nbsp; Acciones</th> 
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($tarifas as $tarifa): ?>
-                        <tr>
-                            <td style="text-align: center;"><?php echo $tarifa->viejo_costo. ' ' . $this->config->item('money_sign') ?></td>
-                            <td style="text-align: center;"><?php echo $tarifa->nuevo_costo. ' ' . $this->config->item('money_sign'); ?></td>
-                            <td style="text-align: center;"><?php echo $tarifa->total_clientes; ?></td>                                                
-                            <td>
-                            <div class="options">                                                                
-                                <a class="row_action_borrar" href="<?php echo site_url('panel_vendedor/tarifas/borrar') . '/' . $tarifa->id ?>" data-toogle="tooltip"  title="Eliminar Tarifa"><i class="glyphicon glyphicon-trash"></i></a>
+    <div class="table-responsive">        
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>                                                                  
+                    <th style="width: 40%">Nombre</th>                    
+                    <th style="width: 25%">Fecha creado</th>                    
+                    <th style="width: 15%">Productos</th>
+                    <th style="width: 15%">Clientes</th>
+                    <th style="width: 5%;text-align: center">&nbsp; Acciones</th> 
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($tarifas as $tarifa): ?>
+                    <tr>                                                
+                        <td><?php echo $tarifa->nombre; ?></td>                        
+                        <td><?php echo $tarifa->fecha_creado; ?></td>                        
+                        <td><?php echo $tarifa->productos; ?></td>                        
+                        <td><?php echo $tarifa->clientes; ?></td>                        
+                        <td>
+                            <div class="options">                                                               
+                                <a href="<?php echo site_url('panel_vendedor/producto/editar') . '/' . $tarifa->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>
+                                <a class="row_action_borrar" href="<?php echo site_url('panel_vendedor/tarifas/borrar') . '/' . $tarifa->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
                             </div>                           
                         </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <?php echo $pagination; ?>
-        </div>
-    <?php endif; ?>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php echo $pagination; ?>
+    </div>
 <?php endif; ?>
-
-

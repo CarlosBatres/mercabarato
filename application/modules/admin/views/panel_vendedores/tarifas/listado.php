@@ -22,33 +22,19 @@
                                 <div class="row">                                    
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label class="control-label col-md-12" for="nombre">Nombre del Producto</label>
+                                            <label class="control-label col-md-12" for="nombre">Nombre</label>
                                             <div class="col-md-12">
                                                 <input type="text" name="nombre" id="nombre" value="" class="form-control"/>                                
                                             </div>
                                         </div>
-                                    </div>                                                                                                                                                
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-12" for="categoria">Categoria</label>
-                                            <div class="col-md-12">
-                                                <select name="categoria" class="form-control">
-                                                    <option value="0">Seleccione una Categoria</option>
-                                                    <?php foreach ($categorias as $categoria): ?>
-                                                        <option value="<?php echo $categoria->id ?>"><?php echo $categoria->nombre ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>                                                                         
+                                    </div>                                                                                                                                                                                                                                                            
                                 </div>                                
                                 <hr>
                                 <div class="row"> 
                                     <div class="col-md-12">
                                         <div class="form-buttons">
                                             <button type="submit" id="btn-search" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Buscar</button>
-                                            <input type="hidden" value="1" name="pagina" id="pagina"/>                                        
-                                            <input type="hidden" value="1" name="pagina_tab2" id="pagina_tab2"/>                                        
+                                            <input type="hidden" value="1" name="pagina" id="pagina"/>                                                                                    
                                         </div>
                                     </div>
                                 </div>
@@ -58,37 +44,18 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
     <div class="row">
-        <div class="col-md-6">
-            <div class="">                         
-                <p class="lead">Haz click sobre un producto del listado a continuacion para ver mas detalles</p>
-            </div>
-        </div>
-        <div class="col-md-6"></div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <strong>Mis Productos</strong>
+                    <strong>Mis Tarifas</strong>
                 </div>
                 <div class="panel-body">
                     <div id="tabla-resultados-left"></div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong>Tarifas y Clientes</strong>
-                </div>
-                <div class="panel-body">                            
-                    <div id="tabla-resultados-right"></div>
-                </div>
-            </div>
-        </div>
+        </div>        
     </div>           
     <div id="question" style="display:none; cursor: default">
         <div class="modal-content">
