@@ -460,7 +460,9 @@ class Producto_model extends MY_Model {
 
         if ($count > 0) {
             $this->db->order_by('producto.id', 'asc');
-            $this->db->limit($limit, $offset);
+            if($limit){
+                $this->db->limit($limit, $offset);
+            }            
             $productos = $this->db->get()->result();
             $this->db->flush_cache();
             return array("productos" => $productos, "total" => $count);

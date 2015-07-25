@@ -1,18 +1,17 @@
-<?php if (sizeof($clientes) == 0): ?>
-    <div>
-        <p> No se encontraron mas clientes...</p>    
-    </div>
-<?php else: ?>
-
-    <?php if ($left_panel): ?>
+<?php if ($left_panel): ?>
+    <?php if (sizeof($clientes) == 0): ?>
+        <div>
+            <p> No se encontraron mas clientes...</p>    
+        </div>
+    <?php else: ?>
         <div class="table-responsive">        
             <table class="table table-bordered table-hover table-striped">
                 <thead>
                     <tr>              
                         <th style="width: 1%"> <input type="checkbox" name="select_all" value="ON" /></th>              
-                        <th style="width: 35%">Identificacion</th>                                                         
+                        <th style="width: 50%">Identificacion</th>                                                         
                         <th style="width: 20%">Miembro Desde</th>                    
-                        <th style="width: 15%">Ultima Actividad</th>                      
+                        <th style="width: 29%">Ultima Actividad</th>                      
                     </tr>
                 </thead>
                 <tbody>
@@ -40,15 +39,21 @@
             </table>
 
             <?php echo $pagination; ?>
-        </div> 
+        </div>
+    <?php endif; ?>
+<?php else: ?>
+    <?php if (sizeof($clientes) == 0): ?>
+        <div>
+            <p> Selecciona clientes en el panel de <strong>Mis Clientes</strong> y presiona <strong>Mover</strong></p>    
+        </div>
     <?php else: ?>
         <div class="table-responsive">        
             <table class="table table-bordered table-hover table-striped">
                 <thead>
                     <tr>                                      
-                        <th style="width: 35%">Identificacion</th>                                        
+                        <th style="width: 50%">Identificacion</th>                                        
                         <th style="width: 20%">Miembro Desde</th>                    
-                        <th style="width: 15%">Ultima Actividad</th>                      
+                        <th style="width: 30%">Ultima Actividad</th>                      
                     </tr>
                 </thead>
                 <tbody>

@@ -151,6 +151,8 @@ $route['panel_vendedor/tarifas/ajax_get_clientes'] = 'admin/panel_vendedores_tar
 $route['panel_vendedor/tarifas/ajax_get_productos_tarifados'] = 'admin/panel_vendedores_tarifas/ajax_get_productos_tarifados';
 $route['panel_vendedor/tarifas/ajax_get_tarifa_detalles'] = 'admin/panel_vendedores_tarifas/ajax_get_tarifa_detalles';
 $route['panel_vendedor/tarifas/listado'] = 'admin/panel_vendedores_tarifas/view_listado';
+$route['panel_vendedor/tarifas/incluir_todos_productos'] = 'admin/panel_vendedores_tarifas/incluir_todos_productos';
+$route['panel_vendedor/tarifas/incluir_todos_clientes'] = 'admin/panel_vendedores_tarifas/incluir_todos_clientes';
 
 $route['panel_vendedor/infocompras/seguros'] = 'admin/panel_vendedores_infocompras/view_listado_seguros';
 $route['panel_vendedor/infocompras/seguros/responder/(:num)'] = 'admin/panel_vendedores_infocompras/responder_seguros/$1';

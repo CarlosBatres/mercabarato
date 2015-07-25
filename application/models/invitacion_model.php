@@ -212,7 +212,9 @@ class Invitacion_model extends MY_Model {
         $query.=") temp";
 
         $query.=" ORDER BY " . $order_by . " " . $order;
-        $query.=" LIMIT " . $offset . " , " . $limit;
+        if($limit){
+            $query.=" LIMIT " . $offset . " , " . $limit;
+        }        
 
         $result = $this->db->query($query);
         $invitaciones = $result->result();

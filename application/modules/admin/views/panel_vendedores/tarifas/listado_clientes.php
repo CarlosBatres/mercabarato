@@ -102,6 +102,12 @@
                     <button type="button" id="btn-mover" class="btn btn-primary"> Mover <span class="glyphicon glyphicon-arrow-right"></span></button>
                 </div>
             </div>
+            <br>                        
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" id="btn-mover-todos" class="btn btn-primary"> Mover Todos <span class="glyphicon glyphicon-arrow-right"></span></button>
+                </div>
+            </div>
             <br>
             <br>
             <div class="row">

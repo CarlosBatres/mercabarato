@@ -205,11 +205,11 @@ class Panel_vendedores_tarifas extends ADController {
                     $this->session->set_userdata(array('pv_tarifas_incluir_ids_productos' => $ids));
                 } else {
                     $ids_old = $this->session->userdata('pv_tarifas_incluir_ids_productos');
-                    if(!$ids_old){
+                    if (!$ids_old) {
                         $params["incluir_ids"] = array("0");
-                    }else{
+                    } else {
                         $params["incluir_ids"] = $ids_old;
-                    }                    
+                    }
                 }
             }
 
@@ -326,12 +326,12 @@ class Panel_vendedores_tarifas extends ADController {
                     $params["incluir_ids_clientes"] = $ids;
                     $this->session->set_userdata(array('pv_tarifas_incluir_ids_clientes' => $ids));
                 } else {
-                     $ids_old = $this->session->userdata('pv_tarifas_incluir_ids_clientes');
-                    if(!$ids_old){
+                    $ids_old = $this->session->userdata('pv_tarifas_incluir_ids_clientes');
+                    if (!$ids_old) {
                         $params["incluir_ids_clientes"] = array("0");
-                    }else{
+                    } else {
                         $params["incluir_ids_clientes"] = $ids_old;
-                    }  
+                    }
                 }
             }
 
@@ -520,6 +520,59 @@ class Panel_vendedores_tarifas extends ADController {
             "left_panel" => $flag_left_panel);
 
         $this->template->load_view('admin/panel_vendedores/tarifas/tabla_resultados_tarifa_prod', $data);
+    }
+
+    public function incluir_todos_productos() {
+        if ($this->input->is_ajax_request()) {
+            $formValues = $this->input->post();
+            if ($formValues !== false) {
+                $params = array();
+                $params["vendedor_id"] = $this->identidad->get_vendedor_id();
+                $params["group_by_producto_id"] = true;
+                $productos_array = $this->producto_model->get_tarifas_search($params, false, false);
+
+                if ($productos_array["total"] > 0) {
+                    $ids = array();
+                    foreach ($productos_array["productos"] as $producto) {
+                        $ids[] = $producto->id;
+                    }
+                    $this->session->set_userdata(array('pv_tarifas_incluir_ids_productos' => $ids));
+                }
+
+                echo json_encode(array("success" => true));
+            }
+        }
+    }
+
+    public function incluir_todos_clientes() {
+        if ($this->input->is_ajax_request()) {
+            $formValues = $this->input->post();
+            if ($formValues !== false) {
+                $params = array();
+                $params["usuario_id"] = $this->identidad->usuario->id;
+                $params["excluir_admins"] = true;
+
+                $producto_seleccionado_ids = $this->session->userdata('pv_tarifas_incluir_ids_productos');
+                if ($producto_seleccionado_ids) {
+                    $clientes_arr = $this->tarifa_model->get_clientes_for_productos($producto_seleccionado_ids);
+                    if ($clientes_arr) {
+                        $params['excluir_ids_clientes'] = $clientes_arr;
+                    }
+                }
+
+                $clientes_array = $this->invitacion_model->get_invitaciones_aceptadas($params, false, false);
+                if ($clientes_array["total"] > 0) {
+                    $clientes_array["clientes"] = $clientes_array["invitaciones"];
+                    $ids = array();
+                    foreach ($clientes_array["clientes"] as $cliente) {
+                        $ids[] = $cliente->id;
+                    }
+                    $this->session->set_userdata(array('pv_tarifas_incluir_ids_clientes' => $ids));
+                }
+
+                echo json_encode(array("success" => true));
+            }
+        }
     }
 
 }

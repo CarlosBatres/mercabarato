@@ -61,8 +61,8 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="alert alert-info">                         
-                <p>Haz click sobre un producto del listado a continuacion para ver mas detalles</p>
+            <div class="">                         
+                <p class="lead">Haz click sobre un producto del listado a continuacion para ver mas detalles</p>
             </div>
         </div>
         <div class="col-md-6"></div>
