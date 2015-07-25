@@ -2,4 +2,4 @@
 
 <p>Ingresa al sitio para ofrecer una respuesta</p>
 
-<p class="text-right"><strong><a href="<?php echo site_url('seguros/respuesta')?>"><?php echo site_url('seguros/respuesta')?></a></strong></p>                    
+<p class="text-right"><strong><a href="<?php echo site_url('panel_vendedor/infocompras/seguros/responder/'.$solicitud_id)?>"><?php echo site_url('panel_vendedor/infocompras/seguros/responder/'.$solicitud_id)?></a></strong></p>                    

@@ -27,8 +27,10 @@
                     </td>
                     <td>
                         <div class="options">
+                            <?php if($solicitud->estado=="0"):?>
                             <a href="<?php echo site_url('panel_vendedor/infocompras/seguros/responder') . '/' . $solicitud->id ?>" data-toogle="tooltip"  title="Responder"><i class="glyphicon glyphicon-forward"></i></a>
                             <!--<a class="item_borrar" href="<?php echo site_url('admin/anuncios/borrar') . '/' . $solicitud->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>-->
+                            <?php endif;?>
                         </div>                           
                     </td>
                 </tr>

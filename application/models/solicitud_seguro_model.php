@@ -34,7 +34,7 @@ class Solicitud_seguro_model extends MY_Model {
         $count = count($this->db->get()->result());
 
         if ($count > 0) {
-            $this->db->order_by('ss.fecha_solicitud', 'desc');
+            $this->db->order_by('ss.estado asc,ss.fecha_solicitud desc');
             $this->db->limit($limit, $offset);
             $result = $this->db->get()->result();
             $this->db->flush_cache();
@@ -70,7 +70,7 @@ class Solicitud_seguro_model extends MY_Model {
         $count = count($this->db->get()->result());
 
         if ($count > 0) {
-            $this->db->order_by('solicitud_seguro.fecha_solicitud', 'desc');
+            $this->db->order_by('solicitud_seguro.estado desc,solicitud_seguro.fecha_solicitud desc');
             $this->db->limit($limit, $offset);
             $result = $this->db->get()->result();
             $this->db->flush_cache();

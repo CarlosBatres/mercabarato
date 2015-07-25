@@ -41,33 +41,51 @@ class Panel_vendedores_infocompras extends ADController {
 
         $solicitud_seguro = $this->solicitud_seguro_model->get($solicitud_seguro_id);
         if ($solicitud_seguro) {
-            $formValues = $this->input->post();
-            if ($formValues !== false) {
-                $respuesta=$this->input->post('respuesta');
-                $data=array("estado"=>"2","respuesta"=>$respuesta,"fecha_respuesta"=>date("Y-m-d"));
-                
-                $this->solicitud_seguro_model->update($solicitud_seguro->id,$data);
-                redirect("panel_vendedor/infocompras/seguros");
-                
+            if ($solicitud_seguro->vendedor_id == $this->identidad->get_vendedor_id()) {
+                $formValues = $this->input->post();
+                if ($formValues !== false) {
+                    $respuesta = $this->input->post('respuesta');
+                    $data = array("estado" => "2", "respuesta" => $respuesta, "fecha_respuesta" => date("Y-m-d"));
+
+                    $this->solicitud_seguro_model->update($solicitud_seguro->id, $data);
+
+                    if ($this->config->item('emails_enabled')) {                        
+                        $cliente=$this->cliente_model->get($solicitud_seguro->cliente_id);
+                        $usuario=$this->usuario_model->get($cliente->usuario_model);
+                        $this->load->library('email');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($usuario->email);
+                        $this->email->subject('Se ha respondido a tu solicitud de presupuesto');                     
+                        $data_mail=array();
+                        $this->email->message($this->load->view('home/emails/solicitud_presupuesto_2', $data_mail, true));
+                        $this->email->send();
+                    }
+
+                    redirect("panel_vendedor/infocompras/seguros");
+                } else {
+                    $this->load->helper('ckeditor');
+
+                    $data = array("solicitud_seguro" => $solicitud_seguro);
+                    $data['ckeditor'] = array(
+                        //ID of the textarea that will be replaced
+                        'id' => 'content',
+                        'path' => 'assets/js/ckeditor',
+                        //Optionnal values
+                        'config' => array(
+                            'toolbar' => "Full", //Using the Full toolbar                        
+                            'height' => '300px', //Setting a custom height
+                        ),
+                    );
+                    $data["informacion"] = unserialize($solicitud_seguro->datos);
+
+                    //$this->template->add_js("modules/admin/panel_vendedores/seguros_listado.js");
+                    $this->template->load_view('admin/panel_vendedores/infocompras/seguros/responder_seguro', $data);
+                }
             } else {
-                $this->load->helper('ckeditor');
-
-                $data = array("solicitud_seguro" => $solicitud_seguro);
-                $data['ckeditor'] = array(
-                    //ID of the textarea that will be replaced
-                    'id' => 'content',
-                    'path' => 'assets/js/ckeditor',
-                    //Optionnal values
-                    'config' => array(
-                        'toolbar' => "Full", //Using the Full toolbar                        
-                        'height' => '300px', //Setting a custom height
-                    ),
-                );
-                $data["informacion"] = unserialize($solicitud_seguro->datos);
-
-                //$this->template->add_js("modules/admin/panel_vendedores/seguros_listado.js");
-                $this->template->load_view('admin/panel_vendedores/infocompras/seguros/responder_seguro', $data);
+                redirect('panel_vendedor/infocompras/seguros');
             }
+        } else {
+            redirect('panel_vendedor/infocompras/seguros');
         }
     }
 
@@ -75,10 +93,10 @@ class Panel_vendedores_infocompras extends ADController {
         //$this->show_profiler();
         $formValues = $this->input->post();
         $params = array();
-        $params["vendedor_id"] = $this->identidad->get_vendedor_id();        
+        $params["vendedor_id"] = $this->identidad->get_vendedor_id();
 
-        if ($formValues !== false) {                       
-            
+        if ($formValues !== false) {
+
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
