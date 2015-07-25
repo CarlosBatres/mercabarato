@@ -307,7 +307,7 @@ class Seguro extends MY_Controller {
                 'seguros_ignore_list' => $ignore_list,
             ));
 
-            $this->solicitud_seguro_model->insert($solicitud_seguro);
+            $solicitud_id=$this->solicitud_seguro_model->insert($solicitud_seguro);
             $vendedor = $this->vendedor_model->get($vendedor_id);
             
             if ($this->config->item('emails_enabled')) {                
@@ -318,7 +318,7 @@ class Seguro extends MY_Controller {
                 $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                 $this->email->to($usuario->email);
                 $this->email->subject('Nueva solicitud de presupuesto');
-                $data_email = array("data" => $data);
+                $data_email = array("solicitud_id" => $solicitud_id);
                 $this->email->message($this->load->view('home/emails/solicitud_presupuesto', $data_email, true));
                 $this->email->send();
             }
