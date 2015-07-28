@@ -10,8 +10,7 @@ $(document).ready(function() {
 });
 
 function updateResultados(){
-    var form = $('#listado-items');            
-    form.append('<input type="hidden" name="solo_tarifados" value="true">');
+    var form = $('#listado-items');                
     $('#tabla-resultados-left').html('<br><br><br><br>');
     $('#tabla-resultados-left').block({
         message: '<h4>Procesando espere un momento..</h4>',

@@ -37,7 +37,9 @@
             <div class="box box_registro">
                 <h2 class="text-uppercase">Detalles de la Tarifa</h2>                                        
                 <hr>                
-                <?php echo form_open('panel_vendedor/tarifas/crear' ,'id="detalles_tarifa"'); ?>                                 
+                <?php echo form_open('panel_vendedor/tarifas/crear', 'id="detalles_tarifa"'); ?>                                 
+                <input type="hidden" value="1" name="pagina" id="pagina"/>                                        
+                <input type="hidden" value="1" name="pagina_tab2" id="pagina_tab2"/>                                        
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -59,7 +61,7 @@
                 </div>
                 <hr>
                 <div class="row">                    
-                     <div class="col-md-12">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label>Titulo</label>                    
                             <input type="text" class="form-control" name="nombre">

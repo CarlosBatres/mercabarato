@@ -166,3 +166,6 @@ DROP FOREIGN KEY `fk_grupo_oferta_vendedor1`;
 
 ALTER TABLE `grupo_tarifa` DROP INDEX `fk_grupo_vendedor1_idx`
 ALTER TABLE `grupo_tarifa` DROP `vendedor_id`
+
+
+UPDATE  `mercabarato_bd`.`permisos` SET  `controllers` = '{"admin": {"panel_vendedores": "*","panel_vendedores_anuncios": "*","panel_vendedores_productos": "*","panel_vendedores_invitaciones": "*","panel_vendedores_tarifas": "*","panel_vendedores_tarifas_helper":"*","panel_vendedores_infocompras":"*","panel_vendedores_ofertas":"*"}}' WHERE  `permisos`.`id` =3;
