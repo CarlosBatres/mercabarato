@@ -4,24 +4,13 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Panel_vendedores_tarifas_helper extends ADController {
-
-    var $identidad;
-
+    
     public function __construct() {
         parent::__construct();
-        $this->_validar_conexion();
-        $this->get_identidad();
+        $this->_validar_conexion();    
+        $this->_validar_vendedor_habilitado();
     }
-
-    /**
-     * 
-     */
-    private function get_identidad() {
-        $user_id = $this->authentication->read('identifier');
-        $vendedor = $this->usuario_model->get_full_identidad($user_id);
-        $this->identidad = $vendedor;
-    }
-
+    
     /*
      * AJAX productos tarifados
      */

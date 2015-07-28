@@ -8,6 +8,7 @@ class Panel_vendedores_productos extends ADController {
     public function __construct() {
         parent::__construct();
         $this->_validar_conexion();
+        $this->_validar_vendedor_habilitado();
     }
 
     /**

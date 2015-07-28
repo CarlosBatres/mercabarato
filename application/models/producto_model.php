@@ -577,5 +577,20 @@ class Producto_model extends MY_Model {
             return array("total" => 0);
         }
     }
+    
+    
+    public function get_novedades_fecha($fecha_inicio,$fecha_final){        
+        $this->db->select('*');
+        $this->db->from('productos_precios pp');                
+        $this->db->where('pp.fecha_insertado >=', $fecha_inicio);
+        $this->db->where('pp.fecha_insertado <=', $fecha_final);
+
+        $results = $this->db->get()->result();
+        if (count($results) > 0) {
+            return $results;
+        } else {
+            return false;
+        }
+    }
 
 }

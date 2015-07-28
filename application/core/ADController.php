@@ -6,17 +6,25 @@ class ADController extends MY_Controller {
 
     var $module;
     var $class;
-    var $method;
-    var $usuario;
+    var $method;        
+    var $identidad;
 
     public function __construct() {
         parent::__construct();
         $this->module = $this->router->fetch_module();
         $this->class = $this->router->fetch_class();
         $this->method = $this->router->fetch_method();
-
+        
+        $this->get_identidad();                
+    }
+    
+    /**
+     * 
+     */
+    private function get_identidad() {
         $user_id = $this->authentication->read('identifier');
-        $this->usuario = $this->usuario_model->get($user_id);
+        $vendedor = $this->usuario_model->get_full_identidad($user_id);
+        $this->identidad = $vendedor;
     }
 
     /**
@@ -26,7 +34,7 @@ class ADController extends MY_Controller {
      */
     public function _validar_conexion() {
         if ($this->authentication->is_loggedin()) {
-            if ($this->permisos_model->usuario_es_cliente($this->usuario->id)) {
+            if ($this->permisos_model->usuario_es_cliente($this->identidad->usuario->id)) {
                 if (!$this->_validar_acceso()) {
                     redirect('acceso_restringido');
                 }
@@ -55,9 +63,10 @@ class ADController extends MY_Controller {
      * @return boolean
      */
     public function _validar_acceso() {
-        $user_id = $this->authentication->read('identifier');
-        $perfil = $this->usuario_model->get($user_id);
-        $permiso = $this->permisos_model->get($perfil->permisos_id);
+        //$user_id = $this->authentication->read('identifier');
+        //$perfil = $this->usuario_model->get($user_id);
+                
+        $permiso = $this->permisos_model->get($this->identidad->usuario->permisos_id);
         if ($permiso) {
             $perm_array = json_decode($permiso->controllers);
             if (property_exists($perm_array, $this->module)) {
@@ -80,6 +89,17 @@ class ADController extends MY_Controller {
             }
         } else {
             return false;
+        }
+    }
+    /**
+     * 
+     * @return boolean
+     */
+    public function _validar_vendedor_habilitado() {
+        if(!$this->identidad->es_vendedor_habilitado()){
+            redirect('acceso_restringido');
+        }else{
+            return true;
         }
     }
 

@@ -356,7 +356,10 @@ class Vendedor_model extends MY_Model {
             return array("total" => 0);
         }
     }
-
+    /**
+     * 
+     * @param type $vendedor_id
+     */
     public function cleanup_image($vendedor_id) {
         $vendedor = $this->get($vendedor_id);
         if ($vendedor->filename != null) {
@@ -397,5 +400,16 @@ class Vendedor_model extends MY_Model {
             return false;
         }
     }
-
+    /**
+     * Inhabilitar al vendedor y a todos sus productos
+     * @param type $vendedor_id
+     */
+    public function inhabilitar($vendedor_id){
+        $vendedor=$this->get($vendedor_id);
+        if($vendedor){
+            $this->vendedor_model->update($vendedor_id,array("habilitado"=>"0"));
+            $this->producto_model->update_by(array("vendedor_id"=>$vendedor_id),array("habilitado"=>"0"));                        
+            $this->anuncio_model->update_by(array("vendedor_id"=>$vendedor_id),array("habilitado"=>"0"));                        
+        }                       
+    }    
 }
