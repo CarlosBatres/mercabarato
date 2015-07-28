@@ -1,17 +1,6 @@
 $(document).ready(function() {
     updateResultadosProductos();
-    updateResultadosClientes();
-    
-    $("#detalles_tarifa").validate({        
-        rules: {            
-            valor: {required: true,number:true},            
-            nombre: {required:true}
-        },
-        messages: {            
-            valor: {required: "Este campo es necesario.",number:"Este campo tiene que ser un numero"},            
-            nombre: {required:" Indique un nombre para identificar la tarifa."}
-        }
-    });
+    updateResultadosClientes();        
 });
 
 function updateResultadosProductos() {            
@@ -22,9 +11,10 @@ function updateResultadosProductos() {
     });
     $.ajax({
         type: "POST",
-        url: SITE_URL + 'panel_vendedor/tarifas/ajax_get_productos',
+        url: SITE_URL + 'panel_vendedor/tarifas/ajax_get_productos_tarifados',
         data: {
-            pagina: $('#pagina').val()
+            pagina: $('#pagina').val(),
+            tarifa_general_id: $('#tg_id').val()
         },
         dataType: "html",
         success: function(response) {
@@ -43,9 +33,10 @@ function updateResultadosClientes() {
     });
     $.ajax({
         type: "POST",
-        url: SITE_URL + 'panel_vendedor/tarifas/ajax_get_clientes',
+        url: SITE_URL + 'panel_vendedor/tarifas/ajax_get_clientes_tarifados',
         data: {
             pagina: $('#pagina_tab2').val(),
+            tarifa_general_id: $('#tg_id').val(),
             sexo: "X"
         },
         dataType: "html",

@@ -61,3 +61,7 @@ tr.draggable > td > div.ui-state-default
     background-color: Gray;
     opacity: 0.5;
 }
+
+.container-fluid{
+    padding-bottom: 100px;
+}

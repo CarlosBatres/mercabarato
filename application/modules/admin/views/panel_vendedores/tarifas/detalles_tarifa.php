@@ -37,21 +37,23 @@
             <div class="box box_registro">
                 <h2 class="text-uppercase">Detalles de la Tarifa</h2>                                        
                 <hr>                
-                <?php echo form_open('panel_vendedor/tarifas/crear' ,'id="detalles_tarifa"'); ?>                                 
+                <?php echo form_open('panel_vendedor/tarifas/crear', 'id="detalles_tarifa"'); ?>                                 
+                <input type="hidden" value="1" name="pagina" id="pagina"/>                                        
+                <input type="hidden" value="1" name="pagina_tab2" id="pagina_tab2"/>                                        
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Valor de la Oferta</label>
+                            <label>Descuento</label>
                             <input type="text" class="form-control" name="valor">
                         </div>
                     </div>
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label>Porcentaje o Monto Especifico</label>
+                            <label>&nbsp;</label>
                             <select class="form-control" name="tipo">                                
-                                <option value="porcentaje">Porcentaje ( % )</option>
+                                <option value="porcentaje">( % )</option>
                                 <?php if (!$mas_de_uno): ?>
-                                    <option value="valor">Monto Especifico ( <?php echo $this->config->item("money_sign") ?> )</option>                                
+                                    <option value="valor">( <?php echo $this->config->item("money_sign") ?> )</option>                                
                                 <?php endif; ?>
                             </select>
                         </div>
@@ -61,8 +63,14 @@
                 <div class="row">                    
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Comentario</label>                    
-                            <textarea class="form-control" name="comentario" rows="10"></textarea>
+                            <label>Titulo</label>                    
+                            <input type="text" class="form-control" name="nombre">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Descripcion</label>                    
+                            <textarea class="form-control" name="descripcion" rows="10"></textarea>
                         </div>
                     </div>                 
                 </div>

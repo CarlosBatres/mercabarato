@@ -4,11 +4,11 @@ if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Grupo_model extends MY_Model {
+class Oferta_general_model extends MY_Model {
 
     function __construct() {
         parent::__construct();
-        $this->_table = "grupo";
+        $this->_table = "oferta_general";
     }       
          
 }

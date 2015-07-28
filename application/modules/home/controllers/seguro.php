@@ -333,7 +333,7 @@ class Seguro extends MY_Controller {
         $this->session->unset_userdata('seguros_informacion');
         $this->session->unset_userdata('seguros_ignore_list');
         $this->session->unset_userdata('seguros_new_user');
-        redirect('');
+        redirect('usuario/infocompras-seguros');
     }
 
 }

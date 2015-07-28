@@ -432,13 +432,13 @@ class Producto_model extends MY_Model {
         $this->db->start_cache();
         $this->db->select("DISTINCT producto.id,producto.*,categoria.nombre AS Categoria", false);
         $this->db->from($this->_table);
-        $this->db->join("categoria", "categoria.id=producto.categoria_id", 'INNER');
+        $this->db->join("categoria", "categoria.id=producto.categoria_id", 'INNER');               
         $this->db->join("vendedor", "vendedor.id=producto.vendedor_id", 'INNER');
-
-        if (isset($params['solo_tarifados'])) {
-            $this->db->join("tarifa", "tarifa.producto_id=producto.id", 'INNER');
-        }
-
+        
+        if (isset($params['tarifa_general_id'])) {
+            $this->db->join("tarifa", "tarifa.producto_id=producto.id AND tarifa.tarifa_general_id='".$params["tarifa_general_id"]."'", 'INNER');            
+        }        
+      
         if (isset($params['nombre'])) {
             $this->db->like('producto.nombre', $params['nombre'], 'both');
         }
@@ -454,13 +454,16 @@ class Producto_model extends MY_Model {
         if (isset($params['excluir_ids'])) {
             $this->db->where_not_in('producto.id', $params['excluir_ids']);
         }
+        
 
         $this->db->stop_cache();
         $count = count($this->db->get()->result());
 
         if ($count > 0) {
             $this->db->order_by('producto.id', 'asc');
-            $this->db->limit($limit, $offset);
+            if($limit){
+                $this->db->limit($limit, $offset);
+            }            
             $productos = $this->db->get()->result();
             $this->db->flush_cache();
             return array("productos" => $productos, "total" => $count);

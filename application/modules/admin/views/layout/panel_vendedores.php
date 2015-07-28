@@ -82,12 +82,39 @@
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-money fa-fw"></i> Mis Tarifas<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
+                        <?php
+                        if (strpos($this->uri->uri_string(), 'panel_vendedor/tarifas/') !== false) {
+                            $collapse = "in";
+                        } else {
+                            $collapse = "";
+                        }
+                        ?>
+
+                        <ul class="nav nav-second-level <?php echo $collapse ?>">
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/tarifas/nueva'); ?>"> Nueva Tarifa</a>
+                                <?php
+                                if (strpos($this->uri->uri_string(), 'panel_vendedor/tarifas/nueva') !== false ||
+                                        strpos($this->uri->uri_string(), 'panel_vendedor/tarifas/seleccion_clientes') !== false ||
+                                        strpos($this->uri->uri_string(), 'panel_vendedor/tarifas/detalles') !== false) {
+                                    $class = "active";
+                                } else {
+                                    $class = "";
+                                }
+                                ?>
+                                <a class="<?php echo $class; ?>" href="<?php echo site_url('panel_vendedor/tarifas/nueva'); ?>"> Nueva Tarifa</a>
                             </li>                                                        
-                            <li>
-                                <a href="<?php echo site_url('panel_vendedor/tarifas/listado'); ?>"> Listado de Tarifas</a>
+                            <li>   
+                                <?php
+                                if (strpos($this->uri->uri_string(), 'panel_vendedor/tarifas/listado') !== false ||
+                                        strpos($this->uri->uri_string(), 'panel_vendedor/tarifas/ver-tarifa') !== false ||
+                                        strpos($this->uri->uri_string(), 'panel_vendedor/tarifas/modificar-productos') !== false ||
+                                        strpos($this->uri->uri_string(), 'panel_vendedor/tarifas/modificar-clientes') !== false) {
+                                    $class = "active";
+                                } else {
+                                    $class = "";
+                                }
+                                ?>
+                                <a class="<?php echo $class; ?>" href="<?php echo site_url('panel_vendedor/tarifas/listado'); ?>"> Listado de Tarifas</a>
                             </li>                                                        
                         </ul>                         
                     </li>  

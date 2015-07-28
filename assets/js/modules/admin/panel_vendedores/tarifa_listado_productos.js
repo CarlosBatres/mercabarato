@@ -93,7 +93,21 @@ function bind_botones() {
             $('#pagina').val("1");
             updateResultados();
         }
-
+    });
+    
+    $('#btn-mover-todos').on('click', function(e) {
+        $.ajax({
+            type: "POST",
+            url: SITE_URL + 'panel_vendedor/tarifas/incluir_todos_productos',
+            data: {
+                incluir_todos: "true"
+            },
+            dataType: "json",
+            success: function(response) {
+                updateResultados();
+                updateResultadosTab2();
+            }
+        });
     });
 }
 

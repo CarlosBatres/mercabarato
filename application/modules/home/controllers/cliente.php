@@ -311,7 +311,7 @@ class Cliente extends MY_Controller {
     }
 
     public function ajax_get_listado_seguros() {
-        $this->show_profiler();
+        //$this->show_profiler();
         $formValues = $this->input->post();
         $user_id = $this->authentication->read('identifier');
         $cliente = $this->usuario_model->get_full_identidad($user_id);
