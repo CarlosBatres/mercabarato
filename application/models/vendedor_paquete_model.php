@@ -107,7 +107,13 @@ class Vendedor_paquete_model extends MY_Model {
             return FALSE;
         }
     }
-
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public function buscar_vendedores($params, $limit, $offset) {
         $this->db->start_cache();
         $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address,"
@@ -157,7 +163,13 @@ class Vendedor_paquete_model extends MY_Model {
             return array("total" => 0);
         }
     }
-
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public function find_paquetes($params, $limit, $offset) {
         $this->db->start_cache();
         $this->db->select("vendedor_paquete.*,vendedor.nombre AS vendedor_nombre,usuario.email,usuario.ultimo_acceso");
@@ -188,6 +200,35 @@ class Vendedor_paquete_model extends MY_Model {
             $this->db->flush_cache();
             return array("total" => 0);
         }
+    }
+    /**
+     * 
+     * @return boolean
+     */
+    public function get_paquetes_a_caducar(){
+        $this->db->select("*");
+        $this->db->from($this->_table);
+        $this->db->where('aprobado', '1');
+        $this->db->where('fecha_terminar <=', date('Y-m-d'));
+        $this->db->order_by('fecha_terminar', 'desc');        
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            return $result->result();
+        } else {
+            return FALSE;
+        }
+        
+    }
+    /**
+     * 
+     * @param type $vendedor_paquete_id
+     */
+    public function paquete_vencido($vendedor_paquete_id){
+        $paquete=$this->get($vendedor_paquete_id);
+        if($paquete){            
+            $this->vendedor_model->inhabilitar($paquete->vendedor_id);            
+        }                
     }
 
 }

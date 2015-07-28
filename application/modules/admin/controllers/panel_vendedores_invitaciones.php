@@ -5,18 +5,10 @@ if (!defined('BASEPATH'))
 
 class Panel_vendedores_invitaciones extends ADController {
 
-    var $identidad;
-
     public function __construct() {
         parent::__construct();
         $this->_validar_conexion();
-        $this->get_identidad();
-    }
-
-    private function get_identidad() {
-        $user_id = $this->authentication->read('identifier');
-        $vendedor = $this->usuario_model->get_full_identidad($user_id);
-        $this->identidad = $vendedor;
+        $this->_validar_vendedor_habilitado();
     }
 
     /**

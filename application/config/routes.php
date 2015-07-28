@@ -233,6 +233,9 @@ $route['admin/vendedores_admin/ajax_get_listado_resultados'] = 'admin/vendedores
 $route['admin/vendedores_admin/ajax_find_paquetes'] = 'admin/vendedores_admin/ajax_find_paquetes';
 $route['admin/acceso_restringido'] = 'admin/main/acceso_restringido';
 
+$route['admin/sistema/validar_paquetes'] = 'admin/sistema/validar_paquetes';
+$route['admin/sistema/productos_novedades'] = 'admin/sistema/productos_novedades';
+
 $route['default_controller'] = 'home/producto/view_principal';
 $route['404_override'] = 'home/main/not_found';
 $route['pagina-no-existe'] = 'home/main/not_found';

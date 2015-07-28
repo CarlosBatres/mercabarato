@@ -5,21 +5,10 @@ if (!defined('BASEPATH'))
 
 class Panel_vendedores_tarifas extends ADController {
 
-    var $identidad;
-
     public function __construct() {
         parent::__construct();
         $this->_validar_conexion();
-        $this->get_identidad();
-    }
-
-    /**
-     * 
-     */
-    private function get_identidad() {
-        $user_id = $this->authentication->read('identifier');
-        $vendedor = $this->usuario_model->get_full_identidad($user_id);
-        $this->identidad = $vendedor;
+        $this->_validar_vendedor_habilitado();
     }
 
     /**
@@ -28,14 +17,20 @@ class Panel_vendedores_tarifas extends ADController {
     public function nueva_tarifa_paso1() {
         $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());
 
-        if ($paquete->limite_productos != "0") {
-            $this->template->set_title("Panel de Control - Mercabarato.com");
-            $this->template->set_layout('panel_vendedores');
-            $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado_productos.js");
+        if ($paquete) {
+            if ($paquete->limite_productos != "0") {
+                $this->template->set_title("Panel de Control - Mercabarato.com");
+                $this->template->set_layout('panel_vendedores');
+                $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado_productos.js");
 
-            $this->session->unset_userdata('pv_tarifas_incluir_ids_productos');
+                $this->session->unset_userdata('pv_tarifas_incluir_ids_productos');
 
-            $this->template->load_view('admin/panel_vendedores/tarifas/listado_productos');
+                $this->template->load_view('admin/panel_vendedores/tarifas/listado_productos');
+            } else {
+                $this->template->set_title("Panel de Control - Mercabarato.com");
+                $this->template->set_layout('panel_vendedores');
+                $this->template->load_view('admin/panel_vendedores/producto/producto_limite');
+            }
         } else {
             $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
@@ -47,13 +42,25 @@ class Panel_vendedores_tarifas extends ADController {
      * 
      */
     public function nueva_seleccion_clientes() {
-        $this->template->set_title("Panel de Control - Mercabarato.com");
-        $this->template->set_layout('panel_vendedores');
-        $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado_clientes.js");
+        $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());
 
-        $this->session->unset_userdata('pv_tarifas_incluir_ids_clientes');
-
-        $this->template->load_view('admin/panel_vendedores/tarifas/listado_clientes');
+        if ($paquete) {
+            if ($paquete->limite_productos != "0") {
+                $this->template->set_title("Panel de Control - Mercabarato.com");
+                $this->template->set_layout('panel_vendedores');
+                $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado_clientes.js");
+                $this->session->unset_userdata('pv_tarifas_incluir_ids_clientes');
+                $this->template->load_view('admin/panel_vendedores/tarifas/listado_clientes');
+            } else {
+                $this->template->set_title("Panel de Control - Mercabarato.com");
+                $this->template->set_layout('panel_vendedores');
+                $this->template->load_view('admin/panel_vendedores/producto/producto_limite');
+            }
+        } else {
+            $this->template->set_title("Panel de Control - Mercabarato.com");
+            $this->template->set_layout('panel_vendedores');
+            $this->template->load_view('admin/panel_vendedores/producto/producto_limite');
+        }
     }
 
     /**
@@ -88,14 +95,20 @@ class Panel_vendedores_tarifas extends ADController {
     public function view_listado() {
         $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());
 
-        if ($paquete->limite_productos != "0") {
-            $this->template->set_title("Panel de Control - Mercabarato.com");
-            $this->template->set_layout('panel_vendedores');
+        if ($paquete) {
+            if ($paquete->limite_productos != "0") {
+                $this->template->set_title("Panel de Control - Mercabarato.com");
+                $this->template->set_layout('panel_vendedores');
 
-            $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado.js");
-            $categorias = $this->categoria_model->get_all();
-            $data = array("categorias" => $categorias);
-            $this->template->load_view('admin/panel_vendedores/tarifas/listado', $data);
+                $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado.js");
+                $categorias = $this->categoria_model->get_all();
+                $data = array("categorias" => $categorias);
+                $this->template->load_view('admin/panel_vendedores/tarifas/listado', $data);
+            } else {
+                $this->template->set_title("Panel de Control - Mercabarato.com");
+                $this->template->set_layout('panel_vendedores');
+                $this->template->load_view('admin/panel_vendedores/producto/producto_limite');
+            }
         } else {
             $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
@@ -179,12 +192,10 @@ class Panel_vendedores_tarifas extends ADController {
 
                 $this->session->unset_userdata('pv_tarifas_incluir_ids_clientes');
                 $this->session->unset_userdata('pv_tarifas_incluir_ids_productos');
-                redirect('panel_vendedor/tarifas/ver-tarifa/'.$tarifa_general_id);
+                redirect('panel_vendedor/tarifas/ver-tarifa/' . $tarifa_general_id);
             }
         }
     }
-
-
 
     /**
      * Editar Tarifa General
@@ -207,11 +218,11 @@ class Panel_vendedores_tarifas extends ADController {
             redirect('panel_vendedor/tarifas/listado');
         }
     }
-    
+
     public function modificar_clientes($tarifa_general_id) {
         $tarifa_general = $this->tarifa_general_model->get($tarifa_general_id);
         if ($tarifa_general) {
-            if ($this->tarifa_general_model->get_vendedor($tarifa_general_id) == $this->identidad->get_vendedor_id()) {                
+            if ($this->tarifa_general_model->get_vendedor($tarifa_general_id) == $this->identidad->get_vendedor_id()) {
                 $this->template->set_title("Panel de Control - Mercabarato.com");
                 $this->template->set_layout('panel_vendedores');
                 $data = array("tarifa_general" => $tarifa_general);
@@ -247,9 +258,5 @@ class Panel_vendedores_tarifas extends ADController {
             redirect('panel_vendedor/tarifas/listado');
         }
     }
-
-    
-    
-    
 
 }

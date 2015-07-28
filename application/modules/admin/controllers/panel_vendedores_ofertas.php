@@ -5,23 +5,12 @@ if (!defined('BASEPATH'))
 
 class Panel_vendedores_ofertas extends ADController {
 
-    var $identidad;
-
     public function __construct() {
         parent::__construct();
         $this->_validar_conexion();
-        $this->get_identidad();
+        $this->_validar_vendedor_habilitado();
     }
-
-    /**
-     * 
-     */
-    private function get_identidad() {
-        $user_id = $this->authentication->read('identifier');
-        $vendedor = $this->usuario_model->get_full_identidad($user_id);
-        $this->identidad = $vendedor;
-    }
-
+  
     public function nueva_oferta_paso1() {
         $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());
 
