@@ -193,7 +193,7 @@ $route['panel_vendedor/ofertas/ajax_incluir_productos'] = 'admin/panel_vendedore
 $route['panel_vendedor/ofertas/ajax_remover_productos'] = 'admin/panel_vendedores_ofertas_helper/ajax_remover_productos';
 $route['panel_vendedor/ofertas/ajax_modificar_costo_oferta'] = 'admin/panel_vendedores_ofertas_helper/ajax_modificar_costo_oferta';
 $route['panel_vendedor/ofertas/ajax_modificar_productos'] = 'admin/panel_vendedores_ofertas_helper/ajax_modificar_productos';
-
+ 
 
 /* Admin */
 $route['admin'] = 'admin/main';
