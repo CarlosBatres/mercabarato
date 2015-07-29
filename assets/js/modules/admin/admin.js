@@ -191,7 +191,7 @@
     });
 
     $(function() {
-        $('#side-menu').metisMenu();        
+        $('#side-menu').metisMenu();
     });
 
     //Loads the correct sidebar on window load,
@@ -257,5 +257,19 @@
             }
         }
     });
+    
+    $.validator.addMethod(
+            "greaterThan",
+            function(value, element, params) {
+                var startDate = $.datepicker.formatDate('yy-mm-dd', params.datepicker("getDate"));                           
+                var endDate = $.datepicker.formatDate('yy-mm-dd', $('#'+element.id).datepicker("getDate"));                                               
+                
+                if (!/Invalid|NaN/.test(new Date(endDate))) {
+                    return new Date(endDate) > new Date(startDate);
+                }
+
+                return false;
+            },
+            'Must be greater than {0}.');
 
 })(window);

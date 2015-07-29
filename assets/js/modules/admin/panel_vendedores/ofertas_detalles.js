@@ -20,12 +20,14 @@ $(document).ready(function() {
         rules: {            
             valor: {required: true,number:true},
             fecha_inicio: {required: true},
-            fecha_finaliza: {required: true},            
+            fecha_finaliza: {required: true},     
+            nombre: {required:true}
         },
         messages: {            
             valor: {required: "Este campo es necesario.",number:"Este campo tiene que ser un numero"},
             fecha_inicio: {required:"Indica una fecha de inicio de la oferta",date:"Ingresa una fecha valida"},
             fecha_finaliza: {required:"Indica una fecha de finalizacion de la oferta",date:"Ingresa una fecha valida"},
+            nombre: {required:" Indique un nombre para identificar la oferta."}
         }
     });
     

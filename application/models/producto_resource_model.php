@@ -49,6 +49,9 @@ class Producto_resource_model extends MY_Model {
             if ($resource->tipo == "imagen_principal") {
                 unlink('./assets/'.$this->config->item('productos_img_path').'/'.$resource->filename);
                 unlink('./assets/'.$this->config->item('productos_img_path').'/thumbnail/'.$resource->filename);
+            }else if($resource->tipo == "imagen_alternativas"){
+                unlink('./assets/'.$this->config->item('productos_img_path').'/'.$resource->filename);
+                unlink('./assets/'.$this->config->item('productos_img_path').'/thumbnail/'.$resource->filename);
             }
         }
         $this->delete_by("producto_id",$producto_id);

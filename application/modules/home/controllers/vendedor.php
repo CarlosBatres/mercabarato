@@ -23,11 +23,14 @@ class Vendedor extends MY_Controller {
                 if (!$this->cliente_model->es_vendedor($cliente->id)) {
                     $this->session->unset_userdata('afiliacion_cliente');
                     $this->session->unset_userdata('afiliacion_vendedor');
+                    $this->session->unset_userdata('afiliacion_localizacion');
+
+                    $paises = $this->pais_model->get_all();
 
                     $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
                     $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
                     $this->template->add_js('modules/home/perfil.js');
-                    $this->template->load_view('home/vendedor/afiliarse', array("cliente" => $cliente, "html_options" => $html_options, "keywords" => $keywords));
+                    $this->template->load_view('home/vendedor/afiliarse', array("paises" => $paises, "cliente" => $cliente, "html_options" => $html_options, "keywords" => $keywords));
                 } else {
                     redirect('usuario/perfil');
                 }
@@ -79,12 +82,30 @@ class Vendedor extends MY_Controller {
                 "telefono_movil" => $this->input->post('telefono_movil')
             );
 
+            $pais = $this->input->post('pais');
+            $provincia = $this->input->post('provincia');
+            $poblacion = $this->input->post('poblacion');
+
+            if ($pais != "0") {
+                $data_localizacion = array(
+                    "usuario_id" => $user_id,
+                    "pais_id" => $pais,
+                    "provincia_id" => ($provincia == "0") ? null : $provincia,
+                    "poblacion_id" => ($poblacion == "0") ? null : $poblacion
+                );                
+            }else{
+                $data_localizacion=false;
+            }
+
+
             $this->session->unset_userdata('afiliacion_cliente');
             $this->session->unset_userdata('afiliacion_vendedor');
+            $this->session->unset_userdata('afiliacion_localizacion');
 
             $this->session->set_userdata(array(
                 'afiliacion_cliente' => $data_cliente,
                 'afiliacion_vendedor' => $data,
+                'afiliacion_localizacion' => $data_localizacion,
             ));
 
             redirect('usuario/afiliacion-paso2');
@@ -140,6 +161,7 @@ class Vendedor extends MY_Controller {
 
                 $data_cliente = $this->session->userdata('afiliacion_cliente');
                 $data_vendedor = $this->session->userdata('afiliacion_vendedor');
+                $data_localizacion = $this->session->userdata('afiliacion_localizacion');
                 $this->cliente_model->update($cliente->id, $data_cliente);
                 $data_vendedor["unique_slug"] = $this->slug->create_uri($data_vendedor["nombre"]);
 
@@ -150,10 +172,16 @@ class Vendedor extends MY_Controller {
                     $this->vendedor_model->update($vendedor->id, $data_vendedor);
                     $vendedor_id = $vendedor->id;
                 }
+                
+                if($data_localizacion){                    
+                    $this->localizacion_model->delete_by("usuario_id",$data_localizacion["usuario_id"]);
+                    $this->localizacion_model->insert($data_localizacion);
+                }
 
 
                 $this->session->unset_userdata('afiliacion_cliente');
                 $this->session->unset_userdata('afiliacion_vendedor');
+                $this->session->unset_userdata('afiliacion_localizacion');
 
                 $paquete = $this->paquete_model->get($paquete_id);
                 $data = array(
@@ -581,8 +609,8 @@ class Vendedor extends MY_Controller {
                     $keywords_text = substr($keywords_text, 0, -1);
                 } else {
                     $keywords_text = null;
-                }                                
-                
+                }
+
 
                 $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
 
@@ -591,7 +619,7 @@ class Vendedor extends MY_Controller {
                     $this->vendedor_model->cleanup_image($vendedor->id);
                 } else {
                     $filename = null;
-                }                
+                }
 
                 $data_vendedor = array(
                     "nombre" => ($this->input->post('nombre_empresa') != '') ? $this->input->post('nombre_empresa') : null,
@@ -605,7 +633,7 @@ class Vendedor extends MY_Controller {
                     "filename" => $filename,
                     "keyword" => $keywords_text
                 );
-                
+
                 $data_vendedor["unique_slug"] = $this->slug->create_uri($data_vendedor["nombre"]);
                 $this->vendedor_model->update($vendedor->id, $data_vendedor);
 

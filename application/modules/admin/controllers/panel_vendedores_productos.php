@@ -129,22 +129,35 @@ class Panel_vendedores_productos extends ADController {
 
                     $this->producto_model->update($producto_id, $data);
 
-                    if ($this->input->post('file_name') !== "") {
-                        $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto_id);
-                        if ($producto_imagen) {
-                            $this->producto_resource_model->delete($producto_imagen->id);
+                    if ($this->input->post('file_name') != "") {
+                        $this->producto_resource_model->cleanup_resources($producto_id);
+
+                        $filenames = explode(";;", $this->input->post('file_name'));
+                        if (sizeof($filenames) > 0) {
+                            foreach ($filenames as $key => $filename) {
+                                if ($key == 0) {
+                                    $data_img = array(
+                                        "producto_id" => $producto_id,
+                                        "nombre" => "Producto: " . $data["nombre"],
+                                        "descripcion" => "Imagen principal del producto " . $data["nombre"],
+                                        "tipo" => "imagen_principal",
+                                        "filename" => $filename,
+                                        "orden" => 0,
+                                    );
+                                    $this->producto_resource_model->insert($data_img);
+                                } else {
+                                    $data_img = array(
+                                        "producto_id" => $producto_id,
+                                        "nombre" => "Producto: " . $data["nombre"],
+                                        "descripcion" => "Imagen del producto " . $data["nombre"],
+                                        "tipo" => "imagen_alternativas",
+                                        "filename" => $filename,
+                                        "orden" => $key,
+                                    );
+                                    $this->producto_resource_model->insert($data_img);
+                                }
+                            }
                         }
-
-                        $data_img = array(
-                            "producto_id" => $producto_id,
-                            "nombre" => "Imagen principal del producto",
-                            "descripcion" => "Idealmente esta imagen seria lo mas grande posible.",
-                            "tipo" => "imagen_principal",
-                            "filename" => $this->input->post('file_name'),
-                            "orden" => 0,
-                        );
-
-                        $this->producto_resource_model->insert($data_img);
                     }
 
                     $this->session->set_flashdata('success', 'Producto modificado con exito');
@@ -159,7 +172,7 @@ class Panel_vendedores_productos extends ADController {
                     $this->template->set_layout('panel_vendedores');
                     $this->template->add_js("modules/admin/panel_vendedores/productos.js");
                     $vendedor = $this->vendedor_model->get($producto->vendedor_id);
-                    $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto->id);
+                    $producto_imagenes = $this->producto_resource_model->get_producto_imagenes($producto->id);
 
                     $categorias_tree = $this->categoria_model->get_full_tree();
                     $categorias_tree_html = $this->_build_categorias_tree($categorias_tree, $producto->categoria_id);
@@ -168,7 +181,7 @@ class Panel_vendedores_productos extends ADController {
                         "categorias_tree_html" => $categorias_tree_html,
                         "producto" => $producto,
                         "vendedor" => $vendedor,
-                        "producto_imagen" => $producto_imagen);
+                        "producto_imagenes" => $producto_imagenes);
 
                     $this->load->helper('ckeditor');
 
