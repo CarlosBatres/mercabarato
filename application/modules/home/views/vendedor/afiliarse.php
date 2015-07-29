@@ -106,6 +106,45 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="lead">Si quieres que tus productos esten restringidos a una zona en particular indicalo a continuacion, de lo contrario se recomienda dejar solo <strong>España</strong> seleccionado.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">                                
+                                <select name="pais" class="form-control">
+                                    <option value="0">País</option>
+                                    <?php
+                                    foreach ($paises as $pais):
+                                        $class = "";
+                                        if ($pais->nombre == "España") {
+                                            $class = "selected";
+                                        }
+                                        ?>                                        
+                                        <option value="<?php echo $pais->id ?>" <?php echo $class ?>><?php echo $pais->nombre ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">                                
+                                <select name="provincia" class="form-control">
+                                    <option value="0">Provincia</option>                        
+                                </select>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">                        
+                                <select name="poblacion" class="form-control">
+                                    <option value="0">Población</option>                        
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <br>
                     <div class="row">
                         <div class="col-md-12">

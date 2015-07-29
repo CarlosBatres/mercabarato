@@ -60,7 +60,14 @@
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Mis Productos<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
+                        <?php
+                        if (strpos($this->uri->uri_string(), 'panel_vendedor/producto/') !== false) {
+                            $collapse = "in";
+                        } else {
+                            $collapse = "";
+                        }
+                        ?>
+                        <ul class="nav nav-second-level <?php echo $collapse ?>">
                             <li>
                                 <a href="<?php echo site_url('panel_vendedor/producto/agregar'); ?>"> Agregar un producto</a>
                             </li>                            
@@ -71,7 +78,14 @@
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-newspaper-o fa-fw"></i> Mis Anuncios<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
+                        <?php
+                        if (strpos($this->uri->uri_string(), 'panel_vendedor/anuncio/') !== false) {
+                            $collapse = "in";
+                        } else {
+                            $collapse = "";
+                        }
+                        ?>
+                        <ul class="nav nav-second-level <?php echo $collapse ?>">
                             <li>
                                 <a href="<?php echo site_url('panel_vendedor/anuncio/agregar'); ?>"> Agregar un anuncio</a>
                             </li>                            
@@ -120,12 +134,38 @@
                     </li>  
                     <li>
                         <a href="#"><i class="fa fa-area-chart fa-fw"></i> Mis Ofertas<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
+                        <?php
+                        if (strpos($this->uri->uri_string(), 'panel_vendedor/ofertas/') !== false) {
+                            $collapse = "in";
+                        } else {
+                            $collapse = "";
+                        }
+                        ?>
+                        <ul class="nav nav-second-level <?php echo $collapse ?>">
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/ofertas/nueva'); ?>"> Nueva Oferta</a>
+                                <?php
+                                if (strpos($this->uri->uri_string(), 'panel_vendedor/ofertas/nueva') !== false ||
+                                        strpos($this->uri->uri_string(), 'panel_vendedor/ofertas/seleccion_clientes') !== false ||
+                                        strpos($this->uri->uri_string(), 'panel_vendedor/ofertas/detalles') !== false) {
+                                    $class = "active";
+                                } else {
+                                    $class = "";
+                                }
+                                ?>
+                                <a class="<?php echo $class; ?>" href="<?php echo site_url('panel_vendedor/ofertas/nueva'); ?>"> Nueva Oferta</a>
                             </li>                            
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/ofertas/listado'); ?>"> Listado de Ofertas</a>
+                                <?php
+                                if (strpos($this->uri->uri_string(), 'panel_vendedor/ofertas/listado') !== false ||
+                                        strpos($this->uri->uri_string(), 'panel_vendedor/ofertas/ver-oferta') !== false ||
+                                        strpos($this->uri->uri_string(), 'panel_vendedor/ofertas/modificar-productos') !== false ||
+                                        strpos($this->uri->uri_string(), 'panel_vendedor/ofertas/modificar-clientes') !== false) {
+                                    $class = "active";
+                                } else {
+                                    $class = "";
+                                }
+                                ?>
+                                <a class="<?php echo $class; ?>" href="<?php echo site_url('panel_vendedor/ofertas/listado'); ?>"> Listado de Ofertas</a>
                             </li>                            
                         </ul>                         
                     </li>

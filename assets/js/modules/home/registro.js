@@ -27,6 +27,8 @@ $(document).ready(function() {
             }
         });
     });   
+    
+    $('#form_crear').find('select[name="pais"]').trigger('change');
 
     $("#datepicker").datepicker({
         changeMonth: true,

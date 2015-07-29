@@ -16,13 +16,13 @@ class Oferta_model extends MY_Model {
      * @param type $producto_ids
      */
     public function get_clientes_for_productos($producto_ids) {
-        $this->db->select("grupo.cliente_id");
-        $this->db->from("grupo");        
-        $this->db->join("grupo_oferta", "grupo_oferta.grupo_id=grupo.id", 'INNER');
-        $this->db->join("oferta", "oferta.id=grupo_oferta.oferta_id", 'INNER');
+        $this->db->select("grupo_oferta.cliente_id");
+        $this->db->from("grupo_oferta");                
+        $this->db->join("oferta", "oferta.oferta_general_id=grupo_oferta.oferta_general_id", 'INNER');
+        $this->db->join("oferta_general", "oferta_general.id=oferta.oferta_general_id", 'INNER');
         
         $this->db->where_in("oferta.producto_id", $producto_ids);
-        $this->db->where("oferta.fecha_finaliza >", date("Y-m-d"));
+        $this->db->where("oferta_general.fecha_finaliza >", date("Y-m-d"));
         
         $result = $this->db->get();
 

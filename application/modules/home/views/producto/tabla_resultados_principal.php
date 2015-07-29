@@ -22,7 +22,7 @@
                     <div class="col-md-8">
                         <div class="row">
                             <a class="nombre-productos" href="<?php echo site_url("productos/" . $producto->unique_slug) ?>"><?php echo truncate($producto->nombre, 100); ?></a>
-                            <p><?php echo truncate(($producto->descripcion), 100); ?></p>
+                            <p><?php echo truncate_html($producto->descripcion, 100); ?></p>                            
                         </div>
 
                         <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>

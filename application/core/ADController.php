@@ -6,7 +6,7 @@ class ADController extends MY_Controller {
 
     var $module;
     var $class;
-    var $method;        
+    var $method;
     var $identidad;
 
     public function __construct() {
@@ -14,10 +14,10 @@ class ADController extends MY_Controller {
         $this->module = $this->router->fetch_module();
         $this->class = $this->router->fetch_class();
         $this->method = $this->router->fetch_method();
-        
-        $this->get_identidad();                
+
+        $this->get_identidad();
     }
-    
+
     /**
      * 
      */
@@ -65,7 +65,7 @@ class ADController extends MY_Controller {
     public function _validar_acceso() {
         //$user_id = $this->authentication->read('identifier');
         //$perfil = $this->usuario_model->get($user_id);
-                
+
         $permiso = $this->permisos_model->get($this->identidad->usuario->permisos_id);
         if ($permiso) {
             $perm_array = json_decode($permiso->controllers);
@@ -91,15 +91,18 @@ class ADController extends MY_Controller {
             return false;
         }
     }
+
     /**
      * 
      * @return boolean
      */
     public function _validar_vendedor_habilitado() {
-        if(!$this->identidad->es_vendedor_habilitado()){
-            redirect('acceso_restringido');
-        }else{
-            return true;
+        if ($this->identidad) {
+            if (!$this->identidad->es_vendedor_habilitado()) {
+                redirect('acceso_restringido');
+            } else {
+                return true;
+            }
         }
     }
 

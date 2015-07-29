@@ -38,26 +38,36 @@
                     </div>
                 </div> 
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <label>Imagen del Producto</label>
-                            <?php if ($producto_imagen): ?>
-                                <div class="preview_imagen thumbnail">                        
-                                    <img src="<?php echo assets_url($this->config->item('productos_img_path')) . '/' . $producto_imagen->filename ?>"/>
-                                </div>
-                                <br>
-                                <button type="button" id="cambiar_imagen" class="btn btn-lg btn-primary"> Cambiar Imagen</button>
-                                <div class='fileupload_button' style='display:none'>
-                                    <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('panel_vendedor/producto/upload_image') ?>">
+                            <label>Imagenes del producto</label>
+                            <br><br>                            
+                            <?php
+                            if ($producto_imagenes):
+                                foreach ($producto_imagenes as $image):
+                                    ?>                                    
+                                    <div class="col-md-4 producto-img-container">
+                                        <div class="frame">
+                                            <span class="helper"></span>
+                                            <img src="<?php echo assets_url($this->config->item('productos_img_path')) . '/' . $image->filename ?>" class="producto-img"/>
+                                        </div>
+                                    </div>
+
+                                <?php endforeach; ?>                                
+                                <div class="col-md-12">
+                                    <button type="button" id="cambiar_imagen" class="btn btn-lg btn-primary"> Reemplazar todas las Imagenes</button>                                
+                                    <div class='fileupload_button' style='display:none'>
+                                        <input id="fileupload" type="file" name="files[]" multiple data-url="<?php echo site_url('panel_vendedor/producto/upload_image') ?>">
+                                    </div>
                                 </div>
                             <?php else:; ?>
-                                <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('panel_vendedor/producto/upload_image') ?>">                                
+                                <input id="fileupload" type="file" name="files[]" multiple data-url="<?php echo site_url('panel_vendedor/producto/upload_image') ?>">                                
                             <?php endif; ?>
-
                             <input type="hidden" name="file_name" id="file_name" value="">                    
                         </div> 
                     </div>
                 </div>
+                <br><br>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
