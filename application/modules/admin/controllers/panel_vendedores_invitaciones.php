@@ -107,7 +107,7 @@ class Panel_vendedores_invitaciones extends ADController {
                     ),
                 );
 
-                
+
                 $this->template->load_view('admin/panel_vendedores/invitados/enviar_invitacion', $data);
             }
         } else {
@@ -172,12 +172,12 @@ class Panel_vendedores_invitaciones extends ADController {
                     $this->load->library('email');
                     $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                     $this->email->to($email);
-                    $this->email->subject('Invitacion de Mercadolibre.com');
-                    $data_email = array("titulo" => $titulo, "comentario", $comentario);
+                    $this->email->subject('Invitacion de Mercabarato.com');
+                    $data_email = array("titulo" => $titulo, "comentario"=>$comentario);
                     $this->email->message($this->load->view('home/emails/invitacion_email', $data_email, true));
                     $this->email->send();
-                }
-
+                }                
+                
                 $this->session->set_flashdata('success', 'Invitacion Enviada');
                 redirect('panel_vendedor/invitaciones/buscar');
             } else {
