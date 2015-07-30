@@ -165,11 +165,13 @@ class Cliente extends MY_Controller {
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
 
-            //$invitaciones = $this->invitacion_model->get_invitaciones_pendientes($cliente->id);
-
-            $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
-            $this->template->add_js('modules/home/invitaciones.js');
-            $this->template->load_view('home/cliente/invitaciones', array("html_options" => $html_options));
+            if (!$cliente_es_vendedor) {
+                $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+                $this->template->add_js('modules/home/invitaciones.js');
+                $this->template->load_view('home/cliente/invitaciones', array("html_options" => $html_options));
+            } else {
+                redirect('usuario/perfil');
+            }
         } else {
             redirect('');
         }
@@ -285,6 +287,18 @@ class Cliente extends MY_Controller {
                     "comentario" => ($this->input->post('mensaje') != '') ? $this->input->post('mensaje') : null,
                     "estado" => "1"
                 );
+
+                if ($this->config->item('emails_enabled')) {
+                    $usuario = $this->usuario_model->get($cliente->usuario_id);
+                    $this->load->library('email');
+                    $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                    $this->email->to($usuario->email);
+                    $this->email->subject('Invitacion de Mercabarato.com');
+                    $data_email = array("titulo" => $data["titulo"], "comentario" => $data["comentario"]);
+                    $this->email->message($this->load->view('home/emails/invitacion_email_cliente', $data_email, true));
+                    $this->email->send();
+                }                
+
                 $this->invitacion_model->insert($data);
                 redirect($vendedor->unique_slug);
             }
@@ -360,13 +374,13 @@ class Cliente extends MY_Controller {
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Anuncios y subastas');
             $user_id = $this->authentication->read('identifier');
-            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);            
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
             $solicitud_seguro = $this->solicitud_seguro_model->get($solicitud_seguro_id);
             // TODO : Validar que yo pueda acceder a esta
-            if ($solicitud_seguro) {                
+            if ($solicitud_seguro) {
                 //$this->template->add_js('modules/home/infocompras_seguros.js');
-                $this->template->load_view('home/cliente/infocompras_seguros_respuesta', array("seguro"=>$solicitud_seguro));
+                $this->template->load_view('home/cliente/infocompras_seguros_respuesta', array("seguro" => $solicitud_seguro));
             } else {
                 redirect('');
             }

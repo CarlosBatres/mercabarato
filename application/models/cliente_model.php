@@ -91,21 +91,13 @@ class Cliente_model extends MY_Model {
         if ($cliente) {
             $usuario = $this->usuario_model->get($cliente->usuario_id);
             $this->localizacion_model->delete_by("usuario_id", $usuario->id);
-            $this->invitacion_model->delete_by("invitar_para", $cliente->id);
-            $this->invitacion_model->delete_by("invitar_desde", $cliente->id);
+            $this->invitacion_model->delete_by("invitar_para", $usuario->id);
+            $this->invitacion_model->delete_by("invitar_desde", $usuario->id);
             $this->solicitud_seguro_model->delete_by("cliente_id", $id);
-            $this->visita_model->delete_by("cliente_id", $id);
-
-            $grupos = $this->grupo_model->get_many_by("cliente_id", $id);
-            if ($grupos) {
-                foreach ($grupos as $grupo) {
-                    $this->grupo_tarifa_model->delete_by("grupo_id", $grupo->id);
-                    $this->grupo_oferta_model->delete_by("grupo_id", $grupo->id);
-                }
-                $this->grupo_model->delete_by("cliente_id", $id);
-            }
-
-
+            $this->visita_model->delete_by("cliente_id", $id);            
+            
+            $this->grupo_tarifa_model->delete_by("cliente_id", $id);
+            $this->grupo_oferta_model->delete_by("cliente_id", $id);            
 
             $vendedor = $this->vendedor_model->get_by("cliente_id", $id);
             if ($vendedor) {

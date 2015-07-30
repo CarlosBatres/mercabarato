@@ -82,7 +82,18 @@ class Panel_vendedores_invitaciones extends ADController {
                         "invitar_para" => $cliente->usuario_id,
                         "estado" => "1"
                     );
-                    // estado=1 - Pendiente                    
+                    // estado=1 - Pendiente  
+
+                    if ($this->config->item('emails_enabled')) {
+                        $usuario=$this->usuario_model->get($cliente->usuario_id);
+                        $this->load->library('email');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($usuario->email);
+                        $this->email->subject('Invitacion de Mercabarato.com');
+                        $data_email = array("titulo" => $data["titulo"], "comentario" => $data["comentario"] ,"sin_registro"=>true);
+                        $this->email->message($this->load->view('home/emails/invitacion_email', $data_email, true));
+                        $this->email->send();
+                    }                    
 
                     $this->invitacion_model->insert($data);
                     $this->session->set_flashdata('success', 'Invitacion Enviada');
@@ -173,11 +184,11 @@ class Panel_vendedores_invitaciones extends ADController {
                     $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                     $this->email->to($email);
                     $this->email->subject('Invitacion de Mercabarato.com');
-                    $data_email = array("titulo" => $titulo, "comentario"=>$comentario);
+                    $data_email = array("titulo" => $titulo, "comentario" => $comentario);
                     $this->email->message($this->load->view('home/emails/invitacion_email', $data_email, true));
                     $this->email->send();
-                }                
-                
+                }
+
                 $this->session->set_flashdata('success', 'Invitacion Enviada');
                 redirect('panel_vendedor/invitaciones/buscar');
             } else {
