@@ -24,11 +24,11 @@
                                 <p><strong>Tienes una invitación pendiente de este vendedor.</strong></p>
                             <?php endif; ?>                            
                             <?php if ($invitacion->comentario != ""): ?> 
-                                <p><?php echo truncate($invitacion->comentario, 300) ?></p>                                                                                  
+                                <p><?php echo truncate_html($invitacion->comentario, 350) ?></p>                                                                                  
                             <?php endif; ?>                            
                         <?php else: ?>
                             <?php if ($invitacion->descripcion != ""): ?> 
-                                <p><?php echo truncate($invitacion->descripcion, 300) ?></p>                                                      
+                                <p><?php echo truncate_html($invitacion->descripcion, 350) ?></p>                                                      
                             <?php endif; ?>
 
                         <?php endif; ?>                

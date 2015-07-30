@@ -42,13 +42,13 @@ class Panel_vendedores_invitaciones extends ADController {
         $this->template->add_js("modules/admin/panel_vendedores/invitaciones_recibidas_listado.js");
         $this->template->load_view('admin/panel_vendedores/invitados/recibidas');
     }
-    
-    public function get_mensaje_invitacion($invitacion_id){
-        $invitacion=$this->invitacion_model->get($invitacion_id);
-        if($invitacion){            
-            echo "<p><strong>".$invitacion->titulo."</strong></p>";            
+
+    public function get_mensaje_invitacion($invitacion_id) {
+        $invitacion = $this->invitacion_model->get($invitacion_id);
+        if ($invitacion) {
+            echo "<p><strong>" . $invitacion->titulo . "</strong></p>";
             echo "<br>";
-            echo "<p>".$invitacion->comentario."</p>";            
+            echo "<p>" . $invitacion->comentario . "</p>";
             echo "<hr>";
         }
     }
@@ -93,8 +93,21 @@ class Panel_vendedores_invitaciones extends ADController {
             } else {
                 $this->template->set_title("Panel de Administracion - Mercabarato.com");
                 $this->template->set_layout('panel_vendedores');
+                $this->load->helper('ckeditor');
 
                 $data = array("cliente" => $cliente);
+                $data['ckeditor'] = array(
+                    //ID of the textarea that will be replaced
+                    'id' => 'content',
+                    'path' => 'assets/js/ckeditor',
+                    //Optionnal values
+                    'config' => array(
+                        'toolbar' => "Full", //Using the Full toolbar                        
+                        'height' => '200px', //Setting a custom height
+                    ),
+                );
+
+                
                 $this->template->load_view('admin/panel_vendedores/invitados/enviar_invitacion', $data);
             }
         } else {
@@ -108,8 +121,62 @@ class Panel_vendedores_invitaciones extends ADController {
             $accion = $this->input->post('accion');
             if ($accion == "send-invitacion") {
                 $email = $this->input->post('email');
+                $titulo = $this->input->post('titulo');
+                $comentario = $this->input->post('comentario');
 
-                //TODO : Enviar invitacion al email , crear el usuario/cliente con el correo y crear la invitacion
+                /**
+                 * Creo un cliente temporal para que se pueda registrar despues
+                 */
+                $user_id = $this->authentication->create_user($email, "passwordtemporal");
+                if ($user_id !== FALSE) {
+                    $secret_key = substr(md5(uniqid(mt_rand(), true)), 0, 30);
+                    $ip_address = $this->session->userdata('ip_address');
+                    $usuario = $this->usuario_model->get($user_id);
+                    $usuario->ip_address = $ip_address;
+                    $usuario->fecha_creado = date("Y-m-d H:i:s");
+                    $usuario->ultimo_acceso = date("Y-m-d H:i:s");
+                    $usuario->activo = 0;
+                    //$usuario->is_admin = 0;
+                    $usuario->temporal = 1;
+                    $usuario->secret_key = $secret_key;
+                    $this->usuario_model->update($user_id, $usuario);
+                }
+
+                $data = array(
+                    "usuario_id" => $user_id,
+                    "nombres" => null,
+                    "apellidos" => null,
+                    "sexo" => null,
+                    "fecha_nacimiento" => null,
+                    "codigo_postal" => null,
+                    "direccion" => null,
+                    "telefono_fijo" => null,
+                    "telefono_movil" => null,
+                    "keyword" => null
+                );
+
+                $this->cliente_model->insert($data);
+
+                $data_inv = array(
+                    "titulo" => $titulo,
+                    "comentario" => $comentario,
+                    "invitar_desde" => $this->identidad->usuario->id,
+                    "invitar_para" => $user_id,
+                    "estado" => "2"
+                );
+
+
+                $this->invitacion_model->insert($data_inv);
+
+                if ($this->config->item('emails_enabled')) {
+                    $this->load->library('email');
+                    $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                    $this->email->to($email);
+                    $this->email->subject('Invitacion de Mercadolibre.com');
+                    $data_email = array("titulo" => $titulo, "comentario", $comentario);
+                    $this->email->message($this->load->view('home/emails/invitacion_email', $data_email, true));
+                    $this->email->send();
+                }
 
                 $this->session->set_flashdata('success', 'Invitacion Enviada');
                 redirect('panel_vendedor/invitaciones/buscar');
@@ -119,8 +186,22 @@ class Panel_vendedores_invitaciones extends ADController {
         } else {
             $this->template->set_title("Panel de Administracion - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
+            $this->template->add_js("modules/admin/panel_vendedores/enviar_invitacion_email.js");
+            $this->load->helper('ckeditor');
 
-            $this->template->load_view('admin/panel_vendedores/invitados/enviar_invitacion_email');
+            $data = array();
+            $data['ckeditor'] = array(
+                //ID of the textarea that will be replaced
+                'id' => 'content',
+                'path' => 'assets/js/ckeditor',
+                //Optionnal values
+                'config' => array(
+                    'toolbar' => "Full", //Using the Full toolbar                        
+                    'height' => '200px', //Setting a custom height
+                ),
+            );
+
+            $this->template->load_view('admin/panel_vendedores/invitados/enviar_invitacion_email', $data);
         }
     }
 
@@ -215,8 +296,8 @@ class Panel_vendedores_invitaciones extends ADController {
      */
     public function aceptar_invitacion($id) {
         if ($this->input->is_ajax_request()) {
-            $user_id = $this->authentication->read('identifier');                        
-            $this->invitacion_model->aceptar_invitacion($id, $user_id);            
+            $user_id = $this->authentication->read('identifier');
+            $this->invitacion_model->aceptar_invitacion($id, $user_id);
         }
     }
 
@@ -261,7 +342,7 @@ class Panel_vendedores_invitaciones extends ADController {
                 $params["keywords"] = $keywords;
             }
             $params["invitar_desde"] = $this->identidad->usuario->id;
-
+            $params['usuario_activo'] = "1";
             $params["excluir_admins"] = true;
             $pagina = $this->input->post('pagina');
         } else {
@@ -328,6 +409,7 @@ class Panel_vendedores_invitaciones extends ADController {
             }
             $params["invitar_para"] = $this->identidad->usuario->id;
 
+            $params['usuario_activo'] = "1";
             $params["excluir_admins"] = true;
             $pagina = $this->input->post('pagina');
         } else {
@@ -393,7 +475,7 @@ class Panel_vendedores_invitaciones extends ADController {
                 $keywords = explode(",", $this->input->post('keywords'));
                 $params["keywords"] = $keywords;
             }
-
+            $params['usuario_activo'] = "1";
             $params["usuario_id"] = $this->identidad->usuario->id;
             $params["excluir_admins"] = true;
             $pagina = $this->input->post('pagina');
