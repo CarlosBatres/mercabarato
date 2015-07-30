@@ -158,7 +158,7 @@ class Invitacion_model extends MY_Model {
         $query.="INNER JOIN cliente c ON c.usuario_id = u.id ";
         $query.="LEFT JOIN vendedor v ON v.cliente_id = c.id ";
         $query.="WHERE ( 1";
-        
+
         if (isset($params['nombre'])) {
             $text = " AND CONCAT(c.nombres,' ',c.apellidos) LIKE '%" . $params['nombre'] . "%'";
             $query.=$text;
@@ -198,7 +198,7 @@ class Invitacion_model extends MY_Model {
             $text = " AND ( u.permisos_id != '1' AND u.permisos_id != '2' )";
             $query.=$text;
         }
-        
+
         if (isset($params['excluir_ids_clientes'])) {
             $ids = implode(",", $params['excluir_ids_clientes']);
             $query.=" AND c.id NOT IN(" . $ids . ")";
@@ -212,9 +212,9 @@ class Invitacion_model extends MY_Model {
         $query.=") temp";
 
         $query.=" ORDER BY " . $order_by . " " . $order;
-        if($limit){
+        if ($limit) {
             $query.=" LIMIT " . $offset . " , " . $limit;
-        }        
+        }
 
         $result = $this->db->query($query);
         $invitaciones = $result->result();
@@ -332,6 +332,11 @@ class Invitacion_model extends MY_Model {
             $this->db->where('(usuario.permisos_id!="1" AND usuario.permisos_id!="2")');   // TODO: Hardcode Ids 
         }
 
+        if (isset($params['usuario_activo'])) {
+            $this->db->where("usuario.activo", $params['usuario_activo']);
+        }
+
+
         /* if (isset($params['incluir_ids_clientes'])) {
           $this->db->where_in('invitacion.cliente_id', $params['incluir_ids_clientes']);
           }
@@ -393,6 +398,10 @@ class Invitacion_model extends MY_Model {
         if (isset($params['excluir_admins'])) {
             $this->db->where('(usuario.permisos_id!="1" AND usuario.permisos_id!="2")');   // TODO: Hardcode Ids 
         }
+        
+        if (isset($params['usuario_activo'])) {
+            $this->db->where("usuario.activo", $params['usuario_activo']);
+        }
 
         /* if (isset($params['incluir_ids_clientes'])) {
           $this->db->where_in('invitacion.cliente_id', $params['incluir_ids_clientes']);
@@ -415,23 +424,23 @@ class Invitacion_model extends MY_Model {
             return array("total" => 0);
         }
     }
-    
+
     public function son_contactos($persona, $invitado) {
         $recibi_invitacion = $this->invitacion_model->get_by(array("invitar_desde" => $persona, "invitar_para" => $invitado));
-        $result=false;
-        if($recibi_invitacion){
-            if($recibi_invitacion->estado=="2"){
+        $result = false;
+        if ($recibi_invitacion) {
+            if ($recibi_invitacion->estado == "2") {
                 return true;
             }
         }
-        
+
         $envie_invitacion = $this->invitacion_model->get_by(array("invitar_para" => $persona, "invitar_desde" => $invitado));
-        if($envie_invitacion){
-            if($envie_invitacion->estado=="2"){
+        if ($envie_invitacion) {
+            if ($envie_invitacion->estado == "2") {
                 return true;
             }
-        }   
-        
+        }
+
         return $result;
     }
 
