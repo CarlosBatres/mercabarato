@@ -144,6 +144,26 @@ class Cliente extends ADController {
             }
         }
     }
+    
+    /**
+     * 
+     * @param type $id
+     */
+    public function inhabilitar($id) {
+        if ($this->input->is_ajax_request()) {            
+            $cliente = $this->cliente_model->get($id);
+            $this->usuario_model->inhabilitar($cliente->usuario_id);
+            redirect('admin/usuarios');
+        }
+    }
+    
+    public function habilitar($id) {
+        if ($this->input->is_ajax_request()) {            
+            $cliente = $this->cliente_model->get($id);
+            $this->usuario_model->habilitar($cliente->usuario_id);
+            redirect('admin/usuarios');
+        }
+    }
 
     /**
      *  AJAX  Listado

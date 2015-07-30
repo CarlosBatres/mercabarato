@@ -1,9 +1,10 @@
 <div id="question" style="display:none; cursor: default">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title">Esta seguro que desea eliminar este usuario?.</h4>
+            <h4 class="modal-title">Eliminar Usuario?.</h4>
         </div>
-        <div class="modal-body">                                    
+        <div class="modal-body">  
+            <p class="content"> Estas seguro que deseas eliminar este usuario? , ten en cuenta que se eliminara todo lo asociado a el</p>
             <p class="text-center">
                 <button class="btn btn-success" type="button" id="yes"><i class="fa fa-check"></i> Si</button>
                 <button class="btn btn-danger" type="button" id="no"><i class="fa fa-close"></i> No</button>
@@ -42,27 +43,15 @@
                         <div class="panel-body">
                             <form action="<?php echo site_url('admin/cliente') ?>" method="post" class="search-form" id="listado-items">
                                 <div class="row">                                    
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label col-md-12" for="nombre">Nombre del Usuario</label>
                                             <div class="col-md-12">
                                                 <input type="text" name="nombre" id="nombre" value="" class="form-control"/>                                
                                             </div>
                                         </div>
-                                    </div>                                                                                                                                                
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-12" for="sexo">Sexo</label>
-                                            <div class="col-md-12">
-                                                <select name="sexo" class="form-control">
-                                                    <option value="X">Seleccione uno</option>
-                                                    <option value="H">Hombre</option>
-                                                    <option value="M">Mujer</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>                                     
-                                    <div class="col-md-8">
+                                    </div>                                                                                                                                                                                                                         
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label col-md-12" for="email">Email</label>
                                             <div class="col-md-12">

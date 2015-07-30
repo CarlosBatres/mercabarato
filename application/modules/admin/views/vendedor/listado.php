@@ -4,7 +4,7 @@
             <h4 class="modal-title">Eliminar Vendedor.</h4>
         </div>
         <div class="modal-body">                                    
-            <p> Estas seguro que deseas eliminar este vendedor? , ten en cuenta que se eliminara todo lo asociado a el</p>
+            <p class="content"> Estas seguro que deseas eliminar este vendedor? , ten en cuenta que se eliminara todo lo asociado a el</p>
             <p class="text-center">
                 <button class="btn btn-success" type="button" id="yes"><i class="fa fa-check"></i> Si</button>
                 <button class="btn btn-danger" type="button" id="no"><i class="fa fa-close"></i> No</button>

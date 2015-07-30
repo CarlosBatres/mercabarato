@@ -41,7 +41,7 @@ class Vendedor_model extends MY_Model {
      */
     public function get_admin_search($params, $limit, $offset) {
         $this->db->start_cache();
-        $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address");
+        $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.activo");
         $this->db->from($this->_table);
         $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
         $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');

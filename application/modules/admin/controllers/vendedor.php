@@ -166,6 +166,27 @@ class Vendedor extends ADController {
             redirect('admin/vendedores');
         }
     }
+    /**
+     * 
+     * @param type $id
+     */
+    public function inhabilitar($id) {
+        if ($this->input->is_ajax_request()) {
+            $vendedor = $this->vendedor_model->get($id);            
+            $cliente = $this->cliente_model->get($vendedor->cliente_id);
+            $this->usuario_model->inhabilitar($cliente->usuario_id);
+            redirect('admin/vendedores');
+        }
+    }
+    
+    public function habilitar($id) {
+        if ($this->input->is_ajax_request()) {
+            $vendedor = $this->vendedor_model->get($id);            
+            $cliente = $this->cliente_model->get($vendedor->cliente_id);
+            $this->usuario_model->habilitar($cliente->usuario_id);
+            redirect('admin/vendedores');
+        }
+    }
 
     /**
      *  AJAX  Listado
