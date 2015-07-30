@@ -27,7 +27,7 @@ class ADController extends MY_Controller {
         if($vendedor){
             $this->identidad = $vendedor;
         }else{
-            $this->identidad = new Identidad();
+            $this->identidad = false;
         }
         
     }
