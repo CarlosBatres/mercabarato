@@ -107,6 +107,20 @@ class Usuario_model extends MY_Model {
             return false;
         }
     }
+    
+    public function inhabilitar($usuario_id){
+        $usuario=$this->get($usuario_id);
+        if($usuario){
+            $this->update($usuario_id,array("activo"=>"0"));
+        }
+    }
+    
+    public function habilitar($usuario_id){
+        $usuario=$this->get($usuario_id);
+        if($usuario){
+            $this->update($usuario_id,array("activo"=>"1"));
+        }
+    }
 
 }
 

@@ -38,11 +38,22 @@ function bind_pagination_links() {
 }
 
 function bind_borrar_links() {
-    $('.table-responsive').find('.options').find('.vendedor_borrar').off();
-    $('.table-responsive').find('.options').find('.vendedor_borrar').on('click', function(e) {        
+    $('.table-responsive').find('.options').find('.action').off();
+    $('.table-responsive').find('.options').find('.action').on('click', function(e) {        
         e.preventDefault();        
         var a_href = $(this).attr('href');        
         $.blockUI({message: $('#question'), css: {}});
+        
+        if ($(this).hasClass('vendedor_borrar')) {
+            $('#question').find('.modal-title').html("Eliminar Vendedor?.");
+            $('#question').find('.modal-body').find('.content').html("Estas seguro que deseas Eliminar este vendedor? <br> Ten en cuenta que se eliminara todo lo asociado a el.");
+        }else if($(this).hasClass('vendedor_inhabilitar')){
+            $('#question').find('.modal-title').html("Inhabilitar al Vendedor?.");
+            $('#question').find('.modal-body').find('.content').html("Estas seguro que deseas Inhabilitar a este vendedor? <br> Ten en cuenta que no podra acceder a su cuenta.");
+        }else if($(this).hasClass('vendedor_habilitar')){
+            $('#question').find('.modal-title').html("Habilitar al Vendedor?.");
+            $('#question').find('.modal-body').find('.content').html("Estas seguro que deseas Habilitar a este vendedor?");
+        }
 
         $('#yes').off();
         $('#yes').click(function() {
