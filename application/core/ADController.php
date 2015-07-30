@@ -24,7 +24,12 @@ class ADController extends MY_Controller {
     private function get_identidad() {
         $user_id = $this->authentication->read('identifier');
         $vendedor = $this->usuario_model->get_full_identidad($user_id);
-        $this->identidad = $vendedor;
+        if($vendedor){
+            $this->identidad = $vendedor;
+        }else{
+            $this->identidad = new Identidad();
+        }
+        
     }
 
     /**
