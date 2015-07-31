@@ -260,5 +260,9 @@ class Panel_vendedores_ofertas extends ADController {
             redirect('panel_vendedor/ofertas/listado');
         }
     }
+    
+    
+    
+    
 
 }

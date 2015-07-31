@@ -84,9 +84,9 @@ class Producto_model extends MY_Model {
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
             $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
 
-            $query.="WHERE ( p.cliente_id ='" . $params['cliente_id']."'";
-            $query.= " AND (p.fecha_finaliza > '".date("Y-m-d")."' OR p.fecha_finaliza IS NULL)"; // NO Incluimos las ofertas VENCIDAS CUIDADO con fecha_finaliza//
-                
+            $query.="WHERE ( p.cliente_id ='" . $params['cliente_id'] . "'";
+            $query.= " AND (p.fecha_finaliza > '" . date("Y-m-d") . "' OR p.fecha_finaliza IS NULL)"; // NO Incluimos las ofertas VENCIDAS CUIDADO con fecha_finaliza//
+
             $sub_query = "";
             if (isset($params['nombre'])) {
                 $text = " AND p.nombre LIKE '%" . $params['nombre'] . "%'";
@@ -153,7 +153,7 @@ class Producto_model extends MY_Model {
                 $text = " AND p.tipo='tarifa'";
                 $query.=$text;
                 $sub_query.=$text;
-            }           
+            }
 
             $query.=") ";
 
@@ -432,13 +432,13 @@ class Producto_model extends MY_Model {
         $this->db->start_cache();
         $this->db->select("DISTINCT producto.id,producto.*,categoria.nombre AS Categoria", false);
         $this->db->from($this->_table);
-        $this->db->join("categoria", "categoria.id=producto.categoria_id", 'INNER');               
+        $this->db->join("categoria", "categoria.id=producto.categoria_id", 'INNER');
         $this->db->join("vendedor", "vendedor.id=producto.vendedor_id", 'INNER');
-        
+
         if (isset($params['tarifa_general_id'])) {
-            $this->db->join("tarifa", "tarifa.producto_id=producto.id AND tarifa.tarifa_general_id='".$params["tarifa_general_id"]."'", 'INNER');            
-        }        
-      
+            $this->db->join("tarifa", "tarifa.producto_id=producto.id AND tarifa.tarifa_general_id='" . $params["tarifa_general_id"] . "'", 'INNER');
+        }
+
         if (isset($params['nombre'])) {
             $this->db->like('producto.nombre', $params['nombre'], 'both');
         }
@@ -454,16 +454,16 @@ class Producto_model extends MY_Model {
         if (isset($params['excluir_ids'])) {
             $this->db->where_not_in('producto.id', $params['excluir_ids']);
         }
-        
+
 
         $this->db->stop_cache();
         $count = count($this->db->get()->result());
 
         if ($count > 0) {
             $this->db->order_by('producto.id', 'asc');
-            if($limit){
+            if ($limit) {
                 $this->db->limit($limit, $offset);
-            }            
+            }
             $productos = $this->db->get()->result();
             $this->db->flush_cache();
             return array("productos" => $productos, "total" => $count);
@@ -480,6 +480,7 @@ class Producto_model extends MY_Model {
     public function delete($id) {
         $this->producto_resource_model->cleanup_resources($id);
         $this->visita_model->delete_by("producto_id", $id);
+        $this->requisito_visitas_model->delete_by("producto_id", $id);
 
         $tarifas = $this->tarifa_model->get_many_by("producto_id", $id);
         if ($tarifas) {
@@ -487,7 +488,7 @@ class Producto_model extends MY_Model {
                 $this->tarifa_model->delete($tarifa->id);
             }
         }
-        
+
         $ofertas = $this->oferta_model->get_many_by("producto_id", $id);
         if ($ofertas) {
             foreach ($ofertas as $oferta) {
@@ -577,11 +578,10 @@ class Producto_model extends MY_Model {
             return array("total" => 0);
         }
     }
-    
-    
-    public function get_novedades_fecha($fecha_inicio,$fecha_final){        
+
+    public function get_novedades_fecha($fecha_inicio, $fecha_final) {
         $this->db->select('*');
-        $this->db->from('productos_precios pp');                
+        $this->db->from('productos_precios pp');
         $this->db->where('pp.fecha_insertado >=', $fecha_inicio);
         $this->db->where('pp.fecha_insertado <=', $fecha_final);
 
@@ -590,6 +590,47 @@ class Producto_model extends MY_Model {
             return $results;
         } else {
             return false;
+        }
+    }
+
+    public function verificar_oferta($producto_id) {
+        $producto = $this->get($producto_id);
+        if ($producto) {
+            $oferta = $this->oferta_model->get_by("producto_id", $producto_id);
+            $user_id = $this->authentication->read('identifier');
+            $usuario = $this->usuario_model->get_full_identidad($user_id);
+
+            if ($oferta) {
+                $grupo_oferta = $this->grupo_oferta_model->get_by(array("cliente_id" => $usuario->cliente->id, "oferta_general_id" => $oferta->oferta_general_id));
+                if (!$grupo_oferta) {
+                    if ($this->requisito_visitas_model->cumple_todos_requisitos($oferta->oferta_general_id, $usuario->cliente->id)) {
+                        $codigo = strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 15));
+                        $data = array(
+                            "cliente_id" => $usuario->cliente->id,
+                            "oferta_general_id" => $oferta->oferta_general_id,
+                            "codigo" => $codigo
+                        );
+                        $this->grupo_oferta_model->insert($data);
+                        // TODO: Enviar emails a vendedor y cliente de que ya cumple con la oferta
+                    }
+                }
+            }
+            
+            $requisitos = $this->requisito_visitas_model->get_many_by("producto_id", $producto_id);
+            if ($requisitos) {
+                foreach ($requisitos as $req) {
+                    if ($this->requisito_visitas_model->cumple_todos_requisitos($req->oferta_general_id, $usuario->cliente->id)) {
+                        $codigo = strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 15));
+                        $data = array(
+                            "cliente_id" => $usuario->cliente->id,
+                            "oferta_general_id" => $req->oferta_general_id,
+                            "codigo" => $codigo
+                        );
+                        $this->grupo_oferta_model->insert($data);
+                        // TODO: Enviar emails a vendedor y cliente de que ya cumple con la oferta
+                    }
+                }
+            }
         }
     }
 

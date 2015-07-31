@@ -169,30 +169,43 @@ $route['panel_vendedor/infocompras/seguros'] = 'admin/panel_vendedores_infocompr
 $route['panel_vendedor/infocompras/seguros/responder/(:num)'] = 'admin/panel_vendedores_infocompras/responder_seguros/$1';
 $route['panel_vendedor/infocompras/ajax_get_seguros'] = 'admin/panel_vendedores_infocompras/ajax_get_seguros';
 
-$route['panel_vendedor/ofertas/nueva'] = 'admin/panel_vendedores_ofertas/nueva_oferta_paso1';
-$route['panel_vendedor/ofertas/seleccion_clientes'] = 'admin/panel_vendedores_ofertas/nueva_seleccion_clientes';
-$route['panel_vendedor/ofertas/detalles'] = 'admin/panel_vendedores_ofertas/detalles_oferta';
-$route['panel_vendedor/ofertas/crear'] = 'admin/panel_vendedores_ofertas/crear_oferta';
-$route['panel_vendedor/ofertas/borrar/(:num)'] = 'admin/panel_vendedores_ofertas/borrar/$1';
-$route['panel_vendedor/ofertas/listado'] = 'admin/panel_vendedores_ofertas/view_listado';
-$route['panel_vendedor/ofertas/ver-oferta/(:num)'] = 'admin/panel_vendedores_ofertas/ver_oferta/$1';
-$route['panel_vendedor/ofertas/ajax_get_productos'] = 'admin/panel_vendedores_ofertas_helper/ajax_get_productos';
-$route['panel_vendedor/ofertas/ajax_get_clientes'] = 'admin/panel_vendedores_ofertas_helper/ajax_get_clientes';
-$route['panel_vendedor/ofertas/ajax_get_productos_ofertados'] = 'admin/panel_vendedores_ofertas_helper/ajax_get_productos_ofertados';
-$route['panel_vendedor/ofertas/ajax_get_clientes_ofertados'] = 'admin/panel_vendedores_ofertas_helper/ajax_get_clientes_ofertados';
-$route['panel_vendedor/ofertas/ajax_get_oferta_detalles'] = 'admin/panel_vendedores_ofertas_helper/ajax_get_oferta_detalles';
-$route['panel_vendedor/ofertas/ajax_get_ofertas'] = 'admin/panel_vendedores_ofertas_helper/ajax_get_ofertas';
-$route['panel_vendedor/ofertas/modificar-clientes/(:num)'] = 'admin/panel_vendedores_ofertas/modificar_clientes/$1';
-$route['panel_vendedor/ofertas/modificar-productos/(:num)'] = 'admin/panel_vendedores_ofertas/modificar_productos/$1';
-$route['panel_vendedor/ofertas/modificar-datos/(:num)'] = 'admin/panel_vendedores_ofertas/modificar_datos/$1';
+$route['panel_vendedor/ofertas/listado'] = 'admin/panel_vendedores_ofertas2/view_listado';
+$route['panel_vendedor/ofertas/nueva'] = 'admin/panel_vendedores_ofertas2/nueva_oferta';
+$route['panel_vendedor/ofertas/crear'] = 'admin/panel_vendedores_ofertas2/crear_oferta';
+$route['panel_vendedor/ofertas/ver-oferta/(:num)'] = 'admin/panel_vendedores_ofertas2/ver_oferta/$1';
+$route['panel_vendedor/ofertas/ver-oferta-clientes/(:num)'] = 'admin/panel_vendedores_ofertas2/ver_oferta_clientes/$1';
+$route['panel_vendedor/ofertas/ajax_get_productos_ofertados'] = 'admin/panel_vendedores_ofertas2_helper/ajax_get_productos_ofertados';
+$route['panel_vendedor/ofertas/ajax_get_requisitos'] = 'admin/panel_vendedores_ofertas2_helper/ajax_get_requisitos';
+$route['panel_vendedor/ofertas/ajax_get_requisitos_disponibles'] = 'admin/panel_vendedores_ofertas2_helper/ajax_get_requisitos_disponibles';
+$route['panel_vendedor/ofertas/modificar-productos/(:num)'] = 'admin/panel_vendedores_ofertas2/modificar_productos/$1';
+$route['panel_vendedor/ofertas/ajax_get_productos'] = 'admin/panel_vendedores_ofertas2_helper/ajax_get_productos';
+$route['panel_vendedor/ofertas/ajax_incluir_productos'] = 'admin/panel_vendedores_ofertas2_helper/ajax_incluir_productos';
+$route['panel_vendedor/ofertas/ajax_remover_productos'] = 'admin/panel_vendedores_ofertas2_helper/ajax_remover_productos';
+$route['panel_vendedor/ofertas/ajax_incluir_clientes'] = 'admin/panel_vendedores_ofertas2_helper/ajax_incluir_clientes';
+$route['panel_vendedor/ofertas/ajax_remover_clientes'] = 'admin/panel_vendedores_ofertas2_helper/ajax_remover_clientes';
+$route['panel_vendedor/ofertas/ajax_modificar_costo_oferta'] = 'admin/panel_vendedores_ofertas2_helper/ajax_modificar_costo_oferta';
+$route['panel_vendedor/ofertas/ajax_modificar_productos'] = 'admin/panel_vendedores_ofertas2_helper/ajax_modificar_productos';
+$route['panel_vendedor/ofertas/ajax_get_ofertas'] = 'admin/panel_vendedores_ofertas2_helper/ajax_get_ofertas';
+$route['panel_vendedor/ofertas/borrar/(:num)'] = 'admin/panel_vendedores_ofertas2/borrar/$1';
+$route['panel_vendedor/ofertas/modificar-datos/(:num)'] = 'admin/panel_vendedores_ofertas2/modificar_datos/$1';
+$route['panel_vendedor/ofertas/modificar-requisitos/(:num)'] = 'admin/panel_vendedores_ofertas2/modificar_requisitos/$1';
+$route['panel_vendedor/ofertas/ajax_incluir_requisitos'] = 'admin/panel_vendedores_ofertas2_helper/ajax_incluir_requisitos';
+$route['panel_vendedor/ofertas/ajax_remover_requisitos'] = 'admin/panel_vendedores_ofertas2_helper/ajax_remover_requisitos';
+$route['panel_vendedor/ofertas/ajax_get_clientes_oferta'] = 'admin/panel_vendedores_ofertas2_helper/ajax_get_clientes_oferta';
+
+//$route['panel_vendedor/ofertas/seleccion_clientes'] = 'admin/panel_vendedores_ofertas/nueva_seleccion_clientes';
+//$route['panel_vendedor/ofertas/detalles'] = 'admin/panel_vendedores_ofertas/detalles_oferta';
+//$route['panel_vendedor/ofertas/ajax_get_clientes'] = 'admin/panel_vendedores_ofertas_helper/ajax_get_clientes';
+//$route['panel_vendedor/ofertas/ajax_get_clientes_ofertados'] = 'admin/panel_vendedores_ofertas_helper/ajax_get_clientes_ofertados';
+//$route['panel_vendedor/ofertas/ajax_get_oferta_detalles'] = 'admin/panel_vendedores_ofertas_helper/ajax_get_oferta_detalles';
+//$route['panel_vendedor/ofertas/modificar-clientes/(:num)'] = 'admin/panel_vendedores_ofertas/modificar_clientes/$1';
+
 $route['panel_vendedor/ofertas/incluir_todos_productos'] = 'admin/panel_vendedores_ofertas_helper/incluir_todos_productos';
 $route['panel_vendedor/ofertas/incluir_todos_clientes'] = 'admin/panel_vendedores_ofertas_helper/incluir_todos_clientes';
-$route['panel_vendedor/ofertas/ajax_incluir_clientes'] = 'admin/panel_vendedores_ofertas_helper/ajax_incluir_clientes';
-$route['panel_vendedor/ofertas/ajax_remover_clientes'] = 'admin/panel_vendedores_ofertas_helper/ajax_remover_clientes';
-$route['panel_vendedor/ofertas/ajax_incluir_productos'] = 'admin/panel_vendedores_ofertas_helper/ajax_incluir_productos';
-$route['panel_vendedor/ofertas/ajax_remover_productos'] = 'admin/panel_vendedores_ofertas_helper/ajax_remover_productos';
-$route['panel_vendedor/ofertas/ajax_modificar_costo_oferta'] = 'admin/panel_vendedores_ofertas_helper/ajax_modificar_costo_oferta';
-$route['panel_vendedor/ofertas/ajax_modificar_productos'] = 'admin/panel_vendedores_ofertas_helper/ajax_modificar_productos';
+
+
+
+
  
 
 /* Admin */

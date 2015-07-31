@@ -134,7 +134,8 @@ $autoload['model'] = array(
     'solicitud_seguro_model',
     'visita_model',
     'permisos_model',
-    'restriccion_model');
+    'restriccion_model',
+    'requisito_visitas_model');
 
 
 /* End of file autoload.php */
