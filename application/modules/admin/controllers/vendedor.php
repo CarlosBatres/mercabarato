@@ -14,7 +14,7 @@ class Vendedor extends ADController {
      * 
      */
     public function view_listado() {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->add_js("modules/admin/vendedores_listado.js");
 
         $user_id = $this->authentication->read('identifier');
@@ -94,7 +94,7 @@ class Vendedor extends ADController {
                 redirect('admin');
             }
         } else {
-            $this->template->set_title("Panel de Administracion - Mercabarato.com");
+            $this->template->set_title("Panel de Control - Mercabarato.com");
             //$this->template->add_js("fileupload.js");
             $this->template->add_js("modules/admin/vendedores.js");
             $this->template->load_view('admin/vendedor/nuevo');
@@ -144,7 +144,7 @@ class Vendedor extends ADController {
         } else {
             $vendedor = $this->vendedor_model->get_vendedor($id);
             if ($vendedor) {
-                $this->template->set_title("Panel de Administracion - Mercabarato.com");
+                $this->template->set_title("Panel de Control - Mercabarato.com");
                 //$this->template->add_js("modules/admin/vendedores.js");                
                 $this->template->load_view('admin/vendedor/editar', array("vendedor" => $vendedor));
             } else {
@@ -289,7 +289,7 @@ class Vendedor extends ADController {
      * 
      */
     public function view_listado_control() {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         //$this->template->add_js("modules/admin/vendedores_listado.js");
         $this->template->load_view('admin/vendedor/listado_control');
     }

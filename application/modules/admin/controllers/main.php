@@ -15,7 +15,7 @@ class Main extends ADController {
     }
 
     public function dashboard() {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         $user_id = $this->authentication->read('identifier');
         $vendedor = $this->usuario_model->get_full_identidad($user_id);
                 
@@ -58,7 +58,7 @@ class Main extends ADController {
     }
 
     public function acceso_restringido() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->load_view('admin/acceso_restringido');
     }
 

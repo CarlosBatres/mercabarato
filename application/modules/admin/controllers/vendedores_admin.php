@@ -14,7 +14,7 @@ class Vendedores_admin extends ADController {
      * 
      */
     public function asignar_listado() {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->add_js("modules/admin/vendedores_admin_listado.js");
         $this->template->load_view('admin/vendedores_admin/listado_nuevo');
     }
@@ -40,7 +40,7 @@ class Vendedores_admin extends ADController {
             $this->permisos_model->convertir_a_vendedor_admin($usuario->id);
             redirect('admin/vendedores_admin/asignar_listado');
         } else {
-            $this->template->set_title("Panel de Administracion - Mercabarato.com");
+            $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->add_js("modules/admin/vendedores_admin_asignar.js");
             $usuario = $this->usuario_model->get($id);
             $cliente = $this->cliente_model->get_by("usuario_id", $usuario->id);
@@ -60,7 +60,7 @@ class Vendedores_admin extends ADController {
     }
 
     public function ver_informacion($id) {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->add_js("modules/admin/vendedores_admin_informacion.js");
         $usuario = $this->usuario_model->get($id);
         $cliente = $this->cliente_model->get_by("usuario_id", $usuario->id);
@@ -88,7 +88,7 @@ class Vendedores_admin extends ADController {
     }
 
     public function listado_actual() {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->add_js("modules/admin/vendedores_admin_listado_actual.js");
         $this->template->load_view('admin/vendedores_admin/listado_actual');
     }

@@ -168,7 +168,7 @@ class Panel_vendedores_productos extends ADController {
             } else {
                 $producto = $this->producto_model->get($id);
                 if ($producto) {
-                    $this->template->set_title("Panel de Administracion - Mercabarato.com");
+                    $this->template->set_title("Panel de Control - Mercabarato.com");
                     $this->template->set_layout('panel_vendedores');
                     $this->template->add_js("modules/admin/panel_vendedores/productos.js");
                     $vendedor = $this->vendedor_model->get($producto->vendedor_id);

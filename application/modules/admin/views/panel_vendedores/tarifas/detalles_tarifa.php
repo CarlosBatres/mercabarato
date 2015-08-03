@@ -8,30 +8,6 @@
         </div>
     </div>
 
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong>Productos Seleccionados</strong>
-                </div>
-                <div class="panel-body">
-                    <div id="tabla-resultados-productos"></div>
-                </div>
-            </div>
-        </div>        
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <strong>Clientes Seleccionados</strong>
-                </div>
-                <div class="panel-body">                            
-                    <div id="tabla-resultados-clientes"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="box box_registro">
@@ -83,5 +59,30 @@
             </div>
         </div>
     </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Productos Seleccionados</strong>
+                </div>
+                <div class="panel-body">
+                    <div id="tabla-resultados-productos"></div>
+                </div>
+            </div>
+        </div>        
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Clientes Seleccionados</strong>
+                </div>
+                <div class="panel-body">                            
+                    <div id="tabla-resultados-clientes"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
 </div>
 

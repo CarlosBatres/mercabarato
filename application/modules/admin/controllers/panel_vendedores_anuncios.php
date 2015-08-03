@@ -97,7 +97,7 @@ class Panel_vendedores_anuncios extends ADController {
             } else {
                 $anuncio = $this->anuncio_model->get($id);
                 if ($anuncio) {
-                    $this->template->set_title("Panel de Administracion - Mercabarato.com");
+                    $this->template->set_title("Panel de Control - Mercabarato.com");
                     //$this->template->add_js("modules/admin/panel_vendedores/productos.js");
                     //$categorias = $this->categoria_model->get_all();
                     $vendedor = $this->vendedor_model->get($anuncio->vendedor_id);

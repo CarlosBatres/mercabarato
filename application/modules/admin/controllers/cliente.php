@@ -14,7 +14,7 @@ class Cliente extends ADController {
      * 
      */
     public function view_listado() {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->add_js("modules/admin/clientes_listado.js");
         $this->template->load_view('admin/cliente/listado');
     }
@@ -64,7 +64,7 @@ class Cliente extends ADController {
                 redirect('admin');
             }
         } else {
-            $this->template->set_title("Panel de Administracion - Mercabarato.com");
+            $this->template->set_title("Panel de Control - Mercabarato.com");
             //$this->template->add_js("fileupload.js");
             $this->template->add_js("modules/admin/clientes.js");
             $this->template->load_view('admin/cliente/nuevo');
@@ -106,7 +106,7 @@ class Cliente extends ADController {
         } else {
             $cliente = $this->cliente_model->get($id);
             if ($cliente) {
-                $this->template->set_title("Panel de Administracion - Mercabarato.com");
+                $this->template->set_title("Panel de Control - Mercabarato.com");
                 $this->template->add_js("modules/admin/clientes.js");
                 $usuario = $this->usuario_model->get($cliente->usuario_id);
                 $usuario_data = array(

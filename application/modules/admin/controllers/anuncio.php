@@ -14,7 +14,7 @@ class Anuncio extends ADController {
      *  Listado
      */
     public function view_listado() {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->add_js("modules/admin/anuncios_listado.js");
         $this->template->load_view('admin/anuncio/listado');
     }
@@ -52,7 +52,7 @@ class Anuncio extends ADController {
                 redirect('admin');
             }
         } else {
-            $this->template->set_title("Panel de Administracion - Mercabarato.com");
+            $this->template->set_title("Panel de Control - Mercabarato.com");
             //$this->template->add_js("fileupload.js");
             $this->template->add_js("modules/admin/anuncios.js");            
 
@@ -106,7 +106,7 @@ class Anuncio extends ADController {
         } else {
             $anuncio = $this->anuncio_model->get_anuncio($id);
             if ($anuncio) {
-                $this->template->set_title("Panel de Administracion - Mercabarato.com");
+                $this->template->set_title("Panel de Control - Mercabarato.com");
                 $this->template->add_js("modules/admin/anuncios.js");
 
                 $data = array(

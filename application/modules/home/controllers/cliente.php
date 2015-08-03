@@ -160,7 +160,7 @@ class Cliente extends MY_Controller {
 
     public function view_invitaciones() {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
@@ -309,7 +309,7 @@ class Cliente extends MY_Controller {
 
     public function view_infocompras_seguros() {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
@@ -372,7 +372,7 @@ class Cliente extends MY_Controller {
 
     public function view_seguros_respuesta($solicitud_seguro_id) {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 

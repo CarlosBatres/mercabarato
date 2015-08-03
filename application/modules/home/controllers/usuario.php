@@ -14,7 +14,7 @@ class Usuario extends MY_Controller {
      */
     public function view_registro() {
         if (!$this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $this->template->add_js('modules/home/registro.js');
             $paises = $this->pais_model->get_all();
             //$keywords = keywords_listado();
@@ -29,7 +29,7 @@ class Usuario extends MY_Controller {
 
     public function view_registro_exito() {
         if (!$this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $this->template->load_view('home/usuario/registro_exito');
         } else {
             redirect('');
@@ -41,7 +41,7 @@ class Usuario extends MY_Controller {
      */
     public function view_perfil() {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->usuario_model->get_full_identidad($user_id);
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->cliente->id);
@@ -66,7 +66,7 @@ class Usuario extends MY_Controller {
      */
     public function view_datos_personales() {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $this->template->add_js("fileupload.js");
             $user_id = $this->authentication->read('identifier');
             $usuario = $this->usuario_model->get($user_id);
@@ -101,7 +101,7 @@ class Usuario extends MY_Controller {
      */
     public function view_password() {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
@@ -268,7 +268,7 @@ class Usuario extends MY_Controller {
     public function verificar_email($secret_key) {
         if ($this->usuario_model->verificar_email($secret_key)) {
             if (!$this->authentication->is_loggedin()) {
-                $this->template->set_title('Mercabarato - Anuncios y subastas');
+                $this->template->set_title('Mercabarato - Busca y Compara');
                 $this->template->load_view('home/usuario/registro_completado');
             } else {
                 redirect('');

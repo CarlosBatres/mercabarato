@@ -14,7 +14,7 @@ class Paquete extends ADController {
      *  Listado
      */
     public function view_listado() {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->add_js("modules/admin/paquetes_listado.js");
         $this->template->load_view('admin/paquete/listado');
     }
@@ -67,7 +67,7 @@ class Paquete extends ADController {
             $this->paquete_model->insert($data);
             redirect('admin/paquetes');
         } else {
-            $this->template->set_title("Panel de Administracion - Mercabarato.com");            
+            $this->template->set_title("Panel de Control - Mercabarato.com");            
             $this->template->add_js("modules/admin/paquetes.js");
             $this->template->load_view('admin/paquete/nuevo');
         }

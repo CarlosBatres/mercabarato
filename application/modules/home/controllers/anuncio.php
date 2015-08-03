@@ -10,7 +10,7 @@ class Anuncio extends MY_Controller {
     }
 
     public function ver_anuncio($id) {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $anuncio = $this->anuncio_model->get($id);
         if ($anuncio) {
             if ($this->authentication->is_loggedin()) {

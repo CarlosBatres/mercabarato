@@ -14,7 +14,7 @@ class Vendedor_paquete extends ADController {
      *  Listado
      */
     public function view_listado_por_activar() {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->add_js("modules/admin/vendedor_paquete_listado.js");
         $this->template->load_view('admin/vendedor_paquete/listado_por_activar');
     }
