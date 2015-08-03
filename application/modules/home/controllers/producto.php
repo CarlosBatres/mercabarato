@@ -13,7 +13,7 @@ class Producto extends MY_Controller {
      * 
      */
     public function view_principal() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->add_js('modules/home/producto_principal_listado.js');
         $subcategorias = $this->categoria_model->get_categorias_searchbar(0);
         $subcategorias_html = $this->_build_categorias_searchparams($subcategorias);
@@ -156,7 +156,7 @@ class Producto extends MY_Controller {
      * @param type $id
      */
     public function ver_producto($slug) {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $producto = $this->producto_model->get_by("unique_slug", $slug);
         if ($producto) {
             $this->template->add_js('modules/home/producto.js');
@@ -230,6 +230,8 @@ class Producto extends MY_Controller {
 
                 $cc = $this->cliente_model->get($vendedor->cliente_id);
                 $son_contactos = $this->invitacion_model->son_contactos($user_id, $cc->usuario_id);
+                
+                $invitacion = $this->invitacion_model->invitacion_existe($user_id, $cc->usuario_id);
 
                 $data = array(
                     "producto" => $producto,
@@ -241,6 +243,7 @@ class Producto extends MY_Controller {
                     "otros_productos_categoria" => $prods2,                    
                     "vendedor"=>$vendedor,
                     "son_contactos" => $son_contactos,
+                    "invitacion" => $invitacion,
                     "fecha_finaliza"=>$fecha_finaliza,
                     "localizacion" => $localizacion,
                         );
@@ -282,6 +285,8 @@ class Producto extends MY_Controller {
                         "otros_productos" => $prods,
                         "otros_productos_categoria" => $prods2,
                         "vendedor"=>$vendedor,
+                        "invitacion" => true,
+                        "son_contactos" => true,
                         "son_contactos" => false,
                         "localizacion" => $localizacion,
                         );
@@ -356,7 +361,7 @@ class Producto extends MY_Controller {
                     }
                 }
             } else {
-                $this->template->set_title('Mercabarato - Anuncios y subastas');
+                $this->template->set_title('Mercabarato - Busca y Compara');
                 $data = array("producto" => $producto);                
                 $this->template->load_view('home/producto/enviar_mensaje', $data);
             }

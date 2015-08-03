@@ -52,7 +52,7 @@ class Categoria extends ADController {
                 redirect('admin');
             }
         } else {
-            $this->template->set_title("Panel de Administracion - Mercabarato.com");
+            $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->add_js("fileupload.js");
             $this->template->add_js("modules/admin/categorias.js");
             $this->template->load_view('admin/categoria/nuevo', array("padre_id" => $id));
@@ -102,7 +102,7 @@ class Categoria extends ADController {
         } else {
             $categoria = $this->categoria_model->get($id);
             if ($categoria) {
-                $this->template->set_title("Panel de Administracion - Mercabarato.com");
+                $this->template->set_title("Panel de Control - Mercabarato.com");
                 //$this->template->add_js("modules/admin/compradores.js");
 
                 $data = array(
@@ -120,7 +120,7 @@ class Categoria extends ADController {
      * 
      */
     public function view_listado() {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->add_js("modules/admin/categorias_listado.js");
         $this->template->load_view('admin/categoria/listado');
     }
@@ -129,7 +129,7 @@ class Categoria extends ADController {
      * 
      */
     public function view_listado_subcategorias($slug) {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->add_js("modules/admin/categorias_listado.js");
 
         $categoria = $this->categoria_model->get_by('slug', $slug);

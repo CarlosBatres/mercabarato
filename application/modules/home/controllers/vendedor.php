@@ -14,7 +14,7 @@ class Vendedor extends MY_Controller {
      */
     public function view_afiliarse() {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $keywords = keywords_listado();
@@ -119,7 +119,7 @@ class Vendedor extends MY_Controller {
      */
     public function view_seleccionar_paquete() {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
@@ -152,7 +152,7 @@ class Vendedor extends MY_Controller {
                 'replacement' => 'dash' // Either dash or underscore
             );
             $this->load->library('slug', $config);
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
 
             if ($this->paquete_model->validar_paquete($paquete_id)) {
                 $user_id = $this->authentication->read('identifier');
@@ -224,7 +224,7 @@ class Vendedor extends MY_Controller {
      */
     public function view_completado() {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
@@ -238,7 +238,7 @@ class Vendedor extends MY_Controller {
 
     public function ir_panel_vendedor() {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
@@ -264,7 +264,7 @@ class Vendedor extends MY_Controller {
 
     public function mis_paquetes() {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
@@ -292,7 +292,7 @@ class Vendedor extends MY_Controller {
 
     public function comprar_paquetes() {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
@@ -323,7 +323,7 @@ class Vendedor extends MY_Controller {
 
     public function submit_comprar_paquetes($paquete_id) {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
 
             if ($this->paquete_model->validar_paquete($paquete_id)) {
                 $user_id = $this->authentication->read('identifier');
@@ -373,7 +373,7 @@ class Vendedor extends MY_Controller {
      */
 
     public function view_buscador() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->add_js('modules/home/vendedores_listado.js');
         $paises = $this->pais_model->get_all();
 
@@ -483,10 +483,11 @@ class Vendedor extends MY_Controller {
      * @param type $id
      */
     public function ver_vendedor($slug) {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
 
         $vendedor = $this->vendedor_model->get_vendedor_by_slug($slug);
         if ($vendedor) {
+            $this->template->add_js('modules/home/vendedor.js');
             $localizacion = $this->localizacion_model->get_by("usuario_id", $vendedor->usuario_id);
 
             if ($localizacion->pais_id != null) {
@@ -516,8 +517,11 @@ class Vendedor extends MY_Controller {
                 $invitacion = $this->invitacion_model->invitacion_existe($user_id, $cliente_vendedor->usuario_id);
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                 $params["cliente_id"] = $cliente->id;
+                
+                $son_contactos = $this->invitacion_model->son_contactos($user_id, $cliente_vendedor->usuario_id);
             } else {
                 $invitacion = true;
+                $son_contactos = false;
             }
 
             $productos = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "DESC");
@@ -526,6 +530,8 @@ class Vendedor extends MY_Controller {
             } else {
                 $prods = false;
             }
+            
+            
 
             $data = array(
                 "vendedor" => $vendedor,
@@ -533,7 +539,8 @@ class Vendedor extends MY_Controller {
                 "localizacion" => $localizacion,
                 "invitacion" => $invitacion,
                 "anuncios" => $anuncios,
-                "productos" => $prods);
+                "productos" => $prods,
+                "son_contactos"=>$son_contactos);
 
             $this->template->load_view('home/vendedores/ficha', $data);
         } else {
@@ -554,7 +561,7 @@ class Vendedor extends MY_Controller {
      */
     public function view_datos_vendedor() {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $this->template->add_js("fileupload.js");
             $user_id = $this->authentication->read('identifier');
             $usuario = $this->usuario_model->get($user_id);

@@ -102,7 +102,7 @@ class Panel_vendedores_invitaciones extends ADController {
                     redirect('panel_vendedor/invitaciones/buscar');
                 }
             } else {
-                $this->template->set_title("Panel de Administracion - Mercabarato.com");
+                $this->template->set_title("Panel de Control - Mercabarato.com");
                 $this->template->set_layout('panel_vendedores');
                 $this->load->helper('ckeditor');
 
@@ -195,7 +195,7 @@ class Panel_vendedores_invitaciones extends ADController {
                 redirect('panel_vendedor/invitaciones/buscar');
             }
         } else {
-            $this->template->set_title("Panel de Administracion - Mercabarato.com");
+            $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
             $this->template->add_js("modules/admin/panel_vendedores/enviar_invitacion_email.js");
             $this->load->helper('ckeditor');

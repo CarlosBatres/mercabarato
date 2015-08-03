@@ -8,10 +8,16 @@
 }
 
 .navbar-nav li.dropdown a>span {
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: normal;
     position: absolute;
     left:40%;
     top:25%;
+}
+
+.navbar-custom ul.dropdown-menu li a {
+    float: right;
+    padding-right: 38px;
 }
 
 .navbar-custom {
@@ -297,3 +303,10 @@ span.arrow {
 }
 .ficha-producto-descripcion{min-height: 250px;}
 .gallery-container{padding-top: 50px;}
+.manejar_productos{
+    font-weight: bolder;    
+}
+.manejar_productos a{    
+    color: #ffffff;
+    background: #d99327;
+}

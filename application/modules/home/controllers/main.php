@@ -10,12 +10,12 @@ class Main extends MY_Controller {
     }
 
     public function not_found() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/404');
     }
 
     public function acceso_restringido() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/acceso_restringido');
     }
 
@@ -36,13 +36,13 @@ class Main extends MY_Controller {
     }
 
     public function contacto() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->add_js('modules/home/contacto.js');
         $this->template->load_view('home/paginas/contacto');
     }
 
     public function contacto_submit() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $formValues = $this->input->post();
 
         if ($formValues !== false) {
@@ -65,27 +65,27 @@ class Main extends MY_Controller {
     }
 
     public function quienes_somos() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/quienes_somos');
     }
 
     public function como_funciona() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/como_funciona');
     }
 
     public function aviso_legal() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/aviso_legal');
     }
 
     public function terminos_de_uso() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/terminos_de_uso');
     }
     
     public function cookies() {
-        $this->template->set_title('Mercabarato - Anuncios y subastas');
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/cookies');
     }
 

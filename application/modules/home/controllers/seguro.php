@@ -20,7 +20,7 @@ class Seguro extends MY_Controller {
         $this->session->unset_userdata('seguros_new_user');
 
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->usuario_model->get_full_identidad($user_id);
 
@@ -28,7 +28,7 @@ class Seguro extends MY_Controller {
             $data = array("datos_contacto" => $cliente);
             $this->template->load_view('home/seguro/formulario', $data);
         } else {
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
 
             $this->template->add_js('modules/home/seguros.js');
             $data = array();
@@ -145,7 +145,7 @@ class Seguro extends MY_Controller {
                 ));
             }
 
-            $this->template->set_title('Mercabarato - Anuncios y subastas');
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $this->template->add_js('modules/home/seguros.js');
 
             $paises = $this->pais_model->get_all();

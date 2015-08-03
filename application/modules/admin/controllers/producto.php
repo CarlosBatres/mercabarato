@@ -14,7 +14,7 @@ class Producto extends ADController {
      *  Productos / Listado
      */
     public function view_listado() {
-        $this->template->set_title("Panel de Administracion - Mercabarato.com");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->add_js("modules/admin/productos_listado.js");
         $categorias = $this->categoria_model->get_all();
         $data = array("categorias" => $categorias);
@@ -70,7 +70,7 @@ class Producto extends ADController {
                 redirect('admin');
             }
         } else {
-            $this->template->set_title("Panel de Administracion - Mercabarato.com");
+            $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->add_js("fileupload.js");
             $this->template->add_js("modules/admin/productos.js");
             $categorias = $this->categoria_model->get_all();
@@ -149,7 +149,7 @@ class Producto extends ADController {
         } else {
             $producto = $this->producto_model->get($id);
             if ($producto) {
-                $this->template->set_title("Panel de Administracion - Mercabarato.com");
+                $this->template->set_title("Panel de Control - Mercabarato.com");
                 $this->template->add_js("modules/admin/productos.js");
                 $categorias = $this->categoria_model->get_all();
                 $vendedor = $this->vendedor_model->get($producto->vendedor_id);
