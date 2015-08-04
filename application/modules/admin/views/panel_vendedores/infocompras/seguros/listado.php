@@ -28,7 +28,14 @@
                     <a class="close" data-dismiss="alert">×</a>
                     <?= $this->session->flashdata('success') ?> 
                 </div>
-            <?php } ?>                                   
+            <?php } ?>
+            <?php if ($this->session->flashdata('error')) { ?>
+                <div class="alert alert-danger"> 
+                    <a class="close" data-dismiss="alert">×</a>
+                    <?= $this->session->flashdata('error') ?> 
+                </div>
+            <?php } ?>
+            
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">

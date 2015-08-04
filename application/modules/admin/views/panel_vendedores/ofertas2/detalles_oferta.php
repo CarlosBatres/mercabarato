@@ -40,8 +40,8 @@
                             <label>Ofrecer a:</label>                    
                             <select name="grupo" class="form-control">
                                 <option value="0">Todos</option>                        
-                                <option value="1">Tus Contactos</option>                        
-                                <option value="2">Ignorar tus Contactos</option>                        
+<!--                                <option value="1">Tus Contactos</option>                        
+                                <option value="2">Ignorar tus Contactos</option>                        -->
                             </select>
                         </div>
                     </div>

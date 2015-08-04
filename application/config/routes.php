@@ -88,6 +88,7 @@ $route['usuario/paquetes/comprar_paquete/(:any)'] = 'home/vendedor/submit_compra
 $route['usuario/buscar_invitaciones'] = 'home/cliente/ajax_get_listado_resultados_invitaciones';
 $route['usuario/infocompras-seguros'] = 'home/cliente/view_infocompras_seguros';
 $route['usuario/infocompras-seguros/respuesta/(:num)'] = 'home/cliente/view_seguros_respuesta/$1';
+$route['usuario/infocompras-seguros/descargar_respuesta/(:any)'] = 'home/cliente/seguros_download_respuesta/$1';
 $route['usuario/buscar-solicitudes-seguros'] = 'home/cliente/ajax_get_listado_seguros';
 
 $route['util/verificar_email'] = 'home/usuario/check_email';
