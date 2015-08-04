@@ -178,12 +178,12 @@ class Slug {
         $query = $CI->db->get();
 
         if ($query->num_rows() > 0) {
-            $rows = $query->result();
+            $rows = $query->result_array();
             $cc = 1;
             for ($i = 0; $i < count($rows); $i++) {
                 $new = $uri . $this->_get_replacement() . $cc;
-                if ($rows[$i]->slug != $uri) {
-                    if ($new == $rows[$i]->slug) {
+                if ($rows[$i][$this->field] != $uri) {
+                    if ($new == $rows[$i][$this->field]) {
                         $cc++;
                         $i=0;
                     }

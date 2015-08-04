@@ -133,15 +133,15 @@ class Authentication {
         // Generate hash
         //$password = $this->generate_hash($password, $salt);
         $password = md5($password);
-        
-        $permiso=$this->ci->permisos_model->get_permiso_default();
-        
+
+        $permiso = $this->ci->permisos_model->get_permiso_default();
+
         // Define data to insert
         $data = array(
             $this->username_field => $username,
             $this->password_field => $password,
-            "permisos_id"=>$permiso->id
-        );                
+            "permisos_id" => $permiso->id
+        );
 
         // If inserting data fails
         if (!$this->ci->db->insert($this->user_table, $data)) {
@@ -171,14 +171,12 @@ class Authentication {
 //                    ->where('is_admin', '1')
 //                    ->get($this->user_table);
 //        } else {
-            $user = $this->ci->db
-                    ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username, ' . $this->password_field . ' as password')
-                    ->where($this->username_field, $username)
-                    ->where('activo', '1')
-                    ->get($this->user_table);
+        $user = $this->ci->db
+                ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username, ' . $this->password_field . ' as password')
+                ->where($this->username_field, $username)
+                ->where('activo', '1')
+                ->get($this->user_table);
 //        }
-
-
         // Ensure there is a user with that username
         if ($user->num_rows() == 0) {
             // There is no user with that username, but we won't tell the user that
@@ -360,23 +358,49 @@ class Authentication {
             return FALSE;
         }
     }
+
     /**
      * Verificar si usuario tiene privilegios admin
      * @return boolean
      */
     public function user_is_admin() {
         $user_id = $this->ci->session->userdata('identifier');
-        $permiso=$this->ci->permisos_model->usuario_es_admin($user_id);        
-        return $permiso;                
+        $permiso = $this->ci->permisos_model->usuario_es_admin($user_id);
+        return $permiso;
         //$result = $this->ci->db->select('is_admin')->where($this->identifier_field, $user_id)->get($this->user_table);
-        
-        /*$is_admin=$result->row();
-        if($is_admin->is_admin==1){
-            return true;
-        }else{
-            return false;
-        }*/
-        
+
+        /* $is_admin=$result->row();
+          if($is_admin->is_admin==1){
+          return true;
+          }else{
+          return false;
+          } */
+    }
+
+    public function check_login($username, $password) {
+        $user = $this->ci->db
+                ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username, ' . $this->password_field . ' as password')
+                ->where($this->username_field, $username)
+                ->where('activo', '1')
+                ->get($this->user_table);
+
+
+
+        // Ensure there is a user with that username
+        if ($user->num_rows() == 0) {
+            // There is no user with that username, but we won't tell the user that
+            return FALSE;
+        }
+
+        // Set the user details
+        $user_details = $user->row();
+
+        // Do passwords match
+        if (md5($password) == $user_details->password) {            
+            return $user_details->identifier;            
+        } else {            
+            return FALSE;
+        }
     }
 
 }

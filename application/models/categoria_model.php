@@ -11,11 +11,11 @@ if (!defined('BASEPATH')) {
  * Idealmente se van a modificar desde el admin solamente y mediante las funciones del sistema , NO MANUALMENTE!
  */
 class Categoria_model extends MY_Model {
-    
-     public $after_create = array( 'clear_cache' );
-     public $after_update = array( 'clear_cache' );
-     public $after_delete = array( 'clear_cache' );
-    
+
+    public $after_create = array('clear_cache');
+    public $after_update = array('clear_cache');
+    public $after_delete = array('clear_cache');
+
     function __construct() {
         parent::__construct();
         $this->_table = "categoria";
@@ -99,78 +99,90 @@ class Categoria_model extends MY_Model {
     public function delete_categoria($categoria_id) {
         $resource = $this->get_by("id", $categoria_id);
         if ($resource) {
-            unlink('./assets/'.$this->config->item('categorias_img_path').'/'.$resource->filename);
-            unlink('./assets/'.$this->config->item('categorias_img_path').'/thumbnail/' . $resource->filename);
+            unlink('./assets/' . $this->config->item('categorias_img_path') . '/' . $resource->filename);
+            unlink('./assets/' . $this->config->item('categorias_img_path') . '/thumbnail/' . $resource->filename);
         }
         $this->delete_by("id", $categoria_id);
     }
-    
-    public function get_categorias_searchbar($categoria_id){
+
+    public function get_categorias_searchbar($categoria_id) {
         $this->db->cache_on();
-        $query="SELECT id,nombre,padre_id FROM categoria WHERE padre_id='".$categoria_id."'";
-        $result = $this->db->query($query);                
-        $categorias = $result->result_array();        
+        $query = "SELECT id,nombre,padre_id FROM categoria WHERE padre_id='" . $categoria_id . "'";
+        $result = $this->db->query($query);
+        $categorias = $result->result_array();
         $this->db->cache_off();
-        if($categorias){            
-            foreach($categorias as $key=>$value){                
-                $res=$this->get_categorias_searchbar($value['id']);
-                if($res){                    
-                    $categorias[$key]['subcategorias']=$res;
+        if ($categorias) {
+            foreach ($categorias as $key => $value) {
+                $res = $this->get_categorias_searchbar($value['id']);
+                if ($res) {
+                    $categorias[$key]['subcategorias'] = $res;
                 }
             }
             return $categorias;
-        }else{
+        } else {
             return false;
-        }        
-        
+        }
     }
-    /**     
+
+    /**
      * @param type $id
      * @return boolean
      */
     public function get_all_categorias_of($id) {
         $this->db->cache_on();
         $query = "SELECT id,nombre FROM categoria WHERE padre_id='" . $id . "'";
-        $result = $this->db->query($query);        
+        $result = $this->db->query($query);
         $categorias = $result->result_array();
         $this->db->cache_off();
         $ids = array();
-        if ($categorias) {            
+        if ($categorias) {
             foreach ($categorias as $value) {
-                $row=array();
+                $row = array();
                 $row["nombre"] = $value["nombre"];
                 $row["id"] = $value["id"];
                 $res = $this->get_all_categorias_of($value['id']);
                 if ($res) {
-                    $row["children"]=$res;
-                    
+                    $row["children"] = $res;
                 }
-                $ids[]=$row;
+                $ids[] = $row;
             }
             return $ids;
         } else {
             return false;
         }
     }
-    
-    public function get_full_tree(){        
-        $categorias=$this->get_all_categorias_of("0");        
-        return $categorias;        
+
+    public function get_full_tree() {
+        $categorias = $this->get_all_categorias_of("0");
+        return $categorias;
     }
-    
-    public function clear_cache(){
+
+    public function clear_cache() {
         $this->db->cache_delete_all();
     }
-    
-    public function get_keywords_from_categorias(){
-        $categorias=$this->get_many_by("padre_id","0");
-        $keywords=array();
-        if($categorias){
-            foreach ($categorias as $cat){
-                $keywords[]=$cat->nombre;
+
+    public function get_keywords_from_categorias() {
+        $categorias = $this->get_many_by("padre_id", "0");
+        $keywords = array();
+        if ($categorias) {
+            foreach ($categorias as $cat) {
+                $keywords[] = $cat->nombre;
             }
             return $keywords;
-        }else{
+        } else {
+            return false;
+        }
+    }
+
+    public function get_categorias_webservice() {
+        $this->db->select("id,nombre");
+        $this->db->from($this->_table);
+        $this->db->where("padre_id", "0");
+        $response = $this->db->get()->result_array();
+        
+        if ($response) {            
+            return $response;
+        } else {
             return false;
         }
     }
