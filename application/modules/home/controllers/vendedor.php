@@ -92,9 +92,9 @@ class Vendedor extends MY_Controller {
                     "pais_id" => $pais,
                     "provincia_id" => ($provincia == "0") ? null : $provincia,
                     "poblacion_id" => ($poblacion == "0") ? null : $poblacion
-                );                
-            }else{
-                $data_localizacion=false;
+                );
+            } else {
+                $data_localizacion = false;
             }
 
 
@@ -172,9 +172,9 @@ class Vendedor extends MY_Controller {
                     $this->vendedor_model->update($vendedor->id, $data_vendedor);
                     $vendedor_id = $vendedor->id;
                 }
-                
-                if($data_localizacion){                    
-                    $this->localizacion_model->delete_by("usuario_id",$data_localizacion["usuario_id"]);
+
+                if ($data_localizacion) {
+                    $this->localizacion_model->delete_by("usuario_id", $data_localizacion["usuario_id"]);
                     $this->localizacion_model->insert($data_localizacion);
                 }
 
@@ -198,16 +198,21 @@ class Vendedor extends MY_Controller {
                     "aprobado" => 0,
                     "infocompra" => $paquete->infocompra
                 );
-                $this->vendedor_paquete_model->insert($data);
-
-                if ($this->config->item('emails_enabled')) {
-                    $this->load->library('email');
-                    $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
-                    $this->email->to($usuario->email);
-                    $this->email->subject('Informacion para pago del paquete');
-                    $data_email = array("paquete" => $data);
-                    $this->email->message($this->load->view('home/emails/informacion_de_compra', $data_email, true));
-                    $this->email->send();
+                
+                $result = $this->vendedor_model->verificar_disponibilidad($vendedor->id);
+                
+                if ($result) {
+                    if ($this->config->item('emails_enabled')) {
+                        $this->load->library('email');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($usuario->email);
+                        $this->email->subject('Informacion para pago del paquete');
+                        $data_email = array("paquete" => $data);
+                        $this->email->message($this->load->view('home/emails/informacion_de_compra', $data_email, true));
+                        $this->email->send();
+                    }
+                    
+                    $this->vendedor_paquete_model->insert($data);
                 }
 
                 redirect('usuario/completado');
@@ -517,7 +522,7 @@ class Vendedor extends MY_Controller {
                 $invitacion = $this->invitacion_model->invitacion_existe($user_id, $cliente_vendedor->usuario_id);
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                 $params["cliente_id"] = $cliente->id;
-                
+
                 $son_contactos = $this->invitacion_model->son_contactos($user_id, $cliente_vendedor->usuario_id);
             } else {
                 $invitacion = true;
@@ -530,8 +535,8 @@ class Vendedor extends MY_Controller {
             } else {
                 $prods = false;
             }
-            
-            
+
+
 
             $data = array(
                 "vendedor" => $vendedor,
@@ -540,7 +545,7 @@ class Vendedor extends MY_Controller {
                 "invitacion" => $invitacion,
                 "anuncios" => $anuncios,
                 "productos" => $prods,
-                "son_contactos"=>$son_contactos);
+                "son_contactos" => $son_contactos);
 
             $this->template->load_view('home/vendedores/ficha', $data);
         } else {

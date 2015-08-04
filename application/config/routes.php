@@ -268,6 +268,9 @@ $route['admin/acceso_restringido'] = 'admin/main/acceso_restringido';
 $route['admin/sistema/validar_paquetes'] = 'admin/sistema/validar_paquetes';
 $route['admin/sistema/productos_novedades'] = 'admin/sistema/productos_novedades';
 
+$route['webservice/upload_products'] = 'admin/webservice/upload_products';
+$route['webservice/categorias'] = 'admin/webservice/categorias';
+
 $route['default_controller'] = 'home/producto/view_principal';
 $route['404_override'] = 'home/main/not_found';
 $route['pagina-no-existe'] = 'home/main/not_found';

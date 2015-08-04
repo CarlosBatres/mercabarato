@@ -52,11 +52,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+<!--                        <div class="col-md-6">
                             <div class="form-group"> 
                                 <?php echo form_dropdown('actividad', vendedor_actividad_dropdown(), null, 'id="actividad" class="form-control"') ?>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="col-md-6">
                             <div class="form-group">                                
                                 <div class="input-group">

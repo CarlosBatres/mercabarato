@@ -64,12 +64,12 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+<!--                            <div class="col-md-6">
                                 <label class="label-datos">Actividad</label>
                                 <div class="form-group"> 
                                     <?php echo form_dropdown('actividad', vendedor_actividad_dropdown(), $vendedor->actividad, 'id="actividad" class="form-control"') ?>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-md-6">
                                 <label class="label-datos">N.I.F / C.I.F</label>
                                 <div class="form-group">                                
