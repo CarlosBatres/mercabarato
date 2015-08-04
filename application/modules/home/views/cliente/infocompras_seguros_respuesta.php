@@ -5,10 +5,17 @@
 <div class="modal-body">
     <div class="row box">
         <div class="col-md-10 col-md-offset-1">                                                
-            
+
             <div class="col-md-12">                      
                 <?php echo $seguro->respuesta ?>
-            </div>                                        
+            </div>  
+            <br>
+            <hr>
+            <?php if ($seguro->link_file!=null): ?>
+                <div class="col-md-12">
+                    <a title="Click para Descargar" href="<?php echo site_url('usuario/infocompras-seguros/descargar_respuesta/') . '/' . $seguro->link_file; ?>" >Descargar Adjunto</a>
+                </div>
+            <?php endif; ?>
         </div>              
     </div>
 </div>

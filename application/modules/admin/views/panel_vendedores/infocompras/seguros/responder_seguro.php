@@ -667,7 +667,7 @@
                         <?= $this->session->flashdata('error') ?> 
                     </div>
                 <?php } ?>
-                <?php echo form_open('panel_vendedor/infocompras/seguros/responder/' . $solicitud_seguro->id); ?>                                 
+                <?php echo form_open_multipart('panel_vendedor/infocompras/seguros/responder/' . $solicitud_seguro->id); ?>                                 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">                                                        
@@ -677,6 +677,12 @@
                         </div>
                     </div>
                 </div>                                
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Deseas adjuntar un archivo?</label>                    
+                        <input type="file" name="userfile" size="20" />
+                    </div>
+                </div>
             </div>
             <hr>                                
             <div class="text-center">

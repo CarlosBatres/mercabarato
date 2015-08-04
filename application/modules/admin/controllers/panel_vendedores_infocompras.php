@@ -4,13 +4,13 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 class Panel_vendedores_infocompras extends ADController {
-    
+
     public function __construct() {
         parent::__construct();
         $this->_validar_conexion();
         $this->_validar_vendedor_habilitado();
     }
-    
+
     public function view_listado_seguros() {
         $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());
 
@@ -35,20 +35,39 @@ class Panel_vendedores_infocompras extends ADController {
         if ($solicitud_seguro) {
             if ($solicitud_seguro->vendedor_id == $this->identidad->get_vendedor_id()) {
                 $formValues = $this->input->post();
-                if ($formValues !== false) {
+                if ($formValues !== false) {                    
+                    $config['upload_path'] =  './assets/uploads/seguros/';
+                    $config['allowed_types'] = 'gif|jpg|png|pdf|word|doc|docx|xlsx|txt|psd';
+                    $config['max_size'] = '2048';
+                    $config['max_width'] = '1024';
+                    $config['max_height'] = '768';
+
+                    $this->load->library('upload', $config);
+
+                    if (!$this->upload->do_upload()) {
+                        $error = array('error' => $this->upload->display_errors());                        
+                        $file_name=null;
+                        $this->session->set_flashdata('error', $this->upload->display_errors());
+                        redirect('panel_vendedor/infocompras/seguros/responder/'.$solicitud_seguro_id);
+                        die();
+                    }else{
+                        $data_upload = $this->upload->data();
+                        $file_name=$data_upload["file_name"];
+                    }
+                    
                     $respuesta = $this->input->post('respuesta');
-                    $data = array("estado" => "2", "respuesta" => $respuesta, "fecha_respuesta" => date("Y-m-d"));
+                    $data = array("estado" => "2", "respuesta" => $respuesta, "fecha_respuesta" => date("Y-m-d"),"link_file"=>$file_name);
 
                     $this->solicitud_seguro_model->update($solicitud_seguro->id, $data);
 
-                    if ($this->config->item('emails_enabled')) {                        
-                        $cliente=$this->cliente_model->get($solicitud_seguro->cliente_id);
-                        $usuario=$this->usuario_model->get($cliente->usuario_model);
+                    if ($this->config->item('emails_enabled')) {
+                        $cliente = $this->cliente_model->get($solicitud_seguro->cliente_id);
+                        $usuario = $this->usuario_model->get($cliente->usuario_model);
                         $this->load->library('email');
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
-                        $this->email->subject('Se ha respondido a tu solicitud de presupuesto');                     
-                        $data_mail=array();
+                        $this->email->subject('Se ha respondido a tu solicitud de presupuesto');
+                        $data_mail = array();
                         $this->email->message($this->load->view('home/emails/solicitud_presupuesto_2', $data_mail, true));
                         $this->email->send();
                     }
