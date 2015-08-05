@@ -696,4 +696,3 @@
 <div id="throbber" style="display:none;">
     <img src="<?php echo assets_url('imgs/small-ajax-loader.gif'); ?>" />
 </div>
-</div>

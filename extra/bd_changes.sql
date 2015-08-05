@@ -5,5 +5,3 @@ CREATE VIEW `productos_precios` AS select `p`.`id` AS `id`,`p`.`categoria_id` AS
 
 /* Cambios por implementar*/
 
-ALTER TABLE `mercabarato_bd`.`solicitud_seguro` 
-ADD COLUMN `link_file` VARCHAR(255) NULL DEFAULT NULL AFTER `fecha_respuesta`;

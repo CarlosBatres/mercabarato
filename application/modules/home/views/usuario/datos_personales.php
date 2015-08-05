@@ -166,7 +166,7 @@
                                 </div>                                                
                                 <p class="lead">Si desea afiliarse a nuestro sitio y ofertar sus productos aqui, acceda al siguiente apartado y sigua los pasos:</p>                            
                                 <br>
-                                <a href="<?php echo site_url('usuario/afiliacion') ?>" class="btn btn-template-main" ><i class="fa fa-money"></i> Afiliación</a>                            
+                                <a href="<?php echo site_url('usuario/afiliacion') ?>" class="btn btn-template-main" ><i class="fa fa-money"></i> Hazte Vendedor</a>                            
                             </div>
                         </div>
                     <?php endif; ?>

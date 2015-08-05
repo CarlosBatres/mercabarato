@@ -59,7 +59,7 @@
                 }
                 ?>
                 <li class="<?php echo $active; ?>">
-                    <a href="<?php echo site_url('usuario/afiliacion') ?>"><i class="fa fa-money"></i> Afiliación</a>
+                    <a href="<?php echo site_url('usuario/afiliacion') ?>"><i class="fa fa-money"></i> Hazte Vendedor</a>
                 </li>
             </ul>
         </div>

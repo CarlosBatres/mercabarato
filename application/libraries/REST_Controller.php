@@ -32,8 +32,8 @@ abstract class REST_Controller extends MY_Controller {
      * @var array 
      */
     protected $methods = array(
-        'categorias_get'=>array('limit'=>50),
-        'upload_products_post'=>array('limit'=>50)
+        'categorias_get' => array('limit' => 50),
+        'upload_products_post' => array('limit' => 50)
     );
 
     /**
@@ -130,6 +130,8 @@ abstract class REST_Controller extends MY_Controller {
     }
 
     protected $user_id = NULL;  // USUARIO ID que se uso para autenticar
+    protected $username_c = NULL;  
+    protected $password_c = NULL;  
 
     /**
      * Constructor function
@@ -824,12 +826,6 @@ abstract class REST_Controller extends MY_Controller {
           return TRUE; */
     }
 
-    public function get_user_id() {
-        if ($this->user_id != NULL) {
-            return $this->user_id;
-        }
-    }
-
     /**
      * @todo document this. 
      */
@@ -967,6 +963,37 @@ abstract class REST_Controller extends MY_Controller {
      */
     protected function _format_jsonp($data = array()) {
         return $this->get('callback') . '(' . json_encode($data) . ')';
+    }
+
+    /**
+     * CUSTOM
+     */
+    protected function _get_basic_auth_data() {        
+        $this->username_c = NULL;
+        $this->password_c = NULL;
+
+        // mod_php
+        if ($this->input->server('PHP_AUTH_USER')) {
+            $this->username_c = $this->input->server('PHP_AUTH_USER');
+            $this->password_c = $this->input->server('PHP_AUTH_PW');
+        }
+
+        // most other servers
+        elseif ($this->input->server('HTTP_AUTHENTICATION')) {
+            if (strpos(strtolower($this->input->server('HTTP_AUTHENTICATION')), 'basic') === 0) {
+                list($this->username_c, $this->password_c) = explode(':', base64_decode(substr($this->input->server('HTTP_AUTHORIZATION'), 6)));
+            }
+        }
+    }
+
+    protected function get_user_id() {
+        if ($this->user_id != NULL) {
+            return $this->user_id;
+        }
+    }
+
+    protected function set_user_id($user_id) {
+        $this->user_id = $user_id;
     }
 
 }

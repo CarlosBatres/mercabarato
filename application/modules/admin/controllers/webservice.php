@@ -18,18 +18,18 @@ class webservice extends REST_Controller {
         $categorias = $this->categoria_model->get_categorias_webservice();
         $this->response(array('categorias' => $categorias));
     }
-    
+
     /**
      * Webservice para subir productos en BULK
      */
     function upload_products_post() {
         $user_id = $this->get_user_id();
-        $vendedor = $this->usuario_model->get_full_identidad($user_id);
-
+        $vendedor = $this->usuario_model->get_full_identidad($user_id);        
         $datos = $this->_post_args;
+        
         $productos_array = array();
         $error_validacion_campos = false;
-        $error_array=array();
+        $error_array = array();
 
         if ($vendedor->es_vendedor_habilitado()) {
             if (isset($datos["productos"]["producto"])) {
@@ -50,38 +50,38 @@ class webservice extends REST_Controller {
                         $error_validacion_campos = true;
                     }
                 }
-
+                
                 if (sizeof($productos_array) > 0) {
                     $cantidad = $this->vendedor_model->get_cantidad_productos_disp($vendedor->get_vendedor_id());
                     foreach ($productos_array as $prod) {
                         $categoria = $this->categoria_model->get($prod["categoria_id"]);
-                        if ($categoria) {                            
+                        if ($categoria) {
                             if ($cantidad > 0) {
                                 $data = array(
                                     'nombre' => $prod["nombre"],
-                                    'descripcion' => (isset($prod["descripcion"])) ? $prod["descripcion"] : null,
+                                    'descripcion' => (!is_array($prod["descripcion"])) ? $prod["descripcion"] : null,
                                     'precio' => $prod["precio"],
                                     'categoria_id' => $prod["categoria_id"],
                                     'mostrar_precio' => $prod["mostrar_precio"],
                                     'mostrar_producto' => $prod["mostrar_producto"],
                                     'habilitado' => $prod["habilitado"],
-                                    'link_externo' => (isset($prod["link_externo"])) ? $prod["link_externo"] : null,
+                                    'link_externo' => (!is_array($prod["link_externo"])) ? $prod["link_externo"] : null,
                                     'vendedor_id' => $vendedor->get_vendedor_id(),
                                 );
                                 $this->producto_model->insert($data);
                                 $cantidad--;
-                            }else{                                
-                                $error_array[]=array("tipo"=>"Limite Alcanzado","datos"=>"Producto no insertado : ".$prod["nombre"]);
-                            }                                                   
-                        }else{
-                            $error_array[]=array("tipo"=>"Categoria no existe","categoria_id"=>$prod["categoria_id"],"datos"=>"Producto no insertado : ".$prod["nombre"]);                            
+                            } else {
+                                $error_array[] = array("tipo" => "Limite Alcanzado", "datos" => "Producto no insertado : " . $prod["nombre"]);
+                            }
+                        } else {
+                            $error_array[] = array("tipo" => "categoria_id=".$prod["categoria_id"]." no existe", "datos" => "Producto no insertado : " . $prod["nombre"]);
                         }
                     }
-                    
-                    $success=array('estado' => 'completado', 'completado' => 'Operacion completada con exito.');
-                    if(sizeof($error_array)>0){
-                        $success["completado"]="Operacion completada con algunos errores.";
-                        $success["extra"]=$error_array;
+
+                    $success = array('estado' => 'completado', 'completado' => 'Operacion completada con exito.');
+                    if (sizeof($error_array) > 0) {
+                        $success["completado"] = "Operacion completada con algunos errores.";
+                        $success["extra"] = $error_array;
                     }
                     $this->response($success);
                 } else {
@@ -92,7 +92,7 @@ class webservice extends REST_Controller {
             }
         } else {
             $this->response(array('estado' => 'error', 'error' => 'No tienes privilegios para realizar esta operacion'), 404);
-        }        
+        }
     }
 
     /**
@@ -128,6 +128,22 @@ class webservice extends REST_Controller {
             $flag = false;
         }
         return $flag;
+    }
+
+    function categorias_local_get() {
+        $this->categorias_get();
+    }
+
+    function upload_products_local_post() {        
+        $this->_get_basic_auth_data();
+        $user=$this->usuario_model->get_by("email",$this->username_c);
+        
+        if ($user) {             
+            $this->set_user_id($user->id);
+            $this->upload_products_post();
+        }else{
+            $this->response(array('estado' => 'error', 'error' => 'No estas Autorizado'), 404);
+        }        
     }
 
 }

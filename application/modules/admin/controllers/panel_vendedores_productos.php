@@ -378,4 +378,152 @@ class Panel_vendedores_productos extends ADController {
         }
     }
 
+    public function agregar_varios() {
+        $formValues = $this->input->post();
+        if ($formValues !== false) {
+            $config['upload_path'] = './assets/uploads/temporal/';
+            $config['allowed_types'] = 'xls';
+            $config['max_size'] = '1024';
+
+            $this->load->library('upload', $config);
+
+            if (!$this->upload->do_upload()) {
+                $error = array('error' => $this->upload->display_errors());
+                $file_name = null;
+                $this->session->set_flashdata('error', $this->upload->display_errors());
+                redirect('panel_vendedor/producto/agregar-varios');
+                die();
+            } else {
+                $data_upload = $this->upload->data();
+                $file_name = $data_upload["full_path"];
+
+                $this->load->library('excel');
+                $objPHPExcel = PHPExcel_IOFactory::load($file_name);
+                $sheet = $objPHPExcel->getSheet(0);
+                $highestRow = $sheet->getHighestRow();
+                $highestColumn = $sheet->getHighestColumn();
+
+                $productos_array = array();
+
+                for ($row = 1; $row <= $highestRow; $row++) {
+                    $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
+                    $flag=true;
+                    if ($row == 1) {
+                       /* $flag = true;
+                        if (strcmp(strtolower($rowData[0][0]), "nombre")) {
+                            $flag = false;
+                        }
+                        if (strcmp(strtolower($rowData[0][1]), "descripcion")) {
+                            $flag = false;
+                        }
+                        if (strcmp(strtolower($rowData[0][2]), "precio")) {
+                            $flag = false;
+                        }
+                        if (strcmp(strtolower($rowData[0][3]), "mostrar_precio")) {
+                            $flag = false;
+                        }
+                        if (strcmp(strtolower($rowData[0][4]), "mostrar_producto")) {
+                            $flag = false;
+                        }
+                        if (strcmp(strtolower($rowData[0][5]), "habilitado")) {
+                            $flag = false;
+                        }
+                        if (strcmp(strtolower($rowData[0][6]), "link_externo")) {
+                            $flag = false;
+                        }
+                        if (strcmp(strtolower($rowData[0][7]), "categoria_id")) {
+                            $flag = false;
+                        }*/
+                    } else {
+
+                        $flag_empty = true;
+                        for ($i = 0; $i < 8; $i++) {
+                            if ($rowData[0][$i] == null && ($i != 1 && $i != 6)) {
+                                $flag_empty = false;
+                            }
+                        }
+
+                        if ($flag_empty) {
+                            $rowArray = array(
+                                "nombre" => $rowData[0][0],
+                                "descripcion" => $rowData[0][1],
+                                "precio" => $rowData[0][2],
+                                "mostrar_precio" => $rowData[0][3],
+                                "mostrar_producto" => $rowData[0][4],
+                                "habilitado" => $rowData[0][5],
+                                "link_externo" => $rowData[0][6],
+                                "categoria_id" => $rowData[0][7],
+                            );
+                            $productos_array[] = $rowArray;
+                        }
+                    }
+
+                    if (!$flag) {
+                        break;
+                    }
+                }
+
+                if (sizeof($productos_array) > 0) {
+                    $this->load->library('rest');
+                    $config = array('server' => site_url('webservice'),
+                        'http_user' => $this->identidad->usuario->email,
+                        'http_pass' => "nopass",
+                        'http_auth' => 'basic');
+
+                    $this->rest->initialize($config);
+
+                    $test = new SimpleXMLElement("<?xml version=\"1.0\" encoding=\"utf-8\" ?><mercabarato></mercabarato>");
+                    $productos_xml = $test->addChild("productos");
+
+                    foreach ($productos_array as $producto) {
+                        $producto_xml = $productos_xml->addChild("producto");
+                        $producto_xml->addChild("nombre", $producto["nombre"]);
+                        $producto_xml->addChild("descripcion", $producto["descripcion"]);
+                        $producto_xml->addChild("precio", $producto["precio"]);
+                        $producto_xml->addChild("mostrar_precio", $producto["mostrar_precio"]);
+                        $producto_xml->addChild("mostrar_producto", $producto["mostrar_producto"]);
+                        $producto_xml->addChild("habilitado", $producto["habilitado"]);
+                        $producto_xml->addChild("link_externo", $producto["link_externo"]);
+                        $producto_xml->addChild("categoria_id", $producto["categoria_id"]);
+                    }
+
+                    $response = $this->rest->post('upload_products_local', $test->asXML(), "xml");
+                    $this->rest->debug();
+                } else {
+                    $flag = false;
+                }
+
+
+                unlink($file_name);
+                if (!$flag) {
+                    $this->session->set_flashdata('error', "El formato del excel es invalido");
+                    redirect('panel_vendedor/producto/agregar-varios');
+                } else {
+                    $array = SimpleXML2Array($response);
+                    $this->session->set_userdata(array('pvp_temp' => $array));
+                    redirect('panel_vendedor/producto/agregar-varios-resumen');
+                }
+            }
+        } else {
+            $this->template->set_title("Panel de Control - Mercabarato.com");
+            $this->template->set_layout('panel_vendedores');
+            $this->template->load_view('admin/panel_vendedores/producto/producto_agregar_multi');
+        }
+    }
+
+    public function agregar_varios_resumen() {
+        $this->template->set_title("Panel de Control - Mercabarato.com");
+        $this->template->set_layout('panel_vendedores');
+
+        $dat = $this->session->userdata('pvp_temp');
+
+        if ($dat) {
+            $data = array("data" => $dat);
+            $this->session->unset_userdata('pvp_temp');
+            $this->template->load_view('admin/panel_vendedores/producto/producto_agregar_multi_resumen', $data);
+        } else {
+            redirect('panel_vendedor/producto/listado');
+        }
+    }
+
 }
