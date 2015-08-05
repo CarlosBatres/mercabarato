@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mercabarato>
+    <productos>
+        <producto>
+            <nombre>Producto de prueba UNO</nombre>
+            <descripcion><p>Descripcion del producto de prueba uno.</p></descripcion>
+            <precio>10.00</precio>
+            <mostrar_precio>1</mostrar_precio>
+            <mostrar_producto>1</mostrar_producto>
+            <habilitado>1</habilitado>
+            <link_externo>www.ejemplo_link_prueba1.com</link_externo>
+            <categoria_id>1</categoria_id>
+        </producto>
+        <producto>...</producto>
+    </productos>
+</mercabarato>

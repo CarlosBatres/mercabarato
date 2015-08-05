@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+    <categorias>
+        <categoria>
+            <id>1</id>
+            <nombre>Alimentación</nombre>
+        </categoria>        
+        <categoria>...</categoria>        
+    </categorias>
+</xml>

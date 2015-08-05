@@ -1,0 +1,138 @@
+::selection{ background-color: #E13300; color: white; }
+::moz-selection{ background-color: #E13300; color: white; }
+::webkit-selection{ background-color: #E13300; color: white; }
+
+body {
+    background-color: #fff;
+    margin: 40px;
+    font: 13px/20px normal Helvetica, Arial, sans-serif;
+    color: #4F5155;
+    overflow-y: scroll;
+}
+
+a {
+    color: #003399;
+    background-color: transparent;
+    font-weight: normal;
+}
+
+h1 {
+    color: #444;
+    background-color: transparent;
+    border-bottom: 1px solid #D0D0D0;
+    font-size: 19px;
+    font-weight: normal;
+    margin: 0 0 14px 0;
+    padding: 14px 15px 10px 15px;
+}
+
+code {
+    font-family: Consolas, Monaco, Courier New, Courier, monospace;
+    font-size: 12px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #D0D0D0;
+    color: #002166;
+    display: block;
+    width: 100%;
+}
+
+.body{
+    margin: 0 15px 0 15px;
+}
+
+p.footer{
+    text-align: right;
+    font-size: 11px;
+    border-top: 1px solid #D0D0D0;
+    line-height: 32px;
+    padding: 0 10px 0 10px;
+    margin: 20px 0 0 0;
+}
+
+#container{
+    margin: 10px;
+    border: 1px solid #D0D0D0;
+    -webkit-box-shadow: 0 0 8px #D0D0D0;
+}
+
+table{
+    width: 100%;
+}
+
+th{
+    text-align: left;
+    background: #4F5155;
+    padding: 5px;
+    color: #fff;
+}
+
+th.group{
+    background: #D0D0D0;
+    color: #4F5155;
+}
+
+td{
+    padding: 5px;
+    vertical-align: top;
+    background: #f6f6f6;
+}
+ul{
+    margin: 0;
+    list-style:circle inside;
+    padding: 0;
+}
+
+ul ul{
+    margin-left: 10px;
+    list-style: square inside;
+}
+
+small{
+    font-family: courier, courier-new;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+small:before{
+    content: "( ";
+}
+
+small:after{
+    content: " )";
+}
+
+.close{
+    display: none;
+}
+
+.up-down{
+    float: right;
+    border: 1px solid #4F5155;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.up-down span{
+    border-width: 8px;
+    border-color: transparent;
+    border-style: solid;
+    position: absolute;
+    margin-top: 7px;
+    margin-left: 2px;
+}
+
+.up-down .down{
+    border-top-color: #4F5155;
+}
+
+.up-down .up{
+    margin-top: -2px;
+    border-bottom-color: #4F5155;
+}
+
+tr[class]{
+    //display: none;
+}
