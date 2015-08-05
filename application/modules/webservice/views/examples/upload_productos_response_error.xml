@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+    <estado>completado</estado>
+    <completado>Operacion completada con algunos errores.</completado>
+    <extra>
+        <item>
+            <tipo>Limite Alcanzado</tipo>
+            <datos>Producto no insertado : Producto Prueba_0</datos>
+        </item>
+        <item>...</item>
+    </extra>
+</xml>

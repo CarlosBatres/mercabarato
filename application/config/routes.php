@@ -271,10 +271,12 @@ $route['admin/acceso_restringido'] = 'admin/main/acceso_restringido';
 $route['admin/sistema/validar_paquetes'] = 'admin/sistema/validar_paquetes';
 $route['admin/sistema/productos_novedades'] = 'admin/sistema/productos_novedades';
 
-$route['webservice/upload_products'] = 'admin/webservice/upload_products';
-$route['webservice/upload_products_local'] = 'admin/webservice/upload_products_local';
-$route['webservice/categorias'] = 'admin/webservice/categorias';
-$route['webservice/categorias_local'] = 'admin/webservice/categorias_local';
+$route['webservice'] = 'webservice/main/index';
+$route['webservice/upload_products'] = 'webservice/main/upload_products';
+$route['webservice/upload_products_local'] = 'webservice/main/upload_products_local';
+$route['webservice/categorias'] = 'webservice/main/categorias';
+$route['webservice/categorias_local'] = 'webservice/main/categorias_local';
+
 
 $route['default_controller'] = 'home/producto/view_principal';
 $route['404_override'] = 'home/main/not_found';

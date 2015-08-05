@@ -338,3 +338,12 @@ function SimpleXML2Array($xml) {
 
     return $array;
 }
+
+function print_ejemplo($ex, $ext = 'xml') {
+    $file = APPPATH . 'modules/webservice/views/examples/' . $ex . '.' . $ext;
+    if (!is_file($file)) {
+        highlight_string('No se encuentra el ejemplo asociado');
+        return;
+    }
+    highlight_file($file);
+}

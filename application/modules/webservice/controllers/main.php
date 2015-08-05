@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // This can be removed if you use __autoload() in config.php OR use Modular Extensions
 //require APPPATH . '/libraries/REST_Controller.php';
 
-class webservice extends REST_Controller {
+class main extends REST_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -24,9 +24,9 @@ class webservice extends REST_Controller {
      */
     function upload_products_post() {
         $user_id = $this->get_user_id();
-        $vendedor = $this->usuario_model->get_full_identidad($user_id);        
+        $vendedor = $this->usuario_model->get_full_identidad($user_id);
         $datos = $this->_post_args;
-        
+
         $productos_array = array();
         $error_validacion_campos = false;
         $error_array = array();
@@ -50,7 +50,7 @@ class webservice extends REST_Controller {
                         $error_validacion_campos = true;
                     }
                 }
-                
+
                 if (sizeof($productos_array) > 0) {
                     $cantidad = $this->vendedor_model->get_cantidad_productos_disp($vendedor->get_vendedor_id());
                     foreach ($productos_array as $prod) {
@@ -74,7 +74,7 @@ class webservice extends REST_Controller {
                                 $error_array[] = array("tipo" => "Limite Alcanzado", "datos" => "Producto no insertado : " . $prod["nombre"]);
                             }
                         } else {
-                            $error_array[] = array("tipo" => "categoria_id=".$prod["categoria_id"]." no existe", "datos" => "Producto no insertado : " . $prod["nombre"]);
+                            $error_array[] = array("tipo" => "categoria_id=" . $prod["categoria_id"] . " no existe", "datos" => "Producto no insertado : " . $prod["nombre"]);
                         }
                     }
 
@@ -96,7 +96,41 @@ class webservice extends REST_Controller {
     }
 
     /**
-     * 
+     * Version local del categorias_get para ser ejecutado desde el server
+     */
+    function categorias_local_get() {
+        $this->categorias_get();
+    }
+
+    /**
+     * Version local de upload_productos_post para ser ejecutado desde el server ( Panel de Vendedores )
+     */
+    function upload_products_local_post() {
+        $this->_get_basic_auth_data();
+        $user = $this->usuario_model->get_by("email", $this->username_c);
+
+        if ($user) {
+            $this->set_user_id($user->id);
+            $this->upload_products_post();
+        } else {
+            $this->response(array('estado' => 'error', 'error' => 'No estas Autorizado'), 404);
+        }
+    }
+
+    /**
+     * Pagina principal INDEX
+     */
+    function index_get() {
+
+        $this->template->set_title('Mercabarato.com - WEBSERVICE');
+        //$this->template->set_layout('panel_vendedores');
+        //$this->template->add_js("modules/admin/panel_vendedores/ofertas2/ofertas_crear.js");
+        //$this->template->add_css("modules/admin/panel_vendedores/ofertas2/ofertas_crear.js");
+        $this->template->load_view('webservice/index');
+    }
+
+    /**
+     * Validar campos
      * @param type $producto
      */
     private function _validar_campos($producto) {
@@ -128,22 +162,5 @@ class webservice extends REST_Controller {
             $flag = false;
         }
         return $flag;
-    }
-
-    function categorias_local_get() {
-        $this->categorias_get();
-    }
-
-    function upload_products_local_post() {        
-        $this->_get_basic_auth_data();
-        $user=$this->usuario_model->get_by("email",$this->username_c);
-        
-        if ($user) {             
-            $this->set_user_id($user->id);
-            $this->upload_products_post();
-        }else{
-            $this->response(array('estado' => 'error', 'error' => 'No estas Autorizado'), 404);
-        }        
-    }
-
+    }    
 }

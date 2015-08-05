@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xml>
+    <estado>error</estado>
+    <error>El formato de la peticion es invalido.</error>
+</xml>

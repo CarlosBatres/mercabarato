@@ -68,8 +68,9 @@ $config['rest_auth'] = 'basic';
 | Acceptable values are; 'none', 'digest' and 'basic'.  
 |
 */
-$config['auth_override_class_method']['webservice']['categorias_local'] = 'whitelist';
-$config['auth_override_class_method']['webservice']['upload_products_local'] = 'whitelist';
+$config['auth_override_class_method']['main']['index'] = 'none';
+$config['auth_override_class_method']['main']['categorias_local'] = 'whitelist';
+$config['auth_override_class_method']['main']['upload_products_local'] = 'whitelist';
 // $config['auth_override_class_method']['deals']['insert'] = 'digest';
 // $config['auth_override_class_method']['accounts']['user'] = 'basic';
 
