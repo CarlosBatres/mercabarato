@@ -73,7 +73,17 @@
                             </li>                            
                             <li>
                                 <a href="<?php echo site_url('panel_vendedor/producto/listado'); ?>"> Listado de Productos</a>
-                            </li>                            
+                            </li> 
+                            <?php
+                            if (strpos($this->uri->uri_string(), 'panel_vendedor/producto/agregar-varios-resumen') !== false) {
+                                $class = "active";
+                            } else {
+                                $class = "";
+                            }
+                            ?>
+                            <li>
+                                <a class="<?php echo $class; ?>" href="<?php echo site_url('panel_vendedor/producto/agregar-varios'); ?>"> Agregar varios (Excel)</a>
+                            </li> 
                         </ul>                         
                     </li>
                     <li>

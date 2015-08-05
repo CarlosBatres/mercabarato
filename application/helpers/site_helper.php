@@ -277,7 +277,7 @@ function truncate_html($text, $length = 100, $options = array()) {
                     }
                 }
 
-                $truncate .= mb_substr($tag[3], 0 , $left + $entitiesLength);
+                $truncate .= mb_substr($tag[3], 0, $left + $entitiesLength);
                 break;
             } else {
                 $truncate .= $tag[3];
@@ -315,9 +315,26 @@ function truncate_html($text, $length = 100, $options = array()) {
 
     if ($html) {
         foreach ($openTags as $tag) {
-            $truncate .= '</'.$tag.'>';
+            $truncate .= '</' . $tag . '>';
         }
     }
 
     return $truncate;
+}
+
+function SimpleXML2Array($xml) {
+    $array = (array) $xml;
+
+    //recursive Parser
+    foreach ($array as $key => $value) {
+        if (is_object($value)) {
+            if (strpos(get_class($value), "SimpleXML") !== false) {
+                $array[$key] = SimpleXML2Array($value);
+            }
+        } elseif (is_array($value)) {
+            $array[$key] = SimpleXML2Array($value);
+        }
+    }
+
+    return $array;
 }

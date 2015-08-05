@@ -68,7 +68,8 @@ $config['rest_auth'] = 'basic';
 | Acceptable values are; 'none', 'digest' and 'basic'.  
 |
 */
-// $config['auth_override_class_method']['deals']['view'] = 'none';
+$config['auth_override_class_method']['webservice']['categorias_local'] = 'whitelist';
+$config['auth_override_class_method']['webservice']['upload_products_local'] = 'whitelist';
 // $config['auth_override_class_method']['deals']['insert'] = 'digest';
 // $config['auth_override_class_method']['accounts']['user'] = 'basic';
 
@@ -82,7 +83,7 @@ $config['rest_auth'] = 'basic';
 |	array('admin' => '1234')
 |
 */
-$config['rest_valid_logins'] = array('admin' => '1234');
+$config['rest_valid_logins'] = array('admin' => '8708370728572048724037257308a8ja08fj0a');
 
 /*
 |--------------------------------------------------------------------------
@@ -114,7 +115,7 @@ $config['rest_ip_whitelist_enabled'] = false;
 | 127.0.0.1 and 0.0.0.0 are allowed by default.
 |
 */
-$config['rest_ip_whitelist'] = '';
+$config['rest_ip_whitelist'] = '127.0.0.1, 0.0.0.0';
 
 /*
 |--------------------------------------------------------------------------

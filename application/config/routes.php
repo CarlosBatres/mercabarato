@@ -129,6 +129,8 @@ $route['panel_vendedor/invitaciones/ajax_invitaciones_recibidas'] = 'admin/panel
 $route['panel_vendedor/invitaciones/ajax_get_listado_clientes'] = 'admin/panel_vendedores_invitaciones/ajax_get_listado_clientes';
 $route['panel_vendedor/producto/listado'] = 'admin/panel_vendedores_productos/listado';
 $route['panel_vendedor/producto/agregar'] = 'admin/panel_vendedores_productos/agregar';
+$route['panel_vendedor/producto/agregar-varios'] = 'admin/panel_vendedores_productos/agregar_varios';
+$route['panel_vendedor/producto/agregar-varios-resumen'] = 'admin/panel_vendedores_productos/agregar_varios_resumen';
 $route['panel_vendedor/producto/borrar/(:num)'] = 'admin/panel_vendedores_productos/borrar/$1';
 $route['panel_vendedor/producto/editar/(:num)'] = 'admin/panel_vendedores_productos/editar/$1';
 $route['panel_vendedor/producto/habilitar/(:num)'] = 'admin/panel_vendedores_productos/habilitar/$1';
@@ -270,7 +272,9 @@ $route['admin/sistema/validar_paquetes'] = 'admin/sistema/validar_paquetes';
 $route['admin/sistema/productos_novedades'] = 'admin/sistema/productos_novedades';
 
 $route['webservice/upload_products'] = 'admin/webservice/upload_products';
+$route['webservice/upload_products_local'] = 'admin/webservice/upload_products_local';
 $route['webservice/categorias'] = 'admin/webservice/categorias';
+$route['webservice/categorias_local'] = 'admin/webservice/categorias_local';
 
 $route['default_controller'] = 'home/producto/view_principal';
 $route['404_override'] = 'home/main/not_found';
