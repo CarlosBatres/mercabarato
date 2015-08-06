@@ -17,17 +17,23 @@
                 <?= $this->session->flashdata('error') ?> 
             </div>
         <?php } ?>
-        
+
         <?php if ($ilimitado): ?>
             <div class="alert alert-info">                 
                 <p> Puedes insertar anuncios sin limites</p>
             </div>
-        <?php else:?>
+        <?php else: ?>
+
             <div class="alert alert-info">                 
-                <p> Puedes insertar <?php echo $limite_anuncios-$anuncios_total?> anuncios mas de un maximo de <?php echo $limite_anuncios?> anuncios.</p>
-            </div>
+                <?php $diff = $limite_anuncios - $anuncios_total; ?>
+                <?php if ($diff < 0): ?>
+                    <p> Tienes un exceso de <?php echo $diff * -1 ?> productos de un maximo de <?php echo $limite_anuncios ?> productos.</p>
+                <?php else: ?>
+                    <p> Puedes insertar <?php echo $diff ?> anuncios mas de un maximo de <?php echo $limite_anuncios ?> anuncios.</p>
+                <?php endif; ?>                
+            </div>                
         <?php endif; ?>
-        
+
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>                

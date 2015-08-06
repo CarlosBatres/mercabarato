@@ -71,22 +71,22 @@ class Vendedor_paquete_model extends MY_Model {
      * Funcion para aprobar un paquete de un vendedor
      * @param type $id del vendedor_paquete
      */
-    public function aprobar_paquete($id, $user_id) {        
+    public function aprobar_paquete($id, $user_id) {
         $vendedor_paquete = $this->get($id);
         $periodo = $vendedor_paquete->duracion_paquete;
-        
-        if($vendedor_paquete->fecha_inicio!=null){
-            $fecha_inicio=$vendedor_paquete->fecha_inicio;
-        }else{
-            $fecha_inicio=date("Y-m-d");
+
+        if ($vendedor_paquete->fecha_inicio != null) {
+            $fecha_inicio = $vendedor_paquete->fecha_inicio;
+        } else {
+            $fecha_inicio = date("Y-m-d");
         }
-        
+
         $data = array(
             "fecha_aprobado" => date("Y-m-d"),
             "aprobado" => 1,
             "fecha_terminar" => date('Y-m-d', strtotime("+$periodo months", strtotime($fecha_inicio))),
-            "autorizado_por" => $user_id,            
-            "fecha_inicio"=>$fecha_inicio
+            "autorizado_por" => $user_id,
+            "fecha_inicio" => $fecha_inicio
         );
         $this->update($id, $data);
 
@@ -221,10 +221,10 @@ class Vendedor_paquete_model extends MY_Model {
 
         if ($days != 0) {
             $date = strtotime(date('Y-m-d'));
-            $date = strtotime("+".$days." day", $date);
-            $this->db->where('fecha_terminar =', date("Y-m-d",$date));
+            $date = strtotime("+" . $days . " day", $date);
+            $this->db->where('fecha_terminar =', date("Y-m-d", $date));
         } else {
-            $this->db->where('fecha_terminar <=', date('Y-m-d'));
+            $this->db->where('fecha_terminar <', date('Y-m-d'));
         }
 
 
@@ -244,11 +244,30 @@ class Vendedor_paquete_model extends MY_Model {
      */
     public function paquete_vencido($vendedor_paquete_id) {
         $paquete = $this->get($vendedor_paquete_id);
-        if ($paquete) {            
-            $renovacion=$this->vendedor_model->get_paquete_renovacion($paquete->vendedor_id);
-            if(!$renovacion){
+        if ($paquete) {
+            $vigente = $this->vendedor_model->get_paquete_en_curso($paquete->vendedor_id);
+            if (!$vigente) {
                 $this->vendedor_model->inhabilitar($paquete->vendedor_id);
-            }                                        
+            } else {
+                
+                
+                $productos = $this->producto_model->get_many_by("vendedor_id", $vigente->vendedor_id);
+                $anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vigente->vendedor_id);
+
+                if (sizeof($productos) <= $vigente->limite_productos || $vigente->limite_productos == -1) {
+                    $this->producto_model->update_by(array('vendedor_id' => $vigente->vendedor_id), array('habilitado' => 1));
+                } else {
+                    $this->producto_model->update_by(array('vendedor_id' => $vigente->vendedor_id), array('habilitado' => 0));
+                    $this->producto_model->habilitar_productos(array('vendedor_id' => $vigente->vendedor_id, "limit" => $vigente->limite_productos));
+                }
+
+                if (sizeof($anuncios) <= $vigente->limite_anuncios || $vigente->limite_anuncios == -1) {
+                    $this->anuncio_model->update_by(array('vendedor_id' => $vigente->vendedor_id), array('habilitado' => 1));
+                } else {
+                    $this->anuncio_model->update_by(array('vendedor_id' => $vigente->vendedor_id), array('habilitado' => 0));
+                    $this->anuncio_model->habilitar_anuncios(array('vendedor_id' => $vigente->vendedor_id, "limit" => $vigente->limite_anuncios));
+                }
+            }
         }
     }
 
