@@ -12,22 +12,12 @@
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-                                    <b>Nueva Solicitud de presupuesto!</b>
+                                    <b>Invitacion Aceptada</b>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Un cliente te ha enviado una solicitud de presupuesto ingresa al sitio para ofrecer una respuesta.
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                    
-                                    <p class="text-right"><strong><a href="<?php echo site_url('panel_vendedor/infocompras/seguros/responder/'.$solicitud_id)?>">Link para continuar...</a></strong></p>                    
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 20px 0 10px 0; color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-                                    
+                                    Un cliente ha aceptado tu invitacion para conectarse ya puedes interactuar con el para ofrecerle Tarifas, Ofertas y mas.
                                 </td>
                             </tr>                            
                         </table>

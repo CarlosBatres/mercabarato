@@ -15,8 +15,14 @@ class main extends REST_Controller {
      *  Retornar Categorias e IDS
      */
     function categorias_get() {
-        $categorias = $this->categoria_model->get_categorias_webservice();
-        $this->response(array('categorias' => $categorias));
+        $user_id = $this->get_user_id();
+        $vendedor = $this->usuario_model->get_full_identidad($user_id);
+        if ($vendedor->es_vendedor_habilitado()) {
+            $categorias = $this->categoria_model->get_categorias_webservice();
+            $this->response(array('categorias' => $categorias));
+        }else {
+            $this->response(array('estado' => 'error', 'error' => 'No tienes privilegios para realizar esta operacion'), 404);
+        }
     }
 
     /**
@@ -162,5 +168,6 @@ class main extends REST_Controller {
             $flag = false;
         }
         return $flag;
-    }    
+    }
+
 }

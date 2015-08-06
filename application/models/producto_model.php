@@ -84,13 +84,11 @@ class Producto_model extends MY_Model {
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
             $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
 
-            $query.="WHERE ( p.cliente_id ='" . $params['cliente_id'] . "'";
-            $query.= " AND (p.fecha_finaliza > '" . date("Y-m-d") . "' OR p.fecha_finaliza IS NULL)"; // NO Incluimos las ofertas VENCIDAS CUIDADO con fecha_finaliza//
+            // SUB QUERY //
 
             $sub_query = "";
             if (isset($params['nombre'])) {
                 $text = " AND p.nombre LIKE '%" . $params['nombre'] . "%'";
-                $query.=$text;
                 $sub_query.=$text;
             }
             if (isset($params['categoria_id'])) {
@@ -104,7 +102,6 @@ class Producto_model extends MY_Model {
                 }
 
                 $text = " AND p.categoria_id IN(" . implode(",", $categorias_array) . ")";
-                $query.=$text;
                 $sub_query.=$text;
             }
             if (isset($params['precio_tipo1'])) {
@@ -113,60 +110,55 @@ class Producto_model extends MY_Model {
                     // TODO : Aqui el precio puede ser precio oferta o una tarifa especifica. Resolver dependiendo de quien este conectado haciendo la busqueda
                     $text = " AND p.precio >" . $precios['0'];
                     $text.=" AND p.precio <=" . $precios['1'];
-                    $query.=$text;
                     $sub_query.=$text;
                 }
             }
             if (isset($params["poblacion"])) {
                 if ($params['poblacion'] != '0') {
                     $text = " AND pl.poblacion_id=" . $params['poblacion'];
-                    $query.=$text;
                     $sub_query.=$text;
                 }
             }
             if (isset($params["provincia"])) {
                 if ($params['provincia'] != '0') {
                     $text = " AND pl.provincia_id=" . $params['provincia'];
-                    $query.=$text;
                     $sub_query.=$text;
                 }
             }
             if (isset($params["pais"])) {
                 if ($params['pais'] != '0') {
                     $text = " AND pl.pais_id=" . $params['pais'];
-                    $query.=$text;
                     $sub_query.=$text;
                 }
             }
             if (isset($params["vendedor_id"])) {
                 $text = " AND p.vendedor_id=" . $params['vendedor_id'];
-                $query.=$text;
                 $sub_query.=$text;
             }
             if (isset($params['excluir_producto_id'])) {
                 $ids = implode(",", $params['excluir_producto_id']);
                 $text = " AND p.id NOT IN(" . $ids . ")";
-                $query.=$text;
                 $sub_query.=$text;
             }
             if (isset($params['mostrar_solo_tarifas'])) {
                 $text = " AND p.tipo='tarifa'";
-                $query.=$text;
                 $sub_query.=$text;
             }
 
-            $query.=") ";
+            $sub_query.=" ) ";
 
-            $query.="OR (p.cliente_id IS NULL ";
-            if ($sub_query != "") {
-                $query.=$sub_query;
-            }
+            // SUB QUERY //
 
-            $query.=") ";
+
+            $query.="WHERE ( p.cliente_id ='" . $params['cliente_id'] . "' AND p.tipo='tarifa' " . $sub_query;
+            $query.= " OR ( (p.cliente_id ='" . $params['cliente_id'] . "' OR p.cliente_id IS NULL ) " .
+                    "AND p.fecha_finaliza > '" . date("Y-m-d") . "' AND p.fecha_inicio < '" . date("Y-m-d") . "'  AND p.tipo='oferta' " . $sub_query;
+            $query.= " OR ( p.tipo='normal' " . $sub_query;
 
             if (isset($params["habilitado"])) {
                 $query.=" AND p.habilitado=" . $params['habilitado'];
             }
+
             $query.=" GROUP BY p.id";
             $query.=" ORDER BY " . $order_by . " " . $order;
             $query.=" LIMIT " . $offset . " , " . $limit;
@@ -526,6 +518,7 @@ class Producto_model extends MY_Model {
         $this->db->from('productos_precios pp');
         $this->db->where('pp.id', $producto_id);
         $this->db->where('pp.cliente_id', $cliente_id);
+        $this->db->where('pp.fecha_inicio <', date("Y-m-d"));
         $this->db->where('pp.fecha_finaliza >', date("Y-m-d"));
         $this->db->where('pp.tipo', 'oferta');
 
@@ -610,12 +603,31 @@ class Producto_model extends MY_Model {
                             "oferta_general_id" => $oferta->oferta_general_id,
                             "codigo" => $codigo
                         );
-                        $this->grupo_oferta_model->insert($data);
-                        // TODO: Enviar emails a vendedor y cliente de que ya cumple con la oferta
+                        $this->grupo_oferta_model->insert($data);                        
+                        if ($this->config->item('emails_enabled')) {
+                            $oferta_general = $this->oferta_general_model->get($oferta->oferta_general_id);
+
+                            $this->load->library('email');
+                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                            $this->email->to($usuario->email);
+                            $this->email->subject('Requisitos de Oferta cumplidos');
+                            $data_mail = array("codigo" => $codigo, "producto" => $producto, "oferta" => $oferta, "oferta_general" => $oferta_general);
+                            $this->email->message($this->load->view('home/emails/cumplido_requisitos_oferta_cliente', $data_mail, true));
+                            $this->email->send();
+
+                            $email = $this->vendedor_model->get_email($producto->vendedor_id);
+                            $this->load->library('email');
+                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                            $this->email->to($email);
+                            $this->email->subject('Requisitos de Oferta cumplidos');
+                            $data_mail2 = array("codigo" => $codigo, "oferta_general" => $oferta_general);
+                            $this->email->message($this->load->view('home/emails/cumplido_requisitos_oferta_vendedor', $data_mail2, true));
+                            $this->email->send();
+                        }
                     }
                 }
             }
-            
+
             $requisitos = $this->requisito_visitas_model->get_many_by("producto_id", $producto_id);
             if ($requisitos) {
                 foreach ($requisitos as $req) {
@@ -626,8 +638,30 @@ class Producto_model extends MY_Model {
                             "oferta_general_id" => $req->oferta_general_id,
                             "codigo" => $codigo
                         );
-                        $this->grupo_oferta_model->insert($data);
-                        // TODO: Enviar emails a vendedor y cliente de que ya cumple con la oferta
+                        $this->grupo_oferta_model->insert($data);                        
+
+                        if ($this->config->item('emails_enabled')) {
+                            $oferta_general = $this->oferta_general_model->get($req->oferta_general_id);
+                            $oferta = $this->oferta_model->get_by("oferta_general_id", $req->oferta_general_id);
+                            $producto = $this->producto_model->get($oferta->producto_id);
+
+                            $this->load->library('email');
+                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                            $this->email->to($usuario->email);
+                            $this->email->subject('Requisitos de Oferta cumplidos');
+                            $data_mail = array("codigo" => $codigo, "producto" => $producto, "oferta" => $oferta, "oferta_general" => $oferta_general);
+                            $this->email->message($this->load->view('home/emails/cumplido_requisitos_oferta_cliente', $data_mail, true));
+                            $this->email->send();
+
+                            $email = $this->vendedor_model->get_email($producto->vendedor_id);
+                            $this->load->library('email');
+                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                            $this->email->to($email);
+                            $this->email->subject('Requisitos de Oferta cumplidos');
+                            $data_mail2 = array("codigo" => $codigo, "oferta_general" => $oferta_general);
+                            $this->email->message($this->load->view('home/emails/cumplido_requisitos_oferta_vendedor', $data_mail2, true));
+                            $this->email->send();
+                        }                                                
                     }
                 }
             }

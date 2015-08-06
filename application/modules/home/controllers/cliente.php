@@ -185,6 +185,24 @@ class Cliente extends MY_Controller {
                 $invitacion_id = $this->input->post('invitacion_id');
                 $user_id = $this->authentication->read('identifier');
                 $this->invitacion_model->aceptar_invitacion($invitacion_id, $user_id);
+
+                if ($this->config->item('emails_enabled')) {                    
+                    $invitacion = $this->get($invitacion_id);
+                    if($invitacion->invitar_desde!=$user_id){
+                        $usr=$this->usuario_model->get($invitacion->invitar_desde);
+                        $email=$usr->email;
+                    }else{
+                        $usr=$this->usuario_model->get($invitacion->invitar_para);
+                        $email=$usr->email;
+                    }
+                    
+                    $this->load->library('email');
+                    $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                    $this->email->to($email);
+                    $this->email->subject('Invitacion Aceptada');                    
+                    $this->email->message($this->load->view('home/emails/aceptar_invitacion_cliente', array(), true));
+                    $this->email->send();
+                }
                 echo json_encode(array("success" => true));
             }
         } else {
@@ -295,7 +313,7 @@ class Cliente extends MY_Controller {
                     $this->email->to($usuario->email);
                     $this->email->subject('Invitacion de Mercabarato.com');
                     $data_email = array("titulo" => $data["titulo"], "comentario" => $data["comentario"]);
-                    $this->email->message($this->load->view('home/emails/invitacion_email_cliente', $data_email, true));
+                    $this->email->message($this->load->view('home/emails/invitacion_email_a_vendedor', $data_email, true));
                     $this->email->send();
                 }
 
@@ -391,7 +409,7 @@ class Cliente extends MY_Controller {
 
     public function seguros_download_respuesta() {
         $this->load->helper('download');
-        $data = file_get_contents(assets_url('uploads/seguros/')  .'/'.$this->uri->segment(4)); // Read the file's contents
+        $data = file_get_contents(assets_url('uploads/seguros/') . '/' . $this->uri->segment(4)); // Read the file's contents
         $name = $this->uri->segment(4);
         force_download($name, $data);
     }

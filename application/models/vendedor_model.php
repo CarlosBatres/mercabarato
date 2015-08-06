@@ -413,4 +413,21 @@ class Vendedor_model extends MY_Model {
             $this->anuncio_model->update_by(array("vendedor_id"=>$vendedor_id),array("habilitado"=>"0"));                        
         }                       
     }    
+    
+    
+    public function get_email($vendedor_id){
+        $this->db->select("usuario.email");
+        $this->db->from($this->_table);
+        $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
+        $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
+        $this->db->where("vendedor.id",$vendedor_id);
+        
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            return $result->row()->email;
+        } else {
+            return FALSE;
+        }
+    }
 }

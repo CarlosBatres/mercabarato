@@ -39,7 +39,7 @@ class Visita_model extends MY_Model {
                     );
                     $this->insert($data);
                     $this->producto_model->verificar_oferta($producto_id);
-                }
+                }                
             }
         }
     }

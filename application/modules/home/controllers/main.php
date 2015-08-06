@@ -83,10 +83,16 @@ class Main extends MY_Controller {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/terminos_de_uso');
     }
-    
+
     public function cookies() {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/cookies');
+    }
+
+    public function test_url() {
+        
+        $data_email = array();
+        echo $this->load->view('home/emails/aceptar_invitacion_vendedor', $data_email, true);
     }
 
 }

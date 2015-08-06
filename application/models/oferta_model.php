@@ -80,14 +80,7 @@ class Oferta_model extends MY_Model {
         }
     }
     
-    public function delete($id) {
-        $grupos = $this->grupo_oferta_model->get_many_by("oferta_id", $id);
-        if ($grupos) {
-            $this->grupo_oferta_model->delete_by("oferta_id", $id);
-            foreach ($grupos as $grupo) {
-                $this->grupo_model->delete($grupo->id);
-            }
-        }
+    public function delete($id) {        
         parent::delete($id);
     }
          
