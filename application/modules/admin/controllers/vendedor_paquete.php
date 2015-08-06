@@ -32,29 +32,33 @@ class Vendedor_paquete extends ADController {
         $this->vendedor_paquete_model->aprobar_paquete($id, $user_id);
         $this->vendedor_model->habilitar_vendedor($vendedor_paquete->vendedor_id);
 
-        $productos = $this->producto_model->get_many_by("vendedor_id", $vendedor_paquete->vendedor_id);
-        $anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vendedor_paquete->vendedor_id);
+        $paquete_activo = $this->vendedor_model->get_paquete_en_curso($vendedor_paquete->vendedor_id);
 
-        if (sizeof($productos) <= $vendedor_paquete->limite_productos || $vendedor_paquete->limite_productos == -1) {
-            $this->producto_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 1));
-        } else {
-            $this->producto_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 0));
-            $this->producto_model->habilitar_productos(array('vendedor_id' => $vendedor_paquete->vendedor_id, "limit" => $vendedor_paquete->limite_productos));
-        }
+        if (!$paquete_activo) {
+            $productos = $this->producto_model->get_many_by("vendedor_id", $vendedor_paquete->vendedor_id);
+            $anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vendedor_paquete->vendedor_id);
 
-        if (sizeof($anuncios) <= $vendedor_paquete->limite_anuncios || $vendedor_paquete->limite_anuncios == -1) {
-            $this->anuncio_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 1));
-        } else {
-            $this->anuncio_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 0));
-            $this->anuncio_model->habilitar_anuncios(array('vendedor_id' => $vendedor_paquete->vendedor_id, "limit" => $vendedor_paquete->limite_anuncios));
+            if (sizeof($productos) <= $vendedor_paquete->limite_productos || $vendedor_paquete->limite_productos == -1) {
+                $this->producto_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 1));
+            } else {
+                $this->producto_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 0));
+                $this->producto_model->habilitar_productos(array('vendedor_id' => $vendedor_paquete->vendedor_id, "limit" => $vendedor_paquete->limite_productos));
+            }
+
+            if (sizeof($anuncios) <= $vendedor_paquete->limite_anuncios || $vendedor_paquete->limite_anuncios == -1) {
+                $this->anuncio_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 1));
+            } else {
+                $this->anuncio_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 0));
+                $this->anuncio_model->habilitar_anuncios(array('vendedor_id' => $vendedor_paquete->vendedor_id, "limit" => $vendedor_paquete->limite_anuncios));
+            }
         }
 
         if ($this->config->item('emails_enabled')) {
             $vendedor_paqueted = $this->vendedor_paquete_model->get($id);
-            $vendedor=$this->vendedor_model->get($vendedor_paquete->vendedor_id);
-            $cliente=$this->cliente_model->get($vendedor->cliente_id);
-            $usuario=$this->usuario_model->get($cliente->usuario_id);
-                    
+            $vendedor = $this->vendedor_model->get($vendedor_paquete->vendedor_id);
+            $cliente = $this->cliente_model->get($vendedor->cliente_id);
+            $usuario = $this->usuario_model->get($cliente->usuario_id);
+
             $this->load->library('email');
             $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
             $this->email->to($usuario->email);
@@ -89,22 +93,22 @@ class Vendedor_paquete extends ADController {
                 $params["actividad"] = $this->input->post('actividad');
             }
 
-            /*$user_id = $this->authentication->read('identifier');
-            $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
-            if ($restriccion) {
-                if ($restriccion->pais_id != null) {
-                    $params["pais_id"] = $restriccion->pais_id;
-                }
-                if ($restriccion->provincia_id != null) {
-                    unset($params["pais_id"]);
-                    $params["provincia_id"] = $restriccion->provincia_id;
-                }
-                if ($restriccion->poblacion_id != null) {
-                    unset($params["pais_id"]);
-                    unset($params["provincia_id"]);
-                    $params["poblacion_id"] = $restriccion->poblacion_id;
-                }
-            }*/
+            /* $user_id = $this->authentication->read('identifier');
+              $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
+              if ($restriccion) {
+              if ($restriccion->pais_id != null) {
+              $params["pais_id"] = $restriccion->pais_id;
+              }
+              if ($restriccion->provincia_id != null) {
+              unset($params["pais_id"]);
+              $params["provincia_id"] = $restriccion->provincia_id;
+              }
+              if ($restriccion->poblacion_id != null) {
+              unset($params["pais_id"]);
+              unset($params["provincia_id"]);
+              $params["poblacion_id"] = $restriccion->poblacion_id;
+              }
+              } */
 
             $pagina = $this->input->post('pagina');
         } else {

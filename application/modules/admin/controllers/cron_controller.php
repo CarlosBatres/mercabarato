@@ -36,25 +36,22 @@ class cron_controller extends MY_Controller {
                 foreach ($paquetes_vencidos as $paquete) {
                     $this->vendedor_paquete_model->paquete_vencido($paquete->id);
                     if ($this->config->item('emails_enabled')) {
-                        $email = $this->vendedor_model->get_email($paquete->vendedor_id);
-                        $this->load->library('email');
-                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
-                        $this->email->to($email);
-                        $this->email->subject('Tu paquete a caducado');
-                        $data_email = array("paquete" => $paquete);
-                        $this->email->message($this->load->view('home/emails/paquete_caducado', $data_email, true));
-                        $this->email->send();
+                        $renovacion = $this->vendedor_model->get_paquete_renovacion($paquete->vendedor_id);
+                        if (!$renovacion) {
+                            $email = $this->vendedor_model->get_email($paquete->vendedor_id);
+                            $this->load->library('email');
+                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                            $this->email->to($email);
+                            $this->email->subject('Tu paquete a caducado');
+                            $data_email = array("paquete" => $paquete);
+                            $this->email->message($this->load->view('home/emails/paquete_caducado', $data_email, true));
+                            $this->email->send();
+                        }
                     }
                 }
             }
-        }else{
+        } else {
             redirect('');
-        }
-    }
-    
-    public function test_crons() {
-        if ($this->input->is_cli_request()) {
-            echo "TESTING";
         }
     }
 

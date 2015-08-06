@@ -36,9 +36,9 @@
                                 <thead>
                                     <tr>
                                         <th>Nombre</th>
-                                        <th>Fecha Compra</th>
-                                        <th>Fecha Aprobación</th>
-                                        <th>Fecha Terminar</th>
+                                        <th>Fecha Compra</th>                                        
+                                        <th>Fecha Inicio</th>
+                                        <th>Fecha Terminar</th>                                        
                                         <th>Costo</th>
                                         <th>Estado</th>                                        
                                     </tr>
@@ -47,15 +47,21 @@
                                     <?php foreach ($vendedor_paquetes as $paquete): ?>                                    
                                         <tr>
                                             <th><?php echo $paquete->nombre_paquete ?></th>
-                                            <td><?php echo date("d-M-Y", strtotime($paquete->fecha_comprado)) ?></td>
-                                            <td><?php echo ($paquete->fecha_aprobado != null) ? date("d-M-Y", strtotime($paquete->fecha_aprobado)) : ''; ?></td>
+                                            <td><?php echo date("d-M-Y", strtotime($paquete->fecha_comprado)) ?></td>                                            
+                                            <td><?php echo ($paquete->fecha_inicio != null) ? date("d-M-Y", strtotime($paquete->fecha_inicio)) : ''; ?></td>
                                             <td><?php echo ($paquete->fecha_terminar != null) ? date("d-M-Y", strtotime($paquete->fecha_terminar)) : ''; ?></td>
                                             <td><?php echo $paquete->monto_a_cancelar . ' ' . $this->config->item('money_sign') ?></td>
                                             <td>
                                                 <?php if ($paquete->aprobado == 1): ?>
-                                                    <?php if ($paquete->fecha_terminar <= date("Y-m-d")): ?>
+                                                    <?php if ($paquete->fecha_terminar < date("Y-m-d")): ?>
                                                         <span class="label label-danger">Terminado</span>
-                                                    <?php else: ?>
+                                                    <?php elseif ($paquete->fecha_terminar == date("Y-m-d")): ?>
+                                                        <span class="label label-danger">Ultimo Dia</span>
+                                                    <?php elseif ($paquete->fecha_terminar <= $date5): ?>
+                                                        <span class="label label-warning">Apunto de Caducar</span>
+                                                    <?php elseif ($paquete->fecha_inicio > date("Y-m-d")): ?>       
+                                                        <span class="label label-success">Renovacion Aprobada</span>
+                                                    <?php else: ?>       
                                                         <span class="label label-success">Aprobado / En Curso</span>
                                                     <?php endif; ?>   
                                                 <?php else: ?>
@@ -75,14 +81,27 @@
                     <p class="text-muted lead">De momento no tienes paquetes pendientes ni aprobados..</p>                                       
                 <?php endif; ?>                
 
-                <div class="row">
-                    <div class="col-md-8 col-sm-12">
-                        <h3>Le interesa comprar un nuevo paquete?</h3>
+                <?php if ($renovar): ?>    
+                    <div class="row">
+                        <div class="col-md-8 col-sm-12">
+                            <h4>Tienes un paquete a punto de caducar te interesa renovarlo?</h4>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <a href="<?php echo site_url('usuario/paquetes/renovar') ?>" id="boton-perfil2" class="btn btn-template-primary"> Renovar Paquete</a>
+                        </div>
                     </div>
-                    <div class="col-md-4 col-sm-12">
-                        <a href="<?php echo site_url('usuario/paquetes/comprar') ?>" id="boton-perfil" class="btn btn-template-primary"> Comprar Paquetes</a>
+                <?php elseif (!$nada): ?>
+                    <div class="row">
+                        <div class="col-md-8 col-sm-12">
+                            <h3>Le interesa comprar un nuevo paquete?</h3>
+                        </div>
+                        <div class="col-md-4 col-sm-12">
+                            <a href="<?php echo site_url('usuario/paquetes/comprar') ?>" id="boton-perfil" class="btn btn-template-primary"> Comprar Paquetes</a>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
+
+
 
             </div>                    
 

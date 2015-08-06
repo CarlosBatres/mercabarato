@@ -85,6 +85,8 @@ $route['usuario/enviar_invitacion'] = 'home/cliente/enviar_invitacion';
 $route['usuario/mis-paquetes'] = 'home/vendedor/mis_paquetes';
 $route['usuario/paquetes/comprar'] = 'home/vendedor/comprar_paquetes';
 $route['usuario/paquetes/comprar_paquete/(:any)'] = 'home/vendedor/submit_comprar_paquetes/$1';
+$route['usuario/paquetes/renovar'] = 'home/vendedor/renovar_paquetes';
+$route['usuario/paquetes/renovar_paquete/(:any)'] = 'home/vendedor/submit_renovar_paquetes/$1';
 $route['usuario/buscar_invitaciones'] = 'home/cliente/ajax_get_listado_resultados_invitaciones';
 $route['usuario/infocompras-seguros'] = 'home/cliente/view_infocompras_seguros';
 $route['usuario/infocompras-seguros/respuesta/(:num)'] = 'home/cliente/view_seguros_respuesta/$1';
@@ -270,7 +272,6 @@ $route['admin/acceso_restringido'] = 'admin/main/acceso_restringido';
 
 $route['cron_task/validar_paquetes'] = 'admin/cron_controller/validar_paquetes';
 $route['cron_task/productos_novedades'] = 'admin/cron_controller/productos_novedades';
-$route['cron_task/test_crons'] = 'admin/cron_controller/test_crons';
 
 $route['webservice'] = 'webservice/main/index';
 $route['webservice/upload_products'] = 'webservice/main/upload_products';

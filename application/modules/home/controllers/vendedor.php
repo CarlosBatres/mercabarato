@@ -198,9 +198,9 @@ class Vendedor extends MY_Controller {
                     "aprobado" => 0,
                     "infocompra" => $paquete->infocompra
                 );
-                
+
                 $result = $this->vendedor_model->verificar_disponibilidad($vendedor->id);
-                
+
                 if ($result) {
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
@@ -211,7 +211,7 @@ class Vendedor extends MY_Controller {
                         $this->email->message($this->load->view('home/emails/informacion_de_compra', $data_email, true));
                         $this->email->send();
                     }
-                    
+
                     $this->vendedor_paquete_model->insert($data);
                 }
 
@@ -279,11 +279,39 @@ class Vendedor extends MY_Controller {
 
                 $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => true), true);
 
+                $paquete_en_curso = $this->vendedor_model->get_paquete_en_curso($vendedor->id);
+                $date = strtotime(date("Y-m-d"));
+                $date = strtotime("+5 day", $date);
+                $date5 = date('Y-m-d', $date);
+
+
+                if ($paquete_en_curso) {
+                    if ($paquete_en_curso->fecha_terminar <= $date5) {
+                        $renovar = true;
+                    } else {
+                        $renovar = false;
+                    }
+                } else {
+                    $renovar = false;
+                }
+
+                $paquete_pendiente = $this->vendedor_model->get_paquete_pendiente($vendedor->id);
+                $paquete_renovacion = $this->vendedor_model->get_paquete_renovacion($vendedor->id);
+                if ($paquete_pendiente || $paquete_renovacion) {
+                    $renovar = false;
+                    $nada = true;
+                } else {
+                    $nada = false;
+                }
+
                 $data = array(
                     "cliente" => $cliente,
                     "vendedor" => $vendedor,
                     "vendedor_paquetes" => $vendedor_paquetes,
-                    "html_options" => $html_options
+                    "html_options" => $html_options,
+                    "renovar" => $renovar,
+                    "date5" => $date5,
+                    "nada" => $nada
                 );
                 $this->template->add_js('modules/home/perfil.js');
                 $this->template->load_view('home/vendedor/paquetes', $data);
@@ -349,7 +377,8 @@ class Vendedor extends MY_Controller {
                     "limite_anuncios" => $paquete->limite_anuncios,
                     "monto_a_cancelar" => $paquete->costo,
                     "aprobado" => 0,
-                    "infocompra" => $paquete->infocompra
+                    "infocompra" => $paquete->infocompra,
+                    "fecha_inicio" => null
                 );
                 $result = $this->vendedor_model->verificar_disponibilidad($vendedor->id);
                 if ($result) {
@@ -655,6 +684,115 @@ class Vendedor extends MY_Controller {
             redirect('usuario/perfil');
         } else {
             redirect('usuario/perfil');
+        }
+    }
+
+    public function renovar_paquetes() {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Busca y Compara');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+
+            if ($this->cliente_model->es_vendedor($cliente->id)) {
+                $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
+                $paquetes = $this->paquete_model->get_paquetes();
+
+                $paquete_en_curso = $this->vendedor_model->get_paquete_en_curso($vendedor->id);
+                $date = strtotime(date("Y-m-d"));
+                $date = strtotime("+5 day", $date);
+                $date5 = date('Y-m-d', $date);
+
+                if ($paquete_en_curso) {
+                    if ($paquete_en_curso->fecha_terminar <= $date5) {
+                        $renovar = true;
+                    } else {
+                        $renovar = false;
+                    }
+                } else {
+                    $renovar = false;
+                }
+
+                $paquete_pendiente = $this->vendedor_model->get_paquete_pendiente($vendedor->id);
+                $paquete_renovacion = $this->vendedor_model->get_paquete_renovacion($vendedor->id);
+                if ($paquete_pendiente || $paquete_renovacion) {
+                    $renovar = false;
+                }
+
+                if ($renovar) {
+                    $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+                    $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+
+                    $data = array(
+                        "html_options" => $html_options,
+                        "cliente" => $cliente,
+                        "paquetes" => $paquetes,
+                    );
+                    $this->template->add_js('modules/home/perfil.js');
+                    $this->template->load_view('home/vendedor/renovar_paquete', $data);
+                } else {
+                    redirect('usuario/perfil');
+                }
+            } else {
+                redirect('usuario/perfil');
+            }
+        } else {
+            redirect('');
+        }
+    }
+
+    public function submit_renovar_paquetes($paquete_id) {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Busca y Compara');
+
+            if ($this->paquete_model->validar_paquete($paquete_id)) {
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
+                $usuario = $this->usuario_model->get($cliente->usuario_id);
+                $paquete = $this->paquete_model->get($paquete_id);
+
+                $paquete_en_curso = $this->vendedor_model->get_paquete_en_curso($vendedor->id);
+
+                if ($paquete_en_curso) {
+                    $date = strtotime($paquete_en_curso->fecha_terminar);
+                    $date = strtotime("+1 day", $date);
+                    $date1 = date('Y-m-d', $date);
+
+                    $data = array(
+                        "vendedor_id" => $vendedor->id,
+                        "nombre_paquete" => $paquete->nombre,
+                        "duracion_paquete" => $paquete->duracion,
+                        "fecha_comprado" => date('Y-m-d'),
+                        "fecha_terminar" => null,
+                        "fecha_aprobado" => null,
+                        "referencia" => "",
+                        "limite_productos" => $paquete->limite_productos,
+                        "limite_anuncios" => $paquete->limite_anuncios,
+                        "monto_a_cancelar" => $paquete->costo,
+                        "aprobado" => 0,
+                        "infocompra" => $paquete->infocompra,
+                        "fecha_inicio" => $date1
+                    );
+                    $result = $this->vendedor_model->verificar_disponibilidad_renovacion($vendedor->id);
+                    if ($result) {
+                        if ($this->config->item('emails_enabled')) {
+                            $this->load->library('email');
+                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                            $this->email->to($usuario->email);
+                            $this->email->subject('Informacion para pago del paquete');
+                            $data_email = array("paquete" => $data);
+                            $this->email->message($this->load->view('home/emails/informacion_de_compra', $data_email, true));
+                            $this->email->send();
+                        }
+                        $this->vendedor_paquete_model->insert($data);
+                    }
+                }
+                redirect('usuario/mis-paquetes');
+            } else {
+                redirect('usuario/perfil');
+            }
+        } else {
+            redirect('');
         }
     }
 

@@ -19,7 +19,7 @@ class Anuncio_model extends MY_Model {
         $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
         $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
         $this->db->join("vendedor_paquete", "vendedor.id=vendedor_paquete.vendedor_id AND vendedor_paquete.aprobado='1' AND"
-                . " vendedor_paquete.fecha_terminar>'".date("Y-m-d")."'", 'LEFT');
+                . " vendedor_paquete.fecha_terminar >='".date("Y-m-d")."'", 'LEFT');
 
         if (isset($params['titulo'])) {
             $this->db->like('anuncio.titulo', $params['titulo'], 'both');

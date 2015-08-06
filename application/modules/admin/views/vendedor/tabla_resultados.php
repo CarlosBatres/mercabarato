@@ -25,7 +25,7 @@
                         <td><?php echo $vendedor->sitio_web; ?></td>                    
                         <td><?php echo $vendedor->email; ?></td>
                         <td style="text-align: center"><?php
-                            if ($vendedor->activo == 1): echo "<span class='label label-success'>Si</span>";
+                            if ($vendedor->habilitado == 1): echo "<span class='label label-success'>Si</span>";
                             else: echo "<span class='label label-danger'>No</span>";
                             endif;
                             ?>
@@ -38,7 +38,7 @@
                         <td>
                             <div class="options">
                                 <!--                            <a href="<?php echo site_url('admin/vendedores/editar') . '/' . $vendedor->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>-->
-                                <?php if ($vendedor->activo == 0): ?>
+                                <?php if ($vendedor->habilitado == 0): ?>
                                     <a class="action vendedor_habilitar" href="<?php echo site_url('admin/vendedores/habilitar') . '/' . $vendedor->id ?>" title="Habilitar"><i class="glyphicon glyphicon-check"></i></a>
                                 <?php else: ?>
                                     <a class="action vendedor_inhabilitar" href="<?php echo site_url('admin/vendedores/inhabilitar') . '/' . $vendedor->id ?>" title="Inhabilitar"><i class="glyphicon glyphicon-remove"></i></a>
