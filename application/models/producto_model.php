@@ -647,7 +647,7 @@ class Producto_model extends MY_Model {
 
                             $this->load->library('email');
                             $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
-                            $this->email->to($usuario->email);
+                            $this->email->to($usuario->usuario->email);
                             $this->email->subject('Requisitos de Oferta cumplidos');
                             $data_mail = array("codigo" => $codigo, "producto" => $producto, "oferta" => $oferta, "oferta_general" => $oferta_general);
                             $this->email->message($this->load->view('home/emails/cumplido_requisitos_oferta_cliente', $data_mail, true));
