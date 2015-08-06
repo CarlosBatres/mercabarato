@@ -270,6 +270,7 @@ $route['admin/acceso_restringido'] = 'admin/main/acceso_restringido';
 
 $route['cron_task/validar_paquetes'] = 'admin/cron_controller/validar_paquetes';
 $route['cron_task/productos_novedades'] = 'admin/cron_controller/productos_novedades';
+$route['cron_task/test_crons'] = 'admin/cron_controller/test_crons';
 
 $route['webservice'] = 'webservice/main/index';
 $route['webservice/upload_products'] = 'webservice/main/upload_products';
