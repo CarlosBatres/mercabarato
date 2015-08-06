@@ -75,7 +75,7 @@ class main extends REST_Controller {
                                     'vendedor_id' => $vendedor->get_vendedor_id(),
                                 );
                                 $this->producto_model->insert($data);
-                                $cantidad--;
+                                $cantidad = $this->vendedor_model->get_cantidad_productos_disp($vendedor->get_vendedor_id());
                             } else {
                                 $error_array[] = array("tipo" => "Limite Alcanzado", "datos" => "Producto no insertado : " . $prod["nombre"]);
                             }
