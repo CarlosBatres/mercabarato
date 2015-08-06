@@ -107,6 +107,7 @@ class Vendedor_paquete_model extends MY_Model {
             return FALSE;
         }
     }
+
     /**
      * 
      * @param type $params
@@ -163,6 +164,7 @@ class Vendedor_paquete_model extends MY_Model {
             return array("total" => 0);
         }
     }
+
     /**
      * 
      * @param type $params
@@ -176,17 +178,17 @@ class Vendedor_paquete_model extends MY_Model {
         $this->db->from($this->_table);
         $this->db->join("vendedor", "vendedor.id=vendedor_paquete.vendedor_id", 'INNER');
         $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
-        $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');        
+        $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
 
         if (isset($params['autorizado_por'])) {
             $this->db->where('vendedor_paquete.autorizado_por', $params['autorizado_por']);
         }
-        
+
         if (isset($params['aprobado'])) {
             $this->db->where("vendedor_paquete.aprobado", isset($params['aprobado']));
         }
-        
-        
+
+
         $this->db->stop_cache();
         $count = $this->db->count_all_results();
 
@@ -201,16 +203,26 @@ class Vendedor_paquete_model extends MY_Model {
             return array("total" => 0);
         }
     }
+
     /**
      * 
      * @return boolean
      */
-    public function get_paquetes_a_caducar(){
+    public function get_paquetes_a_caducar($days = 0) {
         $this->db->select("*");
         $this->db->from($this->_table);
         $this->db->where('aprobado', '1');
-        $this->db->where('fecha_terminar <=', date('Y-m-d'));
-        $this->db->order_by('fecha_terminar', 'desc');        
+
+        if ($days != 0) {
+            $date = strtotime(date('Y-m-d'));
+            $date = strtotime("+".$days." day", $date);
+            $this->db->where('fecha_terminar =', date("Y-m-d",$date));
+        } else {
+            $this->db->where('fecha_terminar <=', date('Y-m-d'));
+        }
+
+
+        $this->db->order_by('fecha_terminar', 'desc');
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {
@@ -218,17 +230,17 @@ class Vendedor_paquete_model extends MY_Model {
         } else {
             return FALSE;
         }
-        
     }
+
     /**
      * 
      * @param type $vendedor_paquete_id
      */
-    public function paquete_vencido($vendedor_paquete_id){
-        $paquete=$this->get($vendedor_paquete_id);
-        if($paquete){            
-            $this->vendedor_model->inhabilitar($paquete->vendedor_id);            
-        }                
+    public function paquete_vencido($vendedor_paquete_id) {
+        $paquete = $this->get($vendedor_paquete_id);
+        if ($paquete) {
+            $this->vendedor_model->inhabilitar($paquete->vendedor_id);
+        }
     }
 
 }

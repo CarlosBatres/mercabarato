@@ -53,7 +53,7 @@
                                             <td><?php echo $paquete->monto_a_cancelar . ' ' . $this->config->item('money_sign') ?></td>
                                             <td>
                                                 <?php if ($paquete->aprobado == 1): ?>
-                                                    <?php if ($paquete->fecha_terminar < date("Y-m-d")): ?>
+                                                    <?php if ($paquete->fecha_terminar <= date("Y-m-d")): ?>
                                                         <span class="label label-danger">Terminado</span>
                                                     <?php else: ?>
                                                         <span class="label label-success">Aprobado / En Curso</span>
