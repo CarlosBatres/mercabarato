@@ -311,7 +311,7 @@ class Panel_vendedores_invitaciones extends ADController {
             $this->invitacion_model->aceptar_invitacion($id, $user_id);
 
             if ($this->config->item('emails_enabled')) {
-                $invitacion = $this->get($id);
+                $invitacion = $this->invitacion_model->get($id);
                 if ($invitacion->invitar_desde != $user_id) {
                     $usr = $this->usuario_model->get($invitacion->invitar_desde);
                     $email = $usr->email;
