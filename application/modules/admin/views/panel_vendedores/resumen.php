@@ -105,8 +105,10 @@
                                                     <td><?php echo $paquete->monto_a_cancelar . ' ' . $this->config->item('money_sign') ?></td>
                                                     <td>
                                                         <?php if ($paquete->aprobado == 1): ?>
-                                                            <?php if ($paquete->fecha_terminar <= date("Y-m-d")): ?>
+                                                            <?php if ($paquete->fecha_terminar < date("Y-m-d")): ?>
                                                                 <span class="label label-danger">Terminado</span>
+                                                            <?php elseif ($paquete->fecha_terminar == date("Y-m-d")): ?>
+                                                                <span class="label label-danger">Ultimo Dia</span>   
                                                             <?php else: ?>
                                                                 <span class="label label-success">Aprobado / En Curso</span>
                                                             <?php endif; ?>   
@@ -143,7 +145,7 @@
                                     <?php else: ?>   
                                         <img src="<?php echo assets_url('imgs/avatar1.gif') ?>" class="img-responsive"/>
                                     <?php endif; ?>
-                                    
+
                                 </div>
 
                                 <div class="col-md-8">
@@ -231,7 +233,7 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="list-group">
-                             Funcion no disponible.
+                            Funcion no disponible.
                         </div>                                                
                     </div>
                 </div>

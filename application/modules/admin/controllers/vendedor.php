@@ -181,9 +181,10 @@ class Vendedor extends ADController {
     
     public function habilitar($id) {
         if ($this->input->is_ajax_request()) {
-            $vendedor = $this->vendedor_model->get($id);            
+            $this->vendedor_model->habilitar_vendedor($id);
+            /*$vendedor = $this->vendedor_model->get($id);            
             $cliente = $this->cliente_model->get($vendedor->cliente_id);
-            $this->usuario_model->habilitar($cliente->usuario_id);
+            $this->usuario_model->habilitar($cliente->usuario_id);*/
             redirect('admin/vendedores');
         }
     }

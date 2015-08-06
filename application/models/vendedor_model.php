@@ -157,9 +157,31 @@ class Vendedor_model extends MY_Model {
             foreach ($paquetes as $paquete) {
                 if ($paquete->aprobado == 0) {
                     $flag = false;
-                } elseif ($paquete->fecha_terminar > $hoy) {
+                } elseif ($paquete->fecha_terminar >= $hoy) {
                     $flag = false;
                 }
+            }
+        }
+        return $flag;
+    }
+    /**
+     * 
+     * @param type $vendedor_id
+     * @return boolean
+     */
+    public function verificar_disponibilidad_renovacion($vendedor_id) {
+        $this->db->select('*');
+        $this->db->from('vendedor_paquete');
+        $this->db->where('vendedor_id', $vendedor_id);
+        $paquetes = $this->db->get()->result();
+        $hoy = date("Y-m-d");
+
+        $flag = true;
+        if (sizeof($paquetes) > 0) {
+            foreach ($paquetes as $paquete) {
+                if ($paquete->aprobado == 0) {
+                    $flag = false;
+                } 
             }
         }
         return $flag;
@@ -174,7 +196,8 @@ class Vendedor_model extends MY_Model {
         $this->db->from('vendedor_paquete');
         $this->db->where('vendedor_id', $vendedor_id);
         $this->db->where('aprobado', '1');
-        $this->db->where('fecha_terminar >', date('Y-m-d'));
+        $this->db->where('fecha_terminar >=', date('Y-m-d'));
+        $this->db->where('fecha_inicio <=', date('Y-m-d'));
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {
@@ -274,6 +297,25 @@ class Vendedor_model extends MY_Model {
         $this->db->from('vendedor_paquete');
         $this->db->where('vendedor_id', $vendedor_id);
         $this->db->where('aprobado', '0');
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            return $result->row();
+        } else {
+            return FALSE;
+        }
+    }
+    /**
+     * 
+     * @param type $vendedor_id
+     * @return boolean
+     */
+    public function get_paquete_renovacion($vendedor_id) {
+        $this->db->select("*");
+        $this->db->from('vendedor_paquete');
+        $this->db->where('vendedor_id', $vendedor_id);
+        $this->db->where('aprobado', '1');
+        $this->db->where('fecha_inicio >', date("Y-m-d"));
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {

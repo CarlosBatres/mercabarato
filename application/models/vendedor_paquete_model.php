@@ -71,16 +71,22 @@ class Vendedor_paquete_model extends MY_Model {
      * Funcion para aprobar un paquete de un vendedor
      * @param type $id del vendedor_paquete
      */
-    public function aprobar_paquete($id, $user_id) {
-        // TODO: Realizar alguna validacion adicional
+    public function aprobar_paquete($id, $user_id) {        
         $vendedor_paquete = $this->get($id);
         $periodo = $vendedor_paquete->duracion_paquete;
-        // TODO : Validar que sea un periodo valido de meses ??
+        
+        if($vendedor_paquete->fecha_inicio!=null){
+            $fecha_inicio=$vendedor_paquete->fecha_inicio;
+        }else{
+            $fecha_inicio=date("Y-m-d");
+        }
+        
         $data = array(
             "fecha_aprobado" => date("Y-m-d"),
             "aprobado" => 1,
-            "fecha_terminar" => date('Y-m-d', strtotime("+$periodo months", strtotime(date("Y-m-d")))),
-            "autorizado_por" => $user_id
+            "fecha_terminar" => date('Y-m-d', strtotime("+$periodo months", strtotime($fecha_inicio))),
+            "autorizado_por" => $user_id,            
+            "fecha_inicio"=>$fecha_inicio
         );
         $this->update($id, $data);
 
@@ -135,7 +141,7 @@ class Vendedor_paquete_model extends MY_Model {
         }
         if (isset($params['paquete_vigente'])) {
             $this->db->where('vendedor_paquete.aprobado', '1');
-            $this->db->where('vendedor_paquete.fecha_terminar >', date('Y-m-d'));
+            $this->db->where('vendedor_paquete.fecha_terminar >=', date('Y-m-d'));
         }
         if (isset($params['not_vendedor'])) {
             $this->db->where_not_in('vendedor.id', $params["not_vendedor"]);
@@ -238,8 +244,11 @@ class Vendedor_paquete_model extends MY_Model {
      */
     public function paquete_vencido($vendedor_paquete_id) {
         $paquete = $this->get($vendedor_paquete_id);
-        if ($paquete) {
-            $this->vendedor_model->inhabilitar($paquete->vendedor_id);
+        if ($paquete) {            
+            $renovacion=$this->vendedor_model->get_paquete_renovacion($paquete->vendedor_id);
+            if(!$renovacion){
+                $this->vendedor_model->inhabilitar($paquete->vendedor_id);
+            }                                        
         }
     }
 

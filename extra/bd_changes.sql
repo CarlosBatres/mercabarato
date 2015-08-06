@@ -29,3 +29,5 @@ from `producto` `p`;
 
 /* Cambios por implementar*/
 
+ALTER TABLE `mercabarato_bd`.`vendedor_paquete` 
+ADD COLUMN `fecha_inicio` DATE NULL DEFAULT NULL AFTER `autorizado_por`;
