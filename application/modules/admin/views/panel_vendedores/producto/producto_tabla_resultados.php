@@ -17,14 +17,19 @@
                 <?= $this->session->flashdata('error') ?> 
             </div>
         <?php } ?>
-        
+
         <?php if ($ilimitado): ?>
             <div class="alert alert-info">                 
                 <p> Puedes insertar productos sin limites</p>
             </div>
-        <?php else:?>
+        <?php else: ?>
             <div class="alert alert-info">                 
-                <p> Puedes insertar <?php echo $limite_productos-$productos_total?> productos mas de un maximo de <?php echo $limite_productos?> productos.</p>
+                <?php $diff = $limite_productos - $productos_total; ?>
+                <?php if ($diff < 0): ?>
+                    <p> Tienes un exceso de <?php echo $diff*-1 ?> productos de un maximo de <?php echo $limite_productos ?> productos.</p>
+                <?php else: ?>
+                    <p> Puedes insertar <?php echo $diff ?> productos mas de un maximo de <?php echo $limite_productos ?> productos.</p>
+                <?php endif; ?>                
             </div>
         <?php endif; ?>
 
@@ -44,7 +49,7 @@
                 <?php foreach ($productos as $producto): ?>
                     <tr>                    
                         <td><?php echo $producto->nombre; ?></td>
-                        <td style="text-align: center"><?php echo $producto->precio. ' ' . $this->config->item('money_sign'); ?></td>                                                                
+                        <td style="text-align: center"><?php echo $producto->precio . ' ' . $this->config->item('money_sign'); ?></td>                                                                
                         <td><?php echo $producto->Categoria; ?></td>                    
                         <td style="text-align: center"><?php
                             if ($producto->mostrar_producto == 1): echo "<span class='label label-success'>Si</span>";

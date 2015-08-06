@@ -13,7 +13,7 @@ class cron_controller extends MY_Controller {
      *  Verifico los paquetes que estan por caducar y los inhabilito (vendedor/productos/anuncios)
      */
     public function validar_paquetes() {
-        if ($this->input->is_cli_request()) {
+        if (!$this->input->is_cli_request()) {
             $dias_previos_aviso = 5;
             $paquetes_por_vencer = $this->vendedor_paquete_model->get_paquetes_a_caducar($dias_previos_aviso);
             if ($paquetes_por_vencer) {
