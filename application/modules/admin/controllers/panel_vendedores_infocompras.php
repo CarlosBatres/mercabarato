@@ -35,8 +35,8 @@ class Panel_vendedores_infocompras extends ADController {
         if ($solicitud_seguro) {
             if ($solicitud_seguro->vendedor_id == $this->identidad->get_vendedor_id()) {
                 $formValues = $this->input->post();
-                if ($formValues !== false) {                    
-                    $config['upload_path'] =  './assets/uploads/seguros/';
+                if ($formValues !== false) {
+                    $config['upload_path'] = './assets/uploads/seguros/';
                     $config['allowed_types'] = 'gif|jpg|png|pdf|word|doc|docx|xlsx|txt|psd';
                     $config['max_size'] = '2048';
                     $config['max_width'] = '1024';
@@ -44,25 +44,31 @@ class Panel_vendedores_infocompras extends ADController {
 
                     $this->load->library('upload', $config);
 
-                    if (!$this->upload->do_upload()) {
-                        $error = array('error' => $this->upload->display_errors());                        
-                        $file_name=null;
-                        $this->session->set_flashdata('error', $this->upload->display_errors());
-                        redirect('panel_vendedor/infocompras/seguros/responder/'.$solicitud_seguro_id);
-                        die();
-                    }else{
-                        $data_upload = $this->upload->data();
-                        $file_name=$data_upload["file_name"];
+                    if ($_FILES AND $_FILES['field_name']['name']) {
+                        if (!$this->upload->do_upload()) {
+                            $error = array('error' => $this->upload->display_errors());
+                            $file_name = null;
+                            $this->session->set_flashdata('error', $this->upload->display_errors());
+                            redirect('panel_vendedor/infocompras/seguros/responder/' . $solicitud_seguro_id);
+                            die();
+                        } else {
+                            $data_upload = $this->upload->data();
+                            $file_name = $data_upload["file_name"];
+                        }
+                    } else {
+                        $file_name = null;
                     }
-                    
-                    $respuesta = $this->input->post('respuesta');
-                    $data = array("estado" => "2", "respuesta" => $respuesta, "fecha_respuesta" => date("Y-m-d"),"link_file"=>$file_name);
 
-                    $this->solicitud_seguro_model->update($solicitud_seguro->id, $data);
+
+                    $respuesta = $this->input->post('respuesta');
+                    $data = array("estado" => "2", "respuesta" => $respuesta, "fecha_respuesta" => date("Y-m-d"), "link_file" => $file_name);
+
+                    $this->solicitud_seguro_model->update($solicitud_seguro->id, $data);                    
 
                     if ($this->config->item('emails_enabled')) {
                         $cliente = $this->cliente_model->get($solicitud_seguro->cliente_id);
-                        $usuario = $this->usuario_model->get($cliente->usuario_model);
+                        $usuario = $this->usuario_model->get($cliente->usuario_id);
+                        
                         $this->load->library('email');
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
