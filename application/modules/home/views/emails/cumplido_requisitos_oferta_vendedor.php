@@ -12,24 +12,31 @@
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-                                    <b>Nueva Solicitud de presupuesto!</b>
+                                    <b>Cliente cumplio con requisitos de oferta!</b>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Un cliente te ha enviado una solicitud de presupuesto ingresa al sitio para ofrecer una respuesta.
+                                    Un nuevo cliente ha cumplido con todos los requisitos que has puesto para la siguiente oferta.
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                    
-                                    <p class="text-right"><strong><a href="<?php echo site_url('panel_vendedor/infocompras/seguros/responder/'.$solicitud_id)?>">Link para continuar...</a></strong></p>                    
+                                <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+                                    <strong>CODIGO: </strong> <?php echo $codigo ?>                                    
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0 10px 0; color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-                                    
+                                    <b><?php echo $oferta_general->nombre ?></b>                                    
                                 </td>
-                            </tr>                            
+                            </tr>
+                            <?php if ($oferta_general->descripcion != ""): ?>
+                                <tr>
+                                    <td style="padding: 10px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+                                        <?php echo $oferta_general->descripcion ?>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>                                                        
                         </table>
                     </td>
                 </tr>

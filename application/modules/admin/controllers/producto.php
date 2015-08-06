@@ -172,6 +172,7 @@ class Producto extends ADController {
      *  AJAX Productos / Listado
      */
     public function ajax_get_listado_resultados() {        
+        //$this->show_profiler();
         $formValues = $this->input->post();
 
         $params = array();

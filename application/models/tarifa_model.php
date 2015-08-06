@@ -73,23 +73,27 @@ class Tarifa_model extends MY_Model {
      */
     public function get_clientes_for_productos($producto_ids) {
         $this->db->select("grupo_tarifa.cliente_id");
-        $this->db->from("grupo_tarifa");                
+        $this->db->from("grupo_tarifa");
         $this->db->join("tarifa", "tarifa.tarifa_general_id=grupo_tarifa.tarifa_general_id", 'INNER');
-        
+
         $this->db->where_in("tarifa.producto_id", $producto_ids);
-        
+
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {
-            $clientes=$result->result();
-            $array=array();
-            foreach($clientes as $cliente){
-                $array[]=$cliente->cliente_id;
+            $clientes = $result->result();
+            $array = array();
+            foreach ($clientes as $cliente) {
+                $array[] = $cliente->cliente_id;
             }
             return $array;
         } else {
             return false;
         }
-    }    
+    }
+
+    public function delete($id) {
+        parent::delete($id);
+    }
 
 }

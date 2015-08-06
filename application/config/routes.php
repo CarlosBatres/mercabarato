@@ -268,8 +268,8 @@ $route['admin/vendedores_admin/ajax_get_listado_resultados'] = 'admin/vendedores
 $route['admin/vendedores_admin/ajax_find_paquetes'] = 'admin/vendedores_admin/ajax_find_paquetes';
 $route['admin/acceso_restringido'] = 'admin/main/acceso_restringido';
 
-$route['admin/sistema/validar_paquetes'] = 'admin/sistema/validar_paquetes';
-$route['admin/sistema/productos_novedades'] = 'admin/sistema/productos_novedades';
+$route['cron_task/validar_paquetes'] = 'admin/cron_controller/validar_paquetes';
+$route['cron_task/productos_novedades'] = 'admin/cron_controller/productos_novedades';
 
 $route['webservice'] = 'webservice/main/index';
 $route['webservice/upload_products'] = 'webservice/main/upload_products';
@@ -281,6 +281,8 @@ $route['webservice/categorias_local'] = 'webservice/main/categorias_local';
 $route['default_controller'] = 'home/producto/view_principal';
 $route['404_override'] = 'home/main/not_found';
 $route['pagina-no-existe'] = 'home/main/not_found';
+
+$route['test-url'] = 'home/main/test_url';
 
 $route['(:any)'] = 'home/vendedor/ver_vendedor/$1';
 
