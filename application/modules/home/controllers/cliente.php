@@ -187,7 +187,7 @@ class Cliente extends MY_Controller {
                 $this->invitacion_model->aceptar_invitacion($invitacion_id, $user_id);
 
                 if ($this->config->item('emails_enabled')) {                    
-                    $invitacion = $this->get($invitacion_id);
+                    $invitacion = $this->invitacion_model->get($invitacion_id);
                     if($invitacion->invitar_desde!=$user_id){
                         $usr=$this->usuario_model->get($invitacion->invitar_desde);
                         $email=$usr->email;
