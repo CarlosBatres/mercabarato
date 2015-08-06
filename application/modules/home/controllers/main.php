@@ -90,9 +90,9 @@ class Main extends MY_Controller {
     }
 
     public function test_url() {
-        
-        $data_email = array();
-        echo $this->load->view('home/emails/aceptar_invitacion_vendedor', $data_email, true);
+        $paquete=$this->vendedor_paquete_model->get("3919");
+        $data_email = array("paquete"=>$paquete);
+        echo $this->load->view('home/emails/paquete_caducado', $data_email, true);
     }
 
 }

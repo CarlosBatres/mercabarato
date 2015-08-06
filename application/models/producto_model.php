@@ -28,7 +28,8 @@ class Producto_model extends MY_Model {
         $this->db->from($this->_table);
         $this->db->join("categoria", "categoria.id=producto.categoria_id", 'INNER');
         $this->db->join("vendedor", "vendedor.id=producto.vendedor_id", 'INNER');
-        $this->db->join("vendedor_paquete", "vendedor.id=vendedor_paquete.vendedor_id", 'LEFT');
+        $this->db->join("vendedor_paquete", "vendedor.id=vendedor_paquete.vendedor_id AND vendedor_paquete.aprobado='1' AND"
+                . " vendedor_paquete.fecha_terminar>'".date("Y-m-d")."'", 'LEFT');
 
         if (isset($params['nombre'])) {
             $this->db->like('producto.nombre', $params['nombre'], 'both');
