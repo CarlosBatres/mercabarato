@@ -29,5 +29,6 @@ from `producto` `p`;
 
 /* Cambios por implementar*/
 
-ALTER TABLE `mercabarato_bd`.`invitacion` 
-ADD COLUMN `recibir_notificaciones` INT(1) NULL DEFAULT 1 AFTER `invitar_para`;
+ALTER TABLE `usuario` 
+ADD COLUMN `timelapse` DATETIME NULL DEFAULT NULL AFTER `secret_key`;
+

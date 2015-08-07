@@ -45,6 +45,10 @@ if (!defined('BASEPATH'))
 $route[''] = 'home/producto/view_principal';
 $route['login'] = 'home/usuario/login';
 $route['logout'] = 'home/usuario/logout';
+$route['olvido-password'] = 'home/usuario/olvido_password';
+$route['cambio-password/(:any)'] = 'home/usuario/olvido_cambio_password/$1';
+$route['cambio-password'] = 'home/usuario/modificar_password_olvido';
+$route['cambio-password-realizado'] = 'home/usuario/cambio_password_realizado';
 $route['registro'] = 'home/usuario/view_registro';
 $route['confirmar_registro/(:any)'] = 'home/usuario/verificar_email/$1';
 $route['registro_exitoso'] = 'home/usuario/view_registro_exito';
