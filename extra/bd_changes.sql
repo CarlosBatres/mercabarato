@@ -29,5 +29,5 @@ from `producto` `p`;
 
 /* Cambios por implementar*/
 
-ALTER TABLE `mercabarato_bd`.`vendedor_paquete` 
-ADD COLUMN `fecha_inicio` DATE NULL DEFAULT NULL AFTER `autorizado_por`;
+ALTER TABLE `mercabarato_bd`.`invitacion` 
+ADD COLUMN `recibir_notificaciones` INT(1) NULL DEFAULT 1 AFTER `invitar_para`;

@@ -72,7 +72,29 @@ function bind_links() {
                     updateResultados();
                 }
             });                        
+        } else if($(this).hasClass('recibir')) {
+            $.ajax({
+                type: "POST",
+                url: SITE_URL + 'usuario/contactos/sin_notificaciones',
+                data: {invitacion_id: invitacion_id},
+                dataType: 'json',
+                success: function(response) {
+                    updateResultados();
+                }
+            });                        
+        } else if($(this).hasClass('no_recibir')) {
+            $.ajax({
+                type: "POST",
+                url: SITE_URL + 'usuario/contactos/con_notificaciones',
+                data: {invitacion_id: invitacion_id},
+                dataType: 'json',
+                success: function(response) {
+                    updateResultados();
+                }
+            });                        
         }
+        
+        
     });
 }
 

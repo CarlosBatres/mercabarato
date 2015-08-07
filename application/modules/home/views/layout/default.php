@@ -17,7 +17,7 @@
                         <div class="col-md-12">
                             <div class="form-group">                    
                                 <div class="input-group">                                                
-                                    <input type="text" class="form-control" name="email" placeholder="Email" autofocus="">
+                                    <input type="text" class="form-control" name="email" placeholder="Email" autofocus="" autocomplete="off">
                                     <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
                                 </div>                    
                             </div>

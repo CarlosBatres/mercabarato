@@ -29,7 +29,7 @@ class Producto_model extends MY_Model {
         $this->db->join("categoria", "categoria.id=producto.categoria_id", 'INNER');
         $this->db->join("vendedor", "vendedor.id=producto.vendedor_id", 'INNER');
         $this->db->join("vendedor_paquete", "vendedor.id=vendedor_paquete.vendedor_id AND vendedor_paquete.aprobado='1' AND"
-                . " vendedor_paquete.fecha_terminar >='".date("Y-m-d")."' AND vendedor_paquete.fecha_inicio <='".date("Y-m-d")."'", 'LEFT');
+                . " vendedor_paquete.fecha_terminar >='" . date("Y-m-d") . "' AND vendedor_paquete.fecha_inicio <='" . date("Y-m-d") . "'", 'LEFT');
 
         if (isset($params['nombre'])) {
             $this->db->like('producto.nombre', $params['nombre'], 'both');
@@ -573,15 +573,31 @@ class Producto_model extends MY_Model {
         }
     }
 
-    public function get_novedades_fecha($fecha_inicio, $fecha_final) {
-        $this->db->select('*');
-        $this->db->from('productos_precios pp');
-        $this->db->where('pp.fecha_insertado >=', $fecha_inicio);
-        $this->db->where('pp.fecha_insertado <=', $fecha_final);
+    public function get_novedades_fecha($fecha_inicio, $fecha_final, $limit, $vendedores_id = false) {
+        $query = "SELECT COUNT(vi.cliente_id) as visitas,p.*,pr.filename as imagen_nombre ";
+        $query.="FROM producto p ";
+        $query.="LEFT JOIN visita vi ON vi.producto_id=p.id ";
+        $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
 
-        $results = $this->db->get()->result();
-        if (count($results) > 0) {
-            return $results;
+        $query.="WHERE p.fecha_insertado >= '" . $fecha_inicio . "' AND p.fecha_insertado <= '" . $fecha_final . "'";
+
+        if ($vendedores_id) {
+            $ids = implode(",", $vendedores_id);
+            $query.=" AND p.vendedor_id IN('" . $ids . "')";
+        }
+
+        $query.=" GROUP BY p.id";
+        $query.=" ORDER BY visitas DESC,p.fecha_insertado DESC";
+        
+        if($limit){
+            $query.=" LIMIT 0 ,".$limit;
+        }
+
+        $result = $this->db->query($query);
+        $productos = $result->result();
+
+        if ($productos) {
+            return $productos;
         } else {
             return false;
         }
@@ -604,7 +620,7 @@ class Producto_model extends MY_Model {
                             "oferta_general_id" => $oferta->oferta_general_id,
                             "codigo" => $codigo
                         );
-                        $this->grupo_oferta_model->insert($data);                        
+                        $this->grupo_oferta_model->insert($data);
                         if ($this->config->item('emails_enabled')) {
                             $oferta_general = $this->oferta_general_model->get($oferta->oferta_general_id);
 
@@ -639,7 +655,7 @@ class Producto_model extends MY_Model {
                             "oferta_general_id" => $req->oferta_general_id,
                             "codigo" => $codigo
                         );
-                        $this->grupo_oferta_model->insert($data);                        
+                        $this->grupo_oferta_model->insert($data);
 
                         if ($this->config->item('emails_enabled')) {
                             $oferta_general = $this->oferta_general_model->get($req->oferta_general_id);
@@ -662,7 +678,7 @@ class Producto_model extends MY_Model {
                             $data_mail2 = array("codigo" => $codigo, "oferta_general" => $oferta_general);
                             $this->email->message($this->load->view('home/emails/cumplido_requisitos_oferta_vendedor', $data_mail2, true));
                             $this->email->send();
-                        }                                                
+                        }
                     }
                 }
             }

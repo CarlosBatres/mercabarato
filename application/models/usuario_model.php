@@ -121,6 +121,20 @@ class Usuario_model extends MY_Model {
             $this->update($usuario_id,array("activo"=>"1"));
         }
     }
+    
+    public function get_email($usuario_id){
+        $this->db->select("usuario.email");
+        $this->db->from($this->_table);        
+        $this->db->where("usuario.id",$usuario_id);
+        
+        $result = $this->db->get();
+
+        if ($result->num_rows() > 0) {
+            return $result->row()->email;
+        } else {
+            return FALSE;
+        }
+    }
 
 }
 
