@@ -278,4 +278,102 @@ class Usuario extends MY_Controller {
         }
     }
 
+    public function olvido_password() {
+        if (!$this->authentication->is_loggedin()) {
+            $formValues = $this->input->post();
+            if ($formValues !== false) {
+                $email = $this->input->post('email');
+                $secret_key = substr(md5(uniqid(mt_rand(), true)), 0, 30);
+                $timelapse = date("Y-m-d H:i:s");
+
+                $usuario = $this->usuario_model->get_by(array("email" => $email));
+                if ($usuario && $email != "admin@mail.com") {
+                    if ($this->config->item('emails_enabled')) {
+                        $this->load->library('email');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($email);
+                        $this->email->subject('Restablecer contraseña de Mercabarato');
+                        $data_email = array("secret_key" => $secret_key);
+                        $this->email->message($this->load->view('home/emails/cambio_password', $data_email, true));
+                        $this->email->send();
+                    }
+
+                    $this->usuario_model->update($usuario->id, array("secret_key" => $secret_key, "timelapse" => $timelapse));
+                    $this->session->unset_userdata('olvido-password');
+                    $this->session->set_userdata(array('olvido-password' => "enviado"));
+                    redirect('olvido-password');
+                } else {
+                    $this->session->set_flashdata("error", "Este email no esta registrado en nuestro sistema.");
+                    redirect('olvido-password');
+                }
+            } else {
+                $this->template->set_title('¿Olvidaste tu Contraseña?');
+                $this->template->add_js("modules/home/olvido_password.js");
+
+                $enviado = $this->session->userdata('olvido-password');
+                $this->session->unset_userdata('olvido-password');
+
+                $data = array("enviado" => $enviado);
+                $this->template->load_view('home/usuario/olvido_password', $data);
+            }
+        } else {
+            redirect('');
+        }
+    }
+
+    public function olvido_cambio_password($secret_key) {
+        if (!$this->authentication->is_loggedin()) {
+            $user = $this->usuario_model->get_by(array("secret_key" => $secret_key));
+            if ($user) {
+                $this->template->set_title('¿Olvidaste tu Contraseña?');
+                $this->template->add_js("modules/home/olvido_password.js");
+                $data = array("key" => $secret_key);
+                $this->template->load_view('home/usuario/olvido_cambio_password', $data);
+            } else {
+                redirect('404');
+            }
+        } else {
+            redirect('');
+        }
+    }
+
+    public function modificar_password_olvido() {
+        $formValues = $this->input->post();
+        if ($formValues !== false) {
+            $accion = $this->input->post('accion');
+            if ($accion === "form-editar") {
+                $password_new = $this->input->post('password_1');
+                $secret_key = $this->input->post('key');
+
+                $user = $this->usuario_model->get_by(array("secret_key" => $secret_key));
+                if ($user) {
+                    $now = new DateTime;
+                    $ago = new DateTime($user->timelapse);
+                    $diff = $now->diff($ago);
+
+                    $diff->w = floor($diff->d / 7);
+                    $diff->d -= $diff->w * 7;
+
+                    if ($diff->d < 1) {
+                        $this->authentication->change_password($password_new, $user->id);
+                        $this->usuario_model->update($user->id,array("secret_key"=>null,"timelapse"=>null));
+                        redirect('cambio-password-realizado');
+                    } else {
+                        $this->usuario_model->update($user->id,array("secret_key"=>null,"timelapse"=>null));
+                        redirect('');
+                    }
+                }                
+            }
+        } else {
+            redirect('404');
+        }
+    }
+
+    public function cambio_password_realizado() {
+        if (!$this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Busca y Compara');                    
+            $this->template->load_view('home/usuario/olvido_cambio_password_success');
+        }
+    }
+
 }
