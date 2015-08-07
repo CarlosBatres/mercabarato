@@ -35,7 +35,7 @@
 
                     </div>
                 </div>
-                <?php if ($invitacion->enviado == 1): ?>
+                <?php if ($invitacion->enviado == 1 && $invitacion->estado == 1): ?>
                     <div class="col-md-4">                    
                         <br>
                         <br>
@@ -61,14 +61,25 @@
                                 </div>
                             </div>
                         </div>
-                    <?php else: ?>
-                        <div class="col-md-4">                    
-                            <br>
+                    <?php else: ?>                        
+                        <div class="col-md-4">                                                                          
                             <br>
                             <div class="row">
                                 <div class="pull-right">
-                                    <button type="button" class="btn btn-warning accion eliminar" data-id="<?php echo $invitacion->id ?>"> &nbsp;&nbsp;Eliminar Contacto&nbsp;&nbsp;</button>
+                                    <button type="button" class="btn btn-warning accion eliminar" data-id="<?php echo $invitacion->id ?>">Eliminar Contacto</button>
                                 </div>
+                            </div>                        
+                            <br>  
+                            <div class="row">
+                                <?php if ($invitacion->recibir_notificaciones==1): ?>
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-success accion recibir" data-id="<?php echo $invitacion->id ?>">Recibir Notificaciones</button>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-danger accion no_recibir" data-id="<?php echo $invitacion->id ?>">Sin Notificaciones</button>
+                                    </div>
+                                <?php endif; ?>
                             </div>                        
                         </div>
                     <?php endif; ?>                

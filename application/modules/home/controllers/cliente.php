@@ -240,6 +240,36 @@ class Cliente extends MY_Controller {
             redirect('');
         }
     }
+    
+    public function sin_notificaciones() {
+        if ($this->authentication->is_loggedin()) {
+            $formValues = $this->input->post();
+
+            if ($formValues !== false) {
+                $invitacion_id = $this->input->post('invitacion_id');
+                $user_id = $this->authentication->read('identifier');                
+                $this->invitacion_model->update($invitacion_id, array("recibir_notificaciones"=>"0"));
+                echo json_encode(array("success" => true));
+            }
+        } else {
+            redirect('');
+        }
+    }
+    
+    public function con_notificaciones() {
+        if ($this->authentication->is_loggedin()) {
+            $formValues = $this->input->post();
+
+            if ($formValues !== false) {
+                $invitacion_id = $this->input->post('invitacion_id');
+                $user_id = $this->authentication->read('identifier');                
+                $this->invitacion_model->update($invitacion_id, array("recibir_notificaciones"=>"1"));
+                echo json_encode(array("success" => true));
+            }
+        } else {
+            redirect('');
+        }
+    }
 
     public function ajax_get_listado_resultados_invitaciones() {
         //$this->show_profiler();

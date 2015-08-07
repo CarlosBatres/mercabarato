@@ -48,7 +48,7 @@ class Invitacion_model extends MY_Model {
      */
     public function find_mis_invitaciones($params, $limit, $offset, $order_by = "estado", $order = "asc") {
         $query = "SELECT SQL_CALC_FOUND_ROWS * FROM";
-        $query.="(SELECT i.id,i.titulo,i.comentario,i.estado,i.invitar_desde,v.unique_slug,v.nombre,v.descripcion,false as enviado ";
+        $query.="(SELECT i.id,i.titulo,i.comentario,i.estado,i.invitar_desde,i.recibir_notificaciones,v.unique_slug,v.nombre,v.descripcion,'0' as enviado ";
         $query.="FROM invitacion i ";
         $query.="INNER JOIN usuario u ON u.id = i.invitar_desde AND i.invitar_para='" . $params["usuario_id"] . "' ";
         $query.="INNER JOIN cliente c ON c.usuario_id = u.id ";
@@ -57,7 +57,7 @@ class Invitacion_model extends MY_Model {
 
         $query.=" UNION ALL ";
 
-        $query.="(SELECT i.id,i.titulo,i.comentario,i.estado,i.invitar_desde,v.unique_slug,v.nombre,v.descripcion,true as enviado ";
+        $query.="(SELECT i.id,i.titulo,i.comentario,i.estado,i.invitar_desde,i.recibir_notificaciones,v.unique_slug,v.nombre,v.descripcion,'1' as enviado ";
         $query.="FROM invitacion i ";
         $query.="INNER JOIN usuario u ON u.id = i.invitar_para AND i.invitar_desde='" . $params["usuario_id"] . "' ";
         $query.="INNER JOIN cliente c ON c.usuario_id = u.id ";
@@ -398,7 +398,7 @@ class Invitacion_model extends MY_Model {
         if (isset($params['excluir_admins'])) {
             $this->db->where('(usuario.permisos_id!="1" AND usuario.permisos_id!="2")');   // TODO: Hardcode Ids 
         }
-        
+
         if (isset($params['usuario_activo'])) {
             $this->db->where("usuario.activo", $params['usuario_activo']);
         }
@@ -442,6 +442,33 @@ class Invitacion_model extends MY_Model {
         }
 
         return $result;
+    }
+
+    /*
+     * OJO el usuario_id del VENDEDOR
+     */
+
+    public function get_invitados_notificaciones($usuario_id) {
+        $query = "SELECT i.invitar_para as usuario_id";
+        $query.=" FROM invitacion as i";
+        $query.=" WHERE invitar_desde='" . $usuario_id . "' and i.recibir_notificaciones='1'";
+        $query.=" UNION";
+        $query.=" SELECT i.invitar_desde as usuario_id";
+        $query.=" FROM invitacion as i";
+        $query.=" WHERE invitar_para='" . $usuario_id . "' and i.recibir_notificaciones='1'";
+
+        $result = $this->db->query($query);
+        $invitados = $result->result();
+
+        if ($invitados) {
+            $ids=array();
+            foreach ($invitados as $inv) {
+                $ids[] = $inv->usuario_id;
+            }
+            return $ids;
+        } else {
+            return false;
+        }
     }
 
 }

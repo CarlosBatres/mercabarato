@@ -28,11 +28,12 @@ class Vendedor_paquete extends ADController {
     public function aprobar($id) {
         $vendedor_paquete = $this->vendedor_paquete_model->get($id);
         // TODO : Validar la restriccion por si acaso
-        $user_id = $this->authentication->read('identifier');
-        $this->vendedor_paquete_model->aprobar_paquete($id, $user_id);
-        $this->vendedor_model->habilitar_vendedor($vendedor_paquete->vendedor_id);
+        $user_id = $this->authentication->read('identifier');        
 
         $paquete_activo = $this->vendedor_model->get_paquete_en_curso($vendedor_paquete->vendedor_id);
+        
+        $this->vendedor_paquete_model->aprobar_paquete($id, $user_id);
+        $this->vendedor_model->habilitar_vendedor($vendedor_paquete->vendedor_id);
 
         if (!$paquete_activo) {
             $productos = $this->producto_model->get_many_by("vendedor_id", $vendedor_paquete->vendedor_id);
