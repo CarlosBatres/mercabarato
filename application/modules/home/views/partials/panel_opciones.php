@@ -16,7 +16,13 @@
                 </li>
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/password') ? "active" : "" ?>">
                     <a href="<?php echo site_url('usuario/password') ?>"><i class="fa fa-lock"></i> Contraseña</a>
-                </li> 
+                </li>
+                <li class="<?php echo ($this->uri->uri_string() == 'usuario/contactos') ? "active" : "" ?>">
+                    <a href="<?php echo site_url('usuario/contactos') ?>"><i class="fa fa-plus"></i> Contactos Vendedores <span class="badge" id="invitaciones-counter"><?php echo $this->invitacion_model->count_invitaciones_pendientes() ?></span></a>
+                </li>
+                <li class="<?php echo ($this->uri->uri_string() == 'usuario/infocompras-seguros') ? "active" : "" ?>">
+                    <a href="<?php echo site_url('usuario/infocompras-seguros') ?>"><i class="fa fa-newspaper-o"></i> Infocompras - Seguros</a>
+                </li>
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/mis-paquetes') ? "active" : "" ?>">
                     <a href="<?php echo site_url('usuario/mis-paquetes') ?>"><i class="fa fa-money"></i> Mis Paquetes</a>
                 </li>                
@@ -46,7 +52,7 @@
                     <a href="<?php echo site_url('usuario/password') ?>"><i class="fa fa-lock"></i> Contraseña</a>
                 </li>
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/contactos') ? "active" : "" ?>">
-                    <a href="<?php echo site_url('usuario/contactos') ?>"><i class="fa fa-plus"></i> Contactos <span class="badge" id="invitaciones-counter"><?php echo $this->invitacion_model->count_invitaciones_pendientes() ?></span></a>
+                    <a href="<?php echo site_url('usuario/contactos') ?>"><i class="fa fa-plus"></i> Contactos Vendedores <span class="badge" id="invitaciones-counter"><?php echo $this->invitacion_model->count_invitaciones_pendientes() ?></span></a>
                 </li>
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/infocompras-seguros') ? "active" : "" ?>">
                     <a href="<?php echo site_url('usuario/infocompras-seguros') ?>"><i class="fa fa-newspaper-o"></i> Infocompras - Seguros</a>

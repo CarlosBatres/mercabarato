@@ -286,7 +286,7 @@ class Usuario extends MY_Controller {
                 $secret_key = substr(md5(uniqid(mt_rand(), true)), 0, 30);
                 $timelapse = date("Y-m-d H:i:s");
 
-                $usuario = $this->usuario_model->get_by(array("email" => $email));
+                $usuario = $this->usuario_model->get_by(array("email" => $email ,"activo" => "1"));
                 if ($usuario && $email != "admin@mail.com") {
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');

@@ -165,13 +165,13 @@ class Cliente extends MY_Controller {
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
 
-            if (!$cliente_es_vendedor) {
+            //if (!$cliente_es_vendedor) {
                 $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
                 $this->template->add_js('modules/home/invitaciones.js');
                 $this->template->load_view('home/cliente/invitaciones', array("html_options" => $html_options));
-            } else {
-                redirect('usuario/perfil');
-            }
+            //} else {
+            //    redirect('usuario/perfil');
+            //}
         } else {
             redirect('');
         }
@@ -231,9 +231,8 @@ class Cliente extends MY_Controller {
 
             if ($formValues !== false) {
                 $invitacion_id = $this->input->post('invitacion_id');
-                $user_id = $this->authentication->read('identifier');
-                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                $this->invitacion_model->rechazar_invitacion($invitacion_id, $cliente->id);
+                $user_id = $this->authentication->read('identifier');                
+                $this->invitacion_model->rechazar_invitacion($invitacion_id, $user_id);
                 echo json_encode(array("success" => true));
             }
         } else {

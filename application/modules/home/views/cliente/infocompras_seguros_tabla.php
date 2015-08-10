@@ -1,6 +1,6 @@
 <?php if (sizeof($solicitud_seguros) == 0): ?>
     <div>
-        <p> No tienes contactos ni invitaciones pendientes...</p>    
+        <p> No tienes ninguna solicitud de presupuesto pendientes...</p>    
     </div>
 <?php else: ?>
     <ul class="tabla-resultados-principal invitaciones-list">
@@ -15,7 +15,7 @@
 
             <li class="<?php echo $class; ?>">                
                 <div class="col-md-8">                                                        
-                    <div class="row invitaciones">                    
+                    <div class="row invitaciones">                        
                         <a href="<?php echo site_url("") ?>"><p><strong><?php echo $seguro->nombre_vendedor ?></strong></p></a>                        
                         <?php if ($seguro->descripcion != ""): ?> 
                             <p><?php echo truncate($seguro->descripcion, 300) ?></p>                                                                                  

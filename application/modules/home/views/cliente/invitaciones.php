@@ -27,7 +27,7 @@
             <div class="col-md-9 clearfix">                                                
                 <div class="col-md-12">
                     <div class="heading">
-                        <h3>Contactos</h3>                        
+                        <h3>Contactos Vendedores</h3>                        
                     </div>                                       
                     <p class="lead">A continuacion se muestran tus contactos e invitaciones pendientes.</p>
 
