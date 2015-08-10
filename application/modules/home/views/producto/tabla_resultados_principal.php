@@ -42,7 +42,7 @@
                                     <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                                 </div>
                                 <div class="row">                            
-                                    <p class="precio"><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?> <span>Oferta hasta el <?php echo date("d-m-Y",strtotime($producto->fecha_finaliza))?></span></p>
+                                    <p class="precio"><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?> <br><span>OFERTA PROMOCIONAL hasta el <?php echo date("d-m-Y",strtotime($producto->fecha_finaliza))?></span></p>
                                     
                                 </div> 
                             <?php else: ?>

@@ -34,6 +34,19 @@
                     <?php echo form_open('usuario/afiliacion/registrar', 'id="form_afiliarse"'); ?>                 
 
                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">                                
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="nickname" placeholder="Apodo o Nickname">
+                                    <span class="input-group-addon"><i class="fa fa-user-secret fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="col-md-6">
+                            <p class="lead">Solo permite letras, numeros y guiones.</p>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">                                
                                 <div class="input-group">
@@ -51,12 +64,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-<!--                        <div class="col-md-6">
-                            <div class="form-group"> 
-                                <?php echo form_dropdown('actividad', vendedor_actividad_dropdown(), null, 'id="actividad" class="form-control"') ?>
-                            </div>
-                        </div>-->
+                    <div class="row">                       
                         <div class="col-md-6">
                             <div class="form-group">                                
                                 <div class="input-group">
@@ -65,9 +73,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">                                
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="sitio_web" placeholder="Sitio Web">
@@ -75,9 +81,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-
+                    </div>                    
                     <div class='row'>
                         <div class="col-md-12">
                             <div class="form-group">                                

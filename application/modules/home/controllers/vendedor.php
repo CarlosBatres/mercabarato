@@ -73,6 +73,7 @@ class Vendedor extends MY_Controller {
                 "sitio_web" => $this->input->post('sitio_web'),
                 "habilitado" => 0,
                 "nif_cif" => $this->input->post('nif_cif'),
+                "nickname" => $this->input->post('nickname'),
                 "keyword" => $keywords_text
             );
 
@@ -163,8 +164,9 @@ class Vendedor extends MY_Controller {
                 $data_vendedor = $this->session->userdata('afiliacion_vendedor');
                 $data_localizacion = $this->session->userdata('afiliacion_localizacion');
                 $this->cliente_model->update($cliente->id, $data_cliente);
-                $data_vendedor["unique_slug"] = $this->slug->create_uri($data_vendedor["nombre"]);
-
+                $nickname = $data_vendedor["nickname"];
+                unset($data_vendedor["nickname"]);
+                $data_vendedor["unique_slug"] = $this->slug->create_uri($nickname);
                 $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
                 if (!$vendedor) {
                     $vendedor_id = $this->vendedor_model->insert($data_vendedor);
@@ -172,6 +174,8 @@ class Vendedor extends MY_Controller {
                     $this->vendedor_model->update($vendedor->id, $data_vendedor);
                     $vendedor_id = $vendedor->id;
                 }
+
+                $this->usuario_model->update($user_id, array("nickname" => $nickname));
 
                 if ($data_localizacion) {
                     $this->localizacion_model->delete_by("usuario_id", $data_localizacion["usuario_id"]);
@@ -521,62 +525,66 @@ class Vendedor extends MY_Controller {
 
         $vendedor = $this->vendedor_model->get_vendedor_by_slug($slug);
         if ($vendedor) {
-            $this->template->add_js('modules/home/vendedor.js');
-            $localizacion = $this->localizacion_model->get_by("usuario_id", $vendedor->usuario_id);
+            if ($vendedor->habilitado == 1) {
+                $this->template->add_js('modules/home/vendedor.js');
+                $localizacion = $this->localizacion_model->get_by("usuario_id", $vendedor->usuario_id);
 
-            if ($localizacion->pais_id != null) {
-                $res = $this->pais_model->get($localizacion->pais_id);
-                $localizacion->pais = $res->nombre;
+                if ($localizacion->pais_id != null) {
+                    $res = $this->pais_model->get($localizacion->pais_id);
+                    $localizacion->pais = $res->nombre;
+                }
+                if ($localizacion->provincia_id != null) {
+                    $res = $this->provincia_model->get($localizacion->provincia_id);
+                    $localizacion->provincia = $res->nombre;
+                }
+                if ($localizacion->poblacion_id != null) {
+                    $res = $this->poblacion_model->get($localizacion->poblacion_id);
+                    $localizacion->poblacion = $res->nombre;
+                }
+
+                $anuncios = $this->anuncio_model->get_anuncios_del_vendedor($vendedor->id, 3);
+                $params = array(
+                    "vendedor_id" => $vendedor->id,
+                    "mostrar_producto" => "1"
+                );
+
+                $vendedor_image = false;
+
+                if ($this->authentication->is_loggedin()) {
+                    $user_id = $this->authentication->read('identifier');
+                    $cliente_vendedor = $this->cliente_model->get($vendedor->cliente_id);
+                    $invitacion = $this->invitacion_model->invitacion_existe($user_id, $cliente_vendedor->usuario_id);
+                    $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                    $params["cliente_id"] = $cliente->id;
+
+                    $son_contactos = $this->invitacion_model->son_contactos($user_id, $cliente_vendedor->usuario_id);
+                } else {
+                    $invitacion = true;
+                    $son_contactos = false;
+                }
+
+                $productos = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "DESC");
+                if ($productos["total"] > 0) {
+                    $prods = $productos["productos"];
+                } else {
+                    $prods = false;
+                }
+
+
+
+                $data = array(
+                    "vendedor" => $vendedor,
+                    "vendedor_image" => $vendedor_image,
+                    "localizacion" => $localizacion,
+                    "invitacion" => $invitacion,
+                    "anuncios" => $anuncios,
+                    "productos" => $prods,
+                    "son_contactos" => $son_contactos);
+
+                $this->template->load_view('home/vendedores/ficha', $data);
+            }else{
+                show_404();
             }
-            if ($localizacion->provincia_id != null) {
-                $res = $this->provincia_model->get($localizacion->provincia_id);
-                $localizacion->provincia = $res->nombre;
-            }
-            if ($localizacion->poblacion_id != null) {
-                $res = $this->poblacion_model->get($localizacion->poblacion_id);
-                $localizacion->poblacion = $res->nombre;
-            }
-
-            $anuncios = $this->anuncio_model->get_anuncios_del_vendedor($vendedor->id, 3);
-            $params = array(
-                "vendedor_id" => $vendedor->id,
-                "mostrar_producto" => "1"
-            );
-
-            $vendedor_image = false;
-
-            if ($this->authentication->is_loggedin()) {
-                $user_id = $this->authentication->read('identifier');
-                $cliente_vendedor = $this->cliente_model->get($vendedor->cliente_id);
-                $invitacion = $this->invitacion_model->invitacion_existe($user_id, $cliente_vendedor->usuario_id);
-                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                $params["cliente_id"] = $cliente->id;
-
-                $son_contactos = $this->invitacion_model->son_contactos($user_id, $cliente_vendedor->usuario_id);
-            } else {
-                $invitacion = true;
-                $son_contactos = false;
-            }
-
-            $productos = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "DESC");
-            if ($productos["total"] > 0) {
-                $prods = $productos["productos"];
-            } else {
-                $prods = false;
-            }
-
-
-
-            $data = array(
-                "vendedor" => $vendedor,
-                "vendedor_image" => $vendedor_image,
-                "localizacion" => $localizacion,
-                "invitacion" => $invitacion,
-                "anuncios" => $anuncios,
-                "productos" => $prods,
-                "son_contactos" => $son_contactos);
-
-            $this->template->load_view('home/vendedores/ficha', $data);
         } else {
             show_404();
         }

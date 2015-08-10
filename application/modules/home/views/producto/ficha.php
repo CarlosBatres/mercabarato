@@ -65,7 +65,7 @@
                             <?php elseif ($tarifa == 0 || ($tarifa > $oferta && ($tarifa != 0 && $oferta != 0))): ?>
                                 <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                                 <p class="price"><?php echo number_format($oferta, '2') . ' ' . $this->config->item('money_sign') ?></p>
-                                <p class="price-oferta text-center">Oferta valida hasta el <?php echo $fecha_finaliza ?></p>                                                    
+                                <p class="price-oferta text-center">OFERTA PROMOCIONAL valida hasta el <?php echo $fecha_finaliza ?></p>                                                    
                             <?php endif; ?>                                                        
                         <?php endif; ?>
                     </div>

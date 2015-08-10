@@ -135,6 +135,17 @@ class Usuario_model extends MY_Model {
             return FALSE;
         }
     }
+    
+    public function delete($id) {
+        $usuario = $this->get($id);
+        if ($usuario) {             
+            $this->localizacion_model->delete_by("usuario_id", $usuario->id);
+            $this->restriccion_model->delete_by("usuario_id", $usuario->id);                                    
+            parent::delete($id);            
+        } else {
+            return false;
+        }
+    }
 
 }
 

@@ -439,6 +439,7 @@ class Vendedor_model extends MY_Model {
             
             parent::delete($id);
             $this->cliente_model->delete($vendedor->cliente_id);            
+            $this->usuario_model->delete($cliente->usuario_id);            
         } else {
             return false;
         }

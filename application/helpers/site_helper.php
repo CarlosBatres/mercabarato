@@ -223,8 +223,28 @@ function fix_category_text($text) {
 }
 
 function blacklisted_words($word) {
-    $list = array("login", "logout", "registro", "buscar", "buscar_producto", "vendedores", "registro_exitoso", "registrar_cliente", "registrar_vendedor", "seguros", "usuarios",
-        "acceso_invalido", "buscar_prestadores", "password", "util", "panel_vendedor", "admin");
+    $list = array(
+        "login", 
+        "logout",
+        "registro", 
+        "buscar", 
+        "buscar_producto",
+        "vendedores",
+        "registro_exitoso", 
+        "registrar_cliente", 
+        "registrar_vendedor", 
+        "seguros", 
+        "usuarios",
+        "acceso_invalido", 
+        "buscar_prestadores", 
+        "password",
+        "util", 
+        "panel_vendedor", 
+        "admin",
+        "vendedor",
+        "anonymous",
+        "admin_user",
+        "_admin");
 
     if (in_array($word, $list)) {
         return true;

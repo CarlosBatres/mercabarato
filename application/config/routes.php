@@ -101,6 +101,7 @@ $route['usuario/buscar-solicitudes-seguros'] = 'home/cliente/ajax_get_listado_se
 
 $route['util/verificar_email'] = 'home/usuario/check_email';
 $route['util/verificar_nombre'] = 'home/main/verificar_palabra';
+$route['util/verificar_nickname'] = 'home/main/verificar_nickname';
 $route['util/get_poblaciones'] = 'home/poblacion/ajax_get_poblaciones_htmlselect';
 $route['util/get_provincias'] = 'home/provincia/ajax_get_provincias_htmlselect';
 $route['util/upload_vendedor_image'] = 'home/vendedor/upload_image';
