@@ -13,22 +13,31 @@
                     <?php endif; ?>
                 </div>
                 <div class="col-md-5 col-xs-12 col-sm-8">                   
-                    <?php if ($this->authentication->is_loggedin()) { ?>
-                        <div class="login">
-                            <?php if ($this->authentication->user_is_admin()): ?>
-                            <a href="<?php echo site_url('admin') ?>"><i class="fa fa-cogs"></i> <span class="text-uppercase">Admin</span></a>
-                            <?php endif; ?>
-                            <a href="<?php echo site_url('usuario/perfil') ?>"><i class="fa fa-user"></i> <span class="text-uppercase">Mi Perfil</span></a>
-                            <a href="<?php echo site_url('logout'); ?>"><i class="fa fa-power-off"></i><span class="text-uppercase"> Cerrar Sesión</span></a>
+                    <div class="row">
+                        <?php if ($this->authentication->is_loggedin()) { ?>
+                            <div class="login">
+                                <?php if ($this->authentication->user_is_admin()): ?>
+                                    <a href="<?php echo site_url('admin') ?>"><i class="fa fa-cogs"></i> <span class="text-uppercase">Admin</span></a>
+                                <?php endif; ?>
+                                <a href="<?php echo site_url('usuario/perfil') ?>"><i class="fa fa-user"></i> <span class="text-uppercase">Mi Perfil</span></a>
+                                <a href="<?php echo site_url('logout'); ?>"><i class="fa fa-power-off"></i><span class="text-uppercase"> Cerrar Sesión</span></a>
+                            </div>
+                        <?php } else { ?>
+                            <div class="login">
+                                <a href="" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="text-uppercase">Acceso</span></a>
+                                <a href="<?php echo site_url('registro'); ?>"><i class="fa fa-user"></i> <span class="text-uppercase">Registro</span></a>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <?php if ($this->authentication->is_loggedin()): ?>
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12 col-sm-12 pull-right">                                       
+                                <p class="nombre_header text-right">Bienvenido, <?php echo $this->authentication->get_user_name()?> </p>
+                            </div>
                         </div>
-                    <?php } else { ?>
-                        <div class="login">
-                            <a href="" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="text-uppercase">Acceso</span></a>
-                            <a href="<?php echo site_url('registro'); ?>"><i class="fa fa-user"></i> <span class="text-uppercase">Registro</span></a>
-                        </div>
-                    <?php } ?>
+                    <?php endif; ?>
                 </div>
-            </div>
+            </div>            
         </div>
     </div>   
 

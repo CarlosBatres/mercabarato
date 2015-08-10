@@ -62,7 +62,7 @@ $(document).ready(function() {
                 }
             },
             nif_cif: {required: true},
-            nickname: {required: true,
+            nickname: {required: true,maxlength: 30,
                 remote: {
                     url: SITE_URL + "util/verificar_nickname",
                     type: "post",
@@ -83,7 +83,8 @@ $(document).ready(function() {
             },
             nickname: {
                 required: "Ingresa un apodo unico que te identifique",
-                remote: "Este apodo es invalido o ya existe ingresa uno nuevo."
+                remote: "Este apodo es invalido o ya existe ingresa uno nuevo.",
+                maxlength : "El apodo debe tener un maximo de 30 caracteres."
             }
         }
     });

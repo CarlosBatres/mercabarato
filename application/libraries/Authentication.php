@@ -402,6 +402,20 @@ class Authentication {
             return FALSE;
         }
     }
+    
+     public function get_user_name() {
+         $user_id = $this->ci->session->userdata('identifier');
+         $user=$this->ci->usuario_model->get($user_id);
+         if($user){
+             if($user->nickname!=null){
+                 return $user->nickname;
+             }else{
+                 $cliente=$this->ci->cliente_model->get_by("usuario_id",$user->id);
+                 return $cliente->nombres. ' ' .$cliente->apellidos;
+             }
+         }
+         
+     }
 
 }
 

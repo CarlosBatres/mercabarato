@@ -194,7 +194,7 @@ class Producto extends MY_Controller {
                 } else {
                     $tarifa = 0;
                 }
-                $producto_oferta = $this->producto_model->get_ofertas_from_producto($producto->id, $cliente->id);
+                $producto_oferta = $this->producto_model->get_ofertas_from_producto($producto->id);
                 if ($producto_oferta) {
                     $oferta = (float) $producto_oferta->nuevo_costo;
                     $fecha_finaliza=date("d-m-Y",strtotime($producto_oferta->fecha_finaliza));

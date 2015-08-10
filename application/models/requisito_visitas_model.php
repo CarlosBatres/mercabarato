@@ -20,14 +20,19 @@ class Requisito_visitas_model extends MY_Model {
                 $requisitos_ids = $this->oferta_general_model->get_requisitos_ids(array("oferta_general_id" => $oferta_general_id));
 
                 $flag = true;
-                foreach ($requisitos_ids as $req) {
-                    $visita = $this->visita_model->get_by(array("producto_id" => $req, "cliente_id" => $cliente_id));
-                    if (!$visita) {
-                        $flag = false;
+                if ($requisitos_ids) {
+                    foreach ($requisitos_ids as $req) {
+                        $visita = $this->visita_model->get_by(array("producto_id" => $req, "cliente_id" => $cliente_id));
+                        if (!$visita) {
+                            $flag = false;
+                        }
                     }
+                }else{
+                    // TODO: NO tiene requisitos la oferta
+                    $flag=false;
                 }
                 return $flag;
-            }else{
+            } else {
                 return false;
             }
         } else {
