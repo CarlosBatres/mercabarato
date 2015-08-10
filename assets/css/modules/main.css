@@ -171,12 +171,12 @@ body .box_registro{
 
 .tabla-resultados-principal .precio{
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 400;
 }
 
 .tabla-resultados-principal .precio>span{
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 400;
     padding-left: 15px;
 }
 
@@ -193,12 +193,12 @@ body .box_registro{
 }
 #productMain .price-oferta{
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 400;
 }
 
 .tabla-resultados-principal .nombre-producto{
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 400;
 }
 
 .tabla-resultados-principal li{
@@ -218,7 +218,7 @@ body .box_registro{
 
 #producto-principal-categorias a{
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 400;
     font-family: "Roboto", Helvetica, Arial, sans-serif;
     padding-left: 10px;        
 }
@@ -255,7 +255,7 @@ span.arrow {
 .precios-productos .checkbox label{
     color: #38a7bb !important;
     text-decoration: none;
-    font-weight: bold;  
+    font-weight: 400;  
     vertical-align: auto;
 }
 
@@ -293,7 +293,7 @@ span.arrow {
 
 #navbar-menu-principal-text{
     color:#fff;
-    font-weight: bold;
+    font-weight: 400;
 }
 
 .logo_header_small{
@@ -307,9 +307,15 @@ span.arrow {
 .ficha-producto-descripcion{min-height: 250px;}
 .gallery-container{padding-top: 50px;}
 .manejar_productos{
-    font-weight: bolder;    
+    font-weight: 600;    
 }
 .manejar_productos a{    
     color: #ffffff;
     background: #d99327;
+}
+
+.nombre_header{
+    font-weight: 600;
+    padding-top: 10px;
+    font-size: 13px!important;
 }

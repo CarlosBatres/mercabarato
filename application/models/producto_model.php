@@ -84,7 +84,7 @@ class Producto_model extends MY_Model {
                     . "FROM (SELECT * FROM  `productos_precios` ORDER BY nuevo_costo ASC ) as p ";
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
             $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
-            
+
             // SUB QUERY //
 
             $sub_query = "";
@@ -513,12 +513,14 @@ class Producto_model extends MY_Model {
         }
     }
 
-    public function get_ofertas_from_producto($producto_id, $cliente_id) {
+    public function get_ofertas_from_producto($producto_id, $cliente_id = false) {
         // TODO : Validar el rango de fechas que sea presente
         $this->db->select('*');
         $this->db->from('productos_precios pp');
         $this->db->where('pp.id', $producto_id);
-        $this->db->where('pp.cliente_id', $cliente_id);
+        if ($cliente_id) {
+            $this->db->where('pp.cliente_id', $cliente_id);
+        }
         $this->db->where('pp.fecha_inicio <', date("Y-m-d"));
         $this->db->where('pp.fecha_finaliza >', date("Y-m-d"));
         $this->db->where('pp.tipo', 'oferta');
@@ -588,9 +590,9 @@ class Producto_model extends MY_Model {
 
         $query.=" GROUP BY p.id";
         $query.=" ORDER BY visitas DESC,p.fecha_insertado DESC";
-        
-        if($limit){
-            $query.=" LIMIT 0 ,".$limit;
+
+        if ($limit) {
+            $query.=" LIMIT 0 ," . $limit;
         }
 
         $result = $this->db->query($query);
