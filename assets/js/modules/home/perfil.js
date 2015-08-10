@@ -61,7 +61,17 @@ $(document).ready(function() {
                     }
                 }
             },
-            nif_cif: {required: true}
+            nif_cif: {required: true},
+            nickname: {required: true,
+                remote: {
+                    url: SITE_URL + "util/verificar_nickname",
+                    type: "post",
+                    data: {
+                        nombre: function() {
+                            return $("#form_afiliarse").find("input[name='nickname']").val();
+                        }
+                    }
+                }}
         },
         messages: {
             nombre_empresa: {
@@ -70,6 +80,10 @@ $(document).ready(function() {
             },
             nif_cif: {
                 required: "Ingresa tu N.I.F o C.I.F"
+            },
+            nickname: {
+                required: "Ingresa un apodo unico que te identifique",
+                remote: "Este apodo es invalido o ya existe ingresa uno nuevo."
             }
         }
     });
@@ -109,7 +123,7 @@ $(document).ready(function() {
         dateFormat: "dd-mm-yy",
         yearRange: "1900:-nn"
     });
-    
+
     $('#form_afiliarse').find('select[name="pais"]').on('change', function() {
         $('#form_afiliarse').find('select[name="provincia"]').html("<option value='0'>Provincia</option>");
         $('#form_afiliarse').find('select[name="poblacion"]').html("<option value='0'>Población</option>");
@@ -137,7 +151,7 @@ $(document).ready(function() {
                 $('#form_afiliarse').find('select[name="poblacion"]').html(response.html);
             }
         });
-    }); 
-    
+    });
+
     $('#form_afiliarse').find('select[name="pais"]').trigger('change');
 });

@@ -84,7 +84,7 @@ class Producto_model extends MY_Model {
                     . "FROM (SELECT * FROM  `productos_precios` ORDER BY nuevo_costo ASC ) as p ";
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
             $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
-
+            
             // SUB QUERY //
 
             $sub_query = "";

@@ -185,7 +185,9 @@ class Seguro extends MY_Controller {
                 $user_id = $this->authentication->read('identifier');
                 $cliente = $this->usuario_model->get_full_identidad($user_id);
                 if (!$ignore_list) {
-                    $params["not_vendedor"] = $cliente->vendedor->id;
+                    if(isset($cliente->vendedor)){
+                        $params["not_vendedor"] = $cliente->vendedor->id;
+                    }                    
                 } else {
                     $params["not_vendedor"] = array_merge($ignore_list, array($cliente->vendedor->id));
                 }
