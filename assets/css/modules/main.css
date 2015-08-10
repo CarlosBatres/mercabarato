@@ -277,6 +277,9 @@ span.arrow {
     border: 2px solid #38a7bb !important;
 }
 
+.es-cliente{
+    border: 1.5px solid #ddd !important;
+}
 
 #cookie_directive_container .navbar{
     background: #ddd;

@@ -181,6 +181,15 @@ class Seguro extends MY_Controller {
             if ($ignore_list) {
                 $params["not_vendedor"] = $ignore_list;
             }
+            if ($this->authentication->is_loggedin()) {
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->usuario_model->get_full_identidad($user_id);
+                if (!$ignore_list) {
+                    $params["not_vendedor"] = $cliente->vendedor->id;
+                } else {
+                    $params["not_vendedor"] = array_merge($ignore_list, array($cliente->vendedor->id));
+                }
+            }
 
             $pagina = $this->input->post('pagina');
         } else {
@@ -239,11 +248,9 @@ class Seguro extends MY_Controller {
                 $user_id = $this->authentication->read('identifier');
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                 $cliente_id = $cliente->id;
-                
-            } else if($this->session->userdata('seguros_new_user')){
-                
-                $cliente_id=$this->session->userdata('seguros_new_user');
-                
+            } else if ($this->session->userdata('seguros_new_user')) {
+
+                $cliente_id = $this->session->userdata('seguros_new_user');
             } else {
                 /**
                  * Si no existe el cliente lo creo temporal para que se pueda registrar despues
@@ -307,10 +314,10 @@ class Seguro extends MY_Controller {
                 'seguros_ignore_list' => $ignore_list,
             ));
 
-            $solicitud_id=$this->solicitud_seguro_model->insert($solicitud_seguro);
+            $solicitud_id = $this->solicitud_seguro_model->insert($solicitud_seguro);
             $vendedor = $this->vendedor_model->get($vendedor_id);
-            
-            if ($this->config->item('emails_enabled')) {                
+
+            if ($this->config->item('emails_enabled')) {
                 $cliente = $this->cliente_model->get($vendedor->cliente_id);
                 $usuario = $this->usuario_model->get($cliente->usuario_id);
 
@@ -322,8 +329,8 @@ class Seguro extends MY_Controller {
                 $this->email->message($this->load->view('home/emails/solicitud_presupuesto', $data_email, true));
                 $this->email->send();
             }
-            
-            $this->session->set_flashdata('success', 'La solicitud ha sido enviada con exito.<br> Se envio al vendedor <strong>'.$vendedor->nombre.'</strong>');
+
+            $this->session->set_flashdata('success', 'La solicitud ha sido enviada con exito.<br> Se envio al vendedor <strong>' . $vendedor->nombre . '</strong>');
         }
     }
 

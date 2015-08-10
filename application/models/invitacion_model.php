@@ -52,7 +52,7 @@ class Invitacion_model extends MY_Model {
         $query.="FROM invitacion i ";
         $query.="INNER JOIN usuario u ON u.id = i.invitar_desde AND i.invitar_para='" . $params["usuario_id"] . "' ";
         $query.="INNER JOIN cliente c ON c.usuario_id = u.id ";
-        $query.="LEFT JOIN vendedor v ON v.cliente_id = c.id ";
+        $query.="INNER JOIN vendedor v ON v.cliente_id = c.id ";
         $query.="WHERE (i.estado='1' OR i.estado='2')";
 
         $query.=" UNION ALL ";
@@ -61,7 +61,7 @@ class Invitacion_model extends MY_Model {
         $query.="FROM invitacion i ";
         $query.="INNER JOIN usuario u ON u.id = i.invitar_para AND i.invitar_desde='" . $params["usuario_id"] . "' ";
         $query.="INNER JOIN cliente c ON c.usuario_id = u.id ";
-        $query.="LEFT JOIN vendedor v ON v.cliente_id = c.id ";
+        $query.="INNER JOIN vendedor v ON v.cliente_id = c.id ";
         $query.="WHERE (i.estado='1' OR i.estado='2'))) temp";
 
         $query.=" ORDER BY " . $order_by . " " . $order;
