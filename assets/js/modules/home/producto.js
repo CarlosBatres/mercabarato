@@ -8,4 +8,8 @@ $(document).ready(function() {
         var invoker = $(e.relatedTarget);        
         $('input[name="vendedor_id"]').val(invoker.data('id'));
     });
+    
+     $('#ofertaModal').on('hidden.bs.modal', function() {        
+        $(this).removeData('bs.modal');        
+    });
 });

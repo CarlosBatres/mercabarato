@@ -171,12 +171,12 @@ body .box_registro{
 
 .tabla-resultados-principal .precio{
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .tabla-resultados-principal .precio>span{
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 600;
     padding-left: 15px;
 }
 
@@ -193,12 +193,12 @@ body .box_registro{
 }
 #productMain .price-oferta{
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .tabla-resultados-principal .nombre-producto{
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .tabla-resultados-principal li{
@@ -218,7 +218,7 @@ body .box_registro{
 
 #producto-principal-categorias a{
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 600;
     font-family: "Roboto", Helvetica, Arial, sans-serif;
     padding-left: 10px;        
 }
@@ -255,7 +255,7 @@ span.arrow {
 .precios-productos .checkbox label{
     color: #38a7bb !important;
     text-decoration: none;
-    font-weight: 400;  
+    font-weight: 600;  
     vertical-align: auto;
 }
 
@@ -293,7 +293,7 @@ span.arrow {
 
 #navbar-menu-principal-text{
     color:#fff;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .logo_header_small{
@@ -318,4 +318,13 @@ span.arrow {
     font-weight: 600;
     padding-top: 10px;
     font-size: 13px!important;
+}
+
+.price-oferta-sinrequisitos-link{
+    color :red;
+    font-weight: 600;
+}
+
+.price-oferta-sinrequisitos-link:hover{
+    color :red;
 }

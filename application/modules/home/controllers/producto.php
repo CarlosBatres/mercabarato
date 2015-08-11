@@ -197,9 +197,18 @@ class Producto extends MY_Controller {
                 $producto_oferta = $this->producto_model->get_ofertas_from_producto($producto->id);
                 if ($producto_oferta) {
                     $oferta = (float) $producto_oferta->nuevo_costo;
+                    $params=array('oferta_general_id'=>$producto_oferta->grupo_o_tarifa_id);                    
+                    $restricciones=$this->oferta_general_model->get_requisitos($params,0,2);
+                    if($restricciones["total"]>0){
+                        $oferta_id = $producto_oferta->grupo_o_tarifa_id;
+                    }else{
+                        $oferta_id = false;
+                    }
+                    
                     $fecha_finaliza=date("d-m-Y",strtotime($producto_oferta->fecha_finaliza));
                 } else {
                     $oferta = 0;
+                    $oferta_id= false;
                     $fecha_finaliza="";
                 }
 
@@ -239,13 +248,14 @@ class Producto extends MY_Controller {
                     "producto_imagenes" => $producto_imagenes,
                     "tarifa" => $tarifa,
                     "oferta" => $oferta,
+                    "oferta_id"=>$oferta_id,
                     "otros_productos" => $prods,
                     "otros_productos_categoria" => $prods2,                    
                     "vendedor"=>$vendedor,
                     "son_contactos" => $son_contactos,
                     "invitacion" => $invitacion,
                     "fecha_finaliza"=>$fecha_finaliza,
-                    "localizacion" => $localizacion,
+                    "localizacion" => $localizacion,                    
                         );
                 $this->template->load_view('home/producto/ficha', $data);
             } else {
@@ -282,6 +292,7 @@ class Producto extends MY_Controller {
                         "producto_imagenes" => $producto_imagenes,
                         "tarifa" => 0,
                         "oferta" => 0,
+                        "oferta_id"=>false,
                         "otros_productos" => $prods,
                         "otros_productos_categoria" => $prods2,
                         "vendedor"=>$vendedor,
@@ -364,6 +375,30 @@ class Producto extends MY_Controller {
                 $this->template->set_title('Mercabarato - Busca y Compara');
                 $data = array("producto" => $producto);                
                 $this->template->load_view('home/producto/enviar_mensaje', $data);
+            }
+        } else {
+            redirect('');
+        }
+    }
+    
+    public function ver_oferta_requisitos($oferta_general_id){
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Busca y Compara');            
+
+            $oferta_general = $this->oferta_general_model->get($oferta_general_id);
+            // TODO : Validar que yo pueda acceder a esta
+            if ($oferta_general) {
+                $requisitos=$this->requisito_visitas_model->get_many_by("oferta_general_id",$oferta_general_id);
+                if($requisitos){
+                    $productos_array=array();
+                    foreach($requisitos as $requisito){
+                        $productos_array[]=$this->producto_model->get_pp_by($requisito->producto_id);
+                    }
+                }
+                //$this->template->add_js('modules/home/infocompras_seguros.js');
+                $this->template->load_view('home/producto/oferta_restriccion', array("productos"=>$productos_array));
+            } else {
+                redirect('');
             }
         } else {
             redirect('');

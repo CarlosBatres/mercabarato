@@ -62,10 +62,19 @@
                             <?php elseif ($oferta == 0 || ($tarifa < $oferta && ($tarifa != 0 && $oferta != 0))): ?>                    
                                 <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                                 <p class="price"><?php echo number_format($tarifa, '2') . ' ' . $this->config->item('money_sign') ?></p>
-                            <?php elseif ($tarifa == 0 || ($tarifa > $oferta && ($tarifa != 0 && $oferta != 0))): ?>
+                            <?php elseif ($tarifa == 0 || ($tarifa > $oferta && ($tarifa != 0 && $oferta != 0))): ?>                                
                                 <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
-                                <p class="price"><?php echo number_format($oferta, '2') . ' ' . $this->config->item('money_sign') ?></p>
-                                <p class="price-oferta text-center">OFERTA PROMOCIONAL valida hasta el <?php echo $fecha_finaliza ?></p>                                                    
+                                <?php if ($oferta_id): ?>
+                                    <a href="<?php echo site_url('productos/ver-oferta-requisitos/' . $oferta_id) ?>" data-toggle="modal" data-target="#ofertaModal">
+                                        <p class="price"><?php echo number_format($oferta, '2') . ' ' . $this->config->item('money_sign') ?></p>
+                                        <p class="price-oferta text-center">OFERTA PROMOCIONAL valida hasta el <?php echo $fecha_finaliza ?></p>                                                    
+                                    </a>
+                                <?php else: ?>
+                                    <div class="price-oferta-sinrequisitos-link">
+                                        <p class="price"><?php echo number_format($oferta, '2') . ' ' . $this->config->item('money_sign') ?></p>
+                                        <p class="price-oferta text-center">OFERTA PROMOCIONAL valida hasta el <?php echo $fecha_finaliza ?></p>                                                    
+                                    </div>
+                                <?php endif; ?>        
                             <?php endif; ?>                                                        
                         <?php endif; ?>
                     </div>
@@ -99,7 +108,7 @@
                                 <a href="<?php echo site_url('productos/enviar_mensaje/' . $producto->id) ?>" data-toggle="modal" data-target="#myModal" class="btn btn-template-primary" > Enviar Mensaje</a>
                             </div>                
                         </div>
-                    <?php elseif(!$invitacion): ?>
+                    <?php elseif (!$invitacion): ?>
                         <div class="col-md-12 pull-right">
                             <div class="text-right">
                                 <button type="button" class="btn btn-template-primary" data-id="<?php echo $producto->vendedor_id ?>" data-toggle="modal" data-target="#sendInviteModal"> Solicitar Invitación</button>
@@ -267,5 +276,13 @@
             </div>
 
         </div>
+    </div>
+    <div id="ofertaModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">                
+            </div>
+        </div>
+
     </div>
 </div>
