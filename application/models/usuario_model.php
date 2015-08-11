@@ -16,16 +16,14 @@ class Usuario_model extends MY_Model {
      * @param type $email
      * @return boolean
      */
-    public function email_exists($email,$ignore_temporal=false) {
-        $this->db->where('email', $email);        
+    public function email_exists($email, $ignore_temporal = false) {
+        $this->db->where('email', $email);
+        if ($ignore_temporal) {
+            $this->db->where('temporal', '0');
+        }
         $query = $this->db->get('usuario');
         if ($query->num_rows() > 0) {
-            $user=$query->row();
-            if($user->temporal=="0"){
-                return TRUE;
-            }else{
-                return FALSE;
-            }            
+            return TRUE;
         } else {
             return FALSE;
         }
@@ -98,35 +96,35 @@ class Usuario_model extends MY_Model {
             return false;
         }
     }
-    
+
     public function verificar_email($secret_key) {
-        $this->usuario_model->update_by(array("secret_key" => $secret_key), array("activo"=> "1","secret_key"=>null));
-        if($this->db->affected_rows()>=1){
+        $this->usuario_model->update_by(array("secret_key" => $secret_key), array("activo" => "1", "secret_key" => null));
+        if ($this->db->affected_rows() >= 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    
-    public function inhabilitar($usuario_id){
-        $usuario=$this->get($usuario_id);
-        if($usuario){
-            $this->update($usuario_id,array("activo"=>"0"));
+
+    public function inhabilitar($usuario_id) {
+        $usuario = $this->get($usuario_id);
+        if ($usuario) {
+            $this->update($usuario_id, array("activo" => "0"));
         }
     }
-    
-    public function habilitar($usuario_id){
-        $usuario=$this->get($usuario_id);
-        if($usuario){
-            $this->update($usuario_id,array("activo"=>"1"));
+
+    public function habilitar($usuario_id) {
+        $usuario = $this->get($usuario_id);
+        if ($usuario) {
+            $this->update($usuario_id, array("activo" => "1"));
         }
     }
-    
-    public function get_email($usuario_id){
+
+    public function get_email($usuario_id) {
         $this->db->select("usuario.email");
-        $this->db->from($this->_table);        
-        $this->db->where("usuario.id",$usuario_id);
-        
+        $this->db->from($this->_table);
+        $this->db->where("usuario.id", $usuario_id);
+
         $result = $this->db->get();
 
         if ($result->num_rows() > 0) {
@@ -135,13 +133,13 @@ class Usuario_model extends MY_Model {
             return FALSE;
         }
     }
-    
+
     public function delete($id) {
         $usuario = $this->get($id);
-        if ($usuario) {             
+        if ($usuario) {
             $this->localizacion_model->delete_by("usuario_id", $usuario->id);
-            $this->restriccion_model->delete_by("usuario_id", $usuario->id);                                    
-            parent::delete($id);            
+            $this->restriccion_model->delete_by("usuario_id", $usuario->id);
+            parent::delete($id);
         } else {
             return false;
         }
@@ -153,7 +151,7 @@ class Identidad {
 
     public $cliente;
     public $usuario;
-    public $vendedor;    
+    public $vendedor;
 
     function __construct() {
         $this->cliente = null;
@@ -211,5 +209,6 @@ class Identidad {
         } else {
             return false;
         }
-    }    
+    }
+
 }

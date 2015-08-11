@@ -10,8 +10,7 @@ class MY_Controller extends MX_Controller {
     private $_ci;
 
     public function __construct() {
-        parent::__construct();
-
+        parent::__construct();        
         $this->_ci = & get_instance();
     }
     /**
