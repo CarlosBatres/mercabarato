@@ -30,6 +30,7 @@ class Producto_model extends MY_Model {
         $this->db->join("vendedor", "vendedor.id=producto.vendedor_id", 'INNER');
         $this->db->join("vendedor_paquete", "vendedor.id=vendedor_paquete.vendedor_id AND vendedor_paquete.aprobado='1' AND"
                 . " vendedor_paquete.fecha_terminar >='" . date("Y-m-d") . "' AND vendedor_paquete.fecha_inicio <='" . date("Y-m-d") . "'", 'LEFT');
+        $this->db->join("productos_localizacion", "productos_localizacion.producto_id=producto.id", 'INNER');
 
         if (isset($params['nombre'])) {
             $this->db->like('producto.nombre', $params['nombre'], 'both');
@@ -45,6 +46,16 @@ class Producto_model extends MY_Model {
         }
         if (isset($params['autorizado_por'])) {
             $this->db->where('vendedor_paquete.autorizado_por', $params['autorizado_por']);
+        }
+        
+        if (isset($params['pais_id'])) {
+            $this->db->where('productos_localizacion.pais_id', $params['pais_id']);
+        }
+        if (isset($params['provincia_id'])) {
+            $this->db->where('productos_localizacion.provincia_id', $params['provincia_id']);
+        }
+        if (isset($params['poblacion_id'])) {
+            $this->db->where('productos_localizacion.poblacion_id', $params['poblacion_id']);
         }
 
 

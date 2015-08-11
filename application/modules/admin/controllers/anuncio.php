@@ -137,10 +137,21 @@ class Anuncio extends ADController {
             if ($this->input->post('vendedor') != "") {
                 $params["vendedor"] = $this->input->post('vendedor');
             }
-            $user_id = $this->authentication->read('identifier');
+            $user_id = $this->authentication->read('identifier');            
             $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
             if ($restriccion) {
-                $params["autorizado_por"] = $user_id;
+                if ($restriccion->pais_id != null) {
+                    $params["pais_id"] = $restriccion->pais_id;
+                }
+                if ($restriccion->provincia_id != null) {
+                    unset($params["pais_id"]);
+                    $params["provincia_id"] = $restriccion->provincia_id;
+                }
+                if ($restriccion->poblacion_id != null) {
+                    unset($params["pais_id"]);
+                    unset($params["provincia_id"]);
+                    $params["poblacion_id"] = $restriccion->poblacion_id;
+                }
             }
             $pagina = $this->input->post('pagina');
         } else {

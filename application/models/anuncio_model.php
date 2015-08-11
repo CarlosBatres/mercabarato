@@ -19,7 +19,8 @@ class Anuncio_model extends MY_Model {
         $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
         $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
         $this->db->join("vendedor_paquete", "vendedor.id=vendedor_paquete.vendedor_id AND vendedor_paquete.aprobado='1' AND"
-                . " vendedor_paquete.fecha_terminar >='".date("Y-m-d")."'", 'LEFT');
+                . " vendedor_paquete.fecha_terminar >='" . date("Y-m-d") . "'", 'LEFT');
+        $this->db->join("localizacion", "localizacion.usuario_id=usuario.id", 'INNER');
 
         if (isset($params['titulo'])) {
             $this->db->like('anuncio.titulo', $params['titulo'], 'both');
@@ -33,8 +34,14 @@ class Anuncio_model extends MY_Model {
         if (isset($params['vendedor_id'])) {
             $this->db->where('anuncio.vendedor_id', $params['vendedor_id']);
         }
-         if (isset($params['autorizado_por'])) {
-            $this->db->where('vendedor_paquete.autorizado_por', $params['autorizado_por']);
+        if (isset($params['pais_id'])) {
+            $this->db->where('localizacion.pais_id', $params['pais_id']);
+        }
+        if (isset($params['provincia_id'])) {
+            $this->db->where('localizacion.provincia_id', $params['provincia_id']);
+        }
+        if (isset($params['poblacion_id'])) {
+            $this->db->where('localizacion.poblacion_id', $params['poblacion_id']);
         }
 
         $this->db->stop_cache();
@@ -140,6 +147,7 @@ class Anuncio_model extends MY_Model {
     public function habilitar($anuncio_id) {
         $this->update($anuncio_id, array("habilitado" => "1"));
     }
+
     /**
      * 
      * @param type $cliente_id
@@ -148,15 +156,15 @@ class Anuncio_model extends MY_Model {
     public function get_anuncios_para_cliente($cliente_id) {
         $cliente = $this->cliente_model->get($cliente_id);
 
-        $params=array("estado"=>"2","usuario"=>$cliente->usuario_id);
-        $invitaciones_ids=$this->invitacion_model->get_ids_invitaciones($params);
-                
+        $params = array("estado" => "2", "usuario" => $cliente->usuario_id);
+        $invitaciones_ids = $this->invitacion_model->get_ids_invitaciones($params);
+
         if (sizeof($invitaciones_ids) > 0) {
             $this->db->select("anuncio.*");
             $this->db->from($this->_table);
             $this->db->join("vendedor", "vendedor.id=anuncio.vendedor_id", 'INNER');
-            $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');            
-            $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');            
+            $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
+            $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
             $this->db->where("anuncio.habilitado", "1");
             $this->db->where_in("usuario.id", $invitaciones_ids);
             $this->db->order_by("anuncio.fecha_publicacion", "desc");
