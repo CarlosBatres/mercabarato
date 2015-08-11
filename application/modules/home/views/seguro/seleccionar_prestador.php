@@ -52,9 +52,16 @@
                 </form>
             </div>
             <div class="col-md-12">
-                <div class="row">
-                    <div class="pull-right">                        
-                        <a href="<?php echo site_url('seguros/finalizar') ?>" class="btn btn-template-primary" id="terminar-seguros"> Terminar</a>
+                <div class="row">                    
+                    <div class="col-md-3 pull-right">
+                        <div class="pull-right terminar-btn" <?php echo (!$hide_terminar) ? "style='display:none;'" : ""; ?>>                        
+                            <a href="<?php echo site_url('seguros/finalizar') ?>" class="btn btn-template-primary" id="terminar-seguros"> Terminar</a>
+                        </div>                
+                    </div>
+                    <div class="col-md-3 pull-right">
+                        <div class="pull-right enviar-todos-btn" style="display:none;">                        
+                            <a href="" class="btn btn-template-primary" id="enviar-todos"> Enviar a Todos</a>
+                        </div>
                     </div>
                 </div>
             </div>

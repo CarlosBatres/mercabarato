@@ -161,7 +161,9 @@ class Vendedor_paquete_model extends MY_Model {
 
         if ($count > 0) {
             $this->db->order_by('vendedor.id', 'asc');
-            $this->db->limit($limit, $offset);
+            if($limit){
+                $this->db->limit($limit, $offset);
+            }            
             $vendedores = $this->db->get()->result();
             $this->db->flush_cache();
             return array("vendedores" => $vendedores, "total" => $count);

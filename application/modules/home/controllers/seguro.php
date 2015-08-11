@@ -13,12 +13,13 @@ class Seguro extends MY_Controller {
      * 
      */
     public function view_seguros() {
-        $this->session->unset_userdata('seguros_tipo');
-        $this->session->unset_userdata('seguros_datos_contacto');
-        $this->session->unset_userdata('seguros_informacion');
+        $this->session->unset_userdata('seguros');
+        //$this->session->unset_userdata('seguros_tipo');
+        //$this->session->unset_userdata('seguros_datos_contacto');
+        //$this->session->unset_userdata('seguros_informacion');
         $this->session->unset_userdata('seguros_ignore_list');
         $this->session->unset_userdata('seguros_new_user');
-
+                
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
@@ -117,32 +118,46 @@ class Seguro extends MY_Controller {
                 "otros" => ($this->input->post('otros') != '') ? $this->input->post('otros') : null
             );
 
-
-            $this->session->set_userdata(array(
+            if (!$this->authentication->is_loggedin()) {
+                //$this->session->sess_destroy();
+                //$this->session->sess_create();
+            }
+            
+            $session_data=array();
+            
+            $session_data["seguros_tipo"]=$tipo;
+            $session_data["seguros_datos_contacto"]=$datos_contacto;
+            
+            /*$this->session->set_userdata(array(
                 'seguros_tipo' => $tipo,
                 'seguros_datos_contacto' => $datos_contacto,
-            ));
+            ));*/
 
             if ($tipo == "seguro_otros") {
-                $this->session->set_userdata(array(
+                $session_data["seguros_informacion"]=$datos_otros;
+                /*$this->session->set_userdata(array(
                     'seguros_informacion' => $datos_otros,
-                ));
+                ));*/
             } elseif ($tipo == "seguro_hogar") {
-                $this->session->set_userdata(array(
+                $session_data["seguros_informacion"]=$datos_hogar;
+                /*$this->session->set_userdata(array(
                     'seguros_informacion' => $datos_hogar,
-                ));
+                ));*/
             } elseif ($tipo == "seguro_riesgo") {
-                $this->session->set_userdata(array(
+                $session_data["seguros_informacion"]=$datos_riesgo;
+               /* $this->session->set_userdata(array(
                     'seguros_informacion' => $datos_riesgo,
-                ));
+                ));*/
             } elseif ($tipo == "seguro_salud") {
-                $this->session->set_userdata(array(
+                $session_data["seguros_informacion"]=$datos_salud;
+                /*$this->session->set_userdata(array(
                     'seguros_informacion' => $datos_salud,
-                ));
+                ));*/
             } elseif ($tipo == "seguro_vehiculos") {
-                $this->session->set_userdata(array(
+                $session_data["seguros_informacion"]=$datos_vehiculo;
+                /*$this->session->set_userdata(array(
                     'seguros_informacion' => $datos_vehiculo,
-                ));
+                ));*/
             }
 
             $this->template->set_title('Mercabarato - Busca y Compara');
@@ -150,6 +165,15 @@ class Seguro extends MY_Controller {
 
             $paises = $this->pais_model->get_all();
             $data = array("paises" => $paises);
+            
+            $this->session->set_userdata(array("seguros"=>$session_data));            
+            $ignore_list = $this->session->userdata('seguros_ignore_list');
+
+            if ($ignore_list) {
+                $data["hide_terminar"] = true;
+            } else {
+                $data["hide_terminar"] = false;
+            }            
             $this->template->load_view('home/seguro/seleccionar_prestador', $data);
         } else {
             redirect('seguros');
@@ -185,11 +209,15 @@ class Seguro extends MY_Controller {
                 $user_id = $this->authentication->read('identifier');
                 $cliente = $this->usuario_model->get_full_identidad($user_id);
                 if (!$ignore_list) {
-                    if(isset($cliente->vendedor)){
+                    if (isset($cliente->vendedor)) {
                         $params["not_vendedor"] = $cliente->vendedor->id;
-                    }                    
+                    }
                 } else {
-                    $params["not_vendedor"] = array_merge($ignore_list, array($cliente->vendedor->id));
+                    if (isset($cliente->vendedor)) {
+                        $params["not_vendedor"] = array_merge($ignore_list, array($cliente->vendedor->id));
+                    } else {
+                        $params["not_vendedor"] = $ignore_list;
+                    }
                 }
             }
 
@@ -229,7 +257,15 @@ class Seguro extends MY_Controller {
             "vendedores" => $vendedores_array["vendedores"],
             "pagination" => $pagination);
 
-        $this->template->load_view('home/seguro/tabla_resultados', $data);
+        //$html=$this->template->load_view('home/seguro/tabla_resultados', $data , true);
+        $html = $this->load->view('home/seguro/tabla_resultados', $data, true);
+        $result = array("html" => $html);
+        if ($vendedores_array["total"] > 0) {
+            $result["result"] = "success";
+        } else {
+            $result["result"] = "empty";
+        }
+        echo json_encode($result);
     }
 
     /**
@@ -239,110 +275,169 @@ class Seguro extends MY_Controller {
         $formValues = $this->input->post();
         if ($formValues !== false) {
             $vendedor_id = $this->input->post('id');
-
-            $tipo = $this->session->userdata('seguros_tipo');
-            $datos_contacto = $this->session->userdata('seguros_datos_contacto');
-
-            if ($this->authentication->is_loggedin()) {
-                /**
-                 * Si existe el cliente
-                 */
-                $user_id = $this->authentication->read('identifier');
-                $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                $cliente_id = $cliente->id;
-            } else if ($this->session->userdata('seguros_new_user')) {
-
-                $cliente_id = $this->session->userdata('seguros_new_user');
-            } else {
-                /**
-                 * Si no existe el cliente lo creo temporal para que se pueda registrar despues
-                 */
-                $user_id = $this->authentication->create_user($datos_contacto["email"], "passwordtemporal");
-                if ($user_id !== FALSE) {
-                    $secret_key = substr(md5(uniqid(mt_rand(), true)), 0, 30);
-                    $ip_address = $this->session->userdata('ip_address');
-                    $usuario = $this->usuario_model->get($user_id);
-                    $usuario->ip_address = $ip_address;
-                    $usuario->fecha_creado = date("Y-m-d H:i:s");
-                    $usuario->ultimo_acceso = date("Y-m-d H:i:s");
-                    $usuario->activo = 0;
-                    //$usuario->is_admin = 0;
-                    $usuario->temporal = 1;
-                    $usuario->secret_key = $secret_key;
-                    $this->usuario_model->update($user_id, $usuario);
-                }
-
-                $data = array(
-                    "usuario_id" => $user_id,
-                    "nombres" => $datos_contacto["nombres"],
-                    "apellidos" => $datos_contacto["apellidos"],
-                    "sexo" => null,
-                    "fecha_nacimiento" => null,
-                    "codigo_postal" => null,
-                    "direccion" => null,
-                    "telefono_fijo" => null,
-                    "telefono_movil" => null,
-                    "keyword" => null
-                );
-
-                $cliente_id = $this->cliente_model->insert($data);
-                $this->session->set_userdata(array(
-                    'seguros_new_user' => $cliente_id,
-                ));
-            }
-
-
-            $informacion = $this->session->userdata('seguros_informacion');
-            $data = array(
-                'tipo' => $tipo,
-                'datos_contacto' => $datos_contacto,
-                'informacion' => $informacion
-            );
-
-            $solicitud_seguro = array(
-                "vendedor_id" => $vendedor_id,
-                "cliente_id" => $cliente_id,
-                "datos" => serialize($data),
-                "fecha_solicitud" => date("Y-m-d"),
-                "estado" => 0,
-            );
-
-            $ignore_list = $this->session->userdata('seguros_ignore_list');
-            if (!$ignore_list) {
-                $ignore_list = array();
-            }
-            $ignore_list[] = $vendedor_id;
-            $this->session->set_userdata(array(
-                'seguros_ignore_list' => $ignore_list,
-            ));
-
-            $solicitud_id = $this->solicitud_seguro_model->insert($solicitud_seguro);
             $vendedor = $this->vendedor_model->get($vendedor_id);
-
-            if ($this->config->item('emails_enabled')) {
-                $cliente = $this->cliente_model->get($vendedor->cliente_id);
-                $usuario = $this->usuario_model->get($cliente->usuario_id);
-
-                $this->load->library('email');
-                $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
-                $this->email->to($usuario->email);
-                $this->email->subject('Nueva solicitud de presupuesto');
-                $data_email = array("solicitud_id" => $solicitud_id);
-                $this->email->message($this->load->view('home/emails/solicitud_presupuesto', $data_email, true));
-                $this->email->send();
-            }
-
+            $this->enviar_solicitud($vendedor_id);
             $this->session->set_flashdata('success', 'La solicitud ha sido enviada con exito.<br> Se envio al vendedor <strong>' . $vendedor->nombre . '</strong>');
         }
     }
+    /**
+     * 
+     */
+    public function crear_solicitud_seguro_todos() {
+        $formValues = $this->input->post();
+        if ($formValues !== false) {
+            $params = array();
+            if ($this->input->post('pais') != "0") {
+                $params["pais"] = $this->input->post('pais');
+            }
+            if ($this->input->post('provincia') != "0") {
+                $params["provincia"] = $this->input->post('provincia');
+            }
+            if ($this->input->post('poblacion') != "0") {
+                $params["poblacion"] = $this->input->post('poblacion');
+            }
+            $params["infocompra"] = 1;
+            $params["paquete_vigente"] = true;
+            $ignore_list = $this->session->userdata('seguros_ignore_list');
+            if ($ignore_list) {
+                $params["not_vendedor"] = $ignore_list;
+            }
+            if ($this->authentication->is_loggedin()) {
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->usuario_model->get_full_identidad($user_id);
+                if (!$ignore_list) {
+                    if (isset($cliente->vendedor)) {
+                        $params["not_vendedor"] = $cliente->vendedor->id;
+                    }
+                } else {
+                    if (isset($cliente->vendedor)) {
+                        $params["not_vendedor"] = array_merge($ignore_list, array($cliente->vendedor->id));
+                    } else {
+                        $params["not_vendedor"] = $ignore_list;
+                    }
+                }
+            }
 
+
+            $vendedores_array = $this->vendedor_paquete_model->buscar_vendedores($params, false, false);
+
+            if ($vendedores_array["total"] > 0) {
+                foreach ($vendedores_array["vendedores"] as $vendedor) {
+                    $this->enviar_solicitud($vendedor->id);
+                }
+                $this->session->set_flashdata('success', 'Las solicitudes han sido enviadas con exito.<br> Un total de '.$vendedores_array['total'] .' fueron enviadas. </strong>');
+            }
+        }
+    }
+    /**
+     * 
+     */
     public function finalizar() {
-        $this->session->unset_userdata('seguros_tipo');
-        $this->session->unset_userdata('seguros_datos_contacto');
-        $this->session->unset_userdata('seguros_informacion');
+        $this->session->unset_userdata('seguros');
+        //$this->session->unset_userdata('seguros_tipo');
+        //$this->session->unset_userdata('seguros_datos_contacto');
+        //$this->session->unset_userdata('seguros_informacion');
         $this->session->unset_userdata('seguros_ignore_list');
         $this->session->unset_userdata('seguros_new_user');
         redirect('usuario/infocompras-seguros');
+    }
+    /**
+     * 
+     * @param type $vendedor_id
+     */
+    private function enviar_solicitud($vendedor_id) {        
+        $seguros=$this->session->userdata('seguros');
+        $tipo = $seguros["seguros_tipo"];        
+        $datos_contacto = $seguros['seguros_datos_contacto'];
+
+        if ($this->authentication->is_loggedin()) {
+            /**
+             * Si existe el cliente
+             */
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $cliente_id = $cliente->id;
+        } else if ($this->session->userdata('seguros_new_user')) {
+            $cliente_id = $this->session->userdata('seguros_new_user');
+        } else {
+            /**
+             * Si no existe el cliente lo creo temporal para que se pueda registrar despues
+             */            
+            
+            $user_id = $this->authentication->create_user($datos_contacto["email"], "passwordtemporal");
+            if ($user_id !== FALSE) {
+                $secret_key = substr(md5(uniqid(mt_rand(), true)), 0, 30);
+                $ip_address = $this->session->userdata('ip_address');
+                $usuario = $this->usuario_model->get($user_id);
+                $usuario->ip_address = $ip_address;
+                $usuario->fecha_creado = date("Y-m-d H:i:s");
+                $usuario->ultimo_acceso = date("Y-m-d H:i:s");
+                $usuario->activo = 0;
+                //$usuario->is_admin = 0;
+                $usuario->temporal = 1;
+                $usuario->secret_key = $secret_key;
+                $this->usuario_model->update($user_id, $usuario);
+            }
+
+            $data = array(
+                "usuario_id" => $user_id,
+                "nombres" => $datos_contacto["nombres"],
+                "apellidos" => $datos_contacto["apellidos"],
+                "sexo" => null,
+                "fecha_nacimiento" => null,
+                "codigo_postal" => null,
+                "direccion" => null,
+                "telefono_fijo" => null,
+                "telefono_movil" => null,
+                "keyword" => null
+            );
+
+            $cliente_id = $this->cliente_model->insert($data);
+            $this->session->set_userdata(array(
+                'seguros_new_user' => $cliente_id,
+            ));
+        }
+
+
+        $informacion = $seguros['seguros_informacion'];
+        $data = array(
+            'tipo' => $tipo,
+            'datos_contacto' => $datos_contacto,
+            'informacion' => $informacion
+        );
+
+        $solicitud_seguro = array(
+            "vendedor_id" => $vendedor_id,
+            "cliente_id" => $cliente_id,
+            "datos" => serialize($data),
+            "fecha_solicitud" => date("Y-m-d"),
+            "estado" => 0,
+        );
+
+        $ignore_list = $this->session->userdata('seguros_ignore_list');
+        if (!$ignore_list) {
+            $ignore_list = array();
+        }
+        $ignore_list[] = $vendedor_id;
+        $this->session->set_userdata(array(
+            'seguros_ignore_list' => $ignore_list,
+        ));
+
+        $solicitud_id = $this->solicitud_seguro_model->insert($solicitud_seguro);
+        $vendedor = $this->vendedor_model->get($vendedor_id);
+
+        if ($this->config->item('emails_enabled')) {
+            $cliente = $this->cliente_model->get($vendedor->cliente_id);
+            $usuario = $this->usuario_model->get($cliente->usuario_id);
+
+            $this->load->library('email');
+            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+            $this->email->to($usuario->email);
+            $this->email->subject('Nueva solicitud de presupuesto');
+            $data_email = array("solicitud_id" => $solicitud_id);
+            $this->email->message($this->load->view('home/emails/solicitud_presupuesto', $data_email, true));
+            $this->email->send();
+        }
     }
 
 }

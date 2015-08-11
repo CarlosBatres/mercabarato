@@ -44,8 +44,29 @@ $(document).ready(function() {
         changeYear: true,
         dateFormat: "dd-mm-yy",
         yearRange: "1900:-nn"
-    });        
+    });
+
+    $('#enviar-todos').on('click', function(e) {
+        e.preventDefault();
+        $.post(SITE_URL + "seguros/enviar-todos",
+                {
+                    pais: $('#form_buscar').find('select[name="pais"]').val(),
+                    provincia: $('#form_buscar').find('select[name="provincia"]').val(),
+                    poblacion: $('#form_buscar').find('select[name="poblacion"]').val()
+                }).done(function() {
+            updateResultados();            
+            $('.terminar-btn').css('display', 'block');
+        });
+    });
 });
+
+function enviar_todos() {
+    if ($('#form_buscar').find('select[name="poblacion"]').val() !== '0' || $('#form_buscar').find('select[name="provincia"]').val() !== '0') {
+        $('.enviar-todos-btn').css('display', 'block');
+    } else {
+        $('.enviar-todos-btn').css('display', 'none');
+    }
+}
 
 function validateForms() {
     $("#seguro_hogar").validate({
@@ -59,7 +80,7 @@ function validateForms() {
                     data: {
                         email: function() {
                             return $("#seguro_hogar").find("input[name='email']").val();
-                        }
+                        },ignore_temporal : false
                     }
                 }
             },
@@ -265,13 +286,19 @@ function updateResultados() {
             provincia: provincia,
             poblacion: poblacion
         },
-        dataType: "html",
+        dataType: "json",
         success: function(response) {
             $('#tabla-resultados').css('opacity', '1');
             $('#tabla-resultados').unblock();
-            $('#tabla-resultados').html(response);
+            $('#tabla-resultados').html(response.html);
             bind_pagination_links();
             bind_botones();
+            if (response.result === "success") {
+                enviar_todos();
+            } else if (response.result === "empty") {
+                $('.enviar-todos-btn').css('display', 'none');
+            }
+
         }
     });
 }
@@ -289,8 +316,9 @@ function bind_botones() {
         e.preventDefault();
         var id = $(this).data('id');
 
-        $.post(SITE_URL + "seguros/enviar", {id: id}).done(function() {            
+        $.post(SITE_URL + "seguros/enviar", {id: id}).done(function() {
             updateResultados();
+            $('.terminar-btn').css('display', 'block');
         });
     });
 }
