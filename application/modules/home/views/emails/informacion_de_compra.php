@@ -66,13 +66,17 @@
                             </tr>
                             <tr>
                                 <td style="padding: 5px 0 5px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    <p><strong>Cuenta:</strong> XXX</p>
-                                    <p><strong>A nombre de:</strong> XXX</p>
+                                    <p><strong>Cuenta:</strong>  ES51 2100 2798 7501 0008 6475</p>                                    
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 10px 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Envia un correo con los datos una vez hecho el pago.
+                                    Envia un correo una vez hecho el pago que incluya:
+                                    <ul>
+                                        <li>Nombre de la empresa</li>
+                                        <li>El paquete comprado</li>
+                                        <li>El email con el que estas registrado en el sitio</li>
+                                    </ul>
                                 </td>
                             </tr>
                         </table>
