@@ -48,6 +48,7 @@ $(document).ready(function() {
 
     $('#enviar-todos').on('click', function(e) {
         e.preventDefault();
+        $.blockUI({ message: '<h1>Espere un momento...</h1>' });
         $.post(SITE_URL + "seguros/enviar-todos",
                 {
                     pais: $('#form_buscar').find('select[name="pais"]').val(),
@@ -55,6 +56,7 @@ $(document).ready(function() {
                     poblacion: $('#form_buscar').find('select[name="poblacion"]').val()
                 }).done(function() {
             updateResultados();            
+            $.unblockUI();
             $('.terminar-btn').css('display', 'block');
         });
     });
