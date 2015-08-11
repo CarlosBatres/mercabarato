@@ -197,10 +197,11 @@ class Producto extends MY_Controller {
                 $producto_oferta = $this->producto_model->get_ofertas_from_producto($producto->id);
                 if ($producto_oferta) {
                     $oferta = (float) $producto_oferta->nuevo_costo;
-                    $params=array('oferta_general_id'=>$producto_oferta->grupo_o_tarifa_id);                    
-                    $restricciones=$this->oferta_general_model->get_requisitos($params,0,2);
+                    $oferta_vv=$this->oferta_model->get_by(array("id"=>$producto_oferta->grupo_o_tarifa_id,"producto_id"=>$producto_oferta->id));
+                    $params=array('oferta_general_id'=>$oferta_vv->oferta_general_id);                    
+                    $restricciones=$this->oferta_general_model->get_requisitos($params,false,false);
                     if($restricciones["total"]>0){
-                        $oferta_id = $producto_oferta->grupo_o_tarifa_id;
+                        $oferta_id = $oferta_vv->oferta_general_id;
                     }else{
                         $oferta_id = false;
                     }
