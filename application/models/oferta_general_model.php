@@ -116,6 +116,7 @@ class Oferta_general_model extends MY_Model {
     }
 
     public function delete($id) {
+        $this->requisito_visitas_model->delete_by("oferta_general_id", $id);
         $this->grupo_oferta_model->delete_by("oferta_general_id", $id);
         $this->oferta_model->delete_by("oferta_general_id", $id);
         parent::delete($id);
