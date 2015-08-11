@@ -48,9 +48,9 @@ class Main extends MY_Controller {
                         echo json_encode(FALSE);
                     } else {
                         $regex = '/[^a-zA-Z0-9_-]/';
-                        if (preg_match($regex, $word)) {                            
+                        if (preg_match($regex, $word)) {
                             echo json_encode(FALSE);
-                        } else {                            
+                        } else {
                             echo json_encode(TRUE);
                         }
                     }
@@ -118,7 +118,7 @@ class Main extends MY_Controller {
     public function test_url() {
         $paquete = $this->vendedor_paquete_model->get("3919");
         $data_email = array("paquete" => $paquete);
-        echo $this->load->view('home/emails/paquete_caducado', $data_email, true);
+        $this->load->view('home/emails/informacion_de_compra', $data_email);
     }
 
 }
