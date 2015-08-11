@@ -89,7 +89,7 @@ class Template {
      */
     public function add_js($js)
     {
-        $this->js[$js] = $js;
+        $this->js[$js] = $js.'?'.time();
     }
 
     /**
