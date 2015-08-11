@@ -59,6 +59,7 @@ $route['acceso_restringido'] = 'home/main/acceso_restringido';
 $route['productos/enviar_mensaje/(:num)'] = 'home/producto/enviar_mensaje/$1';
 $route['productos/buscar'] = 'home/producto/ajax_get_listado_resultados';
 $route['productos/buscar_producto/(:any)'] = 'home/producto/buscar_producto/$1';
+$route['productos/ver-oferta-requisitos/(:num)'] = 'home/producto/ver_oferta_requisitos/$1';
 $route['productos/(:any)'] = 'home/producto/ver_producto/$1';
 $route['vendedores/buscar'] = 'home/vendedor/ajax_get_listado_resultados';
 $route['anuncios/(:num)'] = 'home/anuncio/ver_anuncio/$1';

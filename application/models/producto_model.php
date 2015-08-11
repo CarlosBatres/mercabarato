@@ -687,4 +687,18 @@ class Producto_model extends MY_Model {
         }
     }
 
+    public function get_pp_by($producto_id) {
+        $this->db->select('pp.*,pr.filename as imagen_nombre');
+        $this->db->from('productos_precios pp');
+        $this->db->join("producto_resource pr", "pr.producto_id = pp.id AND pr.tipo='imagen_principal'", 'LEFT');
+        $this->db->where('pp.id', $producto_id);                
+
+        $results = $this->db->get()->row();
+        if ($results) {
+            return $results;
+        } else {
+            return false;
+        }
+    }
+
 }
