@@ -151,45 +151,48 @@ class Panel_vendedores_invitaciones extends ADController {
                     $usuario->temporal = 1;
                     $usuario->secret_key = $secret_key;
                     $this->usuario_model->update($user_id, $usuario);
+
+                    $data = array(
+                        "usuario_id" => $user_id,
+                        "nombres" => null,
+                        "apellidos" => null,
+                        "sexo" => null,
+                        "fecha_nacimiento" => null,
+                        "codigo_postal" => null,
+                        "direccion" => null,
+                        "telefono_fijo" => null,
+                        "telefono_movil" => null,
+                        "keyword" => null
+                    );
+
+                    $this->cliente_model->insert($data);
+
+                    $data_inv = array(
+                        "titulo" => $titulo,
+                        "comentario" => $comentario,
+                        "invitar_desde" => $this->identidad->usuario->id,
+                        "invitar_para" => $user_id,
+                        "estado" => "2"
+                    );
+
+
+                    $this->invitacion_model->insert($data_inv);
+
+                    if ($this->config->item('emails_enabled')) {
+                        $this->load->library('email');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($email);
+                        $this->email->subject('Invitacion de Mercabarato.com');
+                        $data_email = array("titulo" => $titulo, "comentario" => $comentario);
+                        $this->email->message($this->load->view('home/emails/invitacion_email', $data_email, true));
+                        $this->email->send();
+                    }
+
+                    $this->session->set_flashdata('success', 'Invitacion Enviada');
+                }else{
+                    $this->session->set_flashdata('error', 'Ocurrio un problema durante la creacion del usuario.');
                 }
 
-                $data = array(
-                    "usuario_id" => $user_id,
-                    "nombres" => null,
-                    "apellidos" => null,
-                    "sexo" => null,
-                    "fecha_nacimiento" => null,
-                    "codigo_postal" => null,
-                    "direccion" => null,
-                    "telefono_fijo" => null,
-                    "telefono_movil" => null,
-                    "keyword" => null
-                );
-
-                $this->cliente_model->insert($data);
-
-                $data_inv = array(
-                    "titulo" => $titulo,
-                    "comentario" => $comentario,
-                    "invitar_desde" => $this->identidad->usuario->id,
-                    "invitar_para" => $user_id,
-                    "estado" => "2"
-                );
-
-
-                $this->invitacion_model->insert($data_inv);
-
-                if ($this->config->item('emails_enabled')) {
-                    $this->load->library('email');
-                    $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
-                    $this->email->to($email);
-                    $this->email->subject('Invitacion de Mercabarato.com');
-                    $data_email = array("titulo" => $titulo, "comentario" => $comentario);
-                    $this->email->message($this->load->view('home/emails/invitacion_email', $data_email, true));
-                    $this->email->send();
-                }
-
-                $this->session->set_flashdata('success', 'Invitacion Enviada');
                 redirect('panel_vendedor/invitaciones/buscar');
             } else {
                 redirect('panel_vendedor/invitaciones/buscar');
