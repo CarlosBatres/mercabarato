@@ -28,7 +28,3 @@ AS `9999999`,NULL AS `NULL`,'normal' AS `tipo`,NULL AS `NULL`,NULL AS `NULL`,NUL
 from `producto` `p`;
 
 /* Cambios por implementar*/
-
-ALTER TABLE `usuario` 
-ADD COLUMN `timelapse` DATETIME NULL DEFAULT NULL AFTER `secret_key`;
-
