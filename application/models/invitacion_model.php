@@ -291,6 +291,21 @@ class Invitacion_model extends MY_Model {
             return false;
         }
     }
+    
+    public function get_invitacion($persona, $invitado) {
+        $recibi_invitacion = $this->invitacion_model->get_by(array("invitar_desde" => $persona, "invitar_para" => $invitado));
+        $envie_invitacion = $this->invitacion_model->get_by(array("invitar_para" => $persona, "invitar_desde" => $invitado));
+
+        if ($recibi_invitacion || $envie_invitacion) {
+            if($recibi_invitacion){
+                return $recibi_invitacion;
+            }else{
+                return $envie_invitacion;
+            }                        
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Invitaciones enviadas que todavia no han sido aceptadas

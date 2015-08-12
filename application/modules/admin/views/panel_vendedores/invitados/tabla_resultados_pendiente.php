@@ -28,10 +28,12 @@
             <tbody>
                 <?php foreach ($clientes as $cliente): ?>
                     <tr>                        
-                       <?php if ($cliente->nombre_vendedor != null): ?>
+                        <?php if ($cliente->nombre_vendedor != null): ?>
                             <td><?php echo $cliente->nombre_vendedor; ?></td>
-                        <?php else: ?>   
+                        <?php elseif ($cliente->nombres != null): ?>   
                             <td><?php echo $cliente->nombres . ' ' . $cliente->apellidos; ?></td>
+                        <?php else: ?>
+                            <td><?php echo $cliente->email; ?></td>
                         <?php endif; ?>                                              
                         <?php if ($cliente->fecha_creado != null): ?>
                             <td><?php echo mdate('%d %F %Y', strtotime($cliente->fecha_creado)); ?></td>

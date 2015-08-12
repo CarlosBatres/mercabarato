@@ -9,7 +9,7 @@ $(document).ready(function() {
 			type: "post",
 			data: {
 				email: function(){ return $("#email_form").find('input[name="email"]').val(); },
-                                ignore_temporal : false
+                                ignore_temporal : true
 			}
 		}
             },

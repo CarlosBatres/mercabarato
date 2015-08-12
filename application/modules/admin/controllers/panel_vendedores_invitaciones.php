@@ -80,7 +80,8 @@ class Panel_vendedores_invitaciones extends ADController {
                         "comentario" => ($this->input->post('comentario') != '') ? $this->input->post('comentario') : null,
                         "invitar_desde" => $this->identidad->usuario->id,
                         "invitar_para" => $cliente->usuario_id,
-                        "estado" => "1"
+                        "estado" => "1",
+                        "fecha_envio" => date("Y-m-d H:i:s")
                     );
                     // estado=1 - Pendiente  
 
@@ -126,6 +127,9 @@ class Panel_vendedores_invitaciones extends ADController {
         }
     }
 
+    /**
+     * 
+     */
     public function enviar_invitacion_email() {
         $formValues = $this->input->post();
         if ($formValues !== false) {
@@ -172,7 +176,8 @@ class Panel_vendedores_invitaciones extends ADController {
                         "comentario" => $comentario,
                         "invitar_desde" => $this->identidad->usuario->id,
                         "invitar_para" => $user_id,
-                        "estado" => "2"
+                        "estado" => "1",
+                        "fecha_envio" => date("Y-m-d H:i:s")
                     );
 
 
@@ -189,13 +194,90 @@ class Panel_vendedores_invitaciones extends ADController {
                     }
 
                     $this->session->set_flashdata('success', 'Invitacion Enviada');
-                }else{
-                    $this->session->set_flashdata('error', 'Ocurrio un problema durante la creacion del usuario.');
+                } else {
+                    $usuario = $this->usuario_model->get_by("email", $email);
+                    if ($usuario) {
+                        if ($this->invitacion_model->invitacion_existe($usuario->id, $this->identidad->usuario->id)) {
+                            $invitacion = $this->invitacion_model->get_invitacion($usuario->id, $this->identidad->usuario->id);
+                            if ($invitacion->fecha_envio != null) {
+                                $now = new DateTime;
+                                $ago = new DateTime($invitacion->fecha_envio);
+                                $diff = $now->diff($ago);
+
+                                $diff->w = floor($diff->d / 7);
+                                $diff->d -= $diff->w * 7;
+
+                                if ($diff->d > 0) {
+                                    $dat = array(
+                                        "titulo" => $titulo,
+                                        "comentario" => $comentario,
+                                        "fecha_envio" => date("Y-m-d H:i:s")
+                                    );
+                                    $this->invitacion_model->update($invitacion->id, $dat);
+
+                                    if ($this->config->item('emails_enabled')) {
+                                        $this->load->library('email');
+                                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                                        $this->email->to($email);
+                                        $this->email->subject('Invitacion de Mercabarato.com');
+                                        $data_email = array("titulo" => $titulo, "comentario" => $comentario);
+                                        $this->email->message($this->load->view('home/emails/invitacion_email', $data_email, true));
+                                        $this->email->send();
+                                    }
+                                    $this->session->set_flashdata('success', 'Invitacion Enviada');
+                                } else {
+                                    $this->session->set_flashdata('error', 'Ya le has enviado una invitacion a este email. Espera al menos un dia para volver a hacerlo');
+                                }
+                            } else {
+                                $dat = array(
+                                    "titulo" => $titulo,
+                                    "comentario" => $comentario,
+                                    "fecha_envio" => date("Y-m-d H:i:s")
+                                );
+                                $this->invitacion_model->update($invitacion->id, $dat);
+
+                                if ($this->config->item('emails_enabled')) {
+                                    $this->load->library('email');
+                                    $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                                    $this->email->to($email);
+                                    $this->email->subject('Invitacion de Mercabarato.com');
+                                    $data_email = array("titulo" => $titulo, "comentario" => $comentario);
+                                    $this->email->message($this->load->view('home/emails/invitacion_email', $data_email, true));
+                                    $this->email->send();
+                                }
+                                $this->session->set_flashdata('success', 'Invitacion Enviada');
+                            }
+                        } else {
+                            $data_inv = array(
+                                "titulo" => $titulo,
+                                "comentario" => $comentario,
+                                "invitar_desde" => $this->identidad->usuario->id,
+                                "invitar_para" => $usuario->id,
+                                "estado" => "1",
+                                "fecha_envio" => date("Y-m-d H:i:s")
+                            );
+
+                            $this->invitacion_model->insert($data_inv);
+
+                            if ($this->config->item('emails_enabled')) {
+                                $this->load->library('email');
+                                $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                                $this->email->to($email);
+                                $this->email->subject('Invitacion de Mercabarato.com');
+                                $data_email = array("titulo" => $titulo, "comentario" => $comentario);
+                                $this->email->message($this->load->view('home/emails/invitacion_email', $data_email, true));
+                                $this->email->send();
+                            }
+                            $this->session->set_flashdata('success', 'Invitacion Enviada');
+                        }
+                    } else {
+                        $this->session->set_flashdata('error', 'Ocurrio un problema durante el envio de esta invitacion.');
+                    }
                 }
 
-                redirect('panel_vendedor/invitaciones/buscar');
+                redirect('panel_vendedor/invitaciones/pendientes');
             } else {
-                redirect('panel_vendedor/invitaciones/buscar');
+                redirect('panel_vendedor/invitaciones/pendientes');
             }
         } else {
             $this->template->set_title("Panel de Control - Mercabarato.com");
@@ -248,7 +330,7 @@ class Panel_vendedores_invitaciones extends ADController {
                 $params["nombre"] = $this->input->post('nombre');
                 $params["nombre_vendedor"] = $this->input->post('nombre');
             }
-            if ($this->input->post('sexo') != 'X') {
+            if ($this->input->post('sexo') != 'X' && $this->input->post('sexo')) {
                 $params["sexo"] = $this->input->post('sexo');
             }
             if ($this->input->post('email') != "") {
@@ -374,7 +456,7 @@ class Panel_vendedores_invitaciones extends ADController {
                 $params["keywords"] = $keywords;
             }
             $params["invitar_desde"] = $this->identidad->usuario->id;
-            $params['usuario_activo'] = "1";
+            //$params['usuario_activo'] = "1";
             $params["excluir_admins"] = true;
             $pagina = $this->input->post('pagina');
         } else {

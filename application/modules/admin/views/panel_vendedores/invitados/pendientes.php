@@ -17,6 +17,12 @@
                     <?= $this->session->flashdata('success') ?> 
                 </div>
             <?php } ?>
+            <?php if ($this->session->flashdata('error')) { ?>
+                <div class="alert alert-danger"> 
+                    <a class="close" data-dismiss="alert">×</a>
+                    <?= $this->session->flashdata('error') ?> 
+                </div>
+            <?php } ?>
             <form action="<?php echo site_url('panel_vendedor/producto/listado') ?>" method="post" class="search-form" id="listado-items">
                 <input type="hidden" value="1" name="pagina" id="pagina"/>                                        
                 <input type="hidden" value="invitaciones_pendientes" name="tipo"/>                                        

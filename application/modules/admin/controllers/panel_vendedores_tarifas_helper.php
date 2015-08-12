@@ -419,7 +419,7 @@ class Panel_vendedores_tarifas_helper extends ADController {
                 $params["nombre_vendedor"] = $this->input->post('nombre');
                 $flag_query = true;
             }
-            if ($this->input->post('sexo') != 'X') {
+            if ($this->input->post('sexo') != 'X' && $this->input->post('sexo')) {
                 $params["sexo"] = $this->input->post('sexo');
                 $flag_query = true;
             }
