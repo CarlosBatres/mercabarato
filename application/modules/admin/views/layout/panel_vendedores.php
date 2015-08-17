@@ -17,6 +17,7 @@
         <ul class="nav navbar-top-links navbar-right">                        
             <li class="dropdown">                
                 <a id="cerrar-sesion" href="<?php echo site_url('panel_vendedor/logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
+                
             </li>            
         </ul>
         <!-- /.navbar-top-links -->
