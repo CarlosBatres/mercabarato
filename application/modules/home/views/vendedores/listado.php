@@ -103,7 +103,7 @@
         </div>
     </div>
     <div id="throbber" style="display:none;">
-        <img src="<?php echo assets_url('imgs/loader_on_white_nb_big.gif'); ?>" />
+        <img src="<?php echo assets_url('imgs/loader_on_white_nb_big.gif'); ?>" alt="Espere un momento."/>
     </div>
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">

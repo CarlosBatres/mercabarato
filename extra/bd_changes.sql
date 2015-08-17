@@ -1,6 +1,5 @@
 /*VISTAS*/
 
-
 CREATE VIEW `productos_precios` AS 
 select `p`.`id` AS `id`,`p`.`categoria_id` AS `categoria_id`,`p`.`vendedor_id` AS `vendedor_id`,`p`.`nombre` AS `nombre`,`p`.`descripcion` 
 AS `descripcion`,`p`.`referencia` AS `referencia`,`p`.`precio` AS `precio`,`p`.`mostrar_precio` AS `mostrar_precio`,`p`.`mostrar_producto` 
@@ -27,4 +26,5 @@ AS `habilitado`,`p`.`fecha_insertado` AS `fecha_insertado`,`p`.`link_externo` AS
 AS `9999999`,NULL AS `NULL`,'normal' AS `tipo`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL` 
 from `producto` `p`;
 
-/* Cambios por implementar*/
+/* CAMBIOS POR IMPLEMENTAR */
+

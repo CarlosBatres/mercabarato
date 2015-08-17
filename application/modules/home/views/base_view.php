@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title><?php echo $title; ?></title>
+        <meta name="title" content="<?php echo $title; ?>">
         <meta name="description" content="<?php echo $description; ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,8 +19,8 @@
         <link rel="stylesheet" href="<?php echo assets_url('font-awesome/css/font-awesome.min.css'); ?>">        
         <link rel="stylesheet" href="<?php echo assets_url('css/bootstrap.min.css'); ?>">        
 
-        <link rel="stylesheet" href="<?php echo assets_url('css/owl.carousel.css'); ?>" >
-        <link rel="stylesheet" href="<?php echo assets_url('css/owl.theme.css'); ?>" >
+        <!--<link rel="stylesheet" href="<?php echo assets_url('css/owl.carousel.css'); ?>" >-->
+        <!--<link rel="stylesheet" href="<?php echo assets_url('css/owl.theme.css'); ?>" >-->
 
         <link rel="stylesheet" href="<?php echo assets_url('css/jquery-ui.theme.min.css'); ?>" >
         <link rel="stylesheet" href="<?php echo assets_url('css/jquery-ui.structure.min.css'); ?>" >
@@ -51,7 +52,7 @@
         <script src="<?php echo assets_url('js/jquery.validate.min.js'); ?>"></script>
         <script src="<?php echo assets_url('js/jquery-ui.min.js'); ?>"></script>                
         <script src="<?php echo assets_url('js/bootstrap.min.js'); ?>"></script>        
-        <script src="<?php echo assets_url('js/owl.carousel.min.js'); ?>"></script>
+        <!--<script src="<?php echo assets_url('js/owl.carousel.min.js'); ?>"></script>-->
         <script src="<?php echo assets_url('js/jquery.blockUI.js'); ?>"></script>
         <script src="<?php echo assets_url('js/metisMenu.min.js'); ?>"></script>                                        
         

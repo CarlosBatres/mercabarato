@@ -42,7 +42,8 @@ class Producto extends MY_Controller {
             "subcategorias" => $subcategorias_html,
             "paises" => $paises,
             "search_query" => $search_query);
-
+        
+        $this->template->set_description("Comparador de precios");
         $this->template->load_view('home/producto/listado_principal', $data);
     }
 
