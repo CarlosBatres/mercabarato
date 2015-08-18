@@ -19,7 +19,8 @@ if (!defined('BASEPATH'))
   | environments.
   |
  */
-$config['base_url'] = 'http://www.mercabarato.com/';
+//$config['base_url'] = 'http://www.mercabarato.com/';
+$config['base_url'] = 'http://www.micesc-dev.com/mercabarato/';
 
 /*
   |--------------------------------------------------------------------------
