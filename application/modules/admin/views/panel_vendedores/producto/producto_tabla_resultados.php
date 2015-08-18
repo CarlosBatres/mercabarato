@@ -3,36 +3,35 @@
         <p> No se encontraron productos...</p>    
     </div>
 <?php else: ?>
+    <?php if ($this->session->flashdata('success')) { ?>
+        <div class="alert alert-success"> 
+            <a class="close" data-dismiss="alert">×</a>
+            <?= $this->session->flashdata('success') ?> 
+        </div>
+    <?php } ?>   
+    <?php if ($this->session->flashdata('error')) { ?>
+        <div class="alert alert-danger"> 
+            <a class="close" data-dismiss="alert">×</a>
+            <?= $this->session->flashdata('error') ?> 
+        </div>
+    <?php } ?>
 
-    <div class="table-responsive">
-        <?php if ($this->session->flashdata('success')) { ?>
-            <div class="alert alert-success"> 
-                <a class="close" data-dismiss="alert">×</a>
-                <?= $this->session->flashdata('success') ?> 
-            </div>
-        <?php } ?>   
-        <?php if ($this->session->flashdata('error')) { ?>
-            <div class="alert alert-danger"> 
-                <a class="close" data-dismiss="alert">×</a>
-                <?= $this->session->flashdata('error') ?> 
-            </div>
-        <?php } ?>
+    <?php if ($ilimitado): ?>
+        <div class="alert alert-info">                 
+            <p> Puedes insertar productos sin limites</p>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-info">                 
+            <?php $diff = $limite_productos - $productos_total; ?>
+            <?php if ($diff < 0): ?>
+                <p> Tienes un exceso de <?php echo $diff * -1 ?> productos de un maximo de <?php echo $limite_productos ?> productos.</p>
+            <?php else: ?>
+                <p> Puedes insertar <?php echo $diff ?> productos mas de un maximo de <?php echo $limite_productos ?> productos.</p>
+            <?php endif; ?>                
+        </div>
+    <?php endif; ?>
 
-        <?php if ($ilimitado): ?>
-            <div class="alert alert-info">                 
-                <p> Puedes insertar productos sin limites</p>
-            </div>
-        <?php else: ?>
-            <div class="alert alert-info">                 
-                <?php $diff = $limite_productos - $productos_total; ?>
-                <?php if ($diff < 0): ?>
-                    <p> Tienes un exceso de <?php echo $diff*-1 ?> productos de un maximo de <?php echo $limite_productos ?> productos.</p>
-                <?php else: ?>
-                    <p> Puedes insertar <?php echo $diff ?> productos mas de un maximo de <?php echo $limite_productos ?> productos.</p>
-                <?php endif; ?>                
-            </div>
-        <?php endif; ?>
-
+    <div class="table-responsive">        
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>                

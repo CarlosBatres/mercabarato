@@ -3,44 +3,43 @@
         <p> No se encontraron resultados...</p>    
     </div>
 <?php else: ?>
+    <?php if ($this->session->flashdata('success')) { ?>
+        <div class="alert alert-success"> 
+            <a class="close" data-dismiss="alert">×</a>
+            <?= $this->session->flashdata('success') ?> 
+        </div>
+    <?php } ?>   
+    <?php if ($this->session->flashdata('error')) { ?>
+        <div class="alert alert-danger"> 
+            <a class="close" data-dismiss="alert">×</a>
+            <?= $this->session->flashdata('error') ?> 
+        </div>
+    <?php } ?>
 
-    <div class="table-responsive">
-        <?php if ($this->session->flashdata('success')) { ?>
-            <div class="alert alert-success"> 
-                <a class="close" data-dismiss="alert">×</a>
-                <?= $this->session->flashdata('success') ?> 
-            </div>
-        <?php } ?>   
-        <?php if ($this->session->flashdata('error')) { ?>
-            <div class="alert alert-danger"> 
-                <a class="close" data-dismiss="alert">×</a>
-                <?= $this->session->flashdata('error') ?> 
-            </div>
-        <?php } ?>
+    <?php if ($ilimitado): ?>
+        <div class="alert alert-info">                 
+            <p> Puedes insertar anuncios sin limites</p>
+        </div>
+    <?php else: ?>
 
-        <?php if ($ilimitado): ?>
-            <div class="alert alert-info">                 
-                <p> Puedes insertar anuncios sin limites</p>
-            </div>
-        <?php else: ?>
+        <div class="alert alert-info">                 
+            <?php $diff = $limite_anuncios - $anuncios_total; ?>
+            <?php if ($diff < 0): ?>
+                <p> Tienes un exceso de <?php echo $diff * -1 ?> productos de un maximo de <?php echo $limite_anuncios ?> productos.</p>
+            <?php else: ?>
+                <p> Puedes insertar <?php echo $diff ?> anuncios mas de un maximo de <?php echo $limite_anuncios ?> anuncios.</p>
+            <?php endif; ?>                
+        </div>                
+    <?php endif; ?>
 
-            <div class="alert alert-info">                 
-                <?php $diff = $limite_anuncios - $anuncios_total; ?>
-                <?php if ($diff < 0): ?>
-                    <p> Tienes un exceso de <?php echo $diff * -1 ?> productos de un maximo de <?php echo $limite_anuncios ?> productos.</p>
-                <?php else: ?>
-                    <p> Puedes insertar <?php echo $diff ?> anuncios mas de un maximo de <?php echo $limite_anuncios ?> anuncios.</p>
-                <?php endif; ?>                
-            </div>                
-        <?php endif; ?>
-
+    <div class="table-responsive">        
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>                
                     <th style="width: 15%">Titulo</th>                
-                    <th style="width: 50%">Contenido</th>                                
+                    <th style="width: 40%">Contenido</th>                                
                     <th style="width: 5%;text-align: center">Habilitado</th>
-                    <th style="width: 5%">&nbsp; Acciones</th> 
+                    <th style="width: 10%">&nbsp; Acciones</th> 
                 </tr>
             </thead>
             <tbody>

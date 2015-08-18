@@ -252,6 +252,24 @@ span.arrow {
     padding-left: 10px;
 }
 
+.invalid-precio{
+    background-color: #ff3333;    
+}
+
+.invalid-precio::-webkit-input-placeholder, textarea::-webkit-input-placeholder { 
+    color:#000;
+}
+.invalid-precio:-moz-placeholder, textarea:-moz-placeholder { 
+    color:#000;
+}
+.invalid-precio::-moz-placeholder, textarea::-moz-placeholder { 
+    color:#000;
+}
+.invalid-precio:-ms-input-placeholder, textarea:-ms-input-placeholder { 
+    color:#000;
+}
+
+/*
 .precios-productos .checkbox label{
     color: #38a7bb !important;
     text-decoration: none;
@@ -261,6 +279,10 @@ span.arrow {
 
 .precios-productos .checkbox input[type=checkbox]{
     margin-top:2px;
+}*/
+
+.precios-productos .input-group{
+    width: 45%;
 }
 
 .principal-sidebar .panel-heading{
@@ -327,4 +349,28 @@ span.arrow {
 
 .price-oferta-sinrequisitos-link:hover{
     color :red;
+}
+
+
+@media (max-width: 768px) {
+    .navbar-custom ul{
+        background-color: #fff;
+    }
+    .navbar-nav li.dropdown a {
+        line-height: 45px;
+        height: 45px;
+        padding-top: 0;        
+    }
+
+    .navbar-custom li a {
+        color: #000 !important;
+        font-size: 16px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .navbar-custom ul.dropdown-menu li a {        
+        padding-right: 38px;
+        float:none;
+    }
 }

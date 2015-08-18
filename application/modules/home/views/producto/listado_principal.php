@@ -17,19 +17,16 @@
                             <h3 class="panel-title">Precios</h3>                            
                         </div>
                         <div class="panel-body">                        
-                            <div class="precios-productos">
-                                <?php
-                                $j = 0;
-                                foreach ($precios as $precio) {
-                                    $checked = ($precio['checked']) ? "checked='checked'" : "";
-                                    echo '<div class="checkbox precios_checkbox">'
-                                    . '<label>'
-                                    . '<input type="checkbox" name="precios" value="' . $precio['value'] . '" ' . $checked . '>&nbsp;' . $precio['text'] . ''
-                                    . '</label>'
-                                    . '</div>';
-                                    $j++;
-                                }
-                                ?>                             
+                            <div class="precios-productos">                                
+                                <div class="input-group pull-left">                                                
+                                    <input type="text" class="form-control" name="precio_desde" placeholder="Desde">                                    
+                                    <span class="input-group-addon"><i class="fa fa-euro fa-fw"></i></span>
+                                </div>                           
+
+                                <div class="input-group pull-right">                                                                                    
+                                    <input type="text" class="form-control" name="precio_hasta" placeholder="Hasta">                                    
+                                    <span class="input-group-addon"><i class="fa fa-euro fa-fw"></i></span>
+                                </div>  
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 $(document).ready(function() {
     //updateResultados();
-    $('[data-toggle="tooltip"]').tooltip();    
+    $('[data-toggle="tooltip"]').tooltip();
     $('#producto-principal-categorias').metisMenu();
 
     $('#search_button').on('click', function(e) {
@@ -28,10 +28,10 @@ $(document).ready(function() {
         updateResultados();
     });
 
-    $('.precios_checkbox').find("input[type='checkbox']").change(function() {
-        $('.precios_checkbox').find("input[type='checkbox']").not(this).prop('checked', false);
-        updateResultados();
-    });
+    /*$('.precios_checkbox').find("input[type='checkbox']").change(function() {
+     $('.precios_checkbox').find("input[type='checkbox']").not(this).prop('checked', false);
+     updateResultados();
+     });*/
 
     $('input[name="search_query"]').keydown(function(e) {
         var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
@@ -73,13 +73,12 @@ $(document).ready(function() {
             }
         });
     });
-    
+
     $('#form_buscar').find('select[name="poblacion"]').on('change', function() {
         updateResultados();
     });
 
-    $('#form_buscar').find('select[name="pais"]').trigger('change');
-
+    $('#form_buscar').find('select[name="pais"]').trigger('change');        
 });
 
 function updateResultados() {
@@ -90,14 +89,38 @@ function updateResultados() {
     var poblacion = $('select[name="poblacion"]').val();
     var pagina_id = $('#pagina').val();
     var mostrar_solo_tarifas = $('input[name="mostrar_mis_tarifas"]').is(":checked");
-    var precio = 0;
-    
-    
-    $.each($('input[name="precios"]'), function(index, checkbox) {
-        if ($(this).is(":checked")) {
-            precio = checkbox.value;
+
+    var precio_desde = $('input[name="precio_desde"]').val();
+
+    if (!$.isNumeric(precio_desde)) {
+        if (precio_desde !== "") {
+            $('input[name="precio_desde"]').val("");
+            $('input[name="precio_desde"]').toggleClass("invalid-precio");
         }
-    });
+        precio_desde = "";        
+    } else {
+        $('input[name="precio_desde"]').removeClass("invalid-precio");
+    }
+
+    var precio_hasta = $('input[name="precio_hasta"]').val();
+
+    if (!$.isNumeric(precio_hasta)) {
+        if (precio_hasta !== "") {
+            $('input[name="precio_hasta"]').val("");
+            $('input[name="precio_hasta"]').toggleClass("invalid-precio");
+        }
+        precio_hasta = "";
+    } else {
+        $('input[name="precio_hasta"]').removeClass("invalid-precio");
+    }
+
+//    var precio = 0;
+//
+//    $.each($('input[name="precios"]'), function(index, checkbox) {
+//        if ($(this).is(":checked")) {
+//            precio = checkbox.value;
+//        }
+//    });
 
     if (typeof categoria_id === "undefined") {
         categoria_id = "";
@@ -110,8 +133,8 @@ function updateResultados() {
     });
 
     /*$('#tabla-resultados').block({
-        message: $('#throbber'),
-        css: {border: '0'}});*/
+     message: $('#throbber'),
+     css: {border: '0'}});*/
     $.ajax({
         type: "POST",
         url: SITE_URL + 'productos/buscar',
@@ -119,12 +142,14 @@ function updateResultados() {
             search_query: search_query,
             categoria_id: categoria_id,
             pagina: pagina_id,
-            precio_tipo1: precio,
+            //precio_tipo1: precio,
             alt_layout: true,
             pais: pais,
             provincia: provincia,
             poblacion: poblacion,
-            mostrar_solo_tarifas:mostrar_solo_tarifas
+            mostrar_solo_tarifas: mostrar_solo_tarifas,
+            precio_desde: precio_desde,
+            precio_hasta: precio_hasta
         },
         dataType: "html",
         success: function(response) {
@@ -132,6 +157,11 @@ function updateResultados() {
             $('#tabla-resultados').unblock();
             $('#tabla-resultados').html(response);
             bind_pagination_links();
+        },
+        error: function(result) {
+            $('#tabla-resultados').css('opacity', '1');
+            $('#tabla-resultados').unblock();
+            $('#tabla-resultados').html("<p> Ocurrio un error, refresque su navegador...</p>");
         }
     });
 }

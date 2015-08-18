@@ -47,7 +47,7 @@ class Producto_model extends MY_Model {
         if (isset($params['autorizado_por'])) {
             $this->db->where('vendedor_paquete.autorizado_por', $params['autorizado_por']);
         }
-        
+
         if (isset($params['pais_id'])) {
             $this->db->where('productos_localizacion.pais_id', $params['pais_id']);
         }
@@ -116,15 +116,27 @@ class Producto_model extends MY_Model {
                 $text = " AND p.categoria_id IN(" . implode(",", $categorias_array) . ")";
                 $sub_query.=$text;
             }
-            if (isset($params['precio_tipo1'])) {
-                if ($params['precio_tipo1'] != '0') {
-                    $precios = explode(";;", $params['precio_tipo1']);
-                    // TODO : Aqui el precio puede ser precio oferta o una tarifa especifica. Resolver dependiendo de quien este conectado haciendo la busqueda
-                    $text = " AND p.precio >" . $precios['0'];
-                    $text.=" AND p.precio <=" . $precios['1'];
-                    $sub_query.=$text;
-                }
+            /* if (isset($params['precio_tipo1'])) {
+              if ($params['precio_tipo1'] != '0') {
+              $precios = explode(";;", $params['precio_tipo1']);
+              // TODO : Aqui el precio puede ser precio oferta o una tarifa especifica. Resolver dependiendo de quien este conectado haciendo la busqueda
+              $text = " AND p.precio >" . $precios['0'];
+              $text.=" AND p.precio <=" . $precios['1'];
+              $sub_query.=$text;
+              }
+              } */
+
+            if (isset($params['precio_desde'])) {
+                $text = " AND p.precio >= " . $params['precio_desde'];
+                $query.=$text;
+                $sub_query.=$text;
             }
+            if (isset($params['precio_hasta'])) {
+                $text = " AND p.precio <= " . $params['precio_hasta'];
+                $query.=$text;
+                $sub_query.=$text;
+            }
+
             if (isset($params["poblacion"])) {
                 if ($params['poblacion'] != '0') {
                     $text = " AND pl.poblacion_id=" . $params['poblacion'];
@@ -220,15 +232,25 @@ class Producto_model extends MY_Model {
                 $query.=$text;
                 $sub_query.=$text;
             }
-            if (isset($params['precio_tipo1'])) {
-                if ($params['precio_tipo1'] != '0') {
-                    $precios = explode(";;", $params['precio_tipo1']);
-                    // TODO : Aqui el precio puede ser precio oferta o una tarifa especifica. Resolver dependiendo de quien este conectado haciendo la busqueda
-                    $text = " AND p.precio >" . $precios['0'];
-                    $text.=" AND p.precio <=" . $precios['1'];
-                    $query.=$text;
-                    $sub_query.=$text;
-                }
+            /* if (isset($params['precio_tipo1'])) {
+              if ($params['precio_tipo1'] != '0') {
+              $precios = explode(";;", $params['precio_tipo1']);
+              // TODO : Aqui el precio puede ser precio oferta o una tarifa especifica. Resolver dependiendo de quien este conectado haciendo la busqueda
+              $text = " AND p.precio >" . $precios['0'];
+              $text.=" AND p.precio <=" . $precios['1'];
+              $query.=$text;
+              $sub_query.=$text;
+              }
+              } */
+            if (isset($params['precio_desde'])) {
+                $text = " AND p.precio >= " . $params['precio_desde'];
+                $query.=$text;
+                $sub_query.=$text;
+            }
+            if (isset($params['precio_hasta'])) {
+                $text = " AND p.precio <= " . $params['precio_hasta'];
+                $query.=$text;
+                $sub_query.=$text;
             }
             if (isset($params["poblacion"])) {
                 if ($params['poblacion'] != '0') {
@@ -702,7 +724,7 @@ class Producto_model extends MY_Model {
         $this->db->select('pp.*,pr.filename as imagen_nombre');
         $this->db->from('productos_precios pp');
         $this->db->join("producto_resource pr", "pr.producto_id = pp.id AND pr.tipo='imagen_principal'", 'LEFT');
-        $this->db->where('pp.id', $producto_id);                
+        $this->db->where('pp.id', $producto_id);
 
         $results = $this->db->get()->row();
         if ($results) {

@@ -17,7 +17,7 @@ class Producto extends MY_Controller {
         $this->template->add_js('modules/home/producto_principal_listado.js');
         $subcategorias = $this->categoria_model->get_categorias_searchbar(0);
         $subcategorias_html = $this->_build_categorias_searchparams($subcategorias);
-        $precios = precios_options();
+        //$precios = precios_options();
         $paises = $this->pais_model->get_all();
 
         if ($this->authentication->is_loggedin()) {
@@ -38,11 +38,11 @@ class Producto extends MY_Controller {
         $data = array(
             "productos" => array(),
             "anuncios" => $anuncios,
-            "precios" => $precios,
+            //"precios" => $precios,
             "subcategorias" => $subcategorias_html,
             "paises" => $paises,
             "search_query" => $search_query);
-        
+
         $this->template->set_description("Comparador de precios");
         $this->template->load_view('home/producto/listado_principal', $data);
     }
@@ -75,9 +75,9 @@ class Producto extends MY_Controller {
                 if ($this->input->post('categoria_id') != "") {
                     $params["categoria_id"] = $this->input->post('categoria_id');
                 }
-                if ($this->input->post('precio_tipo1') !== "0") {
-                    $params["precio_tipo1"] = $this->input->post('precio_tipo1');
-                }
+                /* if ($this->input->post('precio_tipo1') !== "0") {
+                  $params["precio_tipo1"] = $this->input->post('precio_tipo1');
+                  } */
                 if ($this->input->post('problacion') !== "0") {
                     $params["problacion"] = $this->input->post('problacion');
                 }
@@ -86,6 +86,14 @@ class Producto extends MY_Controller {
                 }
                 if ($this->input->post('pais') !== "0") {
                     $params["pais"] = $this->input->post('pais');
+                }
+
+                if ($this->input->post('precio_desde') != "") {
+                    $params["precio_desde"] = $this->input->post('precio_desde');
+                }
+
+                if ($this->input->post('precio_hasta') != "") {
+                    $params["precio_hasta"] = $this->input->post('precio_hasta');
                 }
 
                 if ($this->authentication->is_loggedin()) {
@@ -165,8 +173,8 @@ class Producto extends MY_Controller {
             $producto_imagen = $this->producto_resource_model->get_producto_imagen($producto->id);
             $producto_imagenes = $this->producto_resource_model->get_producto_imagenes($producto->id);
             $vendedor = $this->vendedor_model->get($producto->vendedor_id);
-            $vendedor_cliente= $this->cliente_model->get($vendedor->cliente_id);
-            
+            $vendedor_cliente = $this->cliente_model->get($vendedor->cliente_id);
+
             $localizacion = $this->localizacion_model->get_by("usuario_id", $vendedor_cliente->usuario_id);
 
             if ($localizacion->pais_id != null) {
@@ -181,7 +189,7 @@ class Producto extends MY_Controller {
                 $res = $this->poblacion_model->get($localizacion->poblacion_id);
                 $localizacion->poblacion = $res->nombre;
             }
-            
+
             /**
              * Usuario Loggedin
              */
@@ -198,20 +206,20 @@ class Producto extends MY_Controller {
                 $producto_oferta = $this->producto_model->get_ofertas_from_producto($producto->id);
                 if ($producto_oferta) {
                     $oferta = (float) $producto_oferta->nuevo_costo;
-                    $oferta_vv=$this->oferta_model->get_by(array("id"=>$producto_oferta->grupo_o_tarifa_id,"producto_id"=>$producto_oferta->id));
-                    $params=array('oferta_general_id'=>$oferta_vv->oferta_general_id);                    
-                    $restricciones=$this->oferta_general_model->get_requisitos($params,false,false);
-                    if($restricciones["total"]>0){
+                    $oferta_vv = $this->oferta_model->get_by(array("id" => $producto_oferta->grupo_o_tarifa_id, "producto_id" => $producto_oferta->id));
+                    $params = array('oferta_general_id' => $oferta_vv->oferta_general_id);
+                    $restricciones = $this->oferta_general_model->get_requisitos($params, false, false);
+                    if ($restricciones["total"] > 0) {
                         $oferta_id = $oferta_vv->oferta_general_id;
-                    }else{
+                    } else {
                         $oferta_id = false;
                     }
-                    
-                    $fecha_finaliza=date("d-m-Y",strtotime($producto_oferta->fecha_finaliza));
+
+                    $fecha_finaliza = date("d-m-Y", strtotime($producto_oferta->fecha_finaliza));
                 } else {
                     $oferta = 0;
-                    $oferta_id= false;
-                    $fecha_finaliza="";
+                    $oferta_id = false;
+                    $fecha_finaliza = "";
                 }
 
 
@@ -241,7 +249,7 @@ class Producto extends MY_Controller {
 
                 $cc = $this->cliente_model->get($vendedor->cliente_id);
                 $son_contactos = $this->invitacion_model->son_contactos($user_id, $cc->usuario_id);
-                
+
                 $invitacion = $this->invitacion_model->invitacion_existe($user_id, $cc->usuario_id);
 
                 $data = array(
@@ -250,21 +258,20 @@ class Producto extends MY_Controller {
                     "producto_imagenes" => $producto_imagenes,
                     "tarifa" => $tarifa,
                     "oferta" => $oferta,
-                    "oferta_id"=>$oferta_id,
+                    "oferta_id" => $oferta_id,
                     "otros_productos" => $prods,
-                    "otros_productos_categoria" => $prods2,                    
-                    "vendedor"=>$vendedor,
+                    "otros_productos_categoria" => $prods2,
+                    "vendedor" => $vendedor,
                     "son_contactos" => $son_contactos,
                     "invitacion" => $invitacion,
-                    "fecha_finaliza"=>$fecha_finaliza,
-                    "localizacion" => $localizacion,                    
-                        );
+                    "fecha_finaliza" => $fecha_finaliza,
+                    "localizacion" => $localizacion,
+                );
                 $this->template->load_view('home/producto/ficha', $data);
             } else {
-            /**
-             * Anonimo
-             */    
-                
+                /**
+                 * Anonimo
+                 */
                 if ($producto->mostrar_producto == 1) {
                     $params = array(
                         "vendedor_id" => $producto->vendedor_id,
@@ -294,15 +301,15 @@ class Producto extends MY_Controller {
                         "producto_imagenes" => $producto_imagenes,
                         "tarifa" => 0,
                         "oferta" => 0,
-                        "oferta_id"=>false,
+                        "oferta_id" => false,
                         "otros_productos" => $prods,
                         "otros_productos_categoria" => $prods2,
-                        "vendedor"=>$vendedor,
+                        "vendedor" => $vendedor,
                         "invitacion" => true,
                         "son_contactos" => true,
                         "son_contactos" => false,
                         "localizacion" => $localizacion,
-                        );
+                    );
                     $this->template->load_view('home/producto/ficha', $data);
                 } else {
                     show_404();
@@ -375,30 +382,30 @@ class Producto extends MY_Controller {
                 }
             } else {
                 $this->template->set_title('Mercabarato - Busca y Compara');
-                $data = array("producto" => $producto);                
+                $data = array("producto" => $producto);
                 $this->template->load_view('home/producto/enviar_mensaje', $data);
             }
         } else {
             redirect('');
         }
     }
-    
-    public function ver_oferta_requisitos($oferta_general_id){
+
+    public function ver_oferta_requisitos($oferta_general_id) {
         if ($this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Busca y Compara');            
+            $this->template->set_title('Mercabarato - Busca y Compara');
 
             $oferta_general = $this->oferta_general_model->get($oferta_general_id);
             // TODO : Validar que yo pueda acceder a esta
             if ($oferta_general) {
-                $requisitos=$this->requisito_visitas_model->get_many_by("oferta_general_id",$oferta_general_id);
-                if($requisitos){
-                    $productos_array=array();
-                    foreach($requisitos as $requisito){
-                        $productos_array[]=$this->producto_model->get_pp_by($requisito->producto_id);
+                $requisitos = $this->requisito_visitas_model->get_many_by("oferta_general_id", $oferta_general_id);
+                if ($requisitos) {
+                    $productos_array = array();
+                    foreach ($requisitos as $requisito) {
+                        $productos_array[] = $this->producto_model->get_pp_by($requisito->producto_id);
                     }
                 }
                 //$this->template->add_js('modules/home/infocompras_seguros.js');
-                $this->template->load_view('home/producto/oferta_restriccion', array("productos"=>$productos_array));
+                $this->template->load_view('home/producto/oferta_restriccion', array("productos" => $productos_array));
             } else {
                 redirect('');
             }
