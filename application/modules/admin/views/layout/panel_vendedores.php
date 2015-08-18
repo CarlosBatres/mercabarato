@@ -1,22 +1,23 @@
 <div id="wrapper">
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top nav-custom" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <div class="navbar-header">                                    
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">                
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="<?php echo site_url(''); ?>">
-                <img height="52" class="hidden-xs" src="<?php echo assets_url('/imgs/logo.png') ?>"/>
-            </a>
+            </button>                       
+            <p class="navbar-text visible-xs-inline-block" id="navbar-menu-principal-text">Menu Principal &nbsp;&nbsp;</p>
+            <a class="navbar-brand" href="<?php echo site_url(''); ?>">                                
+                <img height="52" class="hidden-xs hidden-sm" src="<?php echo assets_url('imgs/logo.png') ?>" alt="mercabarato logo" >
+                <img height="52" class="hidden-md hidden-lg logo_header_small" src="<?php echo assets_url('imgs/logo_small.png') ?>" alt="mercabarato logo" >
+            </a>            
         </div>
         <!-- /.navbar-header -->
-
-        <ul class="nav navbar-top-links navbar-right">                        
+        <ul class="nav navbar-top-links navbar-right text-right hidden-xs hidden-sm cerrar-sesion">                        
             <li class="dropdown">                
-                <a id="cerrar-sesion" href="<?php echo site_url('panel_vendedor/logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
+                <a href="<?php echo site_url('panel_vendedor/logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión</a>                
             </li>            
         </ul>
         <!-- /.navbar-top-links -->
@@ -187,6 +188,9 @@
                             </li>                                                        
                         </ul>                         
                     </li>
+                    <li class="hidden-md hidden-lg">
+                        <a href="<?php echo site_url('panel_vendedor/logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión</a>
+                    </li> 
                     <li>
                         <a href="<?php echo site_url('panel_vendedor/regresar'); ?>"><i class="fa fa-fw fa-arrow-left"></i> Regresar al Sitio</a>
                     </li> 

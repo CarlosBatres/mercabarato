@@ -15,7 +15,7 @@
                 <div class="col-md-5 col-xs-12 col-sm-8">                   
                     <div class="row">
                         <?php if ($this->authentication->is_loggedin()) { ?>
-                            <div class="login">
+                            <div class="login pull-right">
                                 <?php if ($this->authentication->user_is_admin()): ?>
                                     <a href="<?php echo site_url('admin') ?>"><i class="fa fa-cogs"></i> <span class="text-uppercase">Admin</span></a>
                                 <?php endif; ?>
@@ -75,7 +75,7 @@
                     if ($this->uri->uri_string() == 'seguros'): echo "active";
                     endif;
                     ?>" >
-                        <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Infocompras<b class="caret"></b><span>Seguros</span></a>                           
+                        <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Infocompras<b class="caret"></b><span class="hidden-xs hidden-sm">Seguros</span></a>                           
                         <ul class="dropdown-menu">
                             <li class="sub-opcion-menu"><a href="<?php echo site_url('seguros'); ?>"> Seguros</a></li>                     
                         </ul>

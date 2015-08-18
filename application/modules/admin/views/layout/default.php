@@ -8,14 +8,17 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <p class="navbar-text visible-xs-inline-block" id="navbar-menu-principal-text">Menu Principal &nbsp;&nbsp;</p>
             <a class="navbar-brand" href="<?php echo site_url(''); ?>">
-                <img height="52" src="<?php echo assets_url('/imgs/logo.png') ?>"/>
+                <img height="52" class="hidden-xs hidden-sm" src="<?php echo assets_url('imgs/logo.png') ?>" alt="mercabarato logo" >
+                <img height="52" class="hidden-md hidden-lg logo_header_small" src="<?php echo assets_url('imgs/logo_small.png') ?>" alt="mercabarato logo" >
             </a>
         </div>
         <!-- /.navbar-header -->
-
-        <ul class="nav navbar-top-links navbar-right">            
-            <li><a id="cerrar-sesion" href="<?php echo site_url('admin/logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesion</a>
+        <ul class="nav navbar-top-links navbar-right text-right hidden-xs hidden-sm cerrar-sesion">            
+            <li>
+                <a href="<?php echo site_url('admin/logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Cerrar Sesión</a>
+            </li> 
         </ul>
         <!-- /.navbar-top-links -->
 

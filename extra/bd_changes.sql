@@ -1,6 +1,5 @@
 /*VISTAS*/
 
-
 CREATE VIEW `productos_precios` AS 
 select `p`.`id` AS `id`,`p`.`categoria_id` AS `categoria_id`,`p`.`vendedor_id` AS `vendedor_id`,`p`.`nombre` AS `nombre`,`p`.`descripcion` 
 AS `descripcion`,`p`.`referencia` AS `referencia`,`p`.`precio` AS `precio`,`p`.`mostrar_precio` AS `mostrar_precio`,`p`.`mostrar_producto` 
@@ -27,4 +26,17 @@ AS `habilitado`,`p`.`fecha_insertado` AS `fecha_insertado`,`p`.`link_externo` AS
 AS `9999999`,NULL AS `NULL`,'normal' AS `tipo`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL` 
 from `producto` `p`;
 
-/* Cambios por implementar*/
+
+CREATE VIEW `productos_localizacion` AS 
+select `p`.`id` AS `producto_id`,`v`.`id` AS `vendedor_id`,`pa`.`id` AS `pais_id`,`pr`.`id` AS `provincia_id`,`pb`.`id` AS `poblacion_id` 
+from (((((((`producto` `p` 
+join `vendedor` `v` on((`v`.`id` = `p`.`vendedor_id`))) 
+join `cliente` `c` on((`c`.`id` = `v`.`cliente_id`))) 
+join `usuario` `u` on((`u`.`id` = `c`.`usuario_id`))) 
+left join `localizacion` `l` on((`l`.`usuario_id` = `u`.`id`))) 
+left join `pais` `pa` on((`pa`.`id` = `l`.`pais_id`))) 
+left join `provincia` `pr` on((`pr`.`id` = `l`.`provincia_id`))) 
+left join `poblacion` `pb` on((`pb`.`id` = `l`.`poblacion_id`)));
+
+/* CAMBIOS POR IMPLEMENTAR */
+

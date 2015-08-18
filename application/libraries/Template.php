@@ -11,7 +11,7 @@ class Template {
 
     protected $brand_name = '';
     protected $title_separator = '';
-    protected $ga_id = FALSE; // UA-XXXXX-X
+    protected $ga_id = "UA-31602289-24"; // UA-XXXXX-X
 
     protected $layout = 'default';
 

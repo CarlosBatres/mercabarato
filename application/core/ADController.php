@@ -11,6 +11,8 @@ class ADController extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->template->add_metadata("robots","none");
+        
         $this->module = $this->router->fetch_module();
         $this->class = $this->router->fetch_class();
         $this->method = $this->router->fetch_method();

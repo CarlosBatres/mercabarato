@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
             <h1 class="page-header">
                 Agregar grupo de productos (Excel)
             </h1>            
@@ -9,7 +9,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
             <div class="box box_registro">                
                 <h2>Informacion de Productos</h2>
                 <hr>
@@ -39,32 +39,34 @@
                         <br>
                         <p> La primera fila del archivo sera ignorada ( se puede usar como referencia ).</p>
                         <p> EL formato debe contener las siguientes columnas.</p>
-                        <table class="table table-bordered table-hover table-striped">
-                            <thead>
-                                <tr>                
-                                    <th style="width: 15%">Nombre del Producto</th>
-                                    <th style="width: 5%">Descripcion del Producto</th>
-                                    <th style="width: 10%;text-align: center">Precio</th>                
-                                    <th style="width: 5%;text-align: center">Mostrar Precio</th>                                            
-                                    <th style="width: 5%;text-align: center">Mostrar Producto</th>
-                                    <th style="width: 5%;text-align: center">Habilitado</th>                                    
-                                    <th style="width: 5%">Link Externo</th> 
-                                    <th style="width: 5%;text-align: center">ID de la Categoria</th> 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>                    
-                                    <td>TEXTO</td>
-                                    <td>TEXTO OPCIONAL</td>
-                                    <td style="text-align: center">NUMERO</td>
-                                    <td style="text-align: center">0 , 1</td>
-                                    <td style="text-align: center">0 , 1</td>
-                                    <td style="text-align: center">0 , 1</td>
-                                    <td>TEXTO OPCIONAL</td>
-                                    <td style="text-align: center">NUMERO, VALIDO</td>
-                                </tr>                               
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">        
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>                
+                                        <th style="width: 15%">Nombre del Producto</th>
+                                        <th style="width: 5%">Descripcion del Producto</th>
+                                        <th style="width: 10%;text-align: center">Precio</th>                
+                                        <th style="width: 5%;text-align: center">Mostrar Precio</th>                                            
+                                        <th style="width: 5%;text-align: center">Mostrar Producto</th>
+                                        <th style="width: 5%;text-align: center">Habilitado</th>                                    
+                                        <th style="width: 5%">Link Externo</th> 
+                                        <th style="width: 5%;text-align: center">ID de la Categoria</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>                    
+                                        <td>TEXTO</td>
+                                        <td>TEXTO OPCIONAL</td>
+                                        <td style="text-align: center">NUMERO</td>
+                                        <td style="text-align: center">0 , 1</td>
+                                        <td style="text-align: center">0 , 1</td>
+                                        <td style="text-align: center">0 , 1</td>
+                                        <td>TEXTO OPCIONAL</td>
+                                        <td style="text-align: center">NUMERO, VALIDO</td>
+                                    </tr>                               
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

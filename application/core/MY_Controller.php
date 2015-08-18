@@ -11,7 +11,10 @@ class MY_Controller extends MX_Controller {
 
     public function __construct() {
         parent::__construct();        
-        $this->_ci = & get_instance();
+        $this->_ci = & get_instance();                        
+        $this->template->add_metadata("keywords","Comparador,Productos,Infocompras,Social");
+        $this->template->add_metadata("distribution","global");
+        $this->template->add_metadata("robots","all");
     }
     /**
      * 

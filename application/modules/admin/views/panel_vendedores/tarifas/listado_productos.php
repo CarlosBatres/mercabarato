@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-5 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <strong>Mis Productos</strong>
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2 text-center">
+        <div class="col-md-2 text-center middle-col">
             <div class="row">
                 <div class="col-md-12">
                     <div class="alert alert-info">                         
@@ -88,11 +88,11 @@
             </div>
             <div class="row">
                 <div class="col-md-12">                    
-                    <a href="<?php echo site_url('panel_vendedor/tarifas/seleccion_clientes')?>" class="btn btn-success">Continuar <span class="glyphicon glyphicon-ok"></span></a>
+                    <a href="<?php echo site_url('panel_vendedor/tarifas/seleccion_clientes') ?>" class="btn btn-success">Continuar <span class="glyphicon glyphicon-ok"></span></a>
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5 col-xs-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <strong>Productos a Tarifar</strong>

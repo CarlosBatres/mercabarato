@@ -16,7 +16,9 @@
                 <tbody>
                     <?php foreach ($productos as $producto): ?>
                         <tr data-id="<?php echo $producto->id; ?>">                    
-                            <td><input type="checkbox" name="mover" value="ON" /></td>
+                            <td>
+                                <input type="checkbox" name="mover" value="ON"/>                                
+                            </td>
                             <td><?php echo $producto->nombre; ?></td>                            
                             <td style="text-align: center"><?php echo $producto->precio . ' ' . $this->config->item('money_sign'); ?></td>                                                                                                                                        
                         </tr>
