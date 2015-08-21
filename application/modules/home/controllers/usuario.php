@@ -80,7 +80,13 @@ class Usuario extends MY_Controller {
             }
 
             $keywords = $this->categoria_model->get_keywords_from_categorias();
-            $mis_intereses = explode(";", $cliente->keyword);
+            $keywords_cliente = $this->keyword_model->get_keyword($cliente->keyword);
+            if ($keywords_cliente) {
+                $mis_intereses = explode(";", $keywords_cliente);
+            } else {
+                $mis_intereses = array();
+            }
+
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
             $this->template->add_js('modules/home/perfil.js');
             $this->template->load_view('home/usuario/datos_personales', array(
@@ -136,6 +142,11 @@ class Usuario extends MY_Controller {
                     $keywords_text = null;
                 }
 
+                if ($keywords_text != null) {
+                    $keyword_id = $this->keyword_model->insert(array("keywords" => $keywords_text));
+                } else {
+                    $keyword_id = null;
+                }
 
                 $data = array(
                     "nombres" => ($this->input->post('nombres') != '') ? $this->input->post('nombres') : null,
@@ -146,7 +157,7 @@ class Usuario extends MY_Controller {
                     "direccion" => ($this->input->post('direccion') != '') ? $this->input->post('direccion') : null,
                     "telefono_fijo" => ($this->input->post('telefono_fijo') != '') ? $this->input->post('telefono_fijo') : null,
                     "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,
-                    "keyword" => $keywords_text
+                    "keyword" => $keyword_id
                 );
 
                 $this->cliente_model->update($cliente->id, $data);
@@ -254,7 +265,7 @@ class Usuario extends MY_Controller {
         if ($this->input->is_ajax_request()) {
             $formValues = $this->input->post();
             if ($formValues !== false) {
-                $ignore_termporal=$this->input->post('ignore_temporal') === 'true'? true: false;
+                $ignore_termporal = $this->input->post('ignore_temporal') === 'true' ? true : false;
                 if ($this->usuario_model->email_exists($this->input->post('email'), $ignore_termporal) == TRUE) {
                     echo json_encode(FALSE);
                 } else {
@@ -267,8 +278,15 @@ class Usuario extends MY_Controller {
     }
 
     public function verificar_email($secret_key) {
-        if ($this->usuario_model->verificar_email($secret_key)) {
+        $valid_key = $this->usuario_model->verificar_email($secret_key);
+        if ($valid_key) {
             if (!$this->authentication->is_loggedin()) {
+                $usuario = $this->usuario_model->get($valid_key);
+                $this->authentication->force_login($usuario->email);
+
+                $this->session->unset_userdata('vendedores_ver_localuser');
+                $this->session->set_userdata(array('vendedores_ver_localuser' => 'true'));
+
                 $this->template->set_title('Mercabarato - Busca y Compara');
                 $this->template->load_view('home/usuario/registro_completado');
             } else {
@@ -287,7 +305,7 @@ class Usuario extends MY_Controller {
                 $secret_key = substr(md5(uniqid(mt_rand(), true)), 0, 30);
                 $timelapse = date("Y-m-d H:i:s");
 
-                $usuario = $this->usuario_model->get_by(array("email" => $email ,"activo" => "1"));
+                $usuario = $this->usuario_model->get_by(array("email" => $email, "activo" => "1"));
                 if ($usuario && $email != "admin@mail.com") {
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
@@ -357,13 +375,13 @@ class Usuario extends MY_Controller {
 
                     if ($diff->d < 1) {
                         $this->authentication->change_password($password_new, $user->id);
-                        $this->usuario_model->update($user->id,array("secret_key"=>null,"timelapse"=>null));
+                        $this->usuario_model->update($user->id, array("secret_key" => null, "timelapse" => null));
                         redirect('cambio-password-realizado');
                     } else {
-                        $this->usuario_model->update($user->id,array("secret_key"=>null,"timelapse"=>null));
+                        $this->usuario_model->update($user->id, array("secret_key" => null, "timelapse" => null));
                         redirect('');
                     }
-                }                
+                }
             }
         } else {
             redirect('404');
@@ -372,7 +390,7 @@ class Usuario extends MY_Controller {
 
     public function cambio_password_realizado() {
         if (!$this->authentication->is_loggedin()) {
-            $this->template->set_title('Mercabarato - Busca y Compara');                    
+            $this->template->set_title('Mercabarato - Busca y Compara');
             $this->template->load_view('home/usuario/olvido_cambio_password_success');
         }
     }

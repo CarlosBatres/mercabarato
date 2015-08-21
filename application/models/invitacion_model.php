@@ -97,6 +97,7 @@ class Invitacion_model extends MY_Model {
         $query.="INNER JOIN usuario u ON u.id = i.invitar_desde AND i.invitar_para='" . $params["usuario_id"] . "' ";
         $query.="INNER JOIN cliente c ON c.usuario_id = u.id ";
         $query.="LEFT JOIN vendedor v ON v.cliente_id = c.id ";
+        $query.="LEFT JOIN keyword k ON c.keyword=k.id ";
         $query.="WHERE ( 1";
 
         if (isset($params['nombre'])) {
@@ -129,7 +130,7 @@ class Invitacion_model extends MY_Model {
 
         if (isset($params['keywords'])) {
             foreach ($params['keywords'] as $keyword) {
-                $text = " AND c.keyword LIKE '%" . $keyword . "%'";
+                $text = " AND k.keywords LIKE '%" . $keyword . "%'";
                 $query.=$text;
             }
         }
@@ -157,6 +158,7 @@ class Invitacion_model extends MY_Model {
         $query.="INNER JOIN usuario u ON u.id = i.invitar_para AND i.invitar_desde='" . $params["usuario_id"] . "' ";
         $query.="INNER JOIN cliente c ON c.usuario_id = u.id ";
         $query.="LEFT JOIN vendedor v ON v.cliente_id = c.id ";
+        $query.="LEFT JOIN keyword k ON c.keyword=k.id ";
         $query.="WHERE ( 1";
 
         if (isset($params['nombre'])) {
@@ -189,7 +191,7 @@ class Invitacion_model extends MY_Model {
 
         if (isset($params['keywords'])) {
             foreach ($params['keywords'] as $keyword) {
-                $text = " AND c.keyword LIKE '%" . $keyword . "%'";
+                $text = " AND k.keywords LIKE '%" . $keyword . "%'";
                 $query.=$text;
             }
         }
@@ -334,11 +336,11 @@ class Invitacion_model extends MY_Model {
             $this->db->like('usuario.email', $params['email'], 'both');
         }
 
-        if (isset($params['keywords'])) {
+        /*if (isset($params['keywords'])) {
             foreach ($params['keywords'] as $keyword) {
                 $this->db->like('cliente.keyword', $keyword, 'both');
             }
-        }
+        }*/
         if (isset($params['invitar_desde'])) {
             $this->db->where('invitacion.invitar_desde', $params['invitar_desde']);
         }
@@ -401,11 +403,11 @@ class Invitacion_model extends MY_Model {
             $this->db->like('usuario.email', $params['email'], 'both');
         }
 
-        if (isset($params['keywords'])) {
+        /*if (isset($params['keywords'])) {
             foreach ($params['keywords'] as $keyword) {
                 $this->db->like('cliente.keyword', $keyword, 'both');
             }
-        }
+        }*/
         if (isset($params['invitar_para'])) {
             $this->db->where('invitacion.invitar_para', $params['invitar_para']);
         }

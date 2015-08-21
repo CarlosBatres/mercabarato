@@ -45,13 +45,7 @@ class Cliente_model extends MY_Model {
         }
         if (isset($params['usuario_activo'])) {
             $this->db->where('usuario.activo', $params['usuario_activo']);
-        }
-
-        if (isset($params['keywords'])) {
-            foreach ($params['keywords'] as $keyword) {
-                $this->db->like('cliente.keyword', $keyword, 'both');
-            }
-        }
+        }       
 
         if (isset($params['excluir_cliente_ids'])) {
             $this->db->where_not_in('cliente.id', $params['excluir_cliente_ids']);
@@ -111,10 +105,11 @@ class Cliente_model extends MY_Model {
 
     public function get_clientes_invitados($params, $limit, $offset, $order_by = "c.id", $order = "asc") {
 
-        $query = "SELECT SQL_CALC_FOUND_ROWS c.*,u.email,u.ultimo_acceso,u.ip_address,u.fecha_creado,v.nombre as nombre_vendedor ";
+        $query = "SELECT SQL_CALC_FOUND_ROWS c.*,u.email,u.ultimo_acceso,u.ip_address,u.fecha_creado,v.nombre as nombre_vendedor ";                        
         $query.="FROM cliente c ";
         $query.="INNER JOIN usuario u ON c.usuario_id = u.id ";
         $query.="LEFT JOIN vendedor v ON v.cliente_id = c.id ";
+        $query.="LEFT JOIN keyword k ON c.keyword=k.id ";
 
         $query.="WHERE ( 1 ";
 
@@ -152,7 +147,7 @@ class Cliente_model extends MY_Model {
 
         if (isset($params['keywords'])) {
             foreach ($params['keywords'] as $keyword) {
-                $text = " AND c.keyword LIKE '%" . $keyword . "%'";
+                $text = " AND k.keywords LIKE '%" . $keyword . "%'";
                 $query.=$text;
             }
         }

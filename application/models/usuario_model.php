@@ -98,12 +98,13 @@ class Usuario_model extends MY_Model {
     }
 
     public function verificar_email($secret_key) {
-        $this->usuario_model->update_by(array("secret_key" => $secret_key), array("activo" => "1", "secret_key" => null));
-        if ($this->db->affected_rows() >= 1) {
-            return true;
-        } else {
+        $user_id=$this->usuario_model->get_by(array("secret_key"=>$secret_key));        
+        if($user_id){            
+            $this->usuario_model->update_by(array("secret_key" => $secret_key), array("activo" => "1", "secret_key" => null));
+            return $user_id->id;
+        }else{
             return false;
-        }
+        }                
     }
 
     public function inhabilitar($usuario_id) {

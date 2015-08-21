@@ -51,12 +51,14 @@ $(document).ready(function() {
         updateResultados();
     });
 
-    $('#form_buscar').find('select[name="pais"]').trigger('change');
+    //$('#form_buscar').find('select[name="pais"]').trigger('change');
 
     $('#myModal').on('shown.bs.modal', function(e) {
         var invoker = $(e.relatedTarget);        
         $('input[name="vendedor_id"]').val(invoker.data('id'));
     });
+    
+    updateResultados();
 });
 
 function updateResultados() {

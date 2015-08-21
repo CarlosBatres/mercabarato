@@ -396,26 +396,55 @@ class Authentication {
         $user_details = $user->row();
 
         // Do passwords match
-        if (md5($password) == $user_details->password) {            
-            return $user_details->identifier;            
-        } else {            
+        if (md5($password) == $user_details->password) {
+            return $user_details->identifier;
+        } else {
             return FALSE;
         }
     }
-    
-     public function get_user_name() {
-         $user_id = $this->ci->session->userdata('identifier');
-         $user=$this->ci->usuario_model->get($user_id);
-         if($user){
-             if($user->nickname!=null){
-                 return $user->nickname;
-             }else{
-                 $cliente=$this->ci->cliente_model->get_by("usuario_id",$user->id);
-                 return $cliente->nombres. ' ' .$cliente->apellidos;
-             }
-         }
-         
-     }
+
+    public function get_user_name() {
+        $user_id = $this->ci->session->userdata('identifier');
+        $user = $this->ci->usuario_model->get($user_id);
+        if ($user) {
+            if ($user->nickname != null) {
+                return $user->nickname;
+            } else {
+                $cliente = $this->ci->cliente_model->get_by("usuario_id", $user->id);
+                return $cliente->nombres . ' ' . $cliente->apellidos;
+            }
+        }
+    }
+
+    /**
+     * Forzar el login dando el username DELICADA
+     * @param type $username
+     * @return boolean
+     */
+    public function force_login($username) {
+        // Select user details
+        $user = $this->ci->db
+                ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username')
+                ->where($this->username_field, $username)
+                ->where('activo', '1')
+                ->get($this->user_table);
+
+        // Ensure there is a user with that username
+        if ($user->num_rows() == 0) {
+            // There is no user with that username, but we won't tell the user that
+            return FALSE;
+        }
+        // Set the user details
+        $user_details = $user->row();       
+        // Set the userdata for the current user
+        $this->ci->session->set_userdata(array(
+            'identifier' => $user_details->identifier,
+            'username' => $user_details->username,
+            'logged_in' => $_SERVER['REQUEST_TIME'],
+        ));
+
+        return TRUE;
+    }
 
 }
 
