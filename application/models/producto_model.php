@@ -127,45 +127,45 @@ class Producto_model extends MY_Model {
               } */
 
             if (isset($params['precio_desde'])) {
-                $text = " AND p.precio >= " . $params['precio_desde'];
+                $text = " AND p.precio >= '" . $params['precio_desde'] ."' ";
                 $query.=$text;
                 $sub_query.=$text;
             }
             if (isset($params['precio_hasta'])) {
-                $text = " AND p.precio <= " . $params['precio_hasta'];
+                $text = " AND p.precio <= '" . $params['precio_hasta'] ."' ";
                 $query.=$text;
                 $sub_query.=$text;
             }
 
             if (isset($params["poblacion"])) {
                 if ($params['poblacion'] != '0') {
-                    $text = " AND pl.poblacion_id=" . $params['poblacion'];
+                    $text = " AND pl.poblacion_id='" . $params['poblacion']."' ";
                     $sub_query.=$text;
                 }
             }
             if (isset($params["provincia"])) {
                 if ($params['provincia'] != '0') {
-                    $text = " AND pl.provincia_id=" . $params['provincia'];
+                    $text = " AND pl.provincia_id='" . $params['provincia']."' ";
                     $sub_query.=$text;
                 }
             }
             if (isset($params["pais"])) {
                 if ($params['pais'] != '0') {
-                    $text = " AND pl.pais_id=" . $params['pais'];
+                    $text = " AND pl.pais_id='" . $params['pais']."' ";
                     $sub_query.=$text;
                 }
             }
             if (isset($params["vendedor_id"])) {
-                $text = " AND p.vendedor_id=" . $params['vendedor_id'];
+                $text = " AND p.vendedor_id='" . $params['vendedor_id']."' ";
                 $sub_query.=$text;
             }
             if (isset($params['excluir_producto_id'])) {
                 $ids = implode(",", $params['excluir_producto_id']);
-                $text = " AND p.id NOT IN(" . $ids . ")";
+                $text = " AND p.id NOT IN(" . $ids . ") ";
                 $sub_query.=$text;
             }
             if (isset($params['mostrar_solo_tarifas'])) {
-                $text = " AND p.tipo='tarifa'";
+                $text = " AND p.tipo='tarifa' ";
                 $sub_query.=$text;
             }
 
@@ -243,38 +243,38 @@ class Producto_model extends MY_Model {
               }
               } */
             if (isset($params['precio_desde'])) {
-                $text = " AND p.precio >= " . $params['precio_desde'];
+                $text = " AND p.precio >= '" . $params['precio_desde'] ."' ";
                 $query.=$text;
                 $sub_query.=$text;
             }
             if (isset($params['precio_hasta'])) {
-                $text = " AND p.precio <= " . $params['precio_hasta'];
+                $text = " AND p.precio <= '" . $params['precio_hasta']."' ";
                 $query.=$text;
                 $sub_query.=$text;
             }
             if (isset($params["poblacion"])) {
                 if ($params['poblacion'] != '0') {
-                    $text = " AND pl.poblacion_id=" . $params['poblacion'];
+                    $text = " AND pl.poblacion_id='" . $params['poblacion']."' ";
                     $query.=$text;
                     $sub_query.=$text;
                 }
             }
             if (isset($params["provincia"])) {
                 if ($params['provincia'] != '0') {
-                    $text = " AND pl.provincia_id=" . $params['provincia'];
+                    $text = " AND pl.provincia_id='" . $params['provincia']."' ";
                     $query.=$text;
                     $sub_query.=$text;
                 }
             }
             if (isset($params["pais"])) {
                 if ($params['pais'] != '0') {
-                    $text = " AND pl.pais_id=" . $params['pais'];
+                    $text = " AND pl.pais_id='" . $params['pais']."' ";
                     $query.=$text;
                     $sub_query.=$text;
                 }
             }
             if (isset($params['vendedor_id'])) {
-                $text = " AND p.vendedor_id=" . $params['vendedor_id'];
+                $text = " AND p.vendedor_id='" . $params['vendedor_id']."' ";
                 $query.=$text;
                 $sub_query.=$text;
             }
@@ -285,7 +285,7 @@ class Producto_model extends MY_Model {
                 $sub_query.=$text;
             }
             if (isset($params['mostrar_producto'])) {
-                $text = " AND p.mostrar_producto=" . $params['mostrar_producto'];
+                $text = " AND p.mostrar_producto='" . $params['mostrar_producto']."' ";
                 $query.=$text;
                 $sub_query.=$text;
             }
@@ -293,7 +293,7 @@ class Producto_model extends MY_Model {
             $query.=") ";
 
             if (isset($params["habilitado"])) {
-                $query.=" AND p.habilitado=" . $params['habilitado'];
+                $query.=" AND p.habilitado='" . $params['habilitado']."' ";
             }
             $query.=" GROUP BY p.id";
             $query.=" ORDER BY " . $order_by . " " . $order;

@@ -1,6 +1,14 @@
 <?php if (sizeof($productos) == 0): ?>
-    <div>
-        <p> No se encontraron resultados...</p>    
+    <div>        
+        <div class="alert alert-warning">             
+            <p> De momento no existe ningun producto que se ajuste a estos parametros, puedes intentar lo siguiente: </p>    
+            <ul>
+                <li> Selecciona un lugar diferente ( <strong>Pais , Provincia o Poblacion </strong> ).</li>
+                <li> Prueba con un nombre o palabras claves diferentes.</li>
+                <li> Ingresa un rango de precios diferente.</li>
+                <li> Selecciona una categoria diferente.</li>
+            </ul>
+        </div>        
     </div>
 <?php else: ?>
     <ul class="tabla-resultados-principal">
