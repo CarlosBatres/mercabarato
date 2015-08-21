@@ -66,7 +66,7 @@ class Visita_model extends MY_Model {
                     $flag = true;
                     foreach ($visitas as $visita) {
                         if ($visita->day == $index) {
-                            $data[] = array("date" => $visita->fecha, "producto" => $visita->total, "anuncio" => 0);
+                            $data[] = array("date" => $visita->fecha, "producto" => (int)$visita->total, "anuncio" => 0);
                             $flag = false;
                         }
                     }
@@ -80,7 +80,7 @@ class Visita_model extends MY_Model {
                         $flag = true;
                         foreach ($visitas_anuncios as $visita) {
                             if ($visita->day == $index) {
-                                $data[$index - 1]['anuncio'] = $visita->total;
+                                $data[$index - 1]['anuncio'] = (int)$visita->total;
                                 $flag = false;
                             }
                         }
@@ -97,7 +97,7 @@ class Visita_model extends MY_Model {
                     $flag = true;
                     foreach ($visitas as $visita) {
                         if ($visita->month == $index) {
-                            $data[] = array("month" => $visita->year . '-' . $visita->month, "producto" => $visita->total, "anuncio" => 0);
+                            $data[] = array("month" => $visita->year . '-' . $visita->month, "producto" => (int)$visita->total, "anuncio" => 0);
                             $flag = false;
                         }
                     }
@@ -111,7 +111,7 @@ class Visita_model extends MY_Model {
                         $flag = true;
                         foreach ($visitas_anuncios as $visita) {
                             if ($visita->month == $index) {
-                                $data[$index - 1]['anuncio'] = $visita->total;
+                                $data[$index - 1]['anuncio'] = (int)$visita->total;
                                 $flag = false;
                             }
                         }
@@ -228,12 +228,12 @@ class Visita_model extends MY_Model {
             $query.=$text;
         }
 
-        if (isset($params['keywords'])) {
+        /*if (isset($params['keywords'])) {
             foreach ($params['keywords'] as $keyword) {
                 $text = " AND c.keyword LIKE '%" . $keyword . "%'";
                 $query.=$text;
             }
-        }
+        }*/
 
         if (isset($params['visitas_producto_id'])) {
             $text = " AND vi.producto_id IN(" . implode(",", $params['visitas_producto_id']) . ")";
@@ -297,12 +297,12 @@ class Visita_model extends MY_Model {
             $query.=$text;
         }
 
-        if (isset($params['keywords'])) {
+        /*if (isset($params['keywords'])) {
             foreach ($params['keywords'] as $keyword) {
                 $text = " AND c.keyword LIKE '%" . $keyword . "%'";
                 $query.=$text;
             }
-        }
+        }*/
 
         if (isset($params['ignore_cliente_id'])) {
             $text = " AND c.id!='" . $params['ignore_cliente_id'] . "'";

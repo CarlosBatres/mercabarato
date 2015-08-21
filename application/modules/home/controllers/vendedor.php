@@ -17,7 +17,7 @@ class Vendedor extends MY_Controller {
             $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-            $keywords = keywords_listado();
+            $keywords = $this->categoria_model->get_keywords_from_categorias();
 
             if (!$this->permisos_model->usuario_es_admin($user_id)) {
                 if (!$this->cliente_model->es_vendedor($cliente->id)) {
@@ -65,6 +65,12 @@ class Vendedor extends MY_Controller {
                 $keywords_text = null;
             }
 
+            if ($keywords_text != null) {
+                $keyword_id = $this->keyword_model->insert(array("keywords" => $keywords_text));
+            } else {
+                $keyword_id = null;
+            }
+
             $data = array(
                 "cliente_id" => $cliente->id,
                 "nombre" => $this->input->post('nombre_empresa'),
@@ -74,7 +80,7 @@ class Vendedor extends MY_Controller {
                 "habilitado" => 0,
                 "nif_cif" => $this->input->post('nif_cif'),
                 "nickname" => $this->input->post('nickname'),
-                "keyword" => $keywords_text
+                "keyword" => $keyword_id
             );
 
             $data_cliente = array(
@@ -414,11 +420,26 @@ class Vendedor extends MY_Controller {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->add_js('modules/home/vendedores_listado.js');
         $paises = $this->pais_model->get_all();
+        $provincias = array();
+        $poblaciones = array();
+        $localizacion = false;
 
         if ($this->authentication->is_loggedin()) {
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $anuncios = $this->anuncio_model->get_anuncios_para_cliente($cliente->id);
+
+            $var = $this->session->userdata('vendedores_ver_localuser');
+            if ($var) {
+                $localizacion_user = $this->localizacion_model->get_by("usuario_id", $user_id);
+                $localizacion = $this->localizacion_model->get_full_localizacion($localizacion_user->id);
+                if ($localizacion["pais"] != null) {
+                    $provincias = $this->provincia_model->get_all_by_pais($localizacion["pais"]->id);
+                    if ($localizacion["provincia"] != null) {
+                        $poblaciones = $this->poblacion_model->get_all_by_provincia($localizacion["provincia"]->id);
+                    }
+                }
+            }
         } else {
             $anuncios = $this->anuncio_model->get_ultimos_anuncios();
         }
@@ -427,7 +448,7 @@ class Vendedor extends MY_Controller {
             $anuncios = array();
         }
 
-        $data = array("paises" => $paises, "anuncios" => $anuncios);
+        $data = array("paises" => $paises, "provincias" => $provincias, "poblaciones" => $poblaciones, "localizacion" => $localizacion, "anuncios" => $anuncios);
 
         $this->template->load_view('home/vendedores/listado', $data);
     }
@@ -469,6 +490,10 @@ class Vendedor extends MY_Controller {
                     $vendedor_id_logged = $identidad->get_vendedor_id();
                 } else {
                     $vendedor_id_logged = -1;
+                }
+                $keywords_cliente = $this->keyword_model->get_keyword($identidad->cliente->keyword);
+                if ($keywords_cliente) {
+                    $params["keyword"] = $keywords_cliente;
                 }
                 $params["usuario_id"] = $user_id;
                 $logged_in = true;
@@ -582,7 +607,7 @@ class Vendedor extends MY_Controller {
                     "son_contactos" => $son_contactos);
 
                 $this->template->load_view('home/vendedores/ficha', $data);
-            }else{
+            } else {
                 show_404();
             }
         } else {
@@ -617,7 +642,15 @@ class Vendedor extends MY_Controller {
             }
 
             $keywords = $this->categoria_model->get_keywords_from_categorias();
-            $mis_intereses = explode(";", $cliente->keyword);
+
+            $keywords_cliente = $this->keyword_model->get_keyword($vendedor->keyword);
+            if ($keywords_cliente) {
+                $mis_intereses = explode(";", $keywords_cliente);
+            } else {
+                $mis_intereses = array();
+            }
+
+
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
             $this->template->add_js('modules/home/perfil.js');
             $this->template->load_view('home/vendedor/datos_vendedor', array(
@@ -670,6 +703,12 @@ class Vendedor extends MY_Controller {
                     $filename = null;
                 }
 
+                if ($keywords_text != null) {
+                    $keyword_id = $this->keyword_model->insert(array("keywords" => $keywords_text));
+                } else {
+                    $keyword_id = null;
+                }
+
                 $data_vendedor = array(
                     "nombre" => ($this->input->post('nombre_empresa') != '') ? $this->input->post('nombre_empresa') : null,
                     "descripcion" => ($this->input->post('descripcion') != '') ? $this->input->post('descripcion') : null,
@@ -680,7 +719,7 @@ class Vendedor extends MY_Controller {
                     "telefono_fijo" => ($this->input->post('telefono_fijo') != '') ? $this->input->post('telefono_fijo') : null,
                     "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,
                     "filename" => $filename,
-                    "keyword" => $keywords_text
+                    "keyword" => $keyword_id
                 );
 
                 $data_vendedor["unique_slug"] = $this->slug->create_uri($data_vendedor["nombre"]);

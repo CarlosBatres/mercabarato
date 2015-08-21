@@ -17,32 +17,69 @@
                     <form id="form_buscar">
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="form-group">                                
+                                <div class="form-group"> 
+                                    <label><strong>Pais</strong></label>
                                     <select name="pais" class="form-control">
-                                        <option value="0">País</option>
+                                        <option value="0">Todos los Países</option>
                                         <?php
                                         foreach ($paises as $pais):
-                                            $class = "";
-                                            if ($pais->nombre == "España") {
-                                                $class = "selected";
+                                            $selected = "";
+                                            if ($localizacion) {
+                                                if ($localizacion["pais"] != null) {
+                                                    if ($localizacion["pais"]->id == $pais->id) {
+                                                        $selected = "selected='selected'";
+                                                    }
+                                                }
                                             }
-                                            ?>                                        
-                                            <option value="<?php echo $pais->id ?>" <?php echo $class ?>><?php echo $pais->nombre ?></option>
+                                            ?>
+                                            <option <?php echo $selected; ?> value="<?php echo $pais->id ?>"><?php echo $pais->nombre ?></option>                                        
                                         <?php endforeach; ?>
                                     </select>
                                 </div>   
                             </div> 
                             <div class="col-md-4">
                                 <div class="form-group">                                
+                                    <label class="text-left"><strong>Provincia</strong></label>
                                     <select name="provincia" class="form-control">
-                                        <option value="0">Todas las Provincias</option>                        
+                                        <option value="0">Todas las Provincias</option>
+                                        <?php if (sizeof($provincias) > 0): ?>
+                                            <?php
+                                            foreach ($provincias as $provincia):
+                                                $selected = "";
+                                                if ($localizacion) {
+                                                    if ($localizacion["provincia"] != null) {
+                                                        if ($localizacion["provincia"]->id == $provincia->id) {
+                                                            $selected = "selected='selected'";
+                                                        }
+                                                    }
+                                                }
+                                                ?>
+                                                <option <?php echo $selected; ?> value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>                                                                                    
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="form-group">                        
+                                <div class="form-group"> 
+                                    <label class="text-left"><strong>Población</strong></label>
                                     <select name="poblacion" class="form-control">
                                         <option value="0">Todas las Poblaciónes</option>                        
+                                        <?php if (sizeof($poblaciones) > 0): ?>
+                                            <?php
+                                            foreach ($poblaciones as $poblacion):
+                                                $selected = "";
+                                                if ($localizacion) {
+                                                    if ($localizacion["poblacion"] != null) {
+                                                        if ($localizacion["poblacion"]->id == $poblacion->id) {
+                                                            $selected = "selected='selected'";
+                                                        }
+                                                    }
+                                                }
+                                                ?>
+                                                <option <?php echo $selected; ?> value="<?php echo $poblacion->id ?>"><?php echo $poblacion->nombre ?></option>                                        
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </select>
                                 </div>
                             </div>
@@ -55,7 +92,7 @@
                         <div class="row">                            
                             <div class="col-md-12">                                                                  
                                 <div class="input-group">                                    
-                                    <input type="text" name="search_query" class="form-control" placeholder="Ingrese un nombre, o palabras clave...">
+                                    <input type="text" name="search_query" class="form-control" placeholder="Ingrese un nombre, o alguna referencia...">
                                     <input type="hidden" value="1" name="pagina" id="pagina"/>                                
                                     <span class="input-group-btn">
                                         <button class="btn btn-template-main" id="search_button" type="button"><i class="fa fa-search"></i>Buscar</button>

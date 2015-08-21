@@ -150,11 +150,11 @@ class Panel_vendedores_ofertas_helper extends ADController {
                 $params["email"] = $this->input->post('email');
                 $flag_query = true;
             }
-            if ($this->input->post('keywords') != "") {
+            /*if ($this->input->post('keywords') != "") {
                 $keywords = explode(",", $this->input->post('keywords'));
                 $params["keywords"] = $keywords;
                 $flag_query = true;
-            }
+            }*/
 
             if ($flag_query) {
                 $ids_old = $this->session->userdata('pv_ofertas_incluir_ids_clientes');

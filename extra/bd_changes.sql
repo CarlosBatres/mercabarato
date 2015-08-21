@@ -38,5 +38,24 @@ left join `pais` `pa` on((`pa`.`id` = `l`.`pais_id`)))
 left join `provincia` `pr` on((`pr`.`id` = `l`.`provincia_id`))) 
 left join `poblacion` `pb` on((`pb`.`id` = `l`.`poblacion_id`)));
 
-/* CAMBIOS POR IMPLEMENTAR */
+/* ---------------------------------------------- */
+/*                                                */
+/*             CAMBIOS POR IMPLEMENTAR            */
+/*                                                */
+/* -----------------------------------------------*/
 
+CREATE TABLE IF NOT EXISTS `keyword` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `keywords` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = MyISAM
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
+
+ALTER TABLE `keyword` ADD FULLTEXT INDEX `SEARCH`(`keywords`);
+
+ALTER TABLE `cliente` 
+CHANGE COLUMN `keyword` `keyword` INT(11) NULL DEFAULT NULL ;
+
+ALTER TABLE `vendedor` 
+CHANGE COLUMN `keyword` `keyword` INT(11) NULL DEFAULT NULL ;

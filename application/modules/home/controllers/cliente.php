@@ -49,6 +49,12 @@ class Cliente extends MY_Controller {
                     $keywords_text = null;
                 }
 
+                if ($keywords_text != null) {
+                    $keyword_id = $this->keyword_model->insert(array("keywords" => $keywords_text));
+                } else {
+                    $keyword_id = null;
+                }
+
                 $data = array(
                     "usuario_id" => $user_id,
                     "nombres" => ($this->input->post('nombres') != '') ? $this->input->post('nombres') : null,
@@ -59,7 +65,7 @@ class Cliente extends MY_Controller {
                     "direccion" => ($this->input->post('direccion') != '') ? $this->input->post('direccion') : null,
                     "telefono_fijo" => ($this->input->post('telefono_fijo') != '') ? $this->input->post('telefono_fijo') : null,
                     "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,
-                    "keyword" => $keywords_text
+                    "keyword" => $keyword_id
                 );
 
                 $this->cliente_model->insert($data);
@@ -108,6 +114,12 @@ class Cliente extends MY_Controller {
                         $keywords_text = null;
                     }
 
+                    if ($keywords_text != null) {
+                        $keyword_id = $this->keyword_model->insert(array("keywords" => $keywords_text));
+                    } else {
+                        $keyword_id = null;
+                    }
+
                     $data = array(
                         "usuario_id" => $usuario->id,
                         "nombres" => ($this->input->post('nombres') != '') ? $this->input->post('nombres') : null,
@@ -118,7 +130,7 @@ class Cliente extends MY_Controller {
                         "direccion" => ($this->input->post('direccion') != '') ? $this->input->post('direccion') : null,
                         "telefono_fijo" => ($this->input->post('telefono_fijo') != '') ? $this->input->post('telefono_fijo') : null,
                         "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,
-                        "keyword" => $keywords_text
+                        "keyword" => $keyword_id
                     );
 
                     $this->cliente_model->update($cliente->id, $data);
@@ -166,9 +178,9 @@ class Cliente extends MY_Controller {
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
 
             //if (!$cliente_es_vendedor) {
-                $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
-                $this->template->add_js('modules/home/invitaciones.js');
-                $this->template->load_view('home/cliente/invitaciones', array("html_options" => $html_options));
+            $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+            $this->template->add_js('modules/home/invitaciones.js');
+            $this->template->load_view('home/cliente/invitaciones', array("html_options" => $html_options));
             //} else {
             //    redirect('usuario/perfil');
             //}
@@ -186,20 +198,20 @@ class Cliente extends MY_Controller {
                 $user_id = $this->authentication->read('identifier');
                 $this->invitacion_model->aceptar_invitacion($invitacion_id, $user_id);
 
-                if ($this->config->item('emails_enabled')) {                    
+                if ($this->config->item('emails_enabled')) {
                     $invitacion = $this->invitacion_model->get($invitacion_id);
-                    if($invitacion->invitar_desde!=$user_id){
-                        $usr=$this->usuario_model->get($invitacion->invitar_desde);
-                        $email=$usr->email;
-                    }else{
-                        $usr=$this->usuario_model->get($invitacion->invitar_para);
-                        $email=$usr->email;
+                    if ($invitacion->invitar_desde != $user_id) {
+                        $usr = $this->usuario_model->get($invitacion->invitar_desde);
+                        $email = $usr->email;
+                    } else {
+                        $usr = $this->usuario_model->get($invitacion->invitar_para);
+                        $email = $usr->email;
                     }
-                    
+
                     $this->load->library('email');
                     $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                     $this->email->to($email);
-                    $this->email->subject('Invitacion Aceptada');                    
+                    $this->email->subject('Invitacion Aceptada');
                     $this->email->message($this->load->view('home/emails/aceptar_invitacion_cliente', array(), true));
                     $this->email->send();
                 }
@@ -231,7 +243,7 @@ class Cliente extends MY_Controller {
 
             if ($formValues !== false) {
                 $invitacion_id = $this->input->post('invitacion_id');
-                $user_id = $this->authentication->read('identifier');                
+                $user_id = $this->authentication->read('identifier');
                 $this->invitacion_model->rechazar_invitacion($invitacion_id, $user_id);
                 echo json_encode(array("success" => true));
             }
@@ -239,30 +251,30 @@ class Cliente extends MY_Controller {
             redirect('');
         }
     }
-    
+
     public function sin_notificaciones() {
         if ($this->authentication->is_loggedin()) {
             $formValues = $this->input->post();
 
             if ($formValues !== false) {
                 $invitacion_id = $this->input->post('invitacion_id');
-                $user_id = $this->authentication->read('identifier');                
-                $this->invitacion_model->update($invitacion_id, array("recibir_notificaciones"=>"0"));
+                $user_id = $this->authentication->read('identifier');
+                $this->invitacion_model->update($invitacion_id, array("recibir_notificaciones" => "0"));
                 echo json_encode(array("success" => true));
             }
         } else {
             redirect('');
         }
     }
-    
+
     public function con_notificaciones() {
         if ($this->authentication->is_loggedin()) {
             $formValues = $this->input->post();
 
             if ($formValues !== false) {
                 $invitacion_id = $this->input->post('invitacion_id');
-                $user_id = $this->authentication->read('identifier');                
-                $this->invitacion_model->update($invitacion_id, array("recibir_notificaciones"=>"1"));
+                $user_id = $this->authentication->read('identifier');
+                $this->invitacion_model->update($invitacion_id, array("recibir_notificaciones" => "1"));
                 echo json_encode(array("success" => true));
             }
         } else {

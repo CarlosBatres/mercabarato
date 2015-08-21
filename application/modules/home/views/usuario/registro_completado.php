@@ -17,9 +17,9 @@
                         <h2>Registro Completado.</h2>
 
                         <p class="lead">Gracias por registrate, tu cuenta ya esta habilitada.</p>                        
-                        <p class="lead">Puedes iniciar sesion ingresando tus datos en el siguiente link.</p>
+                        <p class="lead">Puedes continuar presionando el siguiente link.</p>
                         <div class="text-center">
-                            <p class="buttons"><a href="" class="btn btn-template-main" data-toggle="modal" data-target="#login-modal"><i class="fa fa-home"></i> Iniciar Sesión</a>
+                            <p class="buttons"><a href="<?php echo site_url("vendedores"); ?>" class="btn btn-template-main"><i class="fa fa-home"></i> Continuar</a>
                         </div>
                         <hr>
                     </div>

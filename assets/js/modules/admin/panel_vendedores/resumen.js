@@ -14,7 +14,7 @@ function getVisitasDataMensual() {
             if (data === "empty") {
                 $('#morris_mensual').html("No se encontraron resultados..");
             } else {
-                Morris.Area({
+                Morris.Line({
                     element: 'morris_mensual',
                     data: data,
                     xkey: 'date',
@@ -39,7 +39,7 @@ function getVisitasDataAnual() {
             if (data === "empty") {
                 $('#morris_anual').html("No se encontraron resultados..");
             } else {
-                Morris.Area({
+                Morris.Line({
                     element: 'morris_anual',
                     data: data,
                     xkey: 'month',

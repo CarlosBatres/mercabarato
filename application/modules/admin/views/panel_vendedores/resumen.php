@@ -76,9 +76,9 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8">  
+        <div class="col-md-12">  
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 col-lg-8">
                     <?php if ($paquete_vigente || $paquete_pendiente): ?>                                        
                         <div class="heading">
                             <h3 class="text-uppercase">Mis Paquetes</h3>
@@ -127,7 +127,7 @@
                         </div>
                     <?php endif; ?>
                 </div>
-                <div class="col-md-12 clearfix">                                                
+                <div class="col-md-12 col-lg-8">                                                
                     <div class="panel panel-default">
                         <div class="panel-body">  
                             <div class="col-md-12">
