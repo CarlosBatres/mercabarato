@@ -39,7 +39,7 @@ class Visita_model extends MY_Model {
                     );
                     $this->insert($data);
                     $this->producto_model->verificar_oferta($producto_id);
-                }                
+                }
             }
         }
     }
@@ -52,9 +52,9 @@ class Visita_model extends MY_Model {
      * @param type $vendedor_id
      * @param type $por_año
      */
-    public function generar_estadisticas_visitas($fecha_inicio, $fecha_fin, $vendedor_id, $por_año) {
-        $visitas = $this->get_vendedors_visitas_durante($fecha_inicio, $fecha_fin, $vendedor_id, 1, $por_año);
-        $visitas_anuncios = $this->get_vendedors_visitas_durante($fecha_inicio, $fecha_fin, $vendedor_id, 0, $por_año);
+    public function generar_estadisticas_visitas($fecha_inicio, $fecha_fin, $vendedor_id, $solo_afiliados, $por_año) {
+        $visitas = $this->get_vendedors_visitas_durante($fecha_inicio, $fecha_fin, $vendedor_id, 1, $solo_afiliados, $por_año);
+        $visitas_anuncios = $this->get_vendedors_visitas_durante($fecha_inicio, $fecha_fin, $vendedor_id, 0, $solo_afiliados, $por_año);
         $data = array();
         if ($visitas) {
             if ($por_año == false) {
@@ -66,7 +66,7 @@ class Visita_model extends MY_Model {
                     $flag = true;
                     foreach ($visitas as $visita) {
                         if ($visita->day == $index) {
-                            $data[] = array("date" => $visita->fecha, "producto" => (int)$visita->total, "anuncio" => 0);
+                            $data[] = array("date" => $visita->fecha, "producto" => (int) $visita->total, "anuncio" => 0);
                             $flag = false;
                         }
                     }
@@ -80,7 +80,7 @@ class Visita_model extends MY_Model {
                         $flag = true;
                         foreach ($visitas_anuncios as $visita) {
                             if ($visita->day == $index) {
-                                $data[$index - 1]['anuncio'] = (int)$visita->total;
+                                $data[$index - 1]['anuncio'] = (int) $visita->total;
                                 $flag = false;
                             }
                         }
@@ -97,7 +97,7 @@ class Visita_model extends MY_Model {
                     $flag = true;
                     foreach ($visitas as $visita) {
                         if ($visita->month == $index) {
-                            $data[] = array("month" => $visita->year . '-' . $visita->month, "producto" => (int)$visita->total, "anuncio" => 0);
+                            $data[] = array("month" => $visita->year . '-' . $visita->month, "producto" => (int) $visita->total, "anuncio" => 0);
                             $flag = false;
                         }
                     }
@@ -111,7 +111,7 @@ class Visita_model extends MY_Model {
                         $flag = true;
                         foreach ($visitas_anuncios as $visita) {
                             if ($visita->month == $index) {
-                                $data[$index - 1]['anuncio'] = (int)$visita->total;
+                                $data[$index - 1]['anuncio'] = (int) $visita->total;
                                 $flag = false;
                             }
                         }
@@ -130,35 +130,88 @@ class Visita_model extends MY_Model {
     /**
      * 
      */
-    public function get_vendedors_visitas_durante($fecha_inicio, $fecha_fin, $vendedor_id, $tipo, $group_by_month = false) {
-        $this->db->select("visita.id,visita.fecha, COUNT(visita.id) as total,EXTRACT( YEAR FROM visita.fecha) as year,EXTRACT( MONTH FROM visita.fecha) as month,EXTRACT( DAY FROM visita.fecha) as day");
-        $this->db->from("visita");
+    public function get_vendedors_visitas_durante($fecha_inicio, $fecha_fin, $vendedor_id, $tipo, $solo_afiliados, $group_by_month = false) {
+        $vendedor = $this->vendedor_model->get($vendedor_id);
+        $cliente = $this->cliente_model->get($vendedor->cliente_id);
+
+        $query = "SELECT visita.id,visita.fecha, COUNT(visita.id) as total,EXTRACT( YEAR FROM visita.fecha) as year,EXTRACT( MONTH FROM visita.fecha) as month,EXTRACT( DAY FROM visita.fecha) as day ";
+        $query .="FROM visita ";
+        $query .="INNER JOIN cliente ON cliente.id=visita.cliente_id ";
+
         if ($tipo === 1) {
-            $this->db->join("producto", "producto.id=visita.producto_id AND producto.vendedor_id=" . $vendedor_id, 'INNER');
-            $this->db->where('visita.vista_producto', "1");
+            $query .="INNER JOIN producto ON producto.id=visita.producto_id AND producto.vendedor_id='" . $vendedor_id . "' ";
+            $query .="WHERE visita.vista_producto='1' ";
         } else {
-            $this->db->join("anuncio", "anuncio.id=visita.anuncio_id AND anuncio.vendedor_id=" . $vendedor_id, 'INNER');
-            $this->db->where('visita.vista_anuncio', "1");
+            $query .="INNER JOIN anuncio ON anuncio.id=visita.anuncio_id AND anuncio.vendedor_id='" . $vendedor_id . "' ";
+            $query .="WHERE visita.vista_anuncio='1' ";
         }
 
-        $this->db->where('visita.fecha >=', $fecha_inicio);
-        $this->db->where('visita.fecha <=', $fecha_fin);
-        //$this->db->where('producto.vendedor_id', $vendedor_id);
+        if ($solo_afiliados) {
+            $usuarios_ids = $this->invitacion_model->get_ids_invitaciones(array("usuario" => $cliente->usuario_id, "estado" => "2"));
+            if ($usuarios_ids) {
+                $usuarios_ids = implode(",", $usuarios_ids);
+                $query .="AND cliente.usuario_id IN (" . $usuarios_ids . ") ";
+            }else{
+                $query .="AND cliente.usuario_id IN ('0') ";
+            }
+        }
+
+        $query .=" AND visita.fecha >='" . $fecha_inicio . "' ";
+        $query .=" AND visita.fecha <='" . $fecha_fin . "' ";
 
         if ($group_by_month) {
-            $this->db->group_by('Month(visita.fecha)');
+            $query.=" GROUP BY Month(visita.fecha)";
         } else {
-            $this->db->group_by('visita.fecha');
+            $query.=" GROUP BY visita.fecha";
         }
 
-
-        $result = $this->db->get();
+        $result = $this->db->query($query);
 
         if ($result->num_rows() > 0) {
             return $result->result();
         } else {
             return FALSE;
         }
+
+
+
+        /* $this->db->select("visita.id,visita.fecha, COUNT(visita.id) as total,EXTRACT( YEAR FROM visita.fecha) as year,EXTRACT( MONTH FROM visita.fecha) as month,EXTRACT( DAY FROM visita.fecha) as day");
+          $this->db->from("visita");
+          $this->db->join("cliente", "cliente.id=visita.cliente_id", 'INNER');
+
+          if ($solo_afiliados) {
+          //$this->db->join("invitacion i1", "i1.invitar_desde=cliente.usuario_id AND i1.estado='2' AND i1.invitar_para=" . $cliente->usuario_id, 'INNER');
+          $this->db->join("invitacion i2", "i2.invitar_para=cliente.usuario_id AND i2.estado='2' AND i2.invitar_desde=" . $cliente->usuario_id, 'INNER');
+          }
+
+          if ($tipo === 1) {
+          $this->db->join("producto", "producto.id=visita.producto_id AND producto.vendedor_id=" . $vendedor_id, 'INNER');
+          $this->db->where('visita.vista_producto', "1");
+          } else {
+          $this->db->join("anuncio", "anuncio.id=visita.anuncio_id AND anuncio.vendedor_id=" . $vendedor_id, 'INNER');
+          $this->db->where('visita.vista_anuncio', "1");
+          }
+
+
+
+          $this->db->where('visita.fecha >=', $fecha_inicio);
+          $this->db->where('visita.fecha <=', $fecha_fin);
+          //$this->db->where('producto.vendedor_id', $vendedor_id);
+
+          if ($group_by_month) {
+          $this->db->group_by('Month(visita.fecha)');
+          } else {
+          $this->db->group_by('visita.fecha');
+          }
+
+
+          $result = $this->db->get();
+
+          if ($result->num_rows() > 0) {
+          return $result->result();
+          } else {
+          return FALSE;
+          } */
     }
 
     public function nueva_visita_anuncio($anuncio_id) {
@@ -228,12 +281,12 @@ class Visita_model extends MY_Model {
             $query.=$text;
         }
 
-        /*if (isset($params['keywords'])) {
-            foreach ($params['keywords'] as $keyword) {
-                $text = " AND c.keyword LIKE '%" . $keyword . "%'";
-                $query.=$text;
-            }
-        }*/
+        /* if (isset($params['keywords'])) {
+          foreach ($params['keywords'] as $keyword) {
+          $text = " AND c.keyword LIKE '%" . $keyword . "%'";
+          $query.=$text;
+          }
+          } */
 
         if (isset($params['visitas_producto_id'])) {
             $text = " AND vi.producto_id IN(" . implode(",", $params['visitas_producto_id']) . ")";
@@ -297,12 +350,12 @@ class Visita_model extends MY_Model {
             $query.=$text;
         }
 
-        /*if (isset($params['keywords'])) {
-            foreach ($params['keywords'] as $keyword) {
-                $text = " AND c.keyword LIKE '%" . $keyword . "%'";
-                $query.=$text;
-            }
-        }*/
+        /* if (isset($params['keywords'])) {
+          foreach ($params['keywords'] as $keyword) {
+          $text = " AND c.keyword LIKE '%" . $keyword . "%'";
+          $query.=$text;
+          }
+          } */
 
         if (isset($params['ignore_cliente_id'])) {
             $text = " AND c.id!='" . $params['ignore_cliente_id'] . "'";

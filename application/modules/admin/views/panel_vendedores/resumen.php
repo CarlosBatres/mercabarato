@@ -182,7 +182,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Estadisticas Mensual
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Estadistica General
                             <div class="pull-right">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
@@ -197,14 +197,15 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div id="morris_mensual"></div>
+                            <div id="morris_general"></div>
                         </div>
                         <!-- /.panel-body -->
-                    </div>
-
+                    </div>                    
+                </div> 
+                <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> Estadisticas Anuales
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Estadisticas - Clientes Afiliados
                             <div class="pull-right">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
@@ -219,17 +220,28 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div id="morris_anual"></div>
+                            <div id="morris_general_afiliados"></div>
                         </div>
                         <!-- /.panel-body -->
-                    </div>
-                </div> 
+                    </div>                    
+                </div>
+                <form action="#" method="post" class="search-form" id="listado-productos">
+                    <input type="hidden" value="1" name="pagina" id="pagina"/>
+                </form>    
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Estadisticas - Productos                            
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div id="tabla-productos"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>                    
+                </div>
             </div>
         </div>
-
     </div>
-
-
-
 </div> <!-- container-fluid -->
 

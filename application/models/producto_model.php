@@ -127,45 +127,45 @@ class Producto_model extends MY_Model {
               } */
 
             if (isset($params['precio_desde'])) {
-                $text = " AND p.precio >= " . $params['precio_desde'];
+                $text = " AND p.precio >= '" . $params['precio_desde'] . "' ";
                 $query.=$text;
                 $sub_query.=$text;
             }
             if (isset($params['precio_hasta'])) {
-                $text = " AND p.precio <= " . $params['precio_hasta'];
+                $text = " AND p.precio <= '" . $params['precio_hasta'] . "' ";
                 $query.=$text;
                 $sub_query.=$text;
             }
 
             if (isset($params["poblacion"])) {
                 if ($params['poblacion'] != '0') {
-                    $text = " AND pl.poblacion_id=" . $params['poblacion'];
+                    $text = " AND pl.poblacion_id='" . $params['poblacion'] . "' ";
                     $sub_query.=$text;
                 }
             }
             if (isset($params["provincia"])) {
                 if ($params['provincia'] != '0') {
-                    $text = " AND pl.provincia_id=" . $params['provincia'];
+                    $text = " AND pl.provincia_id='" . $params['provincia'] . "' ";
                     $sub_query.=$text;
                 }
             }
             if (isset($params["pais"])) {
                 if ($params['pais'] != '0') {
-                    $text = " AND pl.pais_id=" . $params['pais'];
+                    $text = " AND pl.pais_id='" . $params['pais'] . "' ";
                     $sub_query.=$text;
                 }
             }
             if (isset($params["vendedor_id"])) {
-                $text = " AND p.vendedor_id=" . $params['vendedor_id'];
+                $text = " AND p.vendedor_id='" . $params['vendedor_id'] . "' ";
                 $sub_query.=$text;
             }
             if (isset($params['excluir_producto_id'])) {
                 $ids = implode(",", $params['excluir_producto_id']);
-                $text = " AND p.id NOT IN(" . $ids . ")";
+                $text = " AND p.id NOT IN(" . $ids . ") ";
                 $sub_query.=$text;
             }
             if (isset($params['mostrar_solo_tarifas'])) {
-                $text = " AND p.tipo='tarifa'";
+                $text = " AND p.tipo='tarifa' ";
                 $sub_query.=$text;
             }
 
@@ -243,38 +243,38 @@ class Producto_model extends MY_Model {
               }
               } */
             if (isset($params['precio_desde'])) {
-                $text = " AND p.precio >= " . $params['precio_desde'];
+                $text = " AND p.precio >= '" . $params['precio_desde'] . "' ";
                 $query.=$text;
                 $sub_query.=$text;
             }
             if (isset($params['precio_hasta'])) {
-                $text = " AND p.precio <= " . $params['precio_hasta'];
+                $text = " AND p.precio <= '" . $params['precio_hasta'] . "' ";
                 $query.=$text;
                 $sub_query.=$text;
             }
             if (isset($params["poblacion"])) {
                 if ($params['poblacion'] != '0') {
-                    $text = " AND pl.poblacion_id=" . $params['poblacion'];
+                    $text = " AND pl.poblacion_id='" . $params['poblacion'] . "' ";
                     $query.=$text;
                     $sub_query.=$text;
                 }
             }
             if (isset($params["provincia"])) {
                 if ($params['provincia'] != '0') {
-                    $text = " AND pl.provincia_id=" . $params['provincia'];
+                    $text = " AND pl.provincia_id='" . $params['provincia'] . "' ";
                     $query.=$text;
                     $sub_query.=$text;
                 }
             }
             if (isset($params["pais"])) {
                 if ($params['pais'] != '0') {
-                    $text = " AND pl.pais_id=" . $params['pais'];
+                    $text = " AND pl.pais_id='" . $params['pais'] . "' ";
                     $query.=$text;
                     $sub_query.=$text;
                 }
             }
             if (isset($params['vendedor_id'])) {
-                $text = " AND p.vendedor_id=" . $params['vendedor_id'];
+                $text = " AND p.vendedor_id='" . $params['vendedor_id'] . "' ";
                 $query.=$text;
                 $sub_query.=$text;
             }
@@ -285,7 +285,7 @@ class Producto_model extends MY_Model {
                 $sub_query.=$text;
             }
             if (isset($params['mostrar_producto'])) {
-                $text = " AND p.mostrar_producto=" . $params['mostrar_producto'];
+                $text = " AND p.mostrar_producto='" . $params['mostrar_producto'] . "' ";
                 $query.=$text;
                 $sub_query.=$text;
             }
@@ -293,7 +293,7 @@ class Producto_model extends MY_Model {
             $query.=") ";
 
             if (isset($params["habilitado"])) {
-                $query.=" AND p.habilitado=" . $params['habilitado'];
+                $query.=" AND p.habilitado='" . $params['habilitado'] . "' ";
             }
             $query.=" GROUP BY p.id";
             $query.=" ORDER BY " . $order_by . " " . $order;
@@ -732,6 +732,61 @@ class Producto_model extends MY_Model {
         } else {
             return false;
         }
+    }
+
+    public function get_visitas_search($params, $limit, $offset) {
+        $query = "SELECT SQL_CALC_FOUND_ROWS * FROM ( ";
+        $query.= "SELECT producto.*,COUNT(visita.id) as total  FROM producto ";
+        $query.= "INNER JOIN visita ON visita.producto_id=producto.id ";
+
+        if (isset($params['vendedor_id'])) {
+            $query.= "WHERE producto.vendedor_id='".$params["vendedor_id"]."' ";
+        }
+                
+        $query.=" GROUP BY producto.id";
+        $query.=" ) p ";
+        $query.=" ORDER BY id";
+        $query.=" LIMIT " . $offset . " , " . $limit;
+
+        $result = $this->db->query($query);
+        $productos = $result->result();
+
+        $query_total = "SELECT FOUND_ROWS() as rows;";
+        $result_total = $this->db->query($query_total);
+        $total = $result_total->row();
+
+        if ($total->rows > 0) {
+            return array("productos" => $productos, "total" => $total->rows);
+        } else {
+            return array("total" => 0);
+        }
+
+
+
+        /*$this->db->start_cache();
+        $this->db->select("producto.*,COUNT(visita.id) as total");
+        $this->db->from($this->_table);
+        $this->db->join("visita", "visita.producto_id=producto.id", 'INNER');
+
+        if (isset($params['vendedor_id'])) {
+            $this->db->where('producto.vendedor_id', $params['vendedor_id']);
+        }
+
+        $this->db->group_by('producto.id');
+
+        $this->db->stop_cache();
+        $count = $this->db->count_all_results();
+
+        if ($count > 0) {
+            $this->db->order_by('producto.id', 'asc');
+            $this->db->limit($limit, $offset);
+            $productos = $this->db->get()->result();
+            $this->db->flush_cache();
+            return array("productos" => $productos, "total" => $count);
+        } else {
+            $this->db->flush_cache();
+            return array("total" => 0);
+        }*/
     }
 
 }
