@@ -10,12 +10,13 @@ class MY_Controller extends MX_Controller {
     private $_ci;
 
     public function __construct() {
-        parent::__construct();        
-        $this->_ci = & get_instance();                        
-        $this->template->add_metadata("keywords","Comparador,Productos,Infocompras,Social");
-        $this->template->add_metadata("distribution","global");
-        $this->template->add_metadata("robots","all");
+        parent::__construct();
+        $this->_ci = & get_instance();
+        $this->template->add_metadata("keywords", "Comparador,Productos,Infocompras,Social");
+        $this->template->add_metadata("distribution", "global");
+        $this->template->add_metadata("robots", "all");
     }
+
     /**
      * 
      */
@@ -23,7 +24,13 @@ class MY_Controller extends MX_Controller {
         $this->output->enable_profiler(TRUE);
     }
 
-       
+    public function ajax_header() {
+        $this->output->set_header("HTTP/1.0 200 OK");
+        $this->output->set_header("HTTP/1.1 200 OK");
+        $this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate");
+        $this->output->set_header("Cache-Control: post-check=0, pre-check=0");
+        $this->output->set_header("Pragma: no-cache");
+    }
 
     /**
      * Load Javascript inside the page's body

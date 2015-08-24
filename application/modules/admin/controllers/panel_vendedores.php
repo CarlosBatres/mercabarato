@@ -63,8 +63,8 @@ class Panel_vendedores extends ADController {
             "info" => $vendedor,
             "full_localizacion" => $full_localizacion
         );
-        
-        $this->template->load_view('admin/panel_vendedores/resumen', $data);                
+
+        $this->template->load_view('admin/panel_vendedores/resumen', $data);
     }
 
     /**
@@ -130,14 +130,14 @@ class Panel_vendedores extends ADController {
                 $vendedor = $this->usuario_model->get_full_identidad($user_id);
 
                 if ($tipo == "mensual") {
-                    $visitas = $this->visita_model->generar_estadisticas_visitas(date("Y-m-1"), date("Y-m-t"), $vendedor->get_vendedor_id(), false);
+                    $visitas = $this->visita_model->generar_estadisticas_visitas(date("Y-m-1"), date("Y-m-t"), $vendedor->get_vendedor_id(), false, false);
                     if ($visitas) {
                         $data = $visitas;
                     } else {
                         $data = "empty";
                     }
                 } elseif ($tipo == "anual") {
-                    $visitas = $this->visita_model->generar_estadisticas_visitas(date("Y-1-1"), date("Y-12-31"), $vendedor->get_vendedor_id(), true);
+                    $visitas = $this->visita_model->generar_estadisticas_visitas(date("Y-1-1"), date("Y-12-31"), $vendedor->get_vendedor_id(), false, true);
                     $data = array();
                     if ($visitas) {
                         $data = $visitas;
@@ -148,6 +148,98 @@ class Panel_vendedores extends ADController {
             }
             echo json_encode($data);
         }
+    }
+
+    public function get_visitas_estadisticas_afiliados() {
+        if ($this->input->is_ajax_request()) {
+            $formValues = $this->input->post();
+            //$this->show_profiler();
+            if ($formValues !== false) {
+                $tipo = $this->input->post('tipo');
+
+                $user_id = $this->authentication->read('identifier');
+                $vendedor = $this->usuario_model->get_full_identidad($user_id);
+
+                if ($tipo == "mensual") {
+                    $visitas = $this->visita_model->generar_estadisticas_visitas(date("Y-m-1"), date("Y-m-t"), $vendedor->get_vendedor_id(), true, false);
+                    if ($visitas) {
+                        $data = $visitas;
+                    } else {
+                        $data = "empty";
+                    }
+                } elseif ($tipo == "anual") {
+                    $visitas = $this->visita_model->generar_estadisticas_visitas(date("Y-1-1"), date("Y-12-31"), $vendedor->get_vendedor_id(), true, true);
+                    $data = array();
+                    if ($visitas) {
+                        $data = $visitas;
+                    } else {
+                        $data = "empty";
+                    }
+                }
+            }
+            echo json_encode($data);
+        }
+    }
+    
+    public function ajax_get_productos_visitas() {
+        //$this->show_profiler();
+        $formValues = $this->input->post();
+
+        $params = array();
+        if ($formValues !== false) {            
+            $user_id = $this->authentication->read('identifier');
+            $vendedor = $this->usuario_model->get_full_identidad($user_id);
+            $params["vendedor_id"] = $vendedor->get_vendedor_id();
+            $pagina = $this->input->post('pagina');
+        } else {
+            $pagina = 1;
+        }
+
+        $limit = $this->config->item("admin_default_per_page");
+        $offset = $limit * ($pagina - 1);
+        $productos_array = $this->producto_model->get_visitas_search($params, $limit, $offset);
+        $flt = (float) ($productos_array["total"] / $limit);
+        $ent = (int) ($productos_array["total"] / $limit);
+        if ($flt > $ent || $flt < $ent) {
+            $paginas = $ent + 1;
+        } else {
+            $paginas = $ent;
+        }
+
+        if ($productos_array["total"] == 0) {
+            $productos_array["productos"] = array();
+        }
+
+        $paquete_en_curso = $this->vendedor_model->get_paquete_en_curso($vendedor->get_vendedor_id());
+        $ilimitado = false;
+        $limite_productos = 0;
+        if ($paquete_en_curso) {
+            if ($paquete_en_curso->limite_productos == -1) {
+                $ilimitado = true;
+            } else {
+                $limite_productos = $paquete_en_curso->limite_productos;
+            }
+        }
+
+        $search_params = array(
+            "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+            "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+            "pagina" => $pagina,
+            "total_paginas" => $paginas,
+            "por_pagina" => $limit,
+            "total" => $productos_array["total"],
+            "hasta" => ($pagina * $limit < $productos_array["total"]) ? $pagina * $limit : $productos_array["total"],
+            "desde" => (($pagina * $limit) - $limit) + 1);
+        $pagination = build_paginacion($search_params);
+
+        $data = array(
+            "productos" => $productos_array["productos"],
+            "pagination" => $pagination,
+            "productos_total" => $productos_array["total"],
+            "ilimitado" => $ilimitado,
+            "limite_productos" => $limite_productos);
+
+        $this->template->load_view('admin/panel_vendedores/producto/resumen_tabla_resultados', $data);
     }
 
 }

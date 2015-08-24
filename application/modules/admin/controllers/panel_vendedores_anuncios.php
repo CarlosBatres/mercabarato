@@ -55,7 +55,8 @@ class Panel_vendedores_anuncios extends ADController {
                     'config' => array(
                         'toolbar' => "Full", //Using the Full toolbar                        
                         'height' => '400px', //Setting a custom height
-                    ),
+                        'filebrowserImageUploadUrl'=> assets_url('/js/ckeditor/plugins/imgupload.php'),                        
+                    ),                    
                 );
 
                 $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_agregar', $data);
@@ -115,6 +116,7 @@ class Panel_vendedores_anuncios extends ADController {
                         'config' => array(
                             'toolbar' => "Full", //Using the Full toolbar                        
                             'height' => '400px', //Setting a custom height
+                            'filebrowserImageUploadUrl'=> assets_url('/js/ckeditor/plugins/imgupload.php')
                         ),
                     );
 

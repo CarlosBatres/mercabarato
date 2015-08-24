@@ -63,6 +63,7 @@ class Producto extends MY_Controller {
      */
     public function ajax_get_listado_resultados() {
         if ($this->input->is_ajax_request()) {
+            $this->ajax_header();            
             //$this->show_profiler();
             $formValues = $this->input->post();
             $params = array();
