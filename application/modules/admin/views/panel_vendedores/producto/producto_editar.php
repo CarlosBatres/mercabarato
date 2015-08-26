@@ -103,6 +103,26 @@
                         </div>                                                                       
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <br>
+                            <label>Transporte es gratuito?</label><br>
+                            <?php foreach (transporte_radio() as $id=>$radio): ?>
+                                <label><input type="radio" name="transporte" value="<?php echo $id ?>" class="radioInput" <?php echo ($producto->transporte == $id) ? "checked" : ""; ?>><?php echo $radio?></label><br>    
+                            <?php endforeach; ?>
+                        </div>
+                    </div>   
+                    <div class="col-md-4">                        
+                        <div class="form-group">
+                            <br>
+                            <label>Impuesto incluido?</label><br>
+                            <?php foreach (impuesto_radio() as $id=>$radio): ?>
+                                <label><input type="radio" name="impuesto" value="<?php echo $id ?>" class="radioInput" <?php echo ($producto->impuesto == $id) ? "checked" : ""; ?>><?php echo $radio?></label><br>    
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
                 <br>
                 <div class="row">
                     <div class="col-md-12">

@@ -66,6 +66,7 @@ $route['anuncios/(:num)'] = 'home/anuncio/ver_anuncio/$1';
 
 $route['seguros'] = 'home/seguro/view_seguros';
 $route['seguros/registrar'] = 'home/seguro/registrar_seguro';
+$route['seguros/enviar-directo'] = 'home/seguro/enviar_directo';
 $route['seguros/enviar'] = 'home/seguro/crear_solicitud_seguro';
 $route['seguros/enviar-todos'] = 'home/seguro/crear_solicitud_seguro_todos';
 $route['seguros/buscar_prestadores'] = 'home/seguro/ajax_get_listado_resultados_prestadores';

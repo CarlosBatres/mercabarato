@@ -59,3 +59,26 @@ CHANGE COLUMN `keyword` `keyword` INT(11) NULL DEFAULT NULL ;
 
 ALTER TABLE `vendedor` 
 CHANGE COLUMN `keyword` `keyword` INT(11) NULL DEFAULT NULL ;
+
+ALTER TABLE `mercabarato_bd`.`producto` 
+ADD COLUMN `transporte` INT(1) NULL DEFAULT NULL AFTER `unique_slug`,
+ADD COLUMN `impuesto` INT(1) NULL DEFAULT NULL AFTER `transporte`,
+ADD COLUMN `precio_anterior` FLOAT(10,2) NULL DEFAULT NULL AFTER `impuesto`,
+ADD COLUMN `fecha_precio_modificar` DATE NULL DEFAULT NULL AFTER `precio_anterior`;
+
+
+CREATE TABLE IF NOT EXISTS `mercabarato_bd`.`punto_venta` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NULL DEFAULT NULL,
+  `direccion` VARCHAR(255) NULL DEFAULT NULL,
+  `vendedor_id` INT(10) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_punto_venta_vendedor1_idx` (`vendedor_id` ASC),
+  CONSTRAINT `fk_punto_venta_vendedor1`
+    FOREIGN KEY (`vendedor_id`)
+    REFERENCES `mercabarato_bd`.`vendedor` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;

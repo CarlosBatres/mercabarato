@@ -104,15 +104,37 @@ class Vendedor extends MY_Controller {
                 $data_localizacion = false;
             }
 
+            $data_puntos_venta = array();
+            if ($this->input->post('nombre_punto_venta_1') != "") {
+                $data_puntos_venta[] = array(
+                    "nombre" => $this->input->post('nombre_punto_venta_1'),
+                    "direccion" => $this->input->post("direccion_punto_venta_1")
+                );
+            }
+            if ($this->input->post('nombre_punto_venta_2') != "") {
+                $data_puntos_venta[] = array(
+                    "nombre" => $this->input->post('nombre_punto_venta_2'),
+                    "direccion" => $this->input->post("direccion_punto_venta_2")
+                );
+            }
+            if ($this->input->post('nombre_punto_venta_3') != "") {
+                $data_puntos_venta[] = array(
+                    "nombre" => $this->input->post('nombre_punto_venta_3'),
+                    "direccion" => $this->input->post("direccion_punto_venta_3")
+                );
+            }
+
 
             $this->session->unset_userdata('afiliacion_cliente');
             $this->session->unset_userdata('afiliacion_vendedor');
             $this->session->unset_userdata('afiliacion_localizacion');
+            $this->session->unset_userdata('afiliacion_puntos_venta');
 
             $this->session->set_userdata(array(
                 'afiliacion_cliente' => $data_cliente,
                 'afiliacion_vendedor' => $data,
                 'afiliacion_localizacion' => $data_localizacion,
+                'afiliacion_puntos_venta' => $data_puntos_venta,
             ));
 
             redirect('usuario/afiliacion-paso2');
@@ -169,6 +191,7 @@ class Vendedor extends MY_Controller {
                 $data_cliente = $this->session->userdata('afiliacion_cliente');
                 $data_vendedor = $this->session->userdata('afiliacion_vendedor');
                 $data_localizacion = $this->session->userdata('afiliacion_localizacion');
+                $data_puntos_venta = $this->session->userdata('afiliacion_puntos_venta');
                 $this->cliente_model->update($cliente->id, $data_cliente);
                 $nickname = $data_vendedor["nickname"];
                 unset($data_vendedor["nickname"]);
@@ -188,10 +211,20 @@ class Vendedor extends MY_Controller {
                     $this->localizacion_model->insert($data_localizacion);
                 }
 
+                if ($data_puntos_venta) {
+                    foreach ($data_puntos_venta as $punto) {
+                        $this->punto_venta_model->insert(array(
+                            "vendedor_id" => $vendedor_id,
+                            "nombre" => $punto["nombre"],
+                            "direccion" => $punto["direccion"]
+                        ));
+                    }
+                }
 
                 $this->session->unset_userdata('afiliacion_cliente');
                 $this->session->unset_userdata('afiliacion_vendedor');
                 $this->session->unset_userdata('afiliacion_localizacion');
+                $this->session->unset_userdata('afiliacion_puntos_venta');
 
                 $paquete = $this->paquete_model->get($paquete_id);
                 $data = array(
@@ -543,7 +576,7 @@ class Vendedor extends MY_Controller {
 
     /**
      * 
-     * @param type $id
+     * @param type $slug
      */
     public function ver_vendedor($slug) {
         $this->template->set_title('Mercabarato - Busca y Compara');
@@ -581,8 +614,9 @@ class Vendedor extends MY_Controller {
                     $invitacion = $this->invitacion_model->invitacion_existe($user_id, $cliente_vendedor->usuario_id);
                     $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                     $params["cliente_id"] = $cliente->id;
-
                     $son_contactos = $this->invitacion_model->son_contactos($user_id, $cliente_vendedor->usuario_id);
+
+                    $cliente_datos_contacto = $this->usuario_model->get_full_identidad($user_id);
                 } else {
                     $invitacion = true;
                     $son_contactos = false;
@@ -595,7 +629,13 @@ class Vendedor extends MY_Controller {
                     $prods = false;
                 }
 
-
+                $paquete_curso = $this->vendedor_model->get_paquete_en_curso($vendedor->id);
+                $infocompras = false;
+                if ($paquete_curso) {
+                    if ($paquete_curso->infocompra == "1") {
+                        $infocompras = true;
+                    }
+                }
 
                 $data = array(
                     "vendedor" => $vendedor,
@@ -604,9 +644,37 @@ class Vendedor extends MY_Controller {
                     "invitacion" => $invitacion,
                     "anuncios" => $anuncios,
                     "productos" => $prods,
-                    "son_contactos" => $son_contactos);
+                    "son_contactos" => $son_contactos,
+                    "infocompras" => $infocompras
+                );
 
-                $this->template->load_view('home/vendedores/ficha', $data);
+                if ($infocompras) {
+                    $formulario_data = array();
+                    if ($this->authentication->is_loggedin()) {
+                        $formulario_data["datos_contacto"] = $cliente_datos_contacto;
+                    }
+
+                    $ya_envie = $this->session->userdata('infocompras_enviado_vendedor_id');
+
+                    $this->session->unset_userdata('infocompras_vendedor_id');                    
+
+                    if ($ya_envie == $vendedor->id) {
+                        $formularios = '<div>';
+                        $formularios.='<div class="alert alert-warning">';
+                        $formularios.='<p> Ya le has enviado a este vendedor una solicitud de seguro en esta sesion. </p>';
+                        $formularios.= '</div>';
+                        $formularios.= '</div>';
+                    } else {
+                        $this->session->set_userdata(array('infocompras_vendedor_id' => $vendedor->id));
+                        $this->template->add_js('modules/home/seguros_vendedor.js');
+                        $formularios = $this->load->view('home/seguro/formulario_vendedores', $formulario_data, true);
+                    }
+
+                    $data["formularios"] = $formularios;
+                    $this->template->load_view('home/vendedores/ficha', $data);
+                } else {
+                    $this->template->load_view('home/vendedores/ficha', $data);
+                }
             } else {
                 show_404();
             }
@@ -641,6 +709,8 @@ class Vendedor extends MY_Controller {
                 $vendedor = array();
             }
 
+            $puntos_venta = $this->punto_venta_model->get_many_by("vendedor_id", $vendedor->id);
+
             $keywords = $this->categoria_model->get_keywords_from_categorias();
 
             $keywords_cliente = $this->keyword_model->get_keyword($vendedor->keyword);
@@ -659,7 +729,8 @@ class Vendedor extends MY_Controller {
                 "vendedor" => $vendedor,
                 "html_options" => $html_options,
                 "keywords" => $keywords,
-                "mis_intereses" => $mis_intereses)
+                "mis_intereses" => $mis_intereses,
+                "puntos_venta" => $puntos_venta)
             );
         } else {
             redirect('');
@@ -721,6 +792,71 @@ class Vendedor extends MY_Controller {
                     "filename" => $filename,
                     "keyword" => $keyword_id
                 );
+
+                $data_puntos_venta = array();
+                if ($this->input->post('nombre_punto_venta_1') != "") {
+                    $data_puntos_venta[] = array(
+                        "id" => $this->input->post('id_punto_venta_1'),
+                        "nombre" => $this->input->post('nombre_punto_venta_1'),
+                        "direccion" => $this->input->post("direccion_punto_venta_1")
+                    );
+                } elseif ($this->input->post('id_punto_venta_1') != "") {
+                    $pt = $this->punto_venta_model->get($this->input->post('id_punto_venta_1'));
+                    if ($pt) {
+                        if ($pt->vendedor_id == $vendedor->id) {
+                            $this->punto_venta_model->delete($this->input->post('id_punto_venta_1'));
+                        }
+                    }
+                }
+                if ($this->input->post('nombre_punto_venta_2') != "") {
+                    $data_puntos_venta[] = array(
+                        "id" => $this->input->post('id_punto_venta_2'),
+                        "nombre" => $this->input->post('nombre_punto_venta_2'),
+                        "direccion" => $this->input->post("direccion_punto_venta_2")
+                    );
+                } elseif ($this->input->post('id_punto_venta_2') != "") {
+                    $pt = $this->punto_venta_model->get($this->input->post('id_punto_venta_2'));
+                    if ($pt) {
+                        if ($pt->vendedor_id == $vendedor->id) {
+                            $this->punto_venta_model->delete($this->input->post('id_punto_venta_2'));
+                        }
+                    }
+                }
+
+                if ($this->input->post('nombre_punto_venta_3') != "") {
+                    $data_puntos_venta[] = array(
+                        "id" => $this->input->post('id_punto_venta_3'),
+                        "nombre" => $this->input->post('nombre_punto_venta_3'),
+                        "direccion" => $this->input->post("direccion_punto_venta_3")
+                    );
+                } elseif ($this->input->post('id_punto_venta_3') != "") {
+                    $pt = $this->punto_venta_model->get($this->input->post('id_punto_venta_3'));
+                    if ($pt) {
+                        if ($pt->vendedor_id == $vendedor->id) {
+                            $this->punto_venta_model->delete($this->input->post('id_punto_venta_3'));
+                        }
+                    }
+                }
+
+                if ($data_puntos_venta) {
+                    foreach ($data_puntos_venta as $punto) {
+                        if ($punto["id"] != "") {
+                            $id = $punto["id"];
+                            unset($punto["id"]);
+                            $this->punto_venta_model->update($id, array(
+                                "vendedor_id" => $vendedor->id,
+                                "nombre" => $punto["nombre"],
+                                "direccion" => $punto["direccion"]
+                            ));
+                        } else {
+                            $this->punto_venta_model->insert(array(
+                                "vendedor_id" => $vendedor->id,
+                                "nombre" => $punto["nombre"],
+                                "direccion" => $punto["direccion"]
+                            ));
+                        }
+                    }
+                }
 
                 $data_vendedor["unique_slug"] = $this->slug->create_uri($data_vendedor["nombre"]);
                 $this->vendedor_model->update($vendedor->id, $data_vendedor);

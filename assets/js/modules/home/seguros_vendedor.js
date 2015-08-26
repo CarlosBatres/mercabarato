@@ -1,74 +1,13 @@
 $(document).ready(function() {
-    validateForms();
-    $('#form_buscar').find('select[name="pais"]').on('change', function() {
-        $('#form_buscar').find('select[name="provincia"]').html("<option value='0'>Todas las Provincias</option>");
-        $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
-        var pais_id = $(this).val();
-        updateResultados();
-        $.ajax({
-            type: "POST",
-            url: SITE_URL + 'util/get_provincias',
-            data: {pais_id: pais_id},
-            dataType: 'json',
-            success: function(response) {
-                $('#form_buscar').find('select[name="provincia"]').html(response.html);
-                $('#form_buscar').find('select[name="provincia"]').find('option:first').text("Todas las Provincias");
-            }
-        });
-    });
-
-    $('#form_buscar').find('select[name="provincia"]').on('change', function() {
-        $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
-        var provincia_id = $(this).val();
-        updateResultados();
-        $.ajax({
-            type: "POST",
-            url: SITE_URL + 'util/get_poblaciones',
-            data: {provincia_id: provincia_id},
-            dataType: 'json',
-            success: function(response) {
-                $('#form_buscar').find('select[name="poblacion"]').html(response.html);
-                $('#form_buscar').find('select[name="poblacion"]').find('option:first').text("Todas las Poblaciones");
-            }
-        });
-    });
-
-    $('#form_buscar').find('select[name="poblacion"]').on('change', function() {
-        updateResultados();
-    });
-
-    $('#form_buscar').find('select[name="pais"]').trigger('change');
+    validateForms();           
 
     $(".datepicker").datepicker({
         changeMonth: true,
         changeYear: true,
         dateFormat: "dd-mm-yy",
         yearRange: "1900:-nn"
-    });
-
-    $('#enviar-todos').on('click', function(e) {
-        e.preventDefault();
-        $.blockUI({ message: '<h1>Espere un momento...</h1>' });
-        $.post(SITE_URL + "seguros/enviar-todos",
-                {
-                    pais: $('#form_buscar').find('select[name="pais"]').val(),
-                    provincia: $('#form_buscar').find('select[name="provincia"]').val(),
-                    poblacion: $('#form_buscar').find('select[name="poblacion"]').val()
-                }).done(function() {
-            updateResultados();            
-            $.unblockUI();
-            $('.terminar-btn').css('display', 'block');
-        });
-    });
+    });    
 });
-
-function enviar_todos() {
-    if ($('#form_buscar').find('select[name="poblacion"]').val() !== '0' || $('#form_buscar').find('select[name="provincia"]').val() !== '0') {
-        $('.enviar-todos-btn').css('display', 'block');
-    } else {
-        $('.enviar-todos-btn').css('display', 'none');
-    }
-}
 
 function validateForms() {
     $("#seguro_hogar").validate({
@@ -260,67 +199,10 @@ function validateForms() {
                 email: "Ingrese un email valido",
                 remote: 'Este email ya esta registrado en nuestro sistema.'
             },
-            nombres: {required: "Ingresa tu(s) Nombre(s)."},
-            apellidos: {required: "Ingresa tu(s) Apellido(s)."},
+//            nombres: {required: "Ingresa tu(s) Nombre(s)."},
+//            apellidos: {required: "Ingresa tu(s) Apellido(s)."},
             observaciones: {required: "Este campo es requerido"},
             otros: {required: "Selecciona al menos uno"}
         }
-    });
-}
-
-function updateResultados() {
-    var pagina_id = $('#pagina').val();
-    var pais = $('select[name="pais"]').val();
-    var provincia = $('select[name="provincia"]').val();
-    var poblacion = $('select[name="poblacion"]').val();
-
-    $('#tabla-resultados').css('opacity', '0.5');
-    $('#tabla-resultados').block({message: $('#throbber'),
-        css: {width: '4%', border: '0px solid #FFFFFF', cursor: 'wait', backgroundColor: '#FFFFFF', top: '50px'},
-        overlayCSS: {backgroundColor: '#FFFFFF', opacity: 0.0, cursor: 'wait'}
-    });
-    $.ajax({
-        type: "POST",
-        url: SITE_URL + 'seguros/buscar_prestadores',
-        data: {
-            pagina: pagina_id,
-            pais: pais,
-            provincia: provincia,
-            poblacion: poblacion
-        },
-        dataType: "json",
-        success: function(response) {
-            $('#tabla-resultados').css('opacity', '1');
-            $('#tabla-resultados').unblock();
-            $('#tabla-resultados').html(response.html);
-            bind_pagination_links();
-            bind_botones();
-            if (response.result === "success") {
-                enviar_todos();
-            } else if (response.result === "empty") {
-                $('.enviar-todos-btn').css('display', 'none');
-            }
-
-        }
-    });
-}
-
-function bind_pagination_links() {
-    $('.pagination a').on('click', function(e) {
-        e.preventDefault();
-        $('#pagina').val($(this).data('id'));
-        updateResultados();
-    });
-}
-
-function bind_botones() {
-    $('.enviar_presupuesto').on('click', function(e) {
-        e.preventDefault();
-        var id = $(this).data('id');
-
-        $.post(SITE_URL + "seguros/enviar", {id: id}).done(function() {
-            updateResultados();
-            $('.terminar-btn').css('display', 'block');
-        });
     });
 }

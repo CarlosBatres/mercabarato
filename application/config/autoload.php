@@ -136,7 +136,8 @@ $autoload['model'] = array(
     'permisos_model',
     'restriccion_model',
     'requisito_visitas_model',
-    'keyword_model');
+    'keyword_model',
+    'punto_venta_model');
 
 
 /* End of file autoload.php */

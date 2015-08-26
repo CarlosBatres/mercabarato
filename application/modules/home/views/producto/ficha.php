@@ -78,6 +78,16 @@
                             <?php endif; ?>                                                        
                         <?php endif; ?>
                     </div>
+                    <div class="ficha-producto-extra text-right">
+                        <?php if ($producto->transporte == "0"): ?>
+                            <p><strong>Transporte gratuito</strong></p>
+                        <?php elseif ($producto->transporte == "2"): ?>    
+                            <p><strong>Transporte gratuito segun volumen de compra o distancia</strong></p>
+                        <?php endif; ?>
+                        <?php if ($producto->impuesto == "0"): ?>
+                            <p><strong>Impuestos incluidos</strong></p>
+                        <?php endif; ?>
+                    </div>
                 </div>            
                 <?php if ($producto->link_externo != ""): ?>                        
                     <p class="text-right"><strong><a href="http://<?php echo $producto->link_externo ?>"><?php echo $producto->link_externo ?></a></strong></p>                    

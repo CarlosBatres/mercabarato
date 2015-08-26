@@ -162,6 +162,70 @@
                             <?php endforeach; ?>
                         </div>
                     </div>
+                    <br>
+                    <div class="row">
+                        <div class='col-md-12'>
+                            <p class="lead">Indica a continuación tus puntos de venta registrados. ( Opcionales )</p>
+                        </div>
+                        <div class='col-md-12'>
+                            <p><strong>Punto de Venta 1.</strong></p>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">                                
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="nombre_punto_venta_1" placeholder="Nombre">
+                                    <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">                                
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="direccion_punto_venta_1" placeholder="Dirección">
+                                    <span class="input-group-addon"><i class="fa fa-street-view fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div>                            
+                        <div class='col-md-12'>
+                            <p><strong>Punto de Venta 2.</strong></p>
+                        </div>                       
+                        <div class="col-md-4">
+                            <div class="form-group">                                
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="nombre_punto_venta_2" placeholder="Nombre">
+                                    <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">                                
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="direccion_punto_venta_2" placeholder="Dirección">
+                                    <span class="input-group-addon"><i class="fa fa-street-view fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div>                            
+                        <div class='col-md-12'>
+                            <p><strong>Punto de Venta 3.</strong></p>
+                        </div>                        
+                        <div class="col-md-4">
+                            <div class="form-group">                                
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="nombre_punto_venta_3" placeholder="Nombre">
+                                    <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">                                
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="direccion_punto_venta_3" placeholder="Dirección">
+                                    <span class="input-group-addon"><i class="fa fa-street-view fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div>                            
+
+                    </div>
                     <div class="box-footer">
                         <div class="pull-left">
 

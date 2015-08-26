@@ -162,22 +162,13 @@ class Authentication {
      * @return	boolean Either TRUE or FALSE depending upon successful login
      */
     public function login($username, $password, $check_admin = false) {
-        // Select user details
-//        if ($check_admin) {
-//            $user = $this->ci->db
-//                    ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username, ' . $this->password_field . ' as password')
-//                    ->where($this->username_field, $username)
-//                    ->where('activo', '1')
-//                    ->where('is_admin', '1')
-//                    ->get($this->user_table);
-//        } else {
+       
         $user = $this->ci->db
                 ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username, ' . $this->password_field . ' as password')
                 ->where($this->username_field, $username)
                 ->where('activo', '1')
                 ->get($this->user_table);
-//        }
-        // Ensure there is a user with that username
+
         if ($user->num_rows() == 0) {
             // There is no user with that username, but we won't tell the user that
             return FALSE;
@@ -191,6 +182,7 @@ class Authentication {
 
             // Yes, the passwords match
             // Set the userdata for the current user
+            $this->unset_only();
             $this->ci->session->set_userdata(array(
                 'identifier' => $user_details->identifier,
                 'username' => $user_details->username,
@@ -204,6 +196,37 @@ class Authentication {
             // The passwords don't match, but we won't tell the user that
             return FALSE;
         }
+    }
+    
+    /**
+     * Forzar el login dando el username DELICADA
+     * @param type $username
+     * @return boolean
+     */
+    public function force_login($username) {
+        // Select user details
+        $user = $this->ci->db
+                ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username')
+                ->where($this->username_field, $username)
+                ->where('activo', '1')
+                ->get($this->user_table);
+
+        // Ensure there is a user with that username
+        if ($user->num_rows() == 0) {
+            // There is no user with that username, but we won't tell the user that
+            return FALSE;
+        }
+        // Set the user details
+        $user_details = $user->row();
+        // Set the userdata for the current user
+        $this->unset_only();
+        $this->ci->session->set_userdata(array(
+            'identifier' => $user_details->identifier,
+            'username' => $user_details->username,
+            'logged_in' => $_SERVER['REQUEST_TIME'],
+        ));
+
+        return TRUE;
     }
 
     /**
@@ -331,7 +354,9 @@ class Authentication {
         $this->ci->session->unset_userdata('identifier');
         $this->ci->session->unset_userdata('username');
         $this->ci->session->unset_userdata('logged_in');
-
+        
+        $this->unset_only();
+        
         // Set logged out userdata
         $this->ci->session->set_userdata(array(
             'logged_out' => $_SERVER['REQUEST_TIME']
@@ -339,6 +364,16 @@ class Authentication {
 
         // Return true
         return TRUE;
+    }
+
+    function unset_only() {
+        $user_data = $this->ci->session->all_userdata();
+
+        foreach ($user_data as $key => $value) {
+            if ($key != 'session_id' && $key != 'ip_address' && $key != 'user_agent' && $key != 'last_activity') {
+                $this->ci->session->unset_userdata($key);
+            }
+        }
     }
 
     /**
@@ -416,35 +451,7 @@ class Authentication {
         }
     }
 
-    /**
-     * Forzar el login dando el username DELICADA
-     * @param type $username
-     * @return boolean
-     */
-    public function force_login($username) {
-        // Select user details
-        $user = $this->ci->db
-                ->select($this->identifier_field . ' as identifier, ' . $this->username_field . ' as username')
-                ->where($this->username_field, $username)
-                ->where('activo', '1')
-                ->get($this->user_table);
-
-        // Ensure there is a user with that username
-        if ($user->num_rows() == 0) {
-            // There is no user with that username, but we won't tell the user that
-            return FALSE;
-        }
-        // Set the user details
-        $user_details = $user->row();       
-        // Set the userdata for the current user
-        $this->ci->session->set_userdata(array(
-            'identifier' => $user_details->identifier,
-            'username' => $user_details->username,
-            'logged_in' => $_SERVER['REQUEST_TIME'],
-        ));
-
-        return TRUE;
-    }
+    
 
 }
 
