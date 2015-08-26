@@ -1,7 +1,9 @@
 <?php if (sizeof($solicitud_seguros) == 0): ?>
-    <div>
-        <p> No tienes ninguna solicitud de presupuesto pendientes...</p>    
-    </div>
+    <div>        
+        <div class="alert alert-warning">             
+            <p> No tienes ninguna solicitud de presupuesto pendientes...</p>    
+        </div>        
+    </div>        
 <?php else: ?>
     <ul class="tabla-resultados-principal invitaciones-list">
         <?php foreach ($solicitud_seguros as $seguro): ?>
@@ -41,7 +43,7 @@
                             <br>
                             <div class="row">
                                 <div class="pull-right">                                    
-                                    <a href="<?php echo site_url('usuario/infocompras-seguros/respuesta/'.$seguro->id) ?>" data-toggle="modal" data-target="#myModal" class="btn btn-success" >&nbsp;&nbsp; Ver Respuesta &nbsp;&nbsp;</a>
+                                    <a href="<?php echo site_url('usuario/infocompras-seguros/respuesta/' . $seguro->id) ?>" data-toggle="modal" data-target="#myModal" class="btn btn-success" >&nbsp;&nbsp; Ver Respuesta &nbsp;&nbsp;</a>
                                 </div>
                             </div>                        
                         </div>

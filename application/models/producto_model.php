@@ -8,7 +8,6 @@ class Producto_model extends MY_Model {
 
     public $has_many = array('producto_resources' => array('model' => 'producto_resource_model', 'primary_key' => 'producto_id'));
     public $before_create = array('pre_insertado');
-    public $protected_attributes = array('id');
 
     function __construct() {
         parent::__construct();
@@ -446,9 +445,34 @@ class Producto_model extends MY_Model {
         return $producto;
     }
 
+   
+
+    /**
+     * 
+     * @param type $producto_id
+     * @param type $precio
+     * @return boolean
+     */
+    public function verificar_cambio_precio($producto_id, $precio) {
+        $producto = $this->get($producto_id);
+        if ($producto->precio != $precio) {
+            $this->update($producto_id, array("fecha_precio_modificar"=>date('Y-m-d'),"precio_anterior"=>$producto->precio));
+        } else {
+            return false;
+        }
+    }
+
+    /*
+     * 
+     */
+
     public function inhabilitar($producto_id) {
         $this->update($producto_id, array("habilitado" => "0"));
     }
+
+    /*
+     * 
+     */
 
     public function habilitar($producto_id) {
         $this->update($producto_id, array("habilitado" => "1"));
@@ -740,9 +764,9 @@ class Producto_model extends MY_Model {
         $query.= "INNER JOIN visita ON visita.producto_id=producto.id ";
 
         if (isset($params['vendedor_id'])) {
-            $query.= "WHERE producto.vendedor_id='".$params["vendedor_id"]."' ";
+            $query.= "WHERE producto.vendedor_id='" . $params["vendedor_id"] . "' ";
         }
-                
+
         $query.=" GROUP BY producto.id";
         $query.=" ) p ";
         $query.=" ORDER BY id";
@@ -763,30 +787,30 @@ class Producto_model extends MY_Model {
 
 
 
-        /*$this->db->start_cache();
-        $this->db->select("producto.*,COUNT(visita.id) as total");
-        $this->db->from($this->_table);
-        $this->db->join("visita", "visita.producto_id=producto.id", 'INNER');
+        /* $this->db->start_cache();
+          $this->db->select("producto.*,COUNT(visita.id) as total");
+          $this->db->from($this->_table);
+          $this->db->join("visita", "visita.producto_id=producto.id", 'INNER');
 
-        if (isset($params['vendedor_id'])) {
-            $this->db->where('producto.vendedor_id', $params['vendedor_id']);
-        }
+          if (isset($params['vendedor_id'])) {
+          $this->db->where('producto.vendedor_id', $params['vendedor_id']);
+          }
 
-        $this->db->group_by('producto.id');
+          $this->db->group_by('producto.id');
 
-        $this->db->stop_cache();
-        $count = $this->db->count_all_results();
+          $this->db->stop_cache();
+          $count = $this->db->count_all_results();
 
-        if ($count > 0) {
-            $this->db->order_by('producto.id', 'asc');
-            $this->db->limit($limit, $offset);
-            $productos = $this->db->get()->result();
-            $this->db->flush_cache();
-            return array("productos" => $productos, "total" => $count);
-        } else {
-            $this->db->flush_cache();
-            return array("total" => 0);
-        }*/
+          if ($count > 0) {
+          $this->db->order_by('producto.id', 'asc');
+          $this->db->limit($limit, $offset);
+          $productos = $this->db->get()->result();
+          $this->db->flush_cache();
+          return array("productos" => $productos, "total" => $count);
+          } else {
+          $this->db->flush_cache();
+          return array("total" => 0);
+          } */
     }
 
 }

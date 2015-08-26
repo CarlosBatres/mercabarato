@@ -1,6 +1,8 @@
 <?php if (sizeof($productos) == 0): ?>
-    <div>
-        <p> No se encontraron productos...</p>    
+    <div>        
+        <div class="alert alert-warning">             
+            <p> No tienes productos con visitas. </p>                
+        </div>        
     </div>
 <?php else: ?>    
     <div class="table-responsive">        

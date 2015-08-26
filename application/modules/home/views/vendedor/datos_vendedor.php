@@ -143,7 +143,106 @@
                             <?php endforeach; ?>
                         </div>
                     </div>
+                    <br>
+                    <div class="row">
+                        <div class='col-md-12'>
+                            <p class="lead">Modifica a continuación tus puntos de venta registrados.</p>
+                        </div>
+                        <div class='col-md-12'>
+                            <p><strong>Punto de Venta 1.</strong></p>
+                        </div>
+                        <?php
+                        if (isset($puntos_venta["0"])) {
+                            $text_nombre = $puntos_venta["0"]->nombre;
+                            $text_direccion = $puntos_venta["0"]->direccion;
+                            $id = $puntos_venta["0"]->id;
+                        } else {
+                            $text_nombre = "";
+                            $text_direccion = "";
+                            $id="";
+                        }
+                        ?>
+                        <div class="col-md-4">
+                            <div class="form-group">                                
+                                <div class="input-group">  
+                                    <input type="hidden" name="id_punto_venta_1" value='<?php echo $id ?>'>
+                                    <input type="text" class="form-control" name="nombre_punto_venta_1" placeholder="Nombre" value='<?php echo $text_nombre ?>'>
+                                    <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">                                
+                                <div class="input-group">                                    
+                                    <input type="text" class="form-control" name="direccion_punto_venta_1" placeholder="Dirección" value='<?php echo $text_direccion ?>'>
+                                    <span class="input-group-addon"><i class="fa fa-street-view fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div>                            
+                        <div class='col-md-12'>
+                            <p><strong>Punto de Venta 2.</strong></p>
+                        </div>  
+                        <?php
+                        if (isset($puntos_venta["1"])) {
+                            $text_nombre = $puntos_venta["1"]->nombre;
+                            $text_direccion = $puntos_venta["1"]->direccion;
+                            $id = $puntos_venta["1"]->id;
+                        } else {
+                            $text_nombre = "";
+                            $text_direccion = "";
+                            $id="";
+                        }
+                        ?>
+                        <div class="col-md-4">
+                            <div class="form-group">                                
+                                <div class="input-group">
+                                    <input type="hidden" name="id_punto_venta_2" value='<?php echo $id ?>'>
+                                    <input type="text" class="form-control" name="nombre_punto_venta_2" placeholder="Nombre" value='<?php echo $text_nombre ?>'>
+                                    <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">                                
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="direccion_punto_venta_2" placeholder="Dirección" value='<?php echo $text_direccion ?>'>
+                                    <span class="input-group-addon"><i class="fa fa-street-view fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div>                            
+                        <div class='col-md-12'>
+                            <p><strong>Punto de Venta 3.</strong></p>
+                        </div> 
+                        <?php
+                        if (isset($puntos_venta["2"])) {
+                            $text_nombre = $puntos_venta["2"]->nombre;
+                            $text_direccion = $puntos_venta["2"]->direccion;
+                            $id = $puntos_venta["2"]->id;
+                        } else {
+                            $text_nombre = "";
+                            $text_direccion = "";
+                            $id="";
+                        }
+                        ?>
+                        <div class="col-md-4">
+                            <div class="form-group">                                
+                                <div class="input-group">
+                                    <input type="hidden" name="id_punto_venta_3" value='<?php echo $id ?>'>
+                                    <input type="text" class="form-control" name="nombre_punto_venta_3" placeholder="Nombre" value='<?php echo $text_nombre ?>'>
+                                    <span class="input-group-addon"><i class="fa fa-map-marker fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">                                
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="direccion_punto_venta_3" placeholder="Dirección" value='<?php echo $text_direccion ?>'>
+                                    <span class="input-group-addon"><i class="fa fa-street-view fa-fw"></i></span>
+                                </div>
+                            </div>
+                        </div>                            
 
+                    </div>
                     <br>
                     <hr>
                     <div class="row">

@@ -19,7 +19,7 @@
                         <?= $this->session->flashdata('error') ?> 
                     </div>
                 <?php } ?>
-                <?php echo form_open('panel_vendedor/producto/agregar', 'id="admin_producto_form" enctype="multipart/form-data"' ); ?>                 
+                <?php echo form_open('panel_vendedor/producto/agregar', 'id="admin_producto_form" enctype="multipart/form-data"'); ?>                 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">                            
@@ -78,6 +78,26 @@
                             <label>Si<input type="radio" name="mostrar_precio" id="mostrar_precio_si" value="1" checked class="radioInput"></label>
                             <label>No<input type="radio" name="mostrar_precio" id="mostrar_precio_no" value="0" class="radioInput"></label>
                         </div>                                                                       
+                    </div>
+                </div>                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <br>
+                            <label>Transporte es gratuito?</label><br>
+                            <?php foreach (transporte_radio() as $id=>$radio): ?>
+                                <label><input type="radio" name="transporte" value="<?php echo $id ?>" class="radioInput"><?php echo $radio?></label><br>    
+                            <?php endforeach; ?>
+                        </div>
+                    </div>   
+                    <div class="col-md-4">                        
+                        <div class="form-group">
+                            <br>
+                            <label>Impuesto incluido?</label><br>
+                            <?php foreach (impuesto_radio() as $id=>$radio): ?>
+                                <label><input type="radio" name="impuesto" value="<?php echo $id ?>" class="radioInput"><?php echo $radio?></label><br>    
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
                 <br>

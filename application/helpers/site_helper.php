@@ -224,22 +224,22 @@ function fix_category_text($text) {
 
 function blacklisted_words($word) {
     $list = array(
-        "login", 
+        "login",
         "logout",
-        "registro", 
-        "buscar", 
+        "registro",
+        "buscar",
         "buscar_producto",
         "vendedores",
-        "registro_exitoso", 
-        "registrar_cliente", 
-        "registrar_vendedor", 
-        "seguros", 
+        "registro_exitoso",
+        "registrar_cliente",
+        "registrar_vendedor",
+        "seguros",
         "usuarios",
-        "acceso_invalido", 
-        "buscar_prestadores", 
+        "acceso_invalido",
+        "buscar_prestadores",
         "password",
-        "util", 
-        "panel_vendedor", 
+        "util",
+        "panel_vendedor",
         "admin",
         "vendedor",
         "anonymous",
@@ -366,4 +366,21 @@ function print_ejemplo($ex, $ext = 'xml') {
         return;
     }
     highlight_file($file);
+}
+
+function transporte_radio() {
+    $data = array(
+        '0' => 'Si',
+        '1' => 'No',
+        '2' => 'Segun volumen de compra o distancia'
+    );
+    return $data;
+}
+
+function impuesto_radio() {
+    $data = array(
+        '0' => 'Si',
+        '1' => 'No'        
+    );
+    return $data;
 }

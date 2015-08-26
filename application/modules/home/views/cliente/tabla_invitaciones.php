@@ -1,6 +1,8 @@
 <?php if (sizeof($invitaciones) == 0): ?>
-    <div>
-        <p> No tienes contactos ni invitaciones pendientes...</p>    
+    <div>        
+        <div class="alert alert-warning">             
+            <p> Todavia no tienes contactos ni invitaciones pendientes. </p>                
+        </div>        
     </div>
 <?php else: ?>
     <ul class="tabla-resultados-principal invitaciones-list">
@@ -71,7 +73,7 @@
                             </div>                        
                             <br>  
                             <div class="row">
-                                <?php if ($invitacion->recibir_notificaciones==1): ?>
+                                <?php if ($invitacion->recibir_notificaciones == 1): ?>
                                     <div class="pull-right">
                                         <button type="button" class="btn btn-success accion recibir" data-id="<?php echo $invitacion->id ?>">Recibir Notificaciones</button>
                                     </div>

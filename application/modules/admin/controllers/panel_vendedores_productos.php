@@ -32,6 +32,8 @@ class Panel_vendedores_productos extends ADController {
                         "mostrar_precio" => $this->input->post('mostrar_precio'),
                         "vendedor_id" => $vendedor->get_vendedor_id(),
                         "categoria_id" => $this->input->post('categoria_id'),
+                        "transporte" =>($this->input->post('transporte') != '') ? $this->input->post('transporte') : null,
+                        "impuesto" => ($this->input->post('impuesto') != '') ? $this->input->post('impuesto') : null,
                     );
 
                     $producto_id = $this->producto_model->insert($data);
@@ -125,8 +127,11 @@ class Panel_vendedores_productos extends ADController {
                         "mostrar_precio" => $this->input->post('mostrar_precio'),
                         "vendedor_id" => $vendedor->get_vendedor_id(),
                         "categoria_id" => $this->input->post('categoria_id'),
+                        "transporte" =>($this->input->post('transporte') != '') ? $this->input->post('transporte') : null,
+                        "impuesto" => ($this->input->post('impuesto') != '') ? $this->input->post('impuesto') : null,
                     );
 
+                    $this->producto_model->verificar_cambio_precio($producto_id, $data["precio"]);
                     $this->producto_model->update($producto_id, $data);
 
                     if ($this->input->post('file_name') != "") {
