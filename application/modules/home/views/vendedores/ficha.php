@@ -10,7 +10,7 @@
 
 <div id="content">
     <div class="container">  
-        <div class="col-md-9">
+        <div class="<?php echo ($anuncios)?"col-md-9":"col-md-12"; ?>">
             <div class="row" id="productMain">
                 <div class="row">
                     <div class="col-md-4">
@@ -55,15 +55,15 @@
                     </div>
                 </div>                
             </div>
-            <?php if(!$invitacion):?>
-            <div class="row">
-                <div class="col-md-12 pull-right">
-                    <div class="text-right">
-                        <button type="button" class="btn btn-template-primary" data-id="<?php echo $vendedor->id ?>" data-toggle="modal" data-target="#sendInviteModal"> Solicitar Invitación</button>
+            <?php if (!$invitacion): ?>
+                <div class="row">
+                    <div class="col-md-12 pull-right">
+                        <div class="text-right">
+                            <button type="button" class="btn btn-template-primary" data-id="<?php echo $vendedor->id ?>" data-toggle="modal" data-target="#sendInviteModal"> Solicitar Invitación</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <?php endif;?>
+            <?php endif; ?>
             <?php if ($productos): ?>
                 <div class="row">
                     <hr>
@@ -119,17 +119,26 @@
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <hr>
-                <div class="col-md-12">
-                    <div class="text-right">
-                        <button type="button" class="btn btn-template-primary"> Ver Mas</button>
+                <hr>                
+                <!--                <div class="col-md-12">
+                                    <div class="text-right">
+                                        <button type="button" class="btn btn-template-primary"> Ver Mas</button>
+                                    </div>
+                                </div>-->
+            <?php endif; ?>
+            <?php if ($infocompras): ?>            
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $formularios; ?>
                     </div>
                 </div>
             <?php endif; ?>
-        </div>
+        </div>        
 
-        <div class="col-md-3">
-            <?php if ($anuncios): ?>
+        <?php if ($anuncios): ?>
+            <div class="col-md-3">
+
                 <div class="box box-anuncios">            
                     <div class="box-header">
                         <h4 class="text-center">Anuncios</h4>                
@@ -149,12 +158,14 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            <?php endif; ?>
-        </div>
+                </div>            
+            </div>
+        <?php endif; ?>
 
     </div>
 </div>
+
+
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
