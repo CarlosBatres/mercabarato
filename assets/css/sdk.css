@@ -1,0 +1,13 @@
+#mercabarato-boton{
+    width: 50px;
+    height: 50px;
+    background-image:url('../imgs/logo_small.png');
+    background-size: 50px 50px;
+    background-repeat: no-repeat;    
+    display: inline-block;
+}
+#mercabarato-boton>a{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+}
