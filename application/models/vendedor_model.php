@@ -429,6 +429,7 @@ class Vendedor_model extends MY_Model {
         $vendedor = $this->get($id);
         if ($vendedor) {
             $cliente = $this->cliente_model->get($vendedor->cliente_id);
+            $this->puntos_venta_model->delete_by("vendedor_id", $id);
             $this->invitacion_model->delete_by("invitar_desde", $cliente->usuario_id);
             $this->invitacion_model->delete_by("invitar_para", $cliente->usuario_id);
             $this->solicitud_seguro_model->delete_by("vendedor_id", $id);
