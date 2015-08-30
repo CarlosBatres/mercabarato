@@ -7,7 +7,7 @@
 
                 <p class="text-center">
                     <a href="<?php echo site_url() ?>">
-                        <img src="<?php echo assets_url('imgs/logo.png') ?>" alt="">
+                        <!--<img src="<?php echo assets_url('imgs/logo.png') ?>" alt="">-->
                     </a>
                 </p>
 

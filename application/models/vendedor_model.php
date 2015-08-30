@@ -484,5 +484,21 @@ class Vendedor_model extends MY_Model {
             return FALSE;
         }
     }
+    
+    public function es_vendedor_habilitado($vendedor_id) {
+        $this->db->where('id', $vendedor_id);
+        $query = $this->db->get('vendedor');
+        if ($query->num_rows() > 0) {
+            $vendedor=$query->result();
+            if($vendedor->habilitado=="1"){
+                return TRUE;
+            }else{
+                return FALSE;
+            }            
+        } else {
+            return FALSE;
+        }
+    }
+
 
 }

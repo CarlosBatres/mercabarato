@@ -45,7 +45,7 @@ class Cliente_model extends MY_Model {
         }
         if (isset($params['usuario_activo'])) {
             $this->db->where('usuario.activo', $params['usuario_activo']);
-        }       
+        }
 
         if (isset($params['excluir_cliente_ids'])) {
             $this->db->where_not_in('cliente.id', $params['excluir_cliente_ids']);
@@ -75,6 +75,19 @@ class Cliente_model extends MY_Model {
             return FALSE;
         }
     }
+    
+    public function es_vendedor_habilitado($cliente_id) {
+        if($this->es_vendedor($cliente_id)){
+            $vendedor=$this->vendedor_model->get_by("cliente_id",$cliente_id);
+            if($vendedor->habilitado=="1"){
+                return TRUE;
+            }else{
+                return FALSE;
+            }
+        }else{
+            return FALSE;
+        }
+    }
 
     /**
      * Full Delete de un producto
@@ -88,10 +101,10 @@ class Cliente_model extends MY_Model {
             $this->invitacion_model->delete_by("invitar_para", $usuario->id);
             $this->invitacion_model->delete_by("invitar_desde", $usuario->id);
             $this->solicitud_seguro_model->delete_by("cliente_id", $id);
-            $this->visita_model->delete_by("cliente_id", $id);            
-            
+            $this->visita_model->delete_by("cliente_id", $id);
+
             $this->grupo_tarifa_model->delete_by("cliente_id", $id);
-            $this->grupo_oferta_model->delete_by("cliente_id", $id);            
+            $this->grupo_oferta_model->delete_by("cliente_id", $id);
 
             $vendedor = $this->vendedor_model->get_by("cliente_id", $id);
             if ($vendedor) {
@@ -105,7 +118,7 @@ class Cliente_model extends MY_Model {
 
     public function get_clientes_invitados($params, $limit, $offset, $order_by = "c.id", $order = "asc") {
 
-        $query = "SELECT SQL_CALC_FOUND_ROWS c.*,u.email,u.ultimo_acceso,u.ip_address,u.fecha_creado,v.nombre as nombre_vendedor ";                        
+        $query = "SELECT SQL_CALC_FOUND_ROWS c.*,u.email,u.ultimo_acceso,u.ip_address,u.fecha_creado,v.nombre as nombre_vendedor ";
         $query.="FROM cliente c ";
         $query.="INNER JOIN usuario u ON c.usuario_id = u.id ";
         $query.="LEFT JOIN vendedor v ON v.cliente_id = c.id ";
@@ -162,7 +175,7 @@ class Cliente_model extends MY_Model {
 
 
         $query.=") ";
-        
+
         $query.=" ORDER BY " . $order_by . " " . $order;
         $query.=" LIMIT " . $offset . " , " . $limit;
 
@@ -179,9 +192,5 @@ class Cliente_model extends MY_Model {
             return array("total" => 0);
         }
     }
-    
-    
-    
-    
 
 }
