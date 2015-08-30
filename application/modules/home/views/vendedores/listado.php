@@ -15,29 +15,8 @@
             <div class="col-md-9">
                 <div class="box-simple">                                
                     <form id="form_buscar">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group"> 
-                                    <label><strong>Pais</strong></label>
-                                    <select name="pais" class="form-control">
-                                        <option value="0">Todos los Países</option>
-                                        <?php
-                                        foreach ($paises as $pais):
-                                            $selected = "";
-                                            if ($localizacion) {
-                                                if ($localizacion["pais"] != null) {
-                                                    if ($localizacion["pais"]->id == $pais->id) {
-                                                        $selected = "selected='selected'";
-                                                    }
-                                                }
-                                            }
-                                            ?>
-                                            <option <?php echo $selected; ?> value="<?php echo $pais->id ?>"><?php echo $pais->nombre ?></option>                                        
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>   
-                            </div> 
-                            <div class="col-md-4">
+                        <div class="row">                            
+                            <div class="col-md-6">
                                 <div class="form-group">                                
                                     <label class="text-left"><strong>Provincia</strong></label>
                                     <select name="provincia" class="form-control">
@@ -60,7 +39,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form-group"> 
                                     <label class="text-left"><strong>Población</strong></label>
                                     <select name="poblacion" class="form-control">

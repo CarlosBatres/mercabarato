@@ -25,12 +25,13 @@ class Vendedor extends MY_Controller {
                     $this->session->unset_userdata('afiliacion_vendedor');
                     $this->session->unset_userdata('afiliacion_localizacion');
 
-                    $paises = $this->pais_model->get_all();
+                    //$paises = $this->pais_model->get_all();
+                    $provincias= $this->provincia_model->get_all_by_pais(70);
 
                     $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
                     $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
                     $this->template->add_js('modules/home/perfil.js');
-                    $this->template->load_view('home/vendedor/afiliarse', array("paises" => $paises, "cliente" => $cliente, "html_options" => $html_options, "keywords" => $keywords));
+                    $this->template->load_view('home/vendedor/afiliarse', array("provincias" => $provincias, "cliente" => $cliente, "html_options" => $html_options, "keywords" => $keywords));
                 } else {
                     redirect('usuario/perfil');
                 }
@@ -89,7 +90,8 @@ class Vendedor extends MY_Controller {
                 "telefono_movil" => $this->input->post('telefono_movil')
             );
 
-            $pais = $this->input->post('pais');
+            //$pais = $this->input->post('pais');
+            $pais = "70";
             $provincia = $this->input->post('provincia');
             $poblacion = $this->input->post('poblacion');
 
@@ -452,8 +454,9 @@ class Vendedor extends MY_Controller {
     public function view_buscador() {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->add_js('modules/home/vendedores_listado.js');
-        $paises = $this->pais_model->get_all();
-        $provincias = array();
+        //$paises = $this->pais_model->get_all();
+        $provincias= $this->provincia_model->get_all_by_pais(70);
+        //$provincias = array();
         $poblaciones = array();
         $localizacion = false;
 
@@ -481,7 +484,12 @@ class Vendedor extends MY_Controller {
             $anuncios = array();
         }
 
-        $data = array("paises" => $paises, "provincias" => $provincias, "poblaciones" => $poblaciones, "localizacion" => $localizacion, "anuncios" => $anuncios);
+        $data = array(
+            //"paises" => $paises, 
+            "provincias" => $provincias, 
+            "poblaciones" => $poblaciones, 
+            "localizacion" => $localizacion, 
+            "anuncios" => $anuncios);
 
         $this->template->load_view('home/vendedores/listado', $data);
     }

@@ -1,6 +1,6 @@
 $(document).ready(function() {
     validateForms();
-    $('#form_buscar').find('select[name="pais"]').on('change', function() {
+    /*$('#form_buscar').find('select[name="pais"]').on('change', function() {
         $('#form_buscar').find('select[name="provincia"]').html("<option value='0'>Todas las Provincias</option>");
         $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
         var pais_id = $(this).val();
@@ -15,7 +15,7 @@ $(document).ready(function() {
                 $('#form_buscar').find('select[name="provincia"]').find('option:first').text("Todas las Provincias");
             }
         });
-    });
+    });*/
 
     $('#form_buscar').find('select[name="provincia"]').on('change', function() {
         $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
@@ -37,7 +37,8 @@ $(document).ready(function() {
         updateResultados();
     });
 
-    $('#form_buscar').find('select[name="pais"]').trigger('change');
+    //$('#form_buscar').find('select[name="pais"]').trigger('change');
+    $('#form_buscar').find('select[name="provincia"]').trigger('change');
 
     $(".datepicker").datepicker({
         changeMonth: true,
@@ -270,7 +271,7 @@ function validateForms() {
 
 function updateResultados() {
     var pagina_id = $('#pagina').val();
-    var pais = $('select[name="pais"]').val();
+    //var pais = $('select[name="pais"]').val();
     var provincia = $('select[name="provincia"]').val();
     var poblacion = $('select[name="poblacion"]').val();
 
@@ -284,7 +285,7 @@ function updateResultados() {
         url: SITE_URL + 'seguros/buscar_prestadores',
         data: {
             pagina: pagina_id,
-            pais: pais,
+            //pais: pais,
             provincia: provincia,
             poblacion: poblacion
         },

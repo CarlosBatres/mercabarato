@@ -18,7 +18,8 @@ class Producto extends MY_Controller {
         $subcategorias = $this->categoria_model->get_categorias_searchbar(0);
         $subcategorias_html = $this->_build_categorias_searchparams($subcategorias);
         //$precios = precios_options();
-        $paises = $this->pais_model->get_all();
+        //$paises = $this->pais_model->get_all();
+        $provincias= $this->provincia_model->get_all_by_pais(70);
 
         if ($this->authentication->is_loggedin()) {
             $user_id = $this->authentication->read('identifier');
@@ -40,7 +41,8 @@ class Producto extends MY_Controller {
             "anuncios" => $anuncios,
             //"precios" => $precios,
             "subcategorias" => $subcategorias_html,
-            "paises" => $paises,
+            //"paises" => $paises,
+            "provincias" => $provincias,
             "search_query" => $search_query);
 
         $this->template->set_description("Comparador de precios");
@@ -87,6 +89,8 @@ class Producto extends MY_Controller {
                 }
                 if ($this->input->post('pais') !== "0") {
                     $params["pais"] = $this->input->post('pais');
+                }else{
+                    $params["pais"] = "70";
                 }
 
                 if ($this->input->post('precio_desde') != "") {
