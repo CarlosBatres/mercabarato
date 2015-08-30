@@ -6,7 +6,14 @@ if (!defined('BASEPATH'))
 class Main extends MY_Controller {
 
     public function index() {
-        
+        $this->template->set_title('Mercabarato - Busca y Compara');        
+        $this->template->add_js('modules/home/inicio.js');
+        $this->template->load_view('home/index');
+    }
+    
+    public function productos($search_query){
+        $this->session->set_userdata(array('search_query' => $search_query));
+        redirect('productos');
     }
 
     public function not_found() {
@@ -119,6 +126,26 @@ class Main extends MY_Controller {
         $paquete = $this->vendedor_paquete_model->get("3919");
         $data_email = array("paquete" => $paquete);
         $this->load->view('home/emails/informacion_de_compra', $data_email);
+    }
+    
+    public function busca_compara() {
+        $this->template->set_title('Mercabarato - Busca y Compara');
+        $this->template->load_view('home/paginas/busca_compara');
+    }
+    
+    public function infocompras() {
+        $this->template->set_title('Mercabarato - Busca y Compara');
+        $this->template->load_view('home/paginas/infocompras');
+    }
+    
+    public function tarifas_personales() {
+        $this->template->set_title('Mercabarato - Busca y Compara');
+        $this->template->load_view('home/paginas/tarifas_personales');
+    }
+    
+    public function ventajas_vendedor() {
+        $this->template->set_title('Mercabarato - Busca y Compara');
+        $this->template->load_view('home/paginas/ventajas_vendedor');
     }
 
 }

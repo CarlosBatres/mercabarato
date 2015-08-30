@@ -42,7 +42,8 @@ if (!defined('BASEPATH'))
  */
 
 /* Front */
-$route[''] = 'home/producto/view_principal';
+//$route[''] = 'home/producto/view_principal';
+$route[''] = 'home/main/index';
 $route['login'] = 'home/usuario/login';
 $route['logout'] = 'home/usuario/logout';
 $route['olvido-password'] = 'home/usuario/olvido_password';
@@ -56,10 +57,12 @@ $route['registrar_cliente'] = 'home/cliente/crear';
 $route['registrar_vendedor'] = 'home/vendedor/new_vendedor';
 $route['vendedores'] = 'home/vendedor/view_buscador';
 $route['acceso_restringido'] = 'home/main/acceso_restringido';
+$route['productos'] = 'home/producto/view_principal';
 $route['productos/enviar_mensaje/(:num)'] = 'home/producto/enviar_mensaje/$1';
 $route['productos/buscar'] = 'home/producto/ajax_get_listado_resultados';
 $route['productos/buscar_producto/(:any)'] = 'home/producto/buscar_producto/$1';
 $route['productos/ver-oferta-requisitos/(:num)'] = 'home/producto/ver_oferta_requisitos/$1';
+$route['ir_productos/(:any)'] = 'home/main/productos/$1';
 $route['productos/(:any)'] = 'home/producto/ver_producto/$1';
 $route['vendedores/buscar'] = 'home/vendedor/ajax_get_listado_resultados';
 $route['anuncios/(:num)'] = 'home/anuncio/ver_anuncio/$1';
@@ -116,6 +119,10 @@ $route['site/como-funciona'] = 'home/main/como_funciona';
 $route['site/aviso-legal'] = 'home/main/aviso_legal';
 $route['site/terminos-de-uso'] = 'home/main/terminos_de_uso';
 $route['site/politica-de-cookies'] = 'home/main/cookies';
+$route['site/busca-y-compara'] = 'home/main/busca_compara';
+$route['site/infocompras'] = 'home/main/infocompras';
+$route['site/tarifas-personales'] = 'home/main/tarifas_personales';
+$route['site/ventajas-vendedor'] = 'home/main/ventajas_vendedor';
 
 /* Apartado para vendedores */
 
@@ -292,7 +299,7 @@ $route['webservice/categorias'] = 'webservice/main/categorias';
 $route['webservice/categorias_local'] = 'webservice/main/categorias_local';
 
 
-$route['default_controller'] = 'home/producto/view_principal';
+$route['default_controller'] = 'home/main/index';
 $route['404_override'] = 'home/main/not_found';
 $route['pagina-no-existe'] = 'home/main/not_found';
 

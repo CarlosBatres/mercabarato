@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7 col-xs-12 contact">
-                    <?php if ($this->uri->uri_string() != ''): ?>
+                    <?php if ($this->uri->uri_string() != '' && $this->uri->uri_string() != 'productos'): ?>
                         <div class="input-group">
                             <input type="text" name="search_query_header" class="form-control" placeholder="Ingrese un producto a buscar...">                                                        
                             <span class="input-group-btn">
@@ -64,7 +64,13 @@
                     endif;
                     ?>" >
                         <a href="<?php echo site_url(); ?>">Inicio</a>                            
-                    </li>                    
+                    </li>
+                    <li class="dropdown <?php
+                    if ($this->uri->uri_string() == 'productos'): echo "active";
+                    endif;
+                    ?>" >
+                        <a href="<?php echo site_url('productos'); ?>">Productos</a>                            
+                    </li>
                     <li class="dropdown <?php
                     if ($this->uri->uri_string() == 'vendedores'): echo "active";
                     endif;

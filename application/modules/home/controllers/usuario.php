@@ -54,8 +54,23 @@ class Usuario extends MY_Controller {
             }
 
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
-            //$this->template->add_js('modules/home/perfil.js');
-            $this->template->load_view('home/usuario/perfil', array("html_options" => $html_options, "info" => $cliente, "full_localizacion" => $full_localizacion));
+
+            
+            if ($this->cliente_model->es_vendedor_habilitado($cliente->cliente->id)) {
+                $code_snippet = $this->load->view('home/paginas/compartir_code', array(), true);
+                $cliente_es_vendedor_habilitado=true;
+            }else{
+                $code_snippet="";
+                $cliente_es_vendedor_habilitado=false;
+            }
+
+            $this->template->load_view('home/usuario/perfil', array(
+                "html_options" => $html_options,
+                "info" => $cliente,
+                "full_localizacion" => $full_localizacion,
+                "es_vendedor" => $cliente_es_vendedor_habilitado,
+                "code_snippet"=>$code_snippet
+            ));
         } else {
             redirect('');
         }
