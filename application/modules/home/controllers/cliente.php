@@ -70,7 +70,8 @@ class Cliente extends MY_Controller {
 
                 $this->cliente_model->insert($data);
 
-                $pais = $this->input->post('pais');
+                //$pais = $this->input->post('pais');
+                $pais="70";
                 $provincia = $this->input->post('provincia');
                 $poblacion = $this->input->post('poblacion');
 
@@ -135,7 +136,8 @@ class Cliente extends MY_Controller {
 
                     $this->cliente_model->update($cliente->id, $data);
 
-                    $pais = $this->input->post('pais');
+                    //$pais = $this->input->post('pais');
+                    $pais="70";
                     $provincia = $this->input->post('provincia');
                     $poblacion = $this->input->post('poblacion');
 

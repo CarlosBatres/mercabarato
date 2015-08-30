@@ -12,7 +12,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#form_buscar').find('select[name="pais"]').on('change', function() {
+    /*$('#form_buscar').find('select[name="pais"]').on('change', function() {
         $('#form_buscar').find('select[name="provincia"]').html("<option value='0'>Todas las Provincias</option>");
         $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
         $('#pagina').val("1");
@@ -28,7 +28,7 @@ $(document).ready(function() {
                 $('#form_buscar').find('select[name="provincia"]').find('option:first').text("Todas las Provincias");
             }
         });
-    });
+    });*/
 
     $('#form_buscar').find('select[name="provincia"]').on('change', function() {
         $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
@@ -64,7 +64,7 @@ $(document).ready(function() {
 function updateResultados() {
     var search_query = $('input[name="search_query"]').val();
     var pagina_id = $('#pagina').val();
-    var pais = $('select[name="pais"]').val();
+    //var pais = $('select[name="pais"]').val();
     var provincia = $('select[name="provincia"]').val();
     var poblacion = $('select[name="poblacion"]').val();
 
@@ -79,7 +79,7 @@ function updateResultados() {
         data: {
             search_query: search_query,
             pagina: pagina_id,
-            pais: pais,
+            //pais: pais,
             provincia: provincia,
             poblacion: poblacion
         },

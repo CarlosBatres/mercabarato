@@ -163,8 +163,9 @@ class Seguro extends MY_Controller {
             $this->template->set_title('Mercabarato - Busca y Compara');
             $this->template->add_js('modules/home/seguros.js');
 
-            $paises = $this->pais_model->get_all();
-            $data = array("paises" => $paises);
+            //$paises = $this->pais_model->get_all();
+            $provincias= $this->provincia_model->get_all_by_pais(70);
+            $data = array("provincias"=>$provincias);
 
             $this->session->set_userdata(array("seguros" => $session_data));
             $ignore_list = $this->session->userdata('seguros_ignore_list');
@@ -191,6 +192,8 @@ class Seguro extends MY_Controller {
         if ($formValues !== false) {
             if ($this->input->post('pais') != "0") {
                 $params["pais"] = $this->input->post('pais');
+            }else{
+                $params["pais"] = "70";
             }
             if ($this->input->post('provincia') != "0") {
                 $params["provincia"] = $this->input->post('provincia');
@@ -290,7 +293,10 @@ class Seguro extends MY_Controller {
             $params = array();
             if ($this->input->post('pais') != "0") {
                 $params["pais"] = $this->input->post('pais');
+            }else{
+                $params["pais"] = "70";
             }
+                
             if ($this->input->post('provincia') != "0") {
                 $params["provincia"] = $this->input->post('provincia');
             }

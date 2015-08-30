@@ -45,30 +45,17 @@
                     <div class="box-simple">                                
                         <form id="form_buscar">
                             <div class="row hidden-xs hidden-sm">
-                                <div class="col-md-4 row-less-padding-r">
-                                    <div class="form-group">                                
-                                        <select name="pais" class="form-control">
-                                            <option value="0">País</option>
-                                            <?php
-                                            foreach ($paises as $pais):
-                                                $class = "";
-                                                if ($pais->nombre == "España") {
-                                                    $class = "selected";
-                                                }
-                                                ?>                                        
-                                                <option value="<?php echo $pais->id ?>" <?php echo $class ?>><?php echo $pais->nombre ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>   
-                                </div> 
-                                <div class="col-md-4 row-less-padding-l row-less-padding-r">
+                                <div class="col-md-6">
                                     <div class="form-group">                                
                                         <select name="provincia" class="form-control">
-                                            <option value="0">Todas las Provincias</option>                        
+                                            <option value="0">Todas las Provincias</option>
+                                            <?php foreach($provincias as $provincia):?>
+                                                <option value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>
+                                            <?php endforeach;?>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4 row-less-padding-l">
+                                <div class="col-md-6">
                                     <div class="form-group">                        
                                         <select name="poblacion" class="form-control">
                                             <option value="0">Todas las Poblaciónes</option>                        

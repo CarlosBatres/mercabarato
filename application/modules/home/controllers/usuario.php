@@ -17,9 +17,10 @@ class Usuario extends MY_Controller {
             $this->template->set_title('Mercabarato - Busca y Compara');
             $this->template->add_js('modules/home/registro.js');
             $paises = $this->pais_model->get_all();
+            $provincias = $this->provincia_model->get_all_by_pais("70");
             //$keywords = keywords_listado();
             $keywords = $this->categoria_model->get_keywords_from_categorias();
-            $data = array("paises" => $paises, "keywords" => $keywords);
+            $data = array("provincias" => $provincias, "keywords" => $keywords);
 
             $this->template->load_view('home/usuario/registro', $data);
         } else {
