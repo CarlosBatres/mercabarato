@@ -38,24 +38,35 @@
                                 <p class="precio">Consulte con el vendedor </p>
                             </div>
                         <?php else: ?>
-                            <?php if ($producto->tipo == 'tarifa'): ?>
-                                <div class="row">
-                                    <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                            <?php if ($producto->tipo == 'tarifa' && $producto->nuevo_costo < $producto->precio): ?>
+                                <div class="row">                                    
+                                    <?php if ($producto->precio_anterior == null || ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5)): ?>
+                                        <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del></p>
+                                    <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
+                                        <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del>  &nbsp;&nbsp;&nbsp; <del><?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?></del></p>
+                                    <?php endif; ?>                                                                        
                                 </div>
                                 <div class="row">                            
                                     <p class="precio"><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?></p>
                                 </div>                                                                        
-                            <?php elseif ($producto->tipo == 'oferta'): ?>
+                            <?php elseif ($producto->tipo == 'oferta' && $producto->nuevo_costo < $producto->precio): ?>
                                 <div class="row">
-                                    <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                                    <?php if ($producto->precio_anterior == null || ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5)): ?>
+                                        <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del></p>
+                                    <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
+                                        <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del>  &nbsp;&nbsp;&nbsp; <del><?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?></del></p>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="row">                            
-                                    <p class="precio"><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?> <br><span>OFERTA PROMOCIONAL hasta el <?php echo date("d-m-Y",strtotime($producto->fecha_finaliza))?></span></p>
-                                    
+                                    <p class="precio"><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?> <br><span>OFERTA PROMOCIONAL hasta el <?php echo date("d-m-Y", strtotime($producto->fecha_finaliza)) ?></span></p>
                                 </div> 
                             <?php else: ?>
                                 <div class="row">
-                                    <p class="precio"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
+                                    <?php if ($producto->precio_anterior == null || ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5)): ?>
+                                        <p class="precio"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
+                                    <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
+                                        <p class="precio"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?>  &nbsp;&nbsp;&nbsp; <del><?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?></del></p>                                    
+                                    <?php endif; ?>
                                 </div>
                             <?php endif; ?>
                         <?php endif; ?>

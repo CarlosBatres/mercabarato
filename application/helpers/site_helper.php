@@ -384,3 +384,8 @@ function impuesto_radio() {
     );
     return $data;
 }
+
+function diferencia_dias($date_start,$date_end){
+    $days = abs((strtotime($date_end) - strtotime($date_start)) / (60 * 60 * 24));
+    return (int)$days;
+}

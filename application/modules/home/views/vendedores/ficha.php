@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Informacion de la Empresa / Vendedor</h1>
+                <h1> <?php echo $vendedor->nombre ?></h1>
             </div>            
         </div>
     </div>
@@ -44,7 +44,7 @@
                         </p>
                     </div>
                     <div class="col-md-8">
-                        <h3><?php echo $vendedor->nombre ?></h3>
+<!--                        <h3><?php echo $vendedor->nombre ?></h3>-->
                         <div class="">
                             <?php if ($vendedor->descripcion != ""): ?> 
                                 <p class="lead"><?php echo $vendedor->descripcion ?></p>                                    
@@ -93,14 +93,14 @@
                                             <p class="precio"></p>
                                         </div>
                                     <?php else: ?>
-                                        <?php if ($producto->tipo == 'tarifa'): ?>
+                                        <?php if ($producto->tipo == 'tarifa' && $producto->nuevo_costo < $producto->precio): ?>
                                             <div class="row">
                                                 <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                                             </div>
                                             <div class="row">                            
                                                 <p class="precio"><strong><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?></strong></p>
                                             </div>     
-                                        <?php elseif ($producto->tipo == 'oferta'): ?>
+                                        <?php elseif ($producto->tipo == 'oferta' && $producto->nuevo_costo < $producto->precio): ?>
                                             <div class="row">
                                                 <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                                             </div>

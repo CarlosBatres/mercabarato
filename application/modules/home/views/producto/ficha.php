@@ -56,14 +56,24 @@
                     </div>
                     <div class="ficha-producto-precios">
                         <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
-                        <?php else: ?>
-                            <?php if ($tarifa == 0 && $oferta == 0): ?>                    
-                                <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
-                            <?php elseif ($oferta == 0 || ($tarifa < $oferta && ($tarifa != 0 && $oferta != 0))): ?>                    
-                                <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                        <?php else: ?>                            
+                            <?php if ($tarifa < $oferta && $tarifa < $producto->precio): ?>                                                    
+                                
+                                <?php if ($producto->precio_anterior == null || ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5)): ?>
+                                    <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del></p>
+                                <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
+                                    <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del>  &nbsp;&nbsp;&nbsp; <del><?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?></del></p>                                    
+                                <?php endif; ?>
+
                                 <p class="price"><?php echo number_format($tarifa, '2') . ' ' . $this->config->item('money_sign') ?></p>
-                            <?php elseif ($tarifa == 0 || ($tarifa > $oferta && ($tarifa != 0 && $oferta != 0))): ?>                                
-                                <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
+                            <?php elseif ($oferta < $tarifa && $oferta < $producto->precio): ?>                                
+                                
+                                <?php if ($producto->precio_anterior == null || ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5)): ?>
+                                    <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del></p>
+                                <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
+                                    <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del>  &nbsp;&nbsp;&nbsp; <del><?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?></del></p>                                    
+                                <?php endif; ?>                                
+
                                 <?php if ($oferta_id): ?>
                                     <a href="<?php echo site_url('productos/ver-oferta-requisitos/' . $oferta_id) ?>" data-toggle="modal" data-target="#ofertaModal">
                                         <p class="price"><?php echo number_format($oferta, '2') . ' ' . $this->config->item('money_sign') ?></p>
@@ -75,6 +85,14 @@
                                         <p class="price-oferta text-center">OFERTA PROMOCIONAL valida hasta el <?php echo $fecha_finaliza ?></p>                                                    
                                     </div>
                                 <?php endif; ?>        
+                            <?php else: ?> 
+                                
+                                <?php if ($producto->precio_anterior == null || ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5)): ?>
+                                    <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
+                                <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
+                                    <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?>  &nbsp;&nbsp;&nbsp; <del><?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?></del></p>                                    
+                                <?php endif; ?>
+
                             <?php endif; ?>                                                        
                         <?php endif; ?>
                     </div>
@@ -158,14 +176,14 @@
                                         <p class="precio"></p>
                                     </div>
                                 <?php else: ?>
-                                    <?php if ($producto->tipo == 'tarifa'): ?>
+                                    <?php if ($producto->tipo == 'tarifa' && $producto->nuevo_costo < $producto->precio): ?>
                                         <div class="row">
                                             <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                                         </div>
                                         <div class="row">                            
                                             <p class="precio"><strong><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?></strong></p>
                                         </div> 
-                                    <?php elseif ($producto->tipo == 'oferta'): ?>
+                                    <?php elseif ($producto->tipo == 'oferta' && $producto->nuevo_costo < $producto->precio): ?>
                                         <div class="row">
                                             <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                                         </div>
@@ -214,14 +232,14 @@
                                         <p class="precio"></p>
                                     </div>
                                 <?php else: ?>
-                                    <?php if ($producto->tipo == 'tarifa'): ?>
+                                    <?php if ($producto->tipo == 'tarifa' && $producto->nuevo_costo < $producto->precio): ?>
                                         <div class="row">
                                             <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                                         </div>
                                         <div class="row">                            
                                             <p class="precio"><strong><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?></strong></p>
                                         </div>
-                                    <?php elseif ($producto->tipo == 'oferta'): ?>
+                                    <?php elseif ($producto->tipo == 'oferta' && $producto->nuevo_costo < $producto->precio): ?>
                                         <div class="row">
                                             <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del> </p>
                                         </div>
