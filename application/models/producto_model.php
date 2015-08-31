@@ -114,16 +114,7 @@ class Producto_model extends MY_Model {
 
                 $text = " AND p.categoria_id IN(" . implode(",", $categorias_array) . ")";
                 $sub_query.=$text;
-            }
-            /* if (isset($params['precio_tipo1'])) {
-              if ($params['precio_tipo1'] != '0') {
-              $precios = explode(";;", $params['precio_tipo1']);
-              // TODO : Aqui el precio puede ser precio oferta o una tarifa especifica. Resolver dependiendo de quien este conectado haciendo la busqueda
-              $text = " AND p.precio >" . $precios['0'];
-              $text.=" AND p.precio <=" . $precios['1'];
-              $sub_query.=$text;
-              }
-              } */
+            }            
 
             if (isset($params['precio_desde'])) {
                 $text = " AND p.precio >= '" . $params['precio_desde'] . "' ";

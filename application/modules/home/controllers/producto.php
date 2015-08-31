@@ -77,10 +77,7 @@ class Producto extends MY_Controller {
 
                 if ($this->input->post('categoria_id') != "") {
                     $params["categoria_id"] = $this->input->post('categoria_id');
-                }
-                /* if ($this->input->post('precio_tipo1') !== "0") {
-                  $params["precio_tipo1"] = $this->input->post('precio_tipo1');
-                  } */
+                }                
                 if ($this->input->post('problacion') !== "0") {
                     $params["problacion"] = $this->input->post('problacion');
                 }
@@ -104,9 +101,7 @@ class Producto extends MY_Controller {
                 if ($this->authentication->is_loggedin()) {
                     $user_id = $this->authentication->read('identifier');
                     $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                    $params["cliente_id"] = $cliente->id;
-                    //if ($cliente->es_vendedor == '0') {
-                    //}
+                    $params["cliente_id"] = $cliente->id;                    
                 }
                 if ($this->input->post('mostrar_solo_tarifas') == "true") {
                     $params["mostrar_solo_tarifas"] = true;
@@ -206,7 +201,7 @@ class Producto extends MY_Controller {
                 if ($producto_tarifa) {
                     $tarifa = (float) $producto_tarifa->nuevo_costo;
                 } else {
-                    $tarifa = 0;
+                    $tarifa = 9999999;
                 }
                 $producto_oferta = $this->producto_model->get_ofertas_from_producto($producto->id);
                 if ($producto_oferta) {
@@ -222,7 +217,7 @@ class Producto extends MY_Controller {
 
                     $fecha_finaliza = date("d-m-Y", strtotime($producto_oferta->fecha_finaliza));
                 } else {
-                    $oferta = 0;
+                    $oferta = 9999999;
                     $oferta_id = false;
                     $fecha_finaliza = "";
                 }
@@ -304,8 +299,8 @@ class Producto extends MY_Controller {
                         "producto" => $producto,
                         "producto_imagen" => $producto_imagen,
                         "producto_imagenes" => $producto_imagenes,
-                        "tarifa" => 0,
-                        "oferta" => 0,
+                        "tarifa" => 9999999,
+                        "oferta" => 9999999,
                         "oferta_id" => false,
                         "otros_productos" => $prods,
                         "otros_productos_categoria" => $prods2,
