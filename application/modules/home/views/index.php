@@ -1,70 +1,63 @@
-<!--<div id="heading-breadcrumbs">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>&nbsp;</h1>
-            </div>            
-        </div>
-    </div>
-</div>-->
-
 <section class="bar background-image-1">
-    <div class="container">
-        <!--        <div class="row">
-                    <div class="col-md-12">  
-                        <div class="col-md-4 col-md-offset-2">
-                            <div class="form-group">                                
-                                <select name="provincia" class="form-control">
-                                    <option value="0">Todas las Provincias</option>                        
-                                </select>
-                            </div>
+    <div class="container">                        
+        <div class="row index-search-box">
+            <div class="col-md-12">                
+                <?php echo form_open('ir_productos' ,'id="productos-buscar"'); ?>                 
+                <div class="row inicio-localizacion">
+                    <div class="col-md-4 col-md-offset-2">
+                        <div class="form-group"> 
+                            <select name="provincia" class="form-control">
+                                <option value="0">Todas las Provincias</option>
+                                <?php foreach ($provincias as $provincia): ?>
+                                    <option value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>
+                                <?php endforeach; ?>                                
+                            </select>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">                        
-                                <select name="poblacion" class="form-control">
-                                    <option value="0">Todas las Poblaciónes</option>                        
-                                </select>
-                            </div>
-                        </div>
-        
                     </div>
-                </div>-->
-
-        <!--        <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-2 text-right col-md-offset-2">
-                            <p class="inicio-precios-titulo">Precios</p>                            
+                    <div class="col-md-4">
+                        <div class="form-group">                        
+                            <select name="poblacion" class="form-control">
+                                <option value="0">Todas las Poblaciónes</option>                        
+                            </select>
                         </div>
-                        <div class="col-md-6">
-                            <div class="panel panel-default sidebar-menu principal-sidebar">                        
-                                <div class="panel-body">                        
-                                    <div class="precios-productos">                                
-                                        <div class="input-group pull-left">                                                
-                                            <input type="text" class="form-control" name="precio_desde" placeholder="Desde">                                    
-                                            <span class="input-group-addon"><i class="fa fa-euro fa-fw"></i></span>
-                                        </div>                           
-        
-                                        <div class="input-group pull-right">                                                                                    
-                                            <input type="text" class="form-control" name="precio_hasta" placeholder="Hasta">                                    
-                                            <span class="input-group-addon"><i class="fa fa-euro fa-fw"></i></span>
-                                        </div>  
-                                    </div>
+                    </div>
+                </div>
+
+                <div class="row inicio-precios">
+                    <div class="col-md-2 text-right col-md-offset-4">
+                        <p class="inicio-precios-titulo">Precios</p>                            
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel panel-default sidebar-menu principal-sidebar">                        
+                            <div class="panel-body">                        
+                                <div class="precios-productos">                                
+                                    <div class="input-group pull-left">                                                
+                                        <input type="text" class="form-control" name="precio_desde" placeholder="Desde">                                    
+                                        <span class="input-group-addon"><i class="fa fa-euro fa-fw"></i></span>
+                                    </div>                           
+
+                                    <div class="input-group pull-right">                                                                                    
+                                        <input type="text" class="form-control" name="precio_hasta" placeholder="Hasta">                                    
+                                        <span class="input-group-addon"><i class="fa fa-euro fa-fw"></i></span>
+                                    </div>  
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>-->
-
-        <div class="row index-search-box">
-            <div class="col-md-12">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="input-group">                    
-                        <input type="text" name="search_query" class="form-control" placeholder="Ingrese un producto, o alguna referencia ...">                                                                                
-                        <span class="input-group-btn">
-                            <button class="btn btn-template-primary" id="search_button" type="button"><i class="fa fa-search"></i><span class="hidden-xs">Buscar</span></button>
-                        </span>
-                    </div>
-                </div>                            
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="input-group">                    
+                            <input type="text" name="search_query" class="form-control" placeholder="Ingrese un producto, o alguna referencia ...">                                                                                
+                            <span class="input-group-btn">
+                                <button class="btn btn-template-primary" id="search_button" type="submit"><i class="fa fa-search"></i><span class="hidden-xs">Buscar</span></button>
+                            </span>
+                        </div>
+                    </div> 
+                </div>
+                <?php echo form_close(); ?>
+                <br>
             </div>
         </div>
     </div>

@@ -352,14 +352,22 @@ span.arrow {
 }
 
 .inicio-precios-titulo{
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 800;
     padding-top: 5px;
 }
 
 .manual-title{
     padding-left: 20px;    
 }
+
+.inicio-localizacion{
+    padding-top: 20px;
+}
+.inicio-precios .panel{
+    background: transparent;
+}
+
 
 /*---------------- PANEL BLUE -----------------------*/
 
@@ -560,9 +568,16 @@ span.arrow {
 }
 
 .index-search-box{
-    min-height: 150px;
+    height: 200px;
 }
 
+.como-funciona-title{
+    font-weight: 600;
+    font-size: 18px;
+}
+.como-funciona{
+    padding-top: 40px;
+}
 
 @media (max-width: 768px) {
     .navbar-custom ul{

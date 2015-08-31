@@ -78,7 +78,8 @@ $(document).ready(function() {
         updateResultados();
     });
 
-    $('#form_buscar').find('select[name="provincia"]').trigger('change');        
+    updateResultados();
+    //$('#form_buscar').find('select[name="provincia"]').trigger('change');        
 });
 
 function updateResultados() {

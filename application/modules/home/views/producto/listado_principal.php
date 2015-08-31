@@ -19,12 +19,12 @@
                         <div class="panel-body">                        
                             <div class="precios-productos">                                
                                 <div class="input-group pull-left">                                                
-                                    <input type="text" class="form-control" name="precio_desde" placeholder="Desde">                                    
+                                    <input type="text" class="form-control" name="precio_desde" placeholder="Desde" value="<?php echo $precio_desde; ?>">                                    
                                     <span class="input-group-addon"><i class="fa fa-euro fa-fw"></i></span>
                                 </div>                           
 
                                 <div class="input-group pull-right">                                                                                    
-                                    <input type="text" class="form-control" name="precio_hasta" placeholder="Hasta">                                    
+                                    <input type="text" class="form-control" name="precio_hasta" placeholder="Hasta" value="<?php echo $precio_hasta; ?>">                                    
                                     <span class="input-group-addon"><i class="fa fa-euro fa-fw"></i></span>
                                 </div>  
                             </div>
@@ -49,9 +49,15 @@
                                     <div class="form-group">                                
                                         <select name="provincia" class="form-control">
                                             <option value="0">Todas las Provincias</option>
-                                            <?php foreach($provincias as $provincia):?>
-                                                <option value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>
-                                            <?php endforeach;?>
+                                            <?php foreach ($provincias as $provincia): ?>
+                                                <?php
+                                                $class="";
+                                                if ($provincia_id == $provincia->id) {
+                                                    $class = "selected";
+                                                }
+                                                ?>
+                                                <option <?php echo $class;?> value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
@@ -59,6 +65,15 @@
                                     <div class="form-group">                        
                                         <select name="poblacion" class="form-control">
                                             <option value="0">Todas las Poblaciónes</option>                        
+                                            <?php foreach ($poblaciones as $poblacion): ?>
+                                                <?php
+                                                $class="";
+                                                if ($poblacion_id == $poblacion->id) {
+                                                    $class = "selected";
+                                                }
+                                                ?>
+                                                <option <?php echo $class;?> value="<?php echo $poblacion->id ?>"><?php echo $poblacion->nombre ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </div>
