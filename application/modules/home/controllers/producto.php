@@ -19,7 +19,8 @@ class Producto extends MY_Controller {
         $subcategorias_html = $this->_build_categorias_searchparams($subcategorias);
         //$precios = precios_options();
         //$paises = $this->pais_model->get_all();
-        $provincias= $this->provincia_model->get_all_by_pais(70);
+        $provincias = $this->provincia_model->get_all_by_pais(70);
+        $poblaciones = array();
 
         if ($this->authentication->is_loggedin()) {
             $user_id = $this->authentication->read('identifier');
@@ -36,6 +37,27 @@ class Producto extends MY_Controller {
         $search_query = $this->session->userdata('search_query');
         $this->session->unset_userdata('search_query');
 
+        $search_query_data = $this->session->userdata('search_query_data');
+        $this->session->unset_userdata('search_query_data');
+
+
+        if ($search_query_data) {
+            $search_query = $search_query_data["search_query"];
+            $precio_desde = $search_query_data["precio_desde"];
+            $precio_hasta = $search_query_data["precio_hasta"];
+            $provincia_id = $search_query_data["provincia"];
+            $poblacion_id = $search_query_data["poblacion"];
+
+            if ($provincia_id) {
+                $poblaciones = $this->poblacion_model->get_all_by_provincia($provincia_id);
+            }
+        } else {
+            $precio_desde = "";
+            $precio_hasta = "";
+            $provincia_id = 0;
+            $poblacion_id = 0;
+        }
+
         $data = array(
             "productos" => array(),
             "anuncios" => $anuncios,
@@ -43,7 +65,13 @@ class Producto extends MY_Controller {
             "subcategorias" => $subcategorias_html,
             //"paises" => $paises,
             "provincias" => $provincias,
-            "search_query" => $search_query);
+            "poblaciones" => $poblaciones,
+            "search_query" => $search_query,
+            "precio_desde" => $precio_desde,
+            "precio_hasta" => $precio_hasta,
+            "provincia_id" => $provincia_id,
+            "poblacion_id" => $poblacion_id
+        );
 
         $this->template->set_description("Comparador de precios");
         $this->template->load_view('home/producto/listado_principal', $data);
@@ -65,7 +93,7 @@ class Producto extends MY_Controller {
      */
     public function ajax_get_listado_resultados() {
         if ($this->input->is_ajax_request()) {
-            $this->ajax_header();            
+            $this->ajax_header();
             //$this->show_profiler();
             $formValues = $this->input->post();
             $params = array();
@@ -77,7 +105,7 @@ class Producto extends MY_Controller {
 
                 if ($this->input->post('categoria_id') != "") {
                     $params["categoria_id"] = $this->input->post('categoria_id');
-                }                
+                }
                 if ($this->input->post('problacion') !== "0") {
                     $params["problacion"] = $this->input->post('problacion');
                 }
@@ -86,7 +114,7 @@ class Producto extends MY_Controller {
                 }
                 if ($this->input->post('pais') !== "0") {
                     $params["pais"] = $this->input->post('pais');
-                }else{
+                } else {
                     $params["pais"] = "70";
                 }
 
@@ -101,7 +129,7 @@ class Producto extends MY_Controller {
                 if ($this->authentication->is_loggedin()) {
                     $user_id = $this->authentication->read('identifier');
                     $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
-                    $params["cliente_id"] = $cliente->id;                    
+                    $params["cliente_id"] = $cliente->id;
                 }
                 if ($this->input->post('mostrar_solo_tarifas') == "true") {
                     $params["mostrar_solo_tarifas"] = true;
