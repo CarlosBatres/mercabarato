@@ -66,6 +66,46 @@ class Panel_vendedores_productos extends ADController {
                             }
                         }
                     }
+                    
+                    $precio_extra1=$this->input->post('precio_extra1');
+                    $precio_extra1_cantidad=$this->input->post('precio_extra1_cantidad');
+                    
+                    if($precio_extra1!="" && $precio_extra1_cantidad!=""){
+                        $data_extra=array(
+                            "producto_id"=>$producto_id,
+                            "nombre"=> $precio_extra1_cantidad,
+                            "value" => $precio_extra1,
+                            "tipo" => 1
+                        );
+                        $this->producto_extra_model->insert($data_extra);
+                    }
+                    
+                    $precio_extra2=$this->input->post('precio_extra2');
+                    $precio_extra2_cantidad=$this->input->post('precio_extra2_cantidad');
+                    
+                    if($precio_extra2!="" && $precio_extra2_cantidad!=""){
+                        $data_extra=array(
+                            "producto_id"=>$producto_id,
+                            "nombre"=> $precio_extra2_cantidad,
+                            "value" => $precio_extra2,
+                            "tipo" => 1
+                        );
+                        $this->producto_extra_model->insert($data_extra);
+                    }
+                    
+                    $precio_extra3=$this->input->post('precio_extra3');
+                    $precio_extra3_cantidad=$this->input->post('precio_extra3_cantidad');
+                    
+                    if($precio_extra3!="" && $precio_extra3_cantidad!=""){
+                        $data_extra=array(
+                            "producto_id"=>$producto_id,
+                            "nombre"=> $precio_extra3_cantidad,
+                            "value" => $precio_extra3,
+                            "tipo" => 1
+                        );
+                        $this->producto_extra_model->insert($data_extra);
+                    }
+                    
 
                     redirect('panel_vendedor/producto/listado');
                 } else {
@@ -164,6 +204,48 @@ class Panel_vendedores_productos extends ADController {
                             }
                         }
                     }
+                    
+                    $this->producto_extra_model->delete_by(array("producto_id"=>$producto_id,"tipo"=>"1"));
+                    
+                    $precio_extra1=$this->input->post('precio_extra1');
+                    $precio_extra1_cantidad=$this->input->post('precio_extra1_cantidad');
+                    
+                    if($precio_extra1!="" && $precio_extra1_cantidad!=""){
+                        $data_extra=array(
+                            "producto_id"=>$producto_id,
+                            "nombre"=> $precio_extra1_cantidad,
+                            "value" => $precio_extra1,
+                            "tipo" => 1
+                        );
+                        $this->producto_extra_model->insert($data_extra);
+                    }
+                    
+                    $precio_extra2=$this->input->post('precio_extra2');
+                    $precio_extra2_cantidad=$this->input->post('precio_extra2_cantidad');
+                    
+                    if($precio_extra2!="" && $precio_extra2_cantidad!=""){
+                        $data_extra=array(
+                            "producto_id"=>$producto_id,
+                            "nombre"=> $precio_extra2_cantidad,
+                            "value" => $precio_extra2,
+                            "tipo" => 1
+                        );
+                        $this->producto_extra_model->insert($data_extra);
+                    }
+                    
+                    $precio_extra3=$this->input->post('precio_extra3');
+                    $precio_extra3_cantidad=$this->input->post('precio_extra3_cantidad');
+                    
+                    if($precio_extra3!="" && $precio_extra3_cantidad!=""){
+                        $data_extra=array(
+                            "producto_id"=>$producto_id,
+                            "nombre"=> $precio_extra3_cantidad,
+                            "value" => $precio_extra3,
+                            "tipo" => 1
+                        );
+                        $this->producto_extra_model->insert($data_extra);
+                    }
+                    
 
                     $this->session->set_flashdata('success', 'Producto modificado con exito');
                     redirect('panel_vendedor/producto/listado');
@@ -178,6 +260,10 @@ class Panel_vendedores_productos extends ADController {
                     $this->template->add_js("modules/admin/panel_vendedores/productos.js");
                     $vendedor = $this->vendedor_model->get($producto->vendedor_id);
                     $producto_imagenes = $this->producto_resource_model->get_producto_imagenes($producto->id);
+                    $producto_extras=$this->producto_extra_model->get_many_by(array("producto_id"=>$producto->id,"tipo"=>"1"));
+                    if(!$producto_extras){ 
+                        $producto_extras=array();
+                    }
 
                     $categorias_tree = $this->categoria_model->get_full_tree();
                     $categorias_tree_html = $this->_build_categorias_tree($categorias_tree, $producto->categoria_id);
@@ -186,7 +272,8 @@ class Panel_vendedores_productos extends ADController {
                         "categorias_tree_html" => $categorias_tree_html,
                         "producto" => $producto,
                         "vendedor" => $vendedor,
-                        "producto_imagenes" => $producto_imagenes);
+                        "producto_imagenes" => $producto_imagenes,
+                        "producto_extras"=>$producto_extras);
 
                     $this->load->helper('ckeditor');
 

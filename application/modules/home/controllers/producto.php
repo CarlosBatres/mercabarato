@@ -217,6 +217,11 @@ class Producto extends MY_Controller {
                 $res = $this->poblacion_model->get($localizacion->poblacion_id);
                 $localizacion->poblacion = $res->nombre;
             }
+            
+            $producto_extras=$this->producto_extra_model->get_many_by(array("producto_id"=>$producto->id,"tipo"=>"1"));
+            if(!$producto_extras){
+                $producto_extras=array();
+            }
 
             /**
              * Usuario Loggedin
@@ -294,6 +299,7 @@ class Producto extends MY_Controller {
                     "invitacion" => $invitacion,
                     "fecha_finaliza" => $fecha_finaliza,
                     "localizacion" => $localizacion,
+                    "producto_extras"=>$producto_extras
                 );
                 $this->template->load_view('home/producto/ficha', $data);
             } else {
@@ -337,6 +343,7 @@ class Producto extends MY_Controller {
                         "son_contactos" => true,
                         "son_contactos" => false,
                         "localizacion" => $localizacion,
+                        "producto_extras"=>$producto_extras
                     );
                     $this->template->load_view('home/producto/ficha', $data);
                 } else {

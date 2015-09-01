@@ -69,7 +69,7 @@ ADD COLUMN `precio_anterior` FLOAT(10,2) NULL DEFAULT NULL AFTER `impuesto`,
 ADD COLUMN `fecha_precio_modificar` DATE NULL DEFAULT NULL AFTER `precio_anterior`;
 
 
-CREATE TABLE IF NOT EXISTS `mercabarato_bd`.`punto_venta` (
+CREATE TABLE IF NOT EXISTS `punto_venta` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(255) NULL DEFAULT NULL,
   `direccion` VARCHAR(255) NULL DEFAULT NULL,
@@ -86,3 +86,20 @@ DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
 /*  VOLVER A INSERTAR LA VIEW DE PRODUCTOS PRECIOS PORQUE CAMBIO*/
+
+CREATE TABLE IF NOT EXISTS `producto_extra` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `producto_id` INT(10) UNSIGNED NOT NULL,
+  `nombre` VARCHAR(100) NULL DEFAULT NULL,
+  `value` VARCHAR(255) NULL DEFAULT NULL,
+  `tipo` INT(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_producto_extra_producto1_idx` (`producto_id` ASC),
+  CONSTRAINT `fk_producto_extra_producto1`
+    FOREIGN KEY (`producto_id`)
+    REFERENCES `mercabarato_bd`.`producto` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;

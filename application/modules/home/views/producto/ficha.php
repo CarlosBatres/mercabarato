@@ -58,7 +58,7 @@
                         <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
                         <?php else: ?>                            
                             <?php if ($tarifa < $oferta && $tarifa < $producto->precio): ?>                                                    
-                                
+
                                 <?php if ($producto->precio_anterior == null || ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5)): ?>
                                     <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del></p>
                                 <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
@@ -67,7 +67,7 @@
 
                                 <p class="price"><?php echo number_format($tarifa, '2') . ' ' . $this->config->item('money_sign') ?></p>
                             <?php elseif ($oferta < $tarifa && $oferta < $producto->precio): ?>                                
-                                
+
                                 <?php if ($producto->precio_anterior == null || ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5)): ?>
                                     <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del></p>
                                 <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
@@ -86,7 +86,7 @@
                                     </div>
                                 <?php endif; ?>        
                             <?php else: ?> 
-                                
+
                                 <?php if ($producto->precio_anterior == null || ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5)): ?>
                                     <p class="price"><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></p>
                                 <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
@@ -97,6 +97,14 @@
                         <?php endif; ?>
                     </div>
                     <div class="ficha-producto-extra text-right">
+                        <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>                            
+                        <?php else: ?>  
+                            <?php foreach($producto_extras as $ext):?>
+                                <p><?php echo $ext->value .' por '.$ext->nombre. ' unidades' ?></p>                        
+                            <?php endforeach;?>
+                                <br>
+                        <?php endif; ?>
+
                         <?php if ($producto->transporte == "0"): ?>
                             <p><strong>Transporte gratuito</strong></p>
                         <?php elseif ($producto->transporte == "2"): ?>    
