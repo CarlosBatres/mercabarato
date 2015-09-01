@@ -579,6 +579,10 @@ span.arrow {
     padding-top: 40px;
 }
 
+.ficha-producto-extra{
+    padding-top: 50px;
+}
+
 @media (max-width: 768px) {
     .navbar-custom ul{
         background-color: #fff;

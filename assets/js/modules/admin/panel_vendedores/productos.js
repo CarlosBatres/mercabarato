@@ -69,7 +69,10 @@ function validateForms() {
         },
         rules: {
             nombre: {required: true},
-            precio: {required: true, number: true}
+            precio: {required: true, number: true},
+            precio_extra1_cantidad : {number : true},
+            precio_extra2_cantidad : {number : true},
+            precio_extra3_cantidad : {number : true}
         },
         messages: {
             nombre: {
@@ -78,7 +81,10 @@ function validateForms() {
             precio: {
                 required: "Ingrese un monto.",
                 number: "Ingrese un numero"
-            }
+            },
+            precio_extra1_cantidad : {number : "La cantidad debe ser numerica"},            
+            precio_extra2_cantidad : {number : "La cantidad debe ser numerica"},            
+            precio_extra3_cantidad : {number : "La cantidad debe ser numerica"}
         }
     });
 

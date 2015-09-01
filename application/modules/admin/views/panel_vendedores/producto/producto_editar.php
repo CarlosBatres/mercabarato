@@ -9,7 +9,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-10 col-md-offset-1">
             <div class="box box_registro">
                 <h2 class="text-uppercase">Informacion del producto</h2>                                        
                 <hr>
@@ -69,60 +69,127 @@
                     </div>
                 </div>
                 <br><br>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Precio Venta Publico</label>
-                            <input type="text" class="form-control" name="precio" value="<?php echo $producto->precio; ?>">
-                        </div>
-                    </div>    
-                    <div class="col-md-8">
-                        <div class="form-group">                            
-                            <label>Enlace externo al producto</label>
-                            <input type="text" class="form-control" name="link_externo" value="<?php echo $producto->link_externo; ?>">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <br>
-                            <label>Desea mostrar el producto al publico general?</label><br>
-                            <label>Si<input type="radio" name="mostrar_producto" id="mostrar_si" value="1" class="radioInput" <?php echo ($producto->mostrar_producto == 1) ? "checked" : ""; ?>></label>
-                            <label>No<input type="radio" name="mostrar_producto" id="mostrar_no" value="0" class="radioInput" <?php echo ($producto->mostrar_producto == 0) ? "checked" : ""; ?>></label>
 
-                        </div>
-                    </div>   
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <br>
-                            <label>Desea mostrar el precio al publico general?</label><br>
-                            <label>Si<input type="radio" name="mostrar_precio" id="mostrar_precio_si" value="1" class="radioInput" <?php echo ($producto->mostrar_precio == 1) ? "checked" : ""; ?>></label>
-                            <label>No<input type="radio" name="mostrar_precio" id="mostrar_precio_no" value="0" class="radioInput" <?php echo ($producto->mostrar_precio == 0) ? "checked" : ""; ?>></label>
-
-                        </div>                                                                       
-                    </div>
-                </div>
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <br>
-                            <label>Transporte es gratuito?</label><br>
-                            <?php foreach (transporte_radio() as $id=>$radio): ?>
-                                <label><input type="radio" name="transporte" value="<?php echo $id ?>" class="radioInput" <?php echo ($producto->transporte == $id) ? "checked" : ""; ?>><?php echo $radio?></label><br>    
-                            <?php endforeach; ?>
-                        </div>
-                    </div>   
-                    <div class="col-md-4">                        
-                        <div class="form-group">
-                            <br>
-                            <label>Impuesto incluido?</label><br>
-                            <?php foreach (impuesto_radio() as $id=>$radio): ?>
-                                <label><input type="radio" name="impuesto" value="<?php echo $id ?>" class="radioInput" <?php echo ($producto->impuesto == $id) ? "checked" : ""; ?>><?php echo $radio?></label><br>    
-                            <?php endforeach; ?>
-                        </div>
+                    <div class="col-md-12">
+                        <div class="panel panel-primary panel-blue">
+                            <div class="panel-heading">                                
+                                <span class="titulo">Precio según el número de articulos comprados</span>                                
+                            </div>
+                            <div class="panel-body"> 
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">                            
+                                            <label>Precio Venta Publico ( por unidad )</label>
+                                            <input type="text" class="form-control" name="precio" value="<?php echo $producto->precio; ?>">
+                                        </div>
+                                    </div>                                    
+
+                                </div>
+                                <div class="row">                                    
+                                    <div class="col-md-5">                                        
+                                        <div class="form-group">                            
+                                            <label>Precio Venta ( costo o texto descriptivo )</label>
+                                            <input type="text" class="form-control" name="precio_extra1" value="<?php echo (isset($producto_extras["0"])) ? $producto_extras["0"]->value : "" ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 text-center">
+                                        <br><p class="lead"><strong>x</strong></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Cantidad de articulos ( solo numero )</label>
+                                        <input type="text" class="form-control" name="precio_extra1_cantidad" value="<?php echo (isset($producto_extras["0"])) ? $producto_extras["0"]->nombre : "" ?>">
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">                                                                        
+                                            <input type="text" class="form-control" name="precio_extra2" value="<?php echo (isset($producto_extras["1"])) ? $producto_extras["1"]->value : "" ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 text-center">
+                                        <p class="lead"><strong>x</strong></p>
+                                    </div>
+                                    <div class="col-md-6">                                        
+                                        <input type="text" class="form-control" name="precio_extra2_cantidad" value="<?php echo (isset($producto_extras["1"])) ? $producto_extras["1"]->nombre : "" ?>">
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">                                                                        
+                                            <input type="text" class="form-control" name="precio_extra3" value="<?php echo (isset($producto_extras["2"])) ? $producto_extras["2"]->value : "" ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 text-center">
+                                        <p class="lead"><strong>x</strong></p>
+                                    </div>
+                                    <div class="col-md-6">                                        
+                                        <input type="text" class="form-control" name="precio_extra3_cantidad" value="<?php echo (isset($producto_extras["2"])) ? $producto_extras["2"]->nombre : "" ?>">
+                                    </div>
+                                </div>
+
+                            </div>                
+                        </div> 
                     </div>
                 </div>
+                <br>                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-primary panel-blue">
+                            <div class="panel-heading">                                
+                                <span class="titulo">Opciones adicionales</span>                                
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <div class="form-group">                            
+                                        <label>Enlace externo al producto</label>
+                                        <input type="text" class="form-control" name="link_externo" value="<?php echo $producto->link_externo; ?>">
+                                    </div>
+                                </div> 
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <br>
+                                        <label>Desea mostrar el producto al publico general?</label><br>
+                                        <label>Si<input type="radio" name="mostrar_producto" id="mostrar_si" value="1" class="radioInput" <?php echo ($producto->mostrar_producto == 1) ? "checked" : ""; ?>></label>
+                                        <label>No<input type="radio" name="mostrar_producto" id="mostrar_no" value="0" class="radioInput" <?php echo ($producto->mostrar_producto == 0) ? "checked" : ""; ?>></label>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <br>
+                                        <label>Desea mostrar el precio al publico general?</label><br>
+                                        <label>Si<input type="radio" name="mostrar_precio" id="mostrar_precio_si" value="1" class="radioInput" <?php echo ($producto->mostrar_precio == 1) ? "checked" : ""; ?>></label>
+                                        <label>No<input type="radio" name="mostrar_precio" id="mostrar_precio_no" value="0" class="radioInput" <?php echo ($producto->mostrar_precio == 0) ? "checked" : ""; ?>></label>
+
+                                    </div>                                                                        
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <br>
+                                        <label>Transporte es gratuito?</label><br>
+                                        <?php foreach (transporte_radio() as $id => $radio): ?>
+                                            <label><input type="radio" name="transporte" value="<?php echo $id ?>" class="radioInput" <?php echo ($producto->transporte == $id) ? "checked" : ""; ?>><?php echo $radio ?></label><br>    
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">                        
+                                    <div class="form-group">
+                                        <br>
+                                        <label>Impuesto incluido?</label><br>
+                                        <?php foreach (impuesto_radio() as $id => $radio): ?>
+                                            <label><input type="radio" name="impuesto" value="<?php echo $id ?>" class="radioInput" <?php echo ($producto->impuesto == $id) ? "checked" : ""; ?>><?php echo $radio ?></label><br>    
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                                                
                 <br>
                 <div class="row">
                     <div class="col-md-12">

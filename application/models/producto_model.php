@@ -520,6 +520,7 @@ class Producto_model extends MY_Model {
      */
     public function delete($id) {
         $this->producto_resource_model->cleanup_resources($id);
+        $this->producto_extra_model->delete_by("producto_id", $id);
         $this->visita_model->delete_by("producto_id", $id);
         $this->requisito_visitas_model->delete_by("producto_id", $id);
 
