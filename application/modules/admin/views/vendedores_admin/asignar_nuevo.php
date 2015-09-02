@@ -50,35 +50,25 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row">
+                <div class="row">                    
                     <div class="col-md-6">
                         <div class="form-group">                                
-                            <select name="pais" class="form-control">
-                                <option value="0">País</option>
-                                <?php foreach ($paises as $pais): ?>
-                                    <option value="<?php echo $pais->id ?>"><?php echo $pais->nombre ?></option>
+                            <select name="provincia" class="form-control">
+                                <option value="0">Provincia</option>
+                                <?php foreach ($provincias as $provincia): ?>                                   
+                                    <option value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">                                
-                            <select name="provincia" class="form-control">
-                                <option value="0">Provincia</option>                        
-                            </select>
-                        </div>
-                    </div>
-                </div> 
-                <div class="row">
-                    <div class="col-md-12">
                         <div class="form-group">                        
                             <select name="poblacion" class="form-control">
                                 <option value="0">Población</option>                        
                             </select>
                         </div>
                     </div>
-                </div>
-
+                </div>                 
                 <hr>
                 <div class="row">
                     <div class="col-md-12">

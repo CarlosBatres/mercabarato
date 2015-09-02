@@ -58,13 +58,7 @@
             </div>            
 
             <div class="navbar-collapse collapse" id="navigation">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown <?php
-                    if ($this->uri->uri_string() == ''): echo "active";
-                    endif;
-                    ?>" >
-                        <a href="<?php echo site_url(); ?>">Inicio</a>                            
-                    </li>
+                <ul class="nav navbar-nav navbar-right">                    
                     <li class="dropdown <?php
                     if ($this->uri->uri_string() == 'productos'): echo "active";
                     endif;
