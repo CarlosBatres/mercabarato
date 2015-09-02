@@ -85,7 +85,7 @@ class Producto extends MY_Controller {
         $this->session->unset_userdata('search_query');
         $query = urldecode($search_query);
         $this->session->set_userdata(array('search_query' => $query));
-        redirect('');
+        redirect('productos');
     }
 
     /**

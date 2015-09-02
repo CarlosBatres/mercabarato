@@ -46,7 +46,8 @@ class Vendedores_admin extends ADController {
             $cliente = $this->cliente_model->get_by("usuario_id", $usuario->id);
 
             $paises = $this->pais_model->get_all();
-            $data = array("cliente" => $cliente, "usuario" => $usuario, "paises" => $paises);
+            $provincias = $this->provincia_model->get_all_by_pais("70");
+            $data = array("cliente" => $cliente, "usuario" => $usuario, "provincias" => $provincias);
             $this->template->load_view('admin/vendedores_admin/asignar_nuevo', $data);
         }
     }
