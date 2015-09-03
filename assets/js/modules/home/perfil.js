@@ -125,7 +125,7 @@ $(document).ready(function() {
         yearRange: "1900:-nn"
     });
 
-    $('#form_afiliarse').find('select[name="pais"]').on('change', function() {
+    /*$('select[name="pais"]').on('change', function() {
         $('#form_afiliarse').find('select[name="provincia"]').html("<option value='0'>Provincia</option>");
         $('#form_afiliarse').find('select[name="poblacion"]').html("<option value='0'>Población</option>");
         var pais_id = $(this).val();
@@ -138,10 +138,10 @@ $(document).ready(function() {
                 $('#form_afiliarse').find('select[name="provincia"]').html(response.html);
             }
         });
-    });
+    });*/
 
-    $('#form_afiliarse').find('select[name="provincia"]').on('change', function() {
-        $('#form_afiliarse').find('select[name="poblacion"]').html("<option value='0'>Problación</option>");
+    $('select[name="provincia"]').on('change', function() {
+        $('select[name="poblacion"]').html("<option value='0'>Población</option>");
         var provincia_id = $(this).val();
         $.ajax({
             type: "POST",
@@ -149,10 +149,10 @@ $(document).ready(function() {
             data: {provincia_id: provincia_id},
             dataType: 'json',
             success: function(response) {
-                $('#form_afiliarse').find('select[name="poblacion"]').html(response.html);
+                $('select[name="poblacion"]').html(response.html);
             }
         });
     });
 
-    $('#form_afiliarse').find('select[name="pais"]').trigger('change');
+    //$('#form_afiliarse').find('select[name="pais"]').trigger('change');
 });

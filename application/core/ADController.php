@@ -108,7 +108,12 @@ class ADController extends MY_Controller {
             if (!$this->identidad->es_vendedor_habilitado()) {
                 redirect('acceso_restringido');
             } else {
-                return true;
+                $paquete=$this->vendedor_model->get_paquete_en_curso($this->identidad->vendedor->id);
+                if($paquete){
+                    return true;
+                }else{
+                    redirect('acceso_restringido');
+                }                
             }
         }
     }

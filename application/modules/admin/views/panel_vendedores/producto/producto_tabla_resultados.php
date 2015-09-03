@@ -1,6 +1,11 @@
 <?php if (sizeof($productos) == 0): ?>
-    <div>
-        <p> No se encontraron productos...</p>    
+    <div>        
+        <div class="alert alert-warning">             
+            <p> No se encontro ningun producto que se ajuste a estos parametros, puedes intentar lo siguiente: </p>    
+            <ul>                
+                <li> Prueba con un nombre o palabras claves diferentes.</li>
+            </ul>
+        </div>        
     </div>
 <?php else: ?>
     <?php if ($this->session->flashdata('success')) { ?>
@@ -34,8 +39,9 @@
     <div class="table-responsive">        
         <table class="table table-bordered table-hover table-striped">
             <thead>
-                <tr>                
-                    <th style="width: 15%">Nombre del Producto</th>
+                <tr>    
+                    <th style="width: 1%"><input type="checkbox" name="select_all" value="ON" /></th>              
+                    <th style="width: 14%">Nombre del Producto</th>
                     <th style="width: 5%;text-align: center">Precio Venta Publico</th>
                     <th style="width: 10%">Categoria</th>                
                     <th style="width: 5%;text-align: center">Visible al Publico</th>                                            
@@ -46,7 +52,8 @@
             </thead>
             <tbody>
                 <?php foreach ($productos as $producto): ?>
-                    <tr>                    
+                    <tr data-id="<?php echo $producto->id; ?>">
+                        <td><input type="checkbox" name="eliminar" value="ON"/></td>
                         <td><?php echo $producto->nombre; ?></td>
                         <td style="text-align: center"><?php echo $producto->precio . ' ' . $this->config->item('money_sign'); ?></td>                                                                
                         <td><?php echo $producto->Categoria; ?></td>                    
@@ -82,8 +89,8 @@
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-        </table>
-
+        </table>        
         <?php echo $pagination; ?>
+        <button type="button" id="btn-eliminar-seleccionados" class="btn btn-danger">Eliminar Seleccionados</button>
     </div> 
 <?php endif; ?>

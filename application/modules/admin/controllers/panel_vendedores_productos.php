@@ -32,7 +32,7 @@ class Panel_vendedores_productos extends ADController {
                         "mostrar_precio" => $this->input->post('mostrar_precio'),
                         "vendedor_id" => $vendedor->get_vendedor_id(),
                         "categoria_id" => $this->input->post('categoria_id'),
-                        "transporte" =>($this->input->post('transporte') != '') ? $this->input->post('transporte') : null,
+                        "transporte" => ($this->input->post('transporte') != '') ? $this->input->post('transporte') : null,
                         "impuesto" => ($this->input->post('impuesto') != '') ? $this->input->post('impuesto') : null,
                     );
 
@@ -66,46 +66,46 @@ class Panel_vendedores_productos extends ADController {
                             }
                         }
                     }
-                    
-                    $precio_extra1=$this->input->post('precio_extra1');
-                    $precio_extra1_cantidad=$this->input->post('precio_extra1_cantidad');
-                    
-                    if($precio_extra1!="" && $precio_extra1_cantidad!=""){
-                        $data_extra=array(
-                            "producto_id"=>$producto_id,
-                            "nombre"=> $precio_extra1_cantidad,
+
+                    $precio_extra1 = $this->input->post('precio_extra1');
+                    $precio_extra1_cantidad = $this->input->post('precio_extra1_cantidad');
+
+                    if ($precio_extra1 != "" && $precio_extra1_cantidad != "") {
+                        $data_extra = array(
+                            "producto_id" => $producto_id,
+                            "nombre" => $precio_extra1_cantidad,
                             "value" => $precio_extra1,
                             "tipo" => 1
                         );
                         $this->producto_extra_model->insert($data_extra);
                     }
-                    
-                    $precio_extra2=$this->input->post('precio_extra2');
-                    $precio_extra2_cantidad=$this->input->post('precio_extra2_cantidad');
-                    
-                    if($precio_extra2!="" && $precio_extra2_cantidad!=""){
-                        $data_extra=array(
-                            "producto_id"=>$producto_id,
-                            "nombre"=> $precio_extra2_cantidad,
+
+                    $precio_extra2 = $this->input->post('precio_extra2');
+                    $precio_extra2_cantidad = $this->input->post('precio_extra2_cantidad');
+
+                    if ($precio_extra2 != "" && $precio_extra2_cantidad != "") {
+                        $data_extra = array(
+                            "producto_id" => $producto_id,
+                            "nombre" => $precio_extra2_cantidad,
                             "value" => $precio_extra2,
                             "tipo" => 1
                         );
                         $this->producto_extra_model->insert($data_extra);
                     }
-                    
-                    $precio_extra3=$this->input->post('precio_extra3');
-                    $precio_extra3_cantidad=$this->input->post('precio_extra3_cantidad');
-                    
-                    if($precio_extra3!="" && $precio_extra3_cantidad!=""){
-                        $data_extra=array(
-                            "producto_id"=>$producto_id,
-                            "nombre"=> $precio_extra3_cantidad,
+
+                    $precio_extra3 = $this->input->post('precio_extra3');
+                    $precio_extra3_cantidad = $this->input->post('precio_extra3_cantidad');
+
+                    if ($precio_extra3 != "" && $precio_extra3_cantidad != "") {
+                        $data_extra = array(
+                            "producto_id" => $producto_id,
+                            "nombre" => $precio_extra3_cantidad,
                             "value" => $precio_extra3,
                             "tipo" => 1
                         );
                         $this->producto_extra_model->insert($data_extra);
                     }
-                    
+
 
                     redirect('panel_vendedor/producto/listado');
                 } else {
@@ -167,7 +167,7 @@ class Panel_vendedores_productos extends ADController {
                         "mostrar_precio" => $this->input->post('mostrar_precio'),
                         "vendedor_id" => $vendedor->get_vendedor_id(),
                         "categoria_id" => $this->input->post('categoria_id'),
-                        "transporte" =>($this->input->post('transporte') != '') ? $this->input->post('transporte') : null,
+                        "transporte" => ($this->input->post('transporte') != '') ? $this->input->post('transporte') : null,
                         "impuesto" => ($this->input->post('impuesto') != '') ? $this->input->post('impuesto') : null,
                     );
 
@@ -204,48 +204,48 @@ class Panel_vendedores_productos extends ADController {
                             }
                         }
                     }
-                    
-                    $this->producto_extra_model->delete_by(array("producto_id"=>$producto_id,"tipo"=>"1"));
-                    
-                    $precio_extra1=$this->input->post('precio_extra1');
-                    $precio_extra1_cantidad=$this->input->post('precio_extra1_cantidad');
-                    
-                    if($precio_extra1!="" && $precio_extra1_cantidad!=""){
-                        $data_extra=array(
-                            "producto_id"=>$producto_id,
-                            "nombre"=> $precio_extra1_cantidad,
+
+                    $this->producto_extra_model->delete_by(array("producto_id" => $producto_id, "tipo" => "1"));
+
+                    $precio_extra1 = $this->input->post('precio_extra1');
+                    $precio_extra1_cantidad = $this->input->post('precio_extra1_cantidad');
+
+                    if ($precio_extra1 != "" && $precio_extra1_cantidad != "") {
+                        $data_extra = array(
+                            "producto_id" => $producto_id,
+                            "nombre" => $precio_extra1_cantidad,
                             "value" => $precio_extra1,
                             "tipo" => 1
                         );
                         $this->producto_extra_model->insert($data_extra);
                     }
-                    
-                    $precio_extra2=$this->input->post('precio_extra2');
-                    $precio_extra2_cantidad=$this->input->post('precio_extra2_cantidad');
-                    
-                    if($precio_extra2!="" && $precio_extra2_cantidad!=""){
-                        $data_extra=array(
-                            "producto_id"=>$producto_id,
-                            "nombre"=> $precio_extra2_cantidad,
+
+                    $precio_extra2 = $this->input->post('precio_extra2');
+                    $precio_extra2_cantidad = $this->input->post('precio_extra2_cantidad');
+
+                    if ($precio_extra2 != "" && $precio_extra2_cantidad != "") {
+                        $data_extra = array(
+                            "producto_id" => $producto_id,
+                            "nombre" => $precio_extra2_cantidad,
                             "value" => $precio_extra2,
                             "tipo" => 1
                         );
                         $this->producto_extra_model->insert($data_extra);
                     }
-                    
-                    $precio_extra3=$this->input->post('precio_extra3');
-                    $precio_extra3_cantidad=$this->input->post('precio_extra3_cantidad');
-                    
-                    if($precio_extra3!="" && $precio_extra3_cantidad!=""){
-                        $data_extra=array(
-                            "producto_id"=>$producto_id,
-                            "nombre"=> $precio_extra3_cantidad,
+
+                    $precio_extra3 = $this->input->post('precio_extra3');
+                    $precio_extra3_cantidad = $this->input->post('precio_extra3_cantidad');
+
+                    if ($precio_extra3 != "" && $precio_extra3_cantidad != "") {
+                        $data_extra = array(
+                            "producto_id" => $producto_id,
+                            "nombre" => $precio_extra3_cantidad,
                             "value" => $precio_extra3,
                             "tipo" => 1
                         );
                         $this->producto_extra_model->insert($data_extra);
                     }
-                    
+
 
                     $this->session->set_flashdata('success', 'Producto modificado con exito');
                     redirect('panel_vendedor/producto/listado');
@@ -260,9 +260,9 @@ class Panel_vendedores_productos extends ADController {
                     $this->template->add_js("modules/admin/panel_vendedores/productos.js");
                     $vendedor = $this->vendedor_model->get($producto->vendedor_id);
                     $producto_imagenes = $this->producto_resource_model->get_producto_imagenes($producto->id);
-                    $producto_extras=$this->producto_extra_model->get_many_by(array("producto_id"=>$producto->id,"tipo"=>"1"));
-                    if(!$producto_extras){ 
-                        $producto_extras=array();
+                    $producto_extras = $this->producto_extra_model->get_many_by(array("producto_id" => $producto->id, "tipo" => "1"));
+                    if (!$producto_extras) {
+                        $producto_extras = array();
                     }
 
                     $categorias_tree = $this->categoria_model->get_full_tree();
@@ -273,7 +273,7 @@ class Panel_vendedores_productos extends ADController {
                         "producto" => $producto,
                         "vendedor" => $vendedor,
                         "producto_imagenes" => $producto_imagenes,
-                        "producto_extras"=>$producto_extras);
+                        "producto_extras" => $producto_extras);
 
                     $this->load->helper('ckeditor');
 
@@ -325,6 +325,38 @@ class Panel_vendedores_productos extends ADController {
                 $this->session->set_flashdata('error', 'No puedes realizar esta accion.');
             }
             echo json_encode(array("success" => true));
+        } else {
+            show_404();
+        }
+    }
+
+    public function borrar_multi() {
+        if ($this->input->is_ajax_request()) {
+            $user_id = $this->authentication->read('identifier');
+            $vendedor = $this->usuario_model->get_full_identidad($user_id);
+
+            $formValues = $this->input->post();
+            if ($formValues !== false) {
+                $producto_ids = $this->input->post('producto_ids');
+                $ids = explode(";;", $producto_ids);
+
+                $flag = 0;
+                foreach ($ids as $id) {
+                    $res = $this->producto_model->get_vendedor_id_del_producto($id);
+                    if ($res == $vendedor->get_vendedor_id()) {
+                        $this->producto_model->delete($id);
+                    } else {
+                        $flag=1;
+                    }
+                }
+                if ($flag==0) {
+                    $this->session->set_flashdata('success', 'Productos eliminados con exito..');
+                } elseif($flag==1) {
+                    $this->session->set_flashdata('error', 'Ha ocurrido un error durante la operacion.');
+                }
+
+                echo json_encode(array("success" => true));
+            }
         } else {
             show_404();
         }
@@ -500,33 +532,33 @@ class Panel_vendedores_productos extends ADController {
 
                 for ($row = 1; $row <= $highestRow; $row++) {
                     $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
-                    $flag=true;
+                    $flag = true;
                     if ($row == 1) {
-                       /* $flag = true;
-                        if (strcmp(strtolower($rowData[0][0]), "nombre")) {
-                            $flag = false;
-                        }
-                        if (strcmp(strtolower($rowData[0][1]), "descripcion")) {
-                            $flag = false;
-                        }
-                        if (strcmp(strtolower($rowData[0][2]), "precio")) {
-                            $flag = false;
-                        }
-                        if (strcmp(strtolower($rowData[0][3]), "mostrar_precio")) {
-                            $flag = false;
-                        }
-                        if (strcmp(strtolower($rowData[0][4]), "mostrar_producto")) {
-                            $flag = false;
-                        }
-                        if (strcmp(strtolower($rowData[0][5]), "habilitado")) {
-                            $flag = false;
-                        }
-                        if (strcmp(strtolower($rowData[0][6]), "link_externo")) {
-                            $flag = false;
-                        }
-                        if (strcmp(strtolower($rowData[0][7]), "categoria_id")) {
-                            $flag = false;
-                        }*/
+                        /* $flag = true;
+                          if (strcmp(strtolower($rowData[0][0]), "nombre")) {
+                          $flag = false;
+                          }
+                          if (strcmp(strtolower($rowData[0][1]), "descripcion")) {
+                          $flag = false;
+                          }
+                          if (strcmp(strtolower($rowData[0][2]), "precio")) {
+                          $flag = false;
+                          }
+                          if (strcmp(strtolower($rowData[0][3]), "mostrar_precio")) {
+                          $flag = false;
+                          }
+                          if (strcmp(strtolower($rowData[0][4]), "mostrar_producto")) {
+                          $flag = false;
+                          }
+                          if (strcmp(strtolower($rowData[0][5]), "habilitado")) {
+                          $flag = false;
+                          }
+                          if (strcmp(strtolower($rowData[0][6]), "link_externo")) {
+                          $flag = false;
+                          }
+                          if (strcmp(strtolower($rowData[0][7]), "categoria_id")) {
+                          $flag = false;
+                          } */
                     } else {
 
                         $flag_empty = true;

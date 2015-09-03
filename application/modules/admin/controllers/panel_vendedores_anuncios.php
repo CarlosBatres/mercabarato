@@ -163,6 +163,38 @@ class Panel_vendedores_anuncios extends ADController {
             show_404();
         }
     }
+    
+    public function borrar_multi() {
+        if ($this->input->is_ajax_request()) {
+            $user_id = $this->authentication->read('identifier');
+            $vendedor = $this->usuario_model->get_full_identidad($user_id);
+
+            $formValues = $this->input->post();
+            if ($formValues !== false) {
+                $anuncio_ids = $this->input->post('anuncio_ids');
+                $ids = explode(";;", $anuncio_ids);
+
+                $flag = 0;
+                foreach ($ids as $id) {
+                    $res = $this->anuncio_model->get_vendedor_id_del_anuncio($id);
+                    if ($res == $vendedor->get_vendedor_id()) {
+                        $this->anuncio_model->delete($id);
+                    } else {
+                        $flag=1;
+                    }
+                }
+                if ($flag==0) {
+                    $this->session->set_flashdata('success', 'Anuncios eliminados con exito..');
+                } elseif($flag==1) {
+                    $this->session->set_flashdata('error', 'Ha ocurrido un error durante la operacion.');
+                }
+
+                echo json_encode(array("success" => true));
+            }
+        } else {
+            show_404();
+        }
+    }
 
     /**
      * 
