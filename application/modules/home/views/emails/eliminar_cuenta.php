@@ -12,14 +12,24 @@
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-                                    <b>Invitacion Aceptada</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Un Vendedor ha aceptado tu invitacion para conectarse ya puedes recibir sus Tarifas, Ofertas y demas.
+                                    <b>Tienes una nueva solicitud para darse de Baja.</b>
                                 </td>
                             </tr>                            
+                            <tr>
+                                <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+                                    A continuacion esta la informacion del usuario que hizo la peticion para eliminar su cuenta.
+                                </td>
+                            </tr>                            
+                            <tr>
+                                <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+                                    <strong>EMAIL = <?php echo $usuario->usuario->email; ?></strong><br><br>                                    
+                                    <?php if ($usuario->es_vendedor()): ?>
+                                        Es un <strong>VENDEDOR</strong> , buscalo en Ver Vendedores<br>                                    
+                                        <?php else:?>
+                                        Es un <strong>CLIENTE</strong> , buscalo en Ver Clientes<br>                                    
+                                    <?php endif; ?>
+                                </td>
+                            </tr>                                                        
                         </table>
                     </td>
                 </tr>
@@ -28,7 +38,6 @@
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="color: #ffffff; text-align: center; font-family: Arial, sans-serif; font-size: 14px;" width="100%">
-                                    Si deseas darte de baja puedes darle click al siguiente link <a href="<?php echo site_url('usuario/eliminar-cuenta')?>" style="color: #ffffff; font-size: 16px;"> BAJA </a> <br><br>
                                     Copyright &copy; 2015. Mercabarato.com Todos los derechos reservados.                                    
                                 </td>                                
                             </tr>

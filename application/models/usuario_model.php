@@ -145,6 +145,20 @@ class Usuario_model extends MY_Model {
             return false;
         }
     }
+    
+    public function full_inhabilitar($usuario_id) {
+        $usuario = $this->get($usuario_id);
+        if ($usuario) {            
+            $this->update($usuario_id, array("activo" => "0"));
+            $cliente=$this->cliente_model->get_by("usuario_id",$usuario_id);
+            if($cliente){
+                $vendedor=$this->vendedor_model->get_by("cliente_id",$cliente->id);
+                if($vendedor){
+                    $this->vendedor_model->update($vendedor->id,array("habilitado"=>"0"));
+                }
+            }
+        }
+    }
 
 }
 
