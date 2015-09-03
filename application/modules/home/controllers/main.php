@@ -134,30 +134,10 @@ class Main extends MY_Controller {
         $this->template->load_view('home/paginas/cookies');
     }
 
-    public function test_url() {
-        $paquete = $this->vendedor_paquete_model->get("3919");
-        $data_email = array("paquete" => $paquete);
-        $this->load->view('home/emails/informacion_de_compra', $data_email);
-    }
-
-    public function busca_compara() {
-        $this->template->set_title('Mercabarato - Busca y Compara');
-        $this->template->load_view('home/paginas/busca_compara');
-    }
-
-    public function infocompras() {
-        $this->template->set_title('Mercabarato - Busca y Compara');
-        $this->template->load_view('home/paginas/infocompras');
-    }
-
-    public function tarifas_personales() {
-        $this->template->set_title('Mercabarato - Busca y Compara');
-        $this->template->load_view('home/paginas/tarifas_personales');
-    }
-
-    public function ventajas_vendedor() {
-        $this->template->set_title('Mercabarato - Busca y Compara');
-        $this->template->load_view('home/paginas/ventajas_vendedor');
-    }
-
+    public function test_url() {                        
+        $data_email = array();        
+        $this->load->view('home/emails/solicitud_presupuesto', $data_email);
+    }    
+    
+    
 }

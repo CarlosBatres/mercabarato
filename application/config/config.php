@@ -372,6 +372,7 @@ $config["principal_default_per_page"]='10';
 $config["emails_enabled"]=false;
 
 $config["site_info_email"]="info@mercabarato.com";
+$config["site_baja_email"]="baja@mercabarato.com";
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

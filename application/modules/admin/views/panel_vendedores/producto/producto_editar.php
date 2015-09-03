@@ -72,7 +72,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="panel panel-primary panel-blue">
+                        <div class="panel panel-primary">
                             <div class="panel-heading">                                
                                 <span class="titulo">Precio según el número de articulos comprados</span>                                
                             </div>
@@ -139,7 +139,7 @@
                 <br>                
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="panel panel-primary panel-blue">
+                        <div class="panel panel-primary">
                             <div class="panel-heading">                                
                                 <span class="titulo">Opciones adicionales</span>                                
                             </div>
