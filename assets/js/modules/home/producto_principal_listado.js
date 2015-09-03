@@ -90,6 +90,7 @@ function updateResultados() {
     var poblacion = $('select[name="poblacion"]').val();
     var pagina_id = $('#pagina').val();
     var mostrar_solo_tarifas = $('input[name="mostrar_mis_tarifas"]').is(":checked");
+    var mostrar_solo_vendedores = $('input[name="mostrar_mis_vendedores"]').is(":checked");
 
     var precio_desde = $('input[name="precio_desde"]').val();
 
@@ -149,6 +150,7 @@ function updateResultados() {
             provincia: provincia,
             poblacion: poblacion,
             mostrar_solo_tarifas: mostrar_solo_tarifas,
+            mostrar_solo_vendedores: mostrar_solo_vendedores,
             precio_desde: precio_desde,
             precio_hasta: precio_hasta
         },

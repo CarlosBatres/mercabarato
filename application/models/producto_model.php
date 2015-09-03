@@ -83,6 +83,9 @@ class Producto_model extends MY_Model {
      * @return type
      */
     public function get_site_search($params, $limit, $offset, $order_by, $order) {
+        if(isset($params['no_result'])){
+             return array("total" => 0);            
+        }
         if (isset($params['cliente_id'])) {
             /*             * -------------------------------------------------------------------------
              * 
@@ -156,6 +159,12 @@ class Producto_model extends MY_Model {
             }
             if (isset($params['mostrar_solo_tarifas'])) {
                 $text = " AND p.tipo='tarifa' ";
+                $sub_query.=$text;
+            }
+            
+            if (isset($params['solo_vendedor_ids'])) {
+                $ids = implode(",", $params['solo_vendedor_ids']);
+                $text = " AND p.vendedor_id IN(" . $ids . ") ";
                 $sub_query.=$text;
             }
 
