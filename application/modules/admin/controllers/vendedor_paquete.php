@@ -90,9 +90,9 @@ class Vendedor_paquete extends ADController {
             if ($this->input->post('sitioweb') != "") {
                 $params["sitioweb"] = $this->input->post('sitioweb');
             }
-            if ($this->input->post('actividad') != "No Especificada") {
+            /*if ($this->input->post('actividad') != "No Especificada") {
                 $params["actividad"] = $this->input->post('actividad');
-            }
+            }*/
 
             /* $user_id = $this->authentication->read('identifier');
               $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
@@ -160,21 +160,35 @@ class Vendedor_paquete extends ADController {
                 $vendedor = $this->vendedor_model->get($vendedor_paquete->vendedor_id);
                 $cliente = $this->cliente_model->get($vendedor->cliente_id);
                 $usuario = $this->usuario_model->get($cliente->usuario_id);
+                                
 
                 $html = '<table class="table table-bordered table-hover table-striped">';
                 $html.='<thead>';
                 $html.='<tr>';
-                $html.='<th style="width: 15%;text-align:center;">Vendedor / Empresa</th>';
-                $html.='<th style="width: 15%;text-align:center;">Monto a Cancelar</th>';
-                $html.='<th style="width: 15%;text-align:center;">NIF/CIF</th>';
+                $html.='<th style="text-align:center" colspan="2"> Información del Vendedor</th>';                
                 $html.='</tr>';
                 $html.='</thead>';
-                $html.='<tbody>';
+                $html.='<tbody>';                
                 $html.='<tr>';
+                $html.='<td><strong> Nombre Empresa </strong></td>';
                 $html.='<td>' . $vendedor->nombre . '</td>';
+                $html.='</tr>';                
+                
+                $html.='<tr>';
+                $html.='<td><strong> Monto a Cancelar </strong></td>';
                 $html.='<td>' . $vendedor_paquete->monto_a_cancelar . ' ' . $this->config->item('money_sign') . '</td>';
+                $html.='</tr>';                
+                
+                $html.='<tr>';
+                $html.='<td><strong> NIF - CIF </strong></td>';
                 $html.='<td>' . $vendedor->nif_cif . '</td>';
-                $html.='</tr>';
+                $html.='</tr>';                
+                
+                $html.='<tr>';
+                $html.='<td><strong> Dirección </strong></td>';
+                $html.='<td>' . $vendedor->direccion . '</td>';
+                $html.='</tr>';                                                
+                
                 $html.='</tbody>';
                 $html.='</table>';
 

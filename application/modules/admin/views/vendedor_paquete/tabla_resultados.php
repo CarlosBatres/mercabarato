@@ -21,7 +21,7 @@
         <tbody>
             <?php foreach ($vendedor_paquetes as $vendedor_paquete): ?>
                 <tr>
-                    <td><?php echo $vendedor_paquete->id; ?></td>                    
+                    <td><?php echo $vendedor_paquete->vendedor_id; ?></td>                    
                     <td><?php echo $vendedor_paquete->Vendedor; ?></td>
                     <td><?php echo $vendedor_paquete->nif_cif; ?></td>
                     <td><?php echo $vendedor_paquete->email; ?></td>

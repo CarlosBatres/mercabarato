@@ -25,49 +25,34 @@ class Paquete extends ADController {
     public function crear() {
         $formValues = $this->input->post();
         if ($formValues !== false) {
-            $tipo = $this->input->post('tipo');
-            if ($tipo == "productos") {
-                if ($this->input->post('limite_productos') == "") {
-                    $limite_productos = -1;
-                } else {
-                    $limite_productos = $this->input->post('limite_productos');
-                }
-                if ($this->input->post('limite_anuncios') == "") {
-                    $limite_anuncios = -1;
-                } else {
-                    $limite_anuncios = $this->input->post('limite_anuncios');
-                }
-                $data = array(
-                    "nombre" => $this->input->post('nombre'),
-                    "descripcion" => $this->input->post('descripcion'),
-                    "limite_productos" => $limite_productos,
-                    "limite_anuncios" => $limite_anuncios,
-                    "duracion" => $this->input->post('duracion'),
-                    "costo" => $this->input->post('costo'),
-                    "orden" => ($this->input->post('orden') != '') ? $this->input->post('orden') : 0,
-                    "activo" => 1,
-                    "mostrar" => $this->input->post('mostrar'),
-                    "infocompra"=>0
-                );
+            if ($this->input->post('limite_productos') == "") {
+                $limite_productos = -1;
             } else {
-                $data = array(
-                    "nombre" => $this->input->post('nombre'),
-                    "descripcion" => $this->input->post('descripcion'),
-                    "limite_productos" => 0,
-                    "limite_anuncios" => 0,
-                    "duracion" => $this->input->post('duracion'),
-                    "costo" => $this->input->post('costo'),
-                    "orden" => ($this->input->post('orden') != '') ? $this->input->post('orden') : 0,
-                    "activo" => 1,
-                    "mostrar" => $this->input->post('mostrar'),
-                    "infocompra"=>1
-                );
+                $limite_productos = $this->input->post('limite_productos');
             }
+            if ($this->input->post('limite_anuncios') == "") {
+                $limite_anuncios = -1;
+            } else {
+                $limite_anuncios = $this->input->post('limite_anuncios');
+            }                        
+            
+            $data = array(
+                "nombre" => $this->input->post('nombre'),
+                "descripcion" => $this->input->post('descripcion'),
+                "limite_productos" => $limite_productos,
+                "limite_anuncios" => $limite_anuncios,
+                "duracion" => $this->input->post('duracion'),
+                "costo" => $this->input->post('costo'),
+                "orden" => ($this->input->post('orden') != '') ? $this->input->post('orden') : 0,
+                "activo" => 1,
+                "mostrar" => $this->input->post('mostrar'),
+                "infocompra" => $this->input->post('infocompras_seguros')
+            );            
 
             $this->paquete_model->insert($data);
             redirect('admin/paquetes');
         } else {
-            $this->template->set_title("Panel de Control - Mercabarato.com");            
+            $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->add_js("modules/admin/paquetes.js");
             $this->template->load_view('admin/paquete/nuevo');
         }

@@ -30,14 +30,14 @@
                     <td><?php echo $paquete->duracion.' Meses' ?></td>                    
                     <td><?php echo $paquete->costo; ?></td>                    
                     <td style="text-align: center"><?php
-                        if ($paquete->infocompra == 1): echo "<span class='label label-danger'>No disponible</span>";
+                        if ($paquete->limite_productos == 0): echo "<span class='label label-danger'>No disponible</span>";
                         elseif ($paquete->limite_productos == -1): echo "<span class='label label-success'>Sin limite</span>";
                         else: echo $paquete->limite_productos;
                         endif;
                         ?>
                     </td>
                     <td style="text-align: center"><?php
-                        if ($paquete->infocompra == 1): echo "<span class='label label-danger'>No disponible</span>";
+                        if ($paquete->limite_anuncios == 0): echo "<span class='label label-danger'>No disponible</span>";
                         elseif ($paquete->limite_anuncios == -1): echo "<span class='label label-success'>Sin limite</span>";
                         else: echo $paquete->limite_anuncios;
                         endif;

@@ -278,6 +278,14 @@ class Vendedor extends MY_Controller {
                         $data_email = array("paquete" => $data);
                         $this->email->message($this->load->view('home/emails/informacion_de_compra', $data_email, true));
                         $this->email->send();
+                        
+                        $this->load->library('email');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($this->config->item('site_info_email'));
+                        $this->email->subject('Nueva compra de paquete');
+                        $data_email = array("paquete" => $data,"vendedor"=>$vendedor);
+                        $this->email->message($this->load->view('home/emails/nueva_compra_paquete', $data_email, true));
+                        $this->email->send();                                                
                     }
 
                     $this->vendedor_paquete_model->insert($data);
