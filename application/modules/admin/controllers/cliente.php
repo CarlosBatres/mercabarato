@@ -135,8 +135,8 @@ class Cliente extends ADController {
             $cliente = $this->cliente_model->get($id);
             $usuario = $this->usuario_model->get($cliente->usuario_id);
 
-            if ($usuario->id == 1 && $usuario->email === "admin@mail.com") {
-                $this->session->set_flashdata('error', 'Esta cuenta de usuario <strong>admin@mail.com</strong> no se puede eliminar.');
+            if ($usuario->id == 1) {
+                $this->session->set_flashdata('error', 'Esta cuenta de usuario no se puede eliminar.');
             } else {
                 $this->cliente_model->delete($id);
                 $this->usuario_model->delete($cliente->usuario_id);

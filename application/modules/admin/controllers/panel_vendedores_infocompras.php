@@ -37,7 +37,7 @@ class Panel_vendedores_infocompras extends ADController {
                 $formValues = $this->input->post();
                 if ($formValues !== false) {
                     $config['upload_path'] = './assets/uploads/seguros/';
-                    $config['allowed_types'] = 'gif|jpg|png|pdf|word|doc|docx|xlsx|txt|psd';
+                    $config['allowed_types'] = 'jpg|pdf|word|doc|docx';
                     $config['max_size'] = '2048';
                     $config['max_width'] = '1024';
                     $config['max_height'] = '768';

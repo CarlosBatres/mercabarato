@@ -19,57 +19,86 @@ class Vendedor_paquete extends ADController {
         $this->template->load_view('admin/vendedor_paquete/listado_por_activar');
     }
 
+    public function view_aprobar($id) {
+        $this->template->set_title("Panel de Control - Mercabarato.com");
+        $paquete = $this->vendedor_paquete_model->get($id);
+        $vendedor = $this->vendedor_model->get($paquete->vendedor_id);
+        $cliente = $this->cliente_model->get($vendedor->cliente_id);
+        $usuario = $this->usuario_model->get($cliente->usuario_id);
+        $vendedor_administrador = $this->usuario_model->get_many_by(array("permisos_id" => "2", "activo" => "1"));
+
+        $data = array(
+            "vendedor_paquete" => $paquete,
+            "vendedor" => $vendedor,
+            "usuario" => $usuario,
+            "vendedor_administrador" => $vendedor_administrador
+        );
+        $this->template->load_view('admin/vendedor_paquete/ver_aprobar', $data);
+    }
+
     /**
      * ( IMPORTANTE )
      * Aprobamos un vendedor_paquete
      * Verificamos productos y anuncios 
      * @param type $id
      */
-    public function aprobar($id) {
-        $vendedor_paquete = $this->vendedor_paquete_model->get($id);
-        // TODO : Validar la restriccion por si acaso
-        $user_id = $this->authentication->read('identifier');        
-
-        $paquete_activo = $this->vendedor_model->get_paquete_en_curso($vendedor_paquete->vendedor_id);
-        
-        $this->vendedor_paquete_model->aprobar_paquete($id, $user_id);
-        $this->vendedor_model->habilitar_vendedor($vendedor_paquete->vendedor_id);
-
-        if (!$paquete_activo) {
-            $productos = $this->producto_model->get_many_by("vendedor_id", $vendedor_paquete->vendedor_id);
-            $anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vendedor_paquete->vendedor_id);
-
-            if (sizeof($productos) <= $vendedor_paquete->limite_productos || $vendedor_paquete->limite_productos == -1) {
-                $this->producto_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 1));
-            } else {
-                $this->producto_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 0));
-                $this->producto_model->habilitar_productos(array('vendedor_id' => $vendedor_paquete->vendedor_id, "limit" => $vendedor_paquete->limite_productos));
+    public function aprobar() {
+        $formValues = $this->input->post();
+        if ($formValues !== false) {
+            $id = $this->input->post("vendedor_paquete_id");
+            $vendedor_paquete = $this->vendedor_paquete_model->get($id);
+            // TODO : Validar la restriccion por si acaso
+            $user_id = $this->authentication->read('identifier');
+            
+            if($this->input->post("aprobado_por")!="0"){
+                $aprobado_por=$this->input->post("aprobado_por");
+            }else{
+                $aprobado_por=$user_id;
             }
 
-            if (sizeof($anuncios) <= $vendedor_paquete->limite_anuncios || $vendedor_paquete->limite_anuncios == -1) {
-                $this->anuncio_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 1));
-            } else {
-                $this->anuncio_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 0));
-                $this->anuncio_model->habilitar_anuncios(array('vendedor_id' => $vendedor_paquete->vendedor_id, "limit" => $vendedor_paquete->limite_anuncios));
+            $paquete_activo = $this->vendedor_model->get_paquete_en_curso($vendedor_paquete->vendedor_id);
+
+            $this->vendedor_paquete_model->aprobar_paquete($id, $aprobado_por);
+            $this->vendedor_model->habilitar_vendedor($vendedor_paquete->vendedor_id);
+
+            if (!$paquete_activo) {
+                $productos = $this->producto_model->get_many_by("vendedor_id", $vendedor_paquete->vendedor_id);
+                $anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vendedor_paquete->vendedor_id);
+
+                if (sizeof($productos) <= $vendedor_paquete->limite_productos || $vendedor_paquete->limite_productos == -1) {
+                    $this->producto_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 1));
+                } else {
+                    $this->producto_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 0));
+                    $this->producto_model->habilitar_productos(array('vendedor_id' => $vendedor_paquete->vendedor_id, "limit" => $vendedor_paquete->limite_productos));
+                }
+
+                if (sizeof($anuncios) <= $vendedor_paquete->limite_anuncios || $vendedor_paquete->limite_anuncios == -1) {
+                    $this->anuncio_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 1));
+                } else {
+                    $this->anuncio_model->update_by(array('vendedor_id' => $vendedor_paquete->vendedor_id), array('habilitado' => 0));
+                    $this->anuncio_model->habilitar_anuncios(array('vendedor_id' => $vendedor_paquete->vendedor_id, "limit" => $vendedor_paquete->limite_anuncios));
+                }
             }
-        }
 
-        if ($this->config->item('emails_enabled')) {
-            $vendedor_paqueted = $this->vendedor_paquete_model->get($id);
-            $vendedor = $this->vendedor_model->get($vendedor_paquete->vendedor_id);
-            $cliente = $this->cliente_model->get($vendedor->cliente_id);
-            $usuario = $this->usuario_model->get($cliente->usuario_id);
+            if ($this->config->item('emails_enabled')) {
+                $vendedor_paqueted = $this->vendedor_paquete_model->get($id);
+                $vendedor = $this->vendedor_model->get($vendedor_paquete->vendedor_id);
+                $cliente = $this->cliente_model->get($vendedor->cliente_id);
+                $usuario = $this->usuario_model->get($cliente->usuario_id);
 
-            $this->load->library('email');
-            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
-            $this->email->to($usuario->email);
-            $this->email->subject('Paquete Aprobado');
-            $data_email = array("paquete" => $vendedor_paqueted);
-            $this->email->message($this->load->view('home/emails/paquete_aprobado', $data_email, true));
-            $this->email->send();
+                $this->load->library('email');
+                $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                $this->email->to($usuario->email);
+                $this->email->subject('Paquete Aprobado');
+                $data_email = array("paquete" => $vendedor_paqueted);
+                $this->email->message($this->load->view('home/emails/paquete_aprobado', $data_email, true));
+                $this->email->send();
+            }
+            $this->session->set_flashdata('success', 'El paquete ha sido aprobado y el Vendedor habilitado.');
+            redirect('admin/vendedor_paquetes/listado_por_activar');
+        }else{
+            redirect('admin');
         }
-        $this->session->set_flashdata('success', 'El paquete ha sido aprobado y el Vendedor habilitado.');
-        redirect('admin/vendedor_paquetes/listado_por_activar');
     }
 
     /**
@@ -90,9 +119,9 @@ class Vendedor_paquete extends ADController {
             if ($this->input->post('sitioweb') != "") {
                 $params["sitioweb"] = $this->input->post('sitioweb');
             }
-            /*if ($this->input->post('actividad') != "No Especificada") {
-                $params["actividad"] = $this->input->post('actividad');
-            }*/
+            /* if ($this->input->post('actividad') != "No Especificada") {
+              $params["actividad"] = $this->input->post('actividad');
+              } */
 
             /* $user_id = $this->authentication->read('identifier');
               $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
@@ -160,35 +189,35 @@ class Vendedor_paquete extends ADController {
                 $vendedor = $this->vendedor_model->get($vendedor_paquete->vendedor_id);
                 $cliente = $this->cliente_model->get($vendedor->cliente_id);
                 $usuario = $this->usuario_model->get($cliente->usuario_id);
-                                
+
 
                 $html = '<table class="table table-bordered table-hover table-striped">';
                 $html.='<thead>';
                 $html.='<tr>';
-                $html.='<th style="text-align:center" colspan="2"> Información del Vendedor</th>';                
+                $html.='<th style="text-align:center" colspan="2"> Información del Vendedor</th>';
                 $html.='</tr>';
                 $html.='</thead>';
-                $html.='<tbody>';                
+                $html.='<tbody>';
                 $html.='<tr>';
                 $html.='<td><strong> Nombre Empresa </strong></td>';
                 $html.='<td>' . $vendedor->nombre . '</td>';
-                $html.='</tr>';                
-                
+                $html.='</tr>';
+
                 $html.='<tr>';
                 $html.='<td><strong> Monto a Cancelar </strong></td>';
                 $html.='<td>' . $vendedor_paquete->monto_a_cancelar . ' ' . $this->config->item('money_sign') . '</td>';
-                $html.='</tr>';                
-                
+                $html.='</tr>';
+
                 $html.='<tr>';
                 $html.='<td><strong> NIF - CIF </strong></td>';
                 $html.='<td>' . $vendedor->nif_cif . '</td>';
-                $html.='</tr>';                
-                
+                $html.='</tr>';
+
                 $html.='<tr>';
                 $html.='<td><strong> Dirección </strong></td>';
                 $html.='<td>' . $vendedor->direccion . '</td>';
-                $html.='</tr>';                                                
-                
+                $html.='</tr>';
+
                 $html.='</tbody>';
                 $html.='</table>';
 

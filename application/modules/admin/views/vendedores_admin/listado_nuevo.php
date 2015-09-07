@@ -5,7 +5,7 @@
             <h1 class="page-header">
                 Vendedores / Administradores
             </h1> 
-            <p class="lead">A continuacion se muestra el listado de usuarios potenciales a ser asignados como Vendedor/Administrador.</p>
+            <p class="lead">A continuacion se muestra el listado de usuarios potenciales a ser asignados como Moderador.</p>
         </div>
     </div>
     <!-- /.row -->

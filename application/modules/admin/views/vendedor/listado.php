@@ -56,15 +56,7 @@
                                                 <input type="text" name="nombre" id="nombre" value="" class="form-control"/>                                
                                             </div>
                                         </div>
-                                    </div> 
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-12" for="actividad">Actividad</label>
-                                            <div class="col-md-12">                                                
-                                                <?php echo form_dropdown('actividad', vendedor_actividad_dropdown(), null, 'id="actividad" class="form-control"') ?>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>                                     
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label col-md-12" for="email">Email</label>

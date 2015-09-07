@@ -30,7 +30,7 @@
                     <td><?php echo date("d-M-Y",strtotime($vendedor_paquete->fecha_comprado)); ?></td>
                     <td>
                         <div class="options">                            
-                            <a class="item_aprobar" data-id="<?php echo $vendedor_paquete->id?>" href="<?php echo site_url('admin/vendedor_paquetes/aprobar') . '/' . $vendedor_paquete->id ?>" data-toogle="tooltip"  title="Aprobar este Paquete"><i class="glyphicon glyphicon-ok"></i></a>
+                            <a href="<?php echo site_url('admin/vendedor_paquetes/aprobar') . '/' . $vendedor_paquete->id ?>" title="Aprobar este Paquete"><i class="glyphicon glyphicon-ok"></i></a>
                         </div>                           
                     </td>
                 </tr>

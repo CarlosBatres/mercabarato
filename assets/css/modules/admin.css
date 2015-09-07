@@ -91,6 +91,17 @@ tr.draggable > td > div.ui-state-default
     padding-bottom: 50px;
 }
 
+.paquete label{
+    padding-top: 5px;
+}
+.paquete .side_botones{
+    padding-top: 8px;
+}
+
+.paquete .info-header{
+    padding-bottom: 20px;
+}
+
 @media (max-width: 768px) {
     .table-responsive .options .glyphicon {
         font-size: 25px;

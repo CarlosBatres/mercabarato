@@ -349,7 +349,7 @@ class Usuario extends MY_Controller {
                 $timelapse = date("Y-m-d H:i:s");
 
                 $usuario = $this->usuario_model->get_by(array("email" => $email, "activo" => "1"));
-                if ($usuario && $email != "admin@mail.com") {
+                if ($usuario && $usuario->id!="1") {
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');

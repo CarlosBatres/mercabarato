@@ -36,7 +36,7 @@ class Vendedor extends ADController {
             } else {
                 $data["poblacion"] = false;
             }
-        }else{
+        } else {
             $data["pais"] = false;
         }
 
@@ -166,25 +166,26 @@ class Vendedor extends ADController {
             redirect('admin/vendedores');
         }
     }
+
     /**
      * 
      * @param type $id
      */
     public function inhabilitar($id) {
         if ($this->input->is_ajax_request()) {
-            $vendedor = $this->vendedor_model->get($id);            
+            $vendedor = $this->vendedor_model->get($id);
             $cliente = $this->cliente_model->get($vendedor->cliente_id);
             $this->usuario_model->inhabilitar($cliente->usuario_id);
             redirect('admin/vendedores');
         }
     }
-    
+
     public function habilitar($id) {
         if ($this->input->is_ajax_request()) {
             $this->vendedor_model->habilitar_vendedor($id);
-            /*$vendedor = $this->vendedor_model->get($id);            
-            $cliente = $this->cliente_model->get($vendedor->cliente_id);
-            $this->usuario_model->habilitar($cliente->usuario_id);*/
+            /* $vendedor = $this->vendedor_model->get($id);            
+              $cliente = $this->cliente_model->get($vendedor->cliente_id);
+              $this->usuario_model->habilitar($cliente->usuario_id); */
             redirect('admin/vendedores');
         }
     }
@@ -212,6 +213,11 @@ class Vendedor extends ADController {
             }
 
             $user_id = $this->authentication->read('identifier');
+            $usuario = $this->usuario_model->get($user_id);
+            if ($usuario->permisos_id == "2") {
+                $params["autorizado_por"] = $user_id;
+            }
+
             $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
             if ($restriccion) {
                 if ($restriccion->pais_id != null) {
@@ -293,6 +299,194 @@ class Vendedor extends ADController {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         //$this->template->add_js("modules/admin/vendedores_listado.js");
         $this->template->load_view('admin/vendedor/listado_control');
+    }
+
+    /*
+     * 
+     */
+
+    public function administrar($id) {
+        $vendedor = $this->vendedor_model->get($id);
+        if ($vendedor) {
+            $cliente = $this->cliente_model->get($vendedor->cliente_id);
+            $identidad = $this->usuario_model->get_full_identidad($cliente->usuario_id);
+            $paquete_curso = $this->vendedor_model->get_paquete_en_curso($id);
+            $paquete_pendiente = $this->vendedor_model->get_paquete_pendiente($id);
+            $paquetes = $this->paquete_model->get_all();
+            $vendedor_administrador = $this->usuario_model->get_many_by(array("permisos_id" => "2", "activo" => "1"));
+
+            $this->template->set_title("Panel de Control - Mercabarato.com");
+            $this->template->add_js("modules/admin/vendedores_administrar.js");
+            $this->template->load_view('admin/vendedor/administrar', array(
+                "identidad" => $identidad,
+                "paquete_curso" => $paquete_curso,
+                "paquete_pendiente" => $paquete_pendiente,
+                "paquetes" => $paquetes,
+                "vendedor_administrador" => $vendedor_administrador)
+            );
+        } else {
+            redirect('admin');
+        }
+    }
+
+    public function modificar() {
+        $formValues = $this->input->post();
+        if ($formValues !== false) {
+            $accion = $this->input->post('accion');
+
+            if ($accion === "modificar-paquete-pendiente") {
+                $vendedor_id = $this->input->post('vendedor_id');
+                $vendedor = $this->vendedor_model->get_vendedor($vendedor_id);
+                $paquete_pendiente = $this->vendedor_model->get_paquete_pendiente($vendedor_id);
+
+                if ($vendedor && $paquete_pendiente) {
+                    if (!$this->input->post("autorizado_por") && !$this->input->post("limite_productos") && !$this->input->post("limite_anuncios") && !$this->input->post("infocompra")) {
+                        $this->session->set_flashdata('error', 'Nada que modificar.');
+                        redirect("admin/vendedores/administrar/" . $vendedor_id);
+                    } else {
+                        if ($this->input->post("autorizado_por") != "0") {
+                            $autorizado_por = $this->input->post("autorizado_por");
+                        } else {
+                            $autorizado_por = $this->authentication->read('identifier');   // Quien lo autoriza     
+                        }
+                        $limite_productos = ($this->input->post("limite_productos")) ? $this->input->post("limite_productos") : $paquete_pendiente->limite_productos;
+                        $limite_anuncios = ($this->input->post("limite_anuncios")) ? $this->input->post("limite_anuncios") : $paquete_pendiente->limite_anuncios;
+                        $infocompra = ($this->input->post("infocompra")) ? $this->input->post("infocompra") : $paquete_pendiente->infocompra;
+
+                        $this->vendedor_paquete_model->update($paquete_pendiente->id, array(
+                            "limite_productos" => $limite_productos,
+                            "limite_anuncios" => $limite_anuncios,
+                            "infocompra" => $infocompra,
+                            "autorizado_por" => $autorizado_por
+                        ));
+                        $this->session->set_flashdata('success', 'Se han realizado las modificaciones con exito');
+                    }
+                }
+
+                redirect("admin/vendedores/administrar/" . $vendedor_id);
+            } elseif ($accion === "modificar-paquete-curso") {
+                $vendedor_id = $this->input->post('vendedor_id');
+                $vendedor = $this->vendedor_model->get_vendedor($vendedor_id);
+                $paquete_curso = $this->vendedor_model->get_paquete_en_curso($vendedor_id);
+
+                if ($vendedor && $paquete_curso) {
+                    if (!$this->input->post("autorizado_por") && !$this->input->post("limite_productos") && !$this->input->post("limite_anuncios") && !$this->input->post("infocompra")) {
+                        $this->session->set_flashdata('error', 'Nada que modificar.');
+                        redirect("admin/vendedores/administrar/" . $vendedor_id);
+                    } else {
+                        if ($this->input->post("autorizado_por") != "0") {
+                            $autorizado_por = $this->input->post("autorizado_por");
+                        } else {
+                            $autorizado_por = $this->authentication->read('identifier');   // Quien lo autoriza     
+                        }
+                        
+                        $limite_productos = ($this->input->post("limite_productos")) ? $this->input->post("limite_productos") : $paquete_curso->limite_productos;
+                        $limite_anuncios = ($this->input->post("limite_anuncios")) ? $this->input->post("limite_anuncios") : $paquete_curso->limite_anuncios;
+                        $infocompra = ($this->input->post("infocompra")) ? $this->input->post("infocompra") : $paquete_curso->infocompra;
+
+                        $this->vendedor_paquete_model->update($paquete_curso->id, array(
+                            "limite_productos" => $limite_productos,
+                            "limite_anuncios" => $limite_anuncios,
+                            "infocompra" => $infocompra,
+                            "autorizado_por" => $autorizado_por
+                        ));
+                        $this->session->set_flashdata('success', 'Se han realizado las modificaciones con exito');
+                    }
+                }
+
+                redirect("admin/vendedores/administrar/" . $vendedor_id);
+            } elseif ($accion === "eliminar-paquete-pendiente") {
+                $vendedor_id = $this->input->post('vendedor_id');
+                $vendedor = $this->vendedor_model->get_vendedor($vendedor_id);
+                $paquete_pendiente = $this->vendedor_model->get_paquete_pendiente($vendedor_id);
+
+                if ($vendedor && $paquete_pendiente) {
+                    $this->vendedor_paquete_model->delete($paquete_pendiente->id);
+                    $this->session->set_flashdata('success', 'Se ha eliminado con exito');
+                }
+                redirect("admin/vendedores/administrar/" . $vendedor_id);
+            } elseif ($accion === "eliminar-paquete-curso") {
+                $vendedor_id = $this->input->post('vendedor_id');
+                $vendedor = $this->vendedor_model->get_vendedor($vendedor_id);
+                $paquete_curso = $this->vendedor_model->get_paquete_en_curso($vendedor_id);
+
+                if ($vendedor && $paquete_curso) {
+                    $this->vendedor_paquete_model->delete($paquete_curso->id);
+                    $this->session->set_flashdata('success', 'Se ha eliminado con exito');
+                }
+                redirect("admin/vendedores/administrar/" . $vendedor_id);
+            } elseif ($accion === "asignar-paquete") {
+                $vendedor_id = $this->input->post('vendedor_id');
+                $vendedor = $this->vendedor_model->get_vendedor($vendedor_id);
+
+                $paquete_id = $this->input->post('paquete');
+
+                if ($paquete_id != "0") {
+                    $paquete = $this->paquete_model->get($paquete_id);
+                    $data = array(
+                        "vendedor_id" => $vendedor->id,
+                        "nombre_paquete" => $paquete->nombre,
+                        "duracion_paquete" => $paquete->duracion,
+                        "fecha_comprado" => date("Y-m-d"),
+                        "fecha_terminar" => null,
+                        "fecha_aprobado" => null,
+                        "referencia" => "",
+                        "limite_productos" => $paquete->limite_productos,
+                        "limite_anuncios" => $paquete->limite_anuncios,
+                        "monto_a_cancelar" => $paquete->costo,
+                        "aprobado" => 0,
+                        "infocompra" => $paquete->infocompra,
+                        "fecha_inicio" => null
+                    );
+                    $result = $this->vendedor_model->verificar_disponibilidad($vendedor->id);
+                    if ($result) {
+                        $this->vendedor_paquete_model->insert($data);
+                        $this->session->set_flashdata('success', 'Paquete asignado con exito.');
+                    } else {
+                        $this->session->set_flashdata('error', 'A este vendedor no se le puede asignar un paquete.');
+                    }
+                } else {
+                    $this->session->set_flashdata('error', 'Seleccione un paquete para realizar esta operacion.');
+                }
+
+                redirect("admin/vendedores/administrar/" . $vendedor_id);
+            } elseif ($accion === "aprobar-paquete-pendiente") {
+                $vendedor_id = $this->input->post('vendedor_id');
+                $vendedor = $this->vendedor_model->get_vendedor($vendedor_id);
+                $paquete_pendiente = $this->vendedor_model->get_paquete_pendiente($vendedor_id);
+
+                //$user_id = $this->authentication->read('identifier');   // Quien lo autoriza     
+
+                if ($vendedor && $paquete_pendiente) {
+                    $this->vendedor_paquete_model->aprobar_paquete($paquete_pendiente->id);
+                    $this->vendedor_model->habilitar_vendedor($vendedor_id);
+                    $paquete_activo = $this->vendedor_model->get_paquete_en_curso($vendedor_id);
+
+                    if (!$paquete_activo) {
+                        $productos = $this->producto_model->get_many_by("vendedor_id", $vendedor_id);
+                        $anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vendedor_id);
+
+                        if (sizeof($productos) <= $paquete_pendiente->limite_productos || $paquete_pendiente->limite_productos == -1) {
+                            $this->producto_model->update_by(array('vendedor_id' => $paquete_pendiente->vendedor_id), array('habilitado' => 1));
+                        } else {
+                            $this->producto_model->update_by(array('vendedor_id' => $paquete_pendiente->vendedor_id), array('habilitado' => 0));
+                            $this->producto_model->habilitar_productos(array('vendedor_id' => $paquete_pendiente->vendedor_id, "limit" => $paquete_pendiente->limite_productos));
+                        }
+
+                        if (sizeof($anuncios) <= $paquete_pendiente->limite_anuncios || $paquete_pendiente->limite_anuncios == -1) {
+                            $this->anuncio_model->update_by(array('vendedor_id' => $paquete_pendiente->vendedor_id), array('habilitado' => 1));
+                        } else {
+                            $this->anuncio_model->update_by(array('vendedor_id' => $paquete_pendiente->vendedor_id), array('habilitado' => 0));
+                            $this->anuncio_model->habilitar_anuncios(array('vendedor_id' => $paquete_pendiente->vendedor_id, "limit" => $paquete_pendiente->limite_anuncios));
+                        }
+                    }
+
+
+                    $this->session->set_flashdata('success', 'Se ha aprobado con exito.');
+                }
+                redirect("admin/vendedores/administrar/" . $vendedor_id);
+            }
+        }
     }
 
 }

@@ -71,7 +71,7 @@ class Vendedor_paquete_model extends MY_Model {
      * Funcion para aprobar un paquete de un vendedor
      * @param type $id del vendedor_paquete
      */
-    public function aprobar_paquete($id, $user_id) {
+    public function aprobar_paquete($id, $user_id=false) {
         $vendedor_paquete = $this->get($id);
         $periodo = $vendedor_paquete->duracion_paquete;
 
@@ -84,10 +84,13 @@ class Vendedor_paquete_model extends MY_Model {
         $data = array(
             "fecha_aprobado" => date("Y-m-d"),
             "aprobado" => 1,
-            "fecha_terminar" => date('Y-m-d', strtotime("+$periodo months", strtotime($fecha_inicio))),
-            "autorizado_por" => $user_id,
+            "fecha_terminar" => date('Y-m-d', strtotime("+$periodo months", strtotime($fecha_inicio))),            
             "fecha_inicio" => $fecha_inicio
         );
+        
+        if($user_id){
+            $data["autorizado_por"]=$user_id;
+        }
         $this->update($id, $data);
 
         $vendedor = $this->vendedor_model->get($vendedor_paquete->vendedor_id);
