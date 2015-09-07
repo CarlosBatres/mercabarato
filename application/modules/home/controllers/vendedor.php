@@ -25,13 +25,36 @@ class Vendedor extends MY_Controller {
                     $this->session->unset_userdata('afiliacion_vendedor');
                     $this->session->unset_userdata('afiliacion_localizacion');
 
-                    //$paises = $this->pais_model->get_all();
-                    $provincias= $this->provincia_model->get_all_by_pais(70);
+                    //$paises = $this->pais_model->get_all();                    
+                    $localizacion = $this->localizacion_model->get_by("usuario_id", $cliente->usuario_id);
+                    $provincias = $this->provincia_model->get_all_by_pais(70);
+                    $poblaciones = array();
+                    $provincia_id = 0;
+                    $poblacion_id = 0;
+
+                    if ($localizacion) {
+                        if ($localizacion->provincia_id != null) {
+                            $provincia_id = $localizacion->provincia_id;
+                            $poblaciones = $this->poblacion_model->get_all_by_provincia($provincia_id);
+                        }
+                        if ($localizacion->poblacion_id != null) {
+                            $poblacion_id = $localizacion->poblacion_id;
+                        }
+                    }
+
 
                     $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
                     $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
                     $this->template->add_js('modules/home/perfil.js');
-                    $this->template->load_view('home/vendedor/afiliarse', array("provincias" => $provincias, "cliente" => $cliente, "html_options" => $html_options, "keywords" => $keywords));
+                    $this->template->load_view('home/vendedor/afiliarse', array(                        
+                        "cliente" => $cliente,
+                        "html_options" => $html_options,
+                        "keywords" => $keywords,
+                        "provincias" => $provincias,
+                        "poblaciones" => $poblaciones,
+                        "provincia_id" => $provincia_id,
+                        "poblacion_id" => $poblacion_id
+                    ));
                 } else {
                     redirect('usuario/perfil');
                 }
@@ -255,6 +278,14 @@ class Vendedor extends MY_Controller {
                         $data_email = array("paquete" => $data);
                         $this->email->message($this->load->view('home/emails/informacion_de_compra', $data_email, true));
                         $this->email->send();
+                        
+                        $this->load->library('email');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($this->config->item('site_info_email'));
+                        $this->email->subject('Nueva compra de paquete');
+                        $data_email = array("paquete" => $data,"vendedor"=>$vendedor);
+                        $this->email->message($this->load->view('home/emails/nueva_compra_paquete', $data_email, true));
+                        $this->email->send();                                                
                     }
 
                     $this->vendedor_paquete_model->insert($data);
@@ -455,7 +486,7 @@ class Vendedor extends MY_Controller {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->add_js('modules/home/vendedores_listado.js');
         //$paises = $this->pais_model->get_all();
-        $provincias= $this->provincia_model->get_all_by_pais(70);
+        $provincias = $this->provincia_model->get_all_by_pais(70);
         //$provincias = array();
         $poblaciones = array();
         $localizacion = false;
@@ -486,9 +517,9 @@ class Vendedor extends MY_Controller {
 
         $data = array(
             //"paises" => $paises, 
-            "provincias" => $provincias, 
-            "poblaciones" => $poblaciones, 
-            "localizacion" => $localizacion, 
+            "provincias" => $provincias,
+            "poblaciones" => $poblaciones,
+            "localizacion" => $localizacion,
             "anuncios" => $anuncios);
 
         $this->template->load_view('home/vendedores/listado', $data);
@@ -664,7 +695,7 @@ class Vendedor extends MY_Controller {
 
                     $ya_envie = $this->session->userdata('infocompras_enviado_vendedor_id');
 
-                    $this->session->unset_userdata('infocompras_vendedor_id');                    
+                    $this->session->unset_userdata('infocompras_vendedor_id');
 
                     if ($ya_envie == $vendedor->id) {
                         $formularios = '<div>';
@@ -728,6 +759,21 @@ class Vendedor extends MY_Controller {
                 $mis_intereses = array();
             }
 
+            $localizacion = $this->localizacion_model->get_by("usuario_id", $cliente->usuario_id);
+            $provincias = $this->provincia_model->get_all_by_pais(70);
+            $poblaciones = array();
+            $provincia_id = 0;
+            $poblacion_id = 0;
+
+            if ($localizacion) {
+                if ($localizacion->provincia_id != null) {
+                    $provincia_id = $localizacion->provincia_id;
+                    $poblaciones = $this->poblacion_model->get_all_by_provincia($provincia_id);
+                }
+                if ($localizacion->poblacion_id != null) {
+                    $poblacion_id = $localizacion->poblacion_id;
+                }
+            }
 
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
             $this->template->add_js('modules/home/perfil.js');
@@ -738,7 +784,11 @@ class Vendedor extends MY_Controller {
                 "html_options" => $html_options,
                 "keywords" => $keywords,
                 "mis_intereses" => $mis_intereses,
-                "puntos_venta" => $puntos_venta)
+                "puntos_venta" => $puntos_venta,
+                "provincias" => $provincias,
+                "poblaciones" => $poblaciones,
+                "provincia_id" => $provincia_id,
+                "poblacion_id" => $poblacion_id)
             );
         } else {
             redirect('');
@@ -866,9 +916,17 @@ class Vendedor extends MY_Controller {
                     }
                 }
 
-                $data_vendedor["unique_slug"] = $this->slug->create_uri($data_vendedor["nombre"]);
-                $this->vendedor_model->update($vendedor->id, $data_vendedor);
+                if ($this->input->post("provincia") != "") {
+                    $this->localizacion_model->update_by(array("usuario_id" => $user_id), array("provincia_id" => $this->input->post("provincia")));
+                }
+                if ($this->input->post("poblacion") != "") {
+                    $this->localizacion_model->update_by(array("usuario_id" => $user_id), array("poblacion_id" => $this->input->post("poblacion")));
+                }
 
+
+                //$usuario = $this->usuario_model->get($user_id);
+                //$data_vendedor["unique_slug"] = $this->slug->create_uri($usuario->nickname);
+                $this->vendedor_model->update($vendedor->id, $data_vendedor);
 
                 $this->session->set_flashdata('success', 'Tus datos han sido modificados con exito.');
             }

@@ -41,15 +41,15 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row">
+<!--                <div class="row">
                     <div class="col-md-12">
                         <div class="alert alert-info">
                             <p> Si deseas restringir a este vendedor a un area especifica indicalo a continuacion:</p>
                             <p> Una vez restringido solo podra ver a vendedores en su area y aceptar sus paquetes .</p>
                         </div>
                     </div>
-                </div>
-                <hr>
+                </div>-->
+<!--                <hr>
                 <div class="row">                    
                     <div class="col-md-6">
                         <div class="form-group">                                
@@ -68,12 +68,12 @@
                             </select>
                         </div>
                     </div>
-                </div>                 
-                <hr>
+                </div>                 -->
+<!--                <hr>-->
                 <div class="row">
                     <div class="col-md-12">
                         <div class="alert alert-success">
-                            <p> Si estas seguro y deseas convertir a este usuario en Vendedor/Administrador presiona continuar</p>                            
+                            <p> Si estas seguro y deseas convertir a este usuario en <strong>Moderador</strong> presiona continuar</p>                            
                         </div>
                     </div>
                 </div>

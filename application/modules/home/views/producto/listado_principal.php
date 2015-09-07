@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>&nbsp;</h1>
+                <h1>Productos</h1>
             </div>            
         </div>
     </div>
@@ -51,12 +51,12 @@
                                             <option value="0">Todas las Provincias</option>
                                             <?php foreach ($provincias as $provincia): ?>
                                                 <?php
-                                                $class="";
+                                                $class = "";
                                                 if ($provincia_id == $provincia->id) {
                                                     $class = "selected";
                                                 }
                                                 ?>
-                                                <option <?php echo $class;?> value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>
+                                                <option <?php echo $class; ?> value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -67,12 +67,12 @@
                                             <option value="0">Todas las Poblaciónes</option>                        
                                             <?php foreach ($poblaciones as $poblacion): ?>
                                                 <?php
-                                                $class="";
+                                                $class = "";
                                                 if ($poblacion_id == $poblacion->id) {
                                                     $class = "selected";
                                                 }
                                                 ?>
-                                                <option <?php echo $class;?> value="<?php echo $poblacion->id ?>"><?php echo $poblacion->nombre ?></option>
+                                                <option <?php echo $class; ?> value="<?php echo $poblacion->id ?>"><?php echo $poblacion->nombre ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -87,15 +87,25 @@
 
                                 <input type="hidden" value="1" name="pagina" id="pagina"/>                                
                                 <span class="input-group-btn">
-                                    <button class="btn btn-template-main" id="search_button" type="button"><i class="fa fa-search"></i><span class="hidden-xs">Buscar</span></button>
+                                    <button class="btn btn-primary" id="search_button" type="button"><i class="fa fa-search"></i><span class="hidden-xs">Buscar</span></button>
                                 </span>
                             </div>                            
                             <?php if ($this->authentication->is_loggedin()): ?>
-                                <div class="col-md-12 text-right">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="mostrar_mis_tarifas" value="1"> Solo mostrar mis tarifas 
-                                        </label>
+                                <br>
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        <div class="checkbox pull-left">
+                                            <label>
+                                                <input type="checkbox" name="mostrar_mis_vendedores" value="1"> Solo mostrar mis vendedores 
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="checkbox pull-right">
+                                            <label>
+                                                <input type="checkbox" name="mostrar_mis_tarifas" value="1"> Solo mostrar mis tarifas 
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             <?php endif; ?>

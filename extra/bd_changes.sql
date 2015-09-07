@@ -103,3 +103,6 @@ CREATE TABLE IF NOT EXISTS `producto_extra` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
+
+
+UPDATE  `permisos` SET  `controllers` =  '{"admin": {"main": "*","usuario": "*","vendedor":{"view_listado":"*","ajax_get_listado_resultados":"*","habilitar":"*","inhabilitar":"*","borrar":"*"},"cliente": "*","producto": "*","anuncio": "*"}}' WHERE `permisos`.`id` =2;

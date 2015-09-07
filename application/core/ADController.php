@@ -83,9 +83,10 @@ class ADController extends MY_Controller {
                     return true;
                 } else if (property_exists($module, $this->class)) {
                     $temp_2 = $this->class;
+                    $val=$module->$temp_2;
                     if ($module->$temp_2 == "*") {
                         return true;
-                    } else if ($module->$temp_2 == $this->method) {
+                    } else if (property_exists($val,$this->method)) {
                         return true;
                     } else {
                         return false;
@@ -108,7 +109,12 @@ class ADController extends MY_Controller {
             if (!$this->identidad->es_vendedor_habilitado()) {
                 redirect('acceso_restringido');
             } else {
-                return true;
+                $paquete=$this->vendedor_model->get_paquete_en_curso($this->identidad->vendedor->id);
+                if($paquete){
+                    return true;
+                }else{
+                    redirect('acceso_restringido');
+                }                
             }
         }
     }

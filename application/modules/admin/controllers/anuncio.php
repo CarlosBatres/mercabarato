@@ -138,6 +138,10 @@ class Anuncio extends ADController {
                 $params["vendedor"] = $this->input->post('vendedor');
             }
             $user_id = $this->authentication->read('identifier');            
+            $usuario = $this->usuario_model->get($user_id);
+            if($usuario->permisos_id=="2"){
+              $params["autorizado_por"]=$user_id;   
+            }
             $restriccion = $this->restriccion_model->get_by("usuario_id", $user_id);
             if ($restriccion) {
                 if ($restriccion->pais_id != null) {

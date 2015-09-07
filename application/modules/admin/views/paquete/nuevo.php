@@ -33,8 +33,8 @@
 
                 <h3>Seleccione el tipo de paquete</h3>
                 <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#productos" role="tab" data-toggle="tab"><strong>Paquete de Productos</strong></a></li>
-                    <li><a href="#seguros" role="tab" data-toggle="tab"><strong>Paquete Infocompras / Seguros</strong></a></li>                    
+                    <li class="active"><a href="#productos" role="tab" data-toggle="tab"><strong>Paquete Tipo 1</strong></a></li>
+                    <!--<li><a href="#seguros" role="tab" data-toggle="tab"><strong>Paquete Infocompras / Seguros</strong></a></li>-->                    
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="productos">                    
@@ -43,7 +43,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-body">                                                                        
                                         <?php echo form_open('admin/paquetes/crear', 'id="productos_crear"'); ?>                 
-                                        <input type="hidden" name="tipo" value="productos">
+                                        <!--<input type="hidden" name="tipo" value="productos">-->
                                         <div class="row">
                                             <div class="col-md-12">                                            
                                                 <div class="form-group">
@@ -82,17 +82,17 @@
                                                     </select>
                                                 </div>
                                             </div>
-
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Orden en la que se presentan</label>
                                                     <input type="text" class="form-control" name="orden">
                                                 </div>
-                                            </div>
+                                            </div>                                            
                                             <div class="col-md-12">
-                                                <div class="alert alert-warning">
-                                                    <strong>Advertencia:</strong>                    
+                                                <div class="alert alert-info">
+                                                    <strong>Productos / Anuncios</strong>                    
                                                     <p> Si deseas que estos valores sean ilimitados dejalos vacios o de lo contrario ingresa un valor.</p>                    
+                                                    <p> Se permite el valor <strong>0</strong> en ese caso no podran insertar productos o anuncios.</p>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -106,6 +106,21 @@
                                                     <label>Limite Anuncios</label>
                                                     <input type="text" class="form-control" name="limite_anuncios">
                                                 </div> 
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="alert alert-info">
+                                                    <strong>Seguros</strong>                    
+                                                    <p> Deseas que este paquete pueda presupuestar seguros ?</p>                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Infocompras / Seguros</label>
+                                                    <select class="form-control" name="infocompras_seguros">
+                                                        <option value="0">No</option>
+                                                        <option value="1">Si</option>
+                                                    </select>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -121,7 +136,7 @@
                             </div>          
                         </div> 
                     </div>
-                    <div class="tab-pane" id="seguros">                    
+<!--                    <div class="tab-pane" id="seguros">                    
                         <div class="row">        
                             <div class="col-md-12">
                                 <div class="panel panel-default">
@@ -181,7 +196,7 @@
                                 </div>
                             </div>          
                         </div> 
-                    </div>
+                    </div>-->
                 </div>                                
             </div>
         </div>

@@ -258,7 +258,13 @@ class Invitacion_model extends MY_Model {
             return 0;
         }
     }
-
+    /**
+     * usuario = usuario_id
+     * estado = estado de la invitacion
+     * 
+     * @param type $params
+     * @return type usuario_id de los invitados
+     */
     public function get_ids_invitaciones($params) {
         $ids = array();
 
@@ -275,7 +281,7 @@ class Invitacion_model extends MY_Model {
             }
         }
         return $ids;
-    }
+    }        
 
     /**
      * Si existe una invitacion no permitimos duplicados

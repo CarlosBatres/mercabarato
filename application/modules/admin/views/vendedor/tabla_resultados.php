@@ -37,7 +37,7 @@
                         <?php endif; ?>
                         <td>
                             <div class="options">
-                                <!--                            <a href="<?php echo site_url('admin/vendedores/editar') . '/' . $vendedor->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>-->
+                                <a href="<?php echo site_url('admin/vendedores/administrar') . '/' . $vendedor->id ?>" data-toogle="tooltip"  title="Administrar"><i class="glyphicon glyphicon-edit"></i></a>
                                 <?php if ($vendedor->habilitado == 0): ?>
                                     <a class="action vendedor_habilitar" href="<?php echo site_url('admin/vendedores/habilitar') . '/' . $vendedor->id ?>" title="Habilitar"><i class="glyphicon glyphicon-check"></i></a>
                                 <?php else: ?>

@@ -85,7 +85,7 @@
     <br>
     <div class="row">
         <div class="col-md-12">
-            <p class="lead"> Paquetes aprobados por el vendedor:</p>
+            <p class="lead"> Vendedores que administra actualmente:</p>
             <div id="tabla-resultados"></div>
         </div>
     </div>

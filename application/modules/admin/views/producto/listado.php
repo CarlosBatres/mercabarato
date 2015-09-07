@@ -48,28 +48,15 @@
                         <div class="panel-body">
                             <form action="<?php echo site_url('admin/productos') ?>" method="post" class="search-form" id="listado-productos">
                                 <div class="row">                                    
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label col-md-12" for="nombre">Nombre del Producto</label>
                                             <div class="col-md-12">
                                                 <input type="text" name="nombre" id="nombre" value="" class="form-control"/>                                
                                             </div>
                                         </div>
-                                    </div>                                                                                                                                                
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-12" for="categoria">Categoria</label>
-                                            <div class="col-md-12">
-                                                <select name="categoria" class="form-control">
-                                                    <option value="0">Seleccione una Categoria</option>
-                                                    <?php foreach ($categorias as $categoria): ?>
-                                                        <option value="<?php echo $categoria->id ?>"><?php echo $categoria->nombre ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>                                     
-                                    <div class="col-md-12">
+                                    </div>                                                                                                                                                                                    
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label col-md-12" for="vendedor">Vendedor / Empresa</label>
                                             <div class="col-md-12">

@@ -1,6 +1,11 @@
 <?php if (sizeof($anuncios) == 0): ?>
-    <div>
-        <p> No se encontraron resultados...</p>    
+    <div>        
+        <div class="alert alert-warning">             
+            <p> No se encontro ningun anuncio que se ajuste a estos parametros, puedes intentar lo siguiente: </p>    
+            <ul>                
+                <li> Prueba con un nombre o palabras claves diferentes.</li>
+            </ul>
+        </div>        
     </div>
 <?php else: ?>
     <?php if ($this->session->flashdata('success')) { ?>
@@ -35,8 +40,9 @@
     <div class="table-responsive">        
         <table class="table table-bordered table-hover table-striped">
             <thead>
-                <tr>                
-                    <th style="width: 15%">Titulo</th>                
+                <tr>   
+                    <th style="width: 1%"><input type="checkbox" name="select_all" value="ON" /></th>              
+                    <th style="width: 14%">Titulo</th>                
                     <th style="width: 40%">Contenido</th>                                
                     <th style="width: 5%;text-align: center">Habilitado</th>
                     <th style="width: 10%">&nbsp; Acciones</th> 
@@ -44,7 +50,8 @@
             </thead>
             <tbody>
                 <?php foreach ($anuncios as $anuncio): ?>
-                    <tr>                
+                    <tr data-id="<?php echo $anuncio->id; ?>">
+                        <td><input type="checkbox" name="eliminar" value="ON"/></td>
                         <td><?php echo $anuncio->titulo; ?></td>                    
                         <td><?php echo strip_tags(truncate($anuncio->contenido, 300)); ?></td>                                        
                         <td style="text-align: center"><?php
@@ -70,5 +77,6 @@
         </table>
 
         <?php echo $pagination; ?>
+        <button type="button" id="btn-eliminar-seleccionados" class="btn btn-danger">Eliminar Seleccionados</button>
     </div> 
 <?php endif; ?>

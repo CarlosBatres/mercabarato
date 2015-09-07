@@ -40,49 +40,109 @@ class Vendedor_model extends MY_Model {
      * @return type
      */
     public function get_admin_search($params, $limit, $offset) {
-        $this->db->start_cache();
-        $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.activo");
-        $this->db->from($this->_table);
-        $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
-        $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
-        $this->db->join("localizacion", "localizacion.usuario_id=usuario.id", 'INNER');
+        $query = "SELECT SQL_CALC_FOUND_ROWS * FROM ";
+        $query .= "(SELECT vendedor.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.activo ";
+
+        $query.= "FROM vendedor ";
+        $query.="INNER JOIN cliente ON cliente.id=vendedor.cliente_id ";
+        $query.="INNER JOIN usuario ON usuario.id=cliente.usuario_id ";
+        $query.="LEFT JOIN localizacion ON usuario.id=localizacion.usuario_id ";
+
+        if (isset($params['autorizado_por'])) {
+            $query.="INNER JOIN vendedor_paquete ON vendedor_paquete.vendedor_id=vendedor.id AND vendedor_paquete.aprobado ='1' ";
+            $query.="AND vendedor_paquete.autorizado_por ='" . $params['autorizado_por'] . "' AND vendedor_paquete.fecha_terminar >='" . date("Y-m-d") . "'";
+        }
+
+
+        $query.="WHERE 1 ";
 
         if (isset($params['nombre'])) {
-            $this->db->like('vendedor.nombre', $params['nombre'], 'both');
+            $query.="AND vendedor.nombre LIKE '%" . $params['nombre'] . "%'";
         }
         if (isset($params['email'])) {
-            $this->db->like('usuario.email', $params['email'], 'both');
-        }
-        if (isset($params['actividad'])) {
-            $this->db->like('vendedor.actividad', $params['actividad'], 'both');
+            $query.="OR usuario.email LIKE '%" . $params['email'] . "%'";
         }
         if (isset($params['sitio_web'])) {
-            $this->db->like('vendedor.sitio_web', $params['sitio_web'], 'both');
+            $query.="OR vendedor.sitio_web LIKE '%" . $params['sitio_web'] . "%'";
         }
 
-        if (isset($params['pais_id'])) {
-            $this->db->where('localizacion.pais_id', $params['pais_id']);
-        }
-        if (isset($params['provincia_id'])) {
-            $this->db->where('localizacion.provincia_id', $params['provincia_id']);
-        }
-        if (isset($params['poblacion_id'])) {
-            $this->db->where('localizacion.poblacion_id', $params['poblacion_id']);
-        }
+        if (isset($params['poblacion'])) {
+            $query .= " AND localizacion.poblacion_id='" . $params['poblacion'] . "' ";
+        } elseif (isset($params['provincia'])) {
+            $query .= " AND localizacion.provincia_id='" . $params['provincia'] . "' ";
+        } elseif (isset($params['pais'])) {
+            $query .= " AND localizacion.pais_id='" . $params['pais'] . "' ";
+        }        
 
-        $this->db->stop_cache();
-        $count = $this->db->count_all_results();
+        $query.=" ) p";
 
-        if ($count > 0) {
-            $this->db->order_by('vendedor.id', 'asc');
-            $this->db->limit($limit, $offset);
-            $vendedores = $this->db->get()->result();
-            $this->db->flush_cache();
-            return array("vendedores" => $vendedores, "total" => $count);
+
+        $query.=" ORDER BY id DESC";
+        $query.=" LIMIT " . $offset . " , " . $limit;
+
+        $result = $this->db->query($query);
+        $vendedores = $result->result();
+
+        $query_total = "SELECT FOUND_ROWS() as rows;";
+        $result_total = $this->db->query($query_total);
+        $total = $result_total->row();
+
+        if ($total->rows > 0) {
+            return array("vendedores" => $vendedores, "total" => $total->rows);
         } else {
-            $this->db->flush_cache();
             return array("total" => 0);
         }
+
+
+
+
+
+
+
+
+        /* $this->db->start_cache();
+          $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.activo");
+          $this->db->from($this->_table);
+          $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
+          $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
+          $this->db->join("localizacion", "localizacion.usuario_id=usuario.id", 'INNER');
+
+          if (isset($params['nombre'])) {
+          $this->db->like('vendedor.nombre', $params['nombre'], 'both');
+          }
+          if (isset($params['email'])) {
+          $this->db->like('usuario.email', $params['email'], 'both');
+          }
+          if (isset($params['actividad'])) {
+          $this->db->like('vendedor.actividad', $params['actividad'], 'both');
+          }
+          if (isset($params['sitio_web'])) {
+          $this->db->like('vendedor.sitio_web', $params['sitio_web'], 'both');
+          }
+
+          if (isset($params['pais_id'])) {
+          $this->db->where('localizacion.pais_id', $params['pais_id']);
+          }
+          if (isset($params['provincia_id'])) {
+          $this->db->where('localizacion.provincia_id', $params['provincia_id']);
+          }
+          if (isset($params['poblacion_id'])) {
+          $this->db->where('localizacion.poblacion_id', $params['poblacion_id']);
+          }
+
+          $this->db->stop_cache();
+          $count = $this->db->count_all_results();
+
+          if ($count > 0) {
+          $this->db->order_by('vendedor.id', 'asc');
+          $this->db->limit($limit, $offset);
+          $vendedores = $this->db->get()->result();
+          $this->db->flush_cache();
+          return array("vendedores" => $vendedores, "total" => $count);
+          } else {
+          $this->db->flush_cache();
+          return array("total" => 0);
+          } */
     }
 
     /**
@@ -338,18 +398,18 @@ class Vendedor_model extends MY_Model {
         $query = "SELECT SQL_CALC_FOUND_ROWS * FROM "
                 . "(SELECT vendedor.*,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address, "
                 . "pais.nombre as pais,provincia.nombre as provincia,poblacion.nombre as poblacion,i1.id as invitacion_id1,i2.id as invitacion_id2 ";
-        
+
         if (isset($params['keyword'])) {
-            $keywords=explode(";",$params["keyword"]);
+            $keywords = explode(";", $params["keyword"]);
             $query.=", (";
-            foreach($keywords as $keyword){
-                $query.="MATCH (keywords) AGAINST ('".$keyword."' IN BOOLEAN MODE) + ";
-            }            
-            $query=substr($query, 0, -3);
+            foreach ($keywords as $keyword) {
+                $query.="MATCH (keywords) AGAINST ('" . $keyword . "' IN BOOLEAN MODE) + ";
+            }
+            $query = substr($query, 0, -3);
             $query.=" ) as relevance ";
         }
-        
-        
+
+
         $query.= "FROM vendedor ";
         $query.="LEFT JOIN keyword ON vendedor.keyword=keyword.id ";
         $query.="INNER JOIN cliente ON cliente.id=vendedor.cliente_id ";
@@ -375,23 +435,23 @@ class Vendedor_model extends MY_Model {
         if (isset($params['descripcion'])) {
             $query.="OR vendedor.descripcion LIKE '%" . $params['descripcion'] . "%'";
         }
-        
+
         if (isset($params['poblacion'])) {
-            $query .= " AND localizacion.poblacion_id='" . $params['poblacion']."' ";
+            $query .= " AND localizacion.poblacion_id='" . $params['poblacion'] . "' ";
         } elseif (isset($params['provincia'])) {
-            $query .= " AND localizacion.provincia_id='" . $params['provincia']."' ";
+            $query .= " AND localizacion.provincia_id='" . $params['provincia'] . "' ";
         } elseif (isset($params['pais'])) {
-            $query .= " AND localizacion.pais_id='" . $params['pais'] ."' ";
+            $query .= " AND localizacion.pais_id='" . $params['pais'] . "' ";
         }
-        
+
         $query.=" ) p";
-        
+
         if (isset($params['keyword'])) {
             $query.=" ORDER BY relevance DESC";
-        }else{
+        } else {
             $query.=" ORDER BY id DESC";
         }
-        
+
         $query.=" LIMIT " . $offset . " , " . $limit;
 
         $result = $this->db->query($query);
@@ -484,21 +544,38 @@ class Vendedor_model extends MY_Model {
             return FALSE;
         }
     }
-    
+
     public function es_vendedor_habilitado($vendedor_id) {
         $this->db->where('id', $vendedor_id);
         $query = $this->db->get('vendedor');
         if ($query->num_rows() > 0) {
-            $vendedor=$query->result();
-            if($vendedor->habilitado=="1"){
+            $vendedor = $query->result();
+            if ($vendedor->habilitado == "1") {
                 return TRUE;
-            }else{
+            } else {
                 return FALSE;
-            }            
+            }
         } else {
             return FALSE;
         }
     }
 
+    public function get_vendedor_from_usuario_ids($usuario_ids) {
+        $this->db->select('vendedor.id');
+        $this->db->from($this->_table);
+        $this->db->join("cliente", "cliente.id=vendedor.cliente_id", "inner");
+
+        foreach ($usuario_ids as $id) {
+            $this->db->or_where('cliente.usuario_id', $id);
+        }
+        $vendedores = $this->db->get()->result();
+        $ids = array();
+        if (sizeof($vendedores) > 0) {
+            foreach ($vendedores as $vendedor) {
+                $ids[] = $vendedor->id;
+            }
+        }
+        return $ids;
+    }
 
 }

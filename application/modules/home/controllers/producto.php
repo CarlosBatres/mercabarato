@@ -135,6 +135,16 @@ class Producto extends MY_Controller {
                     $params["mostrar_solo_tarifas"] = true;
                 }
 
+                if ($this->input->post('mostrar_solo_vendedores') == "true") {
+                    $vids_array = $this->invitacion_model->get_ids_invitaciones(array("usuario" => $user_id, "estado" => "2"));
+                    if (sizeof($vids_array) > 0) {              
+                        $vids=$this->vendedor_model->get_vendedor_from_usuario_ids($vids_array);
+                        $params["solo_vendedor_ids"]=$vids;
+                    }else{
+                        $params["no_result"]=true;
+                    }
+                }
+
                 $params["habilitado"] = "1";
                 $params["mostrar_producto"] = "1";
 
@@ -217,10 +227,10 @@ class Producto extends MY_Controller {
                 $res = $this->poblacion_model->get($localizacion->poblacion_id);
                 $localizacion->poblacion = $res->nombre;
             }
-            
-            $producto_extras=$this->producto_extra_model->get_many_by(array("producto_id"=>$producto->id,"tipo"=>"1"));
-            if(!$producto_extras){
-                $producto_extras=array();
+
+            $producto_extras = $this->producto_extra_model->get_many_by(array("producto_id" => $producto->id, "tipo" => "1"));
+            if (!$producto_extras) {
+                $producto_extras = array();
             }
 
             /**
@@ -299,7 +309,7 @@ class Producto extends MY_Controller {
                     "invitacion" => $invitacion,
                     "fecha_finaliza" => $fecha_finaliza,
                     "localizacion" => $localizacion,
-                    "producto_extras"=>$producto_extras
+                    "producto_extras" => $producto_extras
                 );
                 $this->template->load_view('home/producto/ficha', $data);
             } else {
@@ -343,7 +353,7 @@ class Producto extends MY_Controller {
                         "son_contactos" => true,
                         "son_contactos" => false,
                         "localizacion" => $localizacion,
-                        "producto_extras"=>$producto_extras
+                        "producto_extras" => $producto_extras
                     );
                     $this->template->load_view('home/producto/ficha', $data);
                 } else {

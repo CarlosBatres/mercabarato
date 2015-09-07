@@ -24,7 +24,7 @@ function updateResultados() {
             $('#tabla-resultados').unblock();
             $('#tabla-resultados').html(response);
             bind_pagination_links();
-            bind_aprobar_links();
+            //bind_aprobar_links();
         }
     });
 }
@@ -37,7 +37,7 @@ function bind_pagination_links() {
     });
 }
 
-function bind_aprobar_links() {
+/*function bind_aprobar_links() {
     $('.table-responsive').find('.options').find('.item_aprobar').off();
     $('.table-responsive').find('.options').find('.item_aprobar').on('click', function(e) {
         e.preventDefault();
@@ -77,4 +77,4 @@ function bind_aprobar_links() {
 
 
     });
-}
+}*/

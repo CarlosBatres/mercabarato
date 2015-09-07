@@ -15,7 +15,7 @@ $(document).ready(function() {
 //    });
 
     $('#form_crear').find('select[name="provincia"]').on('change', function() {
-        $('#form_crear').find('select[name="poblacion"]').html("<option value='0'>Problación</option>");
+        $('#form_crear').find('select[name="poblacion"]').html("<option value='0'>Población</option>");
         var provincia_id = $(this).val();
         $.ajax({
             type: "POST",

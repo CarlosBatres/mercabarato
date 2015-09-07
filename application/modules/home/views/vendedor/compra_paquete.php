@@ -43,26 +43,32 @@
                                             <h4><span class="currency"></span><?php echo $paquete->costo . ' ' . $this->config->item('money_sign') ?></h4>                                            
                                         </div>
                                     </div>
-                                    <?php if ($paquete->infocompra == "0"): ?>
-                                        <ul>
-                                            <li><i class="fa fa-check"></i>
+
+                                    <ul>
+                                        <?php if ($paquete->limite_productos != "0"): ?>
+                                            <li class="text-left"><i class="fa fa-check"></i>
                                                 <?php
                                                 if ($paquete->limite_productos == -1): echo "Sin limite de Productos";
                                                 else: echo $paquete->limite_productos . ' productos';
                                                 endif;
                                                 ?>
                                             </li>
-                                            <li><i class="fa fa-check"></i>
+                                        <?php endif; ?>
+                                        <?php if ($paquete->limite_anuncios != "0"): ?>
+                                            <li class="text-left"><i class="fa fa-check"></i>
                                                 <?php
                                                 if ($paquete->limite_anuncios == -1): echo "Sin limite de Anuncios";
                                                 else: echo $paquete->limite_anuncios . ' anuncios';
                                                 endif;
                                                 ?>
-                                            </li>                                        
-                                        </ul>
-                                    <?php else:?>
-                                    <p><?php echo $paquete->descripcion; ?></p>
-                                    <?php endif; ?>
+                                            </li>
+                                        <?php endif; ?>
+                                        <?php if ($paquete->infocompra == "1"): ?>
+                                            <li class="text-left"><i class="fa fa-check"></i>
+                                                Infocompras / Seguros
+                                            </li>
+                                        <?php endif; ?>
+                                    </ul>
                                     <a href="<?php echo site_url("usuario/paquetes/comprar_paquete/" . $paquete->id) ?>" class="btn btn-primary <?php echo (!$puede_comprar) ? 'disabled' : '' ?>"> Comprar </a>
                                 </div>                                
                             </div>

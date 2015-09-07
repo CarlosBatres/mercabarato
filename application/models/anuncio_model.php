@@ -34,6 +34,9 @@ class Anuncio_model extends MY_Model {
         if (isset($params['vendedor_id'])) {
             $this->db->where('anuncio.vendedor_id', $params['vendedor_id']);
         }
+        if (isset($params['autorizado_por'])) {
+            $this->db->where('vendedor_paquete.autorizado_por', $params['autorizado_por']);
+        }
         if (isset($params['pais_id'])) {
             $this->db->where('localizacion.pais_id', $params['pais_id']);
         }

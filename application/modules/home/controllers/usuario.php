@@ -102,6 +102,22 @@ class Usuario extends MY_Controller {
             } else {
                 $mis_intereses = array();
             }
+            
+            $localizacion = $this->localizacion_model->get_by("usuario_id", $cliente->usuario_id);
+            $provincias = $this->provincia_model->get_all_by_pais(70);
+            $poblaciones = array();
+            $provincia_id=0;
+            $poblacion_id=0;            
+            
+            if ($localizacion) {                
+                if ($localizacion->provincia_id != null) {
+                    $provincia_id = $localizacion->provincia_id;
+                    $poblaciones=$this->poblacion_model->get_all_by_provincia($provincia_id);
+                }
+                if ($localizacion->poblacion_id != null) {
+                    $poblacion_id = $localizacion->poblacion_id;                    
+                }
+            }   
 
             $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
             $this->template->add_js('modules/home/perfil.js');
@@ -111,7 +127,11 @@ class Usuario extends MY_Controller {
                 "vendedor" => $vendedor,
                 "html_options" => $html_options,
                 "keywords" => $keywords,
-                "mis_intereses" => $mis_intereses)
+                "mis_intereses" => $mis_intereses,
+                "provincias" => $provincias,
+                "poblaciones" => $poblaciones,
+                "provincia_id"=>$provincia_id,
+                "poblacion_id"=>$poblacion_id)
             );
         } else {
             redirect('');
@@ -162,6 +182,13 @@ class Usuario extends MY_Controller {
                     $keyword_id = $this->keyword_model->insert(array("keywords" => $keywords_text));
                 } else {
                     $keyword_id = null;
+                }
+                
+                if($this->input->post("provincia")!=""){
+                    $this->localizacion_model->update_by(array("usuario_id"=>$user_id),array("provincia_id"=>$this->input->post("provincia")));
+                }
+                if($this->input->post("poblacion")!=""){
+                    $this->localizacion_model->update_by(array("usuario_id"=>$user_id),array("poblacion_id"=>$this->input->post("poblacion")));
                 }
 
                 $data = array(
@@ -322,7 +349,7 @@ class Usuario extends MY_Controller {
                 $timelapse = date("Y-m-d H:i:s");
 
                 $usuario = $this->usuario_model->get_by(array("email" => $email, "activo" => "1"));
-                if ($usuario && $email != "admin@mail.com") {
+                if ($usuario && $usuario->id!="1") {
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');

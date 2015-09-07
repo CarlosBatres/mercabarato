@@ -143,7 +143,47 @@
                             <?php endforeach; ?>
                         </div>
                     </div>
-                    <br>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="lead">Modifica a continuación tu localidad.</p>
+                            <p>Si quieres que tus productos esten restringidos a una zona en particular indicalo a continuacion, de lo contrario apareceran en busquedas en toda españa.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">                                
+                                <select name="provincia" class="form-control">
+                                    <option value="0">Provincias</option>
+                                    <?php
+                                    foreach ($provincias as $provincia):
+                                        $class = "";
+                                        if ($provincia_id == $provincia->id) {
+                                            $class = "selected";
+                                        }
+                                        ?>
+                                        <option <?php echo $class; ?> value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">                        
+                                <select name="poblacion" class="form-control">
+                                    <option value="0">Población</option>                        
+                                    <?php foreach ($poblaciones as $poblacion): 
+                                        $class = "";
+                                        if ($poblacion_id == $poblacion->id) {
+                                            $class = "selected";
+                                        }
+                                        ?>
+                                        <option <?php echo $class; ?> value="<?php echo $poblacion->id ?>"><?php echo $poblacion->nombre ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div> 
+                    <hr>
                     <div class="row">
                         <div class='col-md-12'>
                             <p class="lead">Modifica a continuación tus puntos de venta registrados.</p>
@@ -159,7 +199,7 @@
                         } else {
                             $text_nombre = "";
                             $text_direccion = "";
-                            $id="";
+                            $id = "";
                         }
                         ?>
                         <div class="col-md-4">
@@ -190,7 +230,7 @@
                         } else {
                             $text_nombre = "";
                             $text_direccion = "";
-                            $id="";
+                            $id = "";
                         }
                         ?>
                         <div class="col-md-4">
@@ -221,7 +261,7 @@
                         } else {
                             $text_nombre = "";
                             $text_direccion = "";
-                            $id="";
+                            $id = "";
                         }
                         ?>
                         <div class="col-md-4">
