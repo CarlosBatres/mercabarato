@@ -10,7 +10,7 @@
 
 <div id="content">
     <div class="container">  
-        <div class="<?php echo ($anuncios)?"col-md-9":"col-md-12"; ?>">
+        <div class="<?php echo ($anuncios) ? "col-md-9" : "col-md-12"; ?>">
             <div class="row" id="productMain">
                 <div class="row">
                     <div class="col-md-4">
@@ -120,15 +120,19 @@
                     <?php endforeach; ?>
                 </div>
                 <hr>                
-                <!--                <div class="col-md-12">
-                                    <div class="text-right">
-                                        <button type="button" class="btn btn-template-primary"> Ver Mas</button>
-                                    </div>
-                                </div>-->
+                <div class="col-xs-6 pull-right">
+                    <div class="text-right">
+                        <a href="<?php echo site_url($vendedor->unique_slug."/productos"); ?>" class="btn btn-template-primary"> Ver Mas</a>
+                    </div>
+                </div>
             <?php endif; ?>
-            <?php if ($infocompras): ?>            
-                <br>
-                <div class="row">
+            <?php if ($infocompras): ?>                            
+                <div class="col-xs-6 pull-left">
+                    <div class="text-left">
+                        <button type="button" class="btn btn-template-primary" id="enviar-solicitud-seguros"> Enviar Solicitud Seguros</button>
+                    </div>
+                </div>
+                <div class="row formularios-seguros" style="display:none;">
                     <div class="col-md-12">
                         <?php echo $formularios; ?>
                     </div>

@@ -65,6 +65,7 @@ $route['productos/ver-oferta-requisitos/(:num)'] = 'home/producto/ver_oferta_req
 $route['ir_productos'] = 'home/main/productos';
 $route['productos/(:any)'] = 'home/producto/ver_producto/$1';
 $route['vendedores/buscar'] = 'home/vendedor/ajax_get_listado_resultados';
+$route['vendedores/ver_productos_listado'] = 'home/vendedor/ver_productos_listado';
 $route['anuncios/(:num)'] = 'home/anuncio/ver_anuncio/$1';
 
 $route['seguros'] = 'home/seguro/view_seguros';
@@ -307,6 +308,7 @@ $route['pagina-no-existe'] = 'home/main/not_found';
 
 $route['test-url'] = 'home/main/test_url';
 
+$route['(:any)/productos'] = 'home/vendedor/ver_productos/$1';
 $route['(:any)'] = 'home/vendedor/ver_vendedor/$1';
 
 /* End of file routes.php */
