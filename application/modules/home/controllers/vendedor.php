@@ -46,7 +46,7 @@ class Vendedor extends MY_Controller {
                     $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
                     $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
                     $this->template->add_js('modules/home/perfil.js');
-                    $this->template->load_view('home/vendedor/afiliarse', array(                        
+                    $this->template->load_view('home/vendedor/afiliarse', array(
                         "cliente" => $cliente,
                         "html_options" => $html_options,
                         "keywords" => $keywords,
@@ -278,14 +278,14 @@ class Vendedor extends MY_Controller {
                         $data_email = array("paquete" => $data);
                         $this->email->message($this->load->view('home/emails/informacion_de_compra', $data_email, true));
                         $this->email->send();
-                        
+
                         $this->load->library('email');
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($this->config->item('site_info_email'));
                         $this->email->subject('Nueva compra de paquete');
-                        $data_email = array("paquete" => $data,"vendedor"=>$vendedor);
+                        $data_email = array("paquete" => $data, "vendedor" => $vendedor);
                         $this->email->message($this->load->view('home/emails/nueva_compra_paquete', $data_email, true));
-                        $this->email->send();                                                
+                        $this->email->send();
                     }
 
                     $this->vendedor_paquete_model->insert($data);
@@ -1039,6 +1039,72 @@ class Vendedor extends MY_Controller {
                 redirect('usuario/mis-paquetes');
             } else {
                 redirect('usuario/perfil');
+            }
+        } else {
+            redirect('');
+        }
+    }
+
+    public function ver_productos($slug) {
+        $vendedor = $this->vendedor_model->get_vendedor_by_slug($slug);
+        if ($vendedor) {
+            if ($vendedor->habilitado == 1) {
+                $anuncios = $this->anuncio_model->get_anuncios_del_vendedor($vendedor->id, 3);
+                $data = array("vendedor" => $vendedor,"anuncios"=>$anuncios);
+                $this->template->add_js('modules/home/vendedores_ver_productos.js');
+                $this->template->load_view('home/vendedores/ver_productos', $data);
+            } else {
+                redirect('404');
+            }
+        } else {
+            redirect('404');
+        }
+    }
+
+    public function ver_productos_listado() {
+        if ($this->input->is_ajax_request()) {
+            $this->ajax_header();
+            //$this->show_profiler();
+            $formValues = $this->input->post();
+            $params = array();
+            if ($formValues !== false) {
+                $params["vendedor_id"] = $this->input->post('vendedor_id');
+                $params["habilitado"] = "1";
+                $params["mostrar_producto"] = "1";
+                $pagina = $this->input->post('pagina');
+
+                $limit = $this->config->item("principal_default_per_page");
+                $offset = $limit * ($pagina - 1);
+                $productos = $this->producto_model->get_site_search($params, $limit, $offset, "p.fecha_insertado", "DESC");
+                $flt = (float) ($productos["total"] / $limit);
+                $ent = (int) ($productos["total"] / $limit);
+                if ($flt > $ent || $flt < $ent) {
+                    $paginas = $ent + 1;
+                } else {
+                    $paginas = $ent;
+                }
+
+                if ($productos["total"] == 0) {
+                    $productos["productos"] = array();
+                }
+
+                $search_params = array(
+                    "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+                    "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+                    "pagina" => $pagina,
+                    "total_paginas" => $paginas,
+                    "por_pagina" => $limit,
+                    "total" => $productos["total"],
+                    "hasta" => ($pagina * $limit < $productos["total"]) ? $pagina * $limit : $productos["total"],
+                    "desde" => (($pagina * $limit) - $limit) + 1);
+
+                $pagination = build_paginacion($search_params);
+                $data = array(
+                    "productos" => $productos["productos"],
+                    "pagination" => $pagination);
+
+
+                $this->template->load_view('home/producto/tabla_resultados_principal', $data);
             }
         } else {
             redirect('');
