@@ -452,8 +452,8 @@ class Cliente extends MY_Controller {
 
     public function seguros_download_respuesta() {
         $this->load->helper('download');
-        $data = file_get_contents(assets_url('uploads/seguros/') . '/' . $this->uri->segment(4)); // Read the file's contents
-        $name = $this->uri->segment(4);
+        $data = file_get_contents(assets_url('uploads/seguros/') . '/' . $this->uri->segment(4). '/' . $this->uri->segment(5)); // Read the file's contents
+        $name = $this->uri->segment(5);
         force_download($name, $data);
     }
 

@@ -131,7 +131,7 @@
                     <div class="text-left">
                         <button type="button" class="btn btn-template-primary" id="enviar-solicitud-seguros"> Enviar Solicitud Seguros</button>
                     </div>
-                </div>
+                </div>                
                 <div class="row formularios-seguros" style="display:none;">
                     <div class="col-md-12">
                         <?php echo $formularios; ?>

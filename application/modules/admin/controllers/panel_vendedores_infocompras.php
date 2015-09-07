@@ -36,15 +36,20 @@ class Panel_vendedores_infocompras extends ADController {
             if ($solicitud_seguro->vendedor_id == $this->identidad->get_vendedor_id()) {
                 $formValues = $this->input->post();
                 if ($formValues !== false) {
-                    $config['upload_path'] = './assets/uploads/seguros/';
+                    $config['upload_path'] = './assets/uploads/seguros/' . $this->identidad->get_vendedor_id();
                     $config['allowed_types'] = 'jpg|pdf|word|doc|docx';
                     $config['max_size'] = '2048';
                     $config['max_width'] = '1024';
                     $config['max_height'] = '768';
+                    $config['encrypt_name'] = TRUE;
 
                     $this->load->library('upload', $config);
 
-                    if ($_FILES AND $_FILES['field_name']['name']) {
+                    if (!is_dir('./assets/uploads/seguros/' . $this->identidad->get_vendedor_id())) {
+                        mkdir('./assets/uploads/seguros/' . $this->identidad->get_vendedor_id(), 0777, true);                        
+                    }
+
+                    if ($_FILES AND $_FILES['userfile']['name']) {
                         if (!$this->upload->do_upload()) {
                             $error = array('error' => $this->upload->display_errors());
                             $file_name = null;
@@ -61,14 +66,14 @@ class Panel_vendedores_infocompras extends ADController {
 
 
                     $respuesta = $this->input->post('respuesta');
-                    $data = array("estado" => "2", "respuesta" => $respuesta, "fecha_respuesta" => date("Y-m-d"), "link_file" => $file_name);
+                    $data = array("estado" => "2", "respuesta" => $respuesta, "fecha_respuesta" => date("Y-m-d"), "link_file" => $this->identidad->get_vendedor_id().'/'.$file_name);
 
-                    $this->solicitud_seguro_model->update($solicitud_seguro->id, $data);                    
+                    $this->solicitud_seguro_model->update($solicitud_seguro->id, $data);
 
                     if ($this->config->item('emails_enabled')) {
                         $cliente = $this->cliente_model->get($solicitud_seguro->cliente_id);
                         $usuario = $this->usuario_model->get($cliente->usuario_id);
-                        
+
                         $this->load->library('email');
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
