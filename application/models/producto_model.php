@@ -167,6 +167,11 @@ class Producto_model extends MY_Model {
                 $text = " AND p.vendedor_id IN(" . $ids . ") ";
                 $sub_query.=$text;
             }
+            
+            if (isset($params["habilitado"])) {
+                $text=" AND p.habilitado=" . $params['habilitado'];
+                $sub_query.=$text;
+            }
 
             $sub_query.=" ) ";
 

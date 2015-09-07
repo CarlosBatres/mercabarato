@@ -410,8 +410,9 @@ class Vendedor extends ADController {
                 $vendedor = $this->vendedor_model->get_vendedor($vendedor_id);
                 $paquete_curso = $this->vendedor_model->get_paquete_en_curso($vendedor_id);
 
-                if ($vendedor && $paquete_curso) {
+                if ($vendedor && $paquete_curso) {                    
                     $this->vendedor_paquete_model->delete($paquete_curso->id);
+                    $this->vendedor_model->inhabilitar($paquete_curso->vendedor_id);
                     $this->session->set_flashdata('success', 'Se ha eliminado con exito');
                 }
                 redirect("admin/vendedores/administrar/" . $vendedor_id);
@@ -462,7 +463,7 @@ class Vendedor extends ADController {
                     $this->vendedor_model->habilitar_vendedor($vendedor_id);
                     $paquete_activo = $this->vendedor_model->get_paquete_en_curso($vendedor_id);
 
-                    if (!$paquete_activo) {
+                    if ($paquete_activo) {
                         $productos = $this->producto_model->get_many_by("vendedor_id", $vendedor_id);
                         $anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vendedor_id);
 
