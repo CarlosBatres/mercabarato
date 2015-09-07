@@ -679,7 +679,7 @@
                 </div>                                
                 <div class="row">
                     <div class="col-md-12">
-                        <label>Deseas adjuntar un archivo?</label>                    
+                        <label>Deseas adjuntar un archivo? (PDF|WORD|JPG max size 2MB)</label>                    
                         <input type="file" name="userfile" size="20" />
                     </div>
                 </div>
