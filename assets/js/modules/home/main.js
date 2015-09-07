@@ -328,9 +328,7 @@ function validateLogin() {
         if (!$(this).find('.alert-danger').hasClass('hidden')) {
             $(this).find('.alert-danger').addClass('hidden');
         }
-        setTimeout(function() {
-            $('input[name="email"]').focus();
-        }, 1000);
+        $(this).find("[autofocus]:first").focus();
     });
 
     $("#loginForm").on('submit', function(e) {
