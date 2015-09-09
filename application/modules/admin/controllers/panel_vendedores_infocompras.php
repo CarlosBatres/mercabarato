@@ -33,6 +33,8 @@ class Panel_vendedores_infocompras extends ADController {
 
         $solicitud_seguro = $this->solicitud_seguro_model->get($solicitud_seguro_id);
         if ($solicitud_seguro) {
+            $mensajes = $this->mensaje_model->get_mensajes($solicitud_seguro->id);
+
             if ($solicitud_seguro->vendedor_id == $this->identidad->get_vendedor_id()) {
                 $formValues = $this->input->post();
                 if ($formValues !== false) {
@@ -46,12 +48,11 @@ class Panel_vendedores_infocompras extends ADController {
                     $this->load->library('upload', $config);
 
                     if (!is_dir('./assets/uploads/seguros/' . $this->identidad->get_vendedor_id())) {
-                        mkdir('./assets/uploads/seguros/' . $this->identidad->get_vendedor_id(), 0777, true);                        
+                        mkdir('./assets/uploads/seguros/' . $this->identidad->get_vendedor_id(), 0777, true);
                     }
 
                     if ($_FILES AND $_FILES['userfile']['name']) {
                         if (!$this->upload->do_upload()) {
-                            $error = array('error' => $this->upload->display_errors());
                             $file_name = null;
                             $this->session->set_flashdata('error', $this->upload->display_errors());
                             redirect('panel_vendedor/infocompras/seguros/responder/' . $solicitud_seguro_id);
@@ -64,11 +65,64 @@ class Panel_vendedores_infocompras extends ADController {
                         $file_name = null;
                     }
 
+                    $ventajas = "<ul>";
+                    $flag = true;
+                    if ($this->input->post('ventaja1') != "") {
+                        $flag = false;
+                        $ventajas.="<li>" . $this->input->post('ventaja1') . "</li>";
+                    }
+                    if ($this->input->post('ventaja2') != "") {
+                        $flag = false;
+                        $ventajas.="<li>" . $this->input->post('ventaja2') . "</li>";
+                    }
+                    if ($this->input->post('ventaja3') != "") {
+                        $flag = false;
+                        $ventajas.="<li>" . $this->input->post('ventaja3') . "</li>";
+                    }
+                    if ($this->input->post('ventaja4') != "") {
+                        $flag = false;
+                        $ventajas.="<li>" . $this->input->post('ventaja4') . "</li>";
+                    }
+                    if ($this->input->post('ventaja5') != "") {
+                        $flag = false;
+                        $ventajas.="<li>" . $this->input->post('ventaja5') . "</li>";
+                    }
+                    $ventajas.="</ul>";
 
-                    $respuesta = $this->input->post('respuesta');
-                    $data = array("estado" => "2", "respuesta" => $respuesta, "fecha_respuesta" => date("Y-m-d"), "link_file" => $this->identidad->get_vendedor_id().'/'.$file_name);
+                    if ($flag) {
+                        $ventajas = "";
+                    }
+
+                    $precio = $this->input->post('precio');
+                    $link_file = ($file_name != null) ? $this->identidad->get_vendedor_id() . '/' . $file_name : null;
+
+                    if (!$mensajes) {
+                        $data = array(
+                            "estado" => "1",
+                            "ventajas" => $ventajas,
+                            "precio" => $precio,
+                            "link_file" => $link_file
+                        );
+                    } else {
+                        $data = array(
+                            "estado" => "1",
+                            "precio" => $precio
+                        );
+                    }
 
                     $this->solicitud_seguro_model->update($solicitud_seguro->id, $data);
+
+                    $respuesta = $this->input->post('respuesta');
+
+
+                    $data_mensaje = array(
+                        "solicitud_seguro_id" => $solicitud_seguro->id,
+                        "mensaje" => $respuesta,
+                        "fecha" => date("Y-m-d"),
+                        "enviado_por" => "0",
+                    );
+
+                    $this->mensaje_model->insert($data_mensaje);
 
                     if ($this->config->item('emails_enabled')) {
                         $cliente = $this->cliente_model->get($solicitud_seguro->cliente_id);
@@ -78,7 +132,7 @@ class Panel_vendedores_infocompras extends ADController {
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
                         $this->email->subject('Se ha respondido a tu solicitud de presupuesto');
-                        $data_mail = array();
+                        $data_mail = array("solicitud_id"=>$solicitud_seguro->id);
                         $this->email->message($this->load->view('home/emails/solicitud_presupuesto_2', $data_mail, true));
                         $this->email->send();
                     }
@@ -89,16 +143,15 @@ class Panel_vendedores_infocompras extends ADController {
 
                     $data = array("solicitud_seguro" => $solicitud_seguro);
                     $data['ckeditor'] = array(
-                        //ID of the textarea that will be replaced
                         'id' => 'content',
                         'path' => 'assets/js/ckeditor',
-                        //Optionnal values
                         'config' => array(
-                            'toolbar' => "Full", //Using the Full toolbar                        
-                            'height' => '300px', //Setting a custom height
+                            'toolbar' => "Full",
+                            'height' => '300px',
                         ),
                     );
                     $data["informacion"] = unserialize($solicitud_seguro->datos);
+                    $data["mensajes"] = $mensajes;
 
                     //$this->template->add_js("modules/admin/panel_vendedores/seguros_listado.js");
                     $this->template->load_view('admin/panel_vendedores/infocompras/seguros/responder_seguro', $data);
@@ -155,6 +208,44 @@ class Panel_vendedores_infocompras extends ADController {
             "pagination" => $pagination);
 
         $this->template->load_view('admin/panel_vendedores/infocompras/seguros/tabla_resultados', $data);
+    }
+
+    public function cerrar_seguros($solicitud_seguro_id) {
+        if ($this->input->is_ajax_request()) {
+            $this->ajax_header();
+            $solicitud_seguro = $this->solicitud_seguro_model->get($solicitud_seguro_id);
+            if ($solicitud_seguro) {
+                if ($solicitud_seguro->vendedor_id == $this->identidad->get_vendedor_id()) {
+                    $this->solicitud_seguro_model->update($solicitud_seguro_id, array("estado" => "2"));
+                    echo json_encode(array("success" => true));
+                }else{
+                    echo json_encode(array("error" => true));
+                }
+            }else{
+                echo json_encode(array("error" => true));
+            }            
+        } else {
+            redirect('404');
+        }
+    }
+
+    public function borrar_seguros($solicitud_seguro_id) {
+         if ($this->input->is_ajax_request()) {
+            $this->ajax_header();
+            $solicitud_seguro = $this->solicitud_seguro_model->get($solicitud_seguro_id);
+            if ($solicitud_seguro) {
+                if ($solicitud_seguro->vendedor_id == $this->identidad->get_vendedor_id()) {
+                    $this->solicitud_seguro_model->delete($solicitud_seguro_id);
+                    echo json_encode(array("success" => true));
+                }else{
+                    echo json_encode(array("error" => true));
+                }
+            }else{
+                echo json_encode(array("error" => true));
+            }            
+        } else {
+            redirect('404');
+        }
     }
 
 }

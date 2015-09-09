@@ -71,7 +71,7 @@ class Cliente extends MY_Controller {
                 $this->cliente_model->insert($data);
 
                 //$pais = $this->input->post('pais');
-                $pais="70";
+                $pais = "70";
                 $provincia = $this->input->post('provincia');
                 $poblacion = $this->input->post('poblacion');
 
@@ -137,7 +137,7 @@ class Cliente extends MY_Controller {
                     $this->cliente_model->update($cliente->id, $data);
 
                     //$pais = $this->input->post('pais');
-                    $pais="70";
+                    $pais = "70";
                     $provincia = $this->input->post('provincia');
                     $poblacion = $this->input->post('poblacion');
 
@@ -436,14 +436,20 @@ class Cliente extends MY_Controller {
             $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
 
             $solicitud_seguro = $this->solicitud_seguro_model->get($solicitud_seguro_id);
-            // TODO : Validar que yo pueda acceder a esta
+            $mensaje = $this->mensaje_model->get_ultimo_mensaje($solicitud_seguro_id, true);
             if ($solicitud_seguro) {
-                //$this->template->add_js('modules/home/infocompras_seguros.js');
-                $this->template->load_view('home/cliente/infocompras_seguros_respuesta', array("seguro" => $solicitud_seguro));
+                if ($solicitud_seguro->estado != "0" && $cliente->id == $solicitud_seguro->cliente_id) {
+                    //$this->template->add_js('modules/home/infocompras_seguros.js');
+                    $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+                    $this->template->load_view('home/cliente/infocompras_seguros_respuesta', array("html_options" => $html_options, "seguro" => $solicitud_seguro, "mensaje" => $mensaje));
+                } else {
+                    redirect('404');
+                }
             } else {
-                redirect('');
+                redirect('404');
             }
         } else {
             redirect('');
@@ -452,9 +458,85 @@ class Cliente extends MY_Controller {
 
     public function seguros_download_respuesta() {
         $this->load->helper('download');
-        $data = file_get_contents(assets_url('uploads/seguros/') . '/' . $this->uri->segment(4). '/' . $this->uri->segment(5)); // Read the file's contents
+        $data = file_get_contents(assets_url('uploads/seguros/') . '/' . $this->uri->segment(4) . '/' . $this->uri->segment(5)); // Read the file's contents
         $name = $this->uri->segment(5);
         force_download($name, $data);
+    }
+
+    public function view_seguros_pregunta($solicitud_seguro_id) {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Busca y Compara');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+
+            $solicitud_seguro = $this->solicitud_seguro_model->get($solicitud_seguro_id);
+
+            if ($solicitud_seguro) {
+                if ($solicitud_seguro->estado == "1" && $cliente->id == $solicitud_seguro->cliente_id) {
+                    $this->load->helper('ckeditor');
+
+                    $data = array("seguro" => $solicitud_seguro);
+                    $data['ckeditor'] = array(
+                        'id' => 'pregunta',
+                        'path' => 'assets/js/ckeditor',
+                        'config' => array(
+                            'toolbar' => "Full",
+                            'height' => '300px',
+                        ),
+                    );
+                    $data["solicitud_seguro_id"] = $solicitud_seguro->id;
+                    //$this->template->add_js('modules/home/infocompras_seguros.js');
+                    $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+                    $data["html_options"] = $html_options;
+                    $this->template->load_view('home/cliente/infocompras_seguros_pregunta', $data);
+                } else {
+                    redirect('404');
+                }
+            } else {
+                redirect('404');
+            }
+        } else {
+            redirect('');
+        }
+    }
+
+    public function seguro_enviar_pregunta() {
+        $formValues = $this->input->post();
+        if ($formValues !== false) {
+            $solicitud_seguro_id = $this->input->post("solicitud_seguro_id");
+            $solicitud_seguro = $this->solicitud_seguro_model->get($solicitud_seguro_id);
+
+            if ($solicitud_seguro) {
+                $pregunta = $this->input->post("pregunta");
+                if ($pregunta != "") {
+
+                    $data_msg = array(
+                        "mensaje" => $pregunta,
+                        "solicitud_seguro_id" => $solicitud_seguro_id,
+                        "enviado_por" => "1",
+                        "fecha" => date("Y-m-d")
+                    );
+                    $this->mensaje_model->insert($data_msg);
+                    $this->solicitud_seguro_model->update($solicitud_seguro_id, array("estado" => "0"));
+
+                    if ($this->config->item('emails_enabled')) {
+                        $vendedor = $this->vendedor_model->get($solicitud_seguro->vendedor_id);
+                        $cliente = $this->cliente_model->get($vendedor->cliente_id);
+                        $usuario = $this->usuario_model->get($cliente->usuario_id);
+
+                        $this->load->library('email');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($usuario->email);
+                        $this->email->subject('Nueva solicitud de presupuesto');
+                        $data_email = array("solicitud_id" => $solicitud_seguro_id);
+                        $this->email->message($this->load->view('home/emails/solicitud_presupuesto_mensaje_vendedor', $data_email, true));
+                        $this->email->send();
+                    }
+                }
+            }
+        }
+        redirect('usuario/infocompras-seguros');
     }
 
 }

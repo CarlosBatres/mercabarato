@@ -24,7 +24,7 @@ function updateResultados() {
             $('#tabla-resultados').unblock();
             $('#tabla-resultados').html(response);
             bind_pagination_links();
-            bind_borrar_links();
+            bind_links();
         }
     });
 }
@@ -37,7 +37,7 @@ function bind_pagination_links() {
     });
 }
 
-function bind_borrar_links() {
+function bind_links() {
     $('.table-responsive').find('.options').find('.row_action').off();
     $('.table-responsive').find('.options').find('.row_action').on('click', function(e) {        
         e.preventDefault();        
@@ -45,11 +45,11 @@ function bind_borrar_links() {
         $.blockUI({message: $('#question'), css: {}});
         
         if ($(this).hasClass('borrar')) {
-            $('#question').find('.modal-title').html("Estas seguro que deseas eliminar este anuncio?.");
-        }else if($(this).hasClass('habilitar')){
-            $('#question').find('.modal-title').html("Estas seguro que deseas habilitar este anuncio?.");
-        }else{
-            $('#question').find('.modal-title').html("Estas seguro que deseas inhabilitar este anuncio?.");
+            $('#question').find('.modal-title').html("Estas seguro que deseas eliminar esta solicitud de seguro?.");
+            $('#question').find('.contenido-mensaje').html("Se eliminaran todos los mensajes y archivos asociados a esta solicitud permanentemente.");
+        }else if($(this).hasClass('cerrar')){
+            $('#question').find('.modal-title').html("Estas seguro que deseas cerrar esta solicitud de seguro?.");
+            $('#question').find('.contenido-mensaje').html("Al cerrar la solicitud no se podran intercambiar mas mensajes.");
         }
         
         $('#yes').off();

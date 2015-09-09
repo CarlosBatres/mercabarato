@@ -54,7 +54,13 @@
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/contactos') ? "active" : "" ?>">
                     <a href="<?php echo site_url('usuario/contactos') ?>"><i class="fa fa-plus"></i> Mis Contactos Vendedores <span class="badge" id="invitaciones-counter"><?php echo $this->invitacion_model->count_invitaciones_pendientes() ?></span></a>
                 </li>
-                <li class="<?php echo ($this->uri->uri_string() == 'usuario/infocompras-seguros') ? "active" : "" ?>">
+                <?php
+                $active = "";
+                if (strpos($this->uri->uri_string(), 'usuario/infocompras-seguros') !== false) {                
+                    $active = "active";
+                }
+                ?>                
+                <li class="<?php echo $active; ?>">
                     <a href="<?php echo site_url('usuario/infocompras-seguros') ?>"><i class="fa fa-newspaper-o"></i> Infocompras - Seguros</a>
                 </li>
 

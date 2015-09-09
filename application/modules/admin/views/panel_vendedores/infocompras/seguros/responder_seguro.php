@@ -656,11 +656,36 @@
     <div class="row">
         <br><hr><br>
     </div>
+    <?php if ($mensajes): ?>
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                <p class="lead"><strong>Mensajes Anteriores</strong></p>
+            </div>
+        </div>
+
+        <?php foreach ($mensajes as $mensaje): ?>            
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <?php if($mensaje->enviado_por=="0"):?>
+                    <p class="lead alert-info">Tu mensaje</p>
+                    <?php else:?>
+                    <p class="lead alert-success">Mensaje del cliente</p>
+                    <?php endif; ?>
+                    <p><?php echo $mensaje->mensaje ?></p>
+                    <hr>
+                </div>
+            </div>
+            
+        <?php endforeach; ?>
+        <div class="row">
+            <br><hr><br>
+        </div>
+    <?php endif; ?>
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="box box_registro">                
-                <h3>Datos de tu Respuesta</h3>
+                <p class="lead"><strong>1) Datos de tu Respuesta</strong></p>
                 <?php if ($this->session->flashdata('error')) { ?>
                     <div class="alert alert-danger"> 
                         <a class="close" data-dismiss="alert">×</a>
@@ -677,12 +702,64 @@
                         </div>
                     </div>
                 </div>                                
-                <div class="row">
-                    <div class="col-md-12">
-                        <label>Deseas adjuntar un archivo? (PDF|WORD|JPG max size 2MB)</label>                    
-                        <input type="file" name="userfile" size="20" />
+                <br>
+                <?php if (!$mensajes): ?>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Deseas adjuntar un archivo? (PDF|WORD|JPG max size 2MB)</label>                    
+                            <input type="file" name="userfile" size="20" />
+                        </div>
                     </div>
+                <?php endif; ?>
+                <br>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label>Precio a ofrecer</label>
+                            <input type="text" class="form-control" name="precio" value="<?php echo $solicitud_seguro->precio ?>">
+                        </div>
+                    </div> 
                 </div>
+                <br>
+                <?php if (!$mensajes): ?>
+                    <p class="lead"><strong>2) Describa las ventajas de su oferta</strong></p>                
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">1</span>
+                                        <input type="text" class="form-control" name="ventaja1">
+                                    </div><!-- /input-group -->
+                                </li>                    
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">2</span>
+                                        <input type="text" class="form-control" name="ventaja2">
+                                    </div><!-- /input-group -->
+                                </li>                    
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">3</span>
+                                        <input type="text" class="form-control" name="ventaja3">
+                                    </div><!-- /input-group -->
+                                </li>                    
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">4</span>
+                                        <input type="text" class="form-control" name="ventaja4">
+                                    </div><!-- /input-group -->
+                                </li>                    
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">5</span>
+                                        <input type="text" class="form-control" name="ventaja5">
+                                    </div><!-- /input-group -->
+                                </li>                    
+                            </ul>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
             <hr>                                
             <div class="text-center">
