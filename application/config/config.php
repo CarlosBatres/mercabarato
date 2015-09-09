@@ -368,6 +368,7 @@ $config["admin_default_per_page"]='10';
 $config["productos_img_path"]='/uploads/productos/';
 $config["categorias_img_path"]='/uploads/categorias/';
 $config["vendedores_img_path"]='/uploads/vendedores/';
+$config["seguros_path"]='/uploads/seguros/';
 $config["principal_default_per_page"]='10';
 $config["emails_enabled"]=false;
 
