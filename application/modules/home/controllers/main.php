@@ -134,25 +134,10 @@ class Main extends MY_Controller {
         $this->template->load_view('home/paginas/cookies');
     }
 
-    public function test_url() {
-        $data = array(
-            "vendedor_id" => "6162",
-            "nombre_paquete" => "Paquete Estandar",
-            "duracion_paquete" => "12",
-            "fecha_comprado" => date("Y-m-d"),
-            "fecha_terminar" => null,
-            "fecha_aprobado" => null,
-            "referencia" => "",
-            "limite_productos" => "15",
-            "limite_anuncios" => "15",
-            "monto_a_cancelar" => "350",
-            "aprobado" => 0,
-            "infocompra" => "0"
-        );
-
-        $vendedor = $this->vendedor_model->get("6754");
-        $data_email = array("paquete" => $data, "vendedor" => $vendedor);
-        $this->load->view('home/emails/nueva_compra_paquete', $data_email);
+    public function test_url() {        
+        
+        $data_email = array("solicitud_id"=>"8");
+        $this->load->view('home/emails/solicitud_presupuesto_2', $data_email);
     }
 
 }

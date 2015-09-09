@@ -211,7 +211,18 @@ body .box_registro{
 
 }
 
-.invitaciones-list li{
+.ventajas ul{
+    list-style-type: circle;
+    padding-left: 10px;
+}
+
+.ventajas li{
+    border: 0px;
+    padding: 5px;
+    margin-bottom: 0px;    
+}
+
+.invitaciones-list>li{
     min-height: 127px;
 }
 

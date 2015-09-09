@@ -103,6 +103,8 @@ $route['usuario/paquetes/renovar_paquete/(:any)'] = 'home/vendedor/submit_renova
 $route['usuario/buscar_invitaciones'] = 'home/cliente/ajax_get_listado_resultados_invitaciones';
 $route['usuario/infocompras-seguros'] = 'home/cliente/view_infocompras_seguros';
 $route['usuario/infocompras-seguros/respuesta/(:num)'] = 'home/cliente/view_seguros_respuesta/$1';
+$route['usuario/infocompras-seguros/pregunta/(:num)'] = 'home/cliente/view_seguros_pregunta/$1';
+$route['usuario/infocompras-seguros/enviar_pregunta'] = 'home/cliente/seguro_enviar_pregunta';
 $route['usuario/infocompras-seguros/descargar_respuesta/(:any)'] = 'home/cliente/seguros_download_respuesta/$1';
 $route['usuario/buscar-solicitudes-seguros'] = 'home/cliente/ajax_get_listado_seguros';
 $route['usuario/eliminar-cuenta'] = 'home/usuario/eliminar_cuenta';
@@ -191,6 +193,8 @@ $route['panel_vendedor/tarifas/incluir_todos_clientes'] = 'admin/panel_vendedore
 
 $route['panel_vendedor/infocompras/seguros'] = 'admin/panel_vendedores_infocompras/view_listado_seguros';
 $route['panel_vendedor/infocompras/seguros/responder/(:num)'] = 'admin/panel_vendedores_infocompras/responder_seguros/$1';
+$route['panel_vendedor/infocompras/seguros/cerrar/(:num)'] = 'admin/panel_vendedores_infocompras/cerrar_seguros/$1';
+$route['panel_vendedor/infocompras/seguros/borrar/(:num)'] = 'admin/panel_vendedores_infocompras/borrar_seguros/$1';
 $route['panel_vendedor/infocompras/ajax_get_seguros'] = 'admin/panel_vendedores_infocompras/ajax_get_seguros';
 
 $route['panel_vendedor/ofertas/listado'] = 'admin/panel_vendedores_ofertas2/view_listado';

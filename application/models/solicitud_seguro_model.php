@@ -13,10 +13,11 @@ class Solicitud_seguro_model extends MY_Model {
          
     public function get_solicitudes_seguro($params, $limit, $offset) {
         $this->db->start_cache();
-        $this->db->select("ss.*,cc.nombres,cc.apellidos,uc.email");
+        $this->db->select("ss.*,cc.nombres,cc.apellidos,uc.email,m.enviado_por");
         $this->db->from("solicitud_seguro ss");        
         $this->db->join("cliente cc", "cc.id=ss.cliente_id", 'INNER');
         $this->db->join("usuario uc", "uc.id=cc.usuario_id", 'INNER');        
+        $this->db->join("mensaje m", "m.solicitud_seguro_id=ss.id AND m.enviado_por='1'", 'LEFT');        
         
         if(isset($params["vendedor_id"])){
             $this->db->where("ss.vendedor_id",$params["vendedor_id"]);
@@ -79,5 +80,28 @@ class Solicitud_seguro_model extends MY_Model {
             $this->db->flush_cache();
             return array("total" => 0);
         }
+    }
+    
+    public function delete($id) {
+        $this->producto_resource_model->cleanup_resources($id);
+        $this->producto_extra_model->delete_by("producto_id", $id);
+        $this->visita_model->delete_by("producto_id", $id);
+        $this->requisito_visitas_model->delete_by("producto_id", $id);
+
+        $tarifas = $this->tarifa_model->get_many_by("producto_id", $id);
+        if ($tarifas) {
+            foreach ($tarifas as $tarifa) {
+                $this->tarifa_model->delete($tarifa->id);
+            }
+        }
+
+        $ofertas = $this->oferta_model->get_many_by("producto_id", $id);
+        if ($ofertas) {
+            foreach ($ofertas as $oferta) {
+                $this->oferta_model->delete($oferta->id);
+            }
+        }
+
+        parent::delete($id);
     }
 }
