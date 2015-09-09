@@ -133,7 +133,12 @@ class Panel_vendedores_infocompras extends ADController {
                         $this->email->to($usuario->email);
                         $this->email->subject('Se ha respondido a tu solicitud de presupuesto');
                         $data_mail = array("solicitud_id"=>$solicitud_seguro->id);
-                        $this->email->message($this->load->view('home/emails/solicitud_presupuesto_2', $data_mail, true));
+                        
+                        if($usuario->temporal=="1"){
+                            $this->email->message($this->load->view('home/emails/solicitud_presupuesto_registro', $data_mail, true));
+                        }else{
+                            $this->email->message($this->load->view('home/emails/solicitud_presupuesto_2', $data_mail, true));
+                        }                                                
                         $this->email->send();
                     }
 

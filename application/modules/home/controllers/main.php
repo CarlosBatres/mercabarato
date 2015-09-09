@@ -137,7 +137,7 @@ class Main extends MY_Controller {
     public function test_url() {        
         
         $data_email = array("solicitud_id"=>"8");
-        $this->load->view('home/emails/solicitud_presupuesto_2', $data_email);
+        $this->load->view('home/emails/solicitud_presupuesto_registro', $data_email);
     }
 
 }
