@@ -75,16 +75,16 @@ class Cliente_model extends MY_Model {
             return FALSE;
         }
     }
-    
+
     public function es_vendedor_habilitado($cliente_id) {
-        if($this->es_vendedor($cliente_id)){
-            $vendedor=$this->vendedor_model->get_by("cliente_id",$cliente_id);
-            if($vendedor->habilitado=="1"){
+        if ($this->es_vendedor($cliente_id)) {
+            $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente_id);
+            if ($vendedor->habilitado == "1") {
                 return TRUE;
-            }else{
+            } else {
                 return FALSE;
             }
-        }else{
+        } else {
             return FALSE;
         }
     }
@@ -189,6 +189,70 @@ class Cliente_model extends MY_Model {
         if ($total->rows > 0) {
             return array("clientes" => $clientes, "total" => $total->rows);
         } else {
+            return array("total" => 0);
+        }
+    }
+
+    public function get_mensajes_search($params, $limit, $offset, $order_by = "cliente.id", $order = "asc") {
+        $this->db->start_cache();
+        $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.fecha_creado,usuario.activo");
+        $this->db->from($this->_table);
+        $this->db->join("usuario", "cliente.usuario_id=usuario.id", 'INNER');
+
+        if (isset($params['nombre'])) {
+            $this->db->like('CONCAT(cliente.nombres," ",cliente.apellidos)', $params['nombre'], 'both');
+        }
+        if (isset($params['email'])) {
+            $this->db->like('usuario.email', $params['email'], 'both');
+        }
+        if (isset($params['tipo_usuario'])) {
+            if ($params['tipo_usuario'] == "1") {
+                $this->db->where('cliente.es_vendedor', '0');
+            } elseif ($params['tipo_usuario'] == "2") {
+                $this->db->where('cliente.es_vendedor', '1');
+            }
+        }
+        if (isset($params['ultimo_acceso'])) {
+            if ($params['ultimo_acceso'] == "1") {
+                $this->db->where('usuario.ultimo_acceso >=', 'date_add(now(), interval -1 month)', FALSE);
+            } elseif ($params['ultimo_acceso'] == "2") {
+                $this->db->where('usuario.ultimo_acceso >=', 'date_add(now(), interval -2 month)', FALSE);
+            } elseif ($params['ultimo_acceso'] == "3") {
+                $this->db->where('usuario.ultimo_acceso >=', 'date_add(now(), interval -5 month)', FALSE);
+            } elseif ($params['ultimo_acceso'] == "4") {
+                $this->db->where('usuario.ultimo_acceso <', 'date_add(now(), interval -12 month)', FALSE);
+            }
+        }
+        if (isset($params['ignore_usuario_id'])) {
+            $this->db->where_not_in('usuario.id', $params['ignore_usuario_id']);
+        }
+
+        if (isset($params['excluir_admins'])) {
+            $this->db->where('(usuario.permisos_id!="1" AND usuario.permisos_id!="2")');   // TODO: Hardcode Ids 
+        }
+        if (isset($params['usuario_activo'])) {
+            $this->db->where('usuario.activo', $params['usuario_activo']);
+        }
+
+        $this->db->stop_cache();
+        $count = $this->db->count_all_results();
+
+        if ($count > 0) {
+            if (isset($params['ultimo_acceso'])) {
+                $this->db->order_by("usuario.ultimo_acceso", "desc");
+            } else {
+                $this->db->order_by($order_by, $order);
+            }
+
+            if ($limit != -1 && $offset != -1) {
+                $this->db->limit($limit, $offset);
+            }
+
+            $clientes = $this->db->get()->result();
+            $this->db->flush_cache();
+            return array("usuarios" => $clientes, "total" => $count);
+        } else {
+            $this->db->flush_cache();
             return array("total" => 0);
         }
     }
