@@ -111,6 +111,7 @@ class Mensaje extends ADController {
                 }
                 $this->session->set_userdata(array('enviar_mensaje_ignore_list' => $ignore_list));
             }
+            $this->session->set_flashdata("success","Mensaje enviado con exito.");
             echo json_encode(array("success" => true));
         }
     }

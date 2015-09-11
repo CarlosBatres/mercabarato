@@ -5,7 +5,12 @@
         </div>        
     </div>
 <?php else: ?>
-
+    <?php if ($this->session->flashdata('success')) { ?>
+        <div class="alert alert-success"> 
+            <a class="close" data-dismiss="alert">×</a>
+            <?= $this->session->flashdata('success') ?> 
+        </div>
+    <?php } ?> 
     <div class="table-responsive">
         <table class="table table-bordered table-hover table-striped">
             <thead>
@@ -37,7 +42,7 @@
                         <?php endif; ?>
                         <td>
                             <div class="options">                                                                
-                                <a href="<?php echo site_url('admin/mensajes/enviar-mensaje')?>" class="btn-enviar" title="Enviar Mensaje"><i class="fa fa-arrow-right"></i></a>
+                                <a href="<?php echo site_url('admin/mensajes/enviar-mensaje') ?>" class="btn-enviar" title="Enviar Mensaje"><i class="fa fa-arrow-right"></i></a>
                             </div>                           
                         </td>
                     </tr>
