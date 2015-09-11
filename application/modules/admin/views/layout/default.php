@@ -43,6 +43,9 @@
                         <a href="<?php echo site_url('admin/vendedor_paquetes/listado_por_activar'); ?>"><i class="fa fa-money fa-fw"></i> Activación de Paquete</a>
                     </li>                     
                     <li>
+                        <a href="<?php echo site_url('admin/mensajes'); ?>"><i class="fa fa-inbox fa-fw"></i> Enviar Mensajes</a>
+                    </li>
+                    <li>
                         <a href="<?php echo site_url('admin/usuarios'); ?>"><i class="fa fa-user fa-fw"></i> Ver Clientes</a>
                     </li>
                     <li>

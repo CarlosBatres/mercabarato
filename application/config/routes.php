@@ -295,6 +295,11 @@ $route['admin/vendedores_admin/ver_informacion/(:num)'] = 'admin/vendedores_admi
 $route['admin/vendedores_admin/ajax_get_listado_resultados'] = 'admin/vendedores_admin/ajax_get_listado_resultados';
 $route['admin/vendedores_admin/ajax_find_paquetes'] = 'admin/vendedores_admin/ajax_find_paquetes';
 $route['admin/acceso_restringido'] = 'admin/main/acceso_restringido';
+$route['admin/mensajes'] = 'admin/mensaje/view_redactar_mensaje';
+$route['admin/mensajes/guardar-mensaje'] = 'admin/mensaje/guardar_mensaje';
+$route['admin/mensajes/enviar-mensaje'] = 'admin/mensaje/enviar_mensaje';
+$route['admin/mensajes/listado'] = 'admin/mensaje/view_listado';
+$route['admin/mensajes/ajax_get_listado_resultados'] = 'admin/mensaje/ajax_get_listado_resultados';
 
 $route['cron_task/validar_paquetes'] = 'admin/cron_controller/validar_paquetes';
 $route['cron_task/productos_novedades'] = 'admin/cron_controller/productos_novedades';
