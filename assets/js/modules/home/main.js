@@ -195,17 +195,17 @@
 
         checkCookie_eu();
 
-        function checkCookie_eu(){
+        function checkCookie_eu() {
             var consent = getCookie_eu("cookies_consent");
-            if (consent == null || consent == "" || consent == undefined){
+            if (consent == null || consent == "" || consent == undefined) {
                 // show notification bar
                 $('#cookie_directive_container').show();
-            }else{
-                $('#copyright').css('margin-bottom','0');
+            } else {
+                $('#copyright').css('margin-bottom', '0');
             }
         }
 
-        function setCookie_eu(c_name, value, exdays){
+        function setCookie_eu(c_name, value, exdays) {
             var exdate = new Date();
             exdate.setDate(exdate.getDate() + exdays);
             var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
@@ -232,8 +232,21 @@
 
         $("#cookie_accept a").click(function() {
             setCookie_eu("cookies_consent", 1, 30);
-            $('#copyright').css('margin-bottom','0');
+            $('#copyright').css('margin-bottom', '0');
         });
+
+        var $buoop = {vs: {i: 8, f: 25, o: 12.1, s: 7}, c: 2};
+        function $buo_f() {
+            var e = document.createElement("script");
+            e.src = "//browser-update.org/update.min.js";
+            document.body.appendChild(e);
+        };
+        try {
+            document.addEventListener("DOMContentLoaded", $buo_f, false)
+        }
+        catch (e) {
+            window.attachEvent("onload", $buo_f)
+        }
 
     });
 
