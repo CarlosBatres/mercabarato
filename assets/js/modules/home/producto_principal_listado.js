@@ -42,21 +42,21 @@ $(document).ready(function() {
     });
 
     /*$('#form_buscar').find('select[name="pais"]').on('change', function() {
-        $('#form_buscar').find('select[name="provincia"]').html("<option value='0'>Todas las Provincias</option>");
-        $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
-        var pais_id = $(this).val();
-        updateResultados();
-        $.ajax({
-            type: "POST",
-            url: SITE_URL + 'util/get_provincias',
-            data: {pais_id: pais_id},
-            dataType: 'json',
-            success: function(response) {
-                $('#form_buscar').find('select[name="provincia"]').html(response.html);
-                $('#form_buscar').find('select[name="provincia"]').find('option:first').text("Todas las Provincias");
-            }
-        });
-    });*/
+     $('#form_buscar').find('select[name="provincia"]').html("<option value='0'>Todas las Provincias</option>");
+     $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
+     var pais_id = $(this).val();
+     updateResultados();
+     $.ajax({
+     type: "POST",
+     url: SITE_URL + 'util/get_provincias',
+     data: {pais_id: pais_id},
+     dataType: 'json',
+     success: function(response) {
+     $('#form_buscar').find('select[name="provincia"]').html(response.html);
+     $('#form_buscar').find('select[name="provincia"]').find('option:first').text("Todas las Provincias");
+     }
+     });
+     });*/
 
     $('#form_buscar').find('select[name="provincia"]').on('change', function() {
         $('#form_buscar').find('select[name="poblacion"]').html("<option value='0'>Todas las Poblaciones</option>");
@@ -99,7 +99,7 @@ function updateResultados() {
             $('input[name="precio_desde"]').val("");
             $('input[name="precio_desde"]').toggleClass("invalid-precio");
         }
-        precio_desde = "";        
+        precio_desde = "";
     } else {
         $('input[name="precio_desde"]').removeClass("invalid-precio");
     }
@@ -134,9 +134,7 @@ function updateResultados() {
         overlayCSS: {backgroundColor: '#FFFFFF', opacity: 0.0, cursor: 'wait'}
     });
 
-    /*$('#tabla-resultados').block({
-     message: $('#throbber'),
-     css: {border: '0'}});*/
+
     $.ajax({
         type: "POST",
         url: SITE_URL + 'productos/buscar',
@@ -158,7 +156,7 @@ function updateResultados() {
         success: function(response) {
             $('#tabla-resultados').css('opacity', '1');
             $('#tabla-resultados').unblock();
-            $('#tabla-resultados').html(response);
+            $('#tabla-resultados').html(response);                       
             bind_pagination_links();
         },
         error: function(result) {

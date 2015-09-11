@@ -68,7 +68,7 @@ function build_paginacion($search_params) {
         } else {
             $html.='<p> Mostrando el ' . $search_params['desde'];
         }
-        $html.= ' de ' . $search_params['total'] . ' resultados</p></div>';
+        $html.= ' de ' . $search_params['total'] . ' resultados';
         $html.= '</p>';
         $html.= '</div>';
 

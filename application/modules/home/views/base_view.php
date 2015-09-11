@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -35,34 +35,37 @@
             var SITE_URL = "<?php echo site_url(); ?>";
         </script>        
 
-    <?php echo $css; ?>
-    <!-- / -->
+        <?php echo $css; ?>
+        <!-- / -->
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="<?php echo assets_url('js/html5shiv.min.js'); ?>"></script>
-        <script src="<?php echo assets_url('js/respond.min.js'); ?>"></script>
-    <![endif]-->
-</head>
-<body>
-    <?php echo $body; ?>
-    <!-- / -->
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="<?php echo assets_url('js/html5shiv.min.js'); ?>"></script>
+            <script src="<?php echo assets_url('js/respond.min.js'); ?>"></script>
+        <![endif]-->
+    </head>
+    <body>
+        
+        
 
-    <script src="<?php echo assets_url('js/jquery.min.js'); ?>"></script>
-    <script src="<?php echo assets_url('js/jquery.validate.min.js'); ?>"></script>
-    <script src="<?php echo assets_url('js/jquery-ui.min.js'); ?>"></script>                
-    <script src="<?php echo assets_url('js/bootstrap.min.js'); ?>"></script>        
-    <!--<script src="<?php echo assets_url('js/owl.carousel.min.js'); ?>"></script>-->
-    <script src="<?php echo assets_url('js/jquery.blockUI.js'); ?>"></script>
-    <script src="<?php echo assets_url('js/metisMenu.min.js'); ?>"></script>                                        
+        <?php echo $body; ?>
+        <!-- / -->
 
-    <script src="<?php echo assets_url('js/modules/home/main.js'); ?>"></script>                
-    <!-- Extra javascript -->
-    <?php echo $js; ?>
-    <!-- / -->
+        <script src="<?php echo assets_url('js/jquery.min.js'); ?>"></script>
+        <script src="<?php echo assets_url('js/jquery.validate.min.js'); ?>"></script>
+        <script src="<?php echo assets_url('js/jquery-ui.min.js'); ?>"></script>                
+        <script src="<?php echo assets_url('js/bootstrap.min.js'); ?>"></script>        
+        <!--<script src="<?php echo assets_url('js/owl.carousel.min.js'); ?>"></script>-->
+        <script src="<?php echo assets_url('js/jquery.blockUI.js'); ?>"></script>
+        <script src="<?php echo assets_url('js/metisMenu.min.js'); ?>"></script>                                        
 
-    <?php if (!empty($ga_id)): ?><!-- Google Analytics -->
-        <script>
+        <script src="<?php echo assets_url('js/modules/home/main.js'); ?>"></script>                
+        <!-- Extra javascript -->
+        <?php echo $js; ?>
+        <!-- / -->
+
+        <?php if (!empty($ga_id)): ?><!-- Google Analytics -->
+            <script>
                 (function(b, o, i, l, e, r) {
                     b.GoogleAnalyticsObject = l;
                     b[l] || (b[l] =
@@ -77,7 +80,7 @@
                 }(window, document, 'script', 'ga'));
                 ga('create', '<?php echo $ga_id; ?>');
                 ga('send', 'pageview');
-        </script>
-    <?php endif; ?><!-- / -->
-</body>
+            </script>
+        <?php endif; ?><!-- / -->
+    </body>
 </html>

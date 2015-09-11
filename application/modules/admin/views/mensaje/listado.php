@@ -22,13 +22,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-md-12">
-            <?php if ($this->session->flashdata('success')) { ?>
-                <div class="alert alert-success"> 
-                    <a class="close" data-dismiss="alert">×</a>
-                    <?= $this->session->flashdata('success') ?> 
-                </div>
-            <?php } ?>            
+        <div class="col-md-12">                       
             <div class="panel-group search-block" id="search-block">
                 <div class="panel panel-default">
                     <div class="panel-heading">
