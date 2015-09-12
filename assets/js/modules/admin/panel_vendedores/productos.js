@@ -1,5 +1,5 @@
-$(document).ready(function() {    
-    
+$(document).ready(function() {
+
     $('#fileupload').fileupload({
         dataType: 'json',
         replaceFileInput: false,
@@ -10,7 +10,7 @@ $(document).ready(function() {
             $("#admin_producto_submit").off('click').on('click', function(e) {
                 e.preventDefault();
                 data.submit();
-            });           
+            });
         },
         start: function(e, data) {
             $.blockUI({
@@ -18,12 +18,12 @@ $(document).ready(function() {
                 css: {border: '0'}});
         },
         done: function(e, data) {
-            var files="";
-            $.each(data.result.files, function(index, file) {                
-                files=files+file.name;
-                files=files+";;";                
+            var files = "";
+            $.each(data.result.files, function(index, file) {
+                files = files + file.name;
+                files = files + ";;";
             });
-            files=files.slice(0,-2);
+            files = files.slice(0, -2);
             $('#file_name').val(files);
             $.unblockUI();
             $('#admin_producto_form').submit();
@@ -70,9 +70,22 @@ function validateForms() {
         rules: {
             nombre: {required: true},
             precio: {required: true, number: true},
-            precio_extra1_cantidad : {number : true},
-            precio_extra2_cantidad : {number : true},
-            precio_extra3_cantidad : {number : true}
+            precio_extra1_cantidad: {number: true},
+            precio_extra2_cantidad: {number: true},
+            precio_extra3_cantidad: {number: true},
+            grupo_txt: {required: {
+                    depends: function(element) {
+                        return ($('input[name="familia_txt"]').val() != '' || $('input[name="subfamilia_txt"]').val() != '');
+                    }
+                },maxlength: 23
+            },
+            familia_txt: {required: {
+                    depends: function(element) {
+                        return ($('input[name="subfamilia_txt"]').val() != '');
+                    }
+                },maxlength: 23
+            },
+            subfamilia_txt:{maxlength: 23}
         },
         messages: {
             nombre: {
@@ -82,9 +95,12 @@ function validateForms() {
                 required: "Ingrese un monto.",
                 number: "Ingrese un numero"
             },
-            precio_extra1_cantidad : {number : "La cantidad debe ser numerica"},            
-            precio_extra2_cantidad : {number : "La cantidad debe ser numerica"},            
-            precio_extra3_cantidad : {number : "La cantidad debe ser numerica"}
+            precio_extra1_cantidad: {number: "La cantidad debe ser numerica"},
+            precio_extra2_cantidad: {number: "La cantidad debe ser numerica"},
+            precio_extra3_cantidad: {number: "La cantidad debe ser numerica"},
+            grupo_txt:{required: "Debes ingresar un grupo",maxlength:" Debe ser maximo 23 caracteres"},
+            familia_txt:{required: "Debes ingresar una familia para este grupo",maxlength:" Debe ser maximo 23 caracteres"},
+            subfamilia_txt:{maxlength:" Debe ser maximo 23 caracteres"}
         }
     });
 

@@ -12,7 +12,7 @@
                     <th style="width: 15%">Identificacion</th>                                                        
                     <th style="width: 15%">Email</th>
                     <th style="width: 15%">Paquete</th>                                    
-                    <th style="width: 15%">Costo</th>                                    
+                    <th style="width: 15%">Precio</th>                                    
                     <th style="width: 15%">Fecha Aprobacion</th>                                    
                 </tr>
             </thead>

@@ -61,7 +61,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Costo</label>
+                                                            <label>Precio</label>
                                                             <input type="text" class="form-control" name="costo">
                                                         </div>
                                                     </div>

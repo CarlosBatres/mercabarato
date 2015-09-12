@@ -92,7 +92,7 @@
                                             <th>Fecha Compra</th>
                                             <th>Fecha Aprobación</th>
                                             <th>Fecha Terminar</th>
-                                            <th>Costo</th>
+                                            <th>Precio</th>
                                             <th>Estado</th>                                        
                                         </tr>
                                     </thead>

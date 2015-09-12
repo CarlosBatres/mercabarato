@@ -125,7 +125,7 @@
                     </div>                    
                     <div class="row">
                         <div class="col-md-2 text-right">
-                            <p> <strong>Costo:</strong></p>
+                            <p> <strong>Precio:</strong></p>
                         </div>
                         <div class="col-md-10 text-left">
                             <p><?php echo $vendedor_paquete->monto_a_cancelar ?> EUR</p>

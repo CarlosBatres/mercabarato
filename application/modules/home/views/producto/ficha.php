@@ -54,6 +54,18 @@
                             <p class="lead">No hay descripcion disponible.</p>
                         <?php endif; ?>
                     </div>
+                    <div class="col-md-12 text-center">    
+                        <?php if ($producto->grupo_txt != ""): ?>
+                            <a href="#" class="btn btn-success" > <?php echo $producto->grupo_txt; ?></a>                    
+                        <?php endif; ?>
+                        <?php if ($producto->familia_txt != ""): ?>
+                            <a href="#" class="btn btn-success" > <?php echo $producto->familia_txt; ?></a>
+                        <?php endif; ?>
+                        <?php if ($producto->subfamilia_txt != ""): ?>
+                            <a href="#" class="btn btn-success" > <?php echo $producto->subfamilia_txt; ?></a>
+                        <?php endif; ?>
+                    </div>
+                    <br>
                     <div class="ficha-producto-precios">
                         <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
                         <?php else: ?>                            
@@ -99,10 +111,10 @@
                     <div class="ficha-producto-extra text-right">
                         <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>                            
                         <?php else: ?>  
-                            <?php foreach($producto_extras as $ext):?>
-                                <p><?php echo $ext->value .' por '.$ext->nombre. ' unidades' ?></p>                        
-                            <?php endforeach;?>
-                                <br>
+                            <?php foreach ($producto_extras as $ext): ?>
+                                <p><?php echo $ext->value . ' por ' . $ext->nombre . ' unidades' ?></p>                        
+                            <?php endforeach; ?>
+                            <br>
                         <?php endif; ?>
 
                         <?php if ($producto->transporte == "0"): ?>
@@ -155,9 +167,10 @@
             </div>
         </div>        
         <br><br>
-        <?php if ($otros_productos): ?>
-            <div class="row">
-                <hr>
+        <?php if ($otros_productos): ?>            
+            <br>
+            <hr>
+            <div class="row">                
                 <h3>Otros Productos del Vendedor</h3>
                 <?php foreach ($otros_productos as $key => $producto): ?>
                     <div class="col-md-3">
