@@ -68,17 +68,7 @@
 
                     </div>
                 </div>
-                <?php if ($es_vendedor): ?>
-                    <div class="col-md-12">
-                        <h2>Deseas crear un enlace en tu web para mercabarato.com?</h2>                                                
-                        <p class="lead"> Copia & pega el codigo del ejemplo en tu sitio web. Ajusta el valor data-vendedor a tu apodo o nickname. </p>
-                        <div class="panel panel-primary">                            
-                            <div class="panel-body">  
-                                <?php echo $code_snippet; ?>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
+                
             </div>                    
 
             <div class="col-md-3">                       

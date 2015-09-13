@@ -58,10 +58,10 @@ class Usuario extends MY_Controller {
 
 
             if ($this->cliente_model->es_vendedor_habilitado($cliente->cliente->id)) {
-                $code_snippet = $this->load->view('home/paginas/compartir_code', array(), true);
+                //$code_snippet = $this->load->view('home/paginas/compartir_code', array(), true);
                 $cliente_es_vendedor_habilitado = true;
             } else {
-                $code_snippet = "";
+                //$code_snippet = "";
                 $cliente_es_vendedor_habilitado = false;
             }
 
@@ -70,7 +70,7 @@ class Usuario extends MY_Controller {
                 "info" => $cliente,
                 "full_localizacion" => $full_localizacion,
                 "es_vendedor" => $cliente_es_vendedor_habilitado,
-                "code_snippet" => $code_snippet
+                //"code_snippet" => $code_snippet
             ));
         } else {
             redirect('');
