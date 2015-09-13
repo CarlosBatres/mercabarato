@@ -52,6 +52,8 @@ class Panel_vendedores extends ADController {
         } else {
             $full_localizacion = false;
         }
+        
+        $code_snippet = $this->load->view('home/paginas/compartir_code', array(), true);
 
         $data = array(
             "mis_productos" => sizeof($mis_productos),
@@ -61,7 +63,8 @@ class Panel_vendedores extends ADController {
             "paquete_pendiente" => $paquete_pendiente,
             "paquete" => $paquete,
             "info" => $vendedor,
-            "full_localizacion" => $full_localizacion
+            "full_localizacion" => $full_localizacion,
+            "code_snippet" => $code_snippet
         );
 
         $this->template->load_view('admin/panel_vendedores/resumen', $data);

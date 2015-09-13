@@ -56,13 +56,13 @@
                     </div>
                     <div class="col-md-12 text-center">    
                         <?php if ($producto->grupo_txt != ""): ?>
-                            <a href="#" class="btn btn-success" > <?php echo $producto->grupo_txt; ?></a>                    
+                        <a href="<?php echo site_url($vendedor->unique_slug.'/productos/'.$producto->grupo_txt)?>" class="btn btn-success" > <?php echo $producto->grupo_txt; ?></a>                    
                         <?php endif; ?>
                         <?php if ($producto->familia_txt != ""): ?>
-                            <a href="#" class="btn btn-success" > <?php echo $producto->familia_txt; ?></a>
+                            <a href="<?php echo site_url($vendedor->unique_slug.'/productos/'.$producto->grupo_txt.'/'.$producto->familia_txt)?>" class="btn btn-success" > <?php echo $producto->familia_txt; ?></a>
                         <?php endif; ?>
                         <?php if ($producto->subfamilia_txt != ""): ?>
-                            <a href="#" class="btn btn-success" > <?php echo $producto->subfamilia_txt; ?></a>
+                            <a href="<?php echo site_url($vendedor->unique_slug.'/productos/'.$producto->grupo_txt.'/'.$producto->familia_txt.'/'.$producto->subfamilia_txt)?>" class="btn btn-success" > <?php echo $producto->subfamilia_txt; ?></a>
                         <?php endif; ?>
                     </div>
                     <br>

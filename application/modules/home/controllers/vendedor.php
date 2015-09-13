@@ -1045,12 +1045,18 @@ class Vendedor extends MY_Controller {
         }
     }
 
-    public function ver_productos($slug) {
+    public function ver_productos($slug, $param1=false , $param2=false ,$param3 = false) {
         $vendedor = $this->vendedor_model->get_vendedor_by_slug($slug);
         if ($vendedor) {
             if ($vendedor->habilitado == 1) {
                 $anuncios = $this->anuncio_model->get_anuncios_del_vendedor($vendedor->id, 3);
-                $data = array("vendedor" => $vendedor,"anuncios"=>$anuncios);
+                $data = array(
+                    "vendedor" => $vendedor,
+                    "anuncios" => $anuncios,
+                    "grupo_txt" => $param1,
+                    "familia_txt" => $param2,
+                    "subfamilia_txt" => $param3,
+                );
                 $this->template->add_js('modules/home/vendedores_ver_productos.js');
                 $this->template->load_view('home/vendedores/ver_productos', $data);
             } else {
@@ -1071,11 +1077,27 @@ class Vendedor extends MY_Controller {
                 $params["vendedor_id"] = $this->input->post('vendedor_id');
                 $params["habilitado"] = "1";
                 $params["mostrar_producto"] = "1";
+                
+                if($this->input->post('grupo_txt')!=""){
+                    $params["order_by_grupo_txt"] = $this->input->post('grupo_txt');
+                    $params["grupo_txt"] = $this->input->post('grupo_txt');
+                }
+                
+                if($this->input->post('familia_txt')!=""){
+                    $params["order_by_familia_txt"] = $this->input->post('familia_txt');
+                    $params["familia_txt"] = $this->input->post('familia_txt');
+                }
+                
+                if($this->input->post('subfamilia_txt')!=""){
+                    $params["order_by_subfamilia_txt"] = $this->input->post('subfamilia_txt');
+                    $params["subfamilia_txt"] = $this->input->post('subfamilia_txt');
+                }
+                
                 $pagina = $this->input->post('pagina');
 
                 $limit = $this->config->item("principal_default_per_page");
                 $offset = $limit * ($pagina - 1);
-                $productos = $this->producto_model->get_site_search($params, $limit, $offset, "p.fecha_insertado", "DESC");
+                $productos = $this->producto_model->get_site_search($params, $limit, $offset, "relevance", "DESC");
                 $flt = (float) ($productos["total"] / $limit);
                 $ent = (int) ($productos["total"] / $limit);
                 if ($flt > $ent || $flt < $ent) {
