@@ -374,6 +374,8 @@ $config["emails_enabled"]=false;
 
 $config["site_info_email"]="info@mercabarato.com";
 $config["site_baja_email"]="baja@mercabarato.com";
+$config["site_noreply_email"]="no-reply@mercabarato.com";
+
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

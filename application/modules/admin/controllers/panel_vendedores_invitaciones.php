@@ -104,7 +104,7 @@ class Panel_vendedores_invitaciones extends ADController {
                     if ($this->config->item('emails_enabled')) {
                         $usuario = $this->usuario_model->get($cliente->usuario_id);
                         $this->load->library('email');
-                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
                         $this->email->subject('Invitacion de Mercabarato.com');
                         $data_email = array("titulo" => $data["titulo"], "comentario" => $data["comentario"]);
@@ -201,7 +201,7 @@ class Panel_vendedores_invitaciones extends ADController {
 
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
-                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                         $this->email->to($email);
                         $this->email->subject('Invitacion de Mercabarato.com');
                         $data_email = array("titulo" => $titulo, "comentario" => $comentario);
@@ -233,7 +233,7 @@ class Panel_vendedores_invitaciones extends ADController {
 
                                     if ($this->config->item('emails_enabled')) {
                                         $this->load->library('email');
-                                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                                        $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                                         $this->email->to($email);
                                         $this->email->subject('Invitacion de Mercabarato.com');
                                         $data_email = array("titulo" => $titulo, "comentario" => $comentario);
@@ -254,7 +254,7 @@ class Panel_vendedores_invitaciones extends ADController {
 
                                 if ($this->config->item('emails_enabled')) {
                                     $this->load->library('email');
-                                    $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                                    $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                                     $this->email->to($email);
                                     $this->email->subject('Invitacion de Mercabarato.com');
                                     $data_email = array("titulo" => $titulo, "comentario" => $comentario);
@@ -277,7 +277,7 @@ class Panel_vendedores_invitaciones extends ADController {
 
                             if ($this->config->item('emails_enabled')) {
                                 $this->load->library('email');
-                                $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                                $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                                 $this->email->to($email);
                                 $this->email->subject('Invitacion de Mercabarato.com');
                                 $data_email = array("titulo" => $titulo, "comentario" => $comentario);
@@ -422,7 +422,7 @@ class Panel_vendedores_invitaciones extends ADController {
                 }
 
                 $this->load->library('email');
-                $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                 $this->email->to($email);
                 $this->email->subject('Invitacion Aceptada');
                 $this->email->message($this->load->view('home/emails/aceptar_invitacion_vendedor', array(), true));

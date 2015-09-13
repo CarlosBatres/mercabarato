@@ -423,7 +423,7 @@ class Producto extends MY_Controller {
                 if ($this->invitacion_model->son_contactos($vendedor_cliente->usuario_id, $user_id)) {
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
-                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                         $this->email->to($vendedor_usuario->email);
                         $this->email->subject('Tienes un nuevo mensaje');
                         $data_email = array("asunto" => $asunto, "mensaje" => $mensaje);
