@@ -352,7 +352,7 @@ class Usuario extends MY_Controller {
                 if ($usuario && $usuario->id!="1") {
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
-                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                         $this->email->to($email);
                         $this->email->subject('Restablecer contraseña de Mercabarato');
                         $data_email = array("secret_key" => $secret_key);

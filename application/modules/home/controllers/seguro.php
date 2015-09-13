@@ -439,7 +439,7 @@ class Seguro extends MY_Controller {
             $usuario = $this->usuario_model->get($cliente->usuario_id);
 
             $this->load->library('email');
-            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+            $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
             $this->email->to($usuario->email);
             $this->email->subject('Nueva solicitud de presupuesto');
             $data_email = array("solicitud_id" => $solicitud_id);
