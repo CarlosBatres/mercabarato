@@ -120,32 +120,28 @@
         <img src="<?php echo assets_url('imgs/loader_on_white_nb_big.gif'); ?>" alt="Espere un momento."/>
     </div>
     <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-md">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Invitacion a Vendedor</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body">                    
                     <?php echo form_open('usuario/enviar_invitacion'); ?>
-                    <div class="row">  
-                        <div class="col-md-12">                            
-                            <div class="form-group">                                                                
-                                <label>Titulo</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="titulo">                                
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12"> 
-                            <div class="form-group">
-                                <label>Mensaje</label>
-                                <textarea class="form-control" name="mensaje" rows="5" cols="20"></textarea>                    
-                            </div>                                                        
-                        </div>
-                    </div>
+
+                    <div class="form-group">                    
+                        <label><strong>Titulo</strong></label>                        
+                        <input type="text" class="form-control" name="titulo" autofocus="" autocomplete="off">                                    
+                    </div>                            
+
+                    <div class="form-group">                    
+                        <label><strong>Mensaje</strong></label>
+                        <textarea class="form-control" name="mensaje" rows="5" cols="20" style="resize: none;"></textarea>                    
+                    </div>  
+
                     <input type="hidden" name="vendedor_id" value="">
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-template-main">Enviar</button>
