@@ -199,8 +199,12 @@ class Producto_model extends MY_Model {
             $total = $result_total->row();
 
             if ($total->rows > 0) {
-                return array("productos" => $productos, "total" => $total->rows);
-            } else {
+                if(sizeof($productos)==0){
+                    return $this->get_site_search($params, $limit, 0, $order_by, $order);
+                }else{
+                    return array("productos" => $productos, "total" => $total->rows);
+                }                
+            } else {                                
                 return array("total" => 0);
             }
         } else {
@@ -311,7 +315,11 @@ class Producto_model extends MY_Model {
             $total = $result_total->row();
 
             if ($total->rows > 0) {
-                return array("productos" => $productos, "total" => $total->rows);
+                if(sizeof($productos)==0){
+                    return $this->get_site_search($params, $limit, 0, $order_by, $order);
+                }else{
+                    return array("productos" => $productos, "total" => $total->rows);
+                }                   
             } else {
                 return array("total" => 0);
             }

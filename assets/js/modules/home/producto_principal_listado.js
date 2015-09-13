@@ -5,6 +5,7 @@ $(document).ready(function() {
 
     $('#search_button').on('click', function(e) {
         e.preventDefault();
+        $('#pagina').val("1");        
         updateResultados();
     });
     /**
@@ -34,7 +35,7 @@ $(document).ready(function() {
      });*/
 
     $('input[name="search_query"]').keydown(function(e) {
-        var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+        var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;        
         if (key == 13) {
             e.preventDefault();
             updateResultados();
@@ -115,14 +116,6 @@ function updateResultados() {
     } else {
         $('input[name="precio_hasta"]').removeClass("invalid-precio");
     }
-
-//    var precio = 0;
-//
-//    $.each($('input[name="precios"]'), function(index, checkbox) {
-//        if ($(this).is(":checked")) {
-//            precio = checkbox.value;
-//        }
-//    });
 
     if (typeof categoria_id === "undefined") {
         categoria_id = "";

@@ -1,6 +1,7 @@
 $(document).ready(function() {    
     $('#search_button').on('click', function(e) {
         e.preventDefault();
+        $('#pagina').val("1");
         updateResultados();
     });
 

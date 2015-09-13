@@ -72,7 +72,7 @@ class Vendedor_model extends MY_Model {
             $query .= " AND localizacion.provincia_id='" . $params['provincia'] . "' ";
         } elseif (isset($params['pais'])) {
             $query .= " AND localizacion.pais_id='" . $params['pais'] . "' ";
-        }        
+        }
 
         $query.=" ) p";
 
@@ -92,57 +92,6 @@ class Vendedor_model extends MY_Model {
         } else {
             return array("total" => 0);
         }
-
-
-
-
-
-
-
-
-        /* $this->db->start_cache();
-          $this->db->select("vendedor.*,cliente.direccion,cliente.telefono_fijo,cliente.telefono_movil,cliente.usuario_id,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.activo");
-          $this->db->from($this->_table);
-          $this->db->join("cliente", "cliente.id=vendedor.cliente_id", 'INNER');
-          $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
-          $this->db->join("localizacion", "localizacion.usuario_id=usuario.id", 'INNER');
-
-          if (isset($params['nombre'])) {
-          $this->db->like('vendedor.nombre', $params['nombre'], 'both');
-          }
-          if (isset($params['email'])) {
-          $this->db->like('usuario.email', $params['email'], 'both');
-          }
-          if (isset($params['actividad'])) {
-          $this->db->like('vendedor.actividad', $params['actividad'], 'both');
-          }
-          if (isset($params['sitio_web'])) {
-          $this->db->like('vendedor.sitio_web', $params['sitio_web'], 'both');
-          }
-
-          if (isset($params['pais_id'])) {
-          $this->db->where('localizacion.pais_id', $params['pais_id']);
-          }
-          if (isset($params['provincia_id'])) {
-          $this->db->where('localizacion.provincia_id', $params['provincia_id']);
-          }
-          if (isset($params['poblacion_id'])) {
-          $this->db->where('localizacion.poblacion_id', $params['poblacion_id']);
-          }
-
-          $this->db->stop_cache();
-          $count = $this->db->count_all_results();
-
-          if ($count > 0) {
-          $this->db->order_by('vendedor.id', 'asc');
-          $this->db->limit($limit, $offset);
-          $vendedores = $this->db->get()->result();
-          $this->db->flush_cache();
-          return array("vendedores" => $vendedores, "total" => $count);
-          } else {
-          $this->db->flush_cache();
-          return array("total" => 0);
-          } */
     }
 
     /**
@@ -462,7 +411,11 @@ class Vendedor_model extends MY_Model {
         $total = $result_total->row();
 
         if ($total->rows > 0) {
-            return array("vendedores" => $vendedores, "total" => $total->rows);
+            if (sizeof($vendedores) == 0) {
+                return $this->get_site_search($params, $limit, 0);
+            } else {
+                return array("vendedores" => $vendedores, "total" => $total->rows);
+            }            
         } else {
             return array("total" => 0);
         }
