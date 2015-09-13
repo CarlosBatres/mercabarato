@@ -40,7 +40,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Imagenes del producto</label>
+                            <label>Seleccione varias imagenes para el producto ( Limite 3)</label>
                             <br><br>                            
                             <?php if ($producto_imagenes): ?>
                                 <?php foreach ($producto_imagenes as $image):
@@ -89,7 +89,7 @@
                                 <div class="row">                                    
                                     <div class="col-md-5">                                        
                                         <div class="form-group">                            
-                                            <label>Precio Venta ( costo o texto descriptivo )</label>
+                                            <label>Precio Venta ( precio o texto descriptivo )</label>
                                             <input type="text" class="form-control" name="precio_extra1" value="<?php echo (isset($producto_extras["0"])) ? $producto_extras["0"]->value : "" ?>">
                                         </div>
                                     </div>
@@ -190,19 +190,46 @@
                         </div>
                     </div>
                 </div>                                                
-                <br>
+                <br>                
                 <div class="row">
                     <div class="col-md-12">
-                        <label>Seleccione una Categoria:</label>
-                        <div class="alert alert-danger" id="seleccionar-categoria_alert" style="display:none;"> 
-                            <a class="close" data-dismiss="alert">×</a>
-                            Debe seleccionar una categoria.
-                        </div>
-                        <div id="categorias_jtree">                
-                            <?php echo $categorias_tree_html; ?>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">                                
+                                <span class="titulo">Categoria y Clasificación del Producto</span>                                
+                            </div>
+                            <div class="panel-body">                                                               
+                                <div class="col-md-4">
+                                    <div class="form-group">                            
+                                        <label>Grupo</label>
+                                        <input type="text" class="form-control" name="grupo_txt" value="<?php echo $producto->grupo_txt; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">                            
+                                        <label>Familia</label>
+                                        <input type="text" class="form-control" name="familia_txt" value="<?php echo $producto->familia_txt; ?>">
+                                    </div>                                                                       
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">                            
+                                        <label>Sub-familia</label>
+                                        <input type="text" class="form-control" name="subfamilia_txt" value="<?php echo $producto->subfamilia_txt; ?>"> 
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Seleccione una Categoria:</label>
+                                    <div class="alert alert-danger" id="seleccionar-categoria_alert" style="display:none;"> 
+                                        <a class="close" data-dismiss="alert">×</a>
+                                        Debe seleccionar una categoria.
+                                    </div>
+                                    <div id="categorias_jtree">                
+                                        <?php echo $categorias_tree_html; ?>
+                                    </div>
+                                </div> 
+                            </div>
                         </div>
                     </div>
-                </div>
+                </div>                                
                 <hr>                
                 <div class="text-center">
                     <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-primary"> Confirmar Cambios</button>

@@ -219,7 +219,11 @@ class Oferta_general_model extends MY_Model {
             return false;
         }
     }
-
+    /**
+     * 
+     * @param type $params
+     * @return boolean
+     */
     public function get_productos_ids($params) {
         $this->db->select("p.id");
         $this->db->from($this->_table);
@@ -229,6 +233,41 @@ class Oferta_general_model extends MY_Model {
         if (isset($params['oferta_general_id'])) {
             $this->db->where("oferta_general.id", $params["oferta_general_id"]);
         }
+        
+        if (isset($params['vendedor_id'])) {
+            $this->db->where("oferta_general.owner_vendedor_id", $params["vendedor_id"]);
+        }
+
+        $result = $this->db->get()->result();
+        if (sizeof($result) > 0) {
+            $ids = array();
+            foreach ($result as $val) {
+                $ids[] = $val->id;
+            }
+            return $ids;
+        } else {
+            return false;
+        }
+    }
+    /**
+     * 
+     * @param type $params
+     * @return boolean
+     */
+    public function get_productos_ids_otras_ofertas($params) {
+        $this->db->select("p.id");
+        $this->db->from($this->_table);
+        $this->db->join("oferta o", "o.oferta_general_id=oferta_general.id", 'INNER');
+        $this->db->join("producto p", "p.id=o.producto_id", 'INNER');
+
+        if (isset($params['oferta_general_id'])) {
+            $this->db->where("oferta_general.id", $params["oferta_general_id"]);
+        }
+        
+        if (isset($params['fecha_inicio']) && isset($params['fecha_finaliza'])) {
+            $this->db->where("oferta_general.fecha_finaliza <=",$params["fecha_finaliza"]);
+            $this->db->where("oferta_general.fecha_inicio >=",$params["fecha_inicio"]);
+        }                
         
         if (isset($params['vendedor_id'])) {
             $this->db->where("oferta_general.owner_vendedor_id", $params["vendedor_id"]);

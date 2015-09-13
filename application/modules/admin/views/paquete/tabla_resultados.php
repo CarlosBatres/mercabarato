@@ -12,7 +12,7 @@
                 <th style="width: 15%">Nombre</th>                
                 <th style="width: 15%">Descripcion</th>                                
                 <th style="width: 10%;">Duracion</th>
-                <th style="width: 5%;">Costo</th>
+                <th style="width: 5%;">Precio</th>
                 <th style="width: 10%;text-align: center">Productos</th>
                 <th style="width: 10%;text-align: center">Anuncios</th>                
                 <th style="width: 5%;text-align: center">Orden</th>

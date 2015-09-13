@@ -13,7 +13,7 @@
         <?php foreach ($vendedores as $key => $vendedor): ?>
             <li>
                 <div class="row vendedores">
-                    <div class="col-md-4 vendedor-img-container">
+                    <div class="col-sm-12 col-md-4 vendedor-img-container">
                         <div class="frame">
                             <span class="helper"></span>
                             <a href="<?php echo site_url($vendedor->unique_slug) ?>">                                                
@@ -25,32 +25,36 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-8 col-sm-12">
                         <div class="row">
-                            <a href="<?php echo site_url($vendedor->unique_slug) ?>"><?php echo $vendedor->nombre; ?></a>
-                            <?php if ($vendedor->descripcion != ""): ?>                         
-                                <p><?php echo truncate($vendedor->descripcion, 300) ?></p>  
-                            <?php else: ?>
-                                <br>
-                                <p></p>
-                                <br>
-                            <?php endif; ?>
+                            <div class="col-xs-12">
+                                <a href="<?php echo site_url($vendedor->unique_slug) ?>"><?php echo $vendedor->nombre; ?></a>
+                                <?php if ($vendedor->descripcion != ""): ?>                         
+                                    <p><?php echo truncate($vendedor->descripcion, 300) ?></p>  
+                                <?php else: ?>
+                                    <br>
+                                    <p></p>
+                                    <br>
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <hr>
                         <div class="row">
-                            <?php if ($vendedor->direccion != ""): ?>                        
-                                <p class="text-left"><i class="fa fa-map-marker fa-fw"></i><strong><?php echo $vendedor->direccion ?></strong></p>
-                            <?php endif; ?>
-                            <?php if ($vendedor->telefono_fijo != ""): ?>                        
-                                <p class="text-left"><i class="fa fa-phone fa-fw"></i><strong><?php echo $vendedor->telefono_fijo ?></strong></p>
-                            <?php endif; ?>
-                            <p class="text-left">
-                                <?php
-                                echo ($vendedor->poblacion != null) ? $vendedor->poblacion . ' , ' : '';
-                                echo ($vendedor->provincia != null) ? $vendedor->provincia . ' , ' : '';
-                                echo ($vendedor->pais != null) ? $vendedor->pais : '';
-                                ?>
-                            </p>
+                            <div class="col-xs-12">
+                                <?php if ($vendedor->direccion != ""): ?>                        
+                                    <p class="text-left"><i class="fa fa-map-marker fa-fw"></i><strong><?php echo $vendedor->direccion ?></strong></p>
+                                <?php endif; ?>
+                                <?php if ($vendedor->telefono_fijo != ""): ?>                        
+                                    <p class="text-left"><i class="fa fa-phone fa-fw"></i><strong><?php echo $vendedor->telefono_fijo ?></strong></p>
+                                <?php endif; ?>
+                                <p class="text-left">
+                                    <?php
+                                    echo ($vendedor->poblacion != null) ? $vendedor->poblacion . ' , ' : '';
+                                    echo ($vendedor->provincia != null) ? $vendedor->provincia . ' , ' : '';
+                                    echo ($vendedor->pais != null) ? $vendedor->pais : '';
+                                    ?>
+                                </p>
+                            </div>
                         </div>
                         <?php if ($logged_in): ?>                                                
                             <?php if ($vendedor->invitacion_id1 == null && $vendedor->invitacion_id2 == null && $vendedor_id_logged != $vendedor->id): ?>

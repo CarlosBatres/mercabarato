@@ -15,7 +15,7 @@
             <div class="col-md-9">
                 <div class="box-simple">                                
                     <form id="form_buscar">
-                        <div class="row pull-left">
+                        <div class="row pull-left hidden-sm hidden-xs">
                             <div class="col-md-12">
                                 <label class="text-left"><strong>Buscar Vendedores</strong></label>
                             </div>
@@ -26,7 +26,7 @@
                                     <input type="text" name="search_query" class="form-control" placeholder="Ingrese un nombre, o alguna referencia...">
                                     <input type="hidden" value="1" name="pagina" id="pagina"/>                                
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary" id="search_button" type="button"><i class="fa fa-search"></i>Buscar</button>
+                                        <button class="btn btn-primary" id="search_button" type="button"><i class="fa fa-search"></i><span class="hidden-sm hidden-xs">Buscar</span></button>
                                     </span>
                                 </div>                                                    
                             </div>  
@@ -84,38 +84,35 @@
                 </div>
 
                 <div id="tabla-resultados"></div>
-            </div>                   
-            <div class="col-md-3">
-                <div class="box box-anuncios">
-                    <div class="box-header">
-                        <h4 class="text-center">Anuncios</h4>                
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tbody>
-                                <?php
-                                if (sizeof($anuncios) > 0):
-                                    foreach ($anuncios as $anuncio):
-                                        ?>
-                                        <tr>
-                                            <td>
-                                                <div class="anuncio-contenido">
-                                                    <p class="text-right"><strong><?php echo date("d-M-Y", strtotime($anuncio->fecha_publicacion)) ?></strong></p>                                                
-                                                    <p><a href="<?php echo site_url("anuncios/" . $anuncio->id) ?>"><strong><?php echo $anuncio->titulo; ?></strong></a></p>
-                                                    <p><?php echo strip_tags(truncate($anuncio->contenido, 300)); ?></p>
-                                                </div>
-                                            </td>                                
-                                        </tr>
-                                        <?php
-                                    endforeach;
-                                else:
-                                    echo "<tr><td> <p> No hay novedades..</p></td></tr>";
-                                endif;
-                                ?>                            
-                            </tbody>
-                        </table>
-                    </div>
+            </div>  
+
+            <div class="col-sm-12 col-md-3">
+                <div class="row anuncios-header">
+                    <h3 class="text-center">Anuncios</h3>
                 </div>
+                <?php
+                if (sizeof($anuncios) > 0):
+                    foreach ($anuncios as $anuncio):
+                        ?>
+
+                        <div class="row">
+                            <div class="col-xs-12">                                
+                                <div class="anuncio-contenido">
+                                    <p class="text-right"><strong><?php echo date("d-M-Y", strtotime($anuncio->fecha_publicacion)) ?></strong></p>
+                                    <p><a href="<?php echo site_url("anuncios/" . $anuncio->id) ?>"><strong><?php echo $anuncio->titulo; ?></strong></a></p>                                                
+                                    <p><?php echo strip_tags(truncate($anuncio->contenido, 300)); ?></p>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p> No hay novedades...</p>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

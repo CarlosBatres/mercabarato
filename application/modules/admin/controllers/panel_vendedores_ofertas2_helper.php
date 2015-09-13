@@ -66,6 +66,9 @@ class Panel_vendedores_ofertas2_helper extends ADController {
         $this->template->load_view('admin/panel_vendedores/ofertas2/tabla_resultados_productos_oferta', $data);
     }
 
+    /**
+     * 
+     */
     public function ajax_get_productos() {
         $formValues = $this->input->post();
         $params = array();
@@ -106,7 +109,13 @@ class Panel_vendedores_ofertas2_helper extends ADController {
                         $params['excluir_ids'] = $prod_ids;
                     }
                 }
-                $prod_ids_otras_ofertas = $this->oferta_general_model->get_productos_ids(array("vendedor_id" => $params["vendedor_id"]));
+                $oferta_general = $this->oferta_general_model->get($this->input->post('ignore_oferta_general_id'));
+                $tmp = array(
+                    "vendedor_id" => $params["vendedor_id"],
+                    "fecha_inicio" => $oferta_general->fecha_inicio,
+                    "fecha_finaliza" => $oferta_general->fecha_finaliza
+                );
+                $prod_ids_otras_ofertas = $this->oferta_general_model->get_productos_ids_otras_ofertas($tmp);
                 if ($prod_ids_otras_ofertas) {
                     if (isset($params['excluir_ids'])) {
                         $params['excluir_ids'] = array_unique(array_merge($prod_ids_otras_ofertas, $params['excluir_ids']));
@@ -458,7 +467,7 @@ class Panel_vendedores_ofertas2_helper extends ADController {
         if ($formValues !== false) {
             $params["vendedor_id"] = $this->identidad->get_vendedor_id();
             $params["oferta_general_id"] = $this->input->post('oferta_general_id');
-            $pagina = $this->input->post('pagina');            
+            $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
         }

@@ -39,7 +39,7 @@
                                         <th>Fecha Compra</th>                                        
                                         <th>Fecha Inicio</th>
                                         <th>Fecha Terminar</th>                                        
-                                        <th>Costo</th>
+                                        <th>Precio</th>
                                         <th>Estado</th>                                        
                                     </tr>
                                 </thead>

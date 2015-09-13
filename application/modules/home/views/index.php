@@ -3,7 +3,7 @@
         <div class="row index-search-box">
             <div class="col-md-12">                
                 <?php echo form_open('ir_productos' ,'id="productos-buscar"'); ?>                 
-                <div class="row inicio-localizacion">
+                <div class="row inicio-localizacion hidden-sm hidden-xs">
                     <div class="col-md-4 col-md-offset-2">
                         <div class="form-group"> 
                             <select name="provincia" class="form-control">
@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                <div class="row inicio-precios">
+                <div class="row inicio-precios hidden-sm hidden-xs">
                     <div class="col-md-2 text-right col-md-offset-4">
                         <p class="inicio-precios-titulo">Precios</p>                            
                     </div>

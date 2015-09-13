@@ -67,7 +67,7 @@
                                 <div class="row">
                                     <div class="col-md-5">
                                         <div class="form-group">                            
-                                            <label>Precio Venta ( costo o texto descriptivo )</label>
+                                            <label>Precio Venta ( precio o texto descriptivo )</label>
                                             <input type="text" class="form-control" name="precio_extra1" value="" placeholder="Ejm: 500 EUR">
                                         </div>
                                     </div>
@@ -110,7 +110,7 @@
                         </div> 
                     </div>
                 </div>
-                <br>                
+                <br>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-primary">
@@ -121,24 +121,26 @@
                                 <div class="col-md-12">
                                     <div class="form-group">                            
                                         <label>Enlace externo al producto</label>
-                                        <input type="text" class="form-control" name="link_externo">
+                                        <input type="text" class="form-control" name="link_externo" value="">
                                     </div>
                                 </div> 
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <br>
                                         <label>Desea mostrar el producto al publico general?</label><br>
-                                        <label>Si<input type="radio" name="mostrar_producto" id="mostrar_si" value="1" checked class="radioInput"></label>
-                                        <label>No<input type="radio" name="mostrar_producto" id="mostrar_no" value="0" class="radioInput"></label>
+                                        <label>Si<input type="radio" name="mostrar_producto" id="mostrar_si" value="1" class="radioInput" checked></label>
+                                        <label>No<input type="radio" name="mostrar_producto" id="mostrar_no" value="0" class="radioInput" ></label>
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <br>
                                         <label>Desea mostrar el precio al publico general?</label><br>
-                                        <label>Si<input type="radio" name="mostrar_precio" id="mostrar_precio_si" value="1" checked class="radioInput"></label>
+                                        <label>Si<input type="radio" name="mostrar_precio" id="mostrar_precio_si" value="1" class="radioInput" checked></label>
                                         <label>No<input type="radio" name="mostrar_precio" id="mostrar_precio_no" value="0" class="radioInput"></label>
-                                    </div>                                                                       
+
+                                    </div>                                                                        
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -161,20 +163,47 @@
                             </div>
                         </div>
                     </div>
-                </div>                  
-                <br>
+                </div> 
+                <br>                
                 <div class="row">
                     <div class="col-md-12">
-                        <label>Seleccione una Categoria:</label>
-                        <div class="alert alert-danger" id="seleccionar-categoria_alert" style="display:none;"> 
-                            <a class="close" data-dismiss="alert">×</a>
-                            Debe seleccionar una categoria.
-                        </div>
-                        <div id="categorias_jtree">                
-                            <?php echo $categorias_tree_html; ?>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">                                
+                                <span class="titulo">Categoria y Clasificación del Producto</span>                                
+                            </div>
+                            <div class="panel-body">                                                               
+                                <div class="col-md-4">
+                                    <div class="form-group">                            
+                                        <label>Grupo</label>
+                                        <input type="text" class="form-control" name="grupo_txt" value="">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">                            
+                                        <label>Familia</label>
+                                        <input type="text" class="form-control" name="familia_txt" value="">
+                                    </div>                                                                       
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">                            
+                                        <label>Sub-familia</label>
+                                        <input type="text" class="form-control" name="subfamilia_txt" value=""> 
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Seleccione una Categoria:</label>
+                                    <div class="alert alert-danger" id="seleccionar-categoria_alert" style="display:none;"> 
+                                        <a class="close" data-dismiss="alert">×</a>
+                                        Debe seleccionar una categoria.
+                                    </div>
+                                    <div id="categorias_jtree">                
+                                        <?php echo $categorias_tree_html; ?>
+                                    </div>
+                                </div> 
+                            </div>
                         </div>
                     </div>
-                </div>
+                </div>                                  
             </div>
 
 

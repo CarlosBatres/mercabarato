@@ -44,7 +44,7 @@ function bind_borrar_links() {
     $('.table-responsive').find('.options').find('.row_action').on('click', function(e) {
         e.preventDefault();
         var a_href = $(this).attr('href');
-        $.blockUI({message: $('#question'), css: {}});
+        $.blockUI({message: $('#question'),blockMsgClass: 'modal-confimacion'});
 
         if ($(this).hasClass('borrar')) {
             $('#question').find('.modal-title').html("Estas seguro que deseas eliminar este anuncio?.");
@@ -90,7 +90,7 @@ function bind_check_all() {
 function bind_btn_eliminar_seleccion() {
     $('#btn-eliminar-seleccionados').on('click', function(e) {
         e.preventDefault();
-        $.blockUI({message: $('#question'), css: {}});
+        $.blockUI({message: $('#question'),blockMsgClass: 'modal-confimacion'});
         $('#question').find('.modal-title').html("Estas seguro que deseas eliminar estos anuncios?.");
         
         $('#yes').off();

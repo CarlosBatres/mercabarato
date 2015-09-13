@@ -37,12 +37,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-12 col-md-6">
             <div class="text-center">                        
                 <a href="<?php echo site_url('panel_vendedor/tarifas/modificar-productos/' . $tarifa_general->id) ?>" class="btn btn-lg btn-primary"> Modificar Productos</a>
             </div>
         </div>
-        <div class="col-md-6">
+        <br>
+        <div class="col-sm-12 col-md-6">
             <div class="text-center">                        
                 <a href="<?php echo site_url('panel_vendedor/tarifas/modificar-clientes/' . $tarifa_general->id) ?>" class="btn btn-lg btn-primary"> Modificar Clientes</a>
             </div>

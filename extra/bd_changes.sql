@@ -108,7 +108,7 @@ COLLATE = utf8_general_ci;
 UPDATE  `permisos` SET  `controllers` =  '{"admin": {"main": "*","usuario": "*","vendedor":{"view_listado":"*","ajax_get_listado_resultados":"*","habilitar":"*","inhabilitar":"*","borrar":"*"},"cliente": "*","producto": "*","anuncio": "*"}}' WHERE `permisos`.`id` =2;
 
 
-ALTER TABLE `mercabarato_bd`.`mensaje` 
+ALTER TABLE `mensaje` 
 DROP COLUMN `visto`,
 DROP COLUMN `contenido`,
 DROP COLUMN `asunto`,
@@ -121,16 +121,21 @@ ADD COLUMN `mensaje` TEXT NULL DEFAULT NULL AFTER `enviado_por`,
 ADD COLUMN `fecha` DATE NULL DEFAULT NULL AFTER `mensaje`,
 ADD INDEX `fk_mensaje_solicitud_seguro1_idx` (`solicitud_seguro_id` ASC);
 
-ALTER TABLE `mercabarato_bd`.`solicitud_seguro` 
+ALTER TABLE `solicitud_seguro` 
 DROP COLUMN `fecha_respuesta`,
 DROP COLUMN `respuesta`,
 CHANGE COLUMN `estado` `estado` INT(1) NULL DEFAULT 0 COMMENT '0=Enviada,1=Respondida,2=Cerrada' ,
 ADD COLUMN `ventajas` TEXT NULL DEFAULT NULL AFTER `datos`,
 ADD COLUMN `precio` FLOAT(10,2) NULL DEFAULT NULL AFTER `estado`;
 
-ALTER TABLE `mercabarato_bd`.`mensaje` 
+ALTER TABLE `mensaje` 
 ADD CONSTRAINT `fk_mensaje_solicitud_seguro1`
   FOREIGN KEY (`solicitud_seguro_id`)
   REFERENCES `mercabarato_bd`.`solicitud_seguro` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+
+ALTER TABLE `producto` 
+ADD COLUMN `grupo_txt` VARCHAR(23) NULL DEFAULT NULL AFTER `fecha_precio_modificar`,
+ADD COLUMN `familia_txt` VARCHAR(23) NULL DEFAULT NULL AFTER `grupo_txt`,
+ADD COLUMN `subfamilia_txt` VARCHAR(23) NULL DEFAULT NULL AFTER `familia_txt`;

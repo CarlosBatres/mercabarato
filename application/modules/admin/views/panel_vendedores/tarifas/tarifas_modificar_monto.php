@@ -13,7 +13,7 @@
                             <tr>                                                                          
                                 <th style="width: 40%">Nombre del Producto</th>                        
                                 <th style="width: 30%;text-align: center">P.V.P.</th>                                                             
-                                <th style="width: 30%;text-align: center">Nuevo Costo</th>                                                             
+                                <th style="width: 30%;text-align: center">Nuevo Precio</th>                                                             
                             </tr>
                         </thead>
                         <tbody>

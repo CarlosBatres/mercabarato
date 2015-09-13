@@ -42,7 +42,7 @@ function bind_links() {
     $('.table-responsive').find('.options').find('.row_action').on('click', function(e) {        
         e.preventDefault();        
         var a_href = $(this).attr('href');        
-        $.blockUI({message: $('#question'), css: {}});
+        $.blockUI({message: $('#question'),blockMsgClass: 'modal-confimacion'});
         
         if ($(this).hasClass('borrar')) {
             $('#question').find('.modal-title').html("Estas seguro que deseas eliminar esta solicitud de seguro?.");

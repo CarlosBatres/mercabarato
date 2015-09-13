@@ -21,8 +21,8 @@
                         <p> No hay mas informacion disponible</p>
                     <?php endif; ?>                    
                     <hr>
-                    <p> <strong>Fecha de Inicio:</strong> <?php echo date("d-m-Y", strtotime($oferta_general->fecha_inicio)) ?></p>
-                    <p> <strong>Fecha de Finalizacion:</strong> <?php echo date("d-m-Y", strtotime($oferta_general->fecha_finaliza)) ?></p>
+                    <p> <strong>Inicia:</strong> <?php echo date("d-M-Y", strtotime($oferta_general->fecha_inicio)) ?></p>
+                    <p> <strong>Finaliza:</strong> <?php echo date("d-M-Y", strtotime($oferta_general->fecha_finaliza)) ?></p>
                     <br>
                     <div class="row">
                         <div class="col-md-6">
@@ -53,26 +53,18 @@
             </div>
         </div>        
     </div>    
-    <div class="row">
-        <div class="col-md-3">
-            <div class="pull-right">                        
-                <a href="<?php echo site_url('panel_vendedor/ofertas/modificar-productos/' . $oferta_general->id) ?>" class="btn btn-lg btn-primary"> Modificar Productos</a>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="pull-right">                        
-                <a href="<?php echo site_url('panel_vendedor/ofertas/modificar-datos/' . $oferta_general->id) ?>" class="btn btn-lg btn-primary"> Modificar Datos</a>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="pull-left">                        
-                <a href="<?php echo site_url('panel_vendedor/ofertas/ver-oferta-clientes/' . $oferta_general->id) ?>" class="btn btn-lg btn-primary"> Ver Clientes </a>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="pull-left">                        
-                <a href="<?php echo site_url('panel_vendedor/ofertas/modificar-requisitos/' . $oferta_general->id) ?>" class="btn btn-lg btn-primary"> Modificar Requisitos</a>
-            </div>
+    <div class="row oferta-editar">
+        <div class="col-sm-12 col-md-3 text-center">            
+            <a href="<?php echo site_url('panel_vendedor/ofertas/modificar-productos/' . $oferta_general->id) ?>" class="btn btn-lg btn-primary"> Modificar Productos</a>            
+        </div>        
+        <div class="col-sm-12 col-md-3 text-center">
+            <a href="<?php echo site_url('panel_vendedor/ofertas/modificar-datos/' . $oferta_general->id) ?>" class="btn btn-lg btn-primary"> Modificar Datos</a>
+        </div>                
+        <div class="col-sm-12 col-md-3 text-center">
+            <a href="<?php echo site_url('panel_vendedor/ofertas/ver-oferta-clientes/' . $oferta_general->id) ?>" class="btn btn-lg btn-primary"> Ver Clientes </a>
+        </div>                
+        <div class="col-sm-12 col-md-3 text-center">
+            <a href="<?php echo site_url('panel_vendedor/ofertas/modificar-requisitos/' . $oferta_general->id) ?>" class="btn btn-lg btn-primary"> Modificar Requisitos</a>
         </div>
     </div>
     <br>

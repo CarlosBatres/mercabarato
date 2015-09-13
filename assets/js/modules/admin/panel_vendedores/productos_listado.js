@@ -44,7 +44,7 @@ function bind_links() {
     $('.table-responsive').find('.options').find('.row_action').on('click', function(e) {
         e.preventDefault();
         var a_href = $(this).attr('href');
-        $.blockUI({message: $('#question'), css: {}});
+        $.blockUI({message: $('#question'),blockMsgClass: 'modal-confimacion'});
 
         if ($(this).hasClass('borrar')) {
             $('#question').find('.modal-title').html("Estas seguro que deseas eliminar este producto?.");
@@ -91,16 +91,16 @@ function bind_check_all() {
 function bind_btn_eliminar_seleccion() {
     $('#btn-eliminar-seleccionados').on('click', function(e) {
         e.preventDefault();
-        $.blockUI({message: $('#question'), css: {}});
+        $.blockUI({message: $('#question'),blockMsgClass: 'modal-confimacion'});
         $('#question').find('.modal-title').html("Estas seguro que deseas eliminar estos productos?.");
-        
+
         $('#yes').off();
         $('#yes').click(function() {
             $.ajax({
-                url: SITE_URL+"panel_vendedor/producto/borrar-multi",                
-                type:"POST",
-                data:{
-                    producto_ids:get_productos_seleccionados_checkboxes()
+                url: SITE_URL + "panel_vendedor/producto/borrar-multi",
+                type: "POST",
+                data: {
+                    producto_ids: get_productos_seleccionados_checkboxes()
                 },
                 complete: function() {
                     updateResultados();

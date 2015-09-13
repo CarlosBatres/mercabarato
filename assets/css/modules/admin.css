@@ -102,9 +102,27 @@ tr.draggable > td > div.ui-state-default
     padding-bottom: 20px;
 }
 
+.oferta-editar>div{
+    padding-bottom: 15px;
+}
+
+/* MEDIA */
+
 @media (max-width: 768px) {
     .table-responsive .options .glyphicon {
         font-size: 25px;
     }
+    .modal-confimacion{
+        width: 98%!important;
+        left: 1%!important;
+        top: 10%!important;
+    }
+}
+
+@media (min-width: 992px){
+    
+}
+
+@media (min-width: 1200px){
     
 }

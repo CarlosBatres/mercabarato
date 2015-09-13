@@ -180,7 +180,7 @@ class Producto_model extends MY_Model {
 
             $query.="WHERE ( p.cliente_id ='" . $params['cliente_id'] . "' AND p.tipo='tarifa' " . $sub_query;
             $query.= " OR ( (p.cliente_id ='" . $params['cliente_id'] . "' OR p.cliente_id IS NULL ) " .
-                    "AND p.fecha_finaliza > '" . date("Y-m-d") . "' AND p.fecha_inicio < '" . date("Y-m-d") . "'  AND p.tipo='oferta' " . $sub_query;
+                    "AND p.fecha_finaliza >= '" . date("Y-m-d") . "' AND p.fecha_inicio <= '" . date("Y-m-d") . "'  AND p.tipo='oferta' " . $sub_query;
             $query.= " OR ( p.tipo='normal' " . $sub_query;
 
             if (isset($params["habilitado"])) {
@@ -595,7 +595,13 @@ class Producto_model extends MY_Model {
             return false;
         }
     }
-
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public function get_ofertas_search($params, $limit, $offset) {
         $this->db->start_cache();
         $this->db->select("DISTINCT producto.id,producto.*,categoria.nombre AS Categoria", false);
