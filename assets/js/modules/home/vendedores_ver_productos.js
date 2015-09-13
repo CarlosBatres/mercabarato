@@ -4,7 +4,10 @@ $(document).ready(function() {
 
 function updateResultados() {
     var vendedor_id = $('input[name="vendedor_id"]').val();
-    var pagina_id = $('#pagina').val();    
+    var pagina_id = $('#pagina').val();
+    var grupo_txt =$('input[name="grupo_txt"]').val();
+    var familia_txt =$('input[name="familia_txt"]').val();
+    var subfamilia_txt =$('input[name="subfamilia_txt"]').val();
 
     $('#tabla-resultados').css('opacity', '0.5');
     $('#tabla-resultados').block({message: $('#throbber'),
@@ -16,7 +19,10 @@ function updateResultados() {
         url: SITE_URL + 'vendedores/ver_productos_listado',
         data: {            
             pagina: pagina_id,
-            vendedor_id:vendedor_id            
+            vendedor_id:vendedor_id,
+            grupo_txt: grupo_txt,
+            familia_txt: familia_txt,
+            subfamilia_txt: subfamilia_txt,
         },
         dataType: "html",
         success: function(response) {

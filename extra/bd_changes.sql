@@ -5,7 +5,7 @@ select `p`.`id` AS `id`,`p`.`categoria_id` AS `categoria_id`,`p`.`vendedor_id` A
 AS `descripcion`,`p`.`referencia` AS `referencia`,`p`.`precio` AS `precio`,`p`.`mostrar_precio` AS `mostrar_precio`,`p`.`mostrar_producto` 
 AS `mostrar_producto`,`p`.`habilitado` AS `habilitado`,`p`.`fecha_insertado` AS `fecha_insertado`,`p`.`link_externo` AS `link_externo`,`p`.`unique_slug` 
 AS `unique_slug`,`of`.`nuevo_costo` AS `nuevo_costo`,`g`.`cliente_id` AS `cliente_id`,'oferta' COLLATE utf8_general_ci AS `tipo`  ,`og`.`fecha_inicio` AS `fecha_inicio`,`og`.`fecha_finaliza` 
-AS `fecha_finaliza`,`of`.`id` AS `grupo_o_tarifa_id`,`og`.`grupo` AS `oferta_grupo` , `p`.`precio_anterior` AS `precio_anterior`,`p`.`fecha_precio_modificar` AS `fecha_precio_modificar`
+AS `fecha_finaliza`,`of`.`id` AS `grupo_o_tarifa_id`,`og`.`grupo` AS `oferta_grupo` , `p`.`precio_anterior` AS `precio_anterior`,`p`.`fecha_precio_modificar` AS `fecha_precio_modificar` , `grupo_txt` AS `grupo_txt` , `familia_txt` AS `familia_txt` , `subfamilia_txt` AS `subfamilia_txt`
 from (((`producto` `p` 
 join `oferta` `of` on((`of`.`producto_id` = `p`.`id`))) 
 join `oferta_general` `og` on((`og`.`id` = `of`.`oferta_general_id`))) 
@@ -15,7 +15,7 @@ select `p`.`id` AS `id`,`p`.`categoria_id` AS `categoria_id`,`p`.`vendedor_id` A
 AS `referencia`,`p`.`precio` AS `precio`,`p`.`mostrar_precio` AS `mostrar_precio`,`p`.`mostrar_producto` AS `mostrar_producto`,`p`.`habilitado` 
 AS `habilitado`,`p`.`fecha_insertado` AS `fecha_insertado`,`p`.`link_externo` AS `link_externo`,`p`.`unique_slug` AS `unique_slug`,`ta`.`nuevo_costo` 
 AS `nuevo_costo`,`g`.`cliente_id` AS `cliente_id`,'tarifa' COLLATE utf8_general_ci AS `tipo` , NULL AS `NULL`,NULL AS `NULL`,`ta`.`id` AS `grupo_o_tarifa_id`,NULL AS `NULL`
-, `p`.`precio_anterior` AS `precio_anterior`,`p`.`fecha_precio_modificar` AS `fecha_precio_modificar`
+, `p`.`precio_anterior` AS `precio_anterior`,`p`.`fecha_precio_modificar` AS `fecha_precio_modificar` , `grupo_txt` AS `grupo_txt` , `familia_txt` AS `familia_txt` , `subfamilia_txt` AS `subfamilia_txt`
 from (((`producto` `p` 
 join `tarifa` `ta` on((`ta`.`producto_id` = `p`.`id`))) 
 join `tarifa_general` `tg` on((`tg`.`id` = `ta`.`tarifa_general_id`))) 
@@ -25,7 +25,7 @@ select `p`.`id` AS `id`,`p`.`categoria_id` AS `categoria_id`,`p`.`vendedor_id` A
 AS `referencia`,`p`.`precio` AS `precio`,`p`.`mostrar_precio` AS `mostrar_precio`,`p`.`mostrar_producto` AS `mostrar_producto`,`p`.`habilitado` 
 AS `habilitado`,`p`.`fecha_insertado` AS `fecha_insertado`,`p`.`link_externo` AS `link_externo`,`p`.`unique_slug` AS `unique_slug`,'9999999' 
 AS `9999999`,NULL AS `NULL`,'normal' COLLATE utf8_general_ci AS `tipo` ,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`,NULL AS `NULL`, `p`.`precio_anterior` AS `precio_anterior`
-,`p`.`fecha_precio_modificar` AS `fecha_precio_modificar`
+,`p`.`fecha_precio_modificar` AS `fecha_precio_modificar` , `grupo_txt` AS `grupo_txt` , `familia_txt` AS `familia_txt` , `subfamilia_txt` AS `subfamilia_txt`
 from `producto` `p`;
 
 
@@ -45,6 +45,8 @@ left join `poblacion` `pb` on((`pb`.`id` = `l`.`poblacion_id`)));
 /*             CAMBIOS POR IMPLEMENTAR            */
 /*                                                */
 /* -----------------------------------------------*/
+
+/*  VOLVER A INSERTAR LA VIEW DE PRODUCTOS PRECIOS PORQUE CAMBIO*/
 
 CREATE TABLE IF NOT EXISTS `keyword` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -84,8 +86,6 @@ CREATE TABLE IF NOT EXISTS `punto_venta` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
-
-/*  VOLVER A INSERTAR LA VIEW DE PRODUCTOS PRECIOS PORQUE CAMBIO*/
 
 CREATE TABLE IF NOT EXISTS `producto_extra` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,

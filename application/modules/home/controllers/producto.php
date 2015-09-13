@@ -137,11 +137,11 @@ class Producto extends MY_Controller {
 
                 if ($this->input->post('mostrar_solo_vendedores') == "true") {
                     $vids_array = $this->invitacion_model->get_ids_invitaciones(array("usuario" => $user_id, "estado" => "2"));
-                    if (sizeof($vids_array) > 0) {              
-                        $vids=$this->vendedor_model->get_vendedor_from_usuario_ids($vids_array);
-                        $params["solo_vendedor_ids"]=$vids;
-                    }else{
-                        $params["no_result"]=true;
+                    if (sizeof($vids_array) > 0) {
+                        $vids = $this->vendedor_model->get_vendedor_from_usuario_ids($vids_array);
+                        $params["solo_vendedor_ids"] = $vids;
+                    } else {
+                        $params["no_result"] = true;
                     }
                 }
 
@@ -200,7 +200,7 @@ class Producto extends MY_Controller {
 
     /**
      * 
-     * @param type $id
+     * @param type $slug
      */
     public function ver_producto($slug) {
         $this->template->set_title('Mercabarato - Busca y Compara');
@@ -269,9 +269,12 @@ class Producto extends MY_Controller {
                 $params = array(
                     "vendedor_id" => $producto->vendedor_id,
                     "cliente_id" => $cliente->id,
-                    "excluir_producto_id" => array($producto->id)
+                    "excluir_producto_id" => array($producto->id),
+                    "order_by_grupo_txt" => $producto->grupo_txt,
+                    "order_by_familia_txt" => $producto->familia_txt,
+                    "order_by_subfamilia_txt" => $producto->subfamilia_txt,
                 );
-                $otros_productos = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "desc");
+                $otros_productos = $this->producto_model->get_site_search($params, 4, 0, "relevance", "desc");
                 if ($otros_productos["total"] > 0) {
                     $prods = $otros_productos["productos"];
                 } else {
@@ -281,7 +284,7 @@ class Producto extends MY_Controller {
                 $params2 = array(
                     "cliente_id" => $cliente->id,
                     "categoria_id" => $producto->categoria_id,
-                    "excluir_producto_id" => array($producto->id)
+                    "excluir_vendedor_id" => $producto->vendedor_id
                 );
                 $otros_productos_categoria = $this->producto_model->get_site_search($params2, 4, 0, "p.fecha_insertado", "desc");
                 if ($otros_productos_categoria["total"] > 0) {
@@ -319,9 +322,12 @@ class Producto extends MY_Controller {
                 if ($producto->mostrar_producto == 1) {
                     $params = array(
                         "vendedor_id" => $producto->vendedor_id,
-                        "excluir_producto_id" => array($producto->id)
+                        "excluir_producto_id" => array($producto->id),
+                        "order_by_grupo_txt" => $producto->grupo_txt,
+                        "order_by_familia_txt" => $producto->familia_txt,
+                        "order_by_subfamilia_txt" => $producto->subfamilia_txt,
                     );
-                    $otros_productos = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "desc");
+                    $otros_productos = $this->producto_model->get_site_search($params, 4, 0, "relevance", "desc");
                     if ($otros_productos["total"] > 0) {
                         $prods = $otros_productos["productos"];
                     } else {
@@ -329,8 +335,8 @@ class Producto extends MY_Controller {
                     }
 
                     $params = array(
-                        "categoria_id" => $producto->categoria_id,
-                        "excluir_producto_id" => array($producto->id)
+                        "categoria_id" => $producto->categoria_id,                        
+                        "excluir_vendedor_id" => $producto->vendedor_id
                     );
                     $otros_productos_categoria = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "desc");
                     if ($otros_productos_categoria["total"] > 0) {

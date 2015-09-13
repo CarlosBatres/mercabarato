@@ -83,8 +83,8 @@ class Producto_model extends MY_Model {
      * @return type
      */
     public function get_site_search($params, $limit, $offset, $order_by, $order) {
-        if(isset($params['no_result'])){
-             return array("total" => 0);            
+        if (isset($params['no_result'])) {
+            return array("total" => 0);
         }
         if (isset($params['cliente_id'])) {
             /*             * -------------------------------------------------------------------------
@@ -92,9 +92,22 @@ class Producto_model extends MY_Model {
              * Busqueda cuando se haya iniciado session, se hace en base a un cliente_id
              *
              * ------------------------------------------------------------------------- 
-             */
-            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre "
-                    . "FROM (SELECT * FROM  `productos_precios` ORDER BY nuevo_costo ASC ) as p ";
+             */           
+
+            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre, ";
+            
+            if (isset($params["order_by_grupo_txt"])) {
+                $familia=(isset($params["order_by_familia_txt"])?$params["order_by_familia_txt"]:'');
+                $subfamilia=(isset($params["order_by_subfamilia_txt"])?$params["order_by_subfamilia_txt"]:'');
+                $query.="(MATCH (grupo_txt) AGAINST ('" . $params["order_by_grupo_txt"] . "' IN BOOLEAN MODE) * 3 + ";
+                $query.="MATCH (familia_txt) AGAINST ('" . $familia . "' IN BOOLEAN MODE) * 2 + ";
+                $query.="MATCH (subfamilia_txt) AGAINST ('" . $subfamilia . "' IN BOOLEAN MODE) ";
+                $query.=") as relevance ";
+            }else{
+                $query.=" '0' as relevance ";
+            }            
+            
+            $query.= "FROM (SELECT * FROM  `productos_precios` ORDER BY nuevo_costo ASC ) as p ";
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
             $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
 
@@ -117,7 +130,7 @@ class Producto_model extends MY_Model {
 
                 $text = " AND p.categoria_id IN(" . implode(",", $categorias_array) . ")";
                 $sub_query.=$text;
-            }            
+            }
 
             if (isset($params['precio_desde'])) {
                 $text = " AND p.precio >= '" . $params['precio_desde'] . "' ";
@@ -157,19 +170,23 @@ class Producto_model extends MY_Model {
                 $text = " AND p.id NOT IN(" . $ids . ") ";
                 $sub_query.=$text;
             }
+            if (isset($params['excluir_vendedor_id'])) {
+                $text = " AND p.vendedor_id!='" . $params['excluir_vendedor_id'] . "' ";                
+                $sub_query.=$text;
+            }
             if (isset($params['mostrar_solo_tarifas'])) {
                 $text = " AND p.tipo='tarifa' ";
                 $sub_query.=$text;
-            }
-            
+            }            
+
             if (isset($params['solo_vendedor_ids'])) {
                 $ids = implode(",", $params['solo_vendedor_ids']);
                 $text = " AND p.vendedor_id IN(" . $ids . ") ";
                 $sub_query.=$text;
             }
-            
+
             if (isset($params["habilitado"])) {
-                $text=" AND p.habilitado=" . $params['habilitado'];
+                $text = " AND p.habilitado=" . $params['habilitado'];
                 $sub_query.=$text;
             }
 
@@ -199,12 +216,12 @@ class Producto_model extends MY_Model {
             $total = $result_total->row();
 
             if ($total->rows > 0) {
-                if(sizeof($productos)==0){
+                if (sizeof($productos) == 0) {
                     return $this->get_site_search($params, $limit, 0, $order_by, $order);
-                }else{
+                } else {
                     return array("productos" => $productos, "total" => $total->rows);
-                }                
-            } else {                                
+                }
+            } else {
                 return array("total" => 0);
             }
         } else {
@@ -214,8 +231,20 @@ class Producto_model extends MY_Model {
              *
              * ------------------------------------------------------------------------- 
              */
-            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre "
-                    . "FROM (SELECT * FROM  `productos_precios` ORDER BY nuevo_costo DESC ) as p ";
+            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre, ";
+            
+            if (isset($params["order_by_grupo_txt"])) {
+                $familia=(isset($params["order_by_familia_txt"])?$params["order_by_familia_txt"]:'');
+                $subfamilia=(isset($params["order_by_subfamilia_txt"])?$params["order_by_subfamilia_txt"]:'');
+                $query.="(MATCH (grupo_txt) AGAINST ('" . $params["order_by_grupo_txt"] . "' IN BOOLEAN MODE) * 3 + ";
+                $query.="MATCH (familia_txt) AGAINST ('" . $familia . "' IN BOOLEAN MODE) * 2 + ";
+                $query.="MATCH (subfamilia_txt) AGAINST ('" . $subfamilia . "' IN BOOLEAN MODE) ";
+                $query.=") as relevance ";
+            }else{
+                $query.=" '0' as relevance ";
+            }
+            
+            $query.= "FROM (SELECT * FROM  `productos_precios` ORDER BY nuevo_costo DESC ) as p ";
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
             $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
 
@@ -240,16 +269,7 @@ class Producto_model extends MY_Model {
                 $query.=$text;
                 $sub_query.=$text;
             }
-            /* if (isset($params['precio_tipo1'])) {
-              if ($params['precio_tipo1'] != '0') {
-              $precios = explode(";;", $params['precio_tipo1']);
-              // TODO : Aqui el precio puede ser precio oferta o una tarifa especifica. Resolver dependiendo de quien este conectado haciendo la busqueda
-              $text = " AND p.precio >" . $precios['0'];
-              $text.=" AND p.precio <=" . $precios['1'];
-              $query.=$text;
-              $sub_query.=$text;
-              }
-              } */
+            
             if (isset($params['precio_desde'])) {
                 $text = " AND p.precio >= '" . $params['precio_desde'] . "' ";
                 $query.=$text;
@@ -286,6 +306,11 @@ class Producto_model extends MY_Model {
                 $query.=$text;
                 $sub_query.=$text;
             }
+            if (isset($params['excluir_vendedor_id'])) {
+                $text = " AND p.vendedor_id!='" . $params['excluir_vendedor_id'] . "' ";
+                $query.=$text;
+                $sub_query.=$text;
+            }
             if (isset($params['excluir_producto_id'])) {
                 $ids = implode(",", $params['excluir_producto_id']);
                 $text = " AND p.id NOT IN(" . $ids . ")";
@@ -294,6 +319,21 @@ class Producto_model extends MY_Model {
             }
             if (isset($params['mostrar_producto'])) {
                 $text = " AND p.mostrar_producto='" . $params['mostrar_producto'] . "' ";
+                $query.=$text;
+                $sub_query.=$text;
+            }
+            if (isset($params["grupo_txt"])) {
+                $text = " AND p.grupo_txt='".$params["grupo_txt"]."'";
+                $query.=$text;
+                $sub_query.=$text;
+            }
+            if (isset($params["familia_txt"])) {
+                $text = " AND p.familia_txt='".$params["familia_txt"]."'";
+                $query.=$text;
+                $sub_query.=$text;
+            }
+            if (isset($params["subfamilia_txt"])) {
+                $text = " AND p.subfamilia_txt='".$params["subfamilia_txt"]."'";
                 $query.=$text;
                 $sub_query.=$text;
             }
@@ -315,11 +355,11 @@ class Producto_model extends MY_Model {
             $total = $result_total->row();
 
             if ($total->rows > 0) {
-                if(sizeof($productos)==0){
+                if (sizeof($productos) == 0) {
                     return $this->get_site_search($params, $limit, 0, $order_by, $order);
-                }else{
+                } else {
                     return array("productos" => $productos, "total" => $total->rows);
-                }                   
+                }
             } else {
                 return array("total" => 0);
             }
@@ -458,8 +498,6 @@ class Producto_model extends MY_Model {
         return $producto;
     }
 
-   
-
     /**
      * 
      * @param type $producto_id
@@ -469,7 +507,7 @@ class Producto_model extends MY_Model {
     public function verificar_cambio_precio($producto_id, $precio) {
         $producto = $this->get($producto_id);
         if ($producto->precio != $precio) {
-            $this->update($producto_id, array("fecha_precio_modificar"=>date('Y-m-d'),"precio_anterior"=>$producto->precio));
+            $this->update($producto_id, array("fecha_precio_modificar" => date('Y-m-d'), "precio_anterior" => $producto->precio));
         } else {
             return false;
         }
@@ -603,6 +641,7 @@ class Producto_model extends MY_Model {
             return false;
         }
     }
+
     /**
      * 
      * @param type $params

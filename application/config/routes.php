@@ -317,6 +317,9 @@ $route['pagina-no-existe'] = 'home/main/not_found';
 
 $route['test-url'] = 'home/main/test_url';
 
+$route['(:any)/productos/(:any)/(:any)/(:any)'] = 'home/vendedor/ver_productos/$1/$2/$3/$4';
+$route['(:any)/productos/(:any)/(:any)'] = 'home/vendedor/ver_productos/$1/$2/$3';
+$route['(:any)/productos/(:any)'] = 'home/vendedor/ver_productos/$1/$2';
 $route['(:any)/productos'] = 'home/vendedor/ver_productos/$1';
 $route['(:any)'] = 'home/vendedor/ver_vendedor/$1';
 
