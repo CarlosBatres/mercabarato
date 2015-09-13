@@ -100,7 +100,14 @@ class Cliente_model extends MY_Model {
             $this->localizacion_model->delete_by("usuario_id", $usuario->id);
             $this->invitacion_model->delete_by("invitar_para", $usuario->id);
             $this->invitacion_model->delete_by("invitar_desde", $usuario->id);
-            $this->solicitud_seguro_model->delete_by("cliente_id", $id);
+            
+            $seguros=$this->solicitud_seguro_model->get_many_by("cliente_id", $id);            
+            if($seguros){
+                foreach($seguros as $seguro){
+                    $this->solicitud_seguro_model->delete($seguro->id);
+                }
+            }
+            
             $this->visita_model->delete_by("cliente_id", $id);
 
             $this->grupo_tarifa_model->delete_by("cliente_id", $id);
