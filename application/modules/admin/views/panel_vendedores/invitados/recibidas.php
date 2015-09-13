@@ -1,17 +1,8 @@
-<div id="question" style="display:none; cursor: default">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title">Invitacion Recibida</h4>
+<div class="modal fade" id="question" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">   
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">                   
         </div>
-        <div class="modal-body">                                                
-            <div class="contenido-mensaje box-simple"></div>
-            <p class="text-center">
-                <p class="lead"> Estas seguro que deseas aceptar la invitacion?.</p>
-                <button class="btn btn-success" type="button" id="yes"><i class="fa fa-check"></i> Si</button>
-                <button class="btn btn-danger" type="button" id="no"><i class="fa fa-close"></i> No</button>
-            </p>
-        </div>        
-    </div>
+    </div>    
 </div>
 <div class="container-fluid">
     <!-- Page Heading -->

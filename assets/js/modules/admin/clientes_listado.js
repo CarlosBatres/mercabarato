@@ -43,7 +43,7 @@ function bind_borrar_links() {
         e.preventDefault();
         $('.alertas').html('');
         var a_href = $(this).attr('href');
-        $.blockUI({message: $('#question'), css: {}});
+        $.blockUI({message: $('#question'),blockMsgClass: 'modal-confimacion'});
 
         if ($(this).hasClass('borrar')) {
             $('#question').find('.modal-title').html("Eliminar Usuario?.");

@@ -18,7 +18,7 @@
     <input type="hidden" value="1" name="pagina_tab2" id="pagina_tab2"/>                                        
     <input type="hidden" value="<?php echo $tarifa_general->id ?>" name="tg_id" id="tg_id"/>                                        
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-5 col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <strong>PRODUCTOS EN LA TARIFA</strong>
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>        
-        <div class="col-md-2 text-center">
+        <div class="col-md-2 text-center col-sm-12">
             <div class="row">
                 <div class="col-md-12">
                     <div class="alert alert-info">                         
@@ -52,8 +52,7 @@
                 <div class="col-md-12">
                     <button type="button" id="btn-modificar" class="btn btn-info"> <span class="glyphicon glyphicon-check"></span> Modificar Monto</button>
                 </div>
-            </div>
-            
+            </div>            
             <br>
             <div class="row">
                 <div class="col-md-12">
@@ -61,14 +60,15 @@
                         <p> Cuando este satisfecho con los cambios presiona <strong>Terminar</strong></p>
                     </div>
                 </div>
-            </div>
+            </div>            
             <div class="row">
                 <div class="col-md-12">                    
                     <a href="<?php echo site_url('panel_vendedor/tarifas/ver-tarifa/' . $tarifa_general->id) ?>" class="btn btn-success">Terminar <span class="glyphicon glyphicon-ok"></span></a>
                 </div>
             </div>
+            <br>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5 col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <strong>PRODUCTOS DISPONIBLES</strong>

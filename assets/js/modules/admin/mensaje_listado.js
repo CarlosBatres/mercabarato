@@ -44,7 +44,7 @@ function bind_links() {
         e.preventDefault();
         var a_href = $(this).attr('href');
         var usuario_id = $(this).parents('tr').data('id');
-        $.blockUI({message: $('#question'), css: {}});
+        $.blockUI({message: $('#question'),blockMsgClass: 'modal-confimacion'});
 
         $('#yes').off();
         $('#yes').click(function() {
@@ -69,7 +69,7 @@ function bind_links() {
     $('#btn-enviar-seleccionados').on('click', function(e) {
         e.preventDefault();        
         var usuario_id = get_selected_checkboxes();
-        $.blockUI({message: $('#question'), css: {}});
+        $.blockUI({message: $('#question'),blockMsgClass: 'modal-confimacion'});
 
         $('#yes').off();
         $('#yes').click(function() {
@@ -93,7 +93,7 @@ function bind_links() {
     $('#btn-enviar-todos').off();
     $('#btn-enviar-todos').on('click', function(e) {
         e.preventDefault();                
-        $.blockUI({message: $('#question'), css: {}});
+        $.blockUI({message: $('#question'),blockMsgClass: 'modal-confimacion'});
 
         $('#yes').off();
         $('#yes').click(function() {

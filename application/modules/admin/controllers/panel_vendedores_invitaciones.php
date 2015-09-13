@@ -43,14 +43,30 @@ class Panel_vendedores_invitaciones extends ADController {
         $this->template->load_view('admin/panel_vendedores/invitados/recibidas');
     }
 
+    /**
+     * 
+     * @param type $invitacion_id
+     */
     public function get_mensaje_invitacion($invitacion_id) {
         $invitacion = $this->invitacion_model->get($invitacion_id);
         if ($invitacion) {
-            echo "<p><strong>" . $invitacion->titulo . "</strong></p>";
-            echo "<br>";
-            echo "<p>" . $invitacion->comentario . "</p>";
-            echo "<hr>";
+            $html = '<div class="modal-header">';
+            $html.='<h4 class="modal-title">Invitacion Recibida</h4>';
+            $html.='</div>';
+            $html.='<div class = "modal-body">';            
+            $html.='<p><strong>' . $invitacion->titulo . '</strong></p>';
+            $html.='<br>';
+            $html.='<p>' . $invitacion->comentario . '</p>';                        
+            $html.='</div>';
+            $html.='<div class="modal-footer">';                        
+            $html.='<input type="hidden" name="invitacion_id" value="'.$invitacion_id.'">';
+            $html.='<button class = "btn btn-success" type = "button" id = "yes"><i class = "fa fa-check"></i> Aceptar</button>';
+            $html.='<button class = "btn btn-danger" type = "button" id = "no"><i class = "fa fa-close"></i> Rechazar</button>';            
+            $html.='</div>';
+            $html.='</div>';
         }
+
+        echo $html;
     }
 
     public function aceptadas() {
@@ -412,6 +428,7 @@ class Panel_vendedores_invitaciones extends ADController {
                 $this->email->message($this->load->view('home/emails/aceptar_invitacion_vendedor', array(), true));
                 $this->email->send();
             }
+            echo json_encode(array("success" => true));
         }
     }
 
@@ -421,15 +438,9 @@ class Panel_vendedores_invitaciones extends ADController {
      */
     public function rechazar_invitacion($id) {
         if ($this->input->is_ajax_request()) {
-            $user_id = $this->authentication->read('identifier');
-            $vendedor = $this->usuario_model->get_full_identidad($user_id);
-
-            $invitacion = $this->invitacion_model->get($id);
-            if ($invitacion->vendedor_id == $vendedor->get_vendedor_id()) {
-                $this->invitacion_model->update($id, array("estado" => "3"));
-            } else {
-                
-            }
+            $user_id = $this->authentication->read('identifier');            
+            $this->invitacion_model->rechazar_invitacion($id, $user_id);
+            echo json_encode(array("success" => true));
         }
     }
 

@@ -713,7 +713,7 @@
                 <?php endif; ?>
                 <br>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-sm-12 col-md-4">
                         <div class="form-group">
                             <label>Precio a ofrecer</label>
                             <input type="text" class="form-control" name="precio" value="<?php echo $solicitud_seguro->precio ?>">

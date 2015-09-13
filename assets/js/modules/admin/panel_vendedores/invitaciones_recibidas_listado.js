@@ -23,8 +23,8 @@ function updateResultados() {
         success: function(response) {
             $('#tabla-resultados').unblock();
             $('#tabla-resultados').html(response);
-            bind_pagination_links();
-            bind_links();
+            bind_pagination_links();           
+            bind_modal();
         }
     });
 }
@@ -37,39 +37,32 @@ function bind_pagination_links() {
     });
 }
 
-function bind_links() {
-    $('.table-responsive').find('.options').find('.action').off();
-    $('.table-responsive').find('.options').find('.action').on('click', function(e) {
-        e.preventDefault();
-        var id=$(this).data('id');
-        var a_href = $(this).attr('href');
-        $.ajax({
-            url: SITE_URL + 'panel_vendedor/invitaciones/get_mensaje_invitacion/'+id,
-            dataType: "html",
-            cache: false,
-            success: function(response) {                
-                $('#question').find('.contenido-mensaje').html(response);                                
-                $.blockUI({message: $('#question'), css: {}});
-                $('#yes').off();
-                $('#yes').click(function() {
-                    $.ajax({
-                        url: a_href,
-                        cache: false,
-                        complete: function() {
-                            updateResultados();
-                            $.unblockUI();
-                        }
-                    });
-                });
-                $('#no').click(function() {
-                    $.unblockUI();
-                    return false;
-                });
-            }
+function bind_modal() {
+    $('#question').on('hidden.bs.modal', function() {
+        $(this).removeData('bs.modal');
+    });
+
+    $('#question').on('shown.bs.modal', function(e) {        
+        var invitacion_id=$('input[name="invitacion_id"]').val();
+        $('#yes').on('click',function() {
+            $.ajax({
+                url: SITE_URL+'panel_vendedor/invitaciones/aceptar/'+invitacion_id,
+                cache: false,
+                complete: function() {
+                    $('#question').modal('hide');
+                    updateResultados();                    
+                }
+            });
         });
-
-
-
+        $('#no').on('click',function() {
+            $.ajax({
+                url: SITE_URL+'panel_vendedor/invitaciones/rechazar/'+invitacion_id,
+                cache: false,
+                complete: function() {
+                    $('#question').modal('hide');
+                    updateResultados();                    
+                }
+            });
+        });
     });
 }
-

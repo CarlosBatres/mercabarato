@@ -43,7 +43,7 @@ function bind_links() {
     $('.row_action_borrar').on('click', function(e) {
         e.preventDefault();
         var a_href = $(this).attr('href');
-        $.blockUI({message: $('#question'), css: {}});        
+        $.blockUI({message: $('#question'),blockMsgClass: 'modal-confimacion'});
 
         $('#yes').off();
         $('#yes').click(function() {

@@ -61,6 +61,7 @@
                     <a href="<?php echo site_url('panel_vendedor/ofertas/ver-oferta/' . $oferta_general->id) ?>" class="btn btn-success">Terminar <span class="glyphicon glyphicon-ok"></span></a>
                 </div>
             </div>
+            <br>
         </div>
         <div class="col-md-5">
             <div class="panel panel-default">

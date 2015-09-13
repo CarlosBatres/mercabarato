@@ -109,6 +109,11 @@ body .box_registro{
     background-color: #ec9c29;
     margin-bottom: 0px;
 }
+.anuncios-header{
+    background-color: #ec9c29;    
+    margin-bottom: 20px;
+}
+
 .box-productos{
     border: 0;
 }
@@ -117,6 +122,7 @@ body .box_registro{
     min-height: 150px;
 }
 
+.producto-img-container{padding-bottom: 15px;}
 .producto-img-container .frame {height: 150px;width: 100%;white-space: nowrap;text-align: center;}
 .producto-img-container .helper {display: inline-block;height: 100%;vertical-align: middle;}
 .producto-img-container .producto-img{background: #3A6F9A;vertical-align: middle;max-height: 150px;max-width: 150px;}
@@ -597,8 +603,6 @@ span.arrow {
 .formularios-seguros{
     padding-top: 50px;
 }
-
-
 
 @media (max-width: 768px) {
     .navbar-custom ul{

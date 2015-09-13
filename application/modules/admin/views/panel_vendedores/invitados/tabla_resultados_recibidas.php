@@ -46,8 +46,7 @@
                         <?php endif; ?> 
                         <td>
                             <div class="options">
-                                <a class="action" data-id="<?php echo $cliente->invitacion_id?>" href="<?php echo site_url('panel_vendedor/invitaciones/aceptar') . '/' . $cliente->invitacion_id ?>" data-toogle="tooltip"  title="Aceptar"><i class="glyphicon glyphicon-ok"></i></a>                                
-                                <a class="action" data-id="<?php echo $cliente->invitacion_id?>" href="<?php echo site_url('panel_vendedor/invitaciones/rechazar') . '/' . $cliente->invitacion_id ?>" data-toogle="tooltip"  title="Rechazar"><i class="glyphicon glyphicon-remove"></i></a>                                
+                                <a href="<?php echo site_url('panel_vendedor/invitaciones/get_mensaje_invitacion') . '/' . $cliente->invitacion_id ?>" data-toggle="modal" data-target="#question" title="Ver Invitacion"><i class="glyphicon glyphicon-check"></i></a>                                
                             </div>                           
                         </td>
                     </tr>

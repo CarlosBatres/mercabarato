@@ -10,7 +10,8 @@
 <div id="content" class="clearfix">
     <div class="container">
         <div class="row">
-            <div class="col-md-9">                        
+            <div class="col-sm-12 col-md-9">                        
+                
                 <div class="col-md-4 hidden-xs hidden-sm">
                     <div class="panel panel-default sidebar-menu principal-sidebar">
                         <div class="panel-heading">
@@ -41,7 +42,8 @@
                         </div>
                     </div>               
                 </div>
-                <div class="col-md-8">
+                
+                <div class="col-sm-12 col-md-8">
                     <div class="box-simple">                                
                         <form id="form_buscar">
                             <div class="row hidden-xs hidden-sm">
@@ -92,15 +94,15 @@
                             </div>                            
                             <?php if ($this->authentication->is_loggedin()): ?>
                                 <br>
-                                <div class="col-md-12">
-                                    <div class="col-md-6">
+                                <div class="col-xs-12">
+                                    <div class="col-xs-6">
                                         <div class="checkbox pull-left">
                                             <label>
                                                 <input type="checkbox" name="mostrar_mis_vendedores" value="1"> Solo mostrar mis vendedores 
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-xs-6">
                                         <div class="checkbox pull-right">
                                             <label>
                                                 <input type="checkbox" name="mostrar_mis_tarifas" value="1"> Solo mostrar mis tarifas 
@@ -112,45 +114,42 @@
                         </form>
                     </div>
                     <br>
-
                     <div id="tabla-resultados"></div>
                 </div>
-
             </div> 
 
-            <div class="col-md-3">
-                <div class="box box-anuncios">
-                    <div class="box-header">
-                        <h4 class="text-center">Anuncios</h4>                
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tbody>
-                                <?php
-                                if (sizeof($anuncios) > 0):
-                                    foreach ($anuncios as $anuncio):
-                                        ?>
-                                        <tr>
-                                            <td>                                                
-                                                <div class="anuncio-contenido">
-                                                    <p class="text-right"><strong><?php echo date("d-M-Y", strtotime($anuncio->fecha_publicacion)) ?></strong></p>
-                                                    <p><a href="<?php echo site_url("anuncios/" . $anuncio->id) ?>"><strong><?php echo $anuncio->titulo; ?></strong></a></p>                                                
-                                                    <p><?php echo strip_tags(truncate($anuncio->contenido, 300)); ?></p>
-                                                </div>
-                                            </td>                                
-                                        </tr>
-                                        <?php
-                                    endforeach;
-                                else:
-                                    echo "<tr><td> <p> No hay novedades..</p></td></tr>";
-                                endif;
-                                ?>                            
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="col-sm-12 col-md-3">
+                <div class="row anuncios-header">
+                    <h3 class="text-center">Anuncios</h3>
                 </div>
+                <?php
+                if (sizeof($anuncios) > 0):
+                    foreach ($anuncios as $anuncio):
+                        ?>
+
+                        <div class="row">
+                            <div class="col-xs-12">                                
+                                <div class="anuncio-contenido">
+                                    <p class="text-right"><strong><?php echo date("d-M-Y", strtotime($anuncio->fecha_publicacion)) ?></strong></p>
+                                    <p><a href="<?php echo site_url("anuncios/" . $anuncio->id) ?>"><strong><?php echo $anuncio->titulo; ?></strong></a></p>                                                
+                                    <p><?php echo strip_tags(truncate($anuncio->contenido, 300)); ?></p>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p> No hay novedades...</p>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
-        </div>        
+
+           
+        </div> 
+        
         <div id="throbber" style="display:none;">
             <img src="<?php echo assets_url('imgs/loader_on_white_nb_big.gif'); ?>" alt="Espere un momento."/>
         </div>

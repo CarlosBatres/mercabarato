@@ -61,12 +61,13 @@
                         <p> Cuando este satisfecho con los cambios presiona <strong>Terminar</strong></p>
                     </div>
                 </div>
-            </div>
+            </div>            
             <div class="row">
                 <div class="col-md-12">                    
                     <a href="<?php echo site_url('panel_vendedor/ofertas/ver-oferta/' . $oferta_general->id) ?>" class="btn btn-success">Terminar <span class="glyphicon glyphicon-ok"></span></a>
                 </div>
             </div>
+            <br>
         </div>
         <div class="col-md-5">
             <div class="panel panel-default">

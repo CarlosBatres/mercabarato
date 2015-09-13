@@ -90,7 +90,7 @@
                 <?php endforeach; ?>
             </tbody>
         </table>        
-        <?php echo $pagination; ?>
-        <button type="button" id="btn-eliminar-seleccionados" class="btn btn-danger">Eliminar Seleccionados</button>
+        <?php echo $pagination; ?>                        
     </div> 
+    <button type="button" id="btn-eliminar-seleccionados" class="btn btn-danger">Eliminar Seleccionados</button>
 <?php endif; ?>
