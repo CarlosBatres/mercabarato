@@ -445,7 +445,14 @@ class Vendedor_model extends MY_Model {
             $this->punto_venta_model->delete_by("vendedor_id", $id);
             $this->invitacion_model->delete_by("invitar_desde", $cliente->usuario_id);
             $this->invitacion_model->delete_by("invitar_para", $cliente->usuario_id);
-            $this->solicitud_seguro_model->delete_by("vendedor_id", $id);
+                        
+            $seguros=$this->solicitud_seguro_model->get_many_by("vendedor_id", $id);            
+            if($seguros){
+                foreach($seguros as $seguro){
+                    $this->solicitud_seguro_model->delete($seguro->id);
+                }
+            }
+            
             $this->vendedor_paquete_model->delete_by("vendedor_id", $id);
 
             $anuncios = $this->anuncio_model->get_many_by("vendedor_id", $id);
