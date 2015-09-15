@@ -2,7 +2,7 @@
     <div id="top">
         <div class="container">
             <div class="row">
-                <div class="col-md-7 col-xs-12 contact">
+                <div class="col-md-7 col-xs-12 contact hidden-sm hidden-xs">
                     <?php if ($this->uri->uri_string() != '' && $this->uri->uri_string() != 'productos'): ?>
                         <div class="input-group">
                             <input type="text" name="search_query_header" class="form-control" placeholder="Ingrese un producto a buscar...">                                                        
@@ -72,12 +72,13 @@
                         <a href="<?php echo site_url('vendedores'); ?>">Vendedores</a>                            
                     </li>
                     <li class="dropdown <?php
-                    if ($this->uri->uri_string() == 'seguros'): echo "active";
+                    if ($this->uri->uri_string() == 'seguros' || $this->uri->uri_string() == 'infocompras'): echo "active";
                     endif;
                     ?>" >
-                        <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Infocompras<b class="caret"></b><span class="hidden-xs hidden-sm">Seguros</span></a>                           
+                        <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Infocompras<b class="caret"></b></a>                           
                         <ul class="dropdown-menu">
-                            <li class="sub-opcion-menu"><a href="<?php echo site_url('seguros'); ?>"> Seguros</a></li>                     
+                            <li><a href="<?php echo site_url('infocompras'); ?>"> General</a></li>                     
+                            <li><a href="<?php echo site_url('seguros'); ?>"> Seguros</a></li>                                                 
                         </ul>
                     </li>                                                
                 </ul>

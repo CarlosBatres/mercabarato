@@ -367,7 +367,9 @@ class Cliente extends MY_Controller {
             redirect('');
         }
     }
-
+    /**
+     * Infocompras Seguros
+     */
     public function view_infocompras_seguros() {
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Busca y Compara');
@@ -399,7 +401,7 @@ class Cliente extends MY_Controller {
 
             $limit = 5;
             $offset = $limit * ($pagina - 1);
-            $resultado = $this->solicitud_seguro_model->get_solicitudes_seguro_cliente($params, $limit, $offset);
+            $resultado = $this->infocompra_model->get_solicitudes_seguro_cliente($params, $limit, $offset);
             $flt = (float) ($resultado["total"] / $limit);
             $ent = (int) ($resultado["total"] / $limit);
             if ($flt > $ent || $flt < $ent) {
@@ -438,7 +440,7 @@ class Cliente extends MY_Controller {
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
 
-            $solicitud_seguro = $this->solicitud_seguro_model->get($solicitud_seguro_id);
+            $solicitud_seguro = $this->infocompra_model->get($solicitud_seguro_id);
             $mensaje = $this->mensaje_model->get_ultimo_mensaje($solicitud_seguro_id, true);
             if ($solicitud_seguro) {
                 if ($solicitud_seguro->estado != "0" && $cliente->id == $solicitud_seguro->cliente_id) {
@@ -470,7 +472,7 @@ class Cliente extends MY_Controller {
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
 
-            $solicitud_seguro = $this->solicitud_seguro_model->get($solicitud_seguro_id);
+            $solicitud_seguro = $this->infocompra_model->get($solicitud_seguro_id);
 
             if ($solicitud_seguro) {
                 if ($solicitud_seguro->estado == "1" && $cliente->id == $solicitud_seguro->cliente_id) {
@@ -505,7 +507,7 @@ class Cliente extends MY_Controller {
         $formValues = $this->input->post();
         if ($formValues !== false) {
             $solicitud_seguro_id = $this->input->post("solicitud_seguro_id");
-            $solicitud_seguro = $this->solicitud_seguro_model->get($solicitud_seguro_id);
+            $solicitud_seguro = $this->infocompra_model->get($solicitud_seguro_id);
 
             if ($solicitud_seguro) {
                 $pregunta = $this->input->post("pregunta");
@@ -513,12 +515,12 @@ class Cliente extends MY_Controller {
 
                     $data_msg = array(
                         "mensaje" => $pregunta,
-                        "solicitud_seguro_id" => $solicitud_seguro_id,
+                        "infocompra_id" => $solicitud_seguro_id,
                         "enviado_por" => "1",
                         "fecha" => date("Y-m-d")
                     );
                     $this->mensaje_model->insert($data_msg);
-                    $this->solicitud_seguro_model->update($solicitud_seguro_id, array("estado" => "0"));
+                    $this->infocompra_model->update($solicitud_seguro_id, array("estado" => "0"));
 
                     if ($this->config->item('emails_enabled')) {
                         $vendedor = $this->vendedor_model->get($solicitud_seguro->vendedor_id);
@@ -537,6 +539,173 @@ class Cliente extends MY_Controller {
             }
         }
         redirect('usuario/infocompras-seguros');
+    }
+    
+    /**
+     * Infocompras General
+     */
+    public function view_infocompras_general() {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Busca y Compara');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+
+            //$invitaciones = $this->invitacion_model->get_invitaciones_pendientes($cliente->id);
+
+            $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+            $this->template->add_js('modules/home/infocompras_generales.js');
+            $this->template->load_view('home/cliente/infocompras_generales', array("html_options" => $html_options));
+        } else {
+            redirect('');
+        }
+    }
+    
+    public function ajax_get_listado_infocompras() {
+        //$this->show_profiler();
+        $formValues = $this->input->post();
+        $user_id = $this->authentication->read('identifier');
+        $cliente = $this->usuario_model->get_full_identidad($user_id);
+        $params = array();
+        if ($formValues !== false) {
+            $pagina = $this->input->post('pagina');
+
+            $params["pagina"] = $pagina;
+            $params["cliente_id"] = $cliente->cliente->id;
+
+            $limit = 5;
+            $offset = $limit * ($pagina - 1);
+            $resultado = $this->infocompra_model->get_solicitudes_infocompras_cliente($params, $limit, $offset);
+            $flt = (float) ($resultado["total"] / $limit);
+            $ent = (int) ($resultado["total"] / $limit);
+            if ($flt > $ent || $flt < $ent) {
+                $paginas = $ent + 1;
+            } else {
+                $paginas = $ent;
+            }
+
+            if ($resultado["total"] == 0) {
+                $resultado["infocompras"] = array();
+            }
+
+            $search_params = array(
+                "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+                "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+                "pagina" => $pagina,
+                "total_paginas" => $paginas,
+                "por_pagina" => $limit,
+                "total" => $resultado["total"],
+                "hasta" => ($pagina * $limit < $resultado["total"]) ? $pagina * $limit : $resultado["total"],
+                "desde" => (($pagina * $limit) - $limit) + 1);
+
+            $pagination = build_paginacion($search_params);
+            $data = array(
+                "infocompras_generales" => $resultado["infocompras"],
+                "pagination" => $pagination);
+
+            $this->template->load_view('home/cliente/infocompras_generales_tabla', $data);
+        }
+    }
+    
+    public function view_infocompras_respuesta($solicitud_id) {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Busca y Compara');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+
+            $solicitud = $this->infocompra_model->get($solicitud_id);
+            $mensaje = $this->mensaje_model->get_ultimo_mensaje($solicitud_id, true);
+            if ($solicitud) {
+                if ($solicitud->estado != "0" && $cliente->id == $solicitud->cliente_id) {
+                    //$this->template->add_js('modules/home/infocompras_seguros.js');
+                    $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+                    $this->template->load_view('home/cliente/infocompras_generales_respuesta', array("html_options" => $html_options, "infocompra" => $solicitud, "mensaje" => $mensaje));
+                } else {
+                    redirect('404');
+                }
+            } else {
+                redirect('404');
+            }
+        } else {
+            redirect('');
+        }
+    }
+    
+    public function view_infocompras_pregunta($solicitud_id) {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Busca y Compara');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+
+            $solicitud = $this->infocompra_model->get($solicitud_id);
+
+            if ($solicitud) {
+                if ($solicitud->estado == "1" && $cliente->id == $solicitud->cliente_id) {
+                    $this->load->helper('ckeditor');
+
+                    $data = array("infocompra" => $solicitud);
+                    $data['ckeditor'] = array(
+                        'id' => 'pregunta',
+                        'path' => 'assets/js/ckeditor',
+                        'config' => array(
+                            'toolbar' => "Full",
+                            'height' => '300px',
+                        ),
+                    );
+                    $data["solicitud_id"] = $solicitud->id;
+                    //$this->template->add_js('modules/home/infocompras_seguros.js');
+                    $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+                    $data["html_options"] = $html_options;
+                    $this->template->load_view('home/cliente/infocompras_generales_pregunta', $data);
+                } else {
+                    redirect('404');
+                }
+            } else {
+                redirect('404');
+            }
+        } else {
+            redirect('');
+        }
+    }
+    
+    public function infocompra_enviar_pregunta() {
+        $formValues = $this->input->post();
+        if ($formValues !== false) {
+            $solicitud_id = $this->input->post("solicitud_id");
+            $solicitud = $this->infocompra_model->get($solicitud_id);
+
+            if ($solicitud) {
+                $pregunta = $this->input->post("pregunta");
+                if ($pregunta != "") {
+
+                    $data_msg = array(
+                        "mensaje" => $pregunta,
+                        "infocompra_id" => $solicitud_id,
+                        "enviado_por" => "1",
+                        "fecha" => date("Y-m-d")
+                    );
+                    $this->mensaje_model->insert($data_msg);
+                    $this->infocompra_model->update($solicitud_id, array("estado" => "0"));
+
+                    if ($this->config->item('emails_enabled')) {
+                        $vendedor = $this->vendedor_model->get($solicitud->vendedor_id);
+                        $cliente = $this->cliente_model->get($vendedor->cliente_id);
+                        $usuario = $this->usuario_model->get($cliente->usuario_id);
+
+                        $this->load->library('email');
+                        $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
+                        $this->email->to($usuario->email);
+                        $this->email->subject('Nueva solicitud de presupuesto');
+                        $data_email = array("solicitud_id" => $solicitud_id);
+                        $this->email->message($this->load->view('home/emails/solicitud_presupuesto_mensaje_vendedor', $data_email, true));
+                        $this->email->send();
+                    }
+                }
+            }
+        }
+        redirect('usuario/infocompras-general');
     }
 
 }

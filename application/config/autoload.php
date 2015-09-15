@@ -131,7 +131,7 @@ $autoload['model'] = array(
     'invitacion_model',
     'localizacion_model',
     'mensaje_model',    
-    'solicitud_seguro_model',
+    'infocompra_model',
     'visita_model',
     'permisos_model',
     'restriccion_model',

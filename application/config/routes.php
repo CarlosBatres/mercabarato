@@ -75,6 +75,15 @@ $route['seguros/enviar'] = 'home/seguro/crear_solicitud_seguro';
 $route['seguros/enviar-todos'] = 'home/seguro/crear_solicitud_seguro_todos';
 $route['seguros/buscar_prestadores'] = 'home/seguro/ajax_get_listado_resultados_prestadores';
 $route['seguros/finalizar'] = 'home/seguro/finalizar';
+
+$route['infocompras'] = 'home/infocompra/view_infocompras';
+$route['infocompras/paso-1'] = 'home/infocompra/paso_1';
+$route['infocompras/paso-2'] = 'home/infocompra/paso_2';
+$route['infocompras/enviar'] = 'home/infocompra/crear_infocompra';
+$route['infocompras/seleccionar-vendedor'] = 'home/infocompra/seleccionar_vendedor';
+$route['infocompras/buscar-vendedores'] = 'home/infocompra/ajax_get_listado_resultados';
+$route['infocompras/finalizar'] = 'home/infocompra/finalizar';
+
 $route['usuario/perfil'] = 'home/usuario/view_perfil';
 $route['usuario/datos-personales'] = 'home/usuario/view_datos_personales';
 $route['usuario/datos-personales/modificar'] = 'home/usuario/modificar_datos';
@@ -108,6 +117,13 @@ $route['usuario/infocompras-seguros/enviar_pregunta'] = 'home/cliente/seguro_env
 $route['usuario/infocompras-seguros/descargar_respuesta/(:any)'] = 'home/cliente/seguros_download_respuesta/$1';
 $route['usuario/buscar-solicitudes-seguros'] = 'home/cliente/ajax_get_listado_seguros';
 $route['usuario/eliminar-cuenta'] = 'home/usuario/eliminar_cuenta';
+
+$route['usuario/infocompras-general'] = 'home/cliente/view_infocompras_general';
+$route['usuario/infocompras-general/respuesta/(:num)'] = 'home/cliente/view_infocompras_respuesta/$1';
+$route['usuario/infocompras-general/pregunta/(:num)'] = 'home/cliente/view_infocompras_pregunta/$1';
+$route['usuario/infocompras-general/enviar_pregunta'] = 'home/cliente/infocompra_enviar_pregunta';
+$route['usuario/buscar-solicitudes-infocompras'] = 'home/cliente/ajax_get_listado_infocompras';
+
 
 $route['util/verificar_email'] = 'home/usuario/check_email';
 $route['util/verificar_nombre'] = 'home/main/verificar_palabra';
@@ -196,6 +212,12 @@ $route['panel_vendedor/infocompras/seguros/responder/(:num)'] = 'admin/panel_ven
 $route['panel_vendedor/infocompras/seguros/cerrar/(:num)'] = 'admin/panel_vendedores_infocompras/cerrar_seguros/$1';
 $route['panel_vendedor/infocompras/seguros/borrar/(:num)'] = 'admin/panel_vendedores_infocompras/borrar_seguros/$1';
 $route['panel_vendedor/infocompras/ajax_get_seguros'] = 'admin/panel_vendedores_infocompras/ajax_get_seguros';
+
+$route['panel_vendedor/infocompras/generales'] = 'admin/panel_vendedores_infocompras/view_listado_generales';
+$route['panel_vendedor/infocompras/generales/responder/(:num)'] = 'admin/panel_vendedores_infocompras/responder_generales/$1';
+$route['panel_vendedor/infocompras/generales/cerrar/(:num)'] = 'admin/panel_vendedores_infocompras/cerrar_generales/$1';
+$route['panel_vendedor/infocompras/generales/borrar/(:num)'] = 'admin/panel_vendedores_infocompras/borrar_generales/$1';
+$route['panel_vendedor/infocompras/ajax_get_generales'] = 'admin/panel_vendedores_infocompras/ajax_get_generales';
 
 $route['panel_vendedor/ofertas/listado'] = 'admin/panel_vendedores_ofertas2/view_listado';
 $route['panel_vendedor/ofertas/nueva'] = 'admin/panel_vendedores_ofertas2/nueva_oferta';

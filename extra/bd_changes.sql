@@ -139,3 +139,58 @@ ALTER TABLE `producto`
 ADD COLUMN `grupo_txt` VARCHAR(23) NULL DEFAULT NULL AFTER `fecha_precio_modificar`,
 ADD COLUMN `familia_txt` VARCHAR(23) NULL DEFAULT NULL AFTER `grupo_txt`,
 ADD COLUMN `subfamilia_txt` VARCHAR(23) NULL DEFAULT NULL AFTER `familia_txt`;
+
+/*        14-09-2015            */
+
+ALTER TABLE `mercabarato_bd`.`mensaje` 
+DROP FOREIGN KEY `fk_mensaje_solicitud_seguro1`;
+
+ALTER TABLE `mercabarato_bd`.`paquete` 
+CHANGE COLUMN `infocompra` `infocompra` INT(1) NOT NULL DEFAULT 0 COMMENT 'Infocompras-Seguros' ;
+
+ALTER TABLE `mercabarato_bd`.`vendedor_paquete` 
+CHANGE COLUMN `infocompra` `infocompra` INT(1) NOT NULL DEFAULT 0 COMMENT 'Infocompras-Seguros' ;
+
+ALTER TABLE `mercabarato_bd`.`mensaje` 
+DROP COLUMN `solicitud_seguro_id`,
+ADD COLUMN `infocompra_id` INT(10) UNSIGNED NOT NULL AFTER `id`,
+ADD INDEX `fk_mensaje_infocompra1_idx` (`infocompra_id` ASC),
+DROP INDEX `fk_mensaje_solicitud_seguro1_idx` ;
+
+CREATE TABLE IF NOT EXISTS `mercabarato_bd`.`infocompra` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `vendedor_id` INT(10) UNSIGNED NOT NULL,
+  `cliente_id` INT(10) UNSIGNED NOT NULL,
+  `datos` TEXT NULL DEFAULT NULL,
+  `ventajas` TEXT NULL DEFAULT NULL,
+  `fecha_solicitud` DATE NULL DEFAULT NULL,
+  `estado` INT(1) NULL DEFAULT NULL,
+  `precio` FLOAT(10,2) NULL DEFAULT NULL,
+  `link_file` VARCHAR(255) NULL DEFAULT NULL,
+  `solicitud_seguro` INT(1) NULL DEFAULT 0,
+  `infocompra_general` INT(1) NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  INDEX `fk_infocompra_general_vendedor1_idx` (`vendedor_id` ASC),
+  INDEX `fk_infocompra_general_cliente1_idx` (`cliente_id` ASC),
+  CONSTRAINT `fk_infocompra_general_vendedor1`
+    FOREIGN KEY (`vendedor_id`)
+    REFERENCES `mercabarato_bd`.`vendedor` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_infocompra_general_cliente1`
+    FOREIGN KEY (`cliente_id`)
+    REFERENCES `mercabarato_bd`.`cliente` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
+
+DROP TABLE IF EXISTS `mercabarato_bd`.`solicitud_seguro` ;
+
+ALTER TABLE `mercabarato_bd`.`mensaje` 
+ADD CONSTRAINT `fk_mensaje_infocompra1`
+  FOREIGN KEY (`infocompra_id`)
+  REFERENCES `mercabarato_bd`.`infocompra` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;

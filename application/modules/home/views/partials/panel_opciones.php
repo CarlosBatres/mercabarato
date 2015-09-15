@@ -20,9 +20,25 @@
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/contactos') ? "active" : "" ?>">
                     <a href="<?php echo site_url('usuario/contactos') ?>"><i class="fa fa-plus"></i> Mis Contactos Vendedores </a>
                 </li>
-                <li class="<?php echo ($this->uri->uri_string() == 'usuario/infocompras-seguros') ? "active" : "" ?>">
-                    <a href="<?php echo site_url('usuario/infocompras-seguros') ?>"><i class="fa fa-newspaper-o"></i> Infocompras - Seguros</a>
+                <li><hr class='panel-opciones'></li>                
+                <li>
+                    <a href="javascript: void(0)"><i class="fa fa-newspaper-o"></i> Infocompras</a>                    
                 </li>
+                <?php
+                $active = "";
+                if (strpos($this->uri->uri_string(), 'usuario/infocompras-general') !== false) {
+                    $active = " active";
+                }
+                ?>
+                <li class='sub-panel-opcion<?php echo $active ?>'><a href="<?php echo site_url('usuario/infocompras-general') ?>"> <i class="fa fa-minus"></i> General</a></li>                     
+                <?php
+                $active = "";
+                if (strpos($this->uri->uri_string(), 'usuario/infocompras-seguros') !== false) {
+                    $active = " active";
+                }
+                ?>
+                <li class='sub-panel-opcion<?php echo $active ?>'><a href="<?php echo site_url('usuario/infocompras-seguros') ?>"> <i class="fa fa-minus"></i> Seguros</a></li>                                                 
+                <li><hr class='panel-opciones'></li>
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/mis-paquetes') ? "active" : "" ?>">
                     <a href="<?php echo site_url('usuario/mis-paquetes') ?>"><i class="fa fa-money"></i> Mis Paquetes</a>
                 </li>                
@@ -54,15 +70,25 @@
                 <li class="<?php echo ($this->uri->uri_string() == 'usuario/contactos') ? "active" : "" ?>">
                     <a href="<?php echo site_url('usuario/contactos') ?>"><i class="fa fa-plus"></i> Mis Contactos Vendedores <span class="badge" id="invitaciones-counter"><?php echo $this->invitacion_model->count_invitaciones_pendientes() ?></span></a>
                 </li>
+                <li><hr class='panel-opciones'></li>                
+                <li>
+                    <a href="javascript: void(0)"><i class="fa fa-newspaper-o"></i> Infocompras</a>                    
+                </li>
                 <?php
                 $active = "";
-                if (strpos($this->uri->uri_string(), 'usuario/infocompras-seguros') !== false) {                
-                    $active = "active";
+                if (strpos($this->uri->uri_string(), 'usuario/infocompras-general') !== false) {
+                    $active = " active";
                 }
-                ?>                
-                <li class="<?php echo $active; ?>">
-                    <a href="<?php echo site_url('usuario/infocompras-seguros') ?>"><i class="fa fa-newspaper-o"></i> Infocompras - Seguros</a>
-                </li>
+                ?>
+                <li class='sub-panel-opcion<?php echo $active ?>'><a href="<?php echo site_url('usuario/infocompras-general') ?>"> <i class="fa fa-minus"></i> General</a></li>                     
+                <?php
+                $active = "";
+                if (strpos($this->uri->uri_string(), 'usuario/infocompras-seguros') !== false) {
+                    $active = " active";
+                }
+                ?>
+                <li class='sub-panel-opcion<?php echo $active ?>'><a href="<?php echo site_url('usuario/infocompras-seguros') ?>"> <i class="fa fa-minus"></i> Seguros</a></li>                                                 
+                <li><hr class='panel-opciones'></li>
 
                 <?php
                 $active = "";
