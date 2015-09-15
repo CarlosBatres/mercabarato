@@ -420,6 +420,7 @@ class Seguro extends MY_Controller {
             "datos" => serialize($data),
             "fecha_solicitud" => date("Y-m-d"),
             "estado" => 0,
+            "solicitud_seguro" => 1
         );
 
         $ignore_list = $this->session->userdata('seguros_ignore_list');
@@ -431,7 +432,7 @@ class Seguro extends MY_Controller {
             'seguros_ignore_list' => $ignore_list,
         ));
 
-        $solicitud_id = $this->solicitud_seguro_model->insert($solicitud_seguro);
+        $solicitud_id = $this->infocompra_model->insert($solicitud_seguro);
         $vendedor = $this->vendedor_model->get($vendedor_id);
 
         if ($this->config->item('emails_enabled')) {

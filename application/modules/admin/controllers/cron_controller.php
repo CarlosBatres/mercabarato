@@ -60,7 +60,7 @@ class cron_controller extends MY_Controller {
      * Cada 3 dias
      */
     public function productos_novedades() {
-        if (!$this->input->is_cli_request()) {
+        if ($this->input->is_cli_request()) {
             $days = 2;
             $date_inicio = strtotime(date('Y-m-d'));
             $date_inicio = strtotime("-" . $days . " day", $date_inicio);

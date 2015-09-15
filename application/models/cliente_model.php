@@ -101,10 +101,10 @@ class Cliente_model extends MY_Model {
             $this->invitacion_model->delete_by("invitar_para", $usuario->id);
             $this->invitacion_model->delete_by("invitar_desde", $usuario->id);
             
-            $seguros=$this->solicitud_seguro_model->get_many_by("cliente_id", $id);            
+            $seguros=$this->infocompra_model->get_many_by("cliente_id", $id);            
             if($seguros){
                 foreach($seguros as $seguro){
-                    $this->solicitud_seguro_model->delete($seguro->id);
+                    $this->infocompra_model->delete($seguro->id);
                 }
             }
             

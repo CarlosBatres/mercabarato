@@ -184,8 +184,11 @@
                         <a href="#"><i class="fa fa-tasks fa-fw"></i> Infocompras<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/infocompras/seguros'); ?>"> Seguros</a>
+                                <a href="<?php echo site_url('panel_vendedor/infocompras/generales'); ?>"> Generales</a>
                             </li>                                                        
+                            <li>
+                                <a href="<?php echo site_url('panel_vendedor/infocompras/seguros'); ?>"> Seguros</a>
+                            </li>                                                                                    
                         </ul>                         
                     </li>
                     <li class="hidden-md hidden-lg">

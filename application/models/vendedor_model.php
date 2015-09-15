@@ -367,6 +367,9 @@ class Vendedor_model extends MY_Model {
         $query.="LEFT JOIN pais ON pais.id=localizacion.pais_id ";
         $query.="LEFT JOIN provincia ON provincia.id=localizacion.provincia_id ";
         $query.="LEFT JOIN poblacion ON poblacion.id=localizacion.poblacion_id ";
+        $query.="INNER JOIN vendedor_paquete ON vendedor_paquete.vendedor_id=vendedor.id AND vendedor_paquete.aprobado ='1' ";
+        $query.="AND vendedor_paquete.fecha_terminar >='" . date("Y-m-d") . "'";
+
 
         if (isset($params['usuario_id'])) {
             $query.="LEFT JOIN invitacion i1 ON i1.invitar_desde=usuario.id AND i1.invitar_para=" . $params['usuario_id'] . " ";
@@ -392,6 +395,16 @@ class Vendedor_model extends MY_Model {
         } elseif (isset($params['pais'])) {
             $query .= " AND localizacion.pais_id='" . $params['pais'] . "' ";
         }
+        
+        if (isset($params['not_vendedor'])) {
+            $kk=  implode(",", $params['not_vendedor']);
+            $query .=" AND vendedor.id NOT IN(".$kk.") ";
+        }
+
+        /* if (isset($params['paquete_vigente'])) {
+          $this->db->where('vendedor_paquete.aprobado', '1');
+          $this->db->where('vendedor_paquete.fecha_terminar >=', date('Y-m-d'));
+          } */
 
         $query.=" ) p";
 
@@ -415,7 +428,7 @@ class Vendedor_model extends MY_Model {
                 return $this->get_site_search($params, $limit, 0);
             } else {
                 return array("vendedores" => $vendedores, "total" => $total->rows);
-            }            
+            }
         } else {
             return array("total" => 0);
         }
@@ -445,14 +458,14 @@ class Vendedor_model extends MY_Model {
             $this->punto_venta_model->delete_by("vendedor_id", $id);
             $this->invitacion_model->delete_by("invitar_desde", $cliente->usuario_id);
             $this->invitacion_model->delete_by("invitar_para", $cliente->usuario_id);
-                        
-            $seguros=$this->solicitud_seguro_model->get_many_by("vendedor_id", $id);            
-            if($seguros){
-                foreach($seguros as $seguro){
-                    $this->solicitud_seguro_model->delete($seguro->id);
+
+            $seguros = $this->infocompra_model->get_many_by("vendedor_id", $id);
+            if ($seguros) {
+                foreach ($seguros as $seguro) {
+                    $this->infocompra_model->delete($seguro->id);
                 }
             }
-            
+
             $this->vendedor_paquete_model->delete_by("vendedor_id", $id);
 
             $anuncios = $this->anuncio_model->get_many_by("vendedor_id", $id);

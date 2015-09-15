@@ -2,8 +2,8 @@
 ------------------------------------------------------*/
 .navbar-brand,
 .navbar-nav li.dropdown a {
-    line-height: 85px;
-    height: 85px;
+    line-height: 90px;
+    height: 90px;
     padding-top: 0;
 }
 
@@ -16,8 +16,12 @@
 }
 
 .navbar-custom ul.dropdown-menu li a {
-    float: right;
-    padding-right: 38px;
+    text-align: center;    
+    color:#000000!important;
+    line-height: 40px;
+    height: 40px;
+    font-weight:900;
+    font-size: 16px;
 }
 
 .navbar-custom {
@@ -580,8 +584,8 @@ span.arrow {
 }
 
 .bar.background-image-1 {
-  background: url('../../imgs/fixed-background-2.jpg') center center no-repeat;  
-  background-size: cover;
+    background: url('../../imgs/fixed-background-2.jpg') center center no-repeat;  
+    background-size: cover;
 }
 
 .index-search-box{
@@ -602,6 +606,55 @@ span.arrow {
 
 .formularios-seguros{
     padding-top: 50px;
+}
+
+.infocompras-radios .radio{
+    padding-bottom: 15px;
+}
+#tipo-error{
+    color:red;
+    width: 100%;
+    text-align: center;
+    font-weight: 800;
+}
+
+#precio_desde-error{    
+    color:red;    
+    font-weight: 800;    
+}
+
+#precio_hasta-error{        
+    text-align: right;
+    color:red;    
+    font-weight: 800;
+}
+
+.infocompras-general-categorias{
+    display: inline-block;
+    margin: auto;    
+}
+
+.infocompras-general-categorias .checkbox{
+    padding-top: 5px;
+    padding-bottom: 5px; 
+    margin-bottom: 10px;
+}
+
+.infocompras-general-categorias .checkbox-box{
+    border: 1px #000 solid;
+    margin: 1px;
+    background-color: #ccc;
+    padding-left: 15px;
+    padding-right: 10px;
+}
+
+.sub-panel-opcion a{
+    padding-left: 50px!important;
+}
+
+hr.panel-opciones{
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 @media (max-width: 768px) {
