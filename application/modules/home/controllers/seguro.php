@@ -443,7 +443,9 @@ class Seguro extends MY_Controller {
             $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
             $this->email->to($usuario->email);
             $this->email->subject('Nueva solicitud de presupuesto');
-            $data_email = array("solicitud_id" => $solicitud_id);
+            //$data_email = array("solicitud_id" => $solicitud_id);
+            $link = site_url('panel_vendedor/infocompras/seguros/responder/' . $solicitud_id);
+            $data_email = array("link" => $link);
             $this->email->message($this->load->view('home/emails/solicitud_presupuesto', $data_email, true));
             $this->email->send();
         }

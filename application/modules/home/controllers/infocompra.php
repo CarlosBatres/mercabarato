@@ -148,12 +148,12 @@ class Infocompra extends MY_Controller {
                     $params["poblacion"] = $infocompras["infocompras_datos_paso_2"]["poblacion"];
                 }
                 if ($infocompras["infocompras_datos_paso_2"]["categoria"]) {
-                    $keyword="";
-                    foreach($infocompras["infocompras_datos_paso_2"]["categoria"] as $categoria){
-                        $cat_obj=$this->categoria_model->get($categoria);
-                        $keyword.=$cat_obj->nombre.";";
+                    $keyword = "";
+                    foreach ($infocompras["infocompras_datos_paso_2"]["categoria"] as $categoria) {
+                        $cat_obj = $this->categoria_model->get($categoria);
+                        $keyword.=$cat_obj->nombre . ";";
                     }
-                    $params["keyword"]=substr($keyword, 0, -1);                    
+                    $params["keyword"] = substr($keyword, 0, -1);
                 }
             }
             $params["paquete_vigente"] = true;
@@ -224,29 +224,27 @@ class Infocompra extends MY_Controller {
         }
         echo json_encode($result);
     }
-    
+
     /**
      * 
      */
-    
-    public function crear_infocompra(){
+    public function crear_infocompra() {
         $formValues = $this->input->post();
         if ($formValues !== false) {
             $vendedor_id = $this->input->post('id');
             $vendedor = $this->vendedor_model->get($vendedor_id);
             $this->enviar_solicitud($vendedor_id);
             $this->session->set_flashdata('success', 'La solicitud ha sido enviada con exito.<br> Se envio al vendedor <strong>' . $vendedor->nombre . '</strong>');
-        }                
+        }
     }
-    
+
     /**
      * 
      * @param type $vendedor_id
      */
-    
     private function enviar_solicitud($vendedor_id) {
-        $infocompras = $this->session->userdata('infocompras');                        
-        $datos_contacto=$infocompras["infocompras_datos_contacto"];
+        $infocompras = $this->session->userdata('infocompras');
+        $datos_contacto = $infocompras["infocompras_datos_contacto"];
 
         if ($this->authentication->is_loggedin()) {
             /**
@@ -297,7 +295,7 @@ class Infocompra extends MY_Controller {
 
 
         $informacion = $infocompras['infocompras_datos_formulario'];
-        $data = array(            
+        $data = array(
             'datos_contacto' => $datos_contacto,
             'informacion' => $informacion
         );
@@ -331,17 +329,19 @@ class Infocompra extends MY_Controller {
             $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
             $this->email->to($usuario->email);
             $this->email->subject('Nueva solicitud de presupuesto');
-            $data_email = array("solicitud_id" => $solicitud_id);
+            //$data_email = array("solicitud_id" => $solicitud_id);
+            $link = site_url('panel_vendedor/infocompras/generales/responder/' . $solicitud_id);
+            $data_email = array("link" => $link);
             $this->email->message($this->load->view('home/emails/solicitud_presupuesto', $data_email, true));
             $this->email->send();
         }
     }
-    
+
     /**
      * 
      */
     public function finalizar() {
-        $this->session->unset_userdata('infocompras');        
+        $this->session->unset_userdata('infocompras');
         $this->session->unset_userdata('infocompra_ignore_list');
         $this->session->unset_userdata('infocompra_new_user');
         redirect('usuario/infocompras-general');

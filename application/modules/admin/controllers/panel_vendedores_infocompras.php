@@ -134,7 +134,9 @@ class Panel_vendedores_infocompras extends ADController {
                         $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
                         $this->email->subject('Se ha respondido a tu solicitud de presupuesto');
-                        $data_mail = array("solicitud_id"=>$solicitud_seguro->id);
+                        //$data_mail = array("solicitud_id"=>$solicitud_seguro->id);
+                        $link=site_url('usuario/infocompras-seguros/respuesta/'.$solicitud_seguro->id);
+                        $data_mail = array("link"=>$link);        
                         
                         if($usuario->temporal=="1"){
                             $this->email->message($this->load->view('home/emails/solicitud_presupuesto_registro', $data_mail, true));
@@ -434,7 +436,9 @@ class Panel_vendedores_infocompras extends ADController {
                         $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
                         $this->email->subject('Se ha respondido a tu solicitud de presupuesto');
-                        $data_mail = array("solicitud_id"=>$solicitud->id);
+                        //$data_mail = array("solicitud_id"=>$solicitud->id);
+                        $link=site_url('usuario/infocompras-seguros/respuesta/'.$solicitud->id);
+                        $data_mail = array("link"=>$link);
                         
                         if($usuario->temporal=="1"){
                             $this->email->message($this->load->view('home/emails/solicitud_presupuesto_registro', $data_mail, true));

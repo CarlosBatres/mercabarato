@@ -134,10 +134,11 @@ class Main extends MY_Controller {
         $this->template->load_view('home/paginas/cookies');
     }
 
-    public function test_url() {        
-        
-        $data_email = array("mensaje"=>"<p>Esto es una prueba</p>");
-        $this->load->view('home/emails/mensaje_admin', $data_email);
+    public function test_url() {                        
+        $solicitud_id="9";
+        $link=site_url('usuario/infocompras-seguros/respuesta/'.$solicitud_id);
+        $data_mail = array("link"=>$link);        
+        echo $this->load->view('home/emails/solicitud_presupuesto_2', $data_mail, true);
     }
 
 }
