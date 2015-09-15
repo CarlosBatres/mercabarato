@@ -23,7 +23,7 @@
                             <tr>
                                 <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
                                     Ingresa para ver la informacion.
-                                    <p class="text-right"><strong><a href="<?php echo site_url('usuario/infocompras-seguros/respuesta/'.$solicitud_id)?>">Link para continuar..</a></strong></p>                    
+                                    <p class="text-right"><strong><a href="<?php echo $link; ?>">Link para continuar..</a></strong></p>                    
                                 </td>
                             </tr>
                             <tr>
