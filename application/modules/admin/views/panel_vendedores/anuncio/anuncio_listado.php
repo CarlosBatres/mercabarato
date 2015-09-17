@@ -22,14 +22,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-md-12">
-            <?php if ($this->session->flashdata('success')) { ?>
-                <div class="alert alert-success"> 
-                    <a class="close" data-dismiss="alert">×</a>
-                    <?= $this->session->flashdata('success') ?> 
-                </div>
-            <?php } ?>            
-
+        <div class="col-md-12">                      
             <div class="panel-group search-block" id="search-block">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -39,7 +32,7 @@
                     </div>
                     <div id="collapse_search" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            <form action="<?php echo site_url('panel_vendedor/anuncio/listado') ?>" method="post" class="search-form" id="listado-items">
+                            <?php echo form_open('panel_vendedor/anuncio/listado', 'id="listado-items" class="search-form"'); ?>                            
                                 <div class="row">                                    
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -59,7 +52,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                 </div>

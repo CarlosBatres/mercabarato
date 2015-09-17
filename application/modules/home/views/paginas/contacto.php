@@ -6,7 +6,7 @@
             </div>
             <div class="col-md-5">
                 <ul class="breadcrumb">
-                    <li><a href="<?php site_url('');?>">Inicio</a>
+                    <li><a href="<?php site_url(''); ?>">Inicio</a>
                     </li>
                     <li>Contacto</li>
                 </ul>
@@ -15,7 +15,7 @@
         </div>
     </div>
 </div>
-
+<br>
 <div id="content">
     <div class="container" id="contact">
 
@@ -29,37 +29,57 @@
 
                     <p class="lead">Escríbenos a través de nuestro formulario de contacto aquí debajo</p>
                     <p></p>
-                    
 
-                    <form action="<?php echo site_url('site/contacto/submit')?>" method="POST" id="formulario_contacto">
-                        <div class="row">                            
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="text" class="form-control" id="email" name="email">
-                                </div>
-                            </div>                            
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="message">Mensaje</label>
-                                    <textarea id="mensjae" name="mensaje" class="form-control" rows="10"></textarea>
-                                </div>
+                    <?php echo form_open('site/contacto/submit', 'id="formulario_contacto" rel="preventDoubleSubmission"'); ?>                                     
+                    <div class="row">                            
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="email"><strong>Email</strong></label>
+                                <input type="text" class="form-control" name="el_email">
                             </div>
-
-                            <div class="col-sm-12 text-center">
-                                <button type="submit" class="btn btn-template-main"><i class="fa fa-envelope-o"></i> Enviar Mensaje</button>
-
+                        </div>                            
+                    </div>                            
+                    <div class="row">                                
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="message"><strong>Mensaje</strong></label>
+                                <textarea name="mensaje" class="form-control" rows="10"></textarea>
                             </div>
                         </div>
-                        <!-- /.row -->
-                    </form>
+                    </div>
+                    <?php if ($this->session->flashdata('error')) { ?>
+                        <div class="alert alert-danger"> 
+                            <a class="close" data-dismiss="alert">×</a>
+                            <?= $this->session->flashdata('error') ?> 
+                        </div>
+                    <?php } ?>
+                    <?php if ($spam_protection): ?>
+                        <div class="row">              
+                            <div class="col-xs-6">
+                                <div class="form-group">
+                                    <label><strong><?php echo $spam_question ?></strong></label>
+                                    <input type="text" class="form-control" name="spam_anwser">
+                                </div>
+                            </div>                     
+                        </div>                     
+                    <?php endif; ?>
+                    <br>
+                    <p class="magia">
+                        <input type="text" name="email">
+                    </p>
+                    <div class="row">                                                                     
+                        <div class="col-xs-12 text-center">
+                            <button type="submit" class="btn btn-template-primary"><i class="fa fa-envelope-o"></i> Enviar Mensaje</button>
+                        </div>
+                    </div>                                        
+                    <?php echo form_close(); ?>
                 </div>
 
                 <div class="col-md-4">                    
                     <h3 class="text-uppercase">Telefono de Contacto</h3>
 
                     <p class="text-muted">Puedes contactarnos a travez del numero a continuación.</p>
-                    <p><strong>+33 555 444 333</strong>
+                    <p><strong>No disponible</strong>
                     </p>
 
 

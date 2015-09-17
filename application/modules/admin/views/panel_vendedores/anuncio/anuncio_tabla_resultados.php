@@ -11,16 +11,15 @@
     <?php if ($this->session->flashdata('success')) { ?>
         <div class="alert alert-success"> 
             <a class="close" data-dismiss="alert">×</a>
-            <?= $this->session->flashdata('success') ?> 
+            <i class="fa fa-info-circle"></i> <?= $this->session->flashdata('success') ?> 
         </div>
-    <?php } ?>   
+    <?php } ?>      
     <?php if ($this->session->flashdata('error')) { ?>
         <div class="alert alert-danger"> 
             <a class="close" data-dismiss="alert">×</a>
-            <?= $this->session->flashdata('error') ?> 
+            <i class="fa fa-warning"></i> <?= $this->session->flashdata('error') ?> 
         </div>
-    <?php } ?>
-
+    <?php } ?> 
     <?php if ($ilimitado): ?>
         <div class="alert alert-info">                 
             <p> Puedes insertar anuncios sin limites</p>

@@ -46,7 +46,7 @@
                     </div>
                     <div id="collapse_search" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            <form action="<?php echo site_url('admin/productos') ?>" method="post" class="search-form" id="listado-productos">
+                            <?php echo form_open('admin/productos', 'id="listado-productos" class="search-form"'); ?>                            
                                 <div class="row">                                    
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -74,7 +74,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                 </div>

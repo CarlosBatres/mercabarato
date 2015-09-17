@@ -684,15 +684,15 @@
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="box box_registro">                
+            <?php echo form_open_multipart('panel_vendedor/infocompras/seguros/responder/' . $solicitud_seguro->id,"id='responder_seguro_form' rel='preventDoubleSubmission'"); ?>                                 
+            <div class="box box_registro">                 
                 <p class="lead"><strong>1) Datos de tu Respuesta</strong></p>
                 <?php if ($this->session->flashdata('error')) { ?>
                     <div class="alert alert-danger"> 
                         <a class="close" data-dismiss="alert">×</a>
                         <?= $this->session->flashdata('error') ?> 
                     </div>
-                <?php } ?>
-                <?php echo form_open_multipart('panel_vendedor/infocompras/seguros/responder/' . $solicitud_seguro->id); ?>                                 
+                <?php } ?>                
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">                                                        

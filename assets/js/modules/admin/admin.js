@@ -119,7 +119,10 @@
     $(function() {
         $('[data-toggle="tooltip"]').tooltip();
         $('[data-toggle="popover"]').popover();
-
+         
+        $('#side-menu').metisMenu();
+        $.ajaxSetup({data: csfrData});
+        
         // Ajaxify links
         $(document).on('click', 'a[rel]', function(e) {
             var $a = $(this),
@@ -157,7 +160,7 @@
             var $form = $(this),
                     rel = $form.attr('rel'),
                     url = $form.attr('action');
-
+                               
             if (typeof url === 'undefined') {
                 e.preventDefault();
                 return;
@@ -184,15 +187,20 @@
                         }
                     });
                     break;
+                case 'preventDoubleSubmission':
+                    if ($form.data('submitted') === true) {                        
+                        e.preventDefault();
+                    } else {                          
+                        $form.data('submitted', true);
+                        $form.find('[type="submit"]').addClass('disabled');                                                
+                    }
+                    return $form;
+                    break;
             }
             e.preventDefault();
-        });
-
+        });                
     });
 
-    $(function() {
-        $('#side-menu').metisMenu();
-    });
 
     //Loads the correct sidebar on window load,
     //collapses the sidebar on window resize.
@@ -223,9 +231,7 @@
         }).addClass('active').parent().parent().addClass('in').parent();
         if (element.is('li')) {
             element.addClass('active');
-        }
-
-
+        }        
 
 
     });
@@ -257,13 +263,13 @@
             }
         }
     });
-    
+
     $.validator.addMethod(
             "greaterThan",
             function(value, element, params) {
-                var startDate = $.datepicker.formatDate('yy-mm-dd', params.datepicker("getDate"));                           
-                var endDate = $.datepicker.formatDate('yy-mm-dd', $('#'+element.id).datepicker("getDate"));                                               
-                
+                var startDate = $.datepicker.formatDate('yy-mm-dd', params.datepicker("getDate"));
+                var endDate = $.datepicker.formatDate('yy-mm-dd', $('#' + element.id).datepicker("getDate"));
+
                 if (!/Invalid|NaN/.test(new Date(endDate))) {
                     return new Date(endDate) > new Date(startDate);
                 }
@@ -271,5 +277,6 @@
                 return false;
             },
             'Must be greater than {0}.');
+
 
 })(window);

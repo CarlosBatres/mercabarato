@@ -1,11 +1,11 @@
 $(document).ready(function() {
     $("#formulario_contacto").validate({
         rules: {
-            email: {required: true,email:true},
-            mensaje : {required:true}
+            el_email: {required: true,email:true},
+            mensaje : {required:true},            
         },
         messages: {
-            email: {
+            el_email: {
                 required: "Ingresa un email.",
                 email:"Ingresa un email valido."
             },

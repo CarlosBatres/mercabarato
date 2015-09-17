@@ -37,7 +37,7 @@ $(document).ready(function() {
         yearRange: "1900:-nn"
     });
 
-    validateForms();
+    validateForms();    
 });
 
 function validateForms() {

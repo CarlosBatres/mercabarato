@@ -13,7 +13,7 @@
             <div class="box box_registro">
                 <h2 class="text-uppercase">Detalles de la Oferta</h2>                                        
                 <hr>                
-                <?php echo form_open('panel_vendedor/ofertas/crear', "id='detalles_oferta'"); ?>                                                 
+                <?php echo form_open('panel_vendedor/ofertas/crear', "id='detalles_oferta' rel='preventDoubleSubmission'"); ?>                                                 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">

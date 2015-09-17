@@ -106,6 +106,10 @@ tr.draggable > td > div.ui-state-default
     padding-bottom: 15px;
 }
 
+textarea{
+    resize: none;
+}
+
 /* MEDIA */
 
 @media (max-width: 768px) {

@@ -19,7 +19,7 @@
                     </div>
                     <div id="collapse_search" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            <form action="" method="post" class="search-form" id="listado-item">
+                            <?php echo form_open('', 'id="listado-item" class="search-form"'); ?>                            
                                 <div class="row">                                    
                                     <div class="col-md-12">
                                         <div class="form-group">
@@ -40,13 +40,19 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <?php if ($this->session->flashdata('error')) { ?>
+        <div class="alert alert-danger"> 
+            <a class="close" data-dismiss="alert">×</a>
+            <i class="fa fa-warning"></i> <?= $this->session->flashdata('error') ?> 
+        </div>
+    <?php } ?> 
     <div class="row">
         <div class="col-md-5 col-sm-12">
             <div class="panel panel-default">

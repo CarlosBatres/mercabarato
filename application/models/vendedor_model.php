@@ -395,10 +395,12 @@ class Vendedor_model extends MY_Model {
         } elseif (isset($params['pais'])) {
             $query .= " AND localizacion.pais_id='" . $params['pais'] . "' ";
         }
-        
+
         if (isset($params['not_vendedor'])) {
-            $kk=  implode(",", $params['not_vendedor']);
-            $query .=" AND vendedor.id NOT IN(".$kk.") ";
+            if (is_array($params['not_vendedor'])) {
+                $kk = implode(",", $params['not_vendedor']);
+                $query .=" AND vendedor.id NOT IN(" . $kk . ") ";
+            }
         }
 
         /* if (isset($params['paquete_vigente'])) {

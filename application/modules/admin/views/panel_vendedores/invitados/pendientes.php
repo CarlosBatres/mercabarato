@@ -23,10 +23,10 @@
                     <?= $this->session->flashdata('error') ?> 
                 </div>
             <?php } ?>
-            <form action="<?php echo site_url('panel_vendedor/producto/listado') ?>" method="post" class="search-form" id="listado-items">
+            <?php echo form_open('panel_vendedor/producto/listado', 'id="listado-items" class="search-form"'); ?>            
                 <input type="hidden" value="1" name="pagina" id="pagina"/>                                        
                 <input type="hidden" value="invitaciones_pendientes" name="tipo"/>                                        
-            </form>
+            <?php echo form_close(); ?>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">

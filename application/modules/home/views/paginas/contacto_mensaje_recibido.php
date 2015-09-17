@@ -15,7 +15,7 @@
         </div>
     </div>
 </div>
-
+<br>
 <div id="content">
     <div class="container">            
         <div class="row ">        
@@ -25,7 +25,7 @@
                         <h3>Hemos recibido su mensaje con exito</h3>                        
 
                         <p class="lead">Te atenderemos en la brevedad posible.</h4>
-                        <p class="buttons"><a href="<?php echo site_url() ?>" class="btn btn-template-main"><i class="fa fa-home"></i> Ir a la Pagina Principal</a>
+                        <p class="buttons"><a href="<?php echo site_url() ?>" class="btn btn-template-primary"><i class="fa fa-home"></i> Ir a la Pagina Principal</a>
                         </p>
                         <hr>
                     </div>

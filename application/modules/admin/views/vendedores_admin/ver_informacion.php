@@ -18,7 +18,7 @@
                         <?= $this->session->flashdata('error') ?> 
                     </div>
                 <?php } ?> 
-                <form action="<?php echo site_url('') ?>" method="post" class="search-form" id="listado-items">
+                <?php echo form_open('', 'id="listado-items" class="search-form"'); ?>                
                     <input type="hidden" value="1" name="pagina" id="pagina"/> 
                     <div class="row">
                         <div class="col-md-2">
@@ -78,7 +78,7 @@
                         </div>
                         <hr>
                     <?php endif; ?>
-                </form>
+                <?php echo form_close(); ?>
             </div>
         </div>
     </div>

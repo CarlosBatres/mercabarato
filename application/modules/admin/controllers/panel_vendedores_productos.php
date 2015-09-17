@@ -126,14 +126,12 @@ class Panel_vendedores_productos extends ADController {
                 $this->load->helper('ckeditor');
 
                 $data = array("categorias_tree_html" => $categorias_tree_html);
-                $data['ckeditor'] = array(
-                    //ID of the textarea that will be replaced
+                $data['ckeditor'] = array(                    
                     'id' => 'content',
-                    'path' => 'assets/js/ckeditor',
-                    //Optionnal values
+                    'path' => 'assets/js/ckeditor',                    
                     'config' => array(
-                        'toolbar' => "Full", //Using the Full toolbar                        
-                        'height' => '200px', //Setting a custom height
+                        'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
+                        'height' => '200px', 
                     ),
                 );
                 $this->template->load_view('admin/panel_vendedores/producto/producto_agregar', $data);
@@ -289,7 +287,7 @@ class Panel_vendedores_productos extends ADController {
                         'path' => 'assets/js/ckeditor',
                         //Optionnal values
                         'config' => array(
-                            'toolbar' => "Full", //Using the Full toolbar                        
+                            'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
                             'height' => '200px', //Setting a custom height
                         ),
                     );

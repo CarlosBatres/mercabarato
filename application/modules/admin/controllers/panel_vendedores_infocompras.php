@@ -155,14 +155,14 @@ class Panel_vendedores_infocompras extends ADController {
                         'id' => 'content',
                         'path' => 'assets/js/ckeditor',
                         'config' => array(
-                            'toolbar' => "Full",
+                            'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
                             'height' => '300px',
                         ),
                     );
                     $data["informacion"] = unserialize($solicitud_seguro->datos);
                     $data["mensajes"] = $mensajes;
 
-                    //$this->template->add_js("modules/admin/panel_vendedores/seguros_listado.js");
+                    $this->template->add_js("modules/admin/panel_vendedores/form_validation.js");
                     $this->template->load_view('admin/panel_vendedores/infocompras/seguros/responder_seguro', $data);
                 }
             } else {
@@ -457,14 +457,14 @@ class Panel_vendedores_infocompras extends ADController {
                         'id' => 'content',
                         'path' => 'assets/js/ckeditor',
                         'config' => array(
-                            'toolbar' => "Full",
+                            'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
                             'height' => '300px',
                         ),
                     );
                     $data["informacion"] = unserialize($solicitud->datos);
                     $data["mensajes"] = $mensajes;
 
-                    //$this->template->add_js("modules/admin/panel_vendedores/seguros_listado.js");
+                    $this->template->add_js("modules/admin/panel_vendedores/form_validation.js");
                     $this->template->load_view('admin/panel_vendedores/infocompras/general/responder_general', $data);
                 }
             } else {

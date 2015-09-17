@@ -225,9 +225,9 @@
                         <!-- /.panel-body -->
                     </div>                    
                 </div>
-                <form action="#" method="post" class="search-form" id="listado-productos">
+                <?php echo form_open('', 'id="listado-productos" class="search-form"'); ?>                
                     <input type="hidden" value="1" name="pagina" id="pagina"/>
-                </form>    
+                <?php echo form_close(); ?>
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
