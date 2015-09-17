@@ -13,6 +13,9 @@
                 <div class="panel-heading">
                     <strong>Mis Ofertas</strong>
                 </div>
+                <?php echo form_open('', 'id="listado-items"'); ?>
+                <input type="hidden" value="1" name="pagina" id="pagina"/>
+                <?php echo form_close(); ?>
                 <div class="panel-body">
                     <div id="tabla-resultados-left"></div>
                 </div>

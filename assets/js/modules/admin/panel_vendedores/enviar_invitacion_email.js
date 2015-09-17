@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    $("#email_form").validate({        
+    $("#email_form").validate({
+        ignore: [],
         rules: {
             email: {
                 required: true, 
@@ -14,20 +15,34 @@ $(document).ready(function() {
 		}
             },
             titulo: {required: true},
-            comentario: {required: true},            
+            contenido: {
+                required: function()
+                {
+                    CKEDITOR.instances.content.updateElement();
+                }
+            }
         },
         messages: {
             email: {
-                required: "Ingrese su email",
+                required: "Ingresa un email para enviar la invitacion",
                 email: "Ingrese un email valido",
                 remote: 'Este email ya esta registrado en el sistema, ingrese uno diferente.'
             },           
             titulo: {
                 required: "Este campo es requerido."
             },
-            comentario: {
+            contenido: {
                 required: "Este campo es requerido."
             }
-        }
+        },
+        errorPlacement: function(error, $elem) {            
+            if ($elem.attr("name") == "contenido") {
+                $elem.next().css('border', '1px solid red');
+                error.insertBefore($elem);
+            } else {
+                error.insertAfter($elem);
+            }
+
+        },
     });  
 });

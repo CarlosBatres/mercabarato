@@ -160,7 +160,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label><strong>Gusto o Aficiones</strong></label>
+                                            <label><strong>Gustos o Aficiones</strong></label>
                                             <input type="text" class="form-control" name="gustos" disabled value="<?php echo $informacion["informacion"]["gustos"] ?>">
                                         </div>
                                     </div>
@@ -307,15 +307,15 @@
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="box box_registro">                
+            <?php echo form_open_multipart('panel_vendedor/infocompras/generales/responder/' . $solicitud->id,"id='responder_general_form' rel='preventDoubleSubmission'"); ?>                                 
+            <div class="box box_registro">                                
                 <p class="lead"><strong>1) Datos de tu Respuesta</strong></p>
                 <?php if ($this->session->flashdata('error')) { ?>
                     <div class="alert alert-danger"> 
                         <a class="close" data-dismiss="alert">×</a>
                         <?= $this->session->flashdata('error') ?> 
                     </div>
-                <?php } ?>
-                <?php echo form_open_multipart('panel_vendedor/infocompras/generales/responder/' . $solicitud->id); ?>                                 
+                <?php } ?>                
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">                                                        

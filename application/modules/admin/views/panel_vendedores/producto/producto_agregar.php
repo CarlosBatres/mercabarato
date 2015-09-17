@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">                                                        
-                            <label>Descripcion</label>                    
+                            <label>Descripción</label>                    
                             <textarea class="form-control" id="content" name="descripcion" rows="10"></textarea>                                        
                             <?php echo display_ckeditor($ckeditor); ?>
                         </div>

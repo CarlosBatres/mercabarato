@@ -169,7 +169,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label><strong>Gusto o Aficiones</strong></label>
+                                        <label><strong>Gustos o Aficiones</strong></label>
                                         <input type="text" class="form-control" name="gustos" value="">
                                     </div>
                                 </div>

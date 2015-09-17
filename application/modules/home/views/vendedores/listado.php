@@ -14,7 +14,7 @@
         <div class="row">              
             <div class="col-md-9">
                 <div class="box-simple">                                
-                    <form id="form_buscar">
+                    <?php echo form_open('', 'id="form_buscar"'); ?>
                         <div class="row pull-left hidden-sm hidden-xs">
                             <div class="col-md-12">
                                 <label class="text-left"><strong>Buscar Vendedores</strong></label>
@@ -80,7 +80,7 @@
                                 </div>
                             </div>
                         </div>                         
-                    </form>
+                    <?php echo form_close(); ?>
                 </div>
 
                 <div id="tabla-resultados"></div>

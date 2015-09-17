@@ -16,6 +16,7 @@ class Panel_vendedores_tarifas extends ADController {
      */
     public function nueva_tarifa_paso1() {
         $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());
+        $this->session->keep_flashdata("error");
 
         if ($paquete) {
             if ($paquete->limite_productos != "0") {
@@ -43,14 +44,21 @@ class Panel_vendedores_tarifas extends ADController {
      */
     public function nueva_seleccion_clientes() {
         $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());
-
+        $this->session->keep_flashdata("error");
+        
         if ($paquete) {
             if ($paquete->limite_productos != "0") {
-                $this->template->set_title("Panel de Control - Mercabarato.com");
-                $this->template->set_layout('panel_vendedores');
-                $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado_clientes.js");
-                $this->session->unset_userdata('pv_tarifas_incluir_ids_clientes');
-                $this->template->load_view('admin/panel_vendedores/tarifas/listado_clientes');
+                $productos_seleccionados = $this->session->userdata('pv_tarifas_incluir_ids_productos');
+                if ($productos_seleccionados) {
+                    $this->template->set_title("Panel de Control - Mercabarato.com");
+                    $this->template->set_layout('panel_vendedores');
+                    $this->template->add_js("modules/admin/panel_vendedores/tarifa_listado_clientes.js");
+                    $this->session->unset_userdata('pv_tarifas_incluir_ids_clientes');
+                    $this->template->load_view('admin/panel_vendedores/tarifas/listado_clientes');
+                } else {
+                    $this->session->set_flashdata("error", "Debes seleccionar al menos un producto.");
+                    redirect('panel_vendedor/tarifas/nueva');
+                }
             } else {
                 $this->template->set_title("Panel de Control - Mercabarato.com");
                 $this->template->set_layout('panel_vendedores');
@@ -73,19 +81,24 @@ class Panel_vendedores_tarifas extends ADController {
         $ids_clientes = $this->session->userdata('pv_tarifas_incluir_ids_clientes');
         $ids_productos = $this->session->userdata('pv_tarifas_incluir_ids_productos');
 
-        if ($ids_clientes && $ids_productos) {
-            $productos_seleccionados = $ids_productos;
-            $mas_de_uno = false;
-            if ($productos_seleccionados) {
-                if (sizeof($productos_seleccionados) > 1) {
-                    $mas_de_uno = true;
+        if ($ids_clientes) {
+            if ($ids_clientes && $ids_productos) {
+                $productos_seleccionados = $ids_productos;
+                $mas_de_uno = false;
+                if ($productos_seleccionados) {
+                    if (sizeof($productos_seleccionados) > 1) {
+                        $mas_de_uno = true;
+                    }
                 }
-            }
 
-            $this->template->add_js("modules/admin/panel_vendedores/tarifa_detalles.js");
-            $this->template->load_view('admin/panel_vendedores/tarifas/detalles_tarifa', array("mas_de_uno" => $mas_de_uno));
+                $this->template->add_js("modules/admin/panel_vendedores/tarifa_detalles.js");
+                $this->template->load_view('admin/panel_vendedores/tarifas/detalles_tarifa', array("mas_de_uno" => $mas_de_uno));
+            } else {
+                redirect('panel_vendedor');
+            }
         } else {
-            redirect('panel_vendedor');
+            $this->session->set_flashdata("error","Debe seleccionar al menos un cliente.");
+            redirect('panel_vendedor/tarifas/seleccion_clientes');
         }
     }
 

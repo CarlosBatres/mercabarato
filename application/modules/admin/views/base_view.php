@@ -46,6 +46,12 @@
         <?php echo $body; ?>
         <!-- / -->
 
+        <script>
+            var csfrData = {};
+            csfrData['<?php echo $this->security->get_csrf_token_name(); ?>']
+                    = '<?php echo $this->security->get_csrf_hash(); ?>';
+        </script>
+        
         <script src="<?php echo assets_url('js/jquery.min.js'); ?>"></script>
         <script src="<?php echo assets_url('js/jquery.validate.min.js'); ?>"></script>
         <script src="<?php echo assets_url('js/jquery-ui.min.js'); ?>"></script>                

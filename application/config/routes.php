@@ -117,6 +117,7 @@ $route['usuario/infocompras-seguros/enviar_pregunta'] = 'home/cliente/seguro_env
 $route['usuario/infocompras-seguros/descargar_respuesta/(:any)'] = 'home/cliente/seguros_download_respuesta/$1';
 $route['usuario/buscar-solicitudes-seguros'] = 'home/cliente/ajax_get_listado_seguros';
 $route['usuario/eliminar-cuenta'] = 'home/usuario/eliminar_cuenta';
+$route['usuario/eliminar-cuenta-confirmar'] = 'home/usuario/eliminar_cuenta_confirmar';
 
 $route['usuario/infocompras-general'] = 'home/cliente/view_infocompras_general';
 $route['usuario/infocompras-general/respuesta/(:num)'] = 'home/cliente/view_infocompras_respuesta/$1';
@@ -134,6 +135,7 @@ $route['util/upload_vendedor_image'] = 'home/vendedor/upload_image';
 
 $route['site/contacto'] = 'home/main/contacto';
 $route['site/contacto/submit'] = 'home/main/contacto_submit';
+$route['site/contacto/mensaje-enviado'] = 'home/main/contacto_enviado';
 $route['site/quienes-somos'] = 'home/main/quienes_somos';
 $route['site/como-funciona'] = 'home/main/como_funciona';
 $route['site/aviso-legal'] = 'home/main/aviso_legal';

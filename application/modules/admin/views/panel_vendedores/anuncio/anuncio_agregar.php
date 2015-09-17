@@ -19,7 +19,7 @@
                         <?= $this->session->flashdata('error') ?> 
                     </div>
                 <?php } ?>
-                <?php echo form_open('panel_vendedor/anuncio/agregar', 'id="admin_crear_form"'); ?>                 
+                <?php echo form_open('panel_vendedor/anuncio/agregar', 'id="admin_crear_form" rel="preventDoubleSubmission"'); ?>                 
                 <div class="form-group">
                     <label>Titulo</label>
                     <input type="text" class="form-control" name="titulo">
@@ -28,12 +28,7 @@
                     <label>Contenido</label>                    
                     <textarea class="form-control" id="content" name="contenido" rows="10"></textarea>                                        
                     <?php echo display_ckeditor($ckeditor); ?>
-                </div>                
-                <!--<div class="form-group">
-                    <label>Imagen del Producto</label>                    
-                    <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('admin/producto_resource/upload_image') ?>">
-                    <input type="hidden" name="file_name" id="file_name" value="">                                                            
-                </div>               -->
+                </div>                               
 
                 <hr>
                 <div class="text-center">

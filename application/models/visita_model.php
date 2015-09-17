@@ -21,7 +21,7 @@ class Visita_model extends MY_Model {
         if ($user_id) {
             $usuario = $this->usuario_model->get_full_identidad($user_id);
             $ip_address = $this->session->userdata('ip_address');
-            if (!$usuario->es_vendedor()) {
+            if (!$usuario->es_vendedor() && ($usuario->usuario->permisos_id!="1" && $usuario->usuario->permisos_id!="2")) {
                 $visita = $this->get_by(array(
                     "fecha" => date("Y-m-d"),
                     "producto_id" => $producto_id,
@@ -219,7 +219,7 @@ class Visita_model extends MY_Model {
         if ($user_id) {
             $usuario = $this->usuario_model->get_full_identidad($user_id);
             $ip_address = $this->session->userdata('ip_address');
-            if (!$usuario->es_vendedor()) {
+            if (!$usuario->es_vendedor() && ($usuario->usuario->permisos_id!="1" && $usuario->usuario->permisos_id!="2")) {
                 $visita = $this->get_by(array(
                     "fecha" => date("Y-m-d"),
                     "anuncio_id" => $anuncio_id,

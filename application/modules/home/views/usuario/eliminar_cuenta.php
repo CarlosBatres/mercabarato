@@ -19,7 +19,7 @@
 <div id="content">
     <div class="container">        
         <div class="col-md-8 col-md-offset-2">                                                                        
-            <?php echo form_open('usuario/eliminar-cuenta'); ?>              
+            <?php echo form_open('usuario/eliminar-cuenta-confirmar'); ?>              
             <h3>¿Desea eliminar su cuenta permanentemente?</h3>
             <p>Estas a punto de eliminar la cuenta de <strong><?php echo $usuario->email ?></strong></p>
             <p>Recuerde que eliminar su cuenta es permanente.</p>

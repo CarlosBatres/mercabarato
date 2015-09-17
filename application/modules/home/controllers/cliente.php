@@ -483,7 +483,7 @@ class Cliente extends MY_Controller {
                         'id' => 'pregunta',
                         'path' => 'assets/js/ckeditor',
                         'config' => array(
-                            'toolbar' => "Full",
+                            'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
                             'height' => '300px',
                         ),
                     );
@@ -652,7 +652,7 @@ class Cliente extends MY_Controller {
                         'id' => 'pregunta',
                         'path' => 'assets/js/ckeditor',
                         'config' => array(
-                            'toolbar' => "Full",
+                            'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
                             'height' => '300px',
                         ),
                     );

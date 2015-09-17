@@ -19,7 +19,7 @@
                         <?= $this->session->flashdata('error') ?> 
                     </div>
                 <?php } ?>
-                <?php echo form_open('panel_vendedor/anuncio/editar/' . $anuncio->id, 'id="admin_edit_form"'); ?>                                 
+                <?php echo form_open('panel_vendedor/anuncio/editar/' . $anuncio->id, 'id="admin_edit_form" rel="preventDoubleSubmission"'); ?>                                 
                 <div class="form-group">
                     <label>Titulo</label>
                     <input type="text" class="form-control" name="titulo" value="<?php echo $anuncio->titulo; ?>">

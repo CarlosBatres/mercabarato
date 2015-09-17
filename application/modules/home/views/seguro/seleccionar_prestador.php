@@ -16,7 +16,7 @@
                 <div class="col-md-12">
                     <p class="lead">A continuación puede filtrar por provincia y población para enviar el presupuesto a los proveedores que coincidan con sus criterios de busqueda.</p>
                 </div>
-                <form id="form_buscar">
+                <?php echo form_open('', 'id="form_buscar"'); ?>                
                     <input type="hidden" name="pagina" id="pagina" value="1">                    
                     <div class="col-md-6">
                         <div class="form-group">                                
@@ -35,7 +35,7 @@
                             </select>
                         </div>
                     </div>
-                </form>
+                <?php echo form_close(); ?>
             </div>
             <div class="col-md-12">
                 <div class="row">                    

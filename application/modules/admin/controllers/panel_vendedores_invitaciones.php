@@ -93,7 +93,7 @@ class Panel_vendedores_invitaciones extends ADController {
                 if ($accion == "send-invitacion") {
                     $data = array(
                         "titulo" => ($this->input->post('titulo') != '') ? $this->input->post('titulo') : null,
-                        "comentario" => ($this->input->post('comentario') != '') ? $this->input->post('comentario') : null,
+                        "comentario" => ($this->input->post('contenido') != '') ? $this->input->post('contenido') : null,
                         "invitar_desde" => $this->identidad->usuario->id,
                         "invitar_para" => $cliente->usuario_id,
                         "estado" => "1",
@@ -121,21 +121,18 @@ class Panel_vendedores_invitaciones extends ADController {
             } else {
                 $this->template->set_title("Panel de Control - Mercabarato.com");
                 $this->template->set_layout('panel_vendedores');
+                $this->template->add_js("modules/admin/panel_vendedores/form_validation.js");
                 $this->load->helper('ckeditor');
 
                 $data = array("cliente" => $cliente);
-                $data['ckeditor'] = array(
-                    //ID of the textarea that will be replaced
+                $data['ckeditor'] = array(                    
                     'id' => 'content',
-                    'path' => 'assets/js/ckeditor',
-                    //Optionnal values
-                    'config' => array(
-                        'toolbar' => "Full", //Using the Full toolbar                        
-                        'height' => '200px', //Setting a custom height
+                    'path' => 'assets/js/ckeditor',                    
+                    'config' => array(                        
+                        'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
+                        'height' => '400px', 
                     ),
                 );
-
-
                 $this->template->load_view('admin/panel_vendedores/invitados/enviar_invitacion', $data);
             }
         } else {
@@ -153,7 +150,7 @@ class Panel_vendedores_invitaciones extends ADController {
             if ($accion == "send-invitacion") {
                 $email = $this->input->post('email');
                 $titulo = $this->input->post('titulo');
-                $comentario = $this->input->post('comentario');
+                $comentario = $this->input->post('contenido');
 
                 /**
                  * Creo un cliente temporal para que se pueda registrar despues
@@ -302,14 +299,12 @@ class Panel_vendedores_invitaciones extends ADController {
             $this->load->helper('ckeditor');
 
             $data = array();
-            $data['ckeditor'] = array(
-                //ID of the textarea that will be replaced
+            $data['ckeditor'] = array(                
                 'id' => 'content',
-                'path' => 'assets/js/ckeditor',
-                //Optionnal values
+                'path' => 'assets/js/ckeditor',                
                 'config' => array(
-                    'toolbar' => "Full", //Using the Full toolbar                        
-                    'height' => '200px', //Setting a custom height
+                    'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
+                    'height' => '400px',
                 ),
             );
 

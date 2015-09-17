@@ -38,12 +38,26 @@
                     </li>
                     <li>
                         <a href="<?php echo site_url('panel_vendedor/resumen'); ?>"><i class="fa fa-fw fa-dashboard"></i> Resumen</a>
-                    </li>                                                                                                
+                    </li>                                                                                                                    
                     <li>
+                        <?php
+                        if (strpos($this->uri->uri_string(), 'panel_vendedor/invitaciones/') !== false) {
+                            $collapse = "in";
+                        } else {
+                            $collapse = "";
+                        }
+                        ?>
                         <a href="#"><i class="fa fa-user-plus fa-fw"></i> Mis Clientes<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
+                        <ul class="nav nav-second-level <?php echo $collapse ?>">
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/invitaciones/buscar'); ?>"><i class="fa fa-plus fa-fw"></i> Buscar Clientes</a>
+                                <?php
+                                if (strpos($this->uri->uri_string(), 'panel_vendedor/invitaciones/enviar') !== false) {
+                                    $class = "active";
+                                } else {
+                                    $class = "";
+                                }
+                                ?>
+                                <a class="<?php echo $class; ?>" href="<?php echo site_url('panel_vendedor/invitaciones/buscar'); ?>"><i class="fa fa-plus fa-fw"></i> Buscar Clientes</a>
                             </li>
                             <li>
                                 <a href="<?php echo site_url('panel_vendedor/invitaciones/aceptadas'); ?>"><i class="fa fa-fw fa-user"></i> Clientes Actuales</a>
@@ -181,13 +195,34 @@
                         </ul>                         
                     </li>
                     <li>
+                        <?php
+                        if (strpos($this->uri->uri_string(), 'panel_vendedor/infocompras/') !== false) {
+                            $collapse = "in";
+                        } else {
+                            $collapse = "";
+                        }
+                        ?>
                         <a href="#"><i class="fa fa-tasks fa-fw"></i> Infocompras<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
+                        <ul class="nav nav-second-level <?php echo $collapse ?>">
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/infocompras/generales'); ?>"> Generales</a>
+                                <?php
+                                if (strpos($this->uri->uri_string(), 'panel_vendedor/infocompras/generales') !== false) {
+                                    $class = "active";
+                                } else {
+                                    $class = "";
+                                }
+                                ?>
+                                <a class="<?php echo $class; ?>" href="<?php echo site_url('panel_vendedor/infocompras/generales'); ?>"> Generales</a>
                             </li>                                                        
                             <li>
-                                <a href="<?php echo site_url('panel_vendedor/infocompras/seguros'); ?>"> Seguros</a>
+                                <?php
+                                if (strpos($this->uri->uri_string(), 'panel_vendedor/infocompras/seguros') !== false) {
+                                    $class = "active";
+                                } else {
+                                    $class = "";
+                                }
+                                ?>
+                                <a class="<?php echo $class; ?>" href="<?php echo site_url('panel_vendedor/infocompras/seguros'); ?>"> Seguros</a>
                             </li>                                                                                    
                         </ul>                         
                     </li>

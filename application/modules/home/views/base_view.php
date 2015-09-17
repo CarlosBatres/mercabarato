@@ -45,19 +45,25 @@
         <![endif]-->
     </head>
     <body>
-        
-        
+
+
 
         <?php echo $body; ?>
         <!-- / -->
 
+        <script>
+            var csfrData = {};
+            csfrData['<?php echo $this->security->get_csrf_token_name(); ?>']
+                    = '<?php echo $this->security->get_csrf_hash(); ?>';
+        </script>
+        
         <script src="<?php echo assets_url('js/jquery.min.js'); ?>"></script>
         <script src="<?php echo assets_url('js/jquery.validate.min.js'); ?>"></script>
         <script src="<?php echo assets_url('js/jquery-ui.min.js'); ?>"></script>                
-        <script src="<?php echo assets_url('js/bootstrap.min.js'); ?>"></script>        
-        <!--<script src="<?php echo assets_url('js/owl.carousel.min.js'); ?>"></script>-->
+        <script src="<?php echo assets_url('js/bootstrap.min.js'); ?>"></script>                
         <script src="<?php echo assets_url('js/jquery.blockUI.js'); ?>"></script>
         <script src="<?php echo assets_url('js/metisMenu.min.js'); ?>"></script>                                        
+        <script src="<?php echo assets_url('js/jquery.placeholder.min.js'); ?>"></script>                
 
         <script src="<?php echo assets_url('js/modules/home/main.js'); ?>"></script>                
         <!-- Extra javascript -->

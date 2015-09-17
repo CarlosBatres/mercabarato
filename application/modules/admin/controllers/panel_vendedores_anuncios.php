@@ -36,6 +36,7 @@ class Panel_vendedores_anuncios extends ADController {
                     );
 
                     $this->anuncio_model->insert($data);
+                    $this->session->set_flashdata('success', 'Anuncio creado con exito..');                    
                     redirect('panel_vendedor/anuncio/listado');
                 } else {
                     redirect('panel_vendedor');
@@ -43,8 +44,7 @@ class Panel_vendedores_anuncios extends ADController {
             } else {
                 $this->template->set_title("Panel de Control - Mercabarato.com");
                 $this->template->set_layout('panel_vendedores');
-                //$this->template->add_js("fileupload.js");
-                //$this->template->add_js("modules/admin/panel_vendedores/productos.js");
+                $this->template->add_js("modules/admin/panel_vendedores/form_validation.js");                
                 $this->load->helper('ckeditor');
 
                 $data['ckeditor'] = array(
@@ -53,7 +53,7 @@ class Panel_vendedores_anuncios extends ADController {
                     'path' => 'assets/js/ckeditor',
                     //Optionnal values
                     'config' => array(
-                        'toolbar' => "Full", //Using the Full toolbar                        
+                        'customConfig'=>assets_url('js/ckeditor_config_full.js'),
                         'height' => '400px', //Setting a custom height
                         'filebrowserImageUploadUrl'=> assets_url('/js/ckeditor/plugins/imgupload.php'),                        
                     ),                    
@@ -99,8 +99,7 @@ class Panel_vendedores_anuncios extends ADController {
                 $anuncio = $this->anuncio_model->get($id);
                 if ($anuncio) {
                     $this->template->set_title("Panel de Control - Mercabarato.com");
-                    //$this->template->add_js("modules/admin/panel_vendedores/productos.js");
-                    //$categorias = $this->categoria_model->get_all();
+                    $this->template->add_js("modules/admin/panel_vendedores/form_validation.js");                                    
                     $vendedor = $this->vendedor_model->get($anuncio->vendedor_id);
 
                     $data = array(
@@ -114,7 +113,7 @@ class Panel_vendedores_anuncios extends ADController {
                         'path' => 'assets/js/ckeditor',
                         //Optionnal values
                         'config' => array(
-                            'toolbar' => "Full", //Using the Full toolbar                        
+                            'customConfig'=>assets_url('js/ckeditor_config_full.js'),
                             'height' => '400px', //Setting a custom height
                             'filebrowserImageUploadUrl'=> assets_url('/js/ckeditor/plugins/imgupload.php')
                         ),
@@ -136,6 +135,8 @@ class Panel_vendedores_anuncios extends ADController {
      * 
      */
     public function listado() {
+        $this->session->keep_flashdata("success");
+        $this->session->keep_flashdata("error");
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
         $this->template->add_js("modules/admin/panel_vendedores/anuncios_listado.js");
