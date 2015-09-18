@@ -80,7 +80,7 @@ function validateForms() {
                 required: true,
                 email: true,
                 remote: {
-                    url: SITE_URL + "util/verificar_email",
+                    url: SITE_URL + "util/verificar_email_informacion",
                     type: "post",
                     data: {
                         email: function() {
@@ -106,8 +106,7 @@ function validateForms() {
         messages: {
             email: {
                 required: "Ingrese un email",
-                email: "Ingrese un email valido",
-                remote: 'Este email ya esta registrado en nuestro sistema.'
+                email: "Ingrese un email valido"                
             },
             comentario: {required: "Este campo es necesario."},
             tipo: {required: "Seleccione uno."},

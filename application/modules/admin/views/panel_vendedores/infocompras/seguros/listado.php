@@ -45,6 +45,9 @@
                         <div class="panel-heading">
                             Solicitudes de Seguro
                         </div>
+                        <?php echo form_open('', 'id="listado-items"'); ?>
+                            <input type='hidden' name='pagina' id='pagina' value='1'>
+                        <?php echo form_close(); ?>
                         <div class="panel-body">
                             <div id="tabla-resultados"></div>
                         </div>

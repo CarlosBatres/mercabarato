@@ -156,6 +156,8 @@ class Infocompra extends MY_Controller {
                     $params["keyword"] = substr($keyword, 0, -1);
                 }
             }
+
+
             $params["paquete_vigente"] = true;
 
             $ignore_list = $this->session->userdata('infocompra_ignore_list');
@@ -176,6 +178,20 @@ class Infocompra extends MY_Controller {
                         $params["not_vendedor"] = $ignore_list;
                     }
                 }
+            }
+
+            /**
+             * Aqui cambiamos not_vendedor por solo_vendedor
+             */
+            if ($this->input->post("solo_ignore_list")) {
+                if (isset($params["not_vendedor"])) {
+                    $params["solo_vendedor"] = $params["not_vendedor"];
+                    unset($params["not_vendedor"]);
+                }
+            }
+            
+            if ($this->input->post("layout")) {
+                $layout=$this->input->post("layout");
             }
 
             $pagina = $this->input->post('pagina');
@@ -215,7 +231,14 @@ class Infocompra extends MY_Controller {
             "vendedores" => $vendedores_array["vendedores"],
             "pagination" => $pagination);
 
-        $html = $this->load->view('home/infocompra/tabla_resultados', $data, true);
+        if($layout=="1"){
+            $html = $this->load->view('home/infocompra/tabla_resultados', $data, true);
+        }elseif($layout=="2"){
+            $html = $this->load->view('home/infocompra/tabla_resultados_final', $data, true);
+        }
+        
+        
+
         $result = array("html" => $html);
         if ($vendedores_array["total"] > 0) {
             $result["result"] = "success";
@@ -337,6 +360,33 @@ class Infocompra extends MY_Controller {
         }
     }
 
+    public function mostrar_resumen() {
+        $this->template->set_title('Mercabarato - Busca y Compara');
+        $this->template->add_js('modules/home/infocompra_listado_final.js');
+
+        $infocompras = $this->session->userdata('infocompras');
+
+        $provincia = false;
+        if ($infocompras["infocompras_datos_paso_2"]["provincia"]) {
+            $provincia = $this->provincia_model->get($infocompras["infocompras_datos_paso_2"]["provincia"]);
+        }
+        $poblacion = false;
+        if ($infocompras["infocompras_datos_paso_2"]["poblacion"]) {
+            $poblacion = $this->poblacion_model->get($infocompras["infocompras_datos_paso_2"]["poblacion"]);
+        }
+
+        $data = array(
+            "informacion" => array(
+                "datos_contacto" => $infocompras["infocompras_datos_contacto"],
+                "informacion" => $infocompras["infocompras_datos_formulario"],
+                "provincia" => $provincia,
+                "poblacion" => $poblacion,
+            )
+        );
+
+        $this->template->load_view('home/infocompra/resumen', $data);
+    }
+
     /**
      * 
      */
@@ -345,6 +395,60 @@ class Infocompra extends MY_Controller {
         $this->session->unset_userdata('infocompra_ignore_list');
         $this->session->unset_userdata('infocompra_new_user');
         redirect('usuario/infocompras-general');
+    }
+
+    public function crear_solicitud_infocompra_todos() {
+        $formValues = $this->input->post();
+        if ($formValues !== false) {
+            $infocompras = $this->session->userdata('infocompras');
+
+            if ($infocompras) {
+                if ($infocompras["infocompras_datos_paso_2"]["provincia"]) {
+                    $params["provincia"] = $infocompras["infocompras_datos_paso_2"]["provincia"];
+                }
+                if ($infocompras["infocompras_datos_paso_2"]["poblacion"]) {
+                    $params["poblacion"] = $infocompras["infocompras_datos_paso_2"]["poblacion"];
+                }
+                if ($infocompras["infocompras_datos_paso_2"]["categoria"]) {
+                    $keyword = "";
+                    foreach ($infocompras["infocompras_datos_paso_2"]["categoria"] as $categoria) {
+                        $cat_obj = $this->categoria_model->get($categoria);
+                        $keyword.=$cat_obj->nombre . ";";
+                    }
+                    $params["keyword"] = substr($keyword, 0, -1);
+                }
+            }
+            $params["paquete_vigente"] = true;
+
+            $ignore_list = $this->session->userdata('infocompra_ignore_list');
+            if ($ignore_list) {
+                $params["not_vendedor"] = $ignore_list;
+            }
+            if ($this->authentication->is_loggedin()) {
+                $user_id = $this->authentication->read('identifier');
+                $cliente = $this->usuario_model->get_full_identidad($user_id);
+                if (!$ignore_list) {
+                    if (isset($cliente->vendedor)) {
+                        $params["not_vendedor"] = $cliente->vendedor->id;
+                    }
+                } else {
+                    if (isset($cliente->vendedor)) {
+                        $params["not_vendedor"] = array_merge($ignore_list, array($cliente->vendedor->id));
+                    } else {
+                        $params["not_vendedor"] = $ignore_list;
+                    }
+                }
+            }
+
+            $vendedores_array = $this->vendedor_model->get_site_search($params, false, false);
+
+            if ($vendedores_array["total"] > 0) {
+                foreach ($vendedores_array["vendedores"] as $vendedor) {
+                    $this->enviar_solicitud($vendedor->id);
+                }
+                $this->session->set_flashdata('success', 'Las solicitudes han sido enviadas con exito.<br> Un total de ' . $vendedores_array['total'] . ' fueron enviadas. </strong>');
+            }
+        }
     }
 
 }

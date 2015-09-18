@@ -13,10 +13,7 @@ class Seguro extends MY_Controller {
      * 
      */
     public function view_seguros() {
-        $this->session->unset_userdata('seguros');
-        //$this->session->unset_userdata('seguros_tipo');
-        //$this->session->unset_userdata('seguros_datos_contacto');
-        //$this->session->unset_userdata('seguros_informacion');
+        $this->session->unset_userdata('seguros');        
         $this->session->unset_userdata('seguros_ignore_list');
         $this->session->unset_userdata('seguros_new_user');
 

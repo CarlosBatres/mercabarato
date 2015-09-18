@@ -197,35 +197,44 @@
                             <div class="panel-heading">                                
                                 <span class="titulo">Categoria y Clasificación del Producto</span>                                
                             </div>
-                            <div class="panel-body">                                                               
-                                <div class="col-md-4">
-                                    <div class="form-group">                            
-                                        <label>Grupo</label>
-                                        <input type="text" class="form-control" name="grupo_txt" value="<?php echo $producto->grupo_txt; ?>">
+                            <div class="panel-body">                                                                                              
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="lead"> Puedes usar los valores a continuación para organizar tus productos a tu gusto, los clientes podran buscar otros productos segun el grupo o familia que tengan.</p>                                        
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Grupo</label>
+                                            <input type="text" class="form-control" name="grupo_txt" value="<?php echo $producto->grupo_txt; ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Familia</label>
+                                            <input type="text" class="form-control" name="familia_txt" value="<?php echo $producto->familia_txt; ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Sub-familia</label>
+                                            <input type="text" class="form-control" name="subfamilia_txt" value="<?php echo $producto->subfamilia_txt; ?>"> 
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">                            
-                                        <label>Familia</label>
-                                        <input type="text" class="form-control" name="familia_txt" value="<?php echo $producto->familia_txt; ?>">
-                                    </div>                                                                       
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="lead"> La categoria se usa para clasificar tu producto en el buscador del sitio.</p>
+                                        <label>Seleccione una Categoria:</label>
+                                        <div class="alert alert-danger" id="seleccionar-categoria_alert" style="display:none;"> 
+                                            <a class="close" data-dismiss="alert">×</a>
+                                            Debe seleccionar una categoria.
+                                        </div>
+                                        <div id="categorias_jtree">                
+                                            <?php echo $categorias_tree_html; ?>
+                                        </div>
+                                    </div> 
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">                            
-                                        <label>Sub-familia</label>
-                                        <input type="text" class="form-control" name="subfamilia_txt" value="<?php echo $producto->subfamilia_txt; ?>"> 
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <label>Seleccione una Categoria:</label>
-                                    <div class="alert alert-danger" id="seleccionar-categoria_alert" style="display:none;"> 
-                                        <a class="close" data-dismiss="alert">×</a>
-                                        Debe seleccionar una categoria.
-                                    </div>
-                                    <div id="categorias_jtree">                
-                                        <?php echo $categorias_tree_html; ?>
-                                    </div>
-                                </div> 
                             </div>
                         </div>
                     </div>
