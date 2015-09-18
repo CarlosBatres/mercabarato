@@ -12,7 +12,7 @@
 <div id="content" class="clearfix">
     <div class="container">
         <div class="col-md-12">
-            <?php echo form_open('infocompras/paso-1','id="infocompras-general"'); ?>                             
+            <?php echo form_open('infocompras/paso-1', 'id="infocompras-general"'); ?>                             
             <div class="row">            
                 <h3>Datos de Contacto</h3>
                 <div class="col-md-4">
@@ -38,7 +38,7 @@
                         <label>Correo Electronico</label>
                         <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->usuario->email : "" ?>" <?php echo (isset($datos_contacto)) ? "disabled" : "" ?>>
                     </div>
-                </div>
+                </div>                
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="comment">Comentario</label>
@@ -218,7 +218,7 @@
                                         <input type="text" class="form-control datepicker" name="fecha_fin_restaurante" placeholder="Hasta">
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label><strong>Cantidad de personas</strong></label>

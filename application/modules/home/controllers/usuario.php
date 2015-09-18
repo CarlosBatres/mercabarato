@@ -310,7 +310,35 @@ class Usuario extends MY_Controller {
             if ($formValues !== false) {
                 $ignore_termporal = $this->input->post('ignore_temporal') === 'true' ? true : false;
                 if ($this->usuario_model->email_exists($this->input->post('email'), $ignore_termporal) == TRUE) {
-                    echo json_encode(FALSE);
+                    echo json_encode('El email ya existe.');
+                } else {
+                    echo json_encode(TRUE);
+                }
+            }
+        } else {
+            show_404();
+        }
+    }
+
+    /**
+     * 
+     */
+    public function check_email_informacion() {
+        if ($this->input->is_ajax_request()) {
+            $formValues = $this->input->post();
+            if ($formValues !== false) {
+                $email = $this->input->post('email');
+                $ignore_termporal = $this->input->post('ignore_temporal') === 'true' ? true : false;
+                if ($this->usuario_model->email_exists($email, $ignore_termporal)) {
+                    $usuario = $this->usuario_model->get_by(array("email" => $email));
+                    $invitaciones = $this->invitacion_model->get_ids_invitaciones(array("usuario" => $usuario->id, "estado" => "1"));
+                    if ($usuario->temporal == "1" && $invitaciones) {
+                        echo json_encode("Usted posee una invitacion pendiente, para poder utilizar este correo debe registrarse.");
+                    } elseif ($usuario->temporal == "1") {
+                        echo json_encode("Debe registrarse para poder utilizar este email.");
+                    } else {
+                        echo json_encode("Este email ya esta registrado en nuestro sistema.");
+                    }
                 } else {
                     echo json_encode(TRUE);
                 }
@@ -552,5 +580,4 @@ class Usuario extends MY_Controller {
 //            }
 //        }
 //    }
-
 }

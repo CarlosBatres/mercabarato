@@ -12,11 +12,12 @@
 <div id="content" class="clearfix">
     <div class="container">
         <div class="col-md-8 col-md-offset-2">            
+            <?php echo form_open('', 'id="form_buscar"'); ?>
             <div class="col-md-12">
                 <div class="row">                    
                     <div class="col-md-3 pull-right">
                         <div class="pull-right terminar-btn" <?php echo (!$hide_terminar) ? "style='display:none;'" : ""; ?>>                        
-                            <a href="<?php echo site_url('infocompras/finalizar') ?>" class="btn btn-template-primary" id="terminar-seguros"> Terminar</a>
+                            <a href="<?php echo site_url('infocompras/mostrar-resumen') ?>" class="btn btn-template-primary" id="terminar-seguros"> Terminar</a>
                         </div>                
                     </div>
                     <input type='hidden' name='pagina' id='pagina' value='1'>
@@ -27,6 +28,7 @@
                     </div>
                 </div>
             </div>
+            <?php echo form_close(); ?>
             <br>
             <hr>
             <div class="col-md-12">

@@ -50,7 +50,7 @@
                         <div class="col-md-12">
                             <div class="form-group">                                
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="nombre_empresa" placeholder="Nombre de la Empresa">
+                                    <input type="text" class="form-control" name="nombre_empresa" placeholder="Nombre Comercial de la Empresa">
                                     <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                         <div class="col-md-12">
                             <div class="form-group">                                
                                 <div class="input-group">                                    
-                                    <input type="text" class="form-control" name="direccion" placeholder="Dirección" value='<?php echo $cliente->direccion ?>'>
+                                    <input type="text" class="form-control" name="direccion" placeholder="Dirección Fiscal" value='<?php echo $cliente->direccion ?>'>
                                     <span class="input-group-addon"><i class="fa fa-street-view fa-fw"></i></span>
                                 </div>
                             </div>

@@ -402,6 +402,13 @@ class Vendedor_model extends MY_Model {
                 $query .=" AND vendedor.id NOT IN(" . $kk . ") ";
             }
         }
+        
+        if (isset($params['solo_vendedor'])) {
+            if (is_array($params['solo_vendedor'])) {
+                $kk = implode(",", $params['solo_vendedor']);
+                $query .=" AND vendedor.id IN(" . $kk . ") ";
+            }
+        }
 
         /* if (isset($params['paquete_vigente'])) {
           $this->db->where('vendedor_paquete.aprobado', '1');
@@ -416,7 +423,10 @@ class Vendedor_model extends MY_Model {
             $query.=" ORDER BY id DESC";
         }
 
-        $query.=" LIMIT " . $offset . " , " . $limit;
+        if ($limit) {
+            $query.=" LIMIT " . $offset . " , " . $limit;
+        }
+
 
         $result = $this->db->query($query);
         $vendedores = $result->result();

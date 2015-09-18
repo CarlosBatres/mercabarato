@@ -1,9 +1,19 @@
 $(document).ready(function() {
     updateResultados();
+
+    $('#enviar-todos').on('click', function(e) {
+        e.preventDefault();
+        $.blockUI({message: '<h1>Espere un momento...</h1>'});
+        $.post(SITE_URL + "infocompras/enviar-todos",{infocompras:true}).done(function() {
+            updateResultados();
+            $.unblockUI();
+            $('.terminar-btn').css('display', 'block');
+        });
+    });
 });
 
 function updateResultados() {
-    var pagina_id = $('#pagina').val();        
+    var pagina_id = $('#pagina').val();
 
     $('#tabla-resultados').css('opacity', '0.5');
     $('#tabla-resultados').block({message: $('#throbber'),
@@ -14,7 +24,8 @@ function updateResultados() {
         type: "POST",
         url: SITE_URL + 'infocompras/buscar-vendedores',
         data: {
-            pagina: pagina_id,            
+            pagina: pagina_id,
+            layout:'1'
         },
         dataType: "json",
         success: function(response) {
@@ -51,4 +62,12 @@ function bind_botones() {
             $('.terminar-btn').css('display', 'block');
         });
     });
+}
+
+function enviar_todos() {
+    if ($('#form_buscar').find('select[name="poblacion"]').val() !== '0' || $('#form_buscar').find('select[name="provincia"]').val() !== '0') {
+        $('.enviar-todos-btn').css('display', 'block');
+    } else {
+        $('.enviar-todos-btn').css('display', 'none');
+    }
 }

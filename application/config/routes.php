@@ -80,8 +80,10 @@ $route['infocompras'] = 'home/infocompra/view_infocompras';
 $route['infocompras/paso-1'] = 'home/infocompra/paso_1';
 $route['infocompras/paso-2'] = 'home/infocompra/paso_2';
 $route['infocompras/enviar'] = 'home/infocompra/crear_infocompra';
+$route['infocompras/enviar-todos'] = 'home/infocompra/crear_solicitud_infocompra_todos';
 $route['infocompras/seleccionar-vendedor'] = 'home/infocompra/seleccionar_vendedor';
 $route['infocompras/buscar-vendedores'] = 'home/infocompra/ajax_get_listado_resultados';
+$route['infocompras/mostrar-resumen'] = 'home/infocompra/mostrar_resumen';
 $route['infocompras/finalizar'] = 'home/infocompra/finalizar';
 
 $route['usuario/perfil'] = 'home/usuario/view_perfil';
@@ -127,6 +129,7 @@ $route['usuario/buscar-solicitudes-infocompras'] = 'home/cliente/ajax_get_listad
 
 
 $route['util/verificar_email'] = 'home/usuario/check_email';
+$route['util/verificar_email_informacion'] = 'home/usuario/check_email_informacion';
 $route['util/verificar_nombre'] = 'home/main/verificar_palabra';
 $route['util/verificar_nickname'] = 'home/main/verificar_nickname';
 $route['util/get_poblaciones'] = 'home/poblacion/ajax_get_poblaciones_htmlselect';

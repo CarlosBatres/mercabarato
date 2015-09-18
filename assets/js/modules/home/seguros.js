@@ -78,7 +78,7 @@ function validateForms() {
                 required: true,
                 email: true,
                 remote: {
-                    url: SITE_URL + "util/verificar_email",
+                    url: SITE_URL + "util/verificar_email_informacion",
                     type: "post",
                     data: {
                         email: function() {
@@ -119,7 +119,7 @@ function validateForms() {
                 required: true,
                 email: true,
                 remote: {
-                    url: SITE_URL + "util/verificar_email",
+                    url: SITE_URL + "util/verificar_email_informacion",
                     type: "post",
                     data: {
                         email: function() {
@@ -152,7 +152,7 @@ function validateForms() {
                 required: true,
                 email: true,
                 remote: {
-                    url: SITE_URL + "util/verificar_email",
+                    url: SITE_URL + "util/verificar_email_informacion",
                     type: "post",
                     data: {
                         email: function() {
@@ -189,7 +189,7 @@ function validateForms() {
                 required: true,
                 email: true,
                 remote: {
-                    url: SITE_URL + "util/verificar_email",
+                    url: SITE_URL + "util/verificar_email_informacion",
                     type: "post",
                     data: {
                         email: function() {
@@ -232,7 +232,7 @@ function validateForms() {
                 required: true,
                 email: true,
                 remote: {
-                    url: SITE_URL + "util/verificar_email",
+                    url: SITE_URL + "util/verificar_email_informacion",
                     type: "post",
                     data: {
                         email: function() {

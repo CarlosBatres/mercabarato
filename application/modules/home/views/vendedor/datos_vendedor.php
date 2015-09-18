@@ -46,7 +46,7 @@
                     <?php echo form_open('usuario/datos-vendedor/modificar', 'id="form_datos_2"'); ?>                                                                        
                     <div class="row">
                         <div class="col-md-12">
-                            <label class="label-datos">Nombre de la Empresa</label>
+                            <label class="label-datos">Nombre Comercial de la Empresa</label>
                             <div class="form-group">                                
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="nombre_empresa" placeholder="Vacio" value="<?php echo $vendedor->nombre ?>">
@@ -95,7 +95,7 @@
 
                     <div class='row'>
                         <div class="col-md-12">
-                            <label class="label-datos">Dirección</label>
+                            <label class="label-datos">Dirección Fiscal ( Factura )</label>
                             <div class="form-group">
                                 <div class="input-group">                                    
                                     <input type="text" class="form-control" name="direccion" placeholder="Vacio" value='<?php echo $vendedor->direccion ?>'>

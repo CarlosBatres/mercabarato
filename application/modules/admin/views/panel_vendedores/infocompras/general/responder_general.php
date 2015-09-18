@@ -60,27 +60,27 @@
                         <div class="panel-body">
                             <div class="col-md-2">
                                 <label class="radio-inline">
-                                    <input type="radio" name="tipo" id="regalos" value="1" <?php echo ($informacion["informacion"]["tipo"] == "1") ? "checked" : "" ?>> Regalos
+                                    <input type="radio" name="tipo" disabled id="regalos" value="1" <?php echo ($informacion["informacion"]["tipo"] == "1") ? "checked" : "" ?>> Regalos
                                 </label>
                             </div>
                             <div class="col-md-2">
                                 <label class="radio-inline">
-                                    <input type="radio" name="tipo" id="servicios" value="2" <?php echo ($informacion["informacion"]["tipo"] == "2") ? "checked" : "" ?>> Servicios
+                                    <input type="radio" name="tipo" disabled  id="servicios" value="2" <?php echo ($informacion["informacion"]["tipo"] == "2") ? "checked" : "" ?>> Servicios
                                 </label>
                             </div>
                             <div class="col-md-3">
                                 <label class="radio-inline">
-                                    <input type="radio" name="tipo" id="compra_ocasional" value="3" <?php echo ($informacion["informacion"]["tipo"] == "3") ? "checked" : "" ?>> Compra Ocasional
+                                    <input type="radio" name="tipo" disabled  id="compra_ocasional" value="3" <?php echo ($informacion["informacion"]["tipo"] == "3") ? "checked" : "" ?>> Compra Ocasional
                                 </label>
                             </div>
                             <div class="col-md-2">
                                 <label class="radio-inline">
-                                    <input type="radio" name="tipo" id="ocio" value="4" <?php echo ($informacion["informacion"]["tipo"] == "4") ? "checked" : "" ?>> Ocio
+                                    <input type="radio" name="tipo" disabled  id="ocio" value="4" <?php echo ($informacion["informacion"]["tipo"] == "4") ? "checked" : "" ?>> Ocio
                                 </label>
                             </div>
                             <div class="col-md-3">
                                 <label class="radio-inline">
-                                    <input type="radio" name="tipo" id="otras_compras" value="5" <?php echo ($informacion["informacion"]["tipo"] == "5") ? "checked" : "" ?>> Otras Compras
+                                    <input type="radio" name="tipo" disabled  id="otras_compras" value="5" <?php echo ($informacion["informacion"]["tipo"] == "5") ? "checked" : "" ?>> Otras Compras
                                 </label>
                             </div>
                         </div>
@@ -89,7 +89,7 @@
                 </div>
             </div>
             <?php if ($informacion["informacion"]["tipo"] == "1"): ?>
-                <div class="row tipo-regalo" style="display:none;">
+                <div class="row tipo-regalo">
                     <div class="col-md-12">
                         <div class="panel panel-primary infocompras-radios">
                             <div class="panel-body">                            
