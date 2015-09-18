@@ -117,13 +117,11 @@
                             <br>
                         <?php endif; ?>
 
-                        <?php if ($producto->transporte == "0"): ?>
-                            <p><strong>Transporte gratuito</strong></p>
-                        <?php elseif ($producto->transporte == "2"): ?>    
-                            <p><strong>Transporte gratuito segun volumen de compra o distancia</strong></p>
+                        <?php if ($producto->transporte == "1"): ?>
+                            <p><strong><?php echo ($producto->transporte_txt!='')?$producto->transporte_txt:'Transporte Gratuito' ?></strong></p>                        
                         <?php endif; ?>
-                        <?php if ($producto->impuesto == "0"): ?>
-                            <p><strong>Impuestos incluidos</strong></p>
+                        <?php if ($producto->impuesto == "1"): ?>
+                            <p><strong><?php echo ($producto->impuesto_txt!='')?$producto->impuesto_txt:'Impuesto Incluido' ?></strong></p>
                         <?php endif; ?>
                     </div>
                 </div>            

@@ -53,6 +53,24 @@ $(document).ready(function() {
         var categoria_id = $('#categorias_jtree').find('#' + data.selected).data('id');
         $('input[name="categoria_id"]').val(categoria_id);
     });
+    
+    $('input[name="transporte"]').on('change',function(){
+        if($(this).val()=='1'){
+            $('input[name="transporte_txt"]').css('display','block');
+        }else{
+            $('input[name="transporte_txt"]').val('');
+            $('input[name="transporte_txt"]').css('display','none');
+        }        
+    });
+    
+    $('input[name="impuesto"]').on('change',function(){
+        if($(this).val()=='1'){
+            $('input[name="impuesto_txt"]').css('display','block');
+        }else{
+            $('input[name="impuesto_txt"]').val('');
+            $('input[name="impuesto_txt"]').css('display','none');
+        }        
+    });
 
     validateForms();
 });

@@ -194,3 +194,9 @@ ADD CONSTRAINT `fk_mensaje_infocompra1`
   REFERENCES `mercabarato_bd`.`infocompra` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+
+/*  17/9/2015 */
+
+ALTER TABLE `mercabarato_bd`.`producto` 
+ADD COLUMN `transporte_txt` VARCHAR(255) NULL DEFAULT NULL AFTER `transporte`,
+ADD COLUMN `impuesto_txt` VARCHAR(255) NULL DEFAULT NULL AFTER `impuesto`;

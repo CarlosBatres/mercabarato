@@ -149,6 +149,10 @@ $route['site/politica-de-cookies'] = 'home/main/cookies';
 
 $route['panel_vendedor'] = 'admin/panel_vendedores/resumen';
 $route['panel_vendedor/resumen'] = 'admin/panel_vendedores/resumen';
+$route['panel_vendedor/estadisticas'] = 'admin/panel_vendedores/view_estadisticas';
+$route['panel_vendedor/get-estadisticas'] = 'admin/panel_vendedores/ajax_get_estadisticas';
+$route['panel_vendedor/estadisticas/cliente/(:num)'] = 'admin/panel_vendedores/view_estadisticas_cliente/$1';
+$route['panel_vendedor/get-estadisticas-cliente'] = 'admin/panel_vendedores/ajax_get_estadisticas_cliente';
 $route['panel_vendedor/regresar'] = 'admin/panel_vendedores/regresar';
 $route['panel_vendedor/login'] = 'admin/panel_vendedores/login';
 $route['panel_vendedor/logout'] = 'admin/panel_vendedores/logout';

@@ -145,19 +145,19 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <br>
-                                        <label>Transporte es gratuito?</label><br>
-                                        <?php foreach (transporte_radio() as $id => $radio): ?>
-                                            <label><input type="radio" name="transporte" value="<?php echo $id ?>" class="radioInput"><?php echo $radio ?></label><br>    
-                                        <?php endforeach; ?>
+                                        <label>Transporte es gratuito?</label><br>                                        
+                                        <label><input type="radio" name="transporte" value="1" class="radioInput">Si</label><br>
+                                        <label><input type="radio" name="transporte" value="0" class="radioInput">No</label><br>
+                                        <input type="text" name="transporte_txt" value="" style='display: none;width: 80%'>
                                     </div>
                                 </div>
                                 <div class="col-md-6">                        
                                     <div class="form-group">
                                         <br>
                                         <label>Impuesto incluido?</label><br>
-                                        <?php foreach (impuesto_radio() as $id => $radio): ?>
-                                            <label><input type="radio" name="impuesto" value="<?php echo $id ?>" class="radioInput"><?php echo $radio ?></label><br>    
-                                        <?php endforeach; ?>
+                                        <label><input type="radio" name="impuesto" value="1" class="radioInput">Si</label><br>                                            
+                                        <label><input type="radio" name="impuesto" value="0" class="radioInput">No</label><br>
+                                        <input type="text" name="impuesto_txt" value="" style='display: none;width: 80%'>
                                     </div>
                                 </div>
                             </div>

@@ -78,7 +78,7 @@
     <div class="row">
         <div class="col-md-12">  
             <div class="row">
-                <div class="col-md-12 col-lg-8">
+                <div class="col-md-8 col-lg-8">
                     <?php if ($paquete_vigente || $paquete_pendiente): ?>                                        
                         <div class="heading">
                             <h3 class="text-uppercase">Mis Paquetes</h3>
@@ -127,7 +127,7 @@
                         </div>
                     <?php endif; ?>
                 </div>
-                <div class="col-md-12 col-lg-8">                                                
+                <div class="col-md-8 col-lg-8">                                                
                     <div class="panel panel-default">
                         <div class="panel-body">  
                             <div class="col-md-12">
@@ -174,7 +174,7 @@
 
                         </div>
                     </div>
-                </div>
+                </div>                
             </div>
             <hr>
             <br>                
@@ -226,7 +226,7 @@
                     </div>                    
                 </div>
                 <?php echo form_open('', 'id="listado-productos" class="search-form"'); ?>                
-                    <input type="hidden" value="1" name="pagina" id="pagina"/>
+                <input type="hidden" value="1" name="pagina" id="pagina"/>
                 <?php echo form_close(); ?>
                 <div class="col-md-12">
                     <div class="panel panel-default">
@@ -239,6 +239,11 @@
                         </div>
                         <!-- /.panel-body -->
                     </div>                    
+                </div>
+                <div class="col-md-12 pull-right">
+                    <div class="text-right">
+                        <a href='<?php echo site_url('panel_vendedor/estadisticas')?>' class="btn btn-primary" > Ver Estadisticas</a>
+                    </div>
                 </div>
             </div>
         </div>
