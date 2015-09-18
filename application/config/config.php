@@ -363,7 +363,6 @@ $config['rewrite_short_tags'] = FALSE;
  */
 $config['proxy_ips'] = '';
 
-
 $config["money_sign"]='€';
 $config["admin_default_per_page"]='10';
 $config["productos_img_path"]='/uploads/productos/';

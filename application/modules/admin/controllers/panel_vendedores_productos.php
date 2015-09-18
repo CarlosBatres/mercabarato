@@ -34,9 +34,11 @@ class Panel_vendedores_productos extends ADController {
                         "categoria_id" => $this->input->post('categoria_id'),
                         "transporte" => ($this->input->post('transporte') != '') ? $this->input->post('transporte') : null,
                         "impuesto" => ($this->input->post('impuesto') != '') ? $this->input->post('impuesto') : null,
-                        "grupo_txt" => ($this->input->post('grupo_txt') != '') ? strtolower($this->input->post('grupo_txt')) : null,                        
-                        "familia_txt" => ($this->input->post('familia_txt') != '') ? strtolower($this->input->post('familia_txt')) : null,                        
-                        "subfamilia_txt" => ($this->input->post('subfamilia_txt') != '') ? strtolower($this->input->post('subfamilia_txt')) : null,                        
+                        "grupo_txt" => ($this->input->post('grupo_txt') != '') ? strtolower($this->input->post('grupo_txt')) : null,
+                        "familia_txt" => ($this->input->post('familia_txt') != '') ? strtolower($this->input->post('familia_txt')) : null,
+                        "subfamilia_txt" => ($this->input->post('subfamilia_txt') != '') ? strtolower($this->input->post('subfamilia_txt')) : null,
+                        "transporte_txt" => ($this->input->post('transporte_txt') != '') ? strtolower($this->input->post('transporte_txt')) : null,
+                        "impuesto_txt" => ($this->input->post('impuesto_txt') != '') ? strtolower($this->input->post('impuesto_txt')) : null,
                     );
 
                     $producto_id = $this->producto_model->insert($data);
@@ -173,6 +175,8 @@ class Panel_vendedores_productos extends ADController {
                         "grupo_txt" => ($this->input->post('grupo_txt') != '') ? strtolower($this->input->post('grupo_txt')) : null,                        
                         "familia_txt" => ($this->input->post('familia_txt') != '') ? strtolower($this->input->post('familia_txt')) : null,                        
                         "subfamilia_txt" => ($this->input->post('subfamilia_txt') != '') ? strtolower($this->input->post('subfamilia_txt')) : null,                        
+                        "transporte_txt" => ($this->input->post('transporte_txt') != '') ? strtolower($this->input->post('transporte_txt')) : null,
+                        "impuesto_txt" => ($this->input->post('impuesto_txt') != '') ? strtolower($this->input->post('impuesto_txt')) : null,
                     );
 
                     $this->producto_model->verificar_cambio_precio($producto_id, $data["precio"]);

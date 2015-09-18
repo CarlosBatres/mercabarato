@@ -10,7 +10,12 @@ class Invitacion_model extends MY_Model {
         parent::__construct();
         $this->_table = "invitacion";
     }
-
+    /**
+     * 
+     * @param type $invitacion_id
+     * @param type $usuario_id
+     * @return boolean
+     */
     public function aceptar_invitacion($invitacion_id, $usuario_id) {
         $invitacion = $this->get($invitacion_id);
         if ($usuario_id == $invitacion->invitar_desde || $usuario_id == $invitacion->invitar_para) {
@@ -299,7 +304,12 @@ class Invitacion_model extends MY_Model {
             return false;
         }
     }
-    
+    /**
+     * 
+     * @param type $persona
+     * @param type $invitado
+     * @return boolean
+     */
     public function get_invitacion($persona, $invitado) {
         $recibi_invitacion = $this->invitacion_model->get_by(array("invitar_desde" => $persona, "invitar_para" => $invitado));
         $envie_invitacion = $this->invitacion_model->get_by(array("invitar_para" => $persona, "invitar_desde" => $invitado));
@@ -447,7 +457,12 @@ class Invitacion_model extends MY_Model {
             return array("total" => 0);
         }
     }
-
+    /**
+     * 
+     * @param type $persona
+     * @param type $invitado
+     * @return boolean
+     */
     public function son_contactos($persona, $invitado) {
         $recibi_invitacion = $this->invitacion_model->get_by(array("invitar_desde" => $persona, "invitar_para" => $invitado));
         $result = false;
@@ -492,6 +507,7 @@ class Invitacion_model extends MY_Model {
         } else {
             return false;
         }
-    }
+    }   
+    
 
 }

@@ -11,6 +11,15 @@ class Cliente_model extends MY_Model {
         $this->_table = "cliente";
     }
 
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @param type $order_by
+     * @param type $order
+     * @return type
+     */
     public function get_admin_search($params, $limit, $offset, $order_by = "cliente.id", $order = "asc") {
         $this->db->start_cache();
 
@@ -66,6 +75,11 @@ class Cliente_model extends MY_Model {
         }
     }
 
+    /**
+     * 
+     * @param type $cliente_id
+     * @return boolean
+     */
     public function es_vendedor($cliente_id) {
         $this->db->where('cliente_id', $cliente_id);
         $query = $this->db->get('vendedor');
@@ -76,6 +90,11 @@ class Cliente_model extends MY_Model {
         }
     }
 
+    /**
+     * 
+     * @param type $cliente_id
+     * @return boolean
+     */
     public function es_vendedor_habilitado($cliente_id) {
         if ($this->es_vendedor($cliente_id)) {
             $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente_id);
@@ -100,14 +119,14 @@ class Cliente_model extends MY_Model {
             $this->localizacion_model->delete_by("usuario_id", $usuario->id);
             $this->invitacion_model->delete_by("invitar_para", $usuario->id);
             $this->invitacion_model->delete_by("invitar_desde", $usuario->id);
-            
-            $seguros=$this->infocompra_model->get_many_by("cliente_id", $id);            
-            if($seguros){
-                foreach($seguros as $seguro){
+
+            $seguros = $this->infocompra_model->get_many_by("cliente_id", $id);
+            if ($seguros) {
+                foreach ($seguros as $seguro) {
                     $this->infocompra_model->delete($seguro->id);
                 }
             }
-            
+
             $this->visita_model->delete_by("cliente_id", $id);
 
             $this->grupo_tarifa_model->delete_by("cliente_id", $id);
@@ -123,6 +142,15 @@ class Cliente_model extends MY_Model {
         }
     }
 
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @param type $order_by
+     * @param type $order
+     * @return type
+     */
     public function get_clientes_invitados($params, $limit, $offset, $order_by = "c.id", $order = "asc") {
 
         $query = "SELECT SQL_CALC_FOUND_ROWS c.*,u.email,u.ultimo_acceso,u.ip_address,u.fecha_creado,v.nombre as nombre_vendedor ";
@@ -200,6 +228,15 @@ class Cliente_model extends MY_Model {
         }
     }
 
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @param type $order_by
+     * @param type $order
+     * @return type
+     */
     public function get_mensajes_search($params, $limit, $offset, $order_by = "cliente.id", $order = "asc") {
         $this->db->start_cache();
         $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.fecha_creado,usuario.activo");
@@ -260,6 +297,105 @@ class Cliente_model extends MY_Model {
             return array("usuarios" => $clientes, "total" => $count);
         } else {
             $this->db->flush_cache();
+            return array("total" => 0);
+        }
+    }
+
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @param type $order_by
+     * @param type $order
+     * @return type
+     */
+    public function get_estadisticas($params, $limit, $offset, $order_by = "c.id", $order = "ASC") {
+        $vendedor = $params["vendedor_identidad"];
+        $invitados_ids = $this->invitacion_model->get_ids_invitaciones(array("usuario" => $vendedor->usuario->id, "estado" => "2"));
+
+        if (sizeof($invitados_ids) > 0) {
+
+            $query = "SELECT SQL_CALC_FOUND_ROWS c.*,COUNT(v.id) as total,u.email,u.ultimo_acceso,u.ip_address,u.fecha_creado ";
+            $query.="FROM cliente c ";
+            $query.="INNER JOIN usuario u ON c.usuario_id = u.id ";
+            $query.="INNER JOIN visita v ON c.id = v.cliente_id ";
+            $query.="INNER JOIN producto p ON p.id = v.producto_id ";
+
+            $query.="WHERE ( 1 ";
+
+            $ids = implode(",", $invitados_ids);
+            $text = " AND u.id IN (" . $ids . ")";
+            $query.=$text;
+
+            $query .=" AND v.fecha >='" . $params["date_from"] . "' ";
+            $query .=" AND v.fecha <='" . $params["date_to"] . "' ";
+
+            $query .=" AND p.vendedor_id ='" . $vendedor->get_vendedor_id() . "' ";
+
+            $query.=") ";
+
+            $query.=" GROUP BY c.id";
+
+            $query.=" ORDER BY " . $order_by . " " . $order;
+            $query.=" LIMIT " . $offset . " , " . $limit;
+
+            $result = $this->db->query($query);
+            $clientes = $result->result();
+
+            $query_total = "SELECT FOUND_ROWS() as rows;";
+            $result_total = $this->db->query($query_total);
+            $total = $result_total->row();
+
+            if ($total->rows > 0) {
+                return array("clientes" => $clientes, "total" => $total->rows);
+            } else {
+                return array("total" => 0);
+            }
+        } else {
+            return array("total" => 0);
+        }
+    }
+
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @param type $order_by
+     * @param type $order
+     * @return type
+     */
+    public function get_estadisticas_por_productos($params, $limit, $offset, $order_by = "v.fecha", $order = "DESC") {
+        $vendedor = $params["vendedor_identidad"];
+
+        $query = "SELECT SQL_CALC_FOUND_ROWS p.*,v.fecha as fecha_visita ";
+        $query.="FROM producto p ";                
+        $query.="INNER JOIN visita v ON v.producto_id = p.id ";        
+
+        $query.="WHERE ( 1 ";        
+        
+        $query .=" AND p.vendedor_id ='" . $vendedor->get_vendedor_id() . "' ";
+
+        if(isset($params["cliente_id"])){
+            $query .=" AND v.cliente_id ='" . $params["cliente_id"]  . "'";
+        }
+
+        $query.=") ";        
+
+        $query.=" ORDER BY " . $order_by . " " . $order;
+        $query.=" LIMIT " . $offset . " , " . $limit;
+
+        $result = $this->db->query($query);
+        $productos = $result->result();
+
+        $query_total = "SELECT FOUND_ROWS() as rows;";
+        $result_total = $this->db->query($query_total);
+        $total = $result_total->row();
+
+        if ($total->rows > 0) {
+            return array("productos" => $productos, "total" => $total->rows);
+        } else {
             return array("total" => 0);
         }
     }

@@ -40,6 +40,9 @@
                         <a href="<?php echo site_url('panel_vendedor/resumen'); ?>"><i class="fa fa-fw fa-dashboard"></i> Resumen</a>
                     </li>                                                                                                                    
                     <li>
+                        <a href="<?php echo site_url('panel_vendedor/estadisticas'); ?>"><i class="fa fa-fw fa-pie-chart"></i> Estadisticas</a>
+                    </li>                                                                                                                    
+                    <li>
                         <?php
                         if (strpos($this->uri->uri_string(), 'panel_vendedor/invitaciones/') !== false) {
                             $collapse = "in";

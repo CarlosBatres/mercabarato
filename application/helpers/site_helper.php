@@ -368,22 +368,39 @@ function print_ejemplo($ex, $ext = 'xml') {
     highlight_file($file);
 }
 
-function transporte_radio() {
-    $data = array(
-        '0' => 'Si',
-        '1' => 'No',
-        '2' => 'Segun volumen de compra o distancia'
-    );
+function year_select() {
+    $year_ini="2015";
+    $year_act=date("Y");
+    
+    $data=array();
+    for($i=$year_ini;$i<=$year_act;$i++){
+        $data[$i]=$i;
+    }    
+    
     return $data;
 }
 
-function impuesto_radio() {
-    $data = array(
-        '0' => 'Si',
-        '1' => 'No'        
+function mes_select() {    
+    
+    $data=array(
+        "1"=>"Enero",
+        "2"=>"Febrero",
+        "3"=>"Marzo",
+        "4"=>"Abril",
+        "5"=>"Mayo",
+        "6"=>"Junio",
+        "7"=>"Julio",
+        "8"=>"Agosto",
+        "9"=>"Septiembre",
+        "10"=>"Octubre",
+        "11"=>"Noviembre",
+        "12"=>"Diciembre"        
     );
+    
+    
     return $data;
 }
+
 
 function diferencia_dias($date_start,$date_end){
     $days = abs((strtotime($date_end) - strtotime($date_start)) / (60 * 60 * 24));
