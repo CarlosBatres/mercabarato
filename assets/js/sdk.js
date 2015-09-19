@@ -1,6 +1,6 @@
 function M() {
     var boton = document.getElementById("mercabarato-boton");
-    var URL="http://localhost/freelancer/mercabarato_new";
+    var URL="http://www.micesc-dev.com/mercabarato";
     if (typeof boton.dataset.vendedor != 'undefined') {
         var headID = document.getElementsByTagName("head")[0];
         var cssNode = document.createElement('link');
