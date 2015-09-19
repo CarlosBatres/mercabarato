@@ -53,15 +53,15 @@ class Panel_vendedores_invitaciones extends ADController {
             $html = '<div class="modal-header">';
             $html.='<h4 class="modal-title">Invitacion Recibida</h4>';
             $html.='</div>';
-            $html.='<div class = "modal-body">';            
+            $html.='<div class = "modal-body">';
             $html.='<p><strong>' . $invitacion->titulo . '</strong></p>';
             $html.='<br>';
-            $html.='<p>' . $invitacion->comentario . '</p>';                        
+            $html.='<p>' . $invitacion->comentario . '</p>';
             $html.='</div>';
-            $html.='<div class="modal-footer">';                        
-            $html.='<input type="hidden" name="invitacion_id" value="'.$invitacion_id.'">';
+            $html.='<div class="modal-footer">';
+            $html.='<input type="hidden" name="invitacion_id" value="' . $invitacion_id . '">';
             $html.='<button class = "btn btn-success" type = "button" id = "yes"><i class = "fa fa-check"></i> Aceptar</button>';
-            $html.='<button class = "btn btn-danger" type = "button" id = "no"><i class = "fa fa-close"></i> Rechazar</button>';            
+            $html.='<button class = "btn btn-danger" type = "button" id = "no"><i class = "fa fa-close"></i> Rechazar</button>';
             $html.='</div>';
             $html.='</div>';
         }
@@ -125,12 +125,12 @@ class Panel_vendedores_invitaciones extends ADController {
                 $this->load->helper('ckeditor');
 
                 $data = array("cliente" => $cliente);
-                $data['ckeditor'] = array(                    
+                $data['ckeditor'] = array(
                     'id' => 'content',
-                    'path' => 'assets/js/ckeditor',                    
-                    'config' => array(                        
-                        'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
-                        'height' => '400px', 
+                    'path' => 'assets/js/ckeditor',
+                    'config' => array(
+                        'customConfig' => assets_url('js/ckeditor_config_sm.js'),
+                        'height' => '400px',
                     ),
                 );
                 $this->template->load_view('admin/panel_vendedores/invitados/enviar_invitacion', $data);
@@ -201,7 +201,13 @@ class Panel_vendedores_invitaciones extends ADController {
                         $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                         $this->email->to($email);
                         $this->email->subject('Invitacion de Mercabarato.com');
-                        $data_email = array("titulo" => $titulo, "comentario" => $comentario);
+                        $data_email = array(
+                            "titulo" => $titulo,
+                            "comentario" => $comentario,
+                            "identidad" => $this->identidad->vendedor->nombre,
+                            "link" => site_url('usuario/identificar/' . $secret_key)
+                        );
+
                         $this->email->message($this->load->view('home/emails/invitacion_email', $data_email, true));
                         $this->email->send();
                     }
@@ -233,7 +239,24 @@ class Panel_vendedores_invitaciones extends ADController {
                                         $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                                         $this->email->to($email);
                                         $this->email->subject('Invitacion de Mercabarato.com');
-                                        $data_email = array("titulo" => $titulo, "comentario" => $comentario);
+
+                                        if ($usuario->activo == "1") {
+                                            $link = false;
+                                        } else {
+                                            if ($usuario->secret_key != '') {
+                                                $link = site_url('usuario/identificar/' . $usuario->secret_key);
+                                            } else {
+                                                $link = false;
+                                            }
+                                        }
+
+                                        $data_email = array(
+                                            "titulo" => $titulo,
+                                            "comentario" => $comentario,
+                                            "identidad" => $this->identidad->vendedor->nombre,
+                                            "link" => $link
+                                        );
+
                                         $this->email->message($this->load->view('home/emails/invitacion_email', $data_email, true));
                                         $this->email->send();
                                     }
@@ -254,7 +277,24 @@ class Panel_vendedores_invitaciones extends ADController {
                                     $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                                     $this->email->to($email);
                                     $this->email->subject('Invitacion de Mercabarato.com');
-                                    $data_email = array("titulo" => $titulo, "comentario" => $comentario);
+
+                                    if ($usuario->activo == "1") {
+                                        $link = false;
+                                    } else {
+                                        if ($usuario->secret_key != '') {
+                                            $link = site_url('usuario/identificar/' . $usuario->secret_key);
+                                        } else {
+                                            $link = false;
+                                        }
+                                    }
+
+                                    $data_email = array(
+                                        "titulo" => $titulo,
+                                        "comentario" => $comentario,
+                                        "identidad" => $this->identidad->vendedor->nombre,
+                                        "link" => $link
+                                    );
+
                                     $this->email->message($this->load->view('home/emails/invitacion_email', $data_email, true));
                                     $this->email->send();
                                 }
@@ -277,7 +317,24 @@ class Panel_vendedores_invitaciones extends ADController {
                                 $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                                 $this->email->to($email);
                                 $this->email->subject('Invitacion de Mercabarato.com');
-                                $data_email = array("titulo" => $titulo, "comentario" => $comentario);
+
+                                if ($usuario->activo == "1") {
+                                    $link = false;
+                                } else {
+                                    if ($usuario->secret_key != '') {
+                                        $link = site_url('usuario/identificar/' . $usuario->secret_key);
+                                    } else {
+                                        $link = false;
+                                    }
+                                }
+
+                                $data_email = array(
+                                    "titulo" => $titulo,
+                                    "comentario" => $comentario,
+                                    "identidad" => $this->identidad->vendedor->nombre,
+                                    "link" => $link
+                                );
+
                                 $this->email->message($this->load->view('home/emails/invitacion_email', $data_email, true));
                                 $this->email->send();
                             }
@@ -299,11 +356,11 @@ class Panel_vendedores_invitaciones extends ADController {
             $this->load->helper('ckeditor');
 
             $data = array();
-            $data['ckeditor'] = array(                
+            $data['ckeditor'] = array(
                 'id' => 'content',
-                'path' => 'assets/js/ckeditor',                
+                'path' => 'assets/js/ckeditor',
                 'config' => array(
-                    'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
+                    'customConfig' => assets_url('js/ckeditor_config_sm.js'),
                     'height' => '400px',
                 ),
             );
@@ -415,11 +472,11 @@ class Panel_vendedores_invitaciones extends ADController {
                     $usr = $this->usuario_model->get($invitacion->invitar_para);
                     $email = $usr->email;
                 }
-                $clt=$this->cliente_model->get_by(array("usuario_id"=>$user_id));
-                $vdr=$this->vendedor_model->get_by(array("cliente_id"=>$clt->id));
-                $nombre=$vdr->nombre;
+                $clt = $this->cliente_model->get_by(array("usuario_id" => $user_id));
+                $vdr = $this->vendedor_model->get_by(array("cliente_id" => $clt->id));
+                $nombre = $vdr->nombre;
                 //TODO : Aqui en vez del $nombre podria y el apodo.
-                $data_email=array("identidad"=>$nombre);
+                $data_email = array("identidad" => $nombre);
 
                 $this->load->library('email');
                 $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
@@ -438,7 +495,7 @@ class Panel_vendedores_invitaciones extends ADController {
      */
     public function rechazar_invitacion($id) {
         if ($this->input->is_ajax_request()) {
-            $user_id = $this->authentication->read('identifier');            
+            $user_id = $this->authentication->read('identifier');
             $this->invitacion_model->rechazar_invitacion($id, $user_id);
             echo json_encode(array("success" => true));
         }

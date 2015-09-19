@@ -23,10 +23,18 @@
                                 </tr>
                                 <tr>
                                     <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                        <p>Puede ingresar al sitio mediante el siguiente link y proceder a registrarse.</p>
-                                        <a href="<?php echo site_url("registro"); ?>">Link para continuar...</a>
+                                        <p>Puede ingresar al sitio y proceder a <a href="<?php echo site_url("registro"); ?>"><strong>registrarse</strong></a>.</p>
+                                        
                                     </td>
                                 </tr>
+                                <?php if($link):?>
+                                <tr>
+                                    <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+                                        <p>Si ya estas registrado en el sitio pero con un email diferente puedes seguir el link a continuacion:</p>
+                                        <a href="<?php echo $link ?>">Link para continuar...</a>
+                                    </td>
+                                </tr>
+                                <?php endif;?>
                             <?php else: ?>
                                 <tr>
                                     <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
@@ -35,15 +43,23 @@
                                 </tr>
                                 <tr>
                                     <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                        Tienes una nueva invitacion pendiente desde nuestro sitio , si deseas interactuar con este Vendedor sigue las instrucciones a continuacion.
+                                        Tienes una nueva invitacion de <strong><?php echo $identidad?></strong> en nuestro sitio , si deseas interactuar con este Vendedor sigue las instrucciones a continuacion.
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                        <p>Puede ingresar al sitio mediante el siguiente link y proceder a registrarse.</p>
-                                        <a href="<?php echo site_url("registro"); ?>">Link para continuar...</a>
+                                        <p>Puede ingresar al sitio y proceder a <a href="<?php echo site_url("registro"); ?>"><strong>registrarse</strong></a>.</p>
+                                        
                                     </td>
                                 </tr>
+                                <?php if($link):?>
+                                <tr>
+                                    <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+                                        <p>Si ya estas registrado en el sitio pero con un email diferente puedes seguir el link a continuacion:</p>
+                                        <a href="<?php echo $link ?>">Link para continuar...</a>
+                                    </td>
+                                </tr>
+                                <?php endif;?>
                             <?php endif; ?>                            
                         </table>
                     </td>

@@ -169,10 +169,23 @@ class Main extends MY_Controller {
 
     public function test_url() {
         //show_404();         
-          $cliente=$this->vendedor_model->get("6754");          
-          $nombre=$cliente->nombre;
-          $data_mail = array("identidad"=>$nombre,"titulo"=>"Titulo","comentario"=>"cmaodmaomdoamdomad");
-          echo $this->load->view('home/emails/invitacion_email', $data_mail, true); 
+        $cliente = $this->vendedor_model->get("6754");
+        $nombre = $cliente->nombre;
+        $data_mail = array(
+            "titulo" => "Titulo",
+            "comentario" => "cmaodmaomdoamdomad"
+        );
+        
+        $secret_key="b3e70b3511d35be501dbf4bb010f5e";
+        $link=site_url('usuario/identificar/'.$secret_key);
+        //$link=false;
+        $data_mail=array(
+            "identidad"=>$nombre,
+            "link"=>$link,
+            "titulo"=>"adad",
+            "comentario"=>"adad"
+        );
+        echo $this->load->view('home/emails/invitacion_email', $data_mail, true);
     }
 
 }

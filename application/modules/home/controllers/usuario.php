@@ -580,4 +580,68 @@ class Usuario extends MY_Controller {
 //            }
 //        }
 //    }
+
+    public function identificar($secret_key) {
+        if ($this->authentication->is_loggedin()) {
+            $this->authentication->logout();
+        }
+
+        $usuario = $this->usuario_model->get_by(array("secret_key" => $secret_key));
+
+        if ($usuario) {
+            $data = array(
+                "secret_key" => $secret_key
+            );
+            $this->template->set_title('Mercabarato - Busca y Compara');
+            $this->template->load_view('home/usuario/identificar', $data);
+        } else {
+            show_404();
+        }
+    }
+
+    public function diferente_email() {
+        $formValues = $this->input->post();
+        if ($formValues !== false) {
+            $password = $this->input->post('password');
+            $username = $this->input->post('email');
+            $secret_key = $this->input->post('secret_key');
+
+            $usuario_secret_key = $this->usuario_model->get_by(array("secret_key" => $secret_key));
+
+            if ($usuario_secret_key) {
+                if ($this->authentication->login($username, $password)) {
+                    $ip_address = $this->session->userdata('ip_address');
+                    $user_id = $this->authentication->read('identifier');
+                    $usuario = $this->usuario_model->get($user_id);
+                    $usuario->ip_address = $ip_address;
+                    $usuario->ultimo_acceso = date("Y-m-d H:i:s");
+
+                    $this->usuario_model->update($user_id, $usuario);
+
+                    $invitaciones = $this->invitacion_model->get_many_by(array("invitar_para" => $usuario_secret_key->id));
+                    if($invitaciones){
+                        foreach($invitaciones as $invitacion){
+                            if(!$this->invitacion_model->invitacion_existe($invitacion->invitar_desde,$user_id)){
+                                $this->invitacion_model->update($invitacion->id,array("invitar_para"=>$user_id));
+                            }
+                        }
+                    }
+                    $this->usuario_model->delete($usuario_secret_key->id);
+
+                    redirect('usuario/identificar-exito');
+                } else {
+                    $this->session->set_flashdata("error", "Credenciales incorrectas");
+                    redirect('usuario/identificar/' . $secret_key);
+                }
+            }else{
+                show_404();
+            }
+        }
+    }
+
+    public function identificar_exito() {
+        $this->template->set_title('Mercabarato - Busca y Compara');
+        $this->template->load_view('home/usuario/identificar_exito');
+    }
+
 }

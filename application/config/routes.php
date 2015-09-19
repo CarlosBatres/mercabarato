@@ -120,6 +120,9 @@ $route['usuario/infocompras-seguros/descargar_respuesta/(:any)'] = 'home/cliente
 $route['usuario/buscar-solicitudes-seguros'] = 'home/cliente/ajax_get_listado_seguros';
 $route['usuario/eliminar-cuenta'] = 'home/usuario/eliminar_cuenta';
 $route['usuario/eliminar-cuenta-confirmar'] = 'home/usuario/eliminar_cuenta_confirmar';
+$route['usuario/identificar/(:any)'] = 'home/usuario/identificar/$1';
+$route['usuario/diferente-email'] = 'home/usuario/diferente_email';
+$route['usuario/identificar-exito'] = 'home/usuario/identificar_exito';
 
 $route['usuario/infocompras-general'] = 'home/cliente/view_infocompras_general';
 $route['usuario/infocompras-general/respuesta/(:num)'] = 'home/cliente/view_infocompras_respuesta/$1';

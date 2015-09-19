@@ -98,13 +98,13 @@ class Usuario_model extends MY_Model {
     }
 
     public function verificar_email($secret_key) {
-        $user_id=$this->usuario_model->get_by(array("secret_key"=>$secret_key));        
-        if($user_id){            
+        $user_id = $this->usuario_model->get_by(array("secret_key" => $secret_key));
+        if ($user_id) {
             $this->usuario_model->update_by(array("secret_key" => $secret_key), array("activo" => "1", "secret_key" => null));
             return $user_id->id;
-        }else{
+        } else {
             return false;
-        }                
+        }
     }
 
     public function inhabilitar($usuario_id) {
@@ -140,21 +140,27 @@ class Usuario_model extends MY_Model {
         if ($usuario) {
             $this->localizacion_model->delete_by("usuario_id", $usuario->id);
             $this->restriccion_model->delete_by("usuario_id", $usuario->id);
+
+            $cliente = $this->cliente_model->get_by("usuario_id", $id);
+            if ($cliente) {
+                $this->cliente_model->delete($cliente->id);
+            }
+
             parent::delete($id);
         } else {
             return false;
         }
     }
-    
+
     public function full_inhabilitar($usuario_id) {
         $usuario = $this->get($usuario_id);
-        if ($usuario) {            
+        if ($usuario) {
             $this->update($usuario_id, array("activo" => "0"));
-            $cliente=$this->cliente_model->get_by("usuario_id",$usuario_id);
-            if($cliente){
-                $vendedor=$this->vendedor_model->get_by("cliente_id",$cliente->id);
-                if($vendedor){
-                    $this->vendedor_model->update($vendedor->id,array("habilitado"=>"0"));
+            $cliente = $this->cliente_model->get_by("usuario_id", $usuario_id);
+            if ($cliente) {
+                $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
+                if ($vendedor) {
+                    $this->vendedor_model->update($vendedor->id, array("habilitado" => "0"));
                 }
             }
         }
