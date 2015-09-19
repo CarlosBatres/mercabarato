@@ -17,7 +17,7 @@
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Un Vendedor ha aceptado tu invitacion para conectarse ya puedes recibir sus Tarifas, Ofertas y demas.
+                                    <strong><?php echo $identidad ?></strong> ha aceptado tu invitacion para conectarse ya puedes recibir sus Tarifas, Ofertas y demas.
                                 </td>
                             </tr>                            
                         </table>

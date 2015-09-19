@@ -42,8 +42,8 @@ function bind_modal() {
         $(this).removeData('bs.modal');
     });
 
-    $('#question').on('shown.bs.modal', function(e) {        
-        var invitacion_id=$('input[name="invitacion_id"]').val();
+    $('#question').on('loaded.bs.modal', function() {         
+        var invitacion_id=$('input[name="invitacion_id"]').val();                
         $('#yes').on('click',function() {
             $.ajax({
                 url: SITE_URL+'panel_vendedor/invitaciones/aceptar/'+invitacion_id,
@@ -53,7 +53,7 @@ function bind_modal() {
                     updateResultados();                    
                 }
             });
-        });
+        });                
         $('#no').on('click',function() {
             $.ajax({
                 url: SITE_URL+'panel_vendedor/invitaciones/rechazar/'+invitacion_id,

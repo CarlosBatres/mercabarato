@@ -209,12 +209,17 @@ class Cliente extends MY_Controller {
                         $usr = $this->usuario_model->get($invitacion->invitar_para);
                         $email = $usr->email;
                     }
+                    
+                    $clt=$this->cliente_model->get_by(array("usuario_id"=>$user_id));                    
+                    $nombre=$clt->nombres.' '.$clt->apellidos;
+                    // TODO: Aqui en vez del nombre podria ser el apodo o nickname en un futuro.
+                    $data_mail = array("identidad"=>$nombre);
 
                     $this->load->library('email');
                     $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
                     $this->email->to($email);
                     $this->email->subject('Invitacion Aceptada');
-                    $this->email->message($this->load->view('home/emails/aceptar_invitacion_cliente', array(), true));
+                    $this->email->message($this->load->view('home/emails/aceptar_invitacion_cliente', $data_mail, true));
                     $this->email->send();
                 }
                 echo json_encode(array("success" => true));

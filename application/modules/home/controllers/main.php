@@ -168,11 +168,11 @@ class Main extends MY_Controller {
     }
 
     public function test_url() {
-        show_404();
-        /* $solicitud_id="9";
-          $link=site_url('usuario/infocompras-seguros/respuesta/'.$solicitud_id);
-          $data_mail = array("link"=>$link);
-          echo $this->load->view('home/emails/solicitud_presupuesto_2', $data_mail, true); */
+        //show_404();         
+          $cliente=$this->vendedor_model->get("6754");          
+          $nombre=$cliente->nombre;
+          $data_mail = array("identidad"=>$nombre,"titulo"=>"Titulo","comentario"=>"cmaodmaomdoamdomad");
+          echo $this->load->view('home/emails/invitacion_email', $data_mail, true); 
     }
 
 }
