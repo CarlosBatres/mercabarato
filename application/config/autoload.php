@@ -80,7 +80,7 @@ $autoload['helper'] = array('url','form','site','path','date');
 |
 */
 
-$autoload['config'] = array('assets');
+$autoload['config'] = array('assets','mercabarato');
 
 
 /*

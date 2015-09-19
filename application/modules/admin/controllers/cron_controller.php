@@ -22,7 +22,7 @@ class cron_controller extends MY_Controller {
                     if ($this->config->item('emails_enabled')) {
                         $email = $this->vendedor_model->get_email($paquete->vendedor_id);
                         $this->load->library('email');
-                        $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($email);
                         $this->email->subject('Tu paquete esta apunto de caducar');
                         $data_email = array("paquete" => $paquete);
@@ -41,7 +41,7 @@ class cron_controller extends MY_Controller {
                         if (!$renovacion) {
                             $email = $this->vendedor_model->get_email($paquete->vendedor_id);
                             $this->load->library('email');
-                            $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
+                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                             $this->email->to($email);
                             $this->email->subject('Tu paquete a caducado');
                             $data_email = array("paquete" => $paquete);

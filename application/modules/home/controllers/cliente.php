@@ -216,7 +216,7 @@ class Cliente extends MY_Controller {
                     $data_mail = array("identidad"=>$nombre);
 
                     $this->load->library('email');
-                    $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
+                    $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                     $this->email->to($email);
                     $this->email->subject('Invitacion Aceptada');
                     $this->email->message($this->load->view('home/emails/aceptar_invitacion_cliente', $data_mail, true));
@@ -357,7 +357,7 @@ class Cliente extends MY_Controller {
                 if ($this->config->item('emails_enabled')) {
                     $usuario = $this->usuario_model->get($cliente->usuario_id);
                     $this->load->library('email');
-                    $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
+                    $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                     $this->email->to($usuario->email);
                     $this->email->subject('Invitacion de Mercabarato.com');
                     $data_email = array("titulo" => $data["titulo"], "comentario" => $data["comentario"]);
@@ -533,7 +533,7 @@ class Cliente extends MY_Controller {
                         $usuario = $this->usuario_model->get($cliente->usuario_id);
 
                         $this->load->library('email');
-                        $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
                         $this->email->subject('Nueva solicitud de presupuesto');
                         //$data_email = array("solicitud_id" => $solicitud_seguro_id);
@@ -702,7 +702,7 @@ class Cliente extends MY_Controller {
                         $usuario = $this->usuario_model->get($cliente->usuario_id);
 
                         $this->load->library('email');
-                        $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
                         $this->email->subject('Nueva solicitud de presupuesto');
                         //$data_email = array("solicitud_id" => $solicitud_id);

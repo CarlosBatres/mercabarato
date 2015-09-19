@@ -743,7 +743,7 @@ class Producto_model extends MY_Model {
                             $oferta_general = $this->oferta_general_model->get($oferta->oferta_general_id);
 
                             $this->load->library('email');
-                            $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
+                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                             $this->email->to($usuario->email);
                             $this->email->subject('Requisitos de Oferta cumplidos');
                             $data_mail = array("codigo" => $codigo, "producto" => $producto, "oferta" => $oferta, "oferta_general" => $oferta_general);
@@ -752,7 +752,7 @@ class Producto_model extends MY_Model {
 
                             $email = $this->vendedor_model->get_email($producto->vendedor_id);
                             $this->load->library('email');
-                            $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
+                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                             $this->email->to($email);
                             $this->email->subject('Requisitos de Oferta cumplidos');
                             $data_mail2 = array("codigo" => $codigo, "oferta_general" => $oferta_general);
@@ -781,7 +781,7 @@ class Producto_model extends MY_Model {
                             $producto = $this->producto_model->get($oferta->producto_id);
 
                             $this->load->library('email');
-                            $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
+                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                             $this->email->to($usuario->usuario->email);
                             $this->email->subject('Requisitos de Oferta cumplidos');
                             $data_mail = array("codigo" => $codigo, "producto" => $producto, "oferta" => $oferta, "oferta_general" => $oferta_general);
@@ -790,7 +790,7 @@ class Producto_model extends MY_Model {
 
                             $email = $this->vendedor_model->get_email($producto->vendedor_id);
                             $this->load->library('email');
-                            $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
+                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                             $this->email->to($email);
                             $this->email->subject('Requisitos de Oferta cumplidos');
                             $data_mail2 = array("codigo" => $codigo, "oferta_general" => $oferta_general);

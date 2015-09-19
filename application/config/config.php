@@ -369,11 +369,7 @@ $config["categorias_img_path"]='/uploads/categorias/';
 $config["vendedores_img_path"]='/uploads/vendedores/';
 $config["seguros_path"]='/uploads/seguros/';
 $config["principal_default_per_page"]='10';
-$config["emails_enabled"]=false;
 
-$config["site_info_email"]="info@mercabarato.com";
-$config["site_baja_email"]="baja@mercabarato.com";
-$config["site_noreply_email"]="no-reply@mercabarato.com";
 
 
 /* End of file config.php */

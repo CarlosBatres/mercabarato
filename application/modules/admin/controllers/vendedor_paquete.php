@@ -87,7 +87,7 @@ class Vendedor_paquete extends ADController {
                 $usuario = $this->usuario_model->get($cliente->usuario_id);
 
                 $this->load->library('email');
-                $this->email->from($this->config->item('site_noreply_email'), 'Mercabarato.com');
+                $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                 $this->email->to($usuario->email);
                 $this->email->subject('Paquete Aprobado');
                 $data_email = array("paquete" => $vendedor_paqueted);

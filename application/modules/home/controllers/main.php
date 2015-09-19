@@ -8,14 +8,18 @@ class Main extends MY_Controller {
     protected $spam_protection = TRUE; // true or false
     protected $spam_question = 'Cuanto es 2 + 3?';
     protected $spam_answer = '5';
-
+    /**
+     * 
+     */
     public function index() {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->add_js('modules/home/inicio.js');
         $provincias = $this->provincia_model->get_all_by_pais(70);
         $this->template->load_view('home/index', array("provincias" => $provincias));
     }
-
+    /**
+     * 
+     */
     public function productos() {
         $formValues = $this->input->post();
         if ($formValues !== false) {
@@ -31,17 +35,23 @@ class Main extends MY_Controller {
             redirect('productos');
         }
     }
-
+    /**
+     * 
+     */
     public function not_found() {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/404');
     }
-
+    /**
+     * 
+     */
     public function acceso_restringido() {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/acceso_restringido');
     }
-
+    /**
+     * 
+     */
     public function verificar_palabra() {
         if ($this->input->is_ajax_request()) {
             $formValues = $this->input->post();
@@ -57,7 +67,9 @@ class Main extends MY_Controller {
             show_404();
         }
     }
-
+    /**
+     * 
+     */
     public function verificar_nickname() {
         if ($this->input->is_ajax_request()) {
             $formValues = $this->input->post();
@@ -113,11 +125,11 @@ class Main extends MY_Controller {
 
             if ($honey_pot == "") {
                 if (strtolower(trim($anwser)) == strtolower(trim($this->spam_answer))) {
-                    if ($this->config->item('emails_enabled')) {
-                        $this->load->library('email');
+                    if ($this->config->item('emails_enabled')) {                        
+                        $this->load->library('email');                        
+                        $this->email->initialize($this->config->item('email_info'));
                         $this->email->from($this->config->item('site_info_email'), 'Formulario de Contacto');
                         $this->email->to($this->config->item('site_info_email'));
-
                         $this->email->subject('Nuevo mensaje desde Mercabarato.com');
                         $data_email = array("email" => $email, "mensaje" => $mensaje);
                         $this->email->message($this->load->view('home/emails/contacto', $data_email, true));
@@ -141,35 +153,47 @@ class Main extends MY_Controller {
     public function contacto_enviado() {
         $this->template->load_view('home/paginas/contacto_mensaje_recibido');
     }
-
+    /**
+     * 
+     */
     public function quienes_somos() {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/quienes_somos');
     }
-
+    /**
+     * 
+     */
     public function como_funciona() {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/como_funciona');
     }
-
+    /**
+     * 
+     */
     public function aviso_legal() {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/aviso_legal');
     }
-
+    /**
+     * 
+     */
     public function terminos_de_uso() {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/terminos_de_uso');
     }
-
+    /**
+     * 
+     */
     public function cookies() {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/cookies');
     }
-
+    /**
+     * 
+     */
     public function test_url() {
-        //show_404();         
-        $cliente = $this->vendedor_model->get("6754");
+        show_404();         
+        /*$cliente = $this->vendedor_model->get("6754");
         $nombre = $cliente->nombre;
         $data_mail = array(
             "titulo" => "Titulo",
@@ -185,7 +209,7 @@ class Main extends MY_Controller {
             "titulo"=>"adad",
             "comentario"=>"adad"
         );
-        echo $this->load->view('home/emails/invitacion_email', $data_mail, true);
+        echo $this->load->view('home/emails/invitacion_email', $data_mail, true);*/
     }
 
 }
