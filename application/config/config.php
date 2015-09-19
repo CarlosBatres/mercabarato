@@ -19,8 +19,7 @@ if (!defined('BASEPATH'))
   | environments.
   |
  */
-//$config['base_url'] = 'http://www.mercabarato.com/';
-$config['base_url'] = 'http://www.micesc-dev.com/mercabarato/';
+$config['base_url'] = 'http://localhost/freelancer/mercabarato_new/';
 
 /*
   |--------------------------------------------------------------------------
@@ -370,7 +369,7 @@ $config["categorias_img_path"]='/uploads/categorias/';
 $config["vendedores_img_path"]='/uploads/vendedores/';
 $config["seguros_path"]='/uploads/seguros/';
 $config["principal_default_per_page"]='10';
-$config["emails_enabled"]=true;
+$config["emails_enabled"]=false;
 
 $config["site_info_email"]="info@mercabarato.com";
 $config["site_baja_email"]="baja@mercabarato.com";
