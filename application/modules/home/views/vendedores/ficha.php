@@ -55,7 +55,7 @@
                     </div>
                 </div>                
             </div>
-            <?php if (!$invitacion): ?>
+            <?php if (!$invitacion && !$son_contactos): ?>
                 <div class="row">
                     <div class="col-md-12 pull-right">
                         <div class="text-right">

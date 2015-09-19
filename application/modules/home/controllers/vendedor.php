@@ -654,6 +654,10 @@ class Vendedor extends MY_Controller {
                     $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                     $params["cliente_id"] = $cliente->id;
                     $son_contactos = $this->invitacion_model->son_contactos($user_id, $cliente_vendedor->usuario_id);
+                    
+                    if($user_id==$cliente_vendedor->usuario_id){
+                        $son_contactos=true;
+                    }
 
                     $cliente_datos_contacto = $this->usuario_model->get_full_identidad($user_id);
                 } else {
