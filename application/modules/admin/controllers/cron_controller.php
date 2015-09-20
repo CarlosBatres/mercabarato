@@ -15,19 +15,25 @@ class cron_controller extends MY_Controller {
      */
     public function validar_paquetes() {
         if ($this->input->is_cli_request()) {
+            if ($this->config->item('emails_enabled')) {
+                $this->load->library('email');
+                $this->email->initialize($this->config->item('email_info'));
+            }
+            
             $dias_previos_aviso = 5;
             $paquetes_por_vencer = $this->vendedor_paquete_model->get_paquetes_a_caducar($dias_previos_aviso);
             if ($paquetes_por_vencer) {
+
                 foreach ($paquetes_por_vencer as $paquete) {
                     if ($this->config->item('emails_enabled')) {
                         $email = $this->vendedor_model->get_email($paquete->vendedor_id);
-                        $this->load->library('email');
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($email);
                         $this->email->subject('Tu paquete esta apunto de caducar');
                         $data_email = array("paquete" => $paquete);
                         $this->email->message($this->load->view('home/emails/paquete_5dias_caducar', $data_email, true));
                         $this->email->send();
+                        $this->email->clear();
                     }
                 }
             }
@@ -39,14 +45,14 @@ class cron_controller extends MY_Controller {
                     if ($this->config->item('emails_enabled')) {
                         $renovacion = $this->vendedor_model->get_paquete_renovacion($paquete->vendedor_id);
                         if (!$renovacion) {
-                            $email = $this->vendedor_model->get_email($paquete->vendedor_id);
-                            $this->load->library('email');
+                            $email = $this->vendedor_model->get_email($paquete->vendedor_id);                                                        
                             $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                             $this->email->to($email);
                             $this->email->subject('Tu paquete a caducado');
                             $data_email = array("paquete" => $paquete);
                             $this->email->message($this->load->view('home/emails/paquete_caducado', $data_email, true));
                             $this->email->send();
+                            $this->email->clear();
                         }
                     }
                 }
@@ -61,6 +67,11 @@ class cron_controller extends MY_Controller {
      */
     public function productos_novedades() {
         if ($this->input->is_cli_request()) {
+            if ($this->config->item('emails_enabled')) {
+                $this->load->library('email');
+                $this->email->initialize($this->config->item('email_info'));
+            }
+            
             $days = 2;
             $date_inicio = strtotime(date('Y-m-d'));
             $date_inicio = strtotime("-" . $days . " day", $date_inicio);
@@ -108,15 +119,15 @@ class cron_controller extends MY_Controller {
                         $pros = $this->producto_model->get_novedades_fecha($date_inicio, $date_final, 3, $vendedor);
                         $cliente_email = $this->usuario_model->get_email($cliente);
 
-                        if ($this->config->item('emails_enabled')) {
-                            $this->load->library('email');
+                        if ($this->config->item('emails_enabled')) {                            
                             $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                             $this->email->to($cliente_email);
                             $this->email->subject('Novedades en Mercabarato.com');
                             $data_email = array("productos" => $pros);
                             $this->email->message($this->load->view('home/emails/novedades_productos', $data_email, true));
                             $this->email->send();
-                        }                        
+                            $this->email->clear();
+                        }
                     }
                 }
             }

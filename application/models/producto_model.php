@@ -720,7 +720,10 @@ class Producto_model extends MY_Model {
             return false;
         }
     }
-
+    /**
+     * 
+     * @param type $producto_id
+     */
     public function verificar_oferta($producto_id) {
         $producto = $this->get($producto_id);
         if ($producto) {
