@@ -417,7 +417,8 @@ class Producto extends MY_Controller {
             if ($formValues !== false) {
                 $asunto = $this->input->post("asunto");
                 $mensaje = $this->input->post("mensaje");
-                $vendedor_cliente = $this->cliente_model->get($producto->cliente_id);
+                $vendedor_vendedor = $this->vendedor_model->get($producto->vendedor_id);
+                $vendedor_cliente = $this->cliente_model->get($vendedor_vendedor->cliente_id);
                 $vendedor_usuario = $this->usuario_model->get($vendedor_cliente->usuario_id);
 
                 if ($this->invitacion_model->son_contactos($vendedor_cliente->usuario_id, $user_id)) {
