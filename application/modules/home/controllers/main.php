@@ -151,6 +151,7 @@ class Main extends MY_Controller {
      * 
      */
     public function contacto_enviado() {
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/contacto_mensaje_recibido');
     }
     /**
