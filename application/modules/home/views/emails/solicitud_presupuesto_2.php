@@ -17,7 +17,7 @@
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    El vendedor ha respondido la solicitud de presupuesto que tenias pendiente en nuestro sitio.
+                                    <strong><?php echo $identidad?></strong> ha respondido la solicitud de presupuesto que tenias pendiente en nuestro sitio.
                                 </td>
                             </tr>
                             <tr>
