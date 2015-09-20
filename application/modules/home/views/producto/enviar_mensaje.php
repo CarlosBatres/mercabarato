@@ -37,15 +37,13 @@
     <div class="row">  
         <div class="col-md-12">                            
             <div class="form-group">                                                                
-                <label>Asunto</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" name="asunto">                                
-                </div>
+                <label><strong>Asunto</strong></label>                
+                <input type="text" class="form-control" name="asunto">                                                
             </div>
         </div>
         <div class="col-md-12"> 
             <div class="form-group">
-                <label>Mensaje</label>
+                <label><strong>Mensaje</strong></label>
                 <textarea class="form-control" name="mensaje" rows="5" cols="20"></textarea>                    
             </div>                                                        
         </div>

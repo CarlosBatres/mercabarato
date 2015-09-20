@@ -56,13 +56,13 @@
                     </div>
                     <div class="col-md-12 text-center">    
                         <?php if ($producto->grupo_txt != ""): ?>
-                        <a href="<?php echo site_url($vendedor->unique_slug.'/productos/'.$producto->grupo_txt)?>" class="btn btn-success" > <?php echo $producto->grupo_txt; ?></a>                    
+                            <a href="<?php echo site_url($vendedor->unique_slug . '/productos/' . $producto->grupo_txt) ?>" class="btn btn-success" > <?php echo $producto->grupo_txt; ?></a>                    
                         <?php endif; ?>
                         <?php if ($producto->familia_txt != ""): ?>
-                            <a href="<?php echo site_url($vendedor->unique_slug.'/productos/'.$producto->grupo_txt.'/'.$producto->familia_txt)?>" class="btn btn-success" > <?php echo $producto->familia_txt; ?></a>
+                            <a href="<?php echo site_url($vendedor->unique_slug . '/productos/' . $producto->grupo_txt . '/' . $producto->familia_txt) ?>" class="btn btn-success" > <?php echo $producto->familia_txt; ?></a>
                         <?php endif; ?>
                         <?php if ($producto->subfamilia_txt != ""): ?>
-                            <a href="<?php echo site_url($vendedor->unique_slug.'/productos/'.$producto->grupo_txt.'/'.$producto->familia_txt.'/'.$producto->subfamilia_txt)?>" class="btn btn-success" > <?php echo $producto->subfamilia_txt; ?></a>
+                            <a href="<?php echo site_url($vendedor->unique_slug . '/productos/' . $producto->grupo_txt . '/' . $producto->familia_txt . '/' . $producto->subfamilia_txt) ?>" class="btn btn-success" > <?php echo $producto->subfamilia_txt; ?></a>
                         <?php endif; ?>
                     </div>
                     <br>
@@ -118,10 +118,10 @@
                         <?php endif; ?>
 
                         <?php if ($producto->transporte == "1"): ?>
-                            <p><strong><?php echo ($producto->transporte_txt!='')?$producto->transporte_txt:'Transporte Gratuito' ?></strong></p>                        
+                            <p><strong><?php echo ($producto->transporte_txt != '') ? $producto->transporte_txt : 'Transporte Gratuito' ?></strong></p>                        
                         <?php endif; ?>
                         <?php if ($producto->impuesto == "1"): ?>
-                            <p><strong><?php echo ($producto->impuesto_txt!='')?$producto->impuesto_txt:'Impuesto Incluido' ?></strong></p>
+                            <p><strong><?php echo ($producto->impuesto_txt != '') ? $producto->impuesto_txt : 'Impuesto Incluido' ?></strong></p>
                         <?php endif; ?>
                     </div>
                 </div>            
@@ -300,15 +300,13 @@
                     <div class="row">  
                         <div class="col-md-12">                            
                             <div class="form-group">                                                                
-                                <label>Titulo</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="titulo">                                
-                                </div>
+                                <label><strong>Titulo</strong></label>                                
+                                <input type="text" class="form-control" name="titulo">                                
                             </div>
                         </div>
                         <div class="col-md-12"> 
                             <div class="form-group">
-                                <label>Mensaje</label>
+                                <label><strong>Mensaje</strong></label>
                                 <textarea class="form-control" name="mensaje" rows="5" cols="20"></textarea>                    
                             </div>                                                        
                         </div>
