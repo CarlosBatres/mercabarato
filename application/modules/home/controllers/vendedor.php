@@ -272,6 +272,7 @@ class Vendedor extends MY_Controller {
                 if ($result) {
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
+                        $this->email->initialize($this->config->item('email_info'));
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
                         $this->email->subject('Informacion para pago del paquete');
@@ -460,6 +461,7 @@ class Vendedor extends MY_Controller {
                 if ($result) {
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
+                        $this->email->initialize($this->config->item('email_info'));
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
                         $this->email->subject('Informacion para pago del paquete');
@@ -1030,6 +1032,7 @@ class Vendedor extends MY_Controller {
                     if ($result) {
                         if ($this->config->item('emails_enabled')) {
                             $this->load->library('email');
+                            $this->email->initialize($this->config->item('email_info'));
                             $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                             $this->email->to($usuario->email);
                             $this->email->subject('Informacion para pago del paquete');

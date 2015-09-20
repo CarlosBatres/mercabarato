@@ -380,6 +380,7 @@ class Usuario extends MY_Controller {
                 if ($usuario && $usuario->id != "1") {
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
+                        $this->email->initialize($this->config->item('email_info'));
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($email);
                         $this->email->subject('Restablecer contraseña de Mercabarato');
@@ -507,7 +508,8 @@ class Usuario extends MY_Controller {
 
                 if ($this->config->item('emails_enabled')) {
                     $this->load->library('email');
-                    $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                    $this->email->initialize($this->config->item('email_baja'));
+                    $this->email->from($this->config->item('site_baja_email'), 'Mercabarato.com');
                     $this->email->to($this->config->item('site_baja_email'));
                     $this->email->subject('Peticion de Baja');
                     $data_mail = array("usuario" => $identidad);
@@ -524,62 +526,6 @@ class Usuario extends MY_Controller {
         }
     }
 
-//    public function eliminar_cuenta_old() {
-//        if ($this->authentication->is_loggedin()) {
-//            $user_id = $this->authentication->read('identifier');
-//            $identidad = $this->usuario_model->get_full_identidad($user_id);
-//
-//            $formValues = $this->input->post();
-//            if ($formValues !== false) {
-//                $usuario_id = $this->input->post("usuario_id");
-//                if ($user_id == $usuario_id) {
-//                    $this->authentication->logout();
-//                    $this->usuario_model->full_inhabilitar($usuario_id);
-//
-//                    if ($this->config->item('emails_enabled')) {
-//                        $this->load->library('email');
-//                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
-//                        $this->email->to($this->config->item('site_baja_email'));
-//                        $this->email->subject('Peticion de Baja');
-//                        $data_mail = array("usuario" => $identidad);
-//                        $this->email->message($this->load->view('home/emails/eliminar_cuenta', $data_mail, true));
-//                        $this->email->send();
-//                    }
-//
-//                    $this->template->set_title('Mercabarato - Busca y Compara');
-//                    $this->template->load_view('home/usuario/eliminar_cuenta_terminado');
-//                } else {
-//                    redirect('404');
-//                }
-//            } else {
-//                $this->template->set_title('Mercabarato - Busca y Compara');
-//                $this->template->load_view('home/usuario/eliminar_cuenta', array("usuario" => $identidad->usuario));
-//            }
-//        } else {
-//            $formValues = $this->input->post();
-//            if ($formValues !== false) {
-//                $password = $this->input->post('password');
-//                $username = $this->input->post('email');
-//
-//                if ($this->authentication->login($username, $password)) {
-//                    $ip_address = $this->session->userdata('ip_address');
-//                    $user_id = $this->authentication->read('identifier');
-//                    $usuario = $this->usuario_model->get($user_id);
-//                    $usuario->ip_address = $ip_address;
-//                    $usuario->ultimo_acceso = date("Y-m-d H:i:s");
-//
-//                    $this->usuario_model->update($user_id, $usuario);
-//                    redirect('usuario/eliminar-cuenta');
-//                } else {
-//                    $this->session->set_flashdata("error", "Credenciales incorrectas");
-//                    redirect('usuario/eliminar-cuenta');
-//                }
-//            } else {
-//                $this->template->set_title('Mercabarato - Busca y Compara');
-//                $this->template->load_view('home/usuario/eliminar_cuenta_login');
-//            }
-//        }
-//    }
 
     public function identificar($secret_key) {
         if ($this->authentication->is_loggedin()) {

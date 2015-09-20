@@ -88,9 +88,9 @@ class Cliente extends MY_Controller {
                 //$this->authentication->login($username, $password);
                 if ($this->config->item('emails_enabled')) {
                     $this->load->library('email');
+                    $this->email->initialize($this->config->item('email_info'));
                     $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                     $this->email->to($username);
-
                     $this->email->subject('Active su cuenta');
                     $data_email = array("link" => site_url('confirmar_registro') . '/' . $secret_key);
                     $this->email->message($this->load->view('home/emails/confirmar_registro', $data_email, true));
@@ -154,9 +154,9 @@ class Cliente extends MY_Controller {
                     //$this->authentication->login($username, $password);
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
+                        $this->email->initialize($this->config->item('email_info'));
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($username);
-
                         $this->email->subject('Active su cuenta');
                         $data_email = array("link" => site_url('confirmar_registro') . '/' . $usuario->secret_key);
                         $this->email->message($this->load->view('home/emails/confirmar_registro', $data_email, true));
@@ -216,6 +216,7 @@ class Cliente extends MY_Controller {
                     $data_mail = array("identidad"=>$nombre);
 
                     $this->load->library('email');
+                    $this->email->initialize($this->config->item('email_info'));
                     $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                     $this->email->to($email);
                     $this->email->subject('Invitacion Aceptada');
@@ -357,6 +358,7 @@ class Cliente extends MY_Controller {
                 if ($this->config->item('emails_enabled')) {
                     $usuario = $this->usuario_model->get($cliente->usuario_id);
                     $this->load->library('email');
+                    $this->email->initialize($this->config->item('email_info'));
                     $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                     $this->email->to($usuario->email);
                     $this->email->subject('Invitacion de Mercabarato.com');
@@ -533,6 +535,7 @@ class Cliente extends MY_Controller {
                         $usuario = $this->usuario_model->get($cliente->usuario_id);
 
                         $this->load->library('email');
+                        $this->email->initialize($this->config->item('email_info'));
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
                         $this->email->subject('Nueva solicitud de presupuesto');
@@ -702,6 +705,7 @@ class Cliente extends MY_Controller {
                         $usuario = $this->usuario_model->get($cliente->usuario_id);
 
                         $this->load->library('email');
+                        $this->email->initialize($this->config->item('email_info'));
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
                         $this->email->subject('Nueva solicitud de presupuesto');

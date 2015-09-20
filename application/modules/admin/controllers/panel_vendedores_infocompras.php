@@ -131,6 +131,7 @@ class Panel_vendedores_infocompras extends ADController {
                         $usuario = $this->usuario_model->get($cliente->usuario_id);
 
                         $this->load->library('email');
+                        $this->email->initialize($this->config->item('email_info'));
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
                         $this->email->subject('Se ha respondido a tu solicitud de presupuesto');
@@ -433,6 +434,7 @@ class Panel_vendedores_infocompras extends ADController {
                         $usuario = $this->usuario_model->get($cliente->usuario_id);
 
                         $this->load->library('email');
+                        $this->email->initialize($this->config->item('email_info'));
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
                         $this->email->subject('Se ha respondido a tu solicitud de presupuesto');

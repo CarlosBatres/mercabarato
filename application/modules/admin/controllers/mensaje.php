@@ -92,6 +92,7 @@ class Mensaje extends ADController {
                 
                 if ($this->config->item('emails_enabled')) {
                     $this->load->library('email');
+                    $this->email->initialize($this->config->item('email_info'));
                 }
                 foreach ($temp_mails as $email) {
                     if ($this->config->item('emails_enabled')) {

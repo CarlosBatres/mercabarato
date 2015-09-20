@@ -104,6 +104,7 @@ class Panel_vendedores_invitaciones extends ADController {
                     if ($this->config->item('emails_enabled')) {
                         $usuario = $this->usuario_model->get($cliente->usuario_id);
                         $this->load->library('email');
+                        $this->email->initialize($this->config->item('email_info'));
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($usuario->email);
                         $this->email->subject('Invitacion de Mercabarato.com');
@@ -198,6 +199,7 @@ class Panel_vendedores_invitaciones extends ADController {
 
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
+                        $this->email->initialize($this->config->item('email_info'));
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($email);
                         $this->email->subject('Invitacion de Mercabarato.com');
@@ -236,6 +238,7 @@ class Panel_vendedores_invitaciones extends ADController {
 
                                     if ($this->config->item('emails_enabled')) {
                                         $this->load->library('email');
+                                        $this->email->initialize($this->config->item('email_info'));
                                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                                         $this->email->to($email);
                                         $this->email->subject('Invitacion de Mercabarato.com');
@@ -274,6 +277,7 @@ class Panel_vendedores_invitaciones extends ADController {
 
                                 if ($this->config->item('emails_enabled')) {
                                     $this->load->library('email');
+                                    $this->email->initialize($this->config->item('email_info'));
                                     $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                                     $this->email->to($email);
                                     $this->email->subject('Invitacion de Mercabarato.com');
@@ -314,6 +318,7 @@ class Panel_vendedores_invitaciones extends ADController {
 
                             if ($this->config->item('emails_enabled')) {
                                 $this->load->library('email');
+                                $this->email->initialize($this->config->item('email_info'));
                                 $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                                 $this->email->to($email);
                                 $this->email->subject('Invitacion de Mercabarato.com');
@@ -479,6 +484,7 @@ class Panel_vendedores_invitaciones extends ADController {
                 $data_email = array("identidad" => $nombre);
 
                 $this->load->library('email');
+                $this->email->initialize($this->config->item('email_info'));
                 $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                 $this->email->to($email);
                 $this->email->subject('Invitacion Aceptada');
