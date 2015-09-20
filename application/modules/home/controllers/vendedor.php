@@ -266,7 +266,7 @@ class Vendedor extends MY_Controller {
                     "aprobado" => 0,
                     "infocompra" => $paquete->infocompra
                 );
-                $vendedor=$this->vendedor_model->get($vendedor_id);
+                $vendedor = $this->vendedor_model->get($vendedor_id);
                 $result = $this->vendedor_model->verificar_disponibilidad($vendedor->id);
 
                 if ($result) {
@@ -468,7 +468,7 @@ class Vendedor extends MY_Controller {
                         $data_email = array("paquete" => $data);
                         $this->email->message($this->load->view('home/emails/informacion_de_compra', $data_email, true));
                         $this->email->send();
-                        
+
                         $this->email->clear();
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($this->config->item('site_info_email'));
@@ -664,9 +664,9 @@ class Vendedor extends MY_Controller {
                     $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                     $params["cliente_id"] = $cliente->id;
                     $son_contactos = $this->invitacion_model->son_contactos($user_id, $cliente_vendedor->usuario_id);
-                    
-                    if($user_id==$cliente_vendedor->usuario_id){
-                        $son_contactos=true;
+
+                    if ($user_id == $cliente_vendedor->usuario_id) {
+                        $son_contactos = true;
                     }
 
                     $cliente_datos_contacto = $this->usuario_model->get_full_identidad($user_id);
@@ -1047,6 +1047,14 @@ class Vendedor extends MY_Controller {
                             $data_email = array("paquete" => $data);
                             $this->email->message($this->load->view('home/emails/informacion_de_compra', $data_email, true));
                             $this->email->send();
+
+                            $this->email->clear();
+                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                            $this->email->to($this->config->item('site_info_email'));
+                            $this->email->subject('Nueva compra de paquete');
+                            $data_email = array("paquete" => $data, "vendedor" => $vendedor);
+                            $this->email->message($this->load->view('home/emails/nueva_compra_paquete', $data_email, true));
+                            $this->email->send();
                         }
                         $this->vendedor_paquete_model->insert($data);
                     }
@@ -1060,7 +1068,7 @@ class Vendedor extends MY_Controller {
         }
     }
 
-    public function ver_productos($slug, $param1=false , $param2=false ,$param3 = false) {
+    public function ver_productos($slug, $param1 = false, $param2 = false, $param3 = false) {
         $vendedor = $this->vendedor_model->get_vendedor_by_slug($slug);
         if ($vendedor) {
             if ($vendedor->habilitado == 1) {
@@ -1092,22 +1100,22 @@ class Vendedor extends MY_Controller {
                 $params["vendedor_id"] = $this->input->post('vendedor_id');
                 $params["habilitado"] = "1";
                 $params["mostrar_producto"] = "1";
-                
-                if($this->input->post('grupo_txt')!=""){
+
+                if ($this->input->post('grupo_txt') != "") {
                     $params["order_by_grupo_txt"] = $this->input->post('grupo_txt');
                     $params["grupo_txt"] = $this->input->post('grupo_txt');
                 }
-                
-                if($this->input->post('familia_txt')!=""){
+
+                if ($this->input->post('familia_txt') != "") {
                     $params["order_by_familia_txt"] = $this->input->post('familia_txt');
                     $params["familia_txt"] = $this->input->post('familia_txt');
                 }
-                
-                if($this->input->post('subfamilia_txt')!=""){
+
+                if ($this->input->post('subfamilia_txt') != "") {
                     $params["order_by_subfamilia_txt"] = $this->input->post('subfamilia_txt');
                     $params["subfamilia_txt"] = $this->input->post('subfamilia_txt');
                 }
-                
+
                 $pagina = $this->input->post('pagina');
 
                 $limit = $this->config->item("principal_default_per_page");

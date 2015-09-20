@@ -295,8 +295,8 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Invitacion a Vendedor</h4>
                 </div>
-                <div class="modal-body">
-                    <?php echo form_open('usuario/enviar_invitacion'); ?>
+                <?php echo form_open('usuario/enviar_invitacion',"rel='preventDoubleSubmission'"); ?>
+                <div class="modal-body">                    
                     <div class="row">  
                         <div class="col-md-12">                            
                             <div class="form-group">                                                                
@@ -314,10 +314,10 @@
                     <input type="hidden" name="vendedor_id" value="">
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-template-main">Enviar</button>
-                    <button type="button" class="btn btn-template-main" data-dismiss="modal">Cancelar</button>
-                    <?php echo form_close(); ?>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>                    
                 </div>
+                <?php echo form_close(); ?>
             </div>
 
         </div>

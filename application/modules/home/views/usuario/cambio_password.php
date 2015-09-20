@@ -36,7 +36,7 @@
                     </div>
                 <?php } ?>
 
-                <?php echo form_open('usuario/password/modificar' ,'id="form_password"'); ?>
+                <?php echo form_open('usuario/password/modificar' ,'id="form_password" rel="preventDoubleSubmission"'); ?>
                 <div class="row">
                     <div class="col-md-6 col-sm-12">                            
                         <div class="form-group">                    
