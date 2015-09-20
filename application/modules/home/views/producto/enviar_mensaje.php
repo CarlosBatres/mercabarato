@@ -1,6 +1,8 @@
 <script>
     $(document).ready(function() {
-        $("#submit").click(function() {
+        //$("#submit").click(function() {
+        $('#producto-enviar-mensaje').on('submit',function(e){
+            e.preventDefault();
             if ($("#producto-enviar-mensaje").valid()) {
                 $.ajax({
                     type: "POST",
@@ -32,8 +34,8 @@
     <button type="button" class="close" data-dismiss="modal">&times;</button>
     <h4 class="modal-title">Mensaje a Vendedor</h4>
 </div>
-<div class="modal-body">
-    <?php echo form_open('productos/enviar_mensaje/' . $producto->id, "id='producto-enviar-mensaje'"); ?>
+<?php echo form_open('',"id='producto-enviar-mensaje' rel='preventDoubleSubmission'"); ?>
+<div class="modal-body">    
     <div class="row">  
         <div class="col-md-12">                            
             <div class="form-group">                                                                
@@ -50,7 +52,7 @@
     </div>    
 </div>
 <div class="modal-footer">
-    <button type="submit" class="btn btn-template-main" id="submit">Enviar</button>
-    <button type="button" class="btn btn-template-main" data-dismiss="modal">Cancelar</button>
-    <?php echo form_close(); ?>
+    <button type="submit" class="btn btn-primary" id="submit">Enviar</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>    
 </div>
+<?php echo form_close(); ?>
