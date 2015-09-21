@@ -399,5 +399,14 @@ class Cliente_model extends MY_Model {
             return array("total" => 0);
         }
     }
+    
+    public function get_email($cliente_id) {
+        $cliente=$this->get($cliente_id);
+        if($cliente){
+            return $this->usuario_model->get_email($cliente->usuario_id);            
+        }else{
+            return false;
+        }
+    }
 
 }

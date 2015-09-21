@@ -32,7 +32,7 @@
 
                 <hr>
                 <div class="text-center">
-                    <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-primary"> Publicar</button>
+                    <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-primary"> Siguiente</button>
                 </div>
                 <input type="hidden" name="accion" value="item-crear">
                 <?php echo form_close(); ?>

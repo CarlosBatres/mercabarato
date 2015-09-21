@@ -38,13 +38,7 @@
                 <div class="form-group">
                     <label>Contenido</label>                    
                     <textarea class="form-control" name="contenido" rows="10"></textarea>
-                </div>                
-                <!--<div class="form-group">
-                    <label>Imagen del Producto</label>                    
-                    <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('admin/producto_resource/upload_image') ?>">
-                    <input type="hidden" name="file_name" id="file_name" value="">                                                            
-                </div>               -->
-                
+                </div>                                               
                 <hr>
                 <div class="alert alert-warning">
                     <strong>Advertencia:</strong>                    
