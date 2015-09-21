@@ -21,7 +21,7 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 $.unblockUI();
-                window.location.replace(SITE_URL+"/panel_vendedor/anuncio/listado");
+                window.location.replace(SITE_URL+"panel_vendedor/anuncio/listado");
             }
         });
     });
