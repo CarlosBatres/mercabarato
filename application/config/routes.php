@@ -128,6 +128,7 @@ $route['usuario/infocompras-general'] = 'home/cliente/view_infocompras_general';
 $route['usuario/infocompras-general/respuesta/(:num)'] = 'home/cliente/view_infocompras_respuesta/$1';
 $route['usuario/infocompras-general/pregunta/(:num)'] = 'home/cliente/view_infocompras_pregunta/$1';
 $route['usuario/infocompras-general/enviar_pregunta'] = 'home/cliente/infocompra_enviar_pregunta';
+$route['usuario/infocompras-general/descargar_respuesta/(:any)'] = 'home/cliente/infocompra_download_respuesta/$1';
 $route['usuario/buscar-solicitudes-infocompras'] = 'home/cliente/ajax_get_listado_infocompras';
 
 

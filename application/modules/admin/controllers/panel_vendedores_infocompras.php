@@ -371,7 +371,34 @@ class Panel_vendedores_infocompras extends ADController {
 
             if ($solicitud->vendedor_id == $this->identidad->get_vendedor_id()) {
                 $formValues = $this->input->post();
-                if ($formValues !== false) {                                                            
+                if ($formValues !== false) { 
+                    $config['upload_path'] = './assets/uploads/infocompras/' . $this->identidad->get_vendedor_id();
+                    $config['allowed_types'] = 'jpg|pdf|word|doc|docx';
+                    $config['max_size'] = '2048';
+                    $config['max_width'] = '1024';
+                    $config['max_height'] = '768';
+                    $config['encrypt_name'] = TRUE;
+
+                    $this->load->library('upload', $config);
+                    
+                    if (!is_dir('./assets/uploads/infocompras/' . $this->identidad->get_vendedor_id())) {
+                        mkdir('./assets/uploads/infocompras/' . $this->identidad->get_vendedor_id(), 0777, true);
+                    }
+
+                    if ($_FILES AND $_FILES['userfile']['name']) {
+                        if (!$this->upload->do_upload()) {
+                            $file_name = null;
+                            $this->session->set_flashdata('error', $this->upload->display_errors());
+                            redirect('panel_vendedor/infocompras/generales/responder/' . $solicitud_id);
+                            die();
+                        } else {
+                            $data_upload = $this->upload->data();
+                            $file_name = $data_upload["file_name"];
+                        }
+                    } else {
+                        $file_name = null;
+                    }
+                    
                     $ventajas = "<ul>";
                     $flag = true;
                     if ($this->input->post('ventaja1') != "") {
@@ -401,12 +428,14 @@ class Panel_vendedores_infocompras extends ADController {
                     }
 
                     $precio = $this->input->post('precio');                    
+                    $link_file = ($file_name != null) ? $this->identidad->get_vendedor_id() . '/' . $file_name : null;
 
                     if (!$mensajes) {
                         $data = array(
                             "estado" => "1",
                             "ventajas" => $ventajas,
-                            "precio" => $precio                            
+                            "precio" => $precio,
+                            "link_file" => $link_file
                         );
                     } else {
                         $data = array(

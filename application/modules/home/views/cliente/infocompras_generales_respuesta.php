@@ -67,7 +67,12 @@
                         <div class="col-xs-4 text-center">
                             <a class="btn btn-primary" href="<?php echo site_url('usuario/infocompras-general/pregunta/' . $infocompra->id) ?>" >Enviar Pregunta</a>
                         </div>
-                    <?php endif; ?>                                        
+                    <?php endif; ?>
+                    <?php if ($infocompra->link_file != null): ?>
+                        <div class="col-xs-4 text-right">
+                            <a class="btn btn-primary" href="<?php echo site_url('usuario/infocompras-general/descargar_respuesta/') . '/' . $infocompra->link_file; ?>" >Descargar Adjunto</a>
+                        </div>                        
+                    <?php endif; ?>
                 </div>
 
             </div>

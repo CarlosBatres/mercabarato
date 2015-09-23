@@ -471,6 +471,13 @@ class Cliente extends MY_Controller {
         $name = $this->uri->segment(5);
         force_download($name, $data);
     }
+    
+    public function infocompra_download_respuesta() {
+        $this->load->helper('download');
+        $data = file_get_contents(assets_url('uploads/infocompras/') . '/' . $this->uri->segment(4) . '/' . $this->uri->segment(5)); // Read the file's contents
+        $name = $this->uri->segment(5);
+        force_download($name, $data);
+    }
 
     public function view_seguros_pregunta($solicitud_seguro_id) {
         if ($this->authentication->is_loggedin()) {

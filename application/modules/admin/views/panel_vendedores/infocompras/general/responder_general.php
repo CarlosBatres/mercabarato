@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-12">
             <h1 class="page-header">
-                Respuesta de Solicitud de Seguro
+                Respuesta de Solicitud de Infocompras
             </h1>            
         </div>
     </div>
@@ -325,7 +325,16 @@
                         </div>
                     </div>
                 </div>                                
-                <br>                                
+                <br>  
+                <?php if (!$mensajes): ?>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Deseas adjuntar un archivo? (PDF|WORD|JPG max size 2MB)</label>                    
+                            <input type="file" name="userfile" size="20" />
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <br>
                 <div class="row">
                     <div class="col-sm-12 col-md-4">
                         <div class="form-group">
