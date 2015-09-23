@@ -10,6 +10,13 @@
 |
 */
 
+$hook['post_controller'][] = array(
+   'class' => 'mantenimiento',
+   'function' => 'mantenimiento',
+   'filename' => 'mantenimiento.php',
+   'filepath' => 'hooks',
+   'params' => array()
+);
 
 
 /* End of file hooks.php */

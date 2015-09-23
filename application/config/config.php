@@ -96,7 +96,7 @@ $config['charset'] = 'UTF-8';
   | setting this variable to TRUE (boolean).  See the user guide for details.
   |
  */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = TRUE;
 
 
 /*
@@ -369,7 +369,6 @@ $config["categorias_img_path"]='/uploads/categorias/';
 $config["vendedores_img_path"]='/uploads/vendedores/';
 $config["seguros_path"]='/uploads/seguros/';
 $config["principal_default_per_page"]='10';
-
 
 
 /* End of file config.php */
