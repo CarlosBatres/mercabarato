@@ -60,10 +60,10 @@ class Vendedor_model extends MY_Model {
             $query.="AND vendedor.nombre LIKE '%" . $params['nombre'] . "%'";
         }
         if (isset($params['email'])) {
-            $query.="OR usuario.email LIKE '%" . $params['email'] . "%'";
+            $query.="AND usuario.email LIKE '%" . $params['email'] . "%'";
         }
         if (isset($params['sitio_web'])) {
-            $query.="OR vendedor.sitio_web LIKE '%" . $params['sitio_web'] . "%'";
+            $query.="AND vendedor.sitio_web LIKE '%" . $params['sitio_web'] . "%'";
         }
 
         if (isset($params['poblacion'])) {
@@ -387,6 +387,10 @@ class Vendedor_model extends MY_Model {
         if (isset($params['descripcion'])) {
             $query.="OR vendedor.descripcion LIKE '%" . $params['descripcion'] . "%'";
         }
+        
+        if (isset($params['infocompra_general'])) {
+            $query.="AND vendedor_paquete.limite_productos!='0'";
+        }
 
         if (isset($params['poblacion'])) {
             $query .= " AND localizacion.poblacion_id='" . $params['poblacion'] . "' ";
@@ -410,6 +414,7 @@ class Vendedor_model extends MY_Model {
             }
         }
 
+        
         /* if (isset($params['paquete_vigente'])) {
           $this->db->where('vendedor_paquete.aprobado', '1');
           $this->db->where('vendedor_paquete.fecha_terminar >=', date('Y-m-d'));

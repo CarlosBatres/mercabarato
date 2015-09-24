@@ -264,17 +264,17 @@ class Panel_vendedores_infocompras extends ADController {
     public function view_listado_generales() {
         $paquete = $this->vendedor_model->get_paquete_en_curso($this->identidad->get_vendedor_id());
 
-        //if ($paquete->infocompra == "1") {
+        if ($paquete->limite_productos != "0") {
             $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
 
             $this->template->add_js("modules/admin/panel_vendedores/infocompras_listado.js");
             $this->template->load_view('admin/panel_vendedores/infocompras/general/listado');
-        /*} else {
+        } else {
             $this->template->set_title("Panel de Control - Mercabarato.com");
             $this->template->set_layout('panel_vendedores');
             $this->template->load_view('admin/panel_vendedores/infocompras/sin_acceso');
-        }*/
+        }
     }
     
     public function ajax_get_generales() {

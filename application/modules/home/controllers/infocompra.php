@@ -159,6 +159,7 @@ class Infocompra extends MY_Controller {
 
 
             $params["paquete_vigente"] = true;
+            $params["infocompra_general"] = true;
 
             $ignore_list = $this->session->userdata('infocompra_ignore_list');
             if ($ignore_list) {
@@ -420,6 +421,7 @@ class Infocompra extends MY_Controller {
                 }
             }
             $params["paquete_vigente"] = true;
+            $params["infocompra_general"] = true;
 
             $ignore_list = $this->session->userdata('infocompra_ignore_list');
             if ($ignore_list) {
