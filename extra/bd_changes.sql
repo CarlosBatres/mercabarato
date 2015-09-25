@@ -46,5 +46,5 @@ left join `poblacion` `pb` on((`pb`.`id` = `l`.`poblacion_id`)));
 /*                                                */
 /* -----------------------------------------------*/
 
-ALTER TABLE `mercabarato_bd`.`vendedor_paquete` 
-ADD COLUMN `anuncios_publicados` INT(11) NULL DEFAULT 0 AFTER `limite_anuncios`;
+/*ALTER TABLE `mercabarato_bd`.`vendedor_paquete` 
+ADD COLUMN `anuncios_publicados` INT(11) NULL DEFAULT 0 AFTER `limite_anuncios`;*/
