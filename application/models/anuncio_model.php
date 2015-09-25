@@ -6,6 +6,8 @@ if (!defined('BASEPATH')) {
 
 class Anuncio_model extends MY_Model {
 
+    public $before_create = array('pre_insertado');
+
     function __construct() {
         parent::__construct();
         $this->_table = "anuncio";
@@ -229,6 +231,14 @@ class Anuncio_model extends MY_Model {
         } else {
             return false;
         }
+    }
+
+    protected function pre_insertado($anuncio) {
+        $paquete = $this->vendedor_model->get_paquete_en_curso($anuncio["vendedor_id"]);
+        if ($paquete) {            
+            $this->vendedor_paquete_model->update($paquete->id, array("anuncios_publicados" => (int) $paquete->anuncios_publicados + 1));
+        }
+        return $anuncio;
     }
 
 }

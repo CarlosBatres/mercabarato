@@ -123,8 +123,8 @@
                         <?php if ($producto->impuesto == "1"): ?>
                             <p><strong><?php echo ($producto->impuesto_txt != '') ? $producto->impuesto_txt : 'Impuesto Incluido' ?></strong></p>
                         <?php endif; ?>
-                    </div>
-                </div>            
+                    </div>                                        
+                </div>                 
                 <?php if ($producto->link_externo != ""): ?>                        
                     <p class="text-right"><strong><a href="http://<?php echo $producto->link_externo ?>"><?php echo $producto->link_externo ?></a></strong></p>                    
                 <?php endif; ?>
@@ -218,8 +218,13 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div>                    
                 <?php endforeach; ?>
+                <div class="col-xs-6 pull-right">
+                    <div class="text-right">
+                        <a href="<?php echo site_url($vendedor->unique_slug . "/productos"); ?>" class="btn btn-template-primary"> Ver Mas</a>
+                    </div>
+                </div>
             </div>                       
         <?php endif; ?>
         <?php if ($otros_productos_categoria): ?>
@@ -295,7 +300,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Invitacion a Vendedor</h4>
                 </div>
-                <?php echo form_open('usuario/enviar_invitacion',"rel='preventDoubleSubmission'"); ?>
+                <?php echo form_open('usuario/enviar_invitacion', "rel='preventDoubleSubmission'"); ?>
                 <div class="modal-body">                    
                     <div class="row">  
                         <div class="col-md-12">                            

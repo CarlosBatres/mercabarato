@@ -8,8 +8,13 @@ $(document).ready(function() {
         singleFileUploads: false,
         add: function(e, data) {
             $("#admin_producto_submit").off('click').on('click', function(e) {
-                e.preventDefault();
-                data.submit();
+                var numFiles = $("#fileupload")[0].files.length;
+                if ($("#admin_producto_form").valid() && $('input[name="categoria_id"]').val() !== "" && (numFiles >= 0 && numFiles <= 3)) {
+                    e.preventDefault();
+                    data.submit();
+                }
+                //e.preventDefault(); //prevent the default action
+                //data.submit();
             });
         },
         start: function(e, data) {
@@ -25,16 +30,16 @@ $(document).ready(function() {
             });
             files = files.slice(0, -2);
             $('#file_name').val(files);
-            $.unblockUI();
             $('#admin_producto_form').submit();
-        }
+            $.unblockUI();
+        }        
     });
 
     $('#cambiar_imagen').on('click', function(e) {
         e.preventDefault();
         $('.fileupload_button').css('display', 'block');
-        $('.preview_imagen').html('');
-        $('.preview_imagen').css('display', 'none');
+        $('.producto-img-container').html('');
+        $('.producto-img-container').css('display', 'none');
         $(this).css('display', 'none');
     });
 
@@ -53,23 +58,23 @@ $(document).ready(function() {
         var categoria_id = $('#categorias_jtree').find('#' + data.selected).data('id');
         $('input[name="categoria_id"]').val(categoria_id);
     });
-    
-    $('input[name="transporte"]').on('change',function(){
-        if($(this).val()=='1'){
-            $('input[name="transporte_txt"]').css('display','block');
-        }else{
+
+    $('input[name="transporte"]').on('change', function() {
+        if ($(this).val() == '1') {
+            $('input[name="transporte_txt"]').css('display', 'block');
+        } else {
             $('input[name="transporte_txt"]').val('');
-            $('input[name="transporte_txt"]').css('display','none');
-        }        
+            $('input[name="transporte_txt"]').css('display', 'none');
+        }
     });
-    
-    $('input[name="impuesto"]').on('change',function(){
-        if($(this).val()=='1'){
-            $('input[name="impuesto_txt"]').css('display','block');
-        }else{
+
+    $('input[name="impuesto"]').on('change', function() {
+        if ($(this).val() == '1') {
+            $('input[name="impuesto_txt"]').css('display', 'block');
+        } else {
             $('input[name="impuesto_txt"]').val('');
-            $('input[name="impuesto_txt"]').css('display','none');
-        }        
+            $('input[name="impuesto_txt"]').css('display', 'none');
+        }
     });
 
     validateForms();
@@ -78,11 +83,31 @@ $(document).ready(function() {
 function validateForms() {
     $("#admin_producto_form").validate({
         submitHandler: function(form) {
+            var flag = true;
+            var numFiles = $("#fileupload")[0].files.length;            
+
+            if (numFiles >= 0 && numFiles <= 3) {
+                $('#fileupload_alert').css('display', 'none');
+            } else {
+                $('#fileupload_alert').css('display', 'block');
+                 $('html, body').animate({
+                    scrollTop: $('#fileupload_alert').offset().top
+                }, 1000);
+                return false;
+            }
+            
             if ($('input[name="categoria_id"]').val() !== "") {
-                form.submit();
+                $('#seleccionar-categoria_alert').css('display', 'none');
             } else {
                 $('#seleccionar-categoria_alert').css('display', 'block');
+                $('html, body').animate({
+                    scrollTop: $('#seleccionar-categoria_alert').offset().top
+                }, 1000);
                 return false;
+            }
+
+            if (flag) {
+                form.submit();
             }
         },
         rules: {
@@ -95,15 +120,15 @@ function validateForms() {
                     depends: function(element) {
                         return ($('input[name="familia_txt"]').val() != '' || $('input[name="subfamilia_txt"]').val() != '');
                     }
-                },maxlength: 23
+                }, maxlength: 23
             },
             familia_txt: {required: {
                     depends: function(element) {
                         return ($('input[name="subfamilia_txt"]').val() != '');
                     }
-                },maxlength: 23
+                }, maxlength: 23
             },
-            subfamilia_txt:{maxlength: 23}
+            subfamilia_txt: {maxlength: 23}
         },
         messages: {
             nombre: {
@@ -116,9 +141,9 @@ function validateForms() {
             precio_extra1_cantidad: {number: "La cantidad debe ser numerica"},
             precio_extra2_cantidad: {number: "La cantidad debe ser numerica"},
             precio_extra3_cantidad: {number: "La cantidad debe ser numerica"},
-            grupo_txt:{required: "Debes ingresar un grupo",maxlength:" Debe ser maximo 23 caracteres"},
-            familia_txt:{required: "Debes ingresar una familia para este grupo",maxlength:" Debe ser maximo 23 caracteres"},
-            subfamilia_txt:{maxlength:" Debe ser maximo 23 caracteres"}
+            grupo_txt: {required: "Debes ingresar un grupo", maxlength: " Debe ser maximo 23 caracteres"},
+            familia_txt: {required: "Debes ingresar una familia para este grupo", maxlength: " Debe ser maximo 23 caracteres"},
+            subfamilia_txt: {maxlength: " Debe ser maximo 23 caracteres"}
         }
     });
 

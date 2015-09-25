@@ -92,21 +92,21 @@ class Producto_model extends MY_Model {
              * Busqueda cuando se haya iniciado session, se hace en base a un cliente_id
              *
              * ------------------------------------------------------------------------- 
-             */           
+             */
 
             $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre, ";
-            
+
             if (isset($params["order_by_grupo_txt"])) {
-                $familia=(isset($params["order_by_familia_txt"])?$params["order_by_familia_txt"]:'');
-                $subfamilia=(isset($params["order_by_subfamilia_txt"])?$params["order_by_subfamilia_txt"]:'');
+                $familia = (isset($params["order_by_familia_txt"]) ? $params["order_by_familia_txt"] : '');
+                $subfamilia = (isset($params["order_by_subfamilia_txt"]) ? $params["order_by_subfamilia_txt"] : '');
                 $query.="(MATCH (grupo_txt) AGAINST ('" . $params["order_by_grupo_txt"] . "' IN BOOLEAN MODE) * 3 + ";
                 $query.="MATCH (familia_txt) AGAINST ('" . $familia . "' IN BOOLEAN MODE) * 2 + ";
                 $query.="MATCH (subfamilia_txt) AGAINST ('" . $subfamilia . "' IN BOOLEAN MODE) ";
                 $query.=") as relevance ";
-            }else{
+            } else {
                 $query.=" '0' as relevance ";
-            }            
-            
+            }
+
             $query.= "FROM (SELECT * FROM  `productos_precios` ORDER BY nuevo_costo ASC ) as p ";
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
             $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
@@ -114,8 +114,16 @@ class Producto_model extends MY_Model {
             // SUB QUERY //
 
             $sub_query = "";
+            if (isset($params['search_query'])) {
+                $text = " AND (p.nombre LIKE '%" . $params['search_query'] . "%' OR p.descripcion LIKE '%" . $params['search_query'] . "%' ) ";                
+                $sub_query.=$text;
+            }
             if (isset($params['nombre'])) {
                 $text = " AND p.nombre LIKE '%" . $params['nombre'] . "%'";
+                $sub_query.=$text;
+            }
+            if (isset($params['descripcion'])) {
+                $text = " AND p.descripcion LIKE '%" . $params['descripcion'] . "%'";
                 $sub_query.=$text;
             }
             if (isset($params['categoria_id'])) {
@@ -171,13 +179,13 @@ class Producto_model extends MY_Model {
                 $sub_query.=$text;
             }
             if (isset($params['excluir_vendedor_id'])) {
-                $text = " AND p.vendedor_id!='" . $params['excluir_vendedor_id'] . "' ";                
+                $text = " AND p.vendedor_id!='" . $params['excluir_vendedor_id'] . "' ";
                 $sub_query.=$text;
             }
             if (isset($params['mostrar_solo_tarifas'])) {
                 $text = " AND p.tipo='tarifa' ";
                 $sub_query.=$text;
-            }            
+            }
 
             if (isset($params['solo_vendedor_ids'])) {
                 $ids = implode(",", $params['solo_vendedor_ids']);
@@ -232,27 +240,36 @@ class Producto_model extends MY_Model {
              * ------------------------------------------------------------------------- 
              */
             $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre, ";
-            
+
             if (isset($params["order_by_grupo_txt"])) {
-                $familia=(isset($params["order_by_familia_txt"])?$params["order_by_familia_txt"]:'');
-                $subfamilia=(isset($params["order_by_subfamilia_txt"])?$params["order_by_subfamilia_txt"]:'');
+                $familia = (isset($params["order_by_familia_txt"]) ? $params["order_by_familia_txt"] : '');
+                $subfamilia = (isset($params["order_by_subfamilia_txt"]) ? $params["order_by_subfamilia_txt"] : '');
                 $query.="(MATCH (grupo_txt) AGAINST ('" . $params["order_by_grupo_txt"] . "' IN BOOLEAN MODE) * 3 + ";
                 $query.="MATCH (familia_txt) AGAINST ('" . $familia . "' IN BOOLEAN MODE) * 2 + ";
                 $query.="MATCH (subfamilia_txt) AGAINST ('" . $subfamilia . "' IN BOOLEAN MODE) ";
                 $query.=") as relevance ";
-            }else{
+            } else {
                 $query.=" '0' as relevance ";
             }
-            
+
             $query.= "FROM (SELECT * FROM  `productos_precios` ORDER BY nuevo_costo DESC ) as p ";
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
             $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
 
             $query.="WHERE ( 1";
             $sub_query = "";
+            if (isset($params['search_query'])) {
+                $text = " AND (p.nombre LIKE '%" . $params['search_query'] . "%' OR p.descripcion LIKE '%" . $params['search_query'] . "%' ) ";
+                $query.=$text;
+                $sub_query.=$text;
+            }
             if (isset($params['nombre'])) {
                 $text = " AND p.nombre LIKE '%" . $params['nombre'] . "%'";
                 $query.=$text;
+                $sub_query.=$text;
+            }
+            if (isset($params['descripcion'])) {
+                $text = " AND p.descripcion LIKE '%" . $params['descripcion'] . "%'";
                 $sub_query.=$text;
             }
             if (isset($params['categoria_id'])) {
@@ -269,7 +286,7 @@ class Producto_model extends MY_Model {
                 $query.=$text;
                 $sub_query.=$text;
             }
-            
+
             if (isset($params['precio_desde'])) {
                 $text = " AND p.precio >= '" . $params['precio_desde'] . "' ";
                 $query.=$text;
@@ -323,17 +340,17 @@ class Producto_model extends MY_Model {
                 $sub_query.=$text;
             }
             if (isset($params["grupo_txt"])) {
-                $text = " AND p.grupo_txt='".$params["grupo_txt"]."'";
+                $text = " AND p.grupo_txt='" . $params["grupo_txt"] . "'";
                 $query.=$text;
                 $sub_query.=$text;
             }
             if (isset($params["familia_txt"])) {
-                $text = " AND p.familia_txt='".$params["familia_txt"]."'";
+                $text = " AND p.familia_txt='" . $params["familia_txt"] . "'";
                 $query.=$text;
                 $sub_query.=$text;
             }
             if (isset($params["subfamilia_txt"])) {
-                $text = " AND p.subfamilia_txt='".$params["subfamilia_txt"]."'";
+                $text = " AND p.subfamilia_txt='" . $params["subfamilia_txt"] . "'";
                 $query.=$text;
                 $sub_query.=$text;
             }
@@ -701,7 +718,7 @@ class Producto_model extends MY_Model {
 
         if ($vendedores_id) {
             $ids = implode(",", $vendedores_id);
-            $query.=" AND p.vendedor_id IN('" . $ids . "')";
+            $query.=" AND p.vendedor_id IN(" . $ids . ")";
         }
 
         $query.=" GROUP BY p.id";
@@ -720,6 +737,7 @@ class Producto_model extends MY_Model {
             return false;
         }
     }
+
     /**
      * 
      * @param type $producto_id
@@ -753,10 +771,10 @@ class Producto_model extends MY_Model {
                             $data_mail = array("codigo" => $codigo, "producto" => $producto, "oferta" => $oferta, "oferta_general" => $oferta_general);
                             $this->email->message($this->load->view('home/emails/cumplido_requisitos_oferta_cliente', $data_mail, true));
                             $this->email->send();
-                            
+
                             $this->email->clear();
 
-                            $email = $this->vendedor_model->get_email($producto->vendedor_id);                            
+                            $email = $this->vendedor_model->get_email($producto->vendedor_id);
                             $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                             $this->email->to($email);
                             $this->email->subject('Requisitos de Oferta cumplidos');
@@ -793,10 +811,10 @@ class Producto_model extends MY_Model {
                             $data_mail = array("codigo" => $codigo, "producto" => $producto, "oferta" => $oferta, "oferta_general" => $oferta_general);
                             $this->email->message($this->load->view('home/emails/cumplido_requisitos_oferta_cliente', $data_mail, true));
                             $this->email->send();
-                            
+
                             $this->email->clear();
 
-                            $email = $this->vendedor_model->get_email($producto->vendedor_id);                            
+                            $email = $this->vendedor_model->get_email($producto->vendedor_id);
                             $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                             $this->email->to($email);
                             $this->email->subject('Requisitos de Oferta cumplidos');
@@ -877,6 +895,69 @@ class Producto_model extends MY_Model {
           $this->db->flush_cache();
           return array("total" => 0);
           } */
+    }
+
+    public function get_productos_tarifas($params) {        
+        $query= "SELECT * FROM (";
+        $query.= " SELECT * FROM productos_precios pp ";        
+        $query.="WHERE 1 ";
+
+        if (isset($params['cliente_id'])) {
+            $query.= "AND ( pp.cliente_id='" . $params["cliente_id"] . "' AND pp.tipo='tarifa' ) ";
+        }                
+        
+        if (isset($params["producto_ids"])) {
+            $ids = implode(",", $params["producto_ids"]);
+            $query.=" AND pp.id IN(" . $ids . ")";
+        } 
+        
+        $query.=" UNION ALL ";
+         
+        $query.= " SELECT * FROM productos_precios pp ";        
+        $query.="WHERE 1 ";
+
+        if (isset($params['cliente_id'])) {
+            $query.= "AND pp.tipo='normal' ";
+        }                
+        
+        if (isset($params["producto_ids"])) {
+            $ids = implode(",", $params["producto_ids"]);
+            $query.=" AND pp.id IN(" . $ids . ")";
+        }        
+        
+        $query.=") a ";
+        $query.=" GROUP BY id";
+        
+        $result = $this->db->query($query);
+        $productos = $result->result();        
+
+        if (sizeof($productos) > 0) {
+            return $productos;
+        } else {
+            return false;
+        }
+        
+        /*$this->db->select('*');
+        $this->db->from('productos_precios pp');        
+        $this->db->where('pp.tipo', "tarifa");
+        $this->db->or_where('pp.tipo', "normal");
+
+        if (isset($params["producto_ids"])) {
+            $this->db->where_in('pp.id', $params["producto_ids"]);
+        }        
+
+        if (isset($params["cliente_id"])) {
+            $this->db->where('pp.cliente_id', $params["cliente_id"]);
+        }
+        
+        $this->db->group_by("pp.id");
+
+        $results = $this->db->get()->result();
+        if ($results) {
+            return $results;
+        } else {
+            return false;
+        }*/
     }
 
 }

@@ -3,7 +3,13 @@
 // PHP Upload Script for CKEditor:  http://coursesweb.net/
 // HERE SET THE PATH TO THE FOLDER WITH IMAGES ON YOUR SERVER (RELATIVE TO THE ROOT OF YOUR WEBSITE ON SERVER)
 //TODO: Cambiar este path acorde al server OJO
-$upload_dir = 'freelancer/mercabarato_new/assets/uploads/anuncios/';
+$url=$_GET["url"];
+if($url!=null){
+   $upload_dir = 'freelancer/mercabarato_new/assets/uploads/'.$url; 
+}else{
+   $upload_dir = 'freelancer/mercabarato_new/assets/uploads/anuncios/'; 
+}
+
 
 // HERE PERMISSIONS FOR IMAGE
 $imgsets = array(

@@ -57,7 +57,7 @@ class Panel_vendedores_productos extends ADController {
                                         "orden" => 0,
                                     );
                                     $this->producto_resource_model->insert($data_img);
-                                } else {
+                                } elseif($key<3) {
                                     $data_img = array(
                                         "producto_id" => $producto_id,
                                         "nombre" => "Producto: " . $data["nombre"],
@@ -198,7 +198,7 @@ class Panel_vendedores_productos extends ADController {
                                         "orden" => 0,
                                     );
                                     $this->producto_resource_model->insert($data_img);
-                                } else {
+                                } elseif($key<3) {
                                     $data_img = array(
                                         "producto_id" => $producto_id,
                                         "nombre" => "Producto: " . $data["nombre"],

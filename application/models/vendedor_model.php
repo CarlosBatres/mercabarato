@@ -268,9 +268,10 @@ class Vendedor_model extends MY_Model {
             if ($vendedor_paquete->limite_anuncios == -1) {
                 return 1;
             } else {
-                $this->db->select('id')->from('anuncio')->where('vendedor_id', $vendedor_id);
-                $total = $this->db->count_all_results();
-                return ($vendedor_paquete->limite_anuncios - $total);
+                /*$this->db->select('id')->from('anuncio')->where('vendedor_id', $vendedor_id);
+                $total = $this->db->count_all_results();                
+                return ($vendedor_paquete->limite_anuncios - $total);*/
+                return ($vendedor_paquete->limite_anuncios - $vendedor_paquete->anuncios_publicados);
             }
         } else {
             return 0;

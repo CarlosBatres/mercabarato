@@ -99,8 +99,9 @@ class Producto extends MY_Controller {
             $params = array();
             if ($formValues !== false) {
                 if ($this->input->post('search_query') != "") {
-                    $params["nombre"] = $this->input->post('search_query');
-                    $params["descripcion"] = $this->input->post('search_query');
+                    //$params["nombre"] = $this->input->post('search_query');
+                    //$params["descripcion"] = $this->input->post('search_query');
+                    $params["search_query"] = $this->input->post('search_query');
                 }
 
                 if ($this->input->post('categoria_id') != "") {
@@ -428,7 +429,7 @@ class Producto extends MY_Controller {
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($vendedor_usuario->email);
                         $this->email->subject('Tienes un nuevo mensaje');
-                        $data_email = array("asunto" => $asunto, "mensaje" => $mensaje);
+                        $data_email = array("asunto" => $asunto, "mensaje" => $mensaje ,"producto"=>$producto);
                         $this->email->message($this->load->view('home/emails/enviar_mensaje', $data_email, true));
                         $this->email->send();
                     }

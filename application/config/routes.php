@@ -197,8 +197,11 @@ $route['panel_vendedor/anuncio/editar/(:num)'] = 'admin/panel_vendedores_anuncio
 $route['panel_vendedor/anuncio/habilitar/(:num)'] = 'admin/panel_vendedores_anuncios/habilitar/$1';
 $route['panel_vendedor/anuncio/inhabilitar/(:num)'] = 'admin/panel_vendedores_anuncios/inhabilitar/$1';
 $route['panel_vendedor/anuncio/ajax_get_listado_resultados'] = 'admin/panel_vendedores_anuncios/ajax_get_listado_resultados';
-$route['panel_vendedor/anuncio/enviar/(:num)'] = 'admin/panel_vendedores_anuncios/enviar/$1';
+$route['panel_vendedor/anuncio/seleccionar-clientes/(:num)'] = 'admin/panel_vendedores_anuncios/seleccionar_clientes/$1';
+$route['panel_vendedor/anuncio/seleccionar-productos/(:num)'] = 'admin/panel_vendedores_anuncios/seleccionar_productos/$1';
+//$route['panel_vendedor/anuncio/enviar/(:num)'] = 'admin/panel_vendedores_anuncios/enviar/$1';
 $route['panel_vendedor/anuncio/ajax_get_invitados'] = 'admin/panel_vendedores_anuncios/ajax_get_invitados';
+$route['panel_vendedor/anuncio/ajax_get_productos'] = 'admin/panel_vendedores_anuncios/ajax_get_productos';
 $route['panel_vendedor/anuncio/enviar_anuncio_invitados'] = 'admin/panel_vendedores_anuncios/enviar_anuncio_invitados';
 
 $route['panel_vendedor/tarifas/nueva'] = 'admin/panel_vendedores_tarifas/nueva_tarifa_paso1';

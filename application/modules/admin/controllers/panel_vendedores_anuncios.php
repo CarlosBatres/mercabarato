@@ -38,7 +38,7 @@ class Panel_vendedores_anuncios extends ADController {
                     $anuncio_id = $this->anuncio_model->insert($data);
                     $this->session->set_flashdata('success', 'Anuncio creado con exito..');
 
-                    redirect('panel_vendedor/anuncio/enviar/' . $anuncio_id);
+                    redirect('panel_vendedor/anuncio/seleccionar-clientes/' . $anuncio_id);
                 } else {
                     redirect('panel_vendedor');
                 }
@@ -54,7 +54,7 @@ class Panel_vendedores_anuncios extends ADController {
                     'config' => array(
                         'customConfig' => assets_url('js/ckeditor_config_full.js'),
                         'height' => '400px', //Setting a custom height
-                        'filebrowserImageUploadUrl' => assets_url('/js/ckeditor/plugins/imgupload.php'),
+                        'filebrowserImageUploadUrl' => assets_url('/js/ckeditor/plugins/imgupload.php?url=anuncios'),
                     ),
                 );
 
@@ -114,7 +114,7 @@ class Panel_vendedores_anuncios extends ADController {
                         'config' => array(
                             'customConfig' => assets_url('js/ckeditor_config_full.js'),
                             'height' => '400px', //Setting a custom height
-                            'filebrowserImageUploadUrl' => assets_url('/js/ckeditor/plugins/imgupload.php')
+                            'filebrowserImageUploadUrl' => assets_url('/js/ckeditor/plugins/imgupload.php?url=anuncios')
                         ),
                     );
 
@@ -239,6 +239,7 @@ class Panel_vendedores_anuncios extends ADController {
             } else {
                 $limite_anuncios = $paquete_en_curso->limite_anuncios;
             }
+            $anuncios_publicados=$paquete_en_curso->anuncios_publicados;
         }
 
         $search_params = array(
@@ -255,7 +256,7 @@ class Panel_vendedores_anuncios extends ADController {
         $data = array(
             "anuncios" => $anuncios_array["anuncios"],
             "pagination" => $pagination,
-            "anuncios_total" => $anuncios_array["total"],
+            "anuncios_total" => $anuncios_publicados,
             "ilimitado" => $ilimitado,
             "limite_anuncios" => $limite_anuncios);
 
@@ -311,7 +312,7 @@ class Panel_vendedores_anuncios extends ADController {
      *
      * @param type $anuncio_id
      */
-    public function enviar($anuncio_id) {
+    public function seleccionar_clientes($anuncio_id) {
         $this->session->keep_flashdata("success");
         $this->session->keep_flashdata("error");
         $this->template->set_title("Panel de Control - Mercabarato.com");
@@ -323,8 +324,8 @@ class Panel_vendedores_anuncios extends ADController {
         $res = $this->anuncio_model->get_vendedor_id_del_anuncio($anuncio_id);
         if ($res == $vendedor->get_vendedor_id()) {
 
-            $this->template->add_js("modules/admin/panel_vendedores/anuncios_enviar_listado.js");
-            $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_enviar', array("anuncio_id" => $anuncio_id));
+            $this->template->add_js("modules/admin/panel_vendedores/anuncios_seleccionar_clientes.js");
+            $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_seleccionar_clientes', array("anuncio_id" => $anuncio_id));
         } else {
             show_404();
         }
@@ -382,6 +383,81 @@ class Panel_vendedores_anuncios extends ADController {
 
     /**
      * 
+     * @param type $anuncio_id
+     */
+    public function seleccionar_productos($anuncio_id) {
+        $this->session->keep_flashdata("success");
+        $this->session->keep_flashdata("error");
+        $this->template->set_title("Panel de Control - Mercabarato.com");
+        $this->template->set_layout('panel_vendedores');
+
+        $user_id = $this->authentication->read('identifier');
+        $vendedor = $this->usuario_model->get_full_identidad($user_id);
+
+        $res = $this->anuncio_model->get_vendedor_id_del_anuncio($anuncio_id);
+        if ($res == $vendedor->get_vendedor_id()) {
+
+            $this->template->add_js("modules/admin/panel_vendedores/anuncios_seleccionar_productos.js");
+            $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_seleccionar_productos', array("anuncio_id" => $anuncio_id));
+        } else {
+            show_404();
+        }
+    }
+
+    public function ajax_get_productos() {
+        //$this->show_profiler();
+        $formValues = $this->input->post();
+
+        $params = array();
+        if ($formValues !== false) {
+            $user_id = $this->authentication->read('identifier');
+            $vendedor = $this->usuario_model->get_full_identidad($user_id);
+            $params["vendedor_id"] = $vendedor->get_vendedor_id();
+
+            if ($this->input->post("no_results") != "") {
+                $params["vendedor_id"] = "-100"; // Hack vendedor inexistente
+            }
+
+            $pagina = $this->input->post('pagina');
+        } else {
+            $pagina = 1;
+        }
+
+        $limit = $this->config->item("admin_default_per_page");
+        $offset = $limit * ($pagina - 1);
+        $productos_array = $this->producto_model->get_admin_search($params, $limit, $offset);
+        $flt = (float) ($productos_array["total"] / $limit);
+        $ent = (int) ($productos_array["total"] / $limit);
+        if ($flt > $ent || $flt < $ent) {
+            $paginas = $ent + 1;
+        } else {
+            $paginas = $ent;
+        }
+
+        if ($productos_array["total"] == 0) {
+            $productos_array["productos"] = array();
+        }
+
+        $search_params = array(
+            "anterior" => (($pagina - 1) < 1) ? -1 : ($pagina - 1),
+            "siguiente" => (($pagina + 1) > $paginas) ? -1 : ($pagina + 1),
+            "pagina" => $pagina,
+            "total_paginas" => $paginas,
+            "por_pagina" => $limit,
+            "total" => $productos_array["total"],
+            "hasta" => ($pagina * $limit < $productos_array["total"]) ? $pagina * $limit : $productos_array["total"],
+            "desde" => (($pagina * $limit) - $limit) + 1);
+        $pagination = build_paginacion($search_params);
+
+        $data = array(
+            "productos" => $productos_array["productos"],
+            "pagination" => $pagination);
+
+        $this->template->load_view('admin/panel_vendedores/anuncio/anuncio_productos_tabla_resultados', $data);
+    }
+
+    /**
+     * 
      */
     public function enviar_anuncio_invitados() {
         if ($this->input->is_ajax_request()) {
@@ -397,24 +473,47 @@ class Panel_vendedores_anuncios extends ADController {
                 $res = $this->anuncio_model->get_vendedor_id_del_anuncio($anuncio_id);
                 if ($res == $vendedor->get_vendedor_id()) {
                     $cliente_ids = $this->input->post("cliente_ids");
-                    $array_cliente_id = explode(";;", $cliente_ids);
+                    if ($cliente_ids != "") {
+                        $array_cliente_id = explode(";;", $cliente_ids);
+                    } else {
+                        $array_cliente_id = false;
+                    }
+
+                    $producto_ids = $this->input->post("producto_ids");
+                    if ($producto_ids != "") {
+                        $array_producto_id = explode(";;", $producto_ids);
+                    } else {
+                        $array_producto_id = false;
+                    }
 
                     if ($this->config->item('emails_enabled')) {
                         $this->load->library('email');
                         $this->email->initialize($this->config->item('email_info'));
                     }
 
-                    foreach ($array_cliente_id as $id) {
-                        $email = $this->cliente_model->get_email($id);
+                    if ($array_cliente_id) {
+                        foreach ($array_cliente_id as $id) {
+                            $email = $this->cliente_model->get_email($id);
 
-                        if ($this->config->item('emails_enabled') && $email) {
-                            $this->email->clear();
-                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
-                            $this->email->to($email);
-                            $this->email->subject($anuncio->titulo);
-                            $data_email = array("titulo" => $anuncio->titulo, "contenido" => $anuncio->contenido);
-                            $this->email->message($this->load->view('home/emails/enviar_anuncio_email', $data_email, true));
-                            $this->email->send();
+                            if ($array_producto_id) {
+                                $params = array();
+                                $params["cliente_id"] = $id;
+                                $params["producto_ids"] = $array_producto_id;
+                                $productos = $this->producto_model->get_productos_tarifas($params);
+                            } else {
+                                $productos = false;
+                            }
+
+                            if ($this->config->item('emails_enabled') && $email) {
+                                $this->email->clear();
+                                $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                                $this->email->to($email);
+                                $this->email->subject($anuncio->titulo);
+                                $data_email = array("titulo" => $anuncio->titulo, "contenido" => $anuncio->contenido, "productos" => $productos);
+                                $this->email->message($this->load->view('home/emails/enviar_anuncio_email', $data_email, true));
+                                $this->email->send();
+                            }
+                            
                         }
                     }
                 }

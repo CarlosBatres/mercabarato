@@ -30,6 +30,22 @@
                     </td>
                 </tr>
                 <tr>
+                    <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td style="color: #153643; font-family: Arial, sans-serif; font-size: 20px;">
+                                    <b>Mensaje enviado sobre el producto:</b>
+                                </td>
+                            </tr>               
+                            <tr>
+                                <td style="padding: 30px 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 22px;">
+                                    <a href="<?php echo site_url("productos/.$producto->unique_slug")?>"><strong><?php echo $producto->nombre ?></strong></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
                     <td bgcolor="#333" style="padding: 30px 30px 30px 30px;">
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>

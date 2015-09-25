@@ -22,16 +22,16 @@
     <?php } ?> 
     <?php if ($ilimitado): ?>
         <div class="alert alert-info">                 
-            <p> Puedes insertar anuncios sin limites</p>
+            <p> Puedes publicar anuncios sin limites</p>
         </div>
     <?php else: ?>
 
         <div class="alert alert-info">                 
             <?php $diff = $limite_anuncios - $anuncios_total; ?>
             <?php if ($diff < 0): ?>
-                <p> Tienes un exceso de <?php echo $diff * -1 ?> productos de un maximo de <?php echo $limite_anuncios ?> productos.</p>
+                <p> Tienes un exceso de <?php echo $diff * -1 ?> anuncio(s) de un maximo de <?php echo $limite_anuncios ?> anuncio(s).</p>
             <?php else: ?>
-                <p> Puedes insertar <?php echo $diff ?> anuncios mas de un maximo de <?php echo $limite_anuncios ?> anuncios.</p>
+                <p> Puedes publicar <?php echo $diff ?> anuncio(s) mas de un maximo de <?php echo $limite_anuncios ?> anuncio(s).</p>
             <?php endif; ?>                
         </div>                
     <?php endif; ?>

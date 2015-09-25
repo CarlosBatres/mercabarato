@@ -21,8 +21,9 @@ class Mensaje extends ADController {
             'id' => 'mensaje',
             'path' => 'assets/js/ckeditor',
             'config' => array(
-                'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
+                'customConfig'=>assets_url('js/ckeditor_config_full.js'),
                 'height' => '300px',
+                'filebrowserImageUploadUrl' => assets_url('/js/ckeditor/plugins/imgupload.php?url=mensajes'),
             ),
         );
         $this->session->unset_userdata('enviar_mensaje_ignore_list');

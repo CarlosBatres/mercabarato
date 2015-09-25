@@ -45,7 +45,11 @@
                             <input id="fileupload" type="file" name="files[]" multiple data-url="<?php echo site_url('panel_vendedor/producto/upload_image') ?>">
                             <input type="hidden" name="file_name" id="file_name" value="">                                                            
                         </div> 
-                    </div> 
+                    </div>
+                    <div class="alert alert-danger" id="fileupload_alert" style="display:none;"> 
+                        <a class="close" data-dismiss="alert">×</a>
+                        Debe seleccionar un maximo de 3 imagenes.
+                    </div>
                 </div>
                 <br>                                
                 <div class="row">
