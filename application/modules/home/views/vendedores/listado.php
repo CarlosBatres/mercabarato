@@ -15,71 +15,71 @@
             <div class="col-md-9">
                 <div class="box-simple">                                
                     <?php echo form_open('', 'id="form_buscar"'); ?>
-                        <div class="row pull-left hidden-sm hidden-xs">
-                            <div class="col-md-12">
-                                <label class="text-left"><strong>Buscar Vendedores</strong></label>
-                            </div>
+                    <div class="row pull-left hidden-sm hidden-xs">
+                        <div class="col-md-12">
+                            <label class="text-left"><strong>Buscar Vendedores</strong></label>
                         </div>
-                        <div class="row">                            
-                            <div class="col-md-12">                                                                  
-                                <div class="input-group">                                    
-                                    <input type="text" name="search_query" class="form-control" placeholder="Ingrese un nombre, o alguna referencia...">
-                                    <input type="hidden" value="1" name="pagina" id="pagina"/>                                
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-primary" id="search_button" type="button"><i class="fa fa-search"></i><span class="hidden-sm hidden-xs">Buscar</span></button>
-                                    </span>
-                                </div>                                                    
-                            </div>  
-                        </div>
-                        <br>
-                        <div class="row">                            
-                            <div class="col-md-6">
-                                <div class="form-group">                                
-                                    <label class="text-left"><strong>Provincia</strong></label>
-                                    <select name="provincia" class="form-control">
-                                        <option value="0">Todas las Provincias</option>
-                                        <?php if (sizeof($provincias) > 0): ?>
-                                            <?php
-                                            foreach ($provincias as $provincia):
-                                                $selected = "";
-                                                if ($localizacion) {
-                                                    if ($localizacion["provincia"] != null) {
-                                                        if ($localizacion["provincia"]->id == $provincia->id) {
-                                                            $selected = "selected='selected'";
-                                                        }
+                    </div>
+                    <div class="row">                            
+                        <div class="col-md-12">                                                                  
+                            <div class="input-group">                                    
+                                <input type="text" name="search_query" class="form-control" placeholder="Ingrese un nombre, o alguna referencia...">
+                                <input type="hidden" value="1" name="pagina" id="pagina"/>                                
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" id="search_button" type="button"><i class="fa fa-search"></i><span class="hidden-sm hidden-xs">Buscar</span></button>
+                                </span>
+                            </div>                                                    
+                        </div>  
+                    </div>
+                    <br>
+                    <div class="row">                            
+                        <div class="col-md-6">
+                            <div class="form-group">                                
+                                <label class="text-left"><strong>Provincia</strong></label>
+                                <select name="provincia" class="form-control">
+                                    <option value="0">Todas las Provincias</option>
+                                    <?php if (sizeof($provincias) > 0): ?>
+                                        <?php
+                                        foreach ($provincias as $provincia):
+                                            $selected = "";
+                                            if ($localizacion) {
+                                                if ($localizacion["provincia"] != null) {
+                                                    if ($localizacion["provincia"]->id == $provincia->id) {
+                                                        $selected = "selected='selected'";
                                                     }
                                                 }
-                                                ?>
-                                                <option <?php echo $selected; ?> value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>                                                                                    
-                                            <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </select>
-                                </div>
+                                            }
+                                            ?>
+                                            <option <?php echo $selected; ?> value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>                                                                                    
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group"> 
-                                    <label class="text-left"><strong>Población</strong></label>
-                                    <select name="poblacion" class="form-control">
-                                        <option value="0">Todas las Poblaciónes</option>                        
-                                        <?php if (sizeof($poblaciones) > 0): ?>
-                                            <?php
-                                            foreach ($poblaciones as $poblacion):
-                                                $selected = "";
-                                                if ($localizacion) {
-                                                    if ($localizacion["poblacion"] != null) {
-                                                        if ($localizacion["poblacion"]->id == $poblacion->id) {
-                                                            $selected = "selected='selected'";
-                                                        }
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group"> 
+                                <label class="text-left"><strong>Población</strong></label>
+                                <select name="poblacion" class="form-control">
+                                    <option value="0">Todas las Poblaciónes</option>                        
+                                    <?php if (sizeof($poblaciones) > 0): ?>
+                                        <?php
+                                        foreach ($poblaciones as $poblacion):
+                                            $selected = "";
+                                            if ($localizacion) {
+                                                if ($localizacion["poblacion"] != null) {
+                                                    if ($localizacion["poblacion"]->id == $poblacion->id) {
+                                                        $selected = "selected='selected'";
                                                     }
                                                 }
-                                                ?>
-                                                <option <?php echo $selected; ?> value="<?php echo $poblacion->id ?>"><?php echo $poblacion->nombre ?></option>                                        
-                                            <?php endforeach; ?>
-                                        <?php endif; ?>
-                                    </select>
-                                </div>
+                                            }
+                                            ?>
+                                            <option <?php echo $selected; ?> value="<?php echo $poblacion->id ?>"><?php echo $poblacion->nombre ?></option>                                        
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
                             </div>
-                        </div>                         
+                        </div>
+                    </div>                         
                     <?php echo form_close(); ?>
                 </div>
 
@@ -127,9 +127,8 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Invitacion a Vendedor</h4>
                 </div>
-                <div class="modal-body">                    
-                    <?php echo form_open('usuario/enviar_invitacion'); ?>
-
+                <?php echo form_open('usuario/enviar_invitacion', 'rel="preventDoubleSubmission"'); ?>
+                <div class="modal-body">                                        
                     <div class="form-group">                    
                         <label><strong>Titulo</strong></label>                        
                         <input type="text" class="form-control" name="titulo" autofocus="" autocomplete="off">                                    
@@ -144,10 +143,10 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-template-main">Enviar</button>
-                    <button type="button" class="btn btn-template-main" data-dismiss="modal">Cancelar</button>
-                    <?php echo form_close(); ?>
+                    <button type="submit" class="btn btn-template-primary">Enviar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>                    
                 </div>
+                <?php echo form_close(); ?>
             </div>
 
         </div>

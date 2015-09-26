@@ -122,7 +122,7 @@
                 <hr>                
                 <div class="col-xs-6 pull-right">
                     <div class="text-right">
-                        <a href="<?php echo site_url($vendedor->unique_slug."/productos"); ?>" class="btn btn-template-primary"> Ver Mas</a>
+                        <a href="<?php echo site_url($vendedor->unique_slug . "/productos"); ?>" class="btn btn-template-primary"> Ver Mas</a>
                     </div>
                 </div>
             <?php endif; ?>
@@ -183,32 +183,25 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Invitacion a Vendedor</h4>
             </div>
-            <div class="modal-body">
-                <?php echo form_open('home/cliente/enviar_invitacion'); ?>
-                <div class="row">  
-                    <div class="col-md-12">
-                        <div class="form-group">                                
-                            <label>Titulo</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="titulo">                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Mensaje</label>
-                            <textarea class="form-control" name="mensaje" rows="5" cols="20"></textarea>                    
-                        </div>                                                        
-                    </div>
-                </div>
+            <?php echo form_open('home/cliente/enviar_invitacion', 'rel="preventDoubleSubmission"'); ?>
+            <div class="modal-body">                
+                <div class="form-group">                    
+                    <label><strong>Titulo</strong></label>                        
+                    <input type="text" class="form-control" name="titulo" autofocus="" autocomplete="off">                                    
+                </div>                            
+
+                <div class="form-group">                    
+                    <label><strong>Mensaje</strong></label>
+                    <textarea class="form-control" name="mensaje" rows="5" cols="20" style="resize: none;"></textarea>                    
+                </div> 
                 <input type="hidden" name="vendedor_id" value="<?php echo $vendedor->id ?>">                                
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-template-main">Enviar</button>
-                <button type="button" class="btn btn-template-main" data-dismiss="modal">Cancelar</button>
-                <?php echo form_close(); ?>
+                <button type="submit" class="btn btn-template-primary">Enviar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>                
             </div>
+            <?php echo form_close(); ?>
         </div>
     </div>
 </div>
@@ -220,31 +213,24 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Invitacion a Vendedor</h4>
             </div>
-            <div class="modal-body">
-                <?php echo form_open('usuario/enviar_invitacion'); ?>
-                <div class="row">  
-                    <div class="col-md-12">                            
-                        <div class="form-group">                                                                
-                            <label>Titulo</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="titulo">                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12"> 
-                        <div class="form-group">
-                            <label>Mensaje</label>
-                            <textarea class="form-control" name="mensaje" rows="5" cols="20"></textarea>                    
-                        </div>                                                        
-                    </div>
-                </div>
+            <?php echo form_open('usuario/enviar_invitacion', 'rel="preventDoubleSubmission"'); ?>
+            <div class="modal-body">                
+                <div class="form-group">                    
+                    <label><strong>Titulo</strong></label>                        
+                    <input type="text" class="form-control" name="titulo" autofocus="" autocomplete="off">                                    
+                </div>                            
+
+                <div class="form-group">                    
+                    <label><strong>Mensaje</strong></label>
+                    <textarea class="form-control" name="mensaje" rows="5" cols="20" style="resize: none;"></textarea>                    
+                </div> 
                 <input type="hidden" name="vendedor_id" value="">
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-template-main">Enviar</button>
-                <button type="button" class="btn btn-template-main" data-dismiss="modal">Cancelar</button>
-                <?php echo form_close(); ?>
+                <button type="submit" class="btn btn-template-primary">Enviar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>                
             </div>
+            <?php echo form_close(); ?>
         </div>
 
     </div>

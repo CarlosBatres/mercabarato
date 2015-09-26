@@ -136,8 +136,10 @@ class Panel_vendedores_infocompras extends ADController {
                         $this->email->to($usuario->email);
                         $this->email->subject('Se ha respondido a tu solicitud de presupuesto');
                         //$data_mail = array("solicitud_id"=>$solicitud_seguro->id);
-                        $link=site_url('usuario/infocompras-seguros/respuesta/'.$solicitud_seguro->id);
-                        $data_mail = array("link"=>$link,"identidad"=>$this->identidad->vendedor->nombre);        
+                        //$link=site_url('usuario/infocompras-seguros/respuesta/'.$solicitud_seguro->id);
+                        $data_mail = array(
+                            "link"=>site_url("auth").'?email='.$usuario->email.'&continue='.site_url('usuario/infocompras-seguros/respuesta/'.$solicitud_seguro->id),
+                            "identidad"=>$this->identidad->vendedor->nombre);        
                         
                         if($usuario->temporal=="1"){
                             $this->email->message($this->load->view('home/emails/solicitud_presupuesto_registro', $data_mail, true));
@@ -468,8 +470,10 @@ class Panel_vendedores_infocompras extends ADController {
                         $this->email->to($usuario->email);
                         $this->email->subject('Se ha respondido a tu solicitud de presupuesto');
                         //$data_mail = array("solicitud_id"=>$solicitud->id);
-                        $link=site_url('usuario/infocompras-seguros/respuesta/'.$solicitud->id);
-                        $data_mail = array("link"=>$link,"identidad"=>$this->identidad->vendedor->nombre);
+                        //$link=site_url('usuario/infocompras-seguros/respuesta/'.$solicitud->id);
+                        $data_mail = array(
+                            "link"=>site_url("auth").'?email='.$usuario->email.'&continue='.site_url('usuario/infocompras-seguros/respuesta/'.$solicitud->id),
+                            "identidad"=>$this->identidad->vendedor->nombre);
                         
                         if($usuario->temporal=="1"){
                             $this->email->message($this->load->view('home/emails/solicitud_presupuesto_registro', $data_mail, true));

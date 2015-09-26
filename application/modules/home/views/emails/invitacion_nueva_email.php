@@ -24,7 +24,7 @@
                                 <tr>
                                     <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
                                         <p>Puedes ingresar al siguiente link y aceptar la invitacion.</p>
-                                        <a href="<?php echo site_url("usuario/contactos"); ?>">Link para continuar...</a>
+                                        <a href="<?php echo $link; ?>">Link para continuar...</a>
                                     </td>
                                 </tr>
                             <?php else: ?>
@@ -41,7 +41,7 @@
                                 <tr>
                                     <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
                                         <p>Puedes ingresar al siguiente link y aceptar la invitacion.</p>
-                                        <a href="<?php echo site_url("usuario/contactos"); ?>">Link para continuar...</a>
+                                        <a href="<?php echo $link; ?>">Link para continuar...</a>
                                     </td>
                                 </tr>
                             <?php endif; ?>                            
