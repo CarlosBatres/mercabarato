@@ -105,10 +105,12 @@ class Infocompra_model extends MY_Model {
      */
     public function cleanup_resources($infocompra_id) {
         $infocompra = $this->get($infocompra_id);
-        if ($infocompra->link_file != null) {
-            if (is_file($infocompra->link_file)) {
-                unlink('./assets/' . $this->config->item('seguros_path') . '/' . $infocompra->link_file);
-            }            
+        if ($infocompra) {
+            if ($infocompra->link_file != NULL) {
+                if (is_file($infocompra->link_file)) {
+                    unlink('./assets/' . $this->config->item('seguros_path') . '/' . $infocompra->link_file);
+                }
+            }
         }
     }
 
@@ -214,7 +216,7 @@ class Infocompra_model extends MY_Model {
      * Llevan dos dias y no tienen respuesta
      */
     public function get_infocompras_por_caducar($params) {
-        $query = "SELECT * FROM infocompra i";
+        $query = "SELECT i.id as infocompra_id,i.* FROM infocompra i";
         $query.=" LEFT OUTER JOIN mensaje m ON m.infocompra_id=i.id";
         $query.=" WHERE getWorkingday(i.fecha_solicitud, NOW( ) ,  'work_days') =  '2'";
         $query.=" AND i.estado='0'";
@@ -232,7 +234,7 @@ class Infocompra_model extends MY_Model {
     }
 
     public function get_infocompras_caducado($params) {
-        $query = "SELECT * FROM infocompra i";
+        $query = "SELECT i.id as infocompra_id,i.* FROM infocompra i";
         $query.=" LEFT OUTER JOIN mensaje m ON m.infocompra_id=i.id";
         $query.=" WHERE getWorkingday(i.fecha_solicitud, NOW( ) ,  'work_days') >  '2'";
         $query.=" AND i.estado='0'";
