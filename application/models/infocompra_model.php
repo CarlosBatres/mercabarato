@@ -105,7 +105,11 @@ class Infocompra_model extends MY_Model {
      */
     public function cleanup_resources($infocompra_id) {
         $infocompra = $this->get($infocompra_id);
-        unlink('./assets/' . $this->config->item('seguros_path') . '/' . $infocompra->link_file);
+        if ($infocompra->link_file != null) {
+            if (is_file($infocompra->link_file)) {
+                unlink('./assets/' . $this->config->item('seguros_path') . '/' . $infocompra->link_file);
+            }            
+        }
     }
 
     /**
@@ -226,7 +230,7 @@ class Infocompra_model extends MY_Model {
             return false;
         }
     }
-    
+
     public function get_infocompras_caducado($params) {
         $query = "SELECT * FROM infocompra i";
         $query.=" LEFT OUTER JOIN mensaje m ON m.infocompra_id=i.id";

@@ -159,9 +159,9 @@ class cron_controller extends MY_Controller {
                         $data_email = array();
 
                         if ($var->solicitud_seguro == "1") {
-                            $data_email["link"] = site_url("auth") . '?email=' . $email_vendedor . '&continue=' . site_url("panel_vendedor/infocompras/seguros/responder/".$var->id);
+                            $data_email["link"] = site_url("auth") . '?email=' . $email_vendedor . '&continue=' . site_url("panel_vendedor/infocompras/seguros/responder/").'/'.$var->id;
                         } else if ($var->infocompra_general == "1") {
-                            $data_email["link"] = site_url("auth") . '?email=' . $email_vendedor . '&continue=' . site_url("panel_vendedor/infocompras/generales/responder/".$var->id);
+                            $data_email["link"] = site_url("auth") . '?email=' . $email_vendedor . '&continue=' . site_url("panel_vendedor/infocompras/generales/responder/").'/'.$var->id;
                         }
 
                         $this->email->message($this->load->view('home/emails/infocompra_caducar_vendedor', $data_email, true));
@@ -179,9 +179,9 @@ class cron_controller extends MY_Controller {
                         $data_email = array();
 
                         if ($var->solicitud_seguro == "1") {
-                            $data_email["link"] = site_url("auth") . '?email=' . $email_cliente . '&continue=' . site_url("usuario/infocompras-seguros/extenderla/".$var->id);
+                            $data_email["link"] = site_url("auth") . '?email=' . $email_cliente . '&continue=' . site_url("usuario/infocompras-seguros/extenderla/").'/'.$var->id;
                         } else if ($var->infocompra_general == "1") {
-                            $data_email["link"] = site_url("auth") . '?email=' . $email_cliente . '&continue=' . site_url("usuario/infocompras-general/extenderla/".$var->id);
+                            $data_email["link"] = site_url("auth") . '?email=' . $email_cliente . '&continue=' . site_url("usuario/infocompras-general/extenderla/").'/'.$var->id;
                         }
                         
                         $this->email->message($this->load->view('home/emails/infocompra_caducar_cliente', $data_email, true));
