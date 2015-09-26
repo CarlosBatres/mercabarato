@@ -399,7 +399,11 @@ class Cliente_model extends MY_Model {
             return array("total" => 0);
         }
     }
-    
+    /**
+     * 
+     * @param type $cliente_id
+     * @return boolean
+     */
     public function get_email($cliente_id) {
         $cliente=$this->get($cliente_id);
         if($cliente){

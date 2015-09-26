@@ -118,6 +118,7 @@ $route['usuario/infocompras-seguros/respuesta/(:num)'] = 'home/cliente/view_segu
 $route['usuario/infocompras-seguros/pregunta/(:num)'] = 'home/cliente/view_seguros_pregunta/$1';
 $route['usuario/infocompras-seguros/enviar_pregunta'] = 'home/cliente/seguro_enviar_pregunta';
 $route['usuario/infocompras-seguros/descargar_respuesta/(:any)'] = 'home/cliente/seguros_download_respuesta/$1';
+$route['usuario/infocompras-seguros/extenderla/(:num)'] = 'home/cliente/extender_infocompra/$1';
 $route['usuario/buscar-solicitudes-seguros'] = 'home/cliente/ajax_get_listado_seguros';
 $route['usuario/eliminar-cuenta'] = 'home/usuario/eliminar_cuenta';
 $route['usuario/eliminar-cuenta-confirmar'] = 'home/usuario/eliminar_cuenta_confirmar';
@@ -129,6 +130,7 @@ $route['usuario/infocompras-general'] = 'home/cliente/view_infocompras_general';
 $route['usuario/infocompras-general/respuesta/(:num)'] = 'home/cliente/view_infocompras_respuesta/$1';
 $route['usuario/infocompras-general/pregunta/(:num)'] = 'home/cliente/view_infocompras_pregunta/$1';
 $route['usuario/infocompras-general/enviar_pregunta'] = 'home/cliente/infocompra_enviar_pregunta';
+$route['usuario/infocompras-general/extenderla/(:num)'] = 'home/cliente/extender_infocompra/$1';
 $route['usuario/infocompras-general/descargar_respuesta/(:any)'] = 'home/cliente/infocompra_download_respuesta/$1';
 $route['usuario/buscar-solicitudes-infocompras'] = 'home/cliente/ajax_get_listado_infocompras';
 
@@ -347,6 +349,7 @@ $route['admin/mensajes/ajax_get_listado_resultados'] = 'admin/mensaje/ajax_get_l
 
 $route['cron_task/validar_paquetes'] = 'admin/cron_controller/validar_paquetes';
 $route['cron_task/productos_novedades'] = 'admin/cron_controller/productos_novedades';
+$route['cron_task/infocompras_mensajes'] = 'admin/cron_controller/infocompras_mensajes';
 
 $route['webservice'] = 'webservice/main/index';
 $route['webservice/upload_products'] = 'webservice/main/upload_products';

@@ -19,7 +19,7 @@ class cron_controller extends MY_Controller {
                 $this->load->library('email');
                 $this->email->initialize($this->config->item('email_info'));
             }
-            
+
             $dias_previos_aviso = 5;
             $paquetes_por_vencer = $this->vendedor_paquete_model->get_paquetes_a_caducar($dias_previos_aviso);
             if ($paquetes_por_vencer) {
@@ -45,7 +45,7 @@ class cron_controller extends MY_Controller {
                     if ($this->config->item('emails_enabled')) {
                         $renovacion = $this->vendedor_model->get_paquete_renovacion($paquete->vendedor_id);
                         if (!$renovacion) {
-                            $email = $this->vendedor_model->get_email($paquete->vendedor_id);                                                        
+                            $email = $this->vendedor_model->get_email($paquete->vendedor_id);
                             $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                             $this->email->to($email);
                             $this->email->subject('Tu paquete a caducado');
@@ -71,7 +71,7 @@ class cron_controller extends MY_Controller {
                 $this->load->library('email');
                 $this->email->initialize($this->config->item('email_info'));
             }
-            
+
             $days = 2;
             $date_inicio = strtotime(date('Y-m-d'));
             $date_inicio = strtotime("-" . $days . " day", $date_inicio);
@@ -119,7 +119,7 @@ class cron_controller extends MY_Controller {
                         $pros = $this->producto_model->get_novedades_fecha($date_inicio, $date_final, 3, $vendedor);
                         $cliente_email = $this->usuario_model->get_email($cliente);
 
-                        if ($this->config->item('emails_enabled')) {                            
+                        if ($this->config->item('emails_enabled')) {
                             $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                             $this->email->to($cliente_email);
                             $this->email->subject('Novedades en Mercabarato.com');
@@ -129,6 +129,73 @@ class cron_controller extends MY_Controller {
                             $this->email->clear();
                         }
                     }
+                }
+            }
+        }
+    }
+
+    /**
+     * Cada dia
+     */
+    public function infocompras_mensajes() {
+        if ($this->input->is_cli_request()) {
+            if ($this->config->item('emails_enabled')) {
+                $this->load->library('email');
+                $this->email->initialize($this->config->item('email_info'));
+            }
+
+            $params = array();
+            $infocompra = $this->infocompra_model->get_infocompras_por_caducar($params);
+
+            if ($infocompra) {
+                foreach ($infocompra as $var) {
+                    $vendedor = $this->vendedor_model->get($var->vendedor_id);
+                    $email_vendedor = $this->vendedor_model->get_email($vendedor->id);
+
+                    if ($this->config->item('emails_enabled')) {
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($email_vendedor);
+                        $this->email->subject('Tienes una solicitud de infocompras a punto de caducar.');
+                        $data_email = array();
+
+                        if ($var->solicitud_seguro == "1") {
+                            $data_email["link"] = site_url("auth") . '?email=' . $email_vendedor . '&continue=' . site_url("panel_vendedor/infocompras/seguros/responder/".$var->id);
+                        } else if ($var->infocompra_general == "1") {
+                            $data_email["link"] = site_url("auth") . '?email=' . $email_vendedor . '&continue=' . site_url("panel_vendedor/infocompras/generales/responder/".$var->id);
+                        }
+
+                        $this->email->message($this->load->view('home/emails/infocompra_caducar_vendedor', $data_email, true));
+                        $this->email->send();
+                        $this->email->clear();
+                    }
+
+                    $cliente = $this->cliente_model->get($var->cliente_id);
+                    $email_cliente = $this->cliente_model->get_email($cliente->id);
+
+                    if ($this->config->item('emails_enabled')) {
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($email_cliente);
+                        $this->email->subject('Tienes una solicitud de infocompras a punto de caducar.');
+                        $data_email = array();
+
+                        if ($var->solicitud_seguro == "1") {
+                            $data_email["link"] = site_url("auth") . '?email=' . $email_cliente . '&continue=' . site_url("usuario/infocompras-seguros/extenderla/".$var->id);
+                        } else if ($var->infocompra_general == "1") {
+                            $data_email["link"] = site_url("auth") . '?email=' . $email_cliente . '&continue=' . site_url("usuario/infocompras-general/extenderla/".$var->id);
+                        }
+                        
+                        $this->email->message($this->load->view('home/emails/infocompra_caducar_cliente', $data_email, true));
+                        $this->email->send();
+                        $this->email->clear();
+                    }
+                }
+            }
+            
+            $infocompra = $this->infocompra_model->get_infocompras_caducado($params);
+
+            if ($infocompra) {
+                foreach ($infocompra as $var) {
+                    $this->infocompra_model->delete($var->id);
                 }
             }
         }

@@ -730,5 +730,30 @@ class Cliente extends MY_Controller {
         }
         redirect('usuario/infocompras-general');
     }
+    
+    
+    public function extender_infocompra($solicitud_id) {
+        if ($this->authentication->is_loggedin()) {
+            $this->template->set_title('Mercabarato - Busca y Compara');
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+            $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+
+            $solicitud = $this->infocompra_model->get($solicitud_id);            
+            if ($solicitud) {
+                if ($solicitud->extendido == "0" && $cliente->id == $solicitud->cliente_id) {                    
+                    $this->infocompra_model->update($solicitud_id,array("fecha_solicitud"=>date("Y-m-d"),"extendido"=>"1"));
+                    $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+                    $this->template->load_view('home/cliente/infocompras_extendido', array("html_options" => $html_options, "infocompra" => $solicitud));
+                } else {
+                    redirect('404');
+                }
+            } else {
+                redirect('404');
+            }
+        } else {
+            redirect('');
+        }
+    }
 
 }

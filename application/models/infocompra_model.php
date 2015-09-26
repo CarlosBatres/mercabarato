@@ -11,6 +11,13 @@ class Infocompra_model extends MY_Model {
         $this->_table = "infocompra";
     }
 
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public function get_solicitudes_seguro($params, $limit, $offset) {
         $this->db->start_cache();
         $this->db->select("ss.*,cc.nombres,cc.apellidos,uc.email,m.enviado_por");
@@ -20,7 +27,7 @@ class Infocompra_model extends MY_Model {
         $this->db->join("mensaje m", "m.infocompra_id=ss.id AND m.enviado_por='1'", 'LEFT');
 
         $this->db->where("ss.solicitud_seguro", "1");
-        
+
         if (isset($params["vendedor_id"])) {
             $this->db->where("ss.vendedor_id", $params["vendedor_id"]);
         }
@@ -48,6 +55,13 @@ class Infocompra_model extends MY_Model {
         }
     }
 
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public function get_solicitudes_seguro_cliente($params, $limit, $offset) {
         $this->db->start_cache();
         $this->db->select("infocompra.*,vendedor.nombre as nombre_vendedor,vendedor.unique_slug as vendedor_slug,vendedor.descripcion");
@@ -57,7 +71,7 @@ class Infocompra_model extends MY_Model {
         $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
 
         $this->db->where("infocompra.solicitud_seguro", "1");
-        
+
         if (isset($params["vendedor_id"])) {
             $this->db->where("infocompra.vendedor_id", $params["vendedor_id"]);
         }
@@ -85,17 +99,32 @@ class Infocompra_model extends MY_Model {
         }
     }
 
+    /**
+     * 
+     * @param type $infocompra_id
+     */
     public function cleanup_resources($infocompra_id) {
         $infocompra = $this->get($infocompra_id);
-        unlink('./assets/' . $this->config->item('seguros_path') . '/' . $infocompra->link_file);        
+        unlink('./assets/' . $this->config->item('seguros_path') . '/' . $infocompra->link_file);
     }
 
+    /**
+     * 
+     * @param type $id
+     */
     public function delete($id) {
         $this->cleanup_resources($id);
         $this->mensaje_model->delete_by("infocompra_id", $id);
         parent::delete($id);
     }
-    
+
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public function get_solicitudes_infocompras_cliente($params, $limit, $offset) {
         $this->db->start_cache();
         $this->db->select("infocompra.*,vendedor.nombre as nombre_vendedor,vendedor.unique_slug as vendedor_slug,vendedor.descripcion");
@@ -105,7 +134,7 @@ class Infocompra_model extends MY_Model {
         $this->db->join("usuario", "usuario.id=cliente.usuario_id", 'INNER');
 
         $this->db->where("infocompra.infocompra_general", "1");
-        
+
         if (isset($params["vendedor_id"])) {
             $this->db->where("infocompra.vendedor_id", $params["vendedor_id"]);
         }
@@ -132,7 +161,14 @@ class Infocompra_model extends MY_Model {
             return array("total" => 0);
         }
     }
-    
+
+    /**
+     * 
+     * @param type $params
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public function get_solicitudes_infocompras($params, $limit, $offset) {
         $this->db->start_cache();
         $this->db->select("ss.*,cc.nombres,cc.apellidos,uc.email,m.enviado_por");
@@ -142,7 +178,7 @@ class Infocompra_model extends MY_Model {
         $this->db->join("mensaje m", "m.infocompra_id=ss.id AND m.enviado_por='1'", 'LEFT');
 
         $this->db->where("ss.infocompra_general", "1");
-        
+
         if (isset($params["vendedor_id"])) {
             $this->db->where("ss.vendedor_id", $params["vendedor_id"]);
         }
@@ -167,6 +203,44 @@ class Infocompra_model extends MY_Model {
         } else {
             $this->db->flush_cache();
             return array("total" => 0);
+        }
+    }
+
+    /**
+     * Llevan dos dias y no tienen respuesta
+     */
+    public function get_infocompras_por_caducar($params) {
+        $query = "SELECT * FROM infocompra i";
+        $query.=" LEFT OUTER JOIN mensaje m ON m.infocompra_id=i.id";
+        $query.=" WHERE getWorkingday(i.fecha_solicitud, NOW( ) ,  'work_days') =  '2'";
+        $query.=" AND i.estado='0'";
+        $query.=" AND i.extendido='0'";
+        $query.=" AND m.id IS null";
+
+        $result = $this->db->query($query);
+        $infocompras = $result->result();
+
+        if (sizeof($infocompras) > 0) {
+            return $infocompras;
+        } else {
+            return false;
+        }
+    }
+    
+    public function get_infocompras_caducado($params) {
+        $query = "SELECT * FROM infocompra i";
+        $query.=" LEFT OUTER JOIN mensaje m ON m.infocompra_id=i.id";
+        $query.=" WHERE getWorkingday(i.fecha_solicitud, NOW( ) ,  'work_days') >  '2'";
+        $query.=" AND i.estado='0'";
+        $query.=" AND m.id IS null";
+
+        $result = $this->db->query($query);
+        $infocompras = $result->result();
+
+        if (sizeof($infocompras) > 0) {
+            return $infocompras;
+        } else {
+            return false;
         }
     }
 

@@ -268,9 +268,9 @@ class Vendedor_model extends MY_Model {
             if ($vendedor_paquete->limite_anuncios == -1) {
                 return 1;
             } else {
-                /*$this->db->select('id')->from('anuncio')->where('vendedor_id', $vendedor_id);
-                $total = $this->db->count_all_results();                
-                return ($vendedor_paquete->limite_anuncios - $total);*/
+                /* $this->db->select('id')->from('anuncio')->where('vendedor_id', $vendedor_id);
+                  $total = $this->db->count_all_results();
+                  return ($vendedor_paquete->limite_anuncios - $total); */
                 return ($vendedor_paquete->limite_anuncios - $vendedor_paquete->anuncios_publicados);
             }
         } else {
@@ -388,7 +388,7 @@ class Vendedor_model extends MY_Model {
         if (isset($params['descripcion'])) {
             $query.="OR vendedor.descripcion LIKE '%" . $params['descripcion'] . "%'";
         }
-        
+
         if (isset($params['infocompra_general'])) {
             $query.="AND vendedor_paquete.limite_productos!='0'";
         }
@@ -407,7 +407,7 @@ class Vendedor_model extends MY_Model {
                 $query .=" AND vendedor.id NOT IN(" . $kk . ") ";
             }
         }
-        
+
         if (isset($params['solo_vendedor'])) {
             if (is_array($params['solo_vendedor'])) {
                 $kk = implode(",", $params['solo_vendedor']);
@@ -415,7 +415,7 @@ class Vendedor_model extends MY_Model {
             }
         }
 
-        
+
         /* if (isset($params['paquete_vigente'])) {
           $this->db->where('vendedor_paquete.aprobado', '1');
           $this->db->where('vendedor_paquete.fecha_terminar >=', date('Y-m-d'));
@@ -568,5 +568,6 @@ class Vendedor_model extends MY_Model {
         }
         return $ids;
     }
+    
 
 }
