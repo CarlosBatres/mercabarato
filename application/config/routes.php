@@ -44,6 +44,7 @@ if (!defined('BASEPATH'))
 /* Front */
 //$route[''] = 'home/producto/view_principal';
 $route[''] = 'home/main/index';
+$route['auth'] = 'home/main/login_auth';
 $route['login'] = 'home/usuario/login';
 $route['logout'] = 'home/usuario/logout';
 $route['olvido-password'] = 'home/usuario/olvido_password';

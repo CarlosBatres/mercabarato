@@ -379,6 +379,8 @@ function validateLogin() {
             }
         });
     });
+    
+         
 }
 
 function searchButtonHeader() {

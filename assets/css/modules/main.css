@@ -69,6 +69,11 @@
     min-height: 320px;
 }
 
+#content-auth {    
+    padding-bottom:100px;
+    min-height: 470px;
+}
+
 .tipo_registro {
     margin:0 -15px;
     padding:.5em 0;
@@ -659,6 +664,14 @@ hr.panel-opciones{
 
 .magia{
   display: none;
+}
+
+.login-auth{
+    padding-top: 80px;        
+}
+
+.login-auth .form-group {
+    margin-bottom: 40px;
 }
 
 @media (max-width: 768px) {

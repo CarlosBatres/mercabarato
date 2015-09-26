@@ -362,7 +362,10 @@ class Cliente extends MY_Controller {
                     $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                     $this->email->to($usuario->email);
                     $this->email->subject('Invitacion de Mercabarato.com');
-                    $data_email = array("titulo" => $data["titulo"], "comentario" => $data["comentario"]);
+                    $data_email = array(
+                        "titulo" => $data["titulo"], 
+                        "comentario" => $data["comentario"],
+                        "link"=>site_url("auth").'?email='.$usuario->email.'&continue='.site_url("panel_vendedor/invitaciones/recibidas"));
                     $this->email->message($this->load->view('home/emails/invitacion_email_a_vendedor', $data_email, true));
                     $this->email->send();
                 }

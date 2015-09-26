@@ -47,10 +47,10 @@
             <div class="alert alert-danger hidden" role="alert">
                 El usuario y/o la contraseña son incorrectas
             </div>
-            <?php echo form_close(); ?>                        
+            <?php echo form_close(); ?>
 
 
 
-        </div>             
-    </div>    
+        </div>
+    </div>
 </div>

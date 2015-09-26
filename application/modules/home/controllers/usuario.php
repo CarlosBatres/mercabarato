@@ -272,6 +272,7 @@ class Usuario extends MY_Controller {
             if ($formValues !== false) {
                 $password = $this->input->post('password');
                 $username = $this->input->post('email');
+                $url = $this->input->post('continue');
 
                 if ($this->authentication->login($username, $password)) {
                     $ip_address = $this->session->userdata('ip_address');
@@ -281,7 +282,12 @@ class Usuario extends MY_Controller {
                     $usuario->ultimo_acceso = date("Y-m-d H:i:s");
 
                     $this->usuario_model->update($user_id, $usuario);
-                    echo json_encode(array("success" => "true", "url" => site_url()));
+                    
+                    if($url==""){
+                        $url=site_url();
+                    }
+                    
+                    echo json_encode(array("success" => "true", "url" => $url));
                 } else {
                     echo json_encode(array("success" => "false"));
                 }

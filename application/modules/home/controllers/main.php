@@ -8,6 +8,7 @@ class Main extends MY_Controller {
     protected $spam_protection = TRUE; // true or false
     protected $spam_question = 'Cuanto es 2 + 3?';
     protected $spam_answer = '5';
+
     /**
      * 
      */
@@ -17,6 +18,7 @@ class Main extends MY_Controller {
         $provincias = $this->provincia_model->get_all_by_pais(70);
         $this->template->load_view('home/index', array("provincias" => $provincias));
     }
+
     /**
      * 
      */
@@ -35,6 +37,7 @@ class Main extends MY_Controller {
             redirect('productos');
         }
     }
+
     /**
      * 
      */
@@ -42,6 +45,7 @@ class Main extends MY_Controller {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/404');
     }
+
     /**
      * 
      */
@@ -49,6 +53,7 @@ class Main extends MY_Controller {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/acceso_restringido');
     }
+
     /**
      * 
      */
@@ -67,6 +72,7 @@ class Main extends MY_Controller {
             show_404();
         }
     }
+
     /**
      * 
      */
@@ -125,8 +131,8 @@ class Main extends MY_Controller {
 
             if ($honey_pot == "") {
                 if (strtolower(trim($anwser)) == strtolower(trim($this->spam_answer))) {
-                    if ($this->config->item('emails_enabled')) {                        
-                        $this->load->library('email');                        
+                    if ($this->config->item('emails_enabled')) {
+                        $this->load->library('email');
                         $this->email->initialize($this->config->item('email_info'));
                         $this->email->from($this->config->item('site_info_email'), 'Formulario de Contacto');
                         $this->email->to($this->config->item('site_info_email'));
@@ -154,6 +160,7 @@ class Main extends MY_Controller {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/contacto_mensaje_recibido');
     }
+
     /**
      * 
      */
@@ -161,6 +168,7 @@ class Main extends MY_Controller {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/quienes_somos');
     }
+
     /**
      * 
      */
@@ -168,6 +176,7 @@ class Main extends MY_Controller {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/como_funciona');
     }
+
     /**
      * 
      */
@@ -175,6 +184,7 @@ class Main extends MY_Controller {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/aviso_legal');
     }
+
     /**
      * 
      */
@@ -182,6 +192,7 @@ class Main extends MY_Controller {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/terminos_de_uso');
     }
+
     /**
      * 
      */
@@ -189,15 +200,56 @@ class Main extends MY_Controller {
         $this->template->set_title('Mercabarato - Busca y Compara');
         $this->template->load_view('home/paginas/cookies');
     }
+
+    /**
+     * 
+     */
+    public function login_auth() {
+        $data = $this->input->get(null, TRUE);
+        if ($data) {
+            if (isset($data["email"])) {
+                if (isset($data["continue"])) {
+                    $url_redirect = $data["continue"];
+                } else {
+                    $url_redirect = site_url('');
+                }
+
+                if ($this->authentication->is_loggedin()) {
+                    $user_id = $this->authentication->read('identifier');
+                    $usuario = $this->usuario_model->get_full_identidad($user_id);
+
+                    if ($data["email"] == $usuario->usuario->email) {
+                        redirect($url_redirect);
+                    } else {
+                        $this->authentication->logout();
+                        $this->template->set_title('Mercabarato - Busca y Compara');
+                        $this->template->set_layout('login_auth');
+                        $this->template->add_js('modules/home/login_auth.js');
+                        $this->template->load_view('home/login_auth', array("email" => $data["email"], "continue" => $url_redirect));
+                    }
+                } else {
+                    $this->template->set_title('Mercabarato - Busca y Compara');
+                    $this->template->set_layout('login_auth');
+                    $this->template->add_js('modules/home/login_auth.js');
+                    $this->template->load_view('home/login_auth', array("email" => $data["email"], "continue" => $url_redirect));
+                }
+            } else {
+                redirect('');
+            }
+        } else {
+            redirect('');
+        }
+    }
+
     /**
      * 
      */
     public function test_url() {
-        show_404();                 
-        /*$data_mail=array(            
-            "link"=>"mocotendido"            
-        );
-        echo $this->load->view('home/emails/confirmar_registro', $data_mail, true);*/
+        show_404();
+        /* $data_mail=array(            
+          "link"=>"mocotendido"
+          );
+          echo $this->load->view('home/emails/confirmar_registro', $data_mail, true); */
     }
 
 }
