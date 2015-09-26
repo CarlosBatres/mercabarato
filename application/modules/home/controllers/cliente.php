@@ -721,7 +721,7 @@ class Cliente extends MY_Controller {
                         $this->email->subject('Nueva solicitud de presupuesto');
                         //$data_email = array("solicitud_id" => $solicitud_id);
                         //$link=site_url('panel_vendedor/infocompras/seguros/responder/'.$solicitud_id);
-                        $data_email = array("link"=>site_url("auth").'?email='.$usuario->email.'&continue='.site_url('panel_vendedor/infocompras/seguros/responder/'.$solicitud_id));        
+                        $data_email = array("link"=>site_url("auth").'?email='.$usuario->email.'&continue='.site_url('panel_vendedor/infocompras/generales/responder/'.$solicitud_id));        
                         $this->email->message($this->load->view('home/emails/solicitud_presupuesto_mensaje_vendedor', $data_email, true));
                         $this->email->send();
                     }
