@@ -138,7 +138,7 @@ class cron_controller extends MY_Controller {
      * Cada dia
      */
     public function infocompras_mensajes() {
-        if (!$this->input->is_cli_request()) {
+        if ($this->input->is_cli_request()) {
             if ($this->config->item('emails_enabled')) {
                 $this->load->library('email');
                 $this->email->initialize($this->config->item('email_info'));
