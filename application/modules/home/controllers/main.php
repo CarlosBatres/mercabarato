@@ -246,10 +246,10 @@ class Main extends MY_Controller {
      */
     public function test_url() {
         show_404();
-        /* $data_mail=array(            
-          "link"=>"mocotendido"
-          );
-          echo $this->load->view('home/emails/confirmar_registro', $data_mail, true); */
+        /*$data_mail = array(
+            "link" => "mocotendido"
+        );
+        echo $this->load->view('home/emails/aceptar_invitacion_cliente', $data_mail, true);*/          
     }
 
 }

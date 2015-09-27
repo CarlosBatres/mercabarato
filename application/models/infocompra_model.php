@@ -216,12 +216,16 @@ class Infocompra_model extends MY_Model {
      * Llevan dos dias y no tienen respuesta
      */
     public function get_infocompras_por_caducar($params) {
-        $query = "SELECT i.id as infocompra_id,i.* FROM infocompra i";
-        $query.=" LEFT OUTER JOIN mensaje m ON m.infocompra_id=i.id";
-        $query.=" WHERE getWorkingday(i.fecha_solicitud, NOW( ) ,  'work_days') =  '2'";
-        $query.=" AND i.estado='0'";
-        $query.=" AND i.extendido='0'";
-        $query.=" AND m.id IS null";
+        $query="SELECT a.*, a.id as infocompra_id FROM ";
+        $query.="( ";
+        $query.="SELECT i.*, (5 * (DATEDIFF(now(), i.fecha_solicitud) DIV 7) + MID('0123444401233334012222340111123400012345001234550', 7 * WEEKDAY(i.fecha_solicitud) + WEEKDAY(now()) + 1, 1)) as workdays ";
+        $query.="FROM infocompra i WHERE 1 ";
+        $query.=") a ";
+        $query.="LEFT OUTER JOIN mensaje m ON m.infocompra_id = a.id ";
+        $query.="WHERE a.workdays = '2' ";
+        $query.="AND a.estado = '0' ";
+        $query.="AND a.extendido = '0' ";
+        $query.="AND m.id IS null ";
 
         $result = $this->db->query($query);
         $infocompras = $result->result();
@@ -234,11 +238,16 @@ class Infocompra_model extends MY_Model {
     }
 
     public function get_infocompras_caducado($params) {
-        $query = "SELECT i.id as infocompra_id,i.* FROM infocompra i";
-        $query.=" LEFT OUTER JOIN mensaje m ON m.infocompra_id=i.id";
-        $query.=" WHERE getWorkingday(i.fecha_solicitud, NOW( ) ,  'work_days') >  '2'";
-        $query.=" AND i.estado='0'";
-        $query.=" AND m.id IS null";
+         $query="SELECT a.*, a.id as infocompra_id FROM ";
+        $query.="( ";
+        $query.="SELECT i.*, (5 * (DATEDIFF(now(), i.fecha_solicitud) DIV 7) + MID('0123444401233334012222340111123400012345001234550', 7 * WEEKDAY(i.fecha_solicitud) + WEEKDAY(now()) + 1, 1)) as workdays ";
+        $query.="FROM infocompra i WHERE 1 ";
+        $query.=") a ";
+        $query.="LEFT OUTER JOIN mensaje m ON m.infocompra_id = a.id ";
+        $query.="WHERE a.workdays > '2' ";
+        $query.="AND a.estado = '0' ";
+        $query.="AND a.extendido = '0' ";
+        $query.="AND m.id IS null ";
 
         $result = $this->db->query($query);
         $infocompras = $result->result();
