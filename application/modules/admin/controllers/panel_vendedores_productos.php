@@ -57,7 +57,7 @@ class Panel_vendedores_productos extends ADController {
                                         "orden" => 0,
                                     );
                                     $this->producto_resource_model->insert($data_img);
-                                } elseif($key<3) {
+                                } elseif ($key < 3) {
                                     $data_img = array(
                                         "producto_id" => $producto_id,
                                         "nombre" => "Producto: " . $data["nombre"],
@@ -128,12 +128,12 @@ class Panel_vendedores_productos extends ADController {
                 $this->load->helper('ckeditor');
 
                 $data = array("categorias_tree_html" => $categorias_tree_html);
-                $data['ckeditor'] = array(                    
+                $data['ckeditor'] = array(
                     'id' => 'content',
-                    'path' => 'assets/js/ckeditor',                    
+                    'path' => 'assets/js/ckeditor',
                     'config' => array(
-                        'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
-                        'height' => '200px', 
+                        'customConfig' => assets_url('js/ckeditor_config_sm.js'),
+                        'height' => '200px',
                     ),
                 );
                 $this->template->load_view('admin/panel_vendedores/producto/producto_agregar', $data);
@@ -172,9 +172,9 @@ class Panel_vendedores_productos extends ADController {
                         "categoria_id" => $this->input->post('categoria_id'),
                         "transporte" => ($this->input->post('transporte') != '') ? $this->input->post('transporte') : null,
                         "impuesto" => ($this->input->post('impuesto') != '') ? $this->input->post('impuesto') : null,
-                        "grupo_txt" => ($this->input->post('grupo_txt') != '') ? strtolower($this->input->post('grupo_txt')) : null,                        
-                        "familia_txt" => ($this->input->post('familia_txt') != '') ? strtolower($this->input->post('familia_txt')) : null,                        
-                        "subfamilia_txt" => ($this->input->post('subfamilia_txt') != '') ? strtolower($this->input->post('subfamilia_txt')) : null,                        
+                        "grupo_txt" => ($this->input->post('grupo_txt') != '') ? strtolower($this->input->post('grupo_txt')) : null,
+                        "familia_txt" => ($this->input->post('familia_txt') != '') ? strtolower($this->input->post('familia_txt')) : null,
+                        "subfamilia_txt" => ($this->input->post('subfamilia_txt') != '') ? strtolower($this->input->post('subfamilia_txt')) : null,
                         "transporte_txt" => ($this->input->post('transporte_txt') != '') ? strtolower($this->input->post('transporte_txt')) : null,
                         "impuesto_txt" => ($this->input->post('impuesto_txt') != '') ? strtolower($this->input->post('impuesto_txt')) : null,
                     );
@@ -198,7 +198,7 @@ class Panel_vendedores_productos extends ADController {
                                         "orden" => 0,
                                     );
                                     $this->producto_resource_model->insert($data_img);
-                                } elseif($key<3) {
+                                } elseif ($key < 3) {
                                     $data_img = array(
                                         "producto_id" => $producto_id,
                                         "nombre" => "Producto: " . $data["nombre"],
@@ -291,7 +291,7 @@ class Panel_vendedores_productos extends ADController {
                         'path' => 'assets/js/ckeditor',
                         //Optionnal values
                         'config' => array(
-                            'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
+                            'customConfig' => assets_url('js/ckeditor_config_sm.js'),
                             'height' => '200px', //Setting a custom height
                         ),
                     );
@@ -354,12 +354,12 @@ class Panel_vendedores_productos extends ADController {
                     if ($res == $vendedor->get_vendedor_id()) {
                         $this->producto_model->delete($id);
                     } else {
-                        $flag=1;
+                        $flag = 1;
                     }
                 }
-                if ($flag==0) {
+                if ($flag == 0) {
                     $this->session->set_flashdata('success', 'Productos eliminados con exito..');
-                } elseif($flag==1) {
+                } elseif ($flag == 1) {
                     $this->session->set_flashdata('error', 'Ha ocurrido un error durante la operacion.');
                 }
 
@@ -511,6 +511,9 @@ class Panel_vendedores_productos extends ADController {
         }
     }
 
+    /**
+     * 
+     */
     public function agregar_varios() {
         $formValues = $this->input->post();
         if ($formValues !== false) {
@@ -570,8 +573,8 @@ class Panel_vendedores_productos extends ADController {
                     } else {
 
                         $flag_empty = true;
-                        for ($i = 0; $i < 8; $i++) {
-                            if ($rowData[0][$i] == null && ($i != 1 && $i != 6)) {
+                        for ($i = 0; $i < $highestRow; $i++) {
+                            if ($rowData[0][$i] == null && ($i != 1 && $i != 6 && $i != 8 && $i != 9 && $i != 10)) {
                                 $flag_empty = false;
                             }
                         }
@@ -586,6 +589,9 @@ class Panel_vendedores_productos extends ADController {
                                 "habilitado" => $rowData[0][5],
                                 "link_externo" => $rowData[0][6],
                                 "categoria_id" => $rowData[0][7],
+                                "imagen_principal" => $rowData[0][8],
+                                "imagen_extra1" => $rowData[0][9],
+                                "imagen_extra2" => $rowData[0][10],
                             );
                             $productos_array[] = $rowArray;
                         }
@@ -618,6 +624,37 @@ class Panel_vendedores_productos extends ADController {
                         $producto_xml->addChild("habilitado", $producto["habilitado"]);
                         $producto_xml->addChild("link_externo", $producto["link_externo"]);
                         $producto_xml->addChild("categoria_id", $producto["categoria_id"]);
+
+                        if ($producto["imagen_principal"] != null) {
+                            if (file_exists($producto["imagen_principal"])) {
+                                $info = getimagesize($producto["imagen_principal"]);
+                                $extension = image_type_to_extension($info[2], false);
+
+                                $imagen1 = file_get_contents($producto["imagen_principal"]);
+                                $producto_xml->addChild("imagen_principal", base64_encode($imagen1));
+                                $producto_xml->addChild("imagen_principal_extension", $extension);
+                            }
+                        }
+                        if ($producto["imagen_extra1"] != null) {
+                            if (file_exists($producto["imagen_extra1"])) {
+                                $info = getimagesize($producto["imagen_extra1"]);
+                                $extension = image_type_to_extension($info[2], false);
+
+                                $imagen1 = file_get_contents($producto["imagen_extra1"]);
+                                $producto_xml->addChild("imagen_extra1", base64_encode($imagen1));
+                                $producto_xml->addChild("imagen_extra1_extension", $extension);
+                            }
+                        }
+                        if ($producto["imagen_extra2"] != null) {
+                            if (file_exists($producto["imagen_extra2"])) {
+                                $info = getimagesize($producto["imagen_extra2"]);
+                                $extension = image_type_to_extension($info[2], false);
+
+                                $imagen1 = file_get_contents($producto["imagen_extra2"]);
+                                $producto_xml->addChild("imagen_extra2", base64_encode($imagen1));
+                                $producto_xml->addChild("imagen_extra2_extension", $extension);
+                            }
+                        }
                     }
 
                     $response = $this->rest->post('upload_products_local', $test->asXML(), "xml");
@@ -657,6 +694,14 @@ class Panel_vendedores_productos extends ADController {
         } else {
             redirect('panel_vendedor/producto/listado');
         }
+    }
+
+    public function agregar_varios_codigo() {
+        $this->template->set_title("Panel de Control - Mercabarato.com");
+        $this->template->set_layout('panel_vendedores');        
+        $link= site_url('webservice/upload_products');
+        $data = array("link"=>$link);
+        $this->template->load_view('admin/panel_vendedores/producto/producto_agregar_varios_codigo', $data);
     }
 
 }

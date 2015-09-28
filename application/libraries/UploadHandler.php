@@ -503,7 +503,7 @@ class UploadHandler {
             }
         }
 
-        return md5(date('Y-m-d H:i:s:u')) . $extension;
+        return md5(time() . rand()) . $extension;
     }
 
     protected function trim_file_name($file_path, $name, $size, $type, $error, $index, $content_range) {

@@ -184,6 +184,7 @@ $route['panel_vendedor/producto/listado'] = 'admin/panel_vendedores_productos/li
 $route['panel_vendedor/producto/agregar'] = 'admin/panel_vendedores_productos/agregar';
 $route['panel_vendedor/producto/agregar-varios'] = 'admin/panel_vendedores_productos/agregar_varios';
 $route['panel_vendedor/producto/agregar-varios-resumen'] = 'admin/panel_vendedores_productos/agregar_varios_resumen';
+$route['panel_vendedor/producto/agregar-varios-codigo'] = 'admin/panel_vendedores_productos/agregar_varios_codigo';
 $route['panel_vendedor/producto/borrar/(:num)'] = 'admin/panel_vendedores_productos/borrar/$1';
 $route['panel_vendedor/producto/borrar-multi'] = 'admin/panel_vendedores_productos/borrar_multi';
 $route['panel_vendedor/producto/editar/(:num)'] = 'admin/panel_vendedores_productos/editar/$1';
@@ -356,6 +357,7 @@ $route['webservice/upload_products'] = 'webservice/main/upload_products';
 $route['webservice/upload_products_local'] = 'webservice/main/upload_products_local';
 $route['webservice/categorias'] = 'webservice/main/categorias';
 $route['webservice/categorias_local'] = 'webservice/main/categorias_local';
+$route['webservice/upload_products_image'] = 'webservice/main/upload_products_image';
 
 
 $route['default_controller'] = 'home/main/index';

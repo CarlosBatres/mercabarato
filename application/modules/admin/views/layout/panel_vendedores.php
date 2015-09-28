@@ -102,6 +102,9 @@
                             <li>
                                 <a class="<?php echo $class; ?>" href="<?php echo site_url('panel_vendedor/producto/agregar-varios'); ?>"> Agregar varios (Excel)</a>
                             </li> 
+                            <li>
+                                <a class="<?php echo $class; ?>" href="<?php echo site_url('panel_vendedor/producto/agregar-varios-codigo'); ?>"> Agregar varios (PHP)</a>
+                            </li> 
                         </ul>                         
                     </li>
                     <li>
