@@ -589,9 +589,9 @@ class Panel_vendedores_productos extends ADController {
                                 "habilitado" => $rowData[0][5],
                                 "link_externo" => $rowData[0][6],
                                 "categoria_id" => $rowData[0][7],
-                                "imagen_principal" => $rowData[0][8],
-                                "imagen_extra1" => $rowData[0][9],
-                                "imagen_extra2" => $rowData[0][10],
+                                //"imagen_principal" => $rowData[0][8],
+                                //"imagen_extra1" => $rowData[0][9],
+                                //"imagen_extra2" => $rowData[0][10],
                             );
                             $productos_array[] = $rowArray;
                         }
@@ -624,8 +624,10 @@ class Panel_vendedores_productos extends ADController {
                         $producto_xml->addChild("habilitado", $producto["habilitado"]);
                         $producto_xml->addChild("link_externo", $producto["link_externo"]);
                         $producto_xml->addChild("categoria_id", $producto["categoria_id"]);
-
-                        if ($producto["imagen_principal"] != null) {
+                        
+                        //TODO : Buscar una forma de subir las imagenes al server a carpeta temporal
+                        
+                        /*if ($producto["imagen_principal"] != null) {
                             if (file_exists($producto["imagen_principal"])) {
                                 $info = getimagesize($producto["imagen_principal"]);
                                 $extension = image_type_to_extension($info[2], false);
@@ -654,7 +656,7 @@ class Panel_vendedores_productos extends ADController {
                                 $producto_xml->addChild("imagen_extra2", base64_encode($imagen1));
                                 $producto_xml->addChild("imagen_extra2_extension", $extension);
                             }
-                        }
+                        }*/
                     }
 
                     $response = $this->rest->post('upload_products_local', $test->asXML(), "xml");

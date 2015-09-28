@@ -37,8 +37,8 @@
                     <div class="col-xs-12">                        
                         <h3> Formato del Excel:</h3>
                         <br>
-                        <p> La primera fila del archivo sera ignorada ( se puede usar como referencia ).</p>
-                        <p> EL formato debe contener los siguientes valores.</p>
+                        <p> La primera columna del archivo sera ignorada ( se puede usar como referencia ).</p>
+                        <p> EL formato debe contener los siguientes datos.</p>
                         <br>
                         <div class="table-responsive">        
                             <table class="table table-bordered table-hover table-striped">
@@ -89,22 +89,7 @@
                                         <td style="font-weight: 600">ID de la Categoria</td>
                                         <td>NUMERO ( Integer ) - Debe existir</td>
                                         <td> Necesario </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: 600">Imagen Principal</td>
-                                        <td>Ruta absoluta del archivo</td>
-                                        <td> Opcional </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: 600">Imagen Extra 1</td>
-                                        <td>Ruta absoluta del archivo</td>
-                                        <td> Opcional </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-weight: 600">Imagen Extra 2</td>
-                                        <td>Ruta absoluta del archivo</td>
-                                        <td> Opcional </td>
-                                    </tr>
+                                    </tr>                                    
                                 </tbody>
                             </table>
                         </div>
