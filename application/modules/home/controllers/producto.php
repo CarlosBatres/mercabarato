@@ -336,7 +336,7 @@ class Producto extends MY_Controller {
                     }
 
                     $params = array(
-                        "categoria_id" => $producto->categoria_id,                        
+                        "categoria_id" => $producto->categoria_id,
                         "excluir_vendedor_id" => $producto->vendedor_id
                     );
                     $otros_productos_categoria = $this->producto_model->get_site_search($params, 4, 0, "p.fecha_insertado", "desc");
@@ -429,7 +429,15 @@ class Producto extends MY_Controller {
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($vendedor_usuario->email);
                         $this->email->subject('Tienes un nuevo mensaje');
-                        $data_email = array("asunto" => $asunto, "mensaje" => $mensaje ,"producto"=>$producto);
+
+                        $code = $user_id . ";;" . $producto_id . ";;" . date('Y-m-d');
+                        $code = urlencode(base64_encode($code));
+
+                        $data_email = array(
+                            "asunto" => $asunto,
+                            "mensaje" => $mensaje,
+                            "producto" => $producto,
+                            "link" => site_url("auth") . '?email=' . $vendedor_usuario->email . '&continue=' . site_url("panel_vendedor/producto/responder-mensaje/" . $code));
                         $this->email->message($this->load->view('home/emails/enviar_mensaje', $data_email, true));
                         $this->email->send();
                     }

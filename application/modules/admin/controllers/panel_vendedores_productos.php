@@ -589,9 +589,9 @@ class Panel_vendedores_productos extends ADController {
                                 "habilitado" => $rowData[0][5],
                                 "link_externo" => $rowData[0][6],
                                 "categoria_id" => $rowData[0][7],
-                                //"imagen_principal" => $rowData[0][8],
-                                //"imagen_extra1" => $rowData[0][9],
-                                //"imagen_extra2" => $rowData[0][10],
+                                    //"imagen_principal" => $rowData[0][8],
+                                    //"imagen_extra1" => $rowData[0][9],
+                                    //"imagen_extra2" => $rowData[0][10],
                             );
                             $productos_array[] = $rowArray;
                         }
@@ -624,39 +624,39 @@ class Panel_vendedores_productos extends ADController {
                         $producto_xml->addChild("habilitado", $producto["habilitado"]);
                         $producto_xml->addChild("link_externo", $producto["link_externo"]);
                         $producto_xml->addChild("categoria_id", $producto["categoria_id"]);
-                        
+
                         //TODO : Buscar una forma de subir las imagenes al server a carpeta temporal
-                        
-                        /*if ($producto["imagen_principal"] != null) {
-                            if (file_exists($producto["imagen_principal"])) {
-                                $info = getimagesize($producto["imagen_principal"]);
-                                $extension = image_type_to_extension($info[2], false);
 
-                                $imagen1 = file_get_contents($producto["imagen_principal"]);
-                                $producto_xml->addChild("imagen_principal", base64_encode($imagen1));
-                                $producto_xml->addChild("imagen_principal_extension", $extension);
-                            }
-                        }
-                        if ($producto["imagen_extra1"] != null) {
-                            if (file_exists($producto["imagen_extra1"])) {
-                                $info = getimagesize($producto["imagen_extra1"]);
-                                $extension = image_type_to_extension($info[2], false);
+                        /* if ($producto["imagen_principal"] != null) {
+                          if (file_exists($producto["imagen_principal"])) {
+                          $info = getimagesize($producto["imagen_principal"]);
+                          $extension = image_type_to_extension($info[2], false);
 
-                                $imagen1 = file_get_contents($producto["imagen_extra1"]);
-                                $producto_xml->addChild("imagen_extra1", base64_encode($imagen1));
-                                $producto_xml->addChild("imagen_extra1_extension", $extension);
-                            }
-                        }
-                        if ($producto["imagen_extra2"] != null) {
-                            if (file_exists($producto["imagen_extra2"])) {
-                                $info = getimagesize($producto["imagen_extra2"]);
-                                $extension = image_type_to_extension($info[2], false);
+                          $imagen1 = file_get_contents($producto["imagen_principal"]);
+                          $producto_xml->addChild("imagen_principal", base64_encode($imagen1));
+                          $producto_xml->addChild("imagen_principal_extension", $extension);
+                          }
+                          }
+                          if ($producto["imagen_extra1"] != null) {
+                          if (file_exists($producto["imagen_extra1"])) {
+                          $info = getimagesize($producto["imagen_extra1"]);
+                          $extension = image_type_to_extension($info[2], false);
 
-                                $imagen1 = file_get_contents($producto["imagen_extra2"]);
-                                $producto_xml->addChild("imagen_extra2", base64_encode($imagen1));
-                                $producto_xml->addChild("imagen_extra2_extension", $extension);
-                            }
-                        }*/
+                          $imagen1 = file_get_contents($producto["imagen_extra1"]);
+                          $producto_xml->addChild("imagen_extra1", base64_encode($imagen1));
+                          $producto_xml->addChild("imagen_extra1_extension", $extension);
+                          }
+                          }
+                          if ($producto["imagen_extra2"] != null) {
+                          if (file_exists($producto["imagen_extra2"])) {
+                          $info = getimagesize($producto["imagen_extra2"]);
+                          $extension = image_type_to_extension($info[2], false);
+
+                          $imagen1 = file_get_contents($producto["imagen_extra2"]);
+                          $producto_xml->addChild("imagen_extra2", base64_encode($imagen1));
+                          $producto_xml->addChild("imagen_extra2_extension", $extension);
+                          }
+                          } */
                     }
 
                     $response = $this->rest->post('upload_products_local', $test->asXML(), "xml");
@@ -700,10 +700,70 @@ class Panel_vendedores_productos extends ADController {
 
     public function agregar_varios_codigo() {
         $this->template->set_title("Panel de Control - Mercabarato.com");
-        $this->template->set_layout('panel_vendedores');        
-        $link= site_url('webservice/upload_products');
-        $data = array("link"=>$link);
+        $this->template->set_layout('panel_vendedores');
+        $link = site_url('webservice/upload_products');
+        $data = array("link" => $link);
         $this->template->load_view('admin/panel_vendedores/producto/producto_agregar_varios_codigo', $data);
+    }
+
+    public function responder_mensaje($id = false) {
+        if ($id) {
+            $this->template->set_title("Panel de Control - Mercabarato.com");
+            $this->template->set_layout('panel_vendedores');
+
+            $code = base64_decode(urldecode($id));
+            $code_array = explode(";;", $code);
+            $usuario = $this->usuario_model->get($code_array["0"]);
+            $producto = $this->producto_model->get($code_array["1"]);
+
+            // TODO : El valor de code_array["2"] es una fecha podria validarse para que no sea un mensaje muy viejo...
+            if ($usuario && $producto) {
+                $formValues = $this->input->post();
+                if ($formValues !== false) {
+                    $titulo = $this->input->post("titulo");
+                    $mensaje = $this->input->post("mensaje");
+
+                    if ($this->config->item('emails_enabled')) {
+                        $this->load->library('email');
+                        $this->email->initialize($this->config->item('email_info'));
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($usuario->email);
+                        $this->email->subject('Tienes un nuevo mensaje');
+                        $data_email = array(
+                            "asunto" => $titulo,
+                            "mensaje" => $mensaje,
+                            "producto" => $producto);
+                        $this->email->message($this->load->view('home/emails/enviar_mensaje_respuesta', $data_email, true));
+                        $this->email->send();
+                    }
+                    redirect('panel_vendedor/producto/mensaje-enviado');
+                } else {
+                    $this->load->helper('ckeditor');
+
+                    $data['ckeditor'] = array(
+                        'id' => 'mensaje',
+                        'path' => 'assets/js/ckeditor',
+                        'config' => array(
+                            'customConfig' => assets_url('js/ckeditor_config_sm.js'),
+                            'height' => '300px'
+                        ),
+                    );
+
+                    $data["code"] = $id;
+                    $this->template->load_view('admin/panel_vendedores/producto/producto_enviar_mensaje', $data);
+                }
+            } else {
+                show_404();
+            }
+        } else {
+            show_404();
+        }
+    }
+
+    public function mensaje_enviado_correcto() {
+        $this->template->set_title("Panel de Control - Mercabarato.com");
+        $this->template->set_layout('panel_vendedores');
+        $this->template->load_view('admin/panel_vendedores/producto/producto_enviar_mensaje_completado');
     }
 
 }

@@ -192,6 +192,8 @@ $route['panel_vendedor/producto/habilitar/(:num)'] = 'admin/panel_vendedores_pro
 $route['panel_vendedor/producto/inhabilitar/(:num)'] = 'admin/panel_vendedores_productos/inhabilitar/$1';
 $route['panel_vendedor/producto/upload_image'] = 'admin/panel_vendedores/upload_image';
 $route['panel_vendedor/producto/ajax_get_listado_resultados'] = 'admin/panel_vendedores_productos/ajax_get_listado_resultados';
+$route['panel_vendedor/producto/responder-mensaje/(:any)'] = 'admin/panel_vendedores_productos/responder_mensaje/$1';
+$route['panel_vendedor/producto/mensaje-enviado'] = 'admin/panel_vendedores_productos/mensaje_enviado_correcto';
 
 $route['panel_vendedor/anuncio/listado'] = 'admin/panel_vendedores_anuncios/listado';
 $route['panel_vendedor/anuncio/agregar'] = 'admin/panel_vendedores_anuncios/agregar';
