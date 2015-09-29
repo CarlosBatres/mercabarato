@@ -46,7 +46,7 @@
                             <tr>
                                 <td style="padding: 30px 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 22px;">
                                     Si deseas responder al mensaje lo puedes hacer mediante el siguiente link
-                                    <a href="<?php echo site_url("productos/".$producto->unique_slug)?>"><strong><?php echo $producto->nombre ?></strong></a>
+                                    <a href="<?php echo $link; ?>"><strong>Responder</strong></a>
                                 </td>
                             </tr>
                         </table>
