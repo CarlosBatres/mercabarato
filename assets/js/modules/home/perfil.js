@@ -141,7 +141,7 @@ $(document).ready(function() {
     });*/
 
     $('select[name="provincia"]').on('change', function() {
-        $('select[name="poblacion"]').html("<option value='0'>Población</option>");
+        $('select[name="poblacion"]').html("<option value='0'>Seleccione una</option>");
         var provincia_id = $(this).val();
         $.ajax({
             type: "POST",

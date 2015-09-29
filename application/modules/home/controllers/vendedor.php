@@ -802,7 +802,8 @@ class Vendedor extends MY_Controller {
                 "provincias" => $provincias,
                 "poblaciones" => $poblaciones,
                 "provincia_id" => $provincia_id,
-                "poblacion_id" => $poblacion_id)
+                "poblacion_id" => $poblacion_id
+                    )
             );
         } else {
             redirect('');

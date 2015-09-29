@@ -89,8 +89,12 @@ class Usuario extends MY_Controller {
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+            $vendedor_habilitado = false;
             if ($cliente_es_vendedor) {
                 $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
+                if ($vendedor->habilitado == 1) {
+                    $vendedor_habilitado = true;
+                } 
             } else {
                 $vendedor = array();
             }
@@ -125,6 +129,7 @@ class Usuario extends MY_Controller {
                 "usuario" => $usuario,
                 "cliente" => $cliente,
                 "vendedor" => $vendedor,
+                "vendedor_habilitado" =>$vendedor_habilitado,
                 "html_options" => $html_options,
                 "keywords" => $keywords,
                 "mis_intereses" => $mis_intereses,
@@ -282,11 +287,11 @@ class Usuario extends MY_Controller {
                     $usuario->ultimo_acceso = date("Y-m-d H:i:s");
 
                     $this->usuario_model->update($user_id, $usuario);
-                    
-                    if($url==""){
-                        $url=site_url();
+
+                    if ($url == "") {
+                        $url = site_url();
                     }
-                    
+
                     echo json_encode(array("success" => "true", "url" => $url));
                 } else {
                     echo json_encode(array("success" => "false"));
@@ -532,7 +537,6 @@ class Usuario extends MY_Controller {
         }
     }
 
-
     public function identificar($secret_key) {
         if ($this->authentication->is_loggedin()) {
             $this->authentication->logout();
@@ -571,10 +575,10 @@ class Usuario extends MY_Controller {
                     $this->usuario_model->update($user_id, $usuario);
 
                     $invitaciones = $this->invitacion_model->get_many_by(array("invitar_para" => $usuario_secret_key->id));
-                    if($invitaciones){
-                        foreach($invitaciones as $invitacion){
-                            if(!$this->invitacion_model->invitacion_existe($invitacion->invitar_desde,$user_id)){
-                                $this->invitacion_model->update($invitacion->id,array("invitar_para"=>$user_id));
+                    if ($invitaciones) {
+                        foreach ($invitaciones as $invitacion) {
+                            if (!$this->invitacion_model->invitacion_existe($invitacion->invitar_desde, $user_id)) {
+                                $this->invitacion_model->update($invitacion->id, array("invitar_para" => $user_id));
                             }
                         }
                     }
@@ -585,7 +589,7 @@ class Usuario extends MY_Controller {
                     $this->session->set_flashdata("error", "Credenciales incorrectas");
                     redirect('usuario/identificar/' . $secret_key);
                 }
-            }else{
+            } else {
                 show_404();
             }
         }

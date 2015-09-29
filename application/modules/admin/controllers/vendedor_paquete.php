@@ -205,7 +205,7 @@ class Vendedor_paquete extends ADController {
                 $html.='</tr>';
 
                 $html.='<tr>';
-                $html.='<td><strong> Monto a Cancelar </strong></td>';
+                $html.='<td><strong> Cantidad a Cancelar </strong></td>';
                 $html.='<td>' . $vendedor_paquete->monto_a_cancelar . ' ' . $this->config->item('money_sign') . '</td>';
                 $html.='</tr>';
 

@@ -152,9 +152,10 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="form-group">                                
+                            <div class="form-group">    
+                                <label class="label-datos">Provincia</label>
                                 <select name="provincia" class="form-control">
-                                    <option value="0">Provincias</option>
+                                    <option value="0">Seleccion una</option>
                                     <?php
                                     foreach ($provincias as $provincia):
                                         $class = "";
@@ -168,9 +169,10 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">                        
+                            <div class="form-group">    
+                                <label class="label-datos">Población</label>
                                 <select name="poblacion" class="form-control">
-                                    <option value="0">Población</option>                        
+                                    <option value="0">Seleccione una</option>                        
                                     <?php foreach ($poblaciones as $poblacion): 
                                         $class = "";
                                         if ($poblacion_id == $poblacion->id) {
@@ -285,8 +287,9 @@
                     </div>
                     <br>
                     <hr>
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="row">                        
+                        <div class="col-xs-6">
+                            <p class="lead"> Imagen reprensentativa de la empresa.</p>
                             <div class="form-group">                                    
                                 <?php if ($vendedor->filename != null): ?>
                                     <div class="row">

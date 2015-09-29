@@ -48,7 +48,7 @@
                                         </tr>                                        
                                         <tr>
                                             <td width="40%" valign="top" style="text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                                <strong>Monto a cancelar</strong>
+                                                <strong>Cantidad a cancelar</strong>
                                             </td>  
                                             <td style="font-size: 0; line-height: 0;" width="20">
                                                 &nbsp;

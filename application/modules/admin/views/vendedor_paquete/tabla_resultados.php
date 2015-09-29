@@ -12,7 +12,7 @@
                 <th style="width: 15%">Vendedor / Empresa</th>
                 <th style="width: 15%">NIF / CIF</th>
                 <th style="width: 15%">Email</th>
-                <th style="width: 15%">Monto a Cancelar</th>
+                <th style="width: 15%">Cantidad a Cancelar</th>
                 <th style="width: 15%">Paquete</th>
                 <th style="width: 15%">Fecha de Compra</th>
                 <th style="width: 5%;text-align: center;">Aprobar</th> 

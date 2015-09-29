@@ -16,7 +16,7 @@ class Poblacion extends MY_Controller {
             if ($formValues !== false) {
                 $provincia_id = $this->input->post('provincia_id');
                 $poblaciones = $this->poblacion_model->get_all_by_provincia($provincia_id);
-                $html = "<option value='0'>Población</option>";                
+                $html = "<option value='0'>Seleccione una</option>";                
                 foreach ($poblaciones as $poblacion) {
                     $html.="<option value='" . $poblacion->id . "'>" . $poblacion->nombre . "</option>";
                 }
