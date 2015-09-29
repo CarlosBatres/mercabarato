@@ -298,6 +298,12 @@ class Producto extends MY_Controller {
                 $son_contactos = $this->invitacion_model->son_contactos($user_id, $cc->usuario_id);
 
                 $invitacion = $this->invitacion_model->invitacion_existe($user_id, $cc->usuario_id);
+                
+                if($user_id==$cc->usuario_id){
+                    $mi_pagina=true;
+                }else{
+                    $mi_pagina=false;
+                }
 
                 $data = array(
                     "producto" => $producto,
@@ -313,7 +319,8 @@ class Producto extends MY_Controller {
                     "invitacion" => $invitacion,
                     "fecha_finaliza" => $fecha_finaliza,
                     "localizacion" => $localizacion,
-                    "producto_extras" => $producto_extras
+                    "producto_extras" => $producto_extras,
+                    "mi_pagina"=>$mi_pagina
                 );
                 $this->template->load_view('home/producto/ficha', $data);
             } else {
@@ -360,7 +367,8 @@ class Producto extends MY_Controller {
                         "son_contactos" => true,
                         "son_contactos" => false,
                         "localizacion" => $localizacion,
-                        "producto_extras" => $producto_extras
+                        "producto_extras" => $producto_extras,
+                        "mi_pagina"=>false
                     );
                     $this->template->load_view('home/producto/ficha', $data);
                 } else {

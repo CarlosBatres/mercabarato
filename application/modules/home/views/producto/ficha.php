@@ -154,7 +154,7 @@
                                 <a href="<?php echo site_url('productos/enviar_mensaje/' . $producto->id) ?>" data-toggle="modal" data-target="#myModal" class="btn btn-template-primary" > Enviar Mensaje</a>
                             </div>                
                         </div>
-                    <?php elseif (!$invitacion): ?>
+                    <?php elseif (!$invitacion && !$mi_pagina): ?>
                         <div class="col-md-12 pull-right">
                             <div class="text-right">
                                 <button type="button" class="btn btn-template-primary" data-id="<?php echo $producto->vendedor_id ?>" data-toggle="modal" data-target="#sendInviteModal"> Solicitar Invitación</button>

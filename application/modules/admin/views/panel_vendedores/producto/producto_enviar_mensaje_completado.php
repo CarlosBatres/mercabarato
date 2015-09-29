@@ -14,7 +14,11 @@
                 <br><br>
                 <div class="row">
                     <div class="col-md-12">                        
-                        <p class="lead">El mensaje Enviado con exito</p>
+                        <div class="alert-success">
+                            <br>
+                            <p class="lead">&nbsp; El mensaje fue enviado con exito</p>
+                            <br>
+                        </div>
                     </div>
                 </div>                
             </div>            
