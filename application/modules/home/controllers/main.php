@@ -210,6 +210,12 @@ class Main extends MY_Controller {
             if (isset($data["email"])) {
                 if (isset($data["continue"])) {
                     $url_redirect = $data["continue"];
+
+                    // Neceistamos algo especial para esta parte porque el base64 puede contener caracteres no permitidos
+                    if (strpos($url_redirect, 'panel_vendedor/producto/responder-mensaje') !== false) {
+                        $end = end((explode('/', $url_redirect)));
+                        $url_redirect = site_url('panel_vendedor/producto/responder-mensaje/' . urlencode($end));
+                    }
                 } else {
                     $url_redirect = site_url('');
                 }
@@ -246,10 +252,10 @@ class Main extends MY_Controller {
      */
     public function test_url() {
         show_404();
-        /*$data_mail = array(
-            "link" => "mocotendido"
-        );
-        echo $this->load->view('home/emails/aceptar_invitacion_cliente', $data_mail, true);*/          
+        /* $data_mail = array(
+          "link" => "mocotendido"
+          );
+          echo $this->load->view('home/emails/aceptar_invitacion_cliente', $data_mail, true); */
     }
 
 }
