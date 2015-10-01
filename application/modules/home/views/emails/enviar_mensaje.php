@@ -1,4 +1,4 @@
-<?php header('Content-Type:text/html; charset=UTF-8');?>
+<?php header('Content-Type:text/html; charset=UTF-8'); ?>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">	
     <tr>
         <td style="padding: 10px 0 30px 0;">
@@ -26,7 +26,7 @@
                                     <?php echo $mensaje; ?>
                                 </td>
                             </tr>
-                                                       
+
                         </table>
                     </td>
                 </tr>
@@ -40,7 +40,23 @@
                             </tr>               
                             <tr>
                                 <td style="padding: 30px 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 22px;">
-                                    <a href="<?php echo site_url("productos/".$producto->unique_slug)?>"><strong><?php echo $producto->nombre ?></strong></a>
+                                    <a href="<?php echo site_url("productos/" . $producto->unique_slug) ?>"><strong><?php echo $producto->nombre ?></strong></a>
+                                </td>
+                            </tr>                            
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td style="color: #153643; font-family: Arial, sans-serif; font-size: 20px;">
+                                    <b>Cliente que envio el mensaje:</b>
+                                </td>
+                            </tr>               
+                            <tr>
+                                <td style="padding: 30px 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 22px;">
+                                    <?php echo $cliente->nombres . ' ' . $cliente->apellidos ?>
                                 </td>
                             </tr>
                             <tr>
@@ -53,12 +69,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td bgcolor="#333" style="padding: 30px 30px 30px 30px;">
+                    <td bgcolor="#333" style="padding: 30px 15px 30px 15px;">
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="color: #ffffff; text-align: center; font-family: Arial, sans-serif; font-size: 14px;" width="100%">
-                                    Práctica el comercio inteligente ( compara precios, presupuestos, ofertas...) <br>
-                                    Si deseas darte de baja puedes darle click al siguiente link <a href="<?php echo site_url('usuario/eliminar-cuenta')?>" style="color: #ffffff; font-size: 16px;"> BAJA </a> <br><br>
+                                    <span style="font-weight: 600;color: #ff9933;">PRÁCTICA EL COMERCIO INTELIGENTE <br>( COMPARA PRECIOS , PRESUPUESTOS , OFERTAS)</span> <br><br>
+                                    Si deseas darte de baja puedes darle click al siguiente link <a href="<?php echo site_url('usuario/eliminar-cuenta')?>" style="color: #ffffff; font-size: 16px;"> BAJA </a> <br>
                                     Copyright &copy; 2015. Mercabarato.com Todos los derechos reservados.                                    
                                 </td>                                
                             </tr>

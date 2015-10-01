@@ -28,7 +28,10 @@
                     <label>Contenido</label>                    
                     <textarea class="form-control" id="content" name="contenido" rows="10"></textarea>                                        
                     <?php echo display_ckeditor($ckeditor); ?>
-                </div>                               
+                </div>
+                <div class="col-xs-12 pull-left">
+                    <p class="lead"><a href="<?php echo assets_url("files/Tutorial_subir_imagenes_con_ckeditor.pdf") ?>" target="_blank"><strong>Como subir imagenes?</strong></a></p>                    
+                </div>
 
                 <hr>
                 <div class="text-center">

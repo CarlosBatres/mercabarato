@@ -255,7 +255,7 @@ class Main extends MY_Controller {
         /* $data_mail = array(
           "link" => "mocotendido"
           );
-          echo $this->load->view('home/emails/aceptar_invitacion_cliente', $data_mail, true); */
+          echo $this->load->view('home/emails/confirmar_registro', $data_mail, true);*/
     }
 
 }

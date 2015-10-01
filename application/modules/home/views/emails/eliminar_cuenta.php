@@ -35,11 +35,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td bgcolor="#333" style="padding: 30px 30px 30px 30px;">
+                    <td bgcolor="#333" style="padding: 30px 15px 30px 15px;">
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="color: #ffffff; text-align: center; font-family: Arial, sans-serif; font-size: 14px;" width="100%">
-                                    Práctica el comercio inteligente ( compara precios, presupuestos, ofertas...) <br><br>
+                                    <span style="font-weight: 600;color: #ff9933;">PRÁCTICA EL COMERCIO INTELIGENTE <br>( COMPARA PRECIOS , PRESUPUESTOS , OFERTAS)</span> <br><br>
                                     Copyright &copy; 2015. Mercabarato.com Todos los derechos reservados.                                    
                                 </td>                                
                             </tr>

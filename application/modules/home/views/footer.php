@@ -33,6 +33,7 @@ _________________________________________________________ -->
                     <li class="footer-link"><a href="<?php echo site_url('site/terminos-de-uso'); ?>">Terminos de Uso</a></li>
                     <li class="footer-link"><a href="<?php echo site_url('site/contacto'); ?>">Contacto</a></li>
                     <li class="footer-link"><a href="<?php echo site_url('site/politica-de-cookies'); ?>">Politica de Cookies</a></li>
+                    <li class="footer-link"><a href="<?php echo site_url('usuario/perfil') ?>">Mi Cuenta</a></li>                    
                     <li class="footer-link"><a href="<?php echo site_url('seguros'); ?>">Seguros</a></li>                                           
                     <li class="footer-link"><a href="<?php echo site_url('vendedores'); ?>">Vendedores</a></li>                    
                 </ul>

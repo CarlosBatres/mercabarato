@@ -19,7 +19,7 @@
                                 <?php if ($this->authentication->user_is_admin()): ?>
                                     <a href="<?php echo site_url('admin') ?>"><i class="fa fa-cogs"></i> <span class="text-uppercase">Admin</span></a>
                                 <?php endif; ?>
-                                <a href="<?php echo site_url('usuario/perfil') ?>"><i class="fa fa-user"></i> <span class="text-uppercase">Mi Perfil</span></a>
+                                <a href="<?php echo site_url('usuario/perfil') ?>"><i class="fa fa-user"></i> <span class="text-uppercase">Mi Perfil<b class="caret"></b></span></a>
                                 <a href="<?php echo site_url('logout'); ?>"><i class="fa fa-power-off"></i><span class="text-uppercase"> Cerrar Sesión</span></a>
                             </div>
                         <?php } else { ?>

@@ -689,6 +689,8 @@ class Vendedor extends MY_Controller {
                         $infocompras = true;
                     }
                 }
+                
+                $puntos_venta=$this->punto_venta_model->get_many_by(array("vendedor_id"=>$vendedor->id));
 
                 $data = array(
                     "vendedor" => $vendedor,
@@ -698,7 +700,8 @@ class Vendedor extends MY_Controller {
                     "anuncios" => $anuncios,
                     "productos" => $prods,
                     "son_contactos" => $son_contactos,
-                    "infocompras" => $infocompras
+                    "infocompras" => $infocompras,
+                    "puntos_venta" => $puntos_venta
                 );
 
                 if ($infocompras) {

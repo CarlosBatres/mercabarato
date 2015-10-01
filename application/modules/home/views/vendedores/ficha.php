@@ -51,10 +51,20 @@
                             <?php else: ?>    
                                 <p>No hay información adicional disponible.</p>
                             <?php endif; ?>                            
-                        </div>            
+                        </div>                        
                     </div>
                 </div>                
             </div>
+            <?php if ($puntos_venta): ?>
+                <div class="row">
+                    <div class="col-xs-6 pull-right text-right">
+                        <p><strong> Puntos de Venta </strong></p>
+                        <?php foreach ($puntos_venta as $pv): ?>
+                            <p><?php echo $pv->nombre . ' - ' . $pv->direccion ?></p>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
             <?php if (!$invitacion && !$son_contactos): ?>
                 <div class="row">
                     <div class="col-md-12 pull-right">

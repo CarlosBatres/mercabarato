@@ -445,6 +445,7 @@ class Producto extends MY_Controller {
                             "asunto" => $asunto,
                             "mensaje" => $mensaje,
                             "producto" => $producto,
+                            "cliente" => $identidad->cliente,
                             "link" => site_url("auth") . '?email=' . $vendedor_usuario->email . '&continue=' . site_url("panel_vendedor/producto/responder-mensaje/" . $code));
                         $this->email->message($this->load->view('home/emails/enviar_mensaje', $data_email, true));
                         $this->email->send();
