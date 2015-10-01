@@ -1,6 +1,6 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <h4 class="modal-title">Indica a continuacion el nuevo monto de los productos</h4>    
+    <h4 class="modal-title">Indica a continuacion el nuevo importe de los productos</h4>    
 </div>
 <div class="modal-body">
     <div class="row box">

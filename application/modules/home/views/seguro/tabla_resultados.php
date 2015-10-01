@@ -7,13 +7,15 @@
             </div>
         <?php } ?> 
 
-        <div class="alert alert-warning">             
+        <!--<div class="alert alert-warning">             
             <p> De momento no existe ningun proveedor que se ajuste a estos parametros, puedes intentar lo siguiente: </p>    
             <ul>
                 <li> Selecciona un lugar diferente ( <strong>Provincia o Poblacion </strong> ).</li>                
             </ul>
-        </div>        
-
+        </div>-->
+        <div class="alert alert-warning">             
+            <p> No hay resultados disponibles.</p>                
+        </div>
     </div>
 <?php else: ?>
     <?php if ($this->session->flashdata('success')) { ?>

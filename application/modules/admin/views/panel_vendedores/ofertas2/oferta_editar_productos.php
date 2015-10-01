@@ -50,7 +50,7 @@
             <br>
             <div class="row">
                 <div class="col-md-12">
-                    <button type="button" id="btn-modificar" class="btn btn-info"> <span class="glyphicon glyphicon-check"></span> Modificar Monto</button>
+                    <button type="button" id="btn-modificar" class="btn btn-info"> <span class="glyphicon glyphicon-check"></span> Modificar Importe</button>
                 </div>
             </div>
             
