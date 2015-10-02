@@ -29,7 +29,7 @@
                     <div class="heading">
                         <h3>Paquetes</h3>
                     </div>
-                    <p class="lead">Seleccione uno de los siguientes paquetes mostrados a continuacion, si lo desea puede saltar este paso y completarlo en otro momento.</p>
+                    <p class="lead">Seleccione uno de los siguientes paquetes mostrados a continuación, si lo desea puede saltar este paso y completarlo en otro momento.</p>
                     <div class="row packages">
 
                         <?php foreach ($paquetes as $paquete): ?>

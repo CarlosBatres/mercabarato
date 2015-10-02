@@ -7,7 +7,7 @@
                     <div class="col-md-4 col-md-offset-2">
                         <div class="form-group"> 
                             <select name="provincia" class="form-control">
-                                <option value="0">Todas las Provincias</option>
+                                <option value="0">Todas las provincias</option>
                                 <?php foreach ($provincias as $provincia): ?>
                                     <option value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>
                                 <?php endforeach; ?>                                
@@ -17,7 +17,7 @@
                     <div class="col-md-4">
                         <div class="form-group">                        
                             <select name="poblacion" class="form-control">
-                                <option value="0">Todas las Poblaciónes</option>                        
+                                <option value="0">Todas las poblaciones</option>                        
                             </select>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                                 <li>Vendedores conocidos.</li>
                                 <li>Siempre informado.</li>
                                 <li>Precios por volumen de compra.</li>
-                                <li>Facilidad de busqueda.</li>
+                                <li>Facilidad de búsqueda.</li>
                             </ul>
                         </div>                
                     </div>                    
@@ -136,7 +136,7 @@
                     <div class="panel panel-primary panel-gray">
                         <div class="panel-heading">                                
                             <span class="titulo">Ventajas de ser un Vendedor</span><br>
-                            <span class="subtext">Anuncios, contacto y descripcion</span>                            
+                            <span class="subtext">Anuncios, contacto y descripción</span>                            
                         </div>
                         <div class="panel-body">                            
                             <ul>

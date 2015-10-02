@@ -29,7 +29,7 @@
                     <div class="heading">
                         <h3>Solicitudes de Seguros</h3>                        
                     </div>                                       
-                    <p class="lead">A continuacion se muestran tus solicitudes de presupuestos para seguros y su estatus actual.</p>
+                    <p class="lead">A continuación se muestran tus solicitudes de presupuestos para seguros y su estado actual.</p>
 
                     <div class="row">
                         <div class="col-md-12">

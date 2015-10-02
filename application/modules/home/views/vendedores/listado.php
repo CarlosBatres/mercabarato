@@ -60,7 +60,7 @@
                             <div class="form-group"> 
                                 <label class="text-left"><strong>Población</strong></label>
                                 <select name="poblacion" class="form-control">
-                                    <option value="0">Todas las Poblaciónes</option>                        
+                                    <option value="0">Todas las poblaciones</option>                        
                                     <?php if (sizeof($poblaciones) > 0): ?>
                                         <?php
                                         foreach ($poblaciones as $poblacion):
@@ -125,7 +125,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Invitacion a Vendedor</h4>
+                    <h4 class="modal-title">Invitación a Vendedor</h4>
                 </div>
                 <?php echo form_open('usuario/enviar_invitacion', 'rel="preventDoubleSubmission"'); ?>
                 <div class="modal-body">                                        

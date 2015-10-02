@@ -18,16 +18,16 @@
                             </tr>                            
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    A continuacion esta la informacion del usuario que hizo la peticion para eliminar su cuenta.
+                                    A continuación esta la información del usuario que hizo la petición para eliminar su cuenta.
                                 </td>
                             </tr>                            
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
                                     <strong>EMAIL = <?php echo $usuario->usuario->email; ?></strong><br><br>                                    
                                     <?php if ($usuario->es_vendedor()): ?>
-                                        Es un <strong>VENDEDOR</strong> , buscalo en Ver Vendedores<br>                                    
+                                        Es un <strong>VENDEDOR</strong> , lo puedes buscar en Ver Vendedores<br>                                    
                                         <?php else:?>
-                                        Es un <strong>CLIENTE</strong> , buscalo en Ver Clientes<br>                                    
+                                        Es un <strong>CLIENTE</strong> , lo puedes buscar en Ver Clientes<br>                                    
                                     <?php endif; ?>
                                 </td>
                             </tr>                                                        

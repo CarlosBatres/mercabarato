@@ -13,12 +13,12 @@
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-                                    <b>Informacion de compra de paquete</b>
+                                    <b>Información de compra de paquete</b>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    A continuacion se muestra los datos.
+                                    A continuación se muestra los datos.
                                 </td>
                             </tr>
                             <tr>
@@ -62,7 +62,7 @@
                             </tr>                            
                             <tr>
                                 <td style="padding: 40px 0 5px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    A continuacion los datos para realizar el pago: 
+                                    A continuación los datos para realizar el pago: 
                                 </td>
                             </tr>
                             <tr>
@@ -72,7 +72,7 @@
                             </tr>
                             <tr>
                                 <td style="padding: 10px 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Envia un correo una vez hecho el pago que incluya:
+                                    Envía un correo una vez hecho el pago que incluya:
                                     <ul>
                                         <li>Nombre de la empresa</li>
                                         <li>El paquete comprado</li>

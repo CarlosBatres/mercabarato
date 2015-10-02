@@ -33,7 +33,7 @@
                     </div>
                     <div class="panel panel-default sidebar-menu principal-sidebar">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Categorias</h3>
+                            <h3 class="panel-title">Categorías</h3>
                         </div>
                         <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked metismenu" id="producto-principal-categorias">                        
@@ -50,7 +50,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">                                
                                         <select name="provincia" class="form-control">
-                                            <option value="0">Todas las Provincias</option>
+                                            <option value="0">Todas las provincias</option>
                                             <?php foreach ($provincias as $provincia): ?>
                                                 <?php
                                                 $class = "";
@@ -66,7 +66,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">                        
                                         <select name="poblacion" class="form-control">
-                                            <option value="0">Todas las Poblaciónes</option>                        
+                                            <option value="0">Todas las poblaciones</option>                        
                                             <?php foreach ($poblaciones as $poblacion): ?>
                                                 <?php
                                                 $class = "";

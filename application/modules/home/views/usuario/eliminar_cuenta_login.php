@@ -19,7 +19,7 @@
 <div id="content">
     <div class="container">        
         <div class="col-md-5 col-md-offset-3">                                                                                    
-            <h4 class="text-center">Identifiquese a continuación</h4>
+            <h4 class="text-center">Identifíquese a continuación</h4>
             <?php echo form_open('usuario/eliminar-cuenta'); ?>                 
             <div class="row">
                 <?php if ($this->session->flashdata('error')) { ?>

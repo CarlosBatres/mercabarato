@@ -17,8 +17,8 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading"> Pasos a seguir a continuación...</div>
                     <div class="panel-body">
-                        <p class='lead'>- Cuando el vendedor responda a su solicitud recibiras un email con la información necesaria.<br>
-                            - Luego de respondida una solicitud se podra realizar una pregunta, solicitar mas infomacion o pedir un mejor precio. <br>
+                        <p class='lead'>- Cuando el vendedor responda a su solicitud recibirás un email con la información necesaria.<br>
+                            - Luego de respondida una solicitud se podrá realizar una pregunta, solicitar mas información o pedir un mejor precio. <br>
                         - Es importante destacar que se debe estar registrado para poder interactuar con el vendedor. </p>
 
                         <div class='row'>
@@ -37,7 +37,7 @@
         <div class='row'>
             <div class="col-md-12">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Informacion suministrada</div>
+                    <div class="panel-heading">Información suministrada</div>
                     <div class="panel-body">
 
                         <div class="row">
@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Telefono de Contacto ( Opcional )</label>
+                                            <label>Teléfono de Contacto ( Opcional )</label>
                                             <input type="text" class="form-control" name="telefono_contacto" disabled value="<?php echo $informacion["datos_contacto"]["telefono_contacto"] ?>">
                                         </div>
                                     </div>                
@@ -309,14 +309,14 @@
 
                         <div class='row'>
                             <div class="col-md-8 col-md-offset-2"> 
-                                <h4>Localizacion usada:</h4>
+                                <h4>Localización usada:</h4>
                                 <div class="col-md-6">
                                     <div class="form-group">                                
                                         <select name="provincia" disabled class="form-control">
                                             <?php if ($informacion["provincia"]): ?>
                                                 <option value="0"><?php echo $informacion["provincia"]->nombre ?></option>
                                             <?php else: ?>
-                                                <option value="0">Todas las Provincias</option>
+                                                <option value="0">Todas las provincias</option>
                                             <?php endif; ?>
                                         </select>
                                     </div>
@@ -327,7 +327,7 @@
                                             <?php if ($informacion["poblacion"]): ?>
                                                 <option value="0"><?php echo $informacion["poblacion"]->nombre ?></option>
                                             <?php else: ?>
-                                                <option value="0">Todas las Poblaciónes</option>                        
+                                                <option value="0">Todas las poblaciones</option>                        
                                             <?php endif; ?>
                                         </select>
                                     </div>

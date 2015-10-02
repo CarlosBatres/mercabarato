@@ -19,7 +19,7 @@
 <div id="content">
     <div class="container">        
         <div class="col-md-8 col-md-offset-2">                                                                                    
-            <h3>Se ha realizado con exito la operacion!.</h3>                        
+            <h3>Se ha realizado con éxito la operación!.</h3>                        
         </div>             
     </div>    
 </div>

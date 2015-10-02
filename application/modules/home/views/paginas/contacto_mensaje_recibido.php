@@ -22,7 +22,7 @@
             <div class="col-md-6 col-md-offset-3">
                 <section>
                     <div id="text-page">                        
-                        <h3>Hemos recibido su mensaje con exito</h3>                        
+                        <h3>Hemos recibido su mensaje con éxito</h3>                        
 
                         <p class="lead">Te atenderemos en la brevedad posible.</h4>
                         <p class="buttons"><a href="<?php echo site_url() ?>" class="btn btn-template-primary"><i class="fa fa-home"></i> Ir a la Pagina Principal</a>

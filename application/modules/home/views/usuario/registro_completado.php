@@ -16,7 +16,7 @@
                     <div id="text-page">                        
                         <h2>Registro Completado.</h2>
 
-                        <p class="lead">Gracias por registrate, tu cuenta ya esta habilitada.</p>                        
+                        <p class="lead">Gracias por registrarse, tu cuenta ya esta habilitada.</p>                        
                         <p class="lead">Puedes continuar presionando el siguiente link.</p>
                         <div class="text-center">
                             <p class="buttons"><a href="<?php echo site_url("vendedores"); ?>" class="btn btn-template-main"><i class="fa fa-home"></i> Continuar</a>

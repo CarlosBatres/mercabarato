@@ -27,7 +27,7 @@
                     <div class="heading">
                         <h3>Panel de Control</h3>
                     </div>
-                    <p class="lead">En el apartado a continuación podras controlar todos los aspectos de tu cuenta, agregar productos, anuncios, realizar ofertas a tus clientes y manejar tus invitaciones.</p>                    
+                    <p class="lead">En el apartado a continuación podrás controlar todos los aspectos de tu cuenta, agregar productos, anuncios, realizar ofertas a tus clientes y manejar tus invitaciones.</p>                    
                 </div>
                 <div class="row">
                     <div class="col-md-4 col-md-offset-4">

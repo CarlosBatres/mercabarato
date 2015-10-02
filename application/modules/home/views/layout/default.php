@@ -32,7 +32,7 @@
                     </div>
                     <?php echo form_close(); ?>
                     <p class="text-center text-muted"><a href="<?php echo site_url('olvido-password'); ?>"><strong>Olvidaste tu contraseña?</strong></a></p>
-                    <p class="text-center text-muted"><a href="<?php echo site_url('registro'); ?>"><strong>Registrese ahora</strong></a>!</p>
+                    <p class="text-center text-muted"><a href="<?php echo site_url('registro'); ?>"><strong>Regístrese ahora</strong></a>!</p>
                 </div>
             </div>
         </div>

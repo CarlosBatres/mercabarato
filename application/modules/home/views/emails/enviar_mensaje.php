@@ -51,7 +51,7 @@
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="color: #153643; font-family: Arial, sans-serif; font-size: 20px;">
-                                    <b>Cliente que envio el mensaje:</b>
+                                    <b>Cliente que envió el mensaje:</b>
                                 </td>
                             </tr>               
                             <tr>

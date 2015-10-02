@@ -23,7 +23,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="heading">
-                            <h3 class="text-uppercase">Informacion de la Cuenta</h3>
+                            <h3 class="text-uppercase">Información de la Cuenta</h3>
                         </div>
                         <hr>                
                         <?php echo form_open('registrar_cliente', 'id="form_crear"'); ?>                 
@@ -163,7 +163,7 @@
                         <br>
                         <div class="row">
                             <div class="col-md-12">
-                                <p class="lead">Indica a continuación lo que te interesaria comprar.</p>
+                                <p class="lead">Indica a continuación lo que te interesaría comprar.</p>
                                 <?php foreach ($keywords as $keyword): ?>
                                     <div class="col-md-4">
                                         <div class="checkbox">

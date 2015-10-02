@@ -31,7 +31,7 @@
                         <div class="col-md-12">
                             <div class="panel panel-default">                                
                                 <div class="panel-body">
-                                    <p class="lead">Los permisos de tu cuenta no te permitiran convertirte en Vendedor, si deseas puedes crear otra cuenta y afiliarte.</p> 
+                                    <p class="lead">Los permisos de tu cuenta no te permitirán convertirte en Vendedor, si deseas puedes crear otra cuenta y afiliarte.</p> 
                                 </div>
                             </div>
 

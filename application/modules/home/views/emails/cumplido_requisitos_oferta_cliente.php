@@ -18,7 +18,7 @@
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Felicidades has cumplido todos los requisitos necesarios para optar por la oferta dada por el vendedor, a continuacion se muestra la informacion referente a la oferta.
+                                    Felicidades has cumplido todos los requisitos necesarios para optar por la oferta dada por el vendedor, a continuación se muestra la información referente a la oferta.
                                 </td>
                             </tr>
                             <tr>

@@ -1,9 +1,9 @@
 <?php if (sizeof($vendedores) == 0): ?>
     <div>        
         <div class="alert alert-warning">             
-            <p> De momento no existe ningun vendedor que se ajuste a estos parametros, puedes intentar lo siguiente: </p>    
+            <p> De momento no existe ningún vendedor que se ajuste a estos parámetros, puedes intentar lo siguiente: </p>    
             <ul>
-                <li> Selecciona un lugar diferente ( <strong>Provincia o Poblacion </strong> ).</li>
+                <li> Selecciona un lugar diferente ( <strong>Provincia o población </strong> ).</li>
                 <li> Prueba con un nombre o palabras claves diferentes.</li>
             </ul>
         </div>        

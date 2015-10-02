@@ -30,7 +30,7 @@
                     <div class="heading">
                         <h3 class="text-uppercase">Datos del Vendedor</h3>
                     </div>
-                    <p class="lead">Complete el formulario a continuación, esta informacion sera la que veran los clientes que visiten sus productos y su apartado personal.</p>                    
+                    <p class="lead">Complete el formulario a continuación, esta información sera la que vean los clientes que visiten sus productos y su apartado personal.</p>                    
                     <?php echo form_open('usuario/afiliacion/registrar', 'id="form_afiliarse"'); ?>                 
 
                     <div class="row">
@@ -43,7 +43,7 @@
                             </div>
                         </div> 
                         <div class="col-md-6">
-                            <p class="lead">Solo permite letras, numeros y guiones.</p>
+                            <p class="lead">Solo permite letras, números y guiones.</p>
                         </div>
                     </div>
                     <div class="row">
@@ -59,7 +59,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Descripcion</label>
+                                <label>Descripción</label>
                                 <textarea class="form-control" name="descripcion" rows="4" cols="20"></textarea>                    
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-12">
-                            <p class="lead">Si quieres que tus productos esten restringidos a una zona en particular indicalo a continuacion, de lo contrario apareceran en busquedas en toda españa.</p>
+                            <p class="lead">Si quieres que tus productos estén restringidos a una zona en particular indicarlo a continuación, de lo contrario aparecerán en búsquedas en toda España.</p>
                         </div>
                     </div>
                     <div class="row">
@@ -231,7 +231,7 @@
 
                         </div>
                         <div class="pull-right">
-                            <button type="submit" class="btn btn-template-main">Registrar Informacion y Continuar<i class="fa fa-chevron-right"></i>
+                            <button type="submit" class="btn btn-template-main">Registrar información y Continuar<i class="fa fa-chevron-right"></i>
                             </button>
                         </div>
                     </div>

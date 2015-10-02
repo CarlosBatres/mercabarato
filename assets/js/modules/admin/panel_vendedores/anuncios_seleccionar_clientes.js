@@ -1,13 +1,17 @@
 $(document).ready(function() {
-    localStorage.setItem("anuncios_clientes_listado_checkboxes", "");
-    updateResultados();
-
-    $('#listado-items').on('submit', function(e) {
-        e.preventDefault();
-        $('#pagina').val('1');
+    if (typeof (Storage) === "undefined") {
+        window.location.replace(SITE_URL + "panel_vendedor/anuncio/listado");
+    } else {
+        localStorage.setItem("anuncios_clientes_listado_checkboxes", "");
         updateResultados();
-    });
-    
+
+        $('#listado-items').on('submit', function(e) {
+            e.preventDefault();
+            $('#pagina').val('1');
+            updateResultados();
+        });
+
+    }
 });
 
 function updateResultados() {

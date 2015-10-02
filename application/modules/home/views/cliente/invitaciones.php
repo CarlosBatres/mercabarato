@@ -28,7 +28,7 @@
                     <div class="heading">
                         <h3>Mis Contactos Vendedores</h3>                        
                     </div>                                       
-                    <p class="lead">A continuacion se muestran tus contactos e invitaciones pendientes.</p>
+                    <p class="lead">A continuación se muestran tus contactos e invitaciones pendientes.</p>
 
                     <div class="row">
                         <div class="col-md-12">

@@ -30,9 +30,9 @@ _________________________________________________________ -->
                     <li class="footer-link"><a href="<?php echo site_url('site/quienes-somos'); ?>">Quienes somos</a></li>
                     <li class="footer-link"><a href="<?php echo site_url('site/como-funciona'); ?>">Como funciona?</a></li>                                    
                     <li class="footer-link"><a href="<?php echo site_url('site/aviso-legal'); ?>">Aviso legal</a></li>                    
-                    <li class="footer-link"><a href="<?php echo site_url('site/terminos-de-uso'); ?>">Terminos de Uso</a></li>
+                    <li class="footer-link"><a href="<?php echo site_url('site/terminos-de-uso'); ?>">Términos de Uso</a></li>
                     <li class="footer-link"><a href="<?php echo site_url('site/contacto'); ?>">Contacto</a></li>
-                    <li class="footer-link"><a href="<?php echo site_url('site/politica-de-cookies'); ?>">Politica de Cookies</a></li>
+                    <li class="footer-link"><a href="<?php echo site_url('site/politica-de-cookies'); ?>">Política de Cookies</a></li>
                     <li class="footer-link"><a href="<?php echo site_url('usuario/perfil') ?>">Mi Cuenta</a></li>                    
                     <li class="footer-link"><a href="<?php echo site_url('seguros'); ?>">Seguros</a></li>                                           
                     <li class="footer-link"><a href="<?php echo site_url('vendedores'); ?>">Vendedores</a></li>                    

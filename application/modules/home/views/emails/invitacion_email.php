@@ -31,7 +31,7 @@
                                 <?php if($link):?>
                                 <tr>
                                     <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                        <p>Si ya estas registrado en el sitio pero con un email diferente puedes seguir el link a continuacion:</p>
+                                        <p>Si ya estas registrado en el sitio pero con un email diferente puedes seguir el link a continuación:</p>
                                         <a href="<?php echo $link ?>">Link para continuar...</a>
                                     </td>
                                 </tr>
@@ -39,12 +39,12 @@
                             <?php else: ?>
                                 <tr>
                                     <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-                                        <b>Invitacion desde Mercabarato.com</b>
+                                        <b>Invitación desde Mercabarato.com</b>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                        Tienes una nueva invitacion de <strong><?php echo $identidad?></strong> en nuestro sitio , si deseas interactuar con este Vendedor sigue las instrucciones a continuacion.
+                                        Tienes una nueva invitación de <strong><?php echo $identidad?></strong> en nuestro sitio , si deseas interactuar con este Vendedor sigue las instrucciones a continuación.
                                     </td>
                                 </tr>
                                 <tr>
@@ -56,7 +56,7 @@
                                 <?php if($link):?>
                                 <tr>
                                     <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                        <p>Si ya estas registrado en el sitio pero con un email diferente puedes seguir el link a continuacion:</p>
+                                        <p>Si ya estas registrado en el sitio pero con un email diferente puedes seguir el link a continuación:</p>
                                         <a href="<?php echo $link ?>">Link para continuar...</a>
                                     </td>
                                 </tr>

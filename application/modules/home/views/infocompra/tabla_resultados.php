@@ -8,9 +8,9 @@
         <?php } ?> 
 
         <div class="alert alert-warning">             
-            <p> De momento no existe ningun proveedor que se ajuste a estos parametros, puedes intentar lo siguiente: </p>    
+            <p> De momento no existe ningún proveedor que se ajuste a estos parámetros, puedes intentar lo siguiente: </p>    
             <ul>
-                <li> Selecciona un lugar diferente ( <strong>Provincia o Poblacion </strong> ).</li>                
+                <li> Selecciona un lugar diferente ( <strong>Provincia o población </strong> ).</li>                
             </ul>
         </div>        
 

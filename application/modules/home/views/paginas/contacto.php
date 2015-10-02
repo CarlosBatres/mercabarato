@@ -24,10 +24,10 @@
                 <div class="col-md-8">
 
                     <div class="heading">
-                        <h2>Estamos aqui para ayudarte</h2>
+                        <h2>Estamos aquí para ayudarte</h2>
                     </div>
 
-                    <p class="lead">Escríbenos a través de nuestro formulario de contacto aquí debajo</p>
+                    <p class="lead">Escribanos a través de nuestro formulario de contacto aquí debajo</p>
                     <p></p>
 
                     <?php echo form_open('site/contacto/submit', 'id="formulario_contacto" rel="preventDoubleSubmission"'); ?>                                     
@@ -76,17 +76,17 @@
                 </div>
 
                 <div class="col-md-4">                    
-                    <h3 class="text-uppercase">Telefono de Contacto</h3>
+                    <h3 class="text-uppercase">Teléfono de Contacto</h3>
 
-                    <p class="text-muted">Puedes contactarnos a travez del numero a continuación.</p>
+                    <p class="text-muted">Puedes contactarnos a través del numero a continuación.</p>
                     <p><strong>No disponible</strong>
                     </p>
 
 
                     <hr>
-                    <h3 class="text-uppercase">Soporte Electronico</h3>
+                    <h3 class="text-uppercase">Soporte electrónico</h3>
 
-                    <p class="text-muted">Puedes escribirnos un correo electronico a la siguiente dirección.</p>
+                    <p class="text-muted">Puedes escribirnos un correo electrónico a la siguiente dirección.</p>
                     <ul>
                         <li><strong><a href="mailto:">info@mercabarato.com</a></strong>
                         </li>                        

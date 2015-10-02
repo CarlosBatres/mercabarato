@@ -17,7 +17,7 @@
                 </div>                               
                 <div class="row">
                     <div class="col-md-12 col-sm-12">                            
-                        <p class="lead"> Se ha realizado la operacion con exito.</p>
+                        <p class="lead"> Se ha realizado la operación con éxito.</p>
                     </div>                   
                 </div>
                 <!-- /.row -->               

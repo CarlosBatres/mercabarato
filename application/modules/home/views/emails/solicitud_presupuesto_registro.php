@@ -23,7 +23,7 @@
                             </tr>
                             <tr>
                                 <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Registrate en el sitio para ver la informacion.
+                                    Registrase en el sitio para ver la información.
                                     <p class="text-right"><strong><a href="<?php echo site_url('registro')?>">Link para registro..</a></strong></p>                    
                                 </td>
                             </tr>

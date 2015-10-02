@@ -29,7 +29,7 @@
                     <div class="heading">
                         <h3>Paquetes</h3>
                     </div>
-                    <p class="lead">Seleccione uno de los siguientes paquetes mostrados a continuacion.</p>
+                    <p class="lead">Seleccione uno de los siguientes paquetes mostrados a continuación.</p>
                     <div class="row packages">
                         <?php foreach ($paquetes as $paquete): ?>
                             <!-- TODO: col-md-4 si son mas de 3 paquetes o menos hay que acomodar aqui -->

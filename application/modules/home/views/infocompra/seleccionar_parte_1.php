@@ -14,7 +14,7 @@
         <?php echo form_open('infocompras/paso-2', 'id="infocompras-general-parte1"'); ?>
         <div class='row'>
             <div class="col-md-12">                            
-                <h4>Selecciona una o varias categorias a continuacion</h4>
+                <h4>Selecciona una o varias categorías a continuación</h4>
                 <div class="radio infocompras-general-categorias">
                     <?php foreach ($categorias as $categoria): ?>                    
                         <div class="col-md-3 checkbox-box">            
@@ -35,7 +35,7 @@
                 <div class="col-md-6">
                     <div class="form-group">                                
                         <select name="provincia" class="form-control">
-                            <option value="0">Todas las Provincias</option>
+                            <option value="0">Todas las provincias</option>
                             <?php foreach ($provincias as $provincia): ?>
                                 <option value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>
                             <?php endforeach; ?>
@@ -45,7 +45,7 @@
                 <div class="col-md-6">
                     <div class="form-group">                        
                         <select name="poblacion" class="form-control">
-                            <option value="0">Todas las Poblaciónes</option>                        
+                            <option value="0">Todas las poblaciones</option>                        
                         </select>
                     </div>
                 </div>

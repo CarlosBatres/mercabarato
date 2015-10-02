@@ -29,13 +29,13 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Telefono de Contacto ( Opcional )</label>
+                        <label>Teléfono de Contacto ( Opcional )</label>
                         <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->telefono_fijo : "" ?>">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Correo Electronico</label>
+                        <label>Correo electrónico</label>
                         <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->usuario->email : "" ?>" <?php echo (isset($datos_contacto)) ? "disabled" : "" ?>>
                     </div>
                 </div>                
@@ -123,7 +123,7 @@
                                         </label>
 
                                         <label class="radio">
-                                            <input type="radio" name="regalo_tipo" value="5"> Romantico
+                                            <input type="radio" name="regalo_tipo" value="5"> Romántico
                                         </label>
                                     </div>
                                 </div>                            

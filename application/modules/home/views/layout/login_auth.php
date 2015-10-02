@@ -14,7 +14,7 @@
                         <img class="hidden-md hidden-lg logo_header_small" src="<?php echo assets_url('imgs/logo_small.png') ?>" alt="mercabarato logo" >                    
                     </a>
                     <div class="navbar-buttons">
-                        <p class="navbar-text visible-xs-inline-block" id="navbar-menu-principal-text">Menu Principal &nbsp;&nbsp;</p>
+                        <p class="navbar-text visible-xs-inline-block" id="navbar-menu-principal-text">Menú Principal &nbsp;&nbsp;</p>
                         <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
                             <span class="sr-only">Toggle navigation</span>
                             <i class="fa fa-align-justify"></i>

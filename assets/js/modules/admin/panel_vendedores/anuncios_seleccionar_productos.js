@@ -1,38 +1,42 @@
 $(document).ready(function() {
-    localStorage.setItem("anuncios_productos_listado_checkboxes", "");
+    if (typeof (Storage) === "undefined") {
+        window.location.replace(SITE_URL + "panel_vendedor/anuncio/listado");
+    } else {
+        localStorage.setItem("anuncios_productos_listado_checkboxes", "");
 
-    var chk = localStorage.getItem('anuncios_clientes_listado_checkboxes');
-    if (chk === "") {
-        updateResultadosEmpty();
-    }else{
-        updateResultados();
-    }    
-    
+        var chk = localStorage.getItem('anuncios_clientes_listado_checkboxes');
+        if (chk === "") {
+            updateResultadosEmpty();
+        } else {
+            updateResultados();
+        }
 
-    $('#listado-items').on('submit', function(e) {
-        e.preventDefault();
-        $('#pagina').val('1');
-        updateResultados();
-    });
 
-    $('#siguiente').on('click', function(e) {
-        e.preventDefault();
-        $.blockUI({message: "<h3>Espere un momento...<h3>"});
-        $.ajax({
-            type: "POST",
-            url: SITE_URL + 'panel_vendedor/anuncio/enviar_anuncio_invitados',
-            data: {
-                anuncio_id: $('#anuncio_id').val(),
-                cliente_ids: localStorage.getItem('anuncios_clientes_listado_checkboxes'),
-                producto_ids: localStorage.getItem('anuncios_productos_listado_checkboxes')
-            },
-            dataType: "json",
-            success: function(response) {
-                $.unblockUI();
-                window.location.replace(SITE_URL + "panel_vendedor/anuncio/listado");
-            }
+        $('#listado-items').on('submit', function(e) {
+            e.preventDefault();
+            $('#pagina').val('1');
+            updateResultados();
         });
-    });
+
+        $('#siguiente').on('click', function(e) {
+            e.preventDefault();
+            $.blockUI({message: "<h3>Espere un momento...<h3>"});
+            $.ajax({
+                type: "POST",
+                url: SITE_URL + 'panel_vendedor/anuncio/enviar_anuncio_invitados',
+                data: {
+                    anuncio_id: $('#anuncio_id').val(),
+                    cliente_ids: localStorage.getItem('anuncios_clientes_listado_checkboxes'),
+                    producto_ids: localStorage.getItem('anuncios_productos_listado_checkboxes')
+                },
+                dataType: "json",
+                success: function(response) {
+                    $.unblockUI();
+                    window.location.replace(SITE_URL + "panel_vendedor/anuncio/listado");
+                }
+            });
+        });
+    }
 });
 
 function updateResultados() {
@@ -67,7 +71,7 @@ function updateResultadosEmpty() {
     $.ajax({
         type: "POST",
         url: SITE_URL + 'panel_vendedor/anuncio/ajax_get_productos',
-        data: {no_results:true},
+        data: {no_results: true},
         dataType: "html",
         success: function(response) {
             $('#tabla-resultados').unblock();
@@ -88,19 +92,19 @@ function bind_pagination_links() {
 }
 
 /*function bind_check_all() {
-    $('#tabla-resultados').find("input[name='select_all']").click(function() {
-        if ($(this).is(':checked')) {
-            $('#tabla-resultados').find("input[name='seleccionar']").each(function() {
-                $(this).prop("checked", true).trigger("change");
-            });
-
-        } else {
-            $('#tabla-resultados').find("input[name='seleccionar']").each(function() {
-                $(this).prop("checked", false).trigger("change");
-            });
-        }
-    });
-}*/
+ $('#tabla-resultados').find("input[name='select_all']").click(function() {
+ if ($(this).is(':checked')) {
+ $('#tabla-resultados').find("input[name='seleccionar']").each(function() {
+ $(this).prop("checked", true).trigger("change");
+ });
+ 
+ } else {
+ $('#tabla-resultados').find("input[name='seleccionar']").each(function() {
+ $(this).prop("checked", false).trigger("change");
+ });
+ }
+ });
+ }*/
 
 function bind_checkbox() {
     $('#tabla-resultados').find("input[name='seleccionar']").on('change', function() {
@@ -111,11 +115,11 @@ function bind_checkbox() {
         }
         var tmp;
         if ($(this).is(':checked')) {
-            if(chk.length<10){
+            if (chk.length < 10) {
                 chk.push(id.toString());
-            }else{                
+            } else {
                 $(this).attr('checked', false);
-            }            
+            }
         } else {
             chk = jQuery.grep(chk, function(value) {
                 return value !== id.toString();

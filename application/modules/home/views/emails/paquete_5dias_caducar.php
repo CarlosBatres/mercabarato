@@ -18,7 +18,7 @@
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Tienes <strong>5</strong> dias para renovar tu actual paquete o todos tus productos y anuncios quedaran inhabilitados y no podras accesar a tu panel de control. No te preocupes no se eliminara nada por el momento.
+                                    Tienes <strong>5</strong> días para renovar tu actual paquete o todos tus productos y anuncios quedaran inhabilitados y no podrás acceder a tu panel de control. No te preocupes no se eliminara nada por el momento.
                                 </td>
                             </tr>
                             <tr>

@@ -29,7 +29,7 @@
                     <div class="heading">
                         <h3>Paquetes</h3>
                     </div>
-                    <p class="lead">Seleccione uno de los siguientes paquetes mostrados a continuacion.</p>
+                    <p class="lead">Seleccione uno de los siguientes paquetes mostrados a continuación.</p>
                     <div class="row packages">
                         <?php foreach ($paquetes as $paquete): ?>
                             <!-- TODO: col-md-4 si son mas de 3 paquetes o menos hay que acomodar aqui -->
@@ -79,7 +79,7 @@
                         <br>
                         <div class="row">
                             <div class="col-md-12">
-                                <p class="lead">De momento tienes un paquete aprobado o esperando por aprobación asi que no necesitas realizar otra compra. Si deseas cambiar un paquete en espera por aprobación ponte en contacto con nosotros via email.</p>
+                                <p class="lead">De momento tienes un paquete aprobado o esperando por aprobación así que no necesitas realizar otra compra. Si deseas cambiar un paquete en espera por aprobación ponte en contacto con nosotros vía email.</p>
                             </div>
                         </div>
                     <?php endif; ?>

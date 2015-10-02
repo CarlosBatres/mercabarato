@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Informacion del producto</h1>
+                <h1>Información del producto</h1>
             </div>            
         </div>
     </div>
@@ -51,7 +51,7 @@
                         <?php if ($producto->descripcion != ""): ?>
                             <p class="lead"><?php echo $producto->descripcion ?></p>
                         <?php else: ?>
-                            <p class="lead">No hay descripcion disponible.</p>
+                            <p class="lead">No hay descripción disponible.</p>
                         <?php endif; ?>
                     </div>
                     <div class="col-md-12 text-center">    
@@ -298,7 +298,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Invitacion a Vendedor</h4>
+                    <h4 class="modal-title">Invitación a Vendedor</h4>
                 </div>
                 <?php echo form_open('usuario/enviar_invitacion', "rel='preventDoubleSubmission'"); ?>
                 <div class="modal-body">                    

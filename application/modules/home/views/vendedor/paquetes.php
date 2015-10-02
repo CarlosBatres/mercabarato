@@ -56,11 +56,11 @@
                                                     <?php if ($paquete->fecha_terminar < date("Y-m-d")): ?>
                                                         <span class="label label-danger">Terminado</span>
                                                     <?php elseif ($paquete->fecha_terminar == date("Y-m-d")): ?>
-                                                        <span class="label label-danger">Ultimo Dia</span>
+                                                        <span class="label label-danger">Ultimo día</span>
                                                     <?php elseif ($paquete->fecha_terminar <= $date5): ?>
                                                         <span class="label label-warning">Apunto de Caducar</span>
                                                     <?php elseif ($paquete->fecha_inicio > date("Y-m-d")): ?>       
-                                                        <span class="label label-success">Renovacion Aprobada</span>
+                                                        <span class="label label-success">Renovación Aprobada</span>
                                                     <?php else: ?>       
                                                         <span class="label label-success">Aprobado / En Curso</span>
                                                     <?php endif; ?>   

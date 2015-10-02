@@ -1,7 +1,7 @@
 <?php if (sizeof($invitaciones) == 0): ?>
     <div>        
         <div class="alert alert-warning">             
-            <p> Todavia no tienes contactos ni invitaciones pendientes. </p>                
+            <p> Todavía no tienes contactos ni invitaciones pendientes. </p>                
         </div>        
     </div>
 <?php else: ?>

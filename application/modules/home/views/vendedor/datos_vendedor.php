@@ -115,7 +115,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="label-datos">Teléfono Movil</label>
+                            <label class="label-datos">Teléfono móvil</label>
                             <div class="form-group">
                                 <div class="input-group">                                                                        
                                     <input type="text" class="form-control" name="telefono_movil" placeholder="Vacio" value='<?php echo $vendedor->telefono_movil ?>'>
@@ -126,7 +126,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <p class="lead">Modifica a continuación las categorias a la que pertenecen tus productos.</p>
+                            <p class="lead">Modifica a continuación las categorías a la que pertenecen tus productos.</p>
                             <?php
                             foreach ($keywords as $keyword):
                                 if (in_array($keyword, $mis_intereses)) {
@@ -147,7 +147,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <p class="lead">Modifica a continuación tu localidad.</p>
-                            <p>Si quieres que tus productos esten restringidos a una zona en particular indicalo a continuacion, de lo contrario apareceran en busquedas en toda españa.</p>
+                            <p>Si quieres que tus productos estén restringidos a una zona en particular indicarlo a continuación, de lo contrario aparecerán en búsquedas en toda España.</p>
                         </div>
                     </div>
                     <div class="row">
@@ -155,7 +155,7 @@
                             <div class="form-group">    
                                 <label class="label-datos">Provincia</label>
                                 <select name="provincia" class="form-control">
-                                    <option value="0">Seleccion una</option>
+                                    <option value="0">Seleccione una</option>
                                     <?php
                                     foreach ($provincias as $provincia):
                                         $class = "";
@@ -289,7 +289,7 @@
                     <hr>
                     <div class="row">                        
                         <div class="col-xs-6">
-                            <p class="lead"> Imagen reprensentativa de la empresa.</p>
+                            <p class="lead"> Imagen representativa de la empresa.</p>
                             <div class="form-group">                                    
                                 <?php if ($vendedor->filename != null): ?>
                                     <div class="row">

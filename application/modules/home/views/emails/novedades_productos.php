@@ -24,7 +24,7 @@
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Disfruta de los nuevos productos que tus vendedores estan ofreciendo en nuestro sitio.
+                                    Disfruta de los nuevos productos que tus vendedores están ofreciendo en nuestro sitio.
                                 </td>
                             </tr>
                             <tr>

@@ -29,7 +29,7 @@
                     <div class="heading">
                         <h3>Completado</h3>
                     </div>
-                    <p class="lead">Felicidades se ha recibido con exito su afiliacion.</p>                    
+                    <p class="lead">Felicidades se ha recibido con éxito su afiliación.</p>                    
                 </div>                
             </div>       
 

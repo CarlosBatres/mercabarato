@@ -13,12 +13,12 @@
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-                                    <b>Informacion de compra de nuevo paquete</b>
+                                    <b>Información de compra de nuevo paquete</b>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    A continuacion se muestra los datos.
+                                    A continuación se muestra los datos.
                                 </td>
                             </tr>
                             <tr>
@@ -48,7 +48,7 @@
                                         </tr>
                                         <tr>
                                             <td width="40%" valign="top" style="text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                                <strong>Direccion</strong>
+                                                <strong>Dirección</strong>
                                             </td>  
                                             <td style="font-size: 0; line-height: 0;" width="20">
                                                 &nbsp;

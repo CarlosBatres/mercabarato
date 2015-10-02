@@ -13,7 +13,7 @@
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-                                    <b>Cliente cumplio con requisitos de oferta!</b>
+                                    <b>Cliente cumplió con requisitos de oferta!</b>
                                 </td>
                             </tr>
                             <tr>

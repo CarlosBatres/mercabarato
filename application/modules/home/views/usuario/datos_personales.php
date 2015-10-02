@@ -120,7 +120,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">   
-                                <label class="label-datos">Teléfono Movil</label>
+                                <label class="label-datos">Teléfono móvil</label>
                                 <div class="input-group">                                                                        
                                     <input type="text" class="form-control" name="telefono_movil" placeholder="Vacio" value="<?php echo $cliente->telefono_movil; ?>">
                                     <span class="input-group-addon"><i class="fa fa-mobile-phone fa-fw"></i></span>
@@ -209,7 +209,7 @@
                                 <div class="heading">
                                     <h3 class="text-uppercase">Deseas ofertar sus productos en este Sitio?</h3>
                                 </div>                                                
-                                <p class="lead">Si desea afiliarse a nuestro sitio y ofertar sus productos aqui, acceda al siguiente apartado y sigua los pasos:</p>                            
+                                <p class="lead">Si desea afiliarse a nuestro sitio y ofertar sus productos aquí, acceda al siguiente apartado y siga los pasos:</p>                            
                                 <br>
                                 <a href="<?php echo site_url('usuario/afiliacion') ?>" class="btn btn-template-main" ><i class="fa fa-money"></i> Hazte Vendedor</a>                            
                             </div>

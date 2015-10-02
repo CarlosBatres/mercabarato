@@ -13,12 +13,12 @@
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
                             <tr>
                                 <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-                                    <b>Tu paquete ha sido aprobado con exito!</b>
+                                    <b>Tu paquete ha sido aprobado con éxito!</b>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Hemos recibido el pago por este paquete y se ha realizado su activacion.
+                                    Hemos recibido el pago por este paquete y se ha realizado su activación.
                                 </td>
                             </tr>
                             <tr>

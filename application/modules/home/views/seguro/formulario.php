@@ -17,7 +17,7 @@
                 <li class="active"><a href="#hogar" role="tab" data-toggle="tab">Hogar</a></li>
                 <li><a href="#riesgo" role="tab" data-toggle="tab">Riesgo</a></li>
                 <li><a href="#salud" role="tab" data-toggle="tab">Salud</a></li>
-                <li><a href="#vehiculos" role="tab" data-toggle="tab">Vehiculos</a></li>
+                <li><a href="#vehiculos" role="tab" data-toggle="tab">Vehículos</a></li>
                 <li><a href="#otros" role="tab" data-toggle="tab">Otros</a></li>
             </ul>
 
@@ -43,7 +43,7 @@
                                                 <select class="form-control" name="edificio_apartamento">
                                                     <option value="">Seleccione Uno</option>
                                                     <option value="Intermedio">Intermedio</option>
-                                                    <option value="Atico">Atico</option>
+                                                    <option value="Atico">Ático</option>
                                                     <option value="Bajo">Bajo</option>
                                                     <option value="Primer Piso">Primer Piso</option>
                                                 </select>
@@ -110,7 +110,7 @@
                                         <h3>Construcción</h3>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Vivienda de construcción estandar</label>
+                                                <label>Vivienda de construcción estándar</label>
                                                 <select class="form-control" name="construccion_estandar">
                                                     <option value="">Seleccione Uno</option>
                                                     <option value="Si">Si</option>
@@ -159,7 +159,7 @@
                                                 <label><input type="checkbox" name="puerta_acorazada" value="true">Puerta acorazada</label>
                                             </div>
                                             <div class="checkbox">
-                                                <label><input type="checkbox" name="prestamo_hipotecario" value="true">Marque si tiene un prestamo hipotecario</label>
+                                                <label><input type="checkbox" name="prestamo_hipotecario" value="true">Marque si tiene un préstamo hipotecario</label>
                                             </div>
                                         </div>
                                     </div>
@@ -224,13 +224,13 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Telefono de Contacto</label>
+                                                <label>Teléfono de Contacto</label>
                                                 <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->telefono_fijo : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Correo Electronico</label>
+                                                <label>Correo electrónico</label>
                                                 <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->usuario->email : "" ?>" <?php echo (isset($datos_contacto)) ? "disabled" : "" ?>>
                                             </div>
                                         </div>
@@ -317,13 +317,13 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Telefono de Contacto</label>
+                                                <label>Teléfono de Contacto</label>
                                                 <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->telefono_fijo : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Correo Electronico</label>
+                                                <label>Correo Electrónico</label>
                                                 <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->usuario->email : "" ?>" <?php echo (isset($datos_contacto)) ? "disabled" : "" ?>>
                                             </div>
                                         </div>
@@ -453,13 +453,13 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Telefono de Contacto</label>
+                                                <label>Teléfono de Contacto</label>
                                                 <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->telefono_fijo : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Correo Electronico</label>
+                                                <label>Correo Electrónico</label>
                                                 <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->usuario->email : "" ?>" <?php echo (isset($datos_contacto)) ? "disabled" : "" ?>>
                                             </div>
                                         </div>
@@ -534,7 +534,7 @@
                                                     <option value="Gasolina">Gasolina</option>
                                                     <option value="Electricidad">Electricidad</option>
                                                     <option value="Gas">Gas</option>
-                                                    <option value="Etenol">Etenol</option>
+                                                    <option value="Etenol">Etanol</option>
                                                     <option value="Híbrido Gasolina">Híbrido Gasolina</option>
                                                     <option value="Híbrido Diesel">Híbrido Diesel</option>
                                                 </select>
@@ -608,7 +608,7 @@
                                                         <select class="form-control" name="tipo_documento">
                                                             <option value="">Seleccione Uno</option>
                                                             <option value="NIF">NIF</option>
-                                                            <option value="DNI (Otros Paises)">DNI (Otros Paises)</option>
+                                                            <option value="DNI (Otros Paises)">DNI (Otros países)</option>
                                                             <option value="NIE">NIE</option>                                                    
                                                         </select>
                                                     </div>
@@ -644,7 +644,7 @@
 
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>Codigo postal</label>
+                                                        <label>código postal</label>
                                                         <input type="text" class="form-control" name="codigo_postal">
                                                     </div>
                                                 </div>
@@ -674,13 +674,13 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Telefono de Contacto</label>
+                                                <label>Teléfono de Contacto</label>
                                                 <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->telefono_fijo : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Correo Electronico</label>
+                                                <label>Correo Electrónico</label>
                                                 <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->usuario->email : "" ?>" <?php echo (isset($datos_contacto)) ? "disabled" : "" ?>>
                                             </div>
                                         </div>
@@ -759,13 +759,13 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label>Telefono de Contacto</label>
+                                                <label>Teléfono de Contacto</label>
                                                 <input type="text" class="form-control" name="telefono_contacto" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->cliente->telefono_fijo : "" ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Correo Electronico</label>
+                                                <label>Correo Electrónico</label>
                                                 <input type="text" class="form-control" name="email" value="<?php echo (isset($datos_contacto)) ? $datos_contacto->usuario->email : "" ?>" <?php echo (isset($datos_contacto)) ? "disabled" : "" ?>>
                                             </div>
                                         </div>

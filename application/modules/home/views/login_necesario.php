@@ -12,7 +12,7 @@
                 </p>
 
                 <h3>Tienes que estar registrado</h3>
-                <h4 class="text-muted">Para solicitar un presupuesto debes estar registrado.. <br>Inicie Sesión o Registrese</h4>
+                <h4 class="text-muted">Para solicitar un presupuesto debes estar registrado.. <br>Inicie Sesión o Regístrese</h4>
 
                 <p class="buttons"><a href="" class="btn btn-template-main" data-toggle="modal" data-target="#login-modal"><i class="fa fa-home"></i> Iniciar Sesión</a>                    
                 </p>

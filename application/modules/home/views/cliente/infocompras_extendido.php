@@ -20,16 +20,15 @@
 
     <div class="container">
         <div class="row">
-            
-            <div class="col-md-9">                                 
+            <div class="col-md-9">
                 <div class="row">
                     <div class="col-md-12">
-                        <p class="lead"> Se ha extendido esta solicitud con exito.</p>
+                        <p class="lead"> Se ha extendido esta solicitud con éxito.</p>
                     </div>
-                </div>                
+                </div>
             </div>
-            <div class="col-md-3">                       
-                <?php echo $html_options; ?>                        
+            <div class="col-md-3">
+                <?php echo $html_options; ?>
             </div> 
         </div>
     </div>

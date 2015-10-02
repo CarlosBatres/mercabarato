@@ -18,17 +18,17 @@
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Gracias por registrarse, tu cuenta se ha creado con exito.
+                                    Gracias por registrarse, tu cuenta se ha creado con éxito.
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Por favor active su cuenta accediendo al enlace a continuacion, o copie y pege el enlace en la barra de direccion de su navegador web.
+                                    Por favor active su cuenta accediendo al enlace a continuación, o copie y pegue el enlace en la barra de dirección de su navegador web.
                                 </td>
                             </tr>
                             <tr>
                                 <td style="padding: 30px 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    <b><strong> Enlace de Confirmacion:</strong></b>                                    
+                                    <b><strong> Enlace de confirmación:</strong></b>                                    
                                     <p><a href="<?php echo $link;?>">Link para continuar...</a></p>
                                 </td>
                             </tr>   

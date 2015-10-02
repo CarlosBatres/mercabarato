@@ -14,14 +14,14 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="row">
                 <div class="col-md-12">
-                    <p class="lead">A continuación puede filtrar por provincia y población para enviar el presupuesto a los proveedores que coincidan con sus criterios de busqueda.</p>
+                    <p class="lead">A continuación puede filtrar por provincia y población para enviar el presupuesto a los proveedores que coincidan con sus criterios de búsqueda.</p>
                 </div>
                 <?php echo form_open('', 'id="form_buscar"'); ?>                
                     <input type="hidden" name="pagina" id="pagina" value="1">                    
                     <div class="col-md-6">
                         <div class="form-group">                                
                             <select name="provincia" class="form-control">
-                                <option value="0">Todas las Provincias</option>
+                                <option value="0">Todas las provincias</option>
                                 <?php foreach ($provincias as $provincia): ?>
                                     <option value="<?php echo $provincia->id ?>"><?php echo $provincia->nombre ?></option>
                                 <?php endforeach; ?>
@@ -31,7 +31,7 @@
                     <div class="col-md-6">
                         <div class="form-group">                        
                             <select name="poblacion" class="form-control">
-                                <option value="0">Todas las Poblaciónes</option>                        
+                                <option value="0">Todas las poblaciones</option>                        
                             </select>
                         </div>
                     </div>

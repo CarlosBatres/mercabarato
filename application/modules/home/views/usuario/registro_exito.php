@@ -16,7 +16,7 @@
                     <div id="text-page">                        
                         <h2>Estimado Usuario,</h2>
 
-                        <p class="lead">Hemos registrado su información en nuestro sistema para terminar el proceso debe confirmar su direccion de correo electronico.</p>
+                        <p class="lead">Hemos registrado su información en nuestro sistema para terminar el proceso debe confirmar su dirección de correo electrónico.</p>
                         <p class="lead">Ingrese a su correo y por favor acceda al link que le hemos suministrado.</p>                       
 
                         <hr>
