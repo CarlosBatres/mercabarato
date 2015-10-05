@@ -118,10 +118,10 @@
                         <?php endif; ?>
 
                         <?php if ($producto->transporte == "1"): ?>
-                            <p><strong><?php echo ($producto->transporte_txt != '') ? $producto->transporte_txt : 'Transporte Gratuito' ?></strong></p>                        
+                            <p><strong>Transporte: </strong><br><?php echo ($producto->transporte_txt != '') ? $producto->transporte_txt : 'Transporte Gratuito' ?></p>                        
                         <?php endif; ?>
                         <?php if ($producto->impuesto == "1"): ?>
-                            <p><strong><?php echo ($producto->impuesto_txt != '') ? $producto->impuesto_txt : 'Impuesto Incluido' ?></strong></p>
+                            <p><strong>Impuestos: </strong><br><?php echo ($producto->impuesto_txt != '') ? $producto->impuesto_txt : 'Impuesto Incluido' ?></strong></p>
                         <?php endif; ?>
                     </div>                                        
                 </div>                 
