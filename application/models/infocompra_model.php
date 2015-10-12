@@ -44,7 +44,8 @@ class Infocompra_model extends MY_Model {
         $count = count($this->db->get()->result());
 
         if ($count > 0) {
-            $this->db->order_by('ss.estado asc,ss.fecha_solicitud desc');
+            $this->db->group_by('ss.id');
+            $this->db->order_by('ss.estado asc,ss.fecha_solicitud desc');            
             $this->db->limit($limit, $offset);
             $result = $this->db->get()->result();
             $this->db->flush_cache();
@@ -201,6 +202,7 @@ class Infocompra_model extends MY_Model {
         $count = count($this->db->get()->result());
 
         if ($count > 0) {
+            $this->db->group_by('ss.id');
             $this->db->order_by('ss.estado asc,ss.fecha_solicitud desc');
             $this->db->limit($limit, $offset);
             $result = $this->db->get()->result();

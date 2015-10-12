@@ -674,6 +674,10 @@ hr.panel-opciones{
     margin-bottom: 40px;
 }
 
+.infocompras-general-icono,.infocompras-seguros-icono{
+    height: 75px;
+}
+
 @media (max-width: 768px) {
     .navbar-custom ul{
         background-color: #fff;

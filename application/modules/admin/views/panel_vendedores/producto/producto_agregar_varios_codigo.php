@@ -54,17 +54,17 @@
                                     </tr>
                                     <tr>
                                         <td style="font-weight: 600">mostrar_precio</td>
-                                        <td>0 , 1</td>
+                                        <td> NUMERO ( Integer ) -  '0' si es para <strong>NO</strong> y '1' para <strong>SI</strong></td>
                                         <td> Necesario </td>
                                     </tr>
                                     <tr>
                                         <td style="font-weight: 600">mostrar_producto</td>
-                                        <td>0 , 1</td>
+                                        <td> NUMERO ( Integer ) -  '0' si es para <strong>NO</strong> y '1' para <strong>SI</strong></td>
                                         <td> Necesario </td>
                                     </tr>
                                     <tr>
                                         <td style="font-weight: 600">habilitado</td>
-                                        <td>0 , 1</td>
+                                        <td> NUMERO ( Integer ) -  '0' si es para <strong>NO</strong> y '1' para <strong>SI</strong></td>
                                         <td> Necesario </td>
                                     </tr>
                                     <tr>

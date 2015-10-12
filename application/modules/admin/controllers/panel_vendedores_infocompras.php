@@ -98,7 +98,7 @@ class Panel_vendedores_infocompras extends ADController {
                     $precio = $this->input->post('precio');
                     $link_file = ($file_name != null) ? $this->identidad->get_vendedor_id() . '/' . $file_name : null;
 
-                    if (!$mensajes) {
+                    if ($file_name != null) {
                         $data = array(
                             "estado" => "1",
                             "ventajas" => $ventajas,
@@ -432,7 +432,7 @@ class Panel_vendedores_infocompras extends ADController {
                     $precio = $this->input->post('precio');                    
                     $link_file = ($file_name != null) ? $this->identidad->get_vendedor_id() . '/' . $file_name : null;
 
-                    if (!$mensajes) {
+                    if ($file_name != null) {
                         $data = array(
                             "estado" => "1",
                             "ventajas" => $ventajas,

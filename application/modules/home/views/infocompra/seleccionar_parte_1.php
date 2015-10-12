@@ -4,7 +4,9 @@
             <div class="col-md-7">
                 <h1>Infocompras - General</h1>
             </div>
-
+            <div class='col-md-5 text-right'>
+                <img class="infocompras-general-icono" src="<?php echo assets_url('imgs/icono-infocompras.png')?>"/>
+            </div>
         </div>
     </div>
 </div>

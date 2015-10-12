@@ -12,7 +12,7 @@
         <div class="col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
             <?php echo form_open_multipart('panel_vendedor/producto/agregar-varios','rel="preventDoubleSubmission"'); ?>                 
             <div class="box box_registro">                
-                <h2>Informacion de Productos</h2>
+                <h2>Información de Productos</h2>
                 <hr>
                 <?php if ($this->session->flashdata('error')) { ?>
                     <div class="alert alert-danger"> 
@@ -22,7 +22,7 @@
                 <?php } ?>                
                 <div class="row">
                     <div class="col-md-12">
-                        <p> A continuacion debe seleccionar una archivo excel que contenga los datos de los productos que desea ingresar en el sistema.</p>
+                        <p> A continuación debe seleccionar una archivo excel que contenga los datos de los productos que desea ingresar en el sistema.</p>
                     </div>
                 </div>
                 <br>
@@ -56,7 +56,7 @@
                                         <td> Necesario </td>
                                     </tr>
                                     <tr>
-                                        <td style="font-weight: 600">Descripcion del Producto</td>
+                                        <td style="font-weight: 600">Descripción del Producto</td>
                                         <td>TEXTO ( String )</td>
                                         <td> Opcional </td>
                                     </tr>
@@ -67,17 +67,17 @@
                                     </tr>
                                     <tr>
                                         <td style="font-weight: 600">Mostrar Precio</td>
-                                        <td>0 , 1</td>
+                                        <td> NUMERO ( Integer ) -  '0' si es para <strong>NO</strong> y '1' para <strong>SI</strong></td>
                                         <td> Necesario </td>
                                     </tr>
                                     <tr>
                                         <td style="font-weight: 600">Mostrar Producto</td>
-                                        <td>0 , 1</td>
+                                        <td> NUMERO ( Integer ) -  '0' si es para <strong>NO</strong> y '1' para <strong>SI</strong></td>
                                         <td> Necesario </td>
                                     </tr>
                                     <tr>
                                         <td style="font-weight: 600">Habilitado</td>
-                                        <td>0 , 1</td>
+                                        <td> NUMERO ( Integer ) -  '0' si es para <strong>NO</strong> y '1' para <strong>SI</strong></td>
                                         <td> Necesario </td>
                                     </tr>
                                     <tr>
@@ -86,7 +86,7 @@
                                         <td> Opcional </td>
                                     </tr>
                                     <tr>
-                                        <td style="font-weight: 600">ID de la Categoria</td>
+                                        <td style="font-weight: 600">ID de la categoría</td>
                                         <td>NUMERO ( Integer ) - Debe existir</td>
                                         <td> Necesario </td>
                                     </tr>                                    

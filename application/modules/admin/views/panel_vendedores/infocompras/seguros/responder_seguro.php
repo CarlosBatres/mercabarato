@@ -703,7 +703,7 @@
                     </div>
                 </div>                                
                 <br>
-                <?php if (!$mensajes): ?>
+                <?php if (sizeof($mensajes)<=2): ?>
                     <div class="row">
                         <div class="col-md-12">
                             <label>Deseas adjuntar un archivo? (PDF|WORD|JPG max size 2MB)</label>                    
