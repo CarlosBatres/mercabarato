@@ -440,12 +440,19 @@ class Producto extends MY_Controller {
 
                         $code = $user_id . ";;" . $producto_id . ";;" . date('Y-m-d');
                         $code = urlencode(base64_encode($code));
-
+                                                                        
+                        if($identidad->cliente->nombres!=""){
+                            $identificador=$identidad->cliente->nombres.' '.$identidad->cliente->apellidos;
+                        }else{
+                            $identificador=$identidad->usuario->email;
+                        }
+                        
+                        
                         $data_email = array(
                             "asunto" => $asunto,
                             "mensaje" => $mensaje,
                             "producto" => $producto,
-                            "cliente" => $identidad->cliente,
+                            "identificador" => $identificador,
                             "link" => site_url("auth") . '?email=' . $vendedor_usuario->email . '&continue=' . site_url("panel_vendedor/producto/responder-mensaje/" . $code));
                         $this->email->message($this->load->view('home/emails/enviar_mensaje', $data_email, true));
                         $this->email->send();

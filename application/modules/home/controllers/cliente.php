@@ -209,11 +209,11 @@ class Cliente extends MY_Controller {
                         $usr = $this->usuario_model->get($invitacion->invitar_para);
                         $email = $usr->email;
                     }
-                    
-                    $clt=$this->cliente_model->get_by(array("usuario_id"=>$user_id));                    
-                    $nombre=$clt->nombres.' '.$clt->apellidos;
+
+                    $clt = $this->cliente_model->get_by(array("usuario_id" => $user_id));
+                    $nombre = $clt->nombres . ' ' . $clt->apellidos;
                     // TODO: Aqui en vez del nombre podria ser el apodo o nickname en un futuro.
-                    $data_mail = array("identidad"=>$nombre);
+                    $data_mail = array("identidad" => $nombre);
 
                     $this->load->library('email');
                     $this->email->initialize($this->config->item('email_info'));
@@ -356,16 +356,25 @@ class Cliente extends MY_Controller {
                 );
 
                 if ($this->config->item('emails_enabled')) {
+                    $identidad = $this->usuario_model->get_full_identidad($user_id);
                     $usuario = $this->usuario_model->get($cliente->usuario_id);
+
+                    if ($identidad->cliente->nombres != "") {
+                        $identificador = $identidad->cliente->nombres . ' ' . $identidad->cliente->apellidos;
+                    } else {
+                        $identificador = $identidad->usuario->email;
+                    }
+
                     $this->load->library('email');
                     $this->email->initialize($this->config->item('email_info'));
                     $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                     $this->email->to($usuario->email);
                     $this->email->subject('Invitacion de Mercabarato.com');
                     $data_email = array(
-                        "titulo" => $data["titulo"], 
-                        "comentario" => $data["comentario"],
-                        "link"=>site_url("auth").'?email='.$usuario->email.'&continue='.site_url("panel_vendedor/invitaciones/recibidas"));
+                    "titulo" => $data["titulo"],
+                    "comentario" => $data["comentario"],
+                    "identidad" => $identificador,
+                    "link" => site_url("auth").'?email='.$usuario->email.'&continue='.site_url("panel_vendedor/invitaciones/recibidas"));
                     $this->email->message($this->load->view('home/emails/invitacion_email_a_vendedor', $data_email, true));
                     $this->email->send();
                 }
@@ -377,6 +386,7 @@ class Cliente extends MY_Controller {
             redirect('');
         }
     }
+
     /**
      * Infocompras Seguros
      */
@@ -474,7 +484,7 @@ class Cliente extends MY_Controller {
         $name = $this->uri->segment(5);
         force_download($name, $data);
     }
-    
+
     public function infocompra_download_respuesta() {
         $this->load->helper('download');
         $data = file_get_contents(assets_url('uploads/infocompras/') . '/' . $this->uri->segment(4) . '/' . $this->uri->segment(5)); // Read the file's contents
@@ -500,7 +510,7 @@ class Cliente extends MY_Controller {
                         'id' => 'pregunta',
                         'path' => 'assets/js/ckeditor',
                         'config' => array(
-                            'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
+                            'customConfig' => assets_url('js/ckeditor_config_sm.js'),
                             'height' => '300px',
                         ),
                     );
@@ -551,7 +561,7 @@ class Cliente extends MY_Controller {
                         $this->email->subject('Nueva solicitud de presupuesto');
                         //$data_email = array("solicitud_id" => $solicitud_seguro_id);
                         //$link=site_url('panel_vendedor/infocompras/seguros/responder/'.$solicitud_seguro_id);
-                        $data_email = array("link"=>site_url("auth").'?email='.$usuario->email.'&continue='.site_url('panel_vendedor/infocompras/seguros/responder/'.$solicitud_seguro_id));        
+                        $data_email = array("link" => site_url("auth") . '?email=' . $usuario->email . '&continue=' . site_url('panel_vendedor/infocompras/seguros/responder/' . $solicitud_seguro_id));
                         $this->email->message($this->load->view('home/emails/solicitud_presupuesto_mensaje_vendedor', $data_email, true));
                         $this->email->send();
                     }
@@ -560,7 +570,7 @@ class Cliente extends MY_Controller {
         }
         redirect('usuario/infocompras-seguros');
     }
-    
+
     /**
      * Infocompras General
      */
@@ -580,7 +590,7 @@ class Cliente extends MY_Controller {
             redirect('');
         }
     }
-    
+
     public function ajax_get_listado_infocompras() {
         //$this->show_profiler();
         $formValues = $this->input->post();
@@ -626,7 +636,7 @@ class Cliente extends MY_Controller {
             $this->template->load_view('home/cliente/infocompras_generales_tabla', $data);
         }
     }
-    
+
     public function view_infocompras_respuesta($solicitud_id) {
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Busca y Compara');
@@ -651,7 +661,7 @@ class Cliente extends MY_Controller {
             redirect('');
         }
     }
-    
+
     public function view_infocompras_pregunta($solicitud_id) {
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Busca y Compara');
@@ -670,7 +680,7 @@ class Cliente extends MY_Controller {
                         'id' => 'pregunta',
                         'path' => 'assets/js/ckeditor',
                         'config' => array(
-                            'customConfig'=>assets_url('js/ckeditor_config_sm.js'),
+                            'customConfig' => assets_url('js/ckeditor_config_sm.js'),
                             'height' => '300px',
                         ),
                     );
@@ -689,7 +699,7 @@ class Cliente extends MY_Controller {
             redirect('');
         }
     }
-    
+
     public function infocompra_enviar_pregunta() {
         $formValues = $this->input->post();
         if ($formValues !== false) {
@@ -721,7 +731,7 @@ class Cliente extends MY_Controller {
                         $this->email->subject('Nueva solicitud de presupuesto');
                         //$data_email = array("solicitud_id" => $solicitud_id);
                         //$link=site_url('panel_vendedor/infocompras/seguros/responder/'.$solicitud_id);
-                        $data_email = array("link"=>site_url("auth").'?email='.$usuario->email.'&continue='.site_url('panel_vendedor/infocompras/generales/responder/'.$solicitud_id));        
+                        $data_email = array("link" => site_url("auth") . '?email=' . $usuario->email . '&continue=' . site_url('panel_vendedor/infocompras/generales/responder/' . $solicitud_id));
                         $this->email->message($this->load->view('home/emails/solicitud_presupuesto_mensaje_vendedor', $data_email, true));
                         $this->email->send();
                     }
@@ -730,8 +740,7 @@ class Cliente extends MY_Controller {
         }
         redirect('usuario/infocompras-general');
     }
-    
-    
+
     public function extender_infocompra($solicitud_id) {
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Busca y Compara');
@@ -739,10 +748,10 @@ class Cliente extends MY_Controller {
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
             $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
 
-            $solicitud = $this->infocompra_model->get($solicitud_id);            
+            $solicitud = $this->infocompra_model->get($solicitud_id);
             if ($solicitud) {
-                if ($solicitud->extendido == "0" && $cliente->id == $solicitud->cliente_id) {                    
-                    $this->infocompra_model->update($solicitud_id,array("fecha_solicitud"=>date("Y-m-d"),"extendido"=>"1"));
+                if ($solicitud->extendido == "0" && $cliente->id == $solicitud->cliente_id) {
+                    $this->infocompra_model->update($solicitud_id, array("fecha_solicitud" => date("Y-m-d"), "extendido" => "1"));
                     $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
                     $this->template->load_view('home/cliente/infocompras_extendido', array("html_options" => $html_options, "infocompra" => $solicitud));
                 } else {

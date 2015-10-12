@@ -111,6 +111,7 @@ class Panel_vendedores_invitaciones extends ADController {
                         $data_email = array(
                             "titulo" => $data["titulo"], 
                             "comentario" => $data["comentario"],
+                            "identidad" => $this->identidad->vendedor->nombre,
                             "link"=>site_url("auth").'?email='.$usuario->email.'&continue='.site_url("usuario/contactos"));
                         $this->email->message($this->load->view('home/emails/invitacion_nueva_email', $data_email, true));
                         $this->email->send();

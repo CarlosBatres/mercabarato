@@ -56,7 +56,7 @@
                             </tr>               
                             <tr>
                                 <td style="padding: 30px 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 22px;">
-                                    <?php echo $cliente->nombres . ' ' . $cliente->apellidos ?>
+                                    <?php echo $identificador ?>
                                 </td>
                             </tr>
                             <tr>

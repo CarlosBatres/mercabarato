@@ -23,6 +23,11 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+                                        Tienes una nueva invitación de <strong><?php echo $identidad?></strong> en nuestro sitio , si deseas interactuar con este cliente sigue las instrucciones a continuación.
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
                                         <p>Puedes ingresar al siguiente link y aceptar la invitación.</p>
                                         <a href="<?php echo $link; ?>">Link para continuar...</a>
@@ -36,7 +41,7 @@
                                 </tr>
                                 <tr>
                                     <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                        Tienes una nueva invitación pendiente desde nuestro sitio , si deseas interactuar con este Cliente sigue las instrucciones a continuación.
+                                        Tienes una nueva invitación de <strong><?php echo $identidad?></strong> en nuestro sitio , si deseas interactuar con este cliente sigue las instrucciones a continuación.
                                     </td>
                                 </tr>
                                 <tr>

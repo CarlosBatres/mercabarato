@@ -23,6 +23,11 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+                                        Tienes una nueva invitación de <strong><?php echo $identidad?></strong> en nuestro sitio , si deseas interactuar con este Vendedor sigue las instrucciones a continuación.
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td style="padding: 0 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
                                         <p>Puede ingresar al sitio y proceder a <a href="<?php echo site_url("registro"); ?>"><strong>registrarse</strong></a>.</p>
                                         
