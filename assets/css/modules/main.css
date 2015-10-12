@@ -134,15 +134,15 @@ body .box_registro{
 .producto-img-container{padding-bottom: 15px;}
 .producto-img-container .frame {height: 150px;width: 100%;white-space: nowrap;text-align: center;}
 .producto-img-container .helper {display: inline-block;height: 100%;vertical-align: middle;}
-.producto-img-container .producto-img{background: #3A6F9A;vertical-align: middle;max-height: 150px;max-width: 150px;}
+.producto-img-container .producto-img{vertical-align: middle;max-height: 150px;max-width: 150px;}
 
-.producto-img-container .producto-img-ficha{background: #3A6F9A;vertical-align: middle;max-height: 300px;max-width: 300px;}
+.producto-img-container .producto-img-ficha{vertical-align: middle;max-height: 300px;max-width: 300px;}
 .producto-img-container .frame-ficha {height: 300px;width: 100%;white-space: nowrap;text-align: center;}
 .producto-img-container .frame-ficha-thumbnail {height: 106px;width: 106px;white-space: nowrap;text-align: center;border: 1px solid #000;}
 
 .vendedor-img-container .frame {height: 230px;width: 100%;white-space: nowrap;text-align: center;}
 .vendedor-img-container .helper {display: inline-block;height: 100%;vertical-align: middle;}
-.vendedor-img-container .vendedor-img{background: #3A6F9A;vertical-align: middle;max-height: 230px;max-width: 230px;}
+.vendedor-img-container .vendedor-img{vertical-align: middle;max-height: 230px;max-width: 230px;}
 
 //label.error { display: block; float: none; color: red; padding-left: 2.5em; vertical-align: top; }
 .box-image .image>img{margin:auto;}
