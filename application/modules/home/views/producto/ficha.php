@@ -121,12 +121,13 @@
                             <p><strong>Transporte: </strong><br><?php echo ($producto->transporte_txt != '') ? $producto->transporte_txt : 'Transporte Gratuito' ?></p>                        
                         <?php endif; ?>
                         <?php if ($producto->impuesto != null): ?>
-                            <p><strong>Impuestos: </strong><br>
+                            <p>
                                 <?php if ($producto->impuesto == 1): ?>
-                                    Impuesto incluidos
+                                    <strong>Impuestos incluidos </strong><br>
                                 <?php elseif ($producto->impuesto == 0 && ($producto->impuesto_txt == '' || $producto->impuesto_txt == null)): ?>
-                                    Impuesto no incluidos
+                                    <strong>Impuestos sin incluir </strong><br>
                                 <?php elseif ($producto->impuesto == 0 && $producto->impuesto != ''): ?>
+                                    <strong>Impuestos sin incluir </strong><br>
                                     <?php echo $producto->impuesto_txt ?>
                                 <?php endif; ?>                                
                             </p>
