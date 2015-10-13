@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="box box_registro">
-                <h2 class="text-uppercase">Informacion del producto</h2>                                        
+                <h2 class="text-uppercase">Información del producto</h2>                                        
                 <hr>
                 <?php if ($this->session->flashdata('error')) { ?>
                     <div class="alert alert-danger"> 
@@ -41,14 +41,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Seleccione varias imagenes para el producto ( Limite 3)</label>                    
+                            <label>Seleccione varias imágenes para el producto ( Limite 3)</label>                    
                             <input id="fileupload" type="file" name="files[]" multiple data-url="<?php echo site_url('panel_vendedor/producto/upload_image') ?>">
                             <input type="hidden" name="file_name" id="file_name" value="">                                                            
                         </div> 
                     </div>
                     <div class="alert alert-danger" id="fileupload_alert" style="display:none;"> 
                         <a class="close" data-dismiss="alert">×</a>
-                        Debe seleccionar un maximo de 3 imagenes.
+                        Debe seleccionar un máximo de 3 imágenes.
                     </div>
                 </div>
                 <br>                                
@@ -56,7 +56,7 @@
                     <div class="col-md-12">
                         <div class="panel panel-primary">
                             <div class="panel-heading">                                
-                                <span class="titulo">Precio según el número de articulos comprados</span>                                
+                                <span class="titulo">Precio según el número de artículos comprados</span>                                
                             </div>
                             <div class="panel-body"> 
                                 <div class="row">
@@ -79,7 +79,7 @@
                                         <br><p class="lead"><strong>X</strong></p>
                                     </div>
                                     <div class="col-md-6">
-                                        <label>Cantidad de articulos ( solo numero )</label>
+                                        <label>Cantidad de artículos ( solo numero )</label>
                                         <input type="text" class="form-control" name="precio_extra1_cantidad" value="" placeholder="Ejm: 100">
                                     </div>
                                 </div>
@@ -173,12 +173,12 @@
                     <div class="col-md-12">
                         <div class="panel panel-primary">
                             <div class="panel-heading">                                
-                                <span class="titulo">Categoria y Clasificación del Producto</span>                                
+                                <span class="titulo">Categoría y Clasificación del Producto</span>                                
                             </div>
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <p class="lead"> Puedes usar los valores a continuación para organizar tus productos a tu gusto, los clientes podran buscar otros productos segun el grupo o familia que tengan.</p>                                        
+                                        <p class="lead"> Puedes usar los valores a continuación para organizar tus productos a tu gusto, los clientes podrán buscar otros productos según el grupo o familia que tengan.</p>                                        
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -202,11 +202,11 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <p class="lead"> La categoria se usa para clasificar tu producto en el buscador del sitio.</p>
-                                        <label>Seleccione una Categoria:</label>
+                                        <p class="lead"> La categoría se usa para clasificar tu producto en el buscador del sitio.</p>
+                                        <label>Seleccione una categoría:</label>
                                         <div class="alert alert-danger" id="seleccionar-categoria_alert" style="display:none;"> 
                                             <a class="close" data-dismiss="alert">×</a>
-                                            Debe seleccionar una categoria.
+                                            Debe seleccionar una categoría.
                                         </div>
                                         <div id="categorias_jtree">                
                                             <?php echo $categorias_tree_html; ?>

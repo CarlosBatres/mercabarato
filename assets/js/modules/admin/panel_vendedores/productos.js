@@ -69,7 +69,7 @@ $(document).ready(function() {
     });
 
     $('input[name="impuesto"]').on('change', function() {
-        if ($(this).val() == '1') {
+        if ($(this).val() == '0') {
             $('input[name="impuesto_txt"]').css('display', 'block');
         } else {
             $('input[name="impuesto_txt"]').val('');
