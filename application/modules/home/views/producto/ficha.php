@@ -118,7 +118,7 @@
                         <?php endif; ?>
 
                         <?php if ($producto->transporte == 1): ?>
-                            <p><strong>Transporte: </strong><br><?php echo ($producto->transporte_txt != '') ? $producto->transporte_txt : 'Transporte Gratuito' ?></p>                        
+                            <p><strong>Transporte gratuito </strong><br><?php echo ($producto->transporte_txt != '') ? $producto->transporte_txt : '' ?></p>                        
                         <?php endif; ?>
                         <?php if ($producto->impuesto != null): ?>
                             <p>
