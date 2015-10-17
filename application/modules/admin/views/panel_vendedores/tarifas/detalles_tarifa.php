@@ -48,6 +48,12 @@
                             <label>Descripcion</label>                    
                             <textarea class="form-control" name="descripcion" rows="10"></textarea>
                         </div>
+                    </div> 
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Condiciones particulares ( Este texto sera visible a los clientes )</label>                    
+                            <input type="text" class="form-control" name="condicion_particular">
+                        </div>
                     </div>                 
                 </div>
                 <hr>

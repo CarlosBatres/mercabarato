@@ -46,3 +46,7 @@ left join `poblacion` `pb` on((`pb`.`id` = `l`.`poblacion_id`)));
 /*             CAMBIOS POR IMPLEMENTAR            */
 /*                                                */
 /* -----------------------------------------------*/
+
+ALTER TABLE `mercabarato_bd`.`tarifa_general` 
+ADD COLUMN `condicion_particular` VARCHAR(255) NULL DEFAULT NULL AFTER `porcentaje`;
+

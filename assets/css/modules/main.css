@@ -377,6 +377,12 @@ span.arrow {
     color :red;
 }
 
+.price-tarifa-resaltado{
+    color :orange;
+    font-weight: 600;
+    font-size: 16px;
+}
+
 .inicio-precios-titulo{
     font-size: 20px;
     font-weight: 800;

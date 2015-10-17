@@ -78,6 +78,7 @@
                                 <?php endif; ?>
 
                                 <p class="price"><?php echo number_format($tarifa, '2') . ' ' . $this->config->item('money_sign') ?></p>
+                                <p class="price-tarifa-resaltado text-center"><?php echo ($tarifa_texto)?$tarifa_texto:""?></p> 
                             <?php elseif ($oferta < $tarifa && $oferta < $producto->precio): ?>                                
 
                                 <?php if ($producto->precio_anterior == null || ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5)): ?>

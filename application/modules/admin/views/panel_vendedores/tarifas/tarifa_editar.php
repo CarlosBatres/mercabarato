@@ -29,6 +29,11 @@
                         <p> No hay mas informacion disponible.</p>
                     <?php endif; ?>
 
+                    <?php if ($tarifa_general->condicion_particular != ""): ?>
+                        <p> <strong>Condiciones Particulares: </strong></p>
+                        <p> <?php echo $tarifa_general->condicion_particular ?></p>                    
+                    <?php endif; ?>
+
                     <input type="hidden" value="1" name="pagina" id="pagina"/>                                        
                     <input type="hidden" value="1" name="pagina_tab2" id="pagina_tab2"/>                                        
                     <input type="hidden" value="<?php echo $tarifa_general->id ?>" name="tg_id" id="tg_id"/>                                        
@@ -37,13 +42,17 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-12 col-md-4">
             <div class="text-center">                        
                 <a href="<?php echo site_url('panel_vendedor/tarifas/modificar-productos/' . $tarifa_general->id) ?>" class="btn btn-lg btn-primary"> Modificar Productos</a>
             </div>
+        </div>        
+        <div class="col-sm-12 col-md-4">
+            <div class="text-center">                        
+                <a href="<?php echo site_url('panel_vendedor/tarifas/modificar-datos/' . $tarifa_general->id) ?>" class="btn btn-lg btn-primary"> Modificar Datos</a>
+            </div>
         </div>
-        <br>
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-12 col-md-4">
             <div class="text-center">                        
                 <a href="<?php echo site_url('panel_vendedor/tarifas/modificar-clientes/' . $tarifa_general->id) ?>" class="btn btn-lg btn-primary"> Modificar Clientes</a>
             </div>

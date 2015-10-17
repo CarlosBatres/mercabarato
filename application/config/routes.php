@@ -218,6 +218,7 @@ $route['panel_vendedor/tarifas/borrar/(:num)'] = 'admin/panel_vendedores_tarifas
 $route['panel_vendedor/tarifas/ver-tarifa/(:num)'] = 'admin/panel_vendedores_tarifas/ver_tarifa/$1';
 $route['panel_vendedor/tarifas/modificar-clientes/(:num)'] = 'admin/panel_vendedores_tarifas/modificar_clientes/$1';
 $route['panel_vendedor/tarifas/modificar-productos/(:num)'] = 'admin/panel_vendedores_tarifas/modificar_productos/$1';
+$route['panel_vendedor/tarifas/modificar-datos/(:num)'] = 'admin/panel_vendedores_tarifas/modificar_datos/$1';
 $route['panel_vendedor/tarifas/listado'] = 'admin/panel_vendedores_tarifas/view_listado';
 $route['panel_vendedor/tarifas/ajax_get_productos'] = 'admin/panel_vendedores_tarifas_helper/ajax_get_productos';
 $route['panel_vendedor/tarifas/ajax_get_clientes'] = 'admin/panel_vendedores_tarifas_helper/ajax_get_clientes';

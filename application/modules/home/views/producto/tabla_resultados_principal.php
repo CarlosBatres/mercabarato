@@ -51,11 +51,11 @@
                                             <p class="precio"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del>  &nbsp;&nbsp;&nbsp; <del><?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?></del></p>
                                         <?php endif; ?>                                                                        
                                     </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <p class="precio"><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?></p>
-                                        </div>
-                                    </div>                                                                        
+
+                                    <div class="col-xs-12">
+                                        <p class="precio"><?php echo number_format($producto->nuevo_costo, '2') . ' ' . $this->config->item('money_sign') ?></p>
+                                    </div>
+
                                 <?php elseif ($producto->tipo == 'oferta' && $producto->nuevo_costo < $producto->precio): ?>
                                     <div class="row">
                                         <div class="col-xs-12">

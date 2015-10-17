@@ -242,7 +242,14 @@ class Producto extends MY_Controller {
                 $user_id = $this->authentication->read('identifier');
                 $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
                 $producto_tarifa = $this->producto_model->get_tarifas_from_producto($producto->id, $cliente->id);
+                $tarifa_texto = false;
+
                 if ($producto_tarifa) {
+                    $tarifa_tmp = $this->tarifa_model->get($producto_tarifa->grupo_o_tarifa_id);
+                    $tarifa_gen_tmp = $this->tarifa_general_model->get($tarifa_tmp->tarifa_general_id);
+                    if ($tarifa_gen_tmp->condicion_particular != null || $tarifa_gen_tmp->condicion_particular != "") {
+                        $tarifa_texto = $tarifa_gen_tmp->condicion_particular;
+                    }
                     $tarifa = (float) $producto_tarifa->nuevo_costo;
                 } else {
                     $tarifa = 9999999;
@@ -298,11 +305,11 @@ class Producto extends MY_Controller {
                 $son_contactos = $this->invitacion_model->son_contactos($user_id, $cc->usuario_id);
 
                 $invitacion = $this->invitacion_model->invitacion_existe($user_id, $cc->usuario_id);
-                
-                if($user_id==$cc->usuario_id){
-                    $mi_pagina=true;
-                }else{
-                    $mi_pagina=false;
+
+                if ($user_id == $cc->usuario_id) {
+                    $mi_pagina = true;
+                } else {
+                    $mi_pagina = false;
                 }
 
                 $data = array(
@@ -310,6 +317,7 @@ class Producto extends MY_Controller {
                     "producto_imagen" => $producto_imagen,
                     "producto_imagenes" => $producto_imagenes,
                     "tarifa" => $tarifa,
+                    "tarifa_texto" => $tarifa_texto,
                     "oferta" => $oferta,
                     "oferta_id" => $oferta_id,
                     "otros_productos" => $prods,
@@ -320,7 +328,7 @@ class Producto extends MY_Controller {
                     "fecha_finaliza" => $fecha_finaliza,
                     "localizacion" => $localizacion,
                     "producto_extras" => $producto_extras,
-                    "mi_pagina"=>$mi_pagina
+                    "mi_pagina" => $mi_pagina
                 );
                 $this->template->load_view('home/producto/ficha', $data);
             } else {
@@ -358,6 +366,7 @@ class Producto extends MY_Controller {
                         "producto_imagen" => $producto_imagen,
                         "producto_imagenes" => $producto_imagenes,
                         "tarifa" => 9999999,
+                        "tarifa_texto" => false,
                         "oferta" => 9999999,
                         "oferta_id" => false,
                         "otros_productos" => $prods,
@@ -368,7 +377,7 @@ class Producto extends MY_Controller {
                         "son_contactos" => false,
                         "localizacion" => $localizacion,
                         "producto_extras" => $producto_extras,
-                        "mi_pagina"=>false
+                        "mi_pagina" => false
                     );
                     $this->template->load_view('home/producto/ficha', $data);
                 } else {
@@ -440,14 +449,14 @@ class Producto extends MY_Controller {
 
                         $code = $user_id . ";;" . $producto_id . ";;" . date('Y-m-d');
                         $code = urlencode(base64_encode($code));
-                                                                        
-                        if($identidad->cliente->nombres!=""){
-                            $identificador=$identidad->cliente->nombres.' '.$identidad->cliente->apellidos;
-                        }else{
-                            $identificador=$identidad->usuario->email;
+
+                        if ($identidad->cliente->nombres != "") {
+                            $identificador = $identidad->cliente->nombres . ' ' . $identidad->cliente->apellidos;
+                        } else {
+                            $identificador = $identidad->usuario->email;
                         }
-                        
-                        
+
+
                         $data_email = array(
                             "asunto" => $asunto,
                             "mensaje" => $mensaje,

@@ -171,6 +171,7 @@ class Panel_vendedores_tarifas extends ADController {
                 $data_tarifa_general = array(
                     "nombre" => ($this->input->post('nombre') != '') ? $this->input->post('nombre') : null,
                     "descripcion" => ($this->input->post('descripcion') != '') ? $this->input->post('descripcion') : null,
+                    "condicion_particular" => ($this->input->post('condicion_particular') != '') ? $this->input->post('condicion_particular') : null,                    
                     "porcentaje" => $porcentaje,
                     "fecha_creado" => date("Y-m-d")
                 );
@@ -263,6 +264,38 @@ class Panel_vendedores_tarifas extends ADController {
                 $this->session->unset_userdata('pv_tarifas_incluir_ids_clientes');
                 $this->template->add_js("modules/admin/panel_vendedores/tarifa_editar_productos.js");
                 $this->template->load_view('admin/panel_vendedores/tarifas/tarifa_editar_productos', $data);
+            } else {
+                redirect('panel_vendedor/tarifas/listado');
+                // TODO: Accesando una tarifa que no es tuya
+            }
+        } else {
+            redirect('panel_vendedor/tarifas/listado');
+        }
+    }
+    
+    public function modificar_datos($tarifa_general_id) {
+        $tarifa_general = $this->tarifa_general_model->get($tarifa_general_id);
+        if ($tarifa_general) {
+            $vendedor_owner = $this->tarifa_general_model->get_vendedor($tarifa_general_id);
+            if ($vendedor_owner == $this->identidad->get_vendedor_id() || !$vendedor_owner) {
+                $formValues = $this->input->post();
+                if ($formValues !== false) {
+                    
+                    $data_tarifa_general = array(
+                        "nombre" => ($this->input->post('nombre') != '') ? $this->input->post('nombre') : null,
+                        "descripcion" => ($this->input->post('descripcion') != '') ? $this->input->post('descripcion') : null,
+                        "condicion_particular" => ($this->input->post('condicion_particular') != '') ? $this->input->post('condicion_particular') : null,
+                    );
+
+                    $this->tarifa_general_model->update($tarifa_general_id,$data_tarifa_general);
+                    redirect('panel_vendedor/tarifas/ver-tarifa/'.$tarifa_general->id);
+                } else {
+                    $this->template->set_title("Panel de Control - Mercabarato.com");
+                    $this->template->set_layout('panel_vendedores');
+                    $data = array("tarifa_general" => $tarifa_general);
+                    //$this->template->add_js("modules/admin/panel_vendedores/ofertas2/ofertas_editar_datos.js");
+                    $this->template->load_view('admin/panel_vendedores/tarifas/tarifa_editar_datos', $data);
+                }
             } else {
                 redirect('panel_vendedor/tarifas/listado');
                 // TODO: Accesando una tarifa que no es tuya
