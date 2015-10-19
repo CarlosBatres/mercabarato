@@ -1080,9 +1080,9 @@ class Vendedor extends MY_Controller {
                 $data = array(
                     "vendedor" => $vendedor,
                     "anuncios" => $anuncios,
-                    "grupo_txt" => $param1,
-                    "familia_txt" => $param2,
-                    "subfamilia_txt" => $param3,
+                    "grupo_txt" => rawurldecode($param1),
+                    "familia_txt" => rawurldecode($param2),
+                    "subfamilia_txt" => rawurldecode($param3),
                 );
                 $this->template->add_js('modules/home/vendedores_ver_productos.js');
                 $this->template->load_view('home/vendedores/ver_productos', $data);
