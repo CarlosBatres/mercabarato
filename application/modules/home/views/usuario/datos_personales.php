@@ -44,7 +44,7 @@
                         </div>
                     <?php } ?>                    
 
-                    <?php echo form_open('usuario/datos-personales/modificar', 'id="form_datos_1"'); ?>
+                    <?php echo form_open('usuario/datos-personales/modificar', 'id="form_datos_1" rel="preventDoubleSubmission"'); ?>
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">     
@@ -195,7 +195,7 @@
                     <br>
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <button type="submit" class="btn btn-template-main"><i class="fa fa-save"></i> Guardar Cambios</button>
+                            <button type="submit" class="btn btn-template-primary"><i class="fa fa-save"></i> Guardar Cambios</button>
                         </div>
                     </div>                   
 

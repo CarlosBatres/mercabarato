@@ -43,7 +43,7 @@
                             <?= $this->session->flashdata('error') ?> 
                         </div>
                     <?php } ?>                                          
-                    <?php echo form_open('usuario/datos-vendedor/modificar', 'id="form_datos_2"'); ?>                                                                        
+                    <?php echo form_open('usuario/datos-vendedor/modificar', 'id="form_datos_2" rel="preventDoubleSubmission"'); ?>                                                                        
                     <div class="row">
                         <div class="col-md-12">
                             <label class="label-datos">Nombre Comercial de la Empresa</label>
@@ -320,7 +320,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12 text-center">
-                            <button type="submit" class="btn btn-template-main"><i class="fa fa-save"></i> Guardar Cambios</button>
+                            <button type="submit" class="btn btn-template-primary"><i class="fa fa-save"></i> Guardar Cambios</button>
                         </div>
                     </div>
 

@@ -189,11 +189,15 @@ class Usuario extends MY_Controller {
                     $keyword_id = null;
                 }
 
-                if ($this->input->post("provincia") != "") {
+                if ($this->input->post("provincia") != 0) {
                     $this->localizacion_model->update_by(array("usuario_id" => $user_id), array("provincia_id" => $this->input->post("provincia")));
+                }else{
+                    $this->localizacion_model->update_by(array("usuario_id" => $user_id), array("provincia_id" => null));
                 }
-                if ($this->input->post("poblacion") != "") {
+                if ($this->input->post("poblacion") != 0) {
                     $this->localizacion_model->update_by(array("usuario_id" => $user_id), array("poblacion_id" => $this->input->post("poblacion")));
+                }else{
+                    $this->localizacion_model->update_by(array("usuario_id" => $user_id), array("poblacion_id" => null));
                 }
 
                 $data = array(
