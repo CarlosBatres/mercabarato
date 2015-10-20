@@ -88,11 +88,13 @@ class Main extends MY_Controller {
                     if ($user_nick) {
                         echo json_encode(FALSE);
                     } else {
-                        $regex = '/[^a-zA-Z0-9_-]/';
-                        if (preg_match($regex, $word)) {
-                            echo json_encode(FALSE);
-                        } else {
+                        //$regex = '/[^a-zA-Z0-9_-]/';
+                        $regex1 = '/^\w{3,30}$/i';
+                        $regex2 = '/[a-z]/i';
+                        if (preg_match($regex1, $word) && preg_match($regex2, $word)) {
                             echo json_encode(TRUE);
+                        } else {
+                            echo json_encode(FALSE);
                         }
                     }
                 }

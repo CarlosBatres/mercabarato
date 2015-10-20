@@ -62,7 +62,7 @@ $(document).ready(function() {
                 }
             },
             nif_cif: {required: true},
-            nickname: {required: true,maxlength: 30,
+            nickname: {required: true, maxlength: 30,minlength: 3,
                 remote: {
                     url: SITE_URL + "util/verificar_nickname",
                     type: "post",
@@ -84,7 +84,8 @@ $(document).ready(function() {
             nickname: {
                 required: "Ingresa un apodo unico que te identifique",
                 remote: "Este apodo es invalido o ya existe ingresa uno nuevo.",
-                maxlength : "El apodo debe tener un maximo de 30 caracteres."
+                maxlength: "El apodo debe tener un maximo de 30 caracteres.",
+                minlength: "El apodo debe tener un minimo de 3 caracteres."
             }
         }
     });
@@ -103,9 +104,17 @@ $(document).ready(function() {
             },
             done: function(e, data) {
                 $.each(data.result.files, function(index, file) {
-                    $('#file_name').val(file.name);
+                    if (typeof file.error !== 'undefined') {                        
+                        $('#fileupload_alert').css('display', 'block');
+                        $('html, body').animate({
+                            scrollTop: $('#fileupload_alert').offset().top
+                        }, 1000);                        
+                        $('#fileupload_alert').find('span').html(file.error);
+                    } else {
+                        $('#file_name').val(file.name);
+                        $('#form_datos_2').submit();
+                    }
                 });
-                $('#form_datos_2').submit();
             }
         });
 
@@ -126,19 +135,19 @@ $(document).ready(function() {
     });
 
     /*$('select[name="pais"]').on('change', function() {
-        $('#form_afiliarse').find('select[name="provincia"]').html("<option value='0'>Provincia</option>");
-        $('#form_afiliarse').find('select[name="poblacion"]').html("<option value='0'>Población</option>");
-        var pais_id = $(this).val();
-        $.ajax({
-            type: "POST",
-            url: SITE_URL + 'util/get_provincias',
-            data: {pais_id: pais_id},
-            dataType: 'json',
-            success: function(response) {
-                $('#form_afiliarse').find('select[name="provincia"]').html(response.html);
-            }
-        });
-    });*/
+     $('#form_afiliarse').find('select[name="provincia"]').html("<option value='0'>Provincia</option>");
+     $('#form_afiliarse').find('select[name="poblacion"]').html("<option value='0'>Población</option>");
+     var pais_id = $(this).val();
+     $.ajax({
+     type: "POST",
+     url: SITE_URL + 'util/get_provincias',
+     data: {pais_id: pais_id},
+     dataType: 'json',
+     success: function(response) {
+     $('#form_afiliarse').find('select[name="provincia"]').html(response.html);
+     }
+     });
+     });*/
 
     $('select[name="provincia"]').on('change', function() {
         $('select[name="poblacion"]').html("<option value='0'>Seleccione una</option>");

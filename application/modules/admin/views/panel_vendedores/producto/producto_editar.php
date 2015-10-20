@@ -37,10 +37,10 @@
                         </div>
                     </div>
                 </div> 
-                <div class="row">
+                <div class="row" id="grupo-imagenes">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Seleccione varias imágenes para el producto ( Limite 3)</label>
+                            <label>Seleccione varias imágenes para el producto ( Limite 3 y solo JPG , GIF y PNG )</label>
                             <br><br>                            
                             <?php if ($producto_imagenes): ?>
                                 <?php foreach ($producto_imagenes as $image):
@@ -67,9 +67,11 @@
                             <input type="hidden" name="file_name" id="file_name" value="">                    
                         </div> 
                     </div>
-                    <div class="alert alert-danger" id="fileupload_alert" style="display:none;"> 
-                        <a class="close" data-dismiss="alert">×</a>
-                        Debe seleccionar un máximo de 3 imágenes.
+                    <div class="col-md-12">
+                        <div class="alert alert-danger" id="fileupload_alert" style="display:none;"> 
+                            <a class="close" data-dismiss="alert">×</a>
+                            <span>Debe seleccionar un máximo de 3 imágenes.</span>
+                        </div>
                     </div>
                 </div>
                 <br><br>
@@ -105,8 +107,8 @@
                                         <input type="text" class="form-control" name="precio_extra1_cantidad" value="<?php echo (isset($producto_extras["0"])) ? $producto_extras["0"]->nombre : "" ?>">
                                     </div>
                                 </div>
-                                
-                                
+
+
                                 <div class="row">
                                     <div class="col-md-5">
                                         <div class="form-group">                                                                        
@@ -120,8 +122,8 @@
                                         <input type="text" class="form-control" name="precio_extra2_cantidad" value="<?php echo (isset($producto_extras["1"])) ? $producto_extras["1"]->nombre : "" ?>">
                                     </div>
                                 </div>
-                                
-                                
+
+
                                 <div class="row">
                                     <div class="col-md-5">
                                         <div class="form-group">                                                                        
@@ -178,7 +180,7 @@
                                         <label>Transporte es gratuito?</label><br>                                                                                
                                         <label><input type="radio" name="transporte" value="1" class="radioInput" <?php echo ($producto->transporte == '1') ? "checked" : ""; ?>>Si</label><br>
                                         <label><input type="radio" name="transporte" value="0" class="radioInput" <?php echo ($producto->transporte == '0') ? "checked" : ""; ?>>No</label><br>
-                                        <input type="text" name="transporte_txt" value="<?php echo $producto->transporte_txt ?>" style='width: 80%;<?php echo ($producto->transporte == '0' || $producto->transporte==null) ? "display:none" : ""; ?>'>
+                                        <input type="text" name="transporte_txt" value="<?php echo $producto->transporte_txt ?>" style='width: 80%;<?php echo ($producto->transporte == '0' || $producto->transporte == null) ? "display:none" : ""; ?>'>
                                     </div>
                                 </div>
                                 <div class="col-md-6">                        
@@ -187,7 +189,7 @@
                                         <label>Impuesto incluido?</label><br>                                                                                
                                         <label><input type="radio" name="impuesto" value="1" class="radioInput" <?php echo ($producto->impuesto == '1') ? "checked" : ""; ?>>Si</label><br>                                            
                                         <label><input type="radio" name="impuesto" value="0" class="radioInput" <?php echo ($producto->impuesto == '0') ? "checked" : ""; ?>>No</label><br>
-                                        <input type="text" name="impuesto_txt" value="<?php echo $producto->impuesto_txt ?>" style='width: 80%;<?php echo ($producto->impuesto == '1'  || $producto->impuesto==null) ? "display:none" : ""; ?>'>
+                                        <input type="text" name="impuesto_txt" value="<?php echo $producto->impuesto_txt ?>" style='width: 80%;<?php echo ($producto->impuesto == '1' || $producto->impuesto == null) ? "display:none" : ""; ?>'>
                                     </div>
                                 </div>
                             </div>

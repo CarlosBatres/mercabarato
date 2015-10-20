@@ -218,9 +218,11 @@ class Vendedor extends MY_Controller {
                 $data_localizacion = $this->session->userdata('afiliacion_localizacion');
                 $data_puntos_venta = $this->session->userdata('afiliacion_puntos_venta');
                 $this->cliente_model->update($cliente->id, $data_cliente);
+                
                 $nickname = $data_vendedor["nickname"];
                 unset($data_vendedor["nickname"]);
                 $data_vendedor["unique_slug"] = $this->slug->create_uri($nickname);
+                
                 $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
                 if (!$vendedor) {
                     $vendedor_id = $this->vendedor_model->insert($data_vendedor);

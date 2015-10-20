@@ -24,15 +24,32 @@ $(document).ready(function() {
         },
         done: function(e, data) {
             var files = "";
+            var error = false;
+            var error_text = "";
             $.each(data.result.files, function(index, file) {
-                files = files + file.name;
-                files = files + ";;";
+                if (typeof file.error !== 'undefined') {
+                    error = true;
+                    error_text = file.error;
+                } else {
+                    files = files + file.name;
+                    files = files + ";;";
+                }
             });
-            files = files.slice(0, -2);
-            $('#file_name').val(files);
-            $('#admin_producto_form').submit();
+
+            if (!error) {
+                files = files.slice(0, -2);
+                $('#file_name').val(files);
+                $('#admin_producto_form').submit();
+            } else {
+                $('#fileupload_alert').css('display', 'block');
+                $('html, body').animate({
+                    scrollTop: $('#grupo-imagenes').offset().top
+                }, 1000);
+                $('#fileupload_alert').find('span').html(error_text);
+            }
+
             $.unblockUI();
-        }        
+        }
     });
 
     $('#cambiar_imagen').on('click', function(e) {
@@ -84,18 +101,19 @@ function validateForms() {
     $("#admin_producto_form").validate({
         submitHandler: function(form) {
             var flag = true;
-            var numFiles = $("#fileupload")[0].files.length;            
+            var numFiles = $("#fileupload")[0].files.length;
 
             if (numFiles >= 0 && numFiles <= 3) {
                 $('#fileupload_alert').css('display', 'none');
             } else {
                 $('#fileupload_alert').css('display', 'block');
-                 $('html, body').animate({
+                $('#fileupload_alert').find('span').html("Debe seleccionar un máximo de 3 imágenes.");
+                $('html, body').animate({
                     scrollTop: $('#fileupload_alert').offset().top
                 }, 1000);
                 return false;
             }
-            
+
             if ($('input[name="categoria_id"]').val() !== "") {
                 $('#seleccionar-categoria_alert').css('display', 'none');
             } else {

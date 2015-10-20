@@ -38,17 +38,19 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row">
+                <div class="row" id="grupo-imagenes">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Seleccione varias imágenes para el producto ( Limite 3)</label>                    
+                            <label>Seleccione varias imágenes para el producto ( Limite 3 y solo JPG , GIF y PNG )</label>                    
                             <input id="fileupload" type="file" name="files[]" multiple data-url="<?php echo site_url('panel_vendedor/producto/upload_image') ?>">
                             <input type="hidden" name="file_name" id="file_name" value="">                                                            
                         </div> 
                     </div>
-                    <div class="alert alert-danger" id="fileupload_alert" style="display:none;"> 
-                        <a class="close" data-dismiss="alert">×</a>
-                        Debe seleccionar un máximo de 3 imágenes.
+                    <div class="col-md-12">
+                        <div class="alert alert-danger" id="fileupload_alert" style="display:none;"> 
+                            <a class="close" data-dismiss="alert">×</a>
+                            <span>Debe seleccionar un máximo de 3 imágenes.</span>
+                        </div>
                     </div>
                 </div>
                 <br>                                

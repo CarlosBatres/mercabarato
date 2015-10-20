@@ -173,7 +173,8 @@
                                 <label class="label-datos">Población</label>
                                 <select name="poblacion" class="form-control">
                                     <option value="0">Seleccione una</option>                        
-                                    <?php foreach ($poblaciones as $poblacion): 
+                                    <?php
+                                    foreach ($poblaciones as $poblacion):
                                         $class = "";
                                         if ($poblacion_id == $poblacion->id) {
                                             $class = "selected";
@@ -310,8 +311,14 @@
                                     <input id="fileupload" type="file" name="files" data-url="<?php echo site_url('util/upload_vendedor_image') ?>">                                        
                                 <?php endif; ?>
                                 <input type="hidden" name="file_name" id="file_name" value="">                                                            
-                            </div> 
-                        </div>                        
+                            </div>                            
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="alert alert-danger" id="fileupload_alert" style="display:none;"> 
+                                <a class="close" data-dismiss="alert">×</a>
+                                <span>Error</span>
+                            </div>
+                        </div>
                         <div class="col-sm-12 text-center">
                             <button type="submit" class="btn btn-template-main"><i class="fa fa-save"></i> Guardar Cambios</button>
                         </div>
