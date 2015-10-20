@@ -844,14 +844,7 @@ class Vendedor extends MY_Controller {
 
 
                 $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
-
-                if ($this->input->post('file_name') !== "") {
-                    $filename = $this->input->post('file_name');
-                    $this->vendedor_model->cleanup_image($vendedor->id);
-                } else {
-                    $filename = null;
-                }
-
+                
                 if ($keywords_text != null) {
                     $keyword_id = $this->keyword_model->insert(array("keywords" => $keywords_text));
                 } else {
@@ -866,10 +859,15 @@ class Vendedor extends MY_Controller {
                     "nif_cif" => ($this->input->post('nif_cif') != '') ? $this->input->post('nif_cif') : null,
                     "direccion" => ($this->input->post('direccion') != '') ? $this->input->post('direccion') : null,
                     "telefono_fijo" => ($this->input->post('telefono_fijo') != '') ? $this->input->post('telefono_fijo') : null,
-                    "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,
-                    "filename" => $filename,
+                    "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,                
                     "keyword" => $keyword_id
                 );
+                
+                if ($this->input->post('file_name') !== "") {
+                    $filename = $this->input->post('file_name');
+                    $this->vendedor_model->cleanup_image($vendedor->id);
+                    $data_vendedor["filename"] = $filename;
+                }
 
                 $data_puntos_venta = array();
                 if ($this->input->post('nombre_punto_venta_1') != "") {
