@@ -371,10 +371,10 @@ class Cliente extends MY_Controller {
                     $this->email->to($usuario->email);
                     $this->email->subject('Invitacion de Mercabarato.com');
                     $data_email = array(
-                    "titulo" => $data["titulo"],
-                    "comentario" => $data["comentario"],
-                    "identidad" => $identificador,
-                    "link" => site_url("auth").'?email='.$usuario->email.'&continue='.site_url("panel_vendedor/invitaciones/recibidas"));
+                        "titulo" => $data["titulo"],
+                        "comentario" => $data["comentario"],
+                        "identidad" => $identificador,
+                        "link" => site_url("auth") . '?email=' . $usuario->email . '&continue=' . site_url("panel_vendedor/invitaciones/recibidas"));
                     $this->email->message($this->load->view('home/emails/invitacion_email_a_vendedor', $data_email, true));
                     $this->email->send();
                 }
@@ -759,6 +759,107 @@ class Cliente extends MY_Controller {
                 }
             } else {
                 redirect('404');
+            }
+        } else {
+            redirect('');
+        }
+    }
+
+    public function enviar_invitacion_email() {
+        if ($this->authentication->is_loggedin()) {
+            $user_id = $this->authentication->read('identifier');
+            $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+
+            $formValues = $this->input->post();
+            if ($formValues !== false) {
+                $email = $this->input->post('email');
+                $titulo = $this->input->post('titulo');
+                $mensaje = $this->input->post('mensaje');
+
+                $vendedor_usr = $this->usuario_model->get_by(array("email" => $email));
+                $registrar = false;
+
+                if (!$vendedor_usr) {
+                    $user_id_created = $this->authentication->create_user($email, "passwordtemporal");
+                    if ($user_id_created !== FALSE) {
+                        $registrar=true;
+                        $secret_key = substr(md5(uniqid(mt_rand(), true)), 0, 30);
+                        $ip_address = $this->session->userdata('ip_address');
+                        $usuario_new = $this->usuario_model->get($user_id_created);
+                        $usuario_new->ip_address = $ip_address;
+                        $usuario_new->fecha_creado = date("Y-m-d H:i:s");
+                        $usuario_new->ultimo_acceso = date("Y-m-d H:i:s");
+                        $usuario_new->activo = 0;
+                        $usuario_new->temporal = 1;
+                        $usuario_new->secret_key = $secret_key;
+                        $this->usuario_model->update($user_id_created, $usuario_new);
+
+                        $data_new = array(
+                            "usuario_id" => $user_id_created,
+                            "es_vendedor" => 0
+                        );
+
+                        $cliente_id_new = $this->cliente_model->insert($data_new);
+
+                        $data_vendedor_new = array(
+                            "cliente_id" => $cliente_id_new,
+                            "habilitado" => 0
+                        );
+
+                        $this->vendedor_model->insert($data_vendedor_new);
+
+                        $vendedor_usr = $this->usuario_model->get($user_id_created);
+                    }
+                }
+
+                if (!$this->invitacion_model->invitacion_existe($user_id, $vendedor_usr->id)) {
+                    $data = array(
+                        "titulo" => $titulo,
+                        "comentario" => $mensaje,
+                        "invitar_desde" => $user_id,
+                        "invitar_para" => $vendedor_usr->id,
+                        "estado" => "1",
+                        "fecha_envio" => date("Y-m-d H:i:s")
+                    );
+
+                    if ($this->config->item('emails_enabled')) {
+                        $usuario = $this->usuario_model->get($user_id);
+
+                        if ($cliente->nombres != "" && $cliente->apellidos != "") {
+                            $identidad = $cliente->nombres . " " . $cliente->apellidos;
+                        } else {
+                            $identidad = $this->usuario_model->get_email($user_id);
+                        }
+
+
+                        $this->load->library('email');
+                        $this->email->initialize($this->config->item('email_info'));
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($email);
+                        $this->email->subject('Invitacion de Mercabarato.com');
+                        $data_email = array(
+                            "titulo" => $titulo,
+                            "comentario" => $mensaje,
+                            "identidad" => $identidad,
+                            "registrar" => $registrar,
+                            "link" => site_url("auth") . '?email=' . $email . '&continue=' . site_url("panel_vendedor/invitaciones/recibidas"));
+                        $this->email->message($this->load->view('home/emails/invitacion_nueva_email_a_vendedor', $data_email, true));
+                        $this->email->send();
+                    }
+
+                    $this->invitacion_model->insert($data);                    
+                } else {
+                    // Invitacion existe
+                }
+
+                redirect('usuario/contactos');
+            } else {
+                $this->template->set_title('Mercabarato - Busca y Compara');
+                $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
+
+                $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
+                $this->template->add_js('modules/home/invitacion_enviar_email.js');
+                $this->template->load_view('home/cliente/enviar_invitacion', array("html_options" => $html_options));
             }
         } else {
             redirect('');

@@ -88,12 +88,14 @@ class Main extends MY_Controller {
                     if ($user_nick) {
                         echo json_encode(FALSE);
                     } else {
-                        //$regex = '/[^a-zA-Z0-9_-]/';
-                        $regex1 = '/^\w{3,30}$/i';
-                        $regex2 = '/[a-z]/i';
-                        if (preg_match($regex1, $word) && preg_match($regex2, $word)) {
-                            echo json_encode(TRUE);
-                        } else {
+                        if (!is_numeric($word)) {
+                            $regex = '/^[a-zA-Z0-9_-]+$/';
+                            if (preg_match($regex, $word)) {
+                                echo json_encode(TRUE);
+                            } else {
+                                echo json_encode(FALSE);
+                            }
+                        }else{
                             echo json_encode(FALSE);
                         }
                     }
@@ -254,10 +256,16 @@ class Main extends MY_Controller {
      */
     public function test_url() {
         show_404();
-        /* $data_mail = array(
-          "link" => "mocotendido"
+
+        /* $email="emailvendedor@mail.com";        
+          $data_email = array(
+          "titulo" => "Titulo",
+          "comentario" => "Mensaje",
+          "identidad" => "Nombre Cliente",
+          "registrar" => true,
+          "link" => site_url("auth") . '?email=' . $email . '&continue=' . site_url("panel_vendedor/invitaciones/recibidas"),
           );
-          echo $this->load->view('home/emails/confirmar_registro', $data_mail, true);*/
+          echo $this->load->view('home/emails/invitacion_nueva_email_a_vendedor', $data_email, true); */
     }
 
 }

@@ -28,7 +28,9 @@
                     <div class="heading">
                         <h3>Mis Contactos Vendedores</h3>                        
                     </div>                                       
-                    <p class="lead">A continuación se muestran tus contactos e invitaciones pendientes.</p>
+                    <p class="lead">A continuación se muestran tus contactos e invitaciones pendientes.<br><br>
+                        <a href="<?php echo site_url('usuario/contactos/enviar-invitacion');?>"><strong>Deseas enviar una invitación a un correo electrónico?</strong></a>
+                    </p>
 
                     <div class="row">
                         <div class="col-md-12">

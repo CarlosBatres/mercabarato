@@ -15,7 +15,17 @@ $(document).ready(function() {
     $("#form_datos_2").validate({
         rules: {
             nombre_empresa: {required: true},
-            nif_cif: {required: true}
+            nif_cif: {required: true},
+            nickname: {required: true, maxlength: 30,minlength: 3,
+                remote: {
+                    url: SITE_URL + "util/verificar_nickname",
+                    type: "post",
+                    data: {
+                        nombre: function() {
+                            return $("#form_datos_2").find("input[name='nickname']").val();
+                        }
+                    }
+                }}
         },
         messages: {
             nombre_empresa: {
@@ -23,6 +33,12 @@ $(document).ready(function() {
             },
             nif_cif: {
                 required: "Ingresa tu N.I.F o C.I.F"
+            },
+            nickname: {
+                required: "Ingresa un apodo unico que te identifique",
+                remote: "Este apodo es invalido o ya existe ingresa uno nuevo.",
+                maxlength: "El apodo debe tener un maximo de 30 caracteres.",
+                minlength: "El apodo debe tener un minimo de 3 caracteres."
             }
         }
     });

@@ -106,6 +106,7 @@ $route['usuario/contactos/rechazar_invitacion'] = 'home/cliente/rechazar_invitac
 $route['usuario/contactos/eliminar'] = 'home/cliente/eliminar_invitacion';
 $route['usuario/contactos/sin_notificaciones'] = 'home/cliente/sin_notificaciones';
 $route['usuario/contactos/con_notificaciones'] = 'home/cliente/con_notificaciones';
+$route['usuario/contactos/enviar-invitacion'] = 'home/cliente/enviar_invitacion_email';
 $route['usuario/enviar_invitacion'] = 'home/cliente/enviar_invitacion';
 $route['usuario/mis-paquetes'] = 'home/vendedor/mis_paquetes';
 $route['usuario/paquetes/comprar'] = 'home/vendedor/comprar_paquetes';

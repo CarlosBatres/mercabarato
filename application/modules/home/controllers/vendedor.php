@@ -218,11 +218,11 @@ class Vendedor extends MY_Controller {
                 $data_localizacion = $this->session->userdata('afiliacion_localizacion');
                 $data_puntos_venta = $this->session->userdata('afiliacion_puntos_venta');
                 $this->cliente_model->update($cliente->id, $data_cliente);
-                
+
                 $nickname = $data_vendedor["nickname"];
                 unset($data_vendedor["nickname"]);
                 $data_vendedor["unique_slug"] = $this->slug->create_uri($nickname);
-                
+
                 $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
                 if (!$vendedor) {
                     $vendedor_id = $this->vendedor_model->insert($data_vendedor);
@@ -406,11 +406,25 @@ class Vendedor extends MY_Controller {
         if ($this->authentication->is_loggedin()) {
             $this->template->set_title('Mercabarato - Busca y Compara');
             $user_id = $this->authentication->read('identifier');
+            $usuario = $this->usuario_model->get($user_id);
             $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
 
             if ($this->cliente_model->es_vendedor($cliente->id)) {
                 $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
                 $paquetes = $this->paquete_model->get_paquetes();
+
+                // Aqui no dejamos que un vendedor adquiera un paquete porque hace falta informacion en su cuenta
+                // Por ejemplo el nickname o unique_url que sirve para accesar la pagina del vendedor
+                // Esto tambien es para el caso de que se envia una invitacion a un vendedor a su correo y la cuenta que se crea es incompleta
+                
+                if (($usuario->nickname == null || $usuario->nickname == "") && ($vendedor->unique_slug == null || $vendedor->unique_slug == "")) {
+                    $this->session->set_flashdata('warning', '<strong>Advertencia:</strong><br>'
+                            . 'Tienes datos incompletos, antes de poder adquirir un paquete debes rellenarlos. '
+                            . '<br> - Necesitas especificar un nickname o apodo para tu cuenta');
+                    redirect('usuario/datos-vendedor');
+                    die();
+                }
+
 
                 $cliente_es_vendedor = $this->cliente_model->es_vendedor($cliente->id);
                 $html_options = $this->load->view('home/partials/panel_opciones', array("es_vendedor" => $cliente_es_vendedor), true);
@@ -691,8 +705,8 @@ class Vendedor extends MY_Controller {
                         $infocompras = true;
                     }
                 }
-                
-                $puntos_venta=$this->punto_venta_model->get_many_by(array("vendedor_id"=>$vendedor->id));
+
+                $puntos_venta = $this->punto_venta_model->get_many_by(array("vendedor_id" => $vendedor->id));
 
                 $data = array(
                     "vendedor" => $vendedor,
@@ -844,7 +858,7 @@ class Vendedor extends MY_Controller {
 
 
                 $vendedor = $this->vendedor_model->get_by("cliente_id", $cliente->id);
-                
+
                 if ($keywords_text != null) {
                     $keyword_id = $this->keyword_model->insert(array("keywords" => $keywords_text));
                 } else {
@@ -859,10 +873,10 @@ class Vendedor extends MY_Controller {
                     "nif_cif" => ($this->input->post('nif_cif') != '') ? $this->input->post('nif_cif') : null,
                     "direccion" => ($this->input->post('direccion') != '') ? $this->input->post('direccion') : null,
                     "telefono_fijo" => ($this->input->post('telefono_fijo') != '') ? $this->input->post('telefono_fijo') : null,
-                    "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,                
+                    "telefono_movil" => ($this->input->post('telefono_movil') != '') ? $this->input->post('telefono_movil') : null,
                     "keyword" => $keyword_id
                 );
-                
+
                 if ($this->input->post('file_name') !== "") {
                     $filename = $this->input->post('file_name');
                     $this->vendedor_model->cleanup_image($vendedor->id);
@@ -936,18 +950,22 @@ class Vendedor extends MY_Controller {
 
                 if ($this->input->post("provincia") != 0) {
                     $this->localizacion_model->update_by(array("usuario_id" => $user_id), array("provincia_id" => $this->input->post("provincia")));
-                }else{
+                } else {
                     $this->localizacion_model->update_by(array("usuario_id" => $user_id), array("provincia_id" => null));
                 }
                 if ($this->input->post("poblacion") != 0) {
                     $this->localizacion_model->update_by(array("usuario_id" => $user_id), array("poblacion_id" => $this->input->post("poblacion")));
-                }else{
+                } else {
                     $this->localizacion_model->update_by(array("usuario_id" => $user_id), array("poblacion_id" => null));
                 }
 
 
-                //$usuario = $this->usuario_model->get($user_id);
-                //$data_vendedor["unique_slug"] = $this->slug->create_uri($usuario->nickname);
+                if ($this->input->post("nickname") != "") {
+                    $nickname = $this->input->post("nickname");
+                    $data_vendedor["unique_slug"] = $this->slug->create_uri($nickname);
+                    $this->usuario_model->update($user_id, array("nickname" => $nickname));
+                }
+
                 $this->vendedor_model->update($vendedor->id, $data_vendedor);
 
                 $this->session->set_flashdata('success', 'Tus datos han sido modificados con exito.');

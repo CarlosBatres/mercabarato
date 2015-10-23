@@ -27,6 +27,12 @@
 
             <div class="col-md-9 clearfix" id="customer-account">                                                
                 <div class="box clearfix">
+                    <?php if ($this->session->flashdata('warning')) { ?>
+                        <div class="alert alert-warning"> 
+                            <a class="close" data-dismiss="alert">×</a>
+                            <?= $this->session->flashdata('warning') ?> 
+                        </div>
+                    <?php } ?>                                          
                     <div class="heading">
                         <h3 class="text-uppercase">Datos del Vendedor</h3>
                     </div>
@@ -42,8 +48,24 @@
                             <a class="close" data-dismiss="alert">×</a>
                             <?= $this->session->flashdata('error') ?> 
                         </div>
-                    <?php } ?>                                          
+                    <?php } ?>                                                              
                     <?php echo form_open('usuario/datos-vendedor/modificar', 'id="form_datos_2" rel="preventDoubleSubmission"'); ?>                                                                        
+                    <?php if ($usuario->nickname==null): ?>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="label-datos">Apodo o Nickname</label>
+                                <div class="form-group">                                
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="nickname" placeholder="Vacio" value="<?php echo $usuario->nickname ?>">
+                                        <span class="input-group-addon"><i class="fa fa-user-secret fa-fw"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <br><p class="lead">Solo permite letras, números y guiones.</p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                     <div class="row">
                         <div class="col-md-12">
                             <label class="label-datos">Nombre Comercial de la Empresa</label>
