@@ -57,7 +57,7 @@ class cron_controller extends MY_Controller {
 
                         // Enviamos el mensaje al correo del vendedor administrador siempre y cuando no sea el admin osea 1
                         
-                        if ($paquete->autorizado_por != 1) {
+                        if ($paquete->autorizado_por != 1 && $paquete->autorizado_por != null) {
                             $vendedor_admin_email = $this->usuario_model->get_email($paquete->autorizado_por);
 
                             $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
