@@ -95,7 +95,7 @@ class Main extends MY_Controller {
                             } else {
                                 echo json_encode(FALSE);
                             }
-                        }else{
+                        } else {
                             echo json_encode(FALSE);
                         }
                     }
@@ -256,16 +256,18 @@ class Main extends MY_Controller {
      */
     public function test_url() {
         show_404();
-
-        /* $email="emailvendedor@mail.com";        
-          $data_email = array(
-          "titulo" => "Titulo",
-          "comentario" => "Mensaje",
-          "identidad" => "Nombre Cliente",
-          "registrar" => true,
-          "link" => site_url("auth") . '?email=' . $email . '&continue=' . site_url("panel_vendedor/invitaciones/recibidas"),
-          );
-          echo $this->load->view('home/emails/invitacion_nueva_email_a_vendedor', $data_email, true); */
+        /*$paquete->nombre_paquete="Estandar";
+        $paquete->fecha_comprado="1-1-2012";
+        $paquete->fecha_terminar="1-1-2012";
+        $paquete->monto_a_cancelar="200";
+            
+        $vendedor="Tecnosapiens";
+        $data_email = array(
+            "paquete" => $paquete,
+            "vendedor"=> $vendedor,
+            "dias_caducar" => "10"
+                );
+        echo $this->load->view('home/emails/paquete_5dias_caducar', $data_email, true);*/
     }
 
 }

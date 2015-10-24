@@ -1,4 +1,4 @@
-<?php header('Content-Type:text/html; charset=UTF-8');?>
+<?php header('Content-Type:text/html; charset=UTF-8'); ?>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">	
     <tr>
         <td style="padding: 10px 0 30px 0;">
@@ -11,16 +11,31 @@
                 <tr>
                     <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
                         <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                            <tr>
-                                <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
-                                    <b>Tu paquete esta a punto de caducar!</b>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                    Tienes <strong>5</strong> días para renovar tu actual paquete o todos tus productos y anuncios quedaran inhabilitados y no podrás acceder a tu panel de control. No te preocupes no se eliminara nada por el momento.
-                                </td>
-                            </tr>
+                            <?php if ($vendedor): ?>
+                                <tr>
+                                    <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
+                                        <b>Un vendedor tiene un paquete a punto de caducar!</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+                                        El vendedor <strong><?php echo $vendedor?></strong> tiene <strong><?php echo $dias_caducar?></strong> días para renovar su actual paquete o todos tus productos y anuncios quedaran inhabilitados y no podrá acceder a su panel de control. No te preocupes no se eliminara nada por el momento.
+                                    </td>
+                                </tr>
+                            <?php else: ?>
+                                <tr>
+                                    <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
+                                        <b>Tu paquete esta a punto de caducar!</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+                                        Tienes <strong><?php echo $dias_caducar?></strong> días para renovar tu actual paquete o todos tus productos y anuncios quedaran inhabilitados y no podrás acceder a tu panel de control. No te preocupes no se eliminara nada por el momento.
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+
+
                             <tr>
                                 <td>
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -80,7 +95,7 @@
                             <tr>
                                 <td style="color: #ffffff; text-align: center; font-family: Arial, sans-serif; font-size: 14px;" width="100%">
                                     <span style="font-weight: 600;color: #ff9933;">PRÁCTICA EL COMERCIO INTELIGENTE <br>(Compara precios , presupuestos , ofertas...)</span> <br><br>
-                                    Si deseas darte de baja puedes darle click al siguiente link <a href="<?php echo site_url('usuario/eliminar-cuenta')?>" style="color: #ffffff; font-size: 16px;"> BAJA </a> <br>
+                                    Si deseas darte de baja puedes darle click al siguiente link <a href="<?php echo site_url('usuario/eliminar-cuenta') ?>" style="color: #ffffff; font-size: 16px;"> BAJA </a> <br>
                                     Copyright &copy; 2015. Mercabarato.com Todos los derechos reservados.                                    
                                 </td>                                
                             </tr>

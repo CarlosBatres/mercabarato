@@ -85,9 +85,11 @@
                                     <div class="frame">
                                         <span class="helper"></span>
                                         <a href="<?php echo site_url("productos/" . $producto->unique_slug) ?>">                    
-                                            <?php if ($producto->imagen_nombre === null): ?>
+                                            <?php if ($producto->imagen_nombre === null && $producto->imagen_vendedor === null): ?>
                                                 <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="producto-img">
-                                            <?php else: ?>
+                                            <?php elseif ($producto->imagen_nombre === null): ?>                                    
+                                                <img src="<?php echo assets_url($this->config->item('vendedores_img_path')) . '/' . $producto->imagen_vendedor ?>" alt="" class="producto-img">
+                                            <?php else: ?>    
                                                 <img src="<?php echo assets_url($this->config->item('productos_img_path')) . '/' . $producto->imagen_nombre ?>" alt="" class="producto-img">
                                             <?php endif; ?>
                                         </a>                        

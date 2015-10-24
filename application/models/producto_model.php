@@ -94,7 +94,7 @@ class Producto_model extends MY_Model {
              * ------------------------------------------------------------------------- 
              */
 
-            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre, ";
+            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre,vd.filename as imagen_vendedor, ";
 
             if (isset($params["order_by_grupo_txt"])) {
                 $familia = (isset($params["order_by_familia_txt"]) ? $params["order_by_familia_txt"] : '');
@@ -109,7 +109,8 @@ class Producto_model extends MY_Model {
 
             $query.= "FROM (SELECT * FROM  `productos_precios` ORDER BY nuevo_costo ASC ) as p ";
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
-            $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
+            $query.="INNER JOIN vendedor vd ON vd.id = p.vendedor_id ";
+            $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";            
 
             // SUB QUERY //
 
@@ -239,7 +240,7 @@ class Producto_model extends MY_Model {
              *
              * ------------------------------------------------------------------------- 
              */
-            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre, ";
+            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre, vd.filename as imagen_vendedor, ";
 
             if (isset($params["order_by_grupo_txt"])) {
                 $familia = (isset($params["order_by_familia_txt"]) ? $params["order_by_familia_txt"] : '');
@@ -254,6 +255,7 @@ class Producto_model extends MY_Model {
 
             $query.= "FROM (SELECT * FROM  `productos_precios` ORDER BY nuevo_costo DESC ) as p ";
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
+            $query.="INNER JOIN vendedor vd ON vd.id = p.vendedor_id ";
             $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
 
             $query.="WHERE ( 1";

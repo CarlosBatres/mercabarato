@@ -20,7 +20,7 @@ class cron_controller extends MY_Controller {
                 $this->email->initialize($this->config->item('email_info'));
             }
 
-            $dias_previos_aviso = 5;
+            $dias_previos_aviso = 10;
             $paquetes_por_vencer = $this->vendedor_paquete_model->get_paquetes_a_caducar($dias_previos_aviso);
             if ($paquetes_por_vencer) {
 
@@ -30,10 +30,50 @@ class cron_controller extends MY_Controller {
                         $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
                         $this->email->to($email);
                         $this->email->subject('Tu paquete esta apunto de caducar');
-                        $data_email = array("paquete" => $paquete);
+                        $data_email = array(
+                            "paquete" => $paquete,
+                            "vendedor" => false,
+                            "dias_caducar" => $dias_previos_aviso
+                        );
                         $this->email->message($this->load->view('home/emails/paquete_5dias_caducar', $data_email, true));
                         $this->email->send();
                         $this->email->clear();
+                        
+                        // Enviamos el mensaje al correo de comercial
+
+                        $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                        $this->email->to($this->config->item('site_comercial_email'));
+                        $this->email->subject('Un paquete esta apunto de caducar');
+                        $vendedor = $this->vendedor_model->get($paquete->vendedor_id);
+
+                        $data_email = array(
+                            "paquete" => $paquete,
+                            "vendedor" => $vendedor->nombre,
+                            "dias_caducar" => $dias_previos_aviso
+                        );
+                        $this->email->message($this->load->view('home/emails/paquete_5dias_caducar', $data_email, true));
+                        $this->email->send();
+                        $this->email->clear();
+
+                        // Enviamos el mensaje al correo del vendedor administrador siempre y cuando no sea el admin osea 1
+                        
+                        if ($paquete->autorizado_por != 1) {
+                            $vendedor_admin_email = $this->usuario_model->get_email($paquete->autorizado_por);
+
+                            $this->email->from($this->config->item('site_info_email'), 'Mercabarato.com');
+                            $this->email->to($vendedor_admin_email);
+                            $this->email->subject('Un paquete esta apunto de caducar');
+                            $vendedor = $this->vendedor_model->get($paquete->vendedor_id);
+
+                            $data_email = array(
+                                "paquete" => $paquete,
+                                "vendedor" => $vendedor->nombre,
+                                "dias_caducar" => $dias_previos_aviso
+                            );
+                            $this->email->message($this->load->view('home/emails/paquete_5dias_caducar', $data_email, true));
+                            $this->email->send();
+                            $this->email->clear();
+                        }
                     }
                 }
             }
@@ -159,9 +199,9 @@ class cron_controller extends MY_Controller {
                         $data_email = array();
 
                         if ($var->solicitud_seguro == "1") {
-                            $data_email["link"] = site_url("auth") . '?email=' . $email_vendedor . '&continue=' . site_url("panel_vendedor/infocompras/seguros/responder/").'/'.$var->infocompra_id;
+                            $data_email["link"] = site_url("auth") . '?email=' . $email_vendedor . '&continue=' . site_url("panel_vendedor/infocompras/seguros/responder/") . '/' . $var->infocompra_id;
                         } else if ($var->infocompra_general == "1") {
-                            $data_email["link"] = site_url("auth") . '?email=' . $email_vendedor . '&continue=' . site_url("panel_vendedor/infocompras/generales/responder/").'/'.$var->infocompra_id;
+                            $data_email["link"] = site_url("auth") . '?email=' . $email_vendedor . '&continue=' . site_url("panel_vendedor/infocompras/generales/responder/") . '/' . $var->infocompra_id;
                         }
 
                         $this->email->message($this->load->view('home/emails/infocompra_caducar_vendedor', $data_email, true));
@@ -179,18 +219,18 @@ class cron_controller extends MY_Controller {
                         $data_email = array();
 
                         if ($var->solicitud_seguro == "1") {
-                            $data_email["link"] = site_url("auth") . '?email=' . $email_cliente . '&continue=' . site_url("usuario/infocompras-seguros/extenderla/").'/'.$var->infocompra_id;
+                            $data_email["link"] = site_url("auth") . '?email=' . $email_cliente . '&continue=' . site_url("usuario/infocompras-seguros/extenderla/") . '/' . $var->infocompra_id;
                         } else if ($var->infocompra_general == "1") {
-                            $data_email["link"] = site_url("auth") . '?email=' . $email_cliente . '&continue=' . site_url("usuario/infocompras-general/extenderla/").'/'.$var->infocompra_id;
+                            $data_email["link"] = site_url("auth") . '?email=' . $email_cliente . '&continue=' . site_url("usuario/infocompras-general/extenderla/") . '/' . $var->infocompra_id;
                         }
-                        
+
                         $this->email->message($this->load->view('home/emails/infocompra_caducar_cliente', $data_email, true));
                         $this->email->send();
                         $this->email->clear();
                     }
                 }
             }
-            
+
             $infocompra = $this->infocompra_model->get_infocompras_caducado($params);
 
             if ($infocompra) {

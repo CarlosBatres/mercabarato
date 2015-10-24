@@ -34,6 +34,15 @@
                             <?php endforeach; ?>
                         </div>
                     </div>
+                <?php elseif ($vendedor->filename != null): ?> 
+                    <div class="row">
+                        <div class="frame-ficha">
+                            <span class="helper"></span>
+                            <a href="<?php echo site_url("") ?>">                                                                
+                                <img src="<?php echo assets_url($this->config->item('vendedores_img_path')) . '/' . $vendedor->filename ?>" alt="" class="producto-img-ficha">                                            
+                            </a>                        
+                        </div>
+                    </div>
                 <?php else: ?> 
                     <div class="row">
                         <div class="frame-ficha">
@@ -78,7 +87,7 @@
                                 <?php endif; ?>
 
                                 <p class="price"><?php echo number_format($tarifa, '2') . ' ' . $this->config->item('money_sign') ?></p>
-                                <p class="price-tarifa-resaltado text-center"><?php echo ($tarifa_texto)?$tarifa_texto:""?></p> 
+                                <p class="price-tarifa-resaltado text-center"><?php echo ($tarifa_texto) ? $tarifa_texto : "" ?></p> 
                             <?php elseif ($oferta < $tarifa && $oferta < $producto->precio): ?>                                
 
                                 <?php if ($producto->precio_anterior == null || ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5)): ?>
@@ -187,9 +196,11 @@
                                 <div class="frame">
                                     <span class="helper"></span>
                                     <a href="<?php echo site_url("productos/" . $producto->unique_slug) ?>">                    
-                                        <?php if ($producto->imagen_nombre === null): ?>
+                                        <?php if ($producto->imagen_nombre === null && $producto->imagen_vendedor === null): ?>
                                             <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="producto-img">
-                                        <?php else: ?>
+                                        <?php elseif ($producto->imagen_nombre === null): ?>                                    
+                                            <img src="<?php echo assets_url($this->config->item('vendedores_img_path')) . '/' . $producto->imagen_vendedor ?>" alt="" class="producto-img">
+                                        <?php else: ?>    
                                             <img src="<?php echo assets_url($this->config->item('productos_img_path')) . '/' . $producto->imagen_nombre ?>" alt="" class="producto-img">
                                         <?php endif; ?>
                                     </a>                        
@@ -248,9 +259,11 @@
                                 <div class="frame">
                                     <span class="helper"></span>
                                     <a href="<?php echo site_url("productos/" . $producto->unique_slug) ?>">                    
-                                        <?php if ($producto->imagen_nombre === null): ?>
+                                        <?php if ($producto->imagen_nombre === null && $producto->imagen_vendedor === null): ?>
                                             <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="producto-img">
-                                        <?php else: ?>
+                                        <?php elseif ($producto->imagen_nombre === null): ?>                                    
+                                            <img src="<?php echo assets_url($this->config->item('vendedores_img_path')) . '/' . $producto->imagen_vendedor ?>" alt="" class="producto-img">
+                                        <?php else: ?>    
                                             <img src="<?php echo assets_url($this->config->item('productos_img_path')) . '/' . $producto->imagen_nombre ?>" alt="" class="producto-img">
                                         <?php endif; ?>
                                     </a>                        

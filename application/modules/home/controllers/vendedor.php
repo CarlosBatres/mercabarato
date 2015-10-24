@@ -360,7 +360,7 @@ class Vendedor extends MY_Controller {
 
                 $paquete_en_curso = $this->vendedor_model->get_paquete_en_curso($vendedor->id);
                 $date = strtotime(date("Y-m-d"));
-                $date = strtotime("+5 day", $date);
+                $date = strtotime("+10 day", $date);
                 $date5 = date('Y-m-d', $date);
 
 
@@ -988,7 +988,7 @@ class Vendedor extends MY_Controller {
 
                 $paquete_en_curso = $this->vendedor_model->get_paquete_en_curso($vendedor->id);
                 $date = strtotime(date("Y-m-d"));
-                $date = strtotime("+5 day", $date);
+                $date = strtotime("+10 day", $date);
                 $date5 = date('Y-m-d', $date);
 
                 if ($paquete_en_curso) {
