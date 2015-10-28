@@ -668,7 +668,8 @@ class Vendedor extends MY_Controller {
                 $anuncios = $this->anuncio_model->get_anuncios_del_vendedor($vendedor->id, 3);
                 $params = array(
                     "vendedor_id" => $vendedor->id,
-                    "mostrar_producto" => "1"
+                    "mostrar_producto" => "1",
+                    "habilitado" => "1"
                 );
 
                 $vendedor_image = false;
@@ -1140,6 +1141,12 @@ class Vendedor extends MY_Controller {
                 if ($this->input->post('subfamilia_txt') != "") {
                     $params["order_by_subfamilia_txt"] = $this->input->post('subfamilia_txt');
                     $params["subfamilia_txt"] = $this->input->post('subfamilia_txt');
+                }
+                
+                if ($this->authentication->is_loggedin()) {
+                    $user_id = $this->authentication->read('identifier');
+                    $cliente = $this->cliente_model->get_by("usuario_id", $user_id);
+                    $params["cliente_id"] = $cliente->id;
                 }
 
                 $pagina = $this->input->post('pagina');

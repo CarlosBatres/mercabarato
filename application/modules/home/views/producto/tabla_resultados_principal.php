@@ -19,11 +19,11 @@
                         <div class="frame">
                             <span class="helper"></span>
                             <a href="<?php echo site_url("productos/" . $producto->unique_slug) ?>">                    
-                                <?php if ($producto->imagen_nombre === null && $producto->imagen_vendedor===null): ?>
+                                <?php if ($producto->imagen_nombre === null && $producto->imagen_vendedor === null): ?>
                                     <img src="<?php echo assets_url("imgs/imagen-no-disponible.png") ?>" alt="" class="producto-img">
-                                <?php elseif($producto->imagen_nombre === null): ?>                                    
+                                <?php elseif ($producto->imagen_nombre === null): ?>                                    
                                     <img src="<?php echo assets_url($this->config->item('vendedores_img_path')) . '/' . $producto->imagen_vendedor ?>" alt="" class="producto-img">
-                                <?php else:?>    
+                                <?php else: ?>    
                                     <img src="<?php echo assets_url($this->config->item('productos_img_path')) . '/' . $producto->imagen_nombre ?>" alt="" class="producto-img">
                                 <?php endif; ?>
                             </a>                        
@@ -38,6 +38,12 @@
                         </div>
 
                         <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <p class="precio">Consulte con el vendedor </p>
+                                </div>
+                            </div>
+                        <?php elseif ($producto->mostrar_precio == 0 && $this->authentication->is_loggedin() && !$producto->invitacion): ?>
                             <div class="row">
                                 <div class="col-xs-12">
                                     <p class="precio">Consulte con el vendedor </p>

@@ -77,9 +77,13 @@
                     <br>
                     <div class="ficha-producto-precios">
                         <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
+                            <br><br>
+                            <p class="lead text-center"><strong> Consulte precio con el Vendedor.</strong></p>
+                        <?php elseif ($producto->mostrar_precio == 0 && $this->authentication->is_loggedin() && !$son_contactos): ?>
+                            <br><br>
+                            <p class="lead text-center"><strong> Consulte precio con el Vendedor.</strong></p>
                         <?php else: ?>                            
-                            <?php if ($tarifa < $oferta && $tarifa < $producto->precio): ?>                                                    
-
+                            <?php if ($tarifa < $oferta && $tarifa < $producto->precio): ?>
                                 <?php if ($producto->precio_anterior == null || ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5)): ?>
                                     <p class="price"><del><?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?></del></p>
                                 <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
@@ -122,7 +126,7 @@
                         <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>                            
                         <?php else: ?>  
                             <?php foreach ($producto_extras as $ext): ?>
-                                <p><?php echo $ext->value . ' por ' . $ext->nombre . ' unidades' ?></p>                        
+                                <p class="destacado"><?php echo $ext->value . ' por ' . $ext->nombre . ' unidades' ?></p>                        
                             <?php endforeach; ?>
                             <br>
                         <?php endif; ?>
@@ -213,6 +217,10 @@
                                     </div>
 
                                     <?php if ($producto->mostrar_precio == 0 && !$this->authentication->is_loggedin()): ?>
+                                        <div class="row">
+                                            <p class="precio"></p>
+                                        </div>
+                                    <?php elseif ($producto->mostrar_precio == 0 && $this->authentication->is_loggedin() && !$producto->invitacion): ?>
                                         <div class="row">
                                             <p class="precio"></p>
                                         </div>

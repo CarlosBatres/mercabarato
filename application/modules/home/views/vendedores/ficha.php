@@ -105,6 +105,10 @@
                                             <div class="row">
                                                 <p class="precio"></p>
                                             </div>
+                                        <?php elseif ($producto->mostrar_precio == 0 && $this->authentication->is_loggedin() && !$producto->invitacion): ?>
+                                            <div class="row">
+                                                <p class="precio"></p>
+                                            </div>
                                         <?php else: ?>
                                             <?php if ($producto->tipo == 'tarifa' && $producto->nuevo_costo < $producto->precio): ?>
                                                 <div class="row">

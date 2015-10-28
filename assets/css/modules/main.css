@@ -615,6 +615,11 @@ span.arrow {
     padding-top: 50px;
 }
 
+.ficha-producto-extra .destacado{
+    font-size: 18px;    
+    font-weight: 500;
+}
+
 .formularios-seguros{
     padding-top: 50px;
 }

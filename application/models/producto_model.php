@@ -87,6 +87,7 @@ class Producto_model extends MY_Model {
             return array("total" => 0);
         }
         if (isset($params['cliente_id'])) {
+            $usuario_tmp=$this->cliente_model->get($params["cliente_id"]);
             /*             * -------------------------------------------------------------------------
              * 
              * Busqueda cuando se haya iniciado session, se hace en base a un cliente_id
@@ -94,7 +95,8 @@ class Producto_model extends MY_Model {
              * ------------------------------------------------------------------------- 
              */
 
-            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre,vd.filename as imagen_vendedor, ";
+            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre,vd.filename as imagen_vendedor, "
+                    . "CASE WHEN inv1.id IS NOT NULL THEN true WHEN inv2.id IS NOT NULL THEN true ELSE false END AS invitacion, ";
 
             if (isset($params["order_by_grupo_txt"])) {
                 $familia = (isset($params["order_by_familia_txt"]) ? $params["order_by_familia_txt"] : '');
@@ -110,13 +112,17 @@ class Producto_model extends MY_Model {
             $query.= "FROM (SELECT * FROM  `productos_precios` ORDER BY nuevo_costo ASC ) as p ";
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
             $query.="INNER JOIN vendedor vd ON vd.id = p.vendedor_id ";
-            $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";            
+            $query.="INNER JOIN cliente c ON c.id=vd.cliente_id ";
+            $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
+
+            $query.="LEFT JOIN ( SELECT * FROM invitacion i WHERE i.invitar_desde='$usuario_tmp->usuario_id' AND i.estado='2' ) as inv1 ON inv1.invitar_para=c.usuario_id ";
+            $query.="LEFT JOIN ( SELECT * FROM invitacion i WHERE i.invitar_para='$usuario_tmp->usuario_id' AND i.estado='2' ) as inv2 ON inv2.invitar_desde=c.usuario_id ";
 
             // SUB QUERY //
 
             $sub_query = "";
             if (isset($params['search_query'])) {
-                $text = " AND (p.nombre LIKE '%" . $params['search_query'] . "%' OR p.descripcion LIKE '%" . $params['search_query'] . "%' ) ";                
+                $text = " AND (p.nombre LIKE '%" . $params['search_query'] . "%' OR p.descripcion LIKE '%" . $params['search_query'] . "%' ) ";
                 $sub_query.=$text;
             }
             if (isset($params['nombre'])) {
@@ -649,8 +655,8 @@ class Producto_model extends MY_Model {
         if ($cliente_id) {
             $this->db->where('pp.cliente_id', $cliente_id);
         }
-        $this->db->where('pp.fecha_inicio <', date("Y-m-d"));
-        $this->db->where('pp.fecha_finaliza >', date("Y-m-d"));
+        $this->db->where('pp.fecha_inicio <=', date("Y-m-d"));
+        $this->db->where('pp.fecha_finaliza >=', date("Y-m-d"));
         $this->db->where('pp.tipo', 'oferta');
 
         $ofertas = $this->db->get()->row();
@@ -899,67 +905,67 @@ class Producto_model extends MY_Model {
           } */
     }
 
-    public function get_productos_tarifas($params) {        
-        $query= "SELECT * FROM (";
-        $query.= " SELECT * FROM productos_precios pp ";        
+    public function get_productos_tarifas($params) {
+        $query = "SELECT * FROM (";
+        $query.= " SELECT * FROM productos_precios pp ";
         $query.="WHERE 1 ";
 
         if (isset($params['cliente_id'])) {
             $query.= "AND ( pp.cliente_id='" . $params["cliente_id"] . "' AND pp.tipo='tarifa' ) ";
-        }                
-        
+        }
+
         if (isset($params["producto_ids"])) {
             $ids = implode(",", $params["producto_ids"]);
             $query.=" AND pp.id IN(" . $ids . ")";
-        } 
-        
+        }
+
         $query.=" UNION ALL ";
-         
-        $query.= " SELECT * FROM productos_precios pp ";        
+
+        $query.= " SELECT * FROM productos_precios pp ";
         $query.="WHERE 1 ";
 
         if (isset($params['cliente_id'])) {
             $query.= "AND pp.tipo='normal' ";
-        }                
-        
+        }
+
         if (isset($params["producto_ids"])) {
             $ids = implode(",", $params["producto_ids"]);
             $query.=" AND pp.id IN(" . $ids . ")";
-        }        
-        
+        }
+
         $query.=") a ";
         $query.=" GROUP BY id";
-        
+
         $result = $this->db->query($query);
-        $productos = $result->result();        
+        $productos = $result->result();
 
         if (sizeof($productos) > 0) {
             return $productos;
         } else {
             return false;
         }
-        
-        /*$this->db->select('*');
-        $this->db->from('productos_precios pp');        
-        $this->db->where('pp.tipo', "tarifa");
-        $this->db->or_where('pp.tipo', "normal");
 
-        if (isset($params["producto_ids"])) {
-            $this->db->where_in('pp.id', $params["producto_ids"]);
-        }        
+        /* $this->db->select('*');
+          $this->db->from('productos_precios pp');
+          $this->db->where('pp.tipo', "tarifa");
+          $this->db->or_where('pp.tipo', "normal");
 
-        if (isset($params["cliente_id"])) {
-            $this->db->where('pp.cliente_id', $params["cliente_id"]);
-        }
-        
-        $this->db->group_by("pp.id");
+          if (isset($params["producto_ids"])) {
+          $this->db->where_in('pp.id', $params["producto_ids"]);
+          }
 
-        $results = $this->db->get()->result();
-        if ($results) {
-            return $results;
-        } else {
-            return false;
-        }*/
+          if (isset($params["cliente_id"])) {
+          $this->db->where('pp.cliente_id', $params["cliente_id"]);
+          }
+
+          $this->db->group_by("pp.id");
+
+          $results = $this->db->get()->result();
+          if ($results) {
+          return $results;
+          } else {
+          return false;
+          } */
     }
 
 }

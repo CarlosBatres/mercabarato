@@ -281,6 +281,7 @@ class Producto extends MY_Controller {
                     "order_by_grupo_txt" => $producto->grupo_txt,
                     "order_by_familia_txt" => $producto->familia_txt,
                     "order_by_subfamilia_txt" => $producto->subfamilia_txt,
+                    "habilitado" => "1"
                 );
                 $otros_productos = $this->producto_model->get_site_search($params, 4, 0, "relevance", "desc");
                 if ($otros_productos["total"] > 0) {
