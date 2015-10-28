@@ -19,7 +19,12 @@ if (!defined('BASEPATH'))
   | environments.
   |
  */
-$config['base_url'] = 'http://localhost/freelancer/mercabarato_new/';
+if (strpos($_SERVER['HTTP_HOST'], 'www') === false) {
+    $config['base_url'] = 'http://localhost/freelancer/mercabarato_new/';
+} else {
+    $config['base_url'] = 'http://localhost/freelancer/mercabarato_new/';
+}
+
 
 /*
   |--------------------------------------------------------------------------
