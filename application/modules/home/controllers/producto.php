@@ -293,7 +293,8 @@ class Producto extends MY_Controller {
                 $params2 = array(
                     "cliente_id" => $cliente->id,
                     "categoria_id" => $producto->categoria_id,
-                    "excluir_vendedor_id" => $producto->vendedor_id
+                    "excluir_vendedor_id" => $producto->vendedor_id,
+                    "habilitado" => "1"
                 );
                 $otros_productos_categoria = $this->producto_model->get_site_search($params2, 4, 0, "p.fecha_insertado", "desc");
                 if ($otros_productos_categoria["total"] > 0) {
