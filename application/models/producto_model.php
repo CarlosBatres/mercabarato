@@ -723,6 +723,7 @@ class Producto_model extends MY_Model {
         $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
 
         $query.="WHERE p.fecha_insertado >= '" . $fecha_inicio . "' AND p.fecha_insertado <= '" . $fecha_final . "'";
+        $query.="AND p.habilitado='1'";
 
         if ($vendedores_id) {
             $ids = implode(",", $vendedores_id);
