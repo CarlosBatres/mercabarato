@@ -17,7 +17,13 @@ class Panel_vendedores extends ADController {
     public function resumen() {
         $this->template->set_title("Panel de Control - Mercabarato.com");
         $this->template->set_layout('panel_vendedores');
-        $this->template->add_js("modules/admin/panel_vendedores/resumen.js");
+
+        $this->load->library('user_agent');
+        if ($this->agent->browser() == 'Internet Explorer' && $this->agent->version() <= 8) {
+            $this->template->add_js("modules/admin/panel_vendedores/resumen_basic.js");
+        } else {
+            $this->template->add_js("modules/admin/panel_vendedores/resumen_full.js");
+        }
 
         $user_id = $this->authentication->read('identifier');
         $vendedor = $this->usuario_model->get_full_identidad($user_id);
@@ -286,7 +292,7 @@ class Panel_vendedores extends ADController {
             $pagina = 1;
         }
 
-        $limit = $this->config->item("admin_default_per_page");        
+        $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
         $clientes_array = $this->cliente_model->get_estadisticas($params, $limit, $offset);
         $flt = (float) ($clientes_array["total"] / $limit);
@@ -333,7 +339,7 @@ class Panel_vendedores extends ADController {
 
             $data = array(
                 "cliente_id" => $cliente_id,
-                "cliente"=>$cliente
+                "cliente" => $cliente
             );
 
             $this->template->load_view('admin/panel_vendedores/estadisticas/estadisticas_cliente', $data);
@@ -354,17 +360,17 @@ class Panel_vendedores extends ADController {
             $vendedor = $this->usuario_model->get_full_identidad($user_id);
 
             $params["vendedor_identidad"] = $vendedor;
-            
-            if($this->input->post('cliente_id')){
-                $params["cliente_id"]=$this->input->post('cliente_id');
-            }            
+
+            if ($this->input->post('cliente_id')) {
+                $params["cliente_id"] = $this->input->post('cliente_id');
+            }
 
             $pagina = $this->input->post('pagina');
         } else {
             $pagina = 1;
         }
 
-        $limit = $this->config->item("admin_default_per_page");        
+        $limit = $this->config->item("admin_default_per_page");
         $offset = $limit * ($pagina - 1);
         $producto_array = $this->cliente_model->get_estadisticas_por_productos($params, $limit, $offset);
         $flt = (float) ($producto_array["total"] / $limit);

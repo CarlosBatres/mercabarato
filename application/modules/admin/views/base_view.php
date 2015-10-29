@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="<?php echo assets_url('css/jquery-ui.theme.min.css'); ?>" >
         <link rel="stylesheet" href="<?php echo assets_url('css/jquery-ui.structure.min.css'); ?>" >
         <link rel="stylesheet" href="<?php echo assets_url('css/jquery-ui.min.css'); ?>" >
-        <link rel="stylesheet" href="<?php echo assets_url('css/metisMenu.min.css'); ?>">
+        <link rel="stylesheet" href="<?php echo assets_url('css/metisMenu.css'); ?>">
         <link rel="stylesheet" href="<?php echo assets_url('css/morris.css'); ?>">
         <link rel="stylesheet" href="<?php echo assets_url('css/jstree/style.min.css'); ?>">
         
@@ -34,12 +34,15 @@
         </script>
         
         <?php echo $css; ?>
+        <!--[if IE]>
+            <link rel="stylesheet" href="<?php echo assets_url("css/modules/fix_internet_explorer.css"); ?>" >
+        <![endif]-->
         <!-- / -->
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
             <script src="<?php echo assets_url('js/html5shiv.min.js'); ?>"></script>
-            <script src="<?php echo assets_url('js/respond.min.js'); ?>"></script>
+            <script src="<?php echo assets_url('js/respond.min.js'); ?>"></script>            
         <![endif]-->
     </head>
     <body>        
@@ -58,12 +61,12 @@
         <script src="<?php echo assets_url('js/bootstrap.min.js'); ?>"></script>                
         <script src="<?php echo assets_url('js/jquery.autocomplete.js'); ?>"></script>                 
         <script src="<?php echo assets_url('js/jquery.blockUI.js'); ?>"></script>
-        <script src="<?php echo assets_url('js/metisMenu.min.js'); ?>"></script>                                        
+        <script src="<?php echo assets_url('js/metisMenu.js'); ?>"></script>                                        
         <script src="<?php echo assets_url('js/fileupload.js'); ?>"></script>                                        
         <script src="<?php echo assets_url('js/raphael-min.js'); ?>"></script>                                        
         <script src="<?php echo assets_url('js/morris.min.js'); ?>"></script>                                        
-        <script src="<?php echo assets_url('js/jstree.min.js'); ?>"></script>                                        
-        
+        <script src="<?php echo assets_url('js/jstree.min.js'); ?>"></script>                                                        
+        <script src="<?php echo assets_url('js/jquery.placeholder.min.js'); ?>"></script>                
         
         <script src="<?php echo assets_url('js/modules/admin/admin.js'); ?>"></script>                
         <!-- Extra javascript -->

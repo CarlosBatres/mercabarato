@@ -1,0 +1,42 @@
+- Los archivos de configuracion son los siquientes:
+
+application/config/config.php
+application/config/assets.php
+application/config/database.php
+application/config/mercabarato.php
+assets/js/sdk.js
+assets/js/ckeditor/plugins/imgupload.php
+
+
+
+/application/config/config.php
+
+Acomodar el base url de acuerdo al sitio  $config['base_url']
+
+
+/application/config/assets.php
+
+Acomodar el assets url de acuerdo al sitio $config['assets_url'] , si no se estan cargando bien los css o js.
+
+
+/application/config/mercabarato.php
+
+Acomodar las credenciales de la base de datos
+
+
+/application/config/mercabarato.php
+
+Aqui se encuentran los correos electronicos y sus credenciales , acomoder segun sea el caso.
+
+
+/assets/js/sdk.js
+
+Aqui hay una referencia a la URL del sitio se debe acomodar segun sea el caso.
+
+
+/assets/js/ckeditor/plugins/imgupload.php
+ 
+Aqui hay referencia ( $upload_dir ) a el path del server se debe acomodar segun el sitio.
+
+
+

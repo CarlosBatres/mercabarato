@@ -1,4 +1,8 @@
-/*VISTAS*/
+/* ---------------------------------------------- */
+/*                                                */
+/*             Vistas usadas en el sistema        */
+/*                                                */
+/* -----------------------------------------------*/
 
 CREATE VIEW `productos_precios` AS 
 select `p`.`id` AS `id`,`p`.`categoria_id` AS `categoria_id`,`p`.`vendedor_id` AS `vendedor_id`,`p`.`nombre` AS `nombre`,`p`.`descripcion` 
@@ -46,7 +50,3 @@ left join `poblacion` `pb` on((`pb`.`id` = `l`.`poblacion_id`)));
 /*             CAMBIOS POR IMPLEMENTAR            */
 /*                                                */
 /* -----------------------------------------------*/
-
-ALTER TABLE `mercabarato_bd`.`tarifa_general` 
-ADD COLUMN `condicion_particular` VARCHAR(255) NULL DEFAULT NULL AFTER `porcentaje`;
-

@@ -2,6 +2,7 @@
 RewriteRule ^(.*)$ index.php/?$1 [L] 
 
 
+
 - Para arreglar el error de headers se hizo esto:
 cannot modify header information codeigniter session
 
