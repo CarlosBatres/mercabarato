@@ -189,6 +189,14 @@ body .box_registro{
     font-weight: 600;
 }
 
+.sub-productos .precio{
+    font-weight: 600;
+}
+.sub-productos .precio del{
+    font-weight: 600;
+    color: #cccccc;
+}
+
 .tabla-resultados-principal .precio>span{
     font-size: 14px;
     font-weight: 600;
@@ -205,6 +213,11 @@ body .box_registro{
 #productMain .price{
     margin-bottom: 20px;
     margin-top: 20px;
+}
+#productMain .price-sm{
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
 }
 #productMain .price-oferta{
     font-size: 16px;

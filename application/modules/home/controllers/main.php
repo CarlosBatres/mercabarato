@@ -256,18 +256,16 @@ class Main extends MY_Controller {
      */
     public function test_url() {
         show_404();
-        /*$paquete->nombre_paquete="Estandar";
-        $paquete->fecha_comprado="1-1-2012";
-        $paquete->fecha_terminar="1-1-2012";
-        $paquete->monto_a_cancelar="200";
-            
-        $vendedor="Tecnosapiens";
+        /*$params = array();
+        $params["cliente_id"] = "20565";
+        $params["producto_ids"] = array("534346","534345","534344");
+        $productos = $this->producto_model->get_productos_tarifas($params);
+        
         $data_email = array(
-            "paquete" => $paquete,
-            "vendedor"=> $vendedor,
-            "dias_caducar" => "10"
-                );
-        echo $this->load->view('home/emails/paquete_5dias_caducar', $data_email, true);*/
+            "contenido" => "Contenido del anuncio",
+            "productos" => $productos
+        );
+        echo $this->load->view('home/emails/enviar_anuncio_email', $data_email, true);*/
     }
 
 }

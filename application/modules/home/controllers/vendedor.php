@@ -1096,6 +1096,7 @@ class Vendedor extends MY_Controller {
     }
 
     public function ver_productos($slug, $param1 = false, $param2 = false, $param3 = false) {
+        $this->template->set_title('Mercabarato - Busca y Compara');
         $vendedor = $this->vendedor_model->get_vendedor_by_slug($slug);
         if ($vendedor) {
             if ($vendedor->habilitado == 1) {

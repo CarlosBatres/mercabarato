@@ -84,13 +84,24 @@
                             </div>
                             <div class="panel-body"> 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">                            
                                             <label>Precio Venta Publico ( por unidad )</label>
                                             <input type="text" class="form-control" name="precio" value="<?php echo $producto->precio; ?>">
                                         </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">                            
+                                            <label>Precio Venta Publico anterior</label>
+                                            <input type="text" class="form-control" disabled="" name="precio_anterior" value="<?php echo $producto->precio_anterior; ?>">
+                                        </div>
                                     </div>                                    
-
+                                    <div class="col-md-4">
+                                        <div class="form-group">                            
+                                            <label>Fecha ultima modificación</label>
+                                            <input type="text" class="form-control" disabled="" name="fecha_anterior" value="<?php echo ($producto->fecha_precio_modificar==null)?"Sin modificar":date('d-m-Y',strtotime($producto->fecha_precio_modificar)); ?>">
+                                        </div>
+                                    </div>                                    
                                 </div>
                                 <div class="row">                                    
                                     <div class="col-md-5">                                        

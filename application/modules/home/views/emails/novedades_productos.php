@@ -1,4 +1,4 @@
-<?php header('Content-Type:text/html; charset=UTF-8');?>
+<?php header('Content-Type:text/html; charset=UTF-8'); ?>
 <style>
     .producto-img-container .frame {height: 150px;width: 100%;white-space: nowrap;text-align: center;}
     .producto-img-container .helper {display: inline-block;height: 100%;vertical-align: middle;}
@@ -49,14 +49,28 @@
                                                     </td>
                                                     <td width="50%" style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                                        
                                                         <b><a href="<?php echo site_url("productos/" . $producto->unique_slug) ?>"><?php echo truncate($producto->nombre, 50); ?></a></b>
-                                                        <br><br><?php echo $producto->precio; ?> &euro;
+                                                        <br><br>
+                                                        <?php if ($producto->precio_anterior == null): ?>
+                                                            <?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?>
+                                                        <?php elseif ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5): ?>    
+                                                            <?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?>
+                                                        <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
+                                                            <?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?>  &nbsp;&nbsp;&nbsp; <del><?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?></del>
+                                                        <?php endif; ?>                                                        
                                                     </td>
                                                 </tr>
                                             <?php else: ?>
                                                 <tr>                                                    
                                                     <td colspan="2" width="100%" style="padding: 25px 0 10px 50px; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
                                                         <b><a href="<?php echo site_url("productos/" . $producto->unique_slug) ?>"><?php echo truncate($producto->nombre, 50); ?></a></b>
-                                                        <br><br><?php echo $producto->precio; ?> &euro;
+                                                        <br><br>
+                                                        <?php if ($producto->precio_anterior == null): ?>
+                                                            <?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?>
+                                                        <?php elseif ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5): ?>    
+                                                            <?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?>
+                                                        <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
+                                                            <?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?>  &nbsp;&nbsp;&nbsp; <del><?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?></del>
+                                                        <?php endif; ?>
                                                     </td>                                                    
                                                 </tr>                                                
                                             <?php endif; ?>
@@ -73,7 +87,7 @@
                             <tr>
                                 <td style="color: #ffffff; text-align: center; font-family: Arial, sans-serif; font-size: 14px;" width="100%">
                                     <span style="font-weight: 600;color: #ff9933;">PRÁCTICA EL COMERCIO INTELIGENTE <br>(Compara precios , presupuestos , ofertas...)</span> <br><br>
-                                    Si deseas darte de baja puedes darle click al siguiente link <a href="<?php echo site_url('usuario/eliminar-cuenta')?>" style="color: #ffffff; font-size: 16px;"> BAJA </a> <br>
+                                    Si deseas darte de baja puedes darle click al siguiente link <a href="<?php echo site_url('usuario/eliminar-cuenta') ?>" style="color: #ffffff; font-size: 16px;"> BAJA </a> <br>
                                     Copyright &copy; 2015. Mercabarato.com Todos los derechos reservados.                                    
                                 </td>                                
                             </tr>

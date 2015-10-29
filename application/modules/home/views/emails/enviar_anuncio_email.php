@@ -1,4 +1,4 @@
-<?php header('Content-Type:text/html; charset=UTF-8');?>
+<?php header('Content-Type:text/html; charset=UTF-8'); ?>
 <table border="0" cellpadding="0" cellspacing="0" width="100%">	
     <tr>
         <td style="padding: 10px 0 30px 0;">
@@ -32,12 +32,80 @@
                                         <td width="5%" style="font-size: 0; line-height: 0;">
                                             &nbsp;
                                         </td>
-                                        <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
-                                            <?php echo ($producto->tipo == "normal") ? number_format($producto->precio,2) : number_format($producto->nuevo_costo, 2); echo " ".$this->config->item("money_sign")?>
-                                        </td>
-                                        <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
-                                            <?php echo ($producto->tipo == "tarifa") ? '<del>'.number_format($producto->precio,2).' '.$this->config->item("money_sign").'</del>' : "";?>
-                                        </td>
+                                        <?php if ($producto->tipo == "normal"): ?>
+                                            <?php if ($producto->precio_anterior == null): ?>
+                                                <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                    <?php echo number_format($producto->precio, 2) . ' ' . $this->config->item("money_sign"); ?>                                            
+                                                </td>
+                                                <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+
+                                                </td>
+                                            <?php elseif ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5): ?>    
+                                                <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                    <?php echo number_format($producto->precio_anterior, 2) . ' ' . $this->config->item("money_sign"); ?>                                            
+                                                </td>
+                                                <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+
+                                                </td>
+                                            <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
+                                                <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                    <?php echo number_format($producto->precio, 2) . ' ' . $this->config->item("money_sign"); ?>                                            
+                                                </td>
+                                                <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                    <del><?php echo number_format($producto->precio_anterior, 2) . ' ' . $this->config->item("money_sign"); ?></del>
+                                                </td>
+                                            <?php endif; ?>
+
+                                        <?php elseif ($producto->tipo == "tarifa"): ?>
+
+                                            <?php if ($producto->nuevo_costo <= 0): ?>
+                                                <?php if ($producto->precio_anterior == null): ?>
+                                                    <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                        ...
+                                                    </td>
+                                                    <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                        <del><?php echo number_format($producto->precio, 2) . ' ' . $this->config->item("money_sign"); ?></del>
+                                                    </td>
+                                                <?php elseif ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5): ?>    
+                                                    <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                        ...
+                                                    </td>
+                                                    <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                        <del><?php echo number_format($producto->precio, 2) . ' ' . $this->config->item("money_sign"); ?></del>
+                                                    </td>
+                                                <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
+                                                    <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                        ...
+                                                    </td>
+                                                    <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                        <del><?php echo number_format($producto->precio_anterior, 2) . ' ' . $this->config->item("money_sign"); ?></del>
+                                                    </td>
+                                                <?php endif; ?> 
+                                            <?php else: ?>
+                                                <?php if ($producto->precio_anterior == null): ?>
+                                                    <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                        <?php echo number_format($producto->nuevo_costo, 2) . ' ' . $this->config->item("money_sign"); ?>                                            
+                                                    </td>
+                                                    <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                        <del><?php echo number_format($producto->precio, 2) . ' ' . $this->config->item("money_sign"); ?></del>
+                                                    </td>
+                                                <?php elseif ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5): ?>    
+                                                    <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                        <?php echo number_format($producto->nuevo_costo, 2) . ' ' . $this->config->item("money_sign"); ?>                                            
+                                                    </td>
+                                                    <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                        <del><?php echo number_format($producto->precio, 2) . ' ' . $this->config->item("money_sign"); ?></del>
+                                                    </td>
+                                                <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
+                                                    <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                        <?php echo number_format($producto->nuevo_costo, 2) . ' ' . $this->config->item("money_sign"); ?>
+                                                    </td>
+                                                    <td width="15%" valign="top" style="font-weight: 600;text-align: right;color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                            
+                                                        <del><?php echo number_format($producto->precio_anterior, 2) . ' ' . $this->config->item("money_sign"); ?></del>
+                                                    </td>
+                                                <?php endif; ?> 
+                                            <?php endif; ?>
+                                        <?php endif; ?>
                                     </tr>
                                 <?php endforeach; ?>
                             </table>
@@ -50,7 +118,7 @@
                             <tr>
                                 <td style="color: #ffffff; text-align: center; font-family: Arial, sans-serif; font-size: 14px;" width="100%">
                                     <span style="font-weight: 600;color: #ff9933;">PRÁCTICA EL COMERCIO INTELIGENTE <br>(Compara precios , presupuestos , ofertas...)</span> <br><br>
-                                    Si deseas darte de baja puedes darle click al siguiente link <a href="<?php echo site_url('usuario/eliminar-cuenta')?>" style="color: #ffffff; font-size: 16px;"> BAJA </a> <br>
+                                    Si deseas darte de baja puedes darle click al siguiente link <a href="<?php echo site_url('usuario/eliminar-cuenta') ?>" style="color: #ffffff; font-size: 16px;"> BAJA </a> <br>
                                     Copyright &copy; 2015. Mercabarato.com Todos los derechos reservados.                                    
                                 </td>                                
                             </tr>
