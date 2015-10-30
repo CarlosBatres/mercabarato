@@ -169,16 +169,26 @@ class Panel_vendedores_productos extends ADController {
             $formValues = $this->input->post();
             if ($formValues !== false) {
                 $accion = $this->input->post('accion');
+                $producto = $this->producto_model->get($id);
 
                 if ($accion === "producto-editar") {
-                    if ($this->input->post('precio') == 0) {
-                        $precio = 0;
-                        $mostrar_precio = 0;
+                    if ($producto->fecha_precio_modificar == null || diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5) {
+                        if ($this->input->post('precio') == 0) {
+                            $precio = 0;
+                            $mostrar_precio = 0;
+                        } else {
+                            $precio = $this->input->post('precio');
+                            $mostrar_precio = $this->input->post('mostrar_precio');
+                        }
                     } else {
-                        $precio = $this->input->post('precio');
-                        $mostrar_precio = $this->input->post('mostrar_precio');
+                        $precio = $producto->precio;
+                        $mostrar_precio = $producto->mostrar_precio;
+                        if ($producto->precio != $this->input->post('precio')) {
+                            $this->session->set_flashdata('warning', 'No se modifico el precio porque el producto no tiene 5 dias con el precio viejo.');
+                        }
                     }
-                    
+
+
                     $data = array(
                         "nombre" => $this->input->post('nombre'),
                         "descripcion" => $this->input->post('descripcion'),

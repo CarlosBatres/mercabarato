@@ -88,6 +88,7 @@
                                         <div class="form-group">                            
                                             <label>Precio Venta Publico ( por unidad )</label>
                                             <input type="text" class="form-control" name="precio" value="<?php echo $producto->precio; ?>">
+                                            <input type="hidden" name="precio_sinmodif" value="<?php echo $producto->precio; ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -99,7 +100,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">                            
                                             <label>Fecha ultima modificación</label>
-                                            <input type="text" class="form-control" disabled="" name="fecha_anterior" value="<?php echo ($producto->fecha_precio_modificar==null)?"Sin modificar":date('d-m-Y',strtotime($producto->fecha_precio_modificar)); ?>">
+                                            <input type="text" class="form-control" disabled="" name="fecha_anterior" value="<?php echo ($producto->fecha_precio_modificar==null)?"Sin modificar":date('d/m/Y',strtotime($producto->fecha_precio_modificar)); ?>">
                                         </div>
                                     </div>                                    
                                 </div>

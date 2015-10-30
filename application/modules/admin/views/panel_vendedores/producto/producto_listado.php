@@ -22,20 +22,7 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-md-12">
-            <?php if ($this->session->flashdata('success')) { ?>
-                <div class="alert alert-success"> 
-                    <a class="close" data-dismiss="alert">×</a>
-                    <?= $this->session->flashdata('success') ?> 
-                </div>
-            <?php } ?>   
-            <?php if ($this->session->flashdata('error')) { ?>
-                <div class="alert alert-danger"> 
-                    <a class="close" data-dismiss="alert">×</a>
-                    <?= $this->session->flashdata('error') ?> 
-                </div>
-            <?php } ?>
-
+        <div class="col-md-12">            
             <div class="panel-group search-block" id="search-block">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -70,6 +57,24 @@
                     </div>
                 </div>
             </div>
+            <?php if ($this->session->flashdata('success')) { ?>
+                <div class="alert alert-success"> 
+                    <a class="close" data-dismiss="alert">×</a>
+                    <?= $this->session->flashdata('success') ?> 
+                </div>
+            <?php } ?>   
+            <?php if ($this->session->flashdata('error')) { ?>
+                <div class="alert alert-danger"> 
+                    <a class="close" data-dismiss="alert">×</a>
+                    <?= $this->session->flashdata('error') ?> 
+                </div>
+            <?php } ?>
+            <?php if ($this->session->flashdata('warning')) { ?>
+                <div class="alert alert-warning"> 
+                    <a class="close" data-dismiss="alert">×</a>
+                    <?= $this->session->flashdata('warning') ?> 
+                </div>
+            <?php } ?> 
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">

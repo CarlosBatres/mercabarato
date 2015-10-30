@@ -98,6 +98,24 @@ $(document).ready(function() {
 });
 
 function validateForms() {
+    jQuery.validator.addMethod("pasado5Dias", function(value, element) {
+        var inicio = $('input[name="fecha_anterior"]').val();
+        var fin = $.datepicker.formatDate('dd/mm/yy', new Date());
+        var diff = daydiff(parseDate(inicio), parseDate(fin));
+        var precio_sinmodificar=$('input[name="precio_sinmodif"]').val();
+        var precio_modificado=$('input[name="precio"]').val();
+
+        if ( parseFloat(precio_sinmodificar) != parseFloat(precio_modificado)) {
+            if (diff > 5) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }, "Tienen que haber pasado 5 dias desde la ultima modificacion.");
+
     $("#admin_producto_form").validate({
         submitHandler: function(form) {
             var flag = true;
@@ -130,7 +148,11 @@ function validateForms() {
         },
         rules: {
             nombre: {required: true},
-            precio: {required: true, number: true},
+            precio: {
+                required: true,
+                number: true,
+                pasado5Dias: true
+            },
             precio_extra1_cantidad: {number: true},
             precio_extra2_cantidad: {number: true},
             precio_extra3_cantidad: {number: true},
@@ -165,4 +187,13 @@ function validateForms() {
         }
     });
 
+}
+
+function parseDate(str) {
+    var mdy = str.split('/')
+    return new Date(mdy[2], mdy[1] - 1, mdy[0]);
+}
+
+function daydiff(first, second) {
+    return Math.floor((second - first) / (1000 * 60 * 60 * 24));
 }

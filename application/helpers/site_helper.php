@@ -369,40 +369,102 @@ function print_ejemplo($ex, $ext = 'xml') {
 }
 
 function year_select() {
-    $year_ini="2015";
-    $year_act=date("Y");
-    
-    $data=array();
-    for($i=$year_ini;$i<=$year_act;$i++){
-        $data[$i]=$i;
-    }    
-    
+    $year_ini = "2015";
+    $year_act = date("Y");
+
+    $data = array();
+    for ($i = $year_ini; $i <= $year_act; $i++) {
+        $data[$i] = $i;
+    }
+
     return $data;
 }
 
-function mes_select() {    
-    
-    $data=array(
-        "1"=>"Enero",
-        "2"=>"Febrero",
-        "3"=>"Marzo",
-        "4"=>"Abril",
-        "5"=>"Mayo",
-        "6"=>"Junio",
-        "7"=>"Julio",
-        "8"=>"Agosto",
-        "9"=>"Septiembre",
-        "10"=>"Octubre",
-        "11"=>"Noviembre",
-        "12"=>"Diciembre"        
+function mes_select() {
+
+    $data = array(
+        "1" => "Enero",
+        "2" => "Febrero",
+        "3" => "Marzo",
+        "4" => "Abril",
+        "5" => "Mayo",
+        "6" => "Junio",
+        "7" => "Julio",
+        "8" => "Agosto",
+        "9" => "Septiembre",
+        "10" => "Octubre",
+        "11" => "Noviembre",
+        "12" => "Diciembre"
     );
-    
-    
+
+
     return $data;
 }
 
-
-function diferencia_dias($date_start,$date_end){
+function diferencia_dias($date_start, $date_end) {
     $days = abs((strtotime($date_end) - strtotime($date_start)) / (60 * 60 * 24));
-    return (int)$days;
+    return (int) $days;
+}
+
+/**
+ *  Logica para imprimir precios en vistas
+ * @param type $class
+ * @param type $precio1
+ * @param type $del1
+ * @param type $precio2
+ * @param type $del2
+ * @return string
+ */
+function print_precio($class, $precio1, $del1 = false, $precio2 = false, $del2 = false) {
+    $m = '€';
+    if ($del1) {
+        $del1_open = "<del>";
+        $del1_close = "</del>";
+    } else {
+        $del1_open = "";
+        $del1_close = "";
+    }
+
+    if ($del2) {
+        $del2_open = "<del>";
+        $del2_close = "</del>";
+    } else {
+        $del2_open = "";
+        $del2_close = "";
+    }
+
+    $string = "<p class='" . $class . "'>";
+
+    if ($precio1 == 0) {
+        $string.="Precio a consultar con el vendedor";
+    } else {
+        $string.= $del1_open . "" . number_format($precio1, '2') . " " . $m . "" . $del1_close;
+        if ($precio2!=null && $precio2!=0) {
+            $string.="&nbsp;&nbsp;&nbsp;" . $del2_open . "" . number_format($precio2, '2') . " " . $m . "" . $del2_close;
+        }
+    }
+
+    $string.="</p>";
+    return $string;
+}
+
+/**
+ * 
+ * @param type $class
+ * @param type $tarifa
+ * @return string
+ */
+function print_tarifa($class, $tarifa) {
+    $m = '€';    
+
+    $string = "<p class='" . $class . "'>";
+
+    if ($tarifa == 0) {
+        $string.="Tarifa a consultar con el vendedor";
+    } else {
+        $string.= number_format($tarifa, '2') . " " . $m;        
+    }
+
+    $string.="</p>";
+    return $string;
 }
