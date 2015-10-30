@@ -24,12 +24,20 @@ class Panel_vendedores_productos extends ADController {
             if ($formValues !== false) {
                 $accion = $this->input->post('accion');
                 if ($accion === "producto-crear") {
+                    if ($this->input->post('precio') == 0) {
+                        $precio = 0;
+                        $mostrar_precio = 0;
+                    } else {
+                        $precio = $this->input->post('precio');
+                        $mostrar_precio = $this->input->post('mostrar_precio');
+                    }
+
                     $data = array(
                         "nombre" => $this->input->post('nombre'),
                         "descripcion" => $this->input->post('descripcion'),
-                        "precio" => $this->input->post('precio'),
+                        "precio" => $precio,
                         "mostrar_producto" => $this->input->post('mostrar_producto'),
-                        "mostrar_precio" => $this->input->post('mostrar_precio'),
+                        "mostrar_precio" => $mostrar_precio,
                         "vendedor_id" => $vendedor->get_vendedor_id(),
                         "categoria_id" => $this->input->post('categoria_id'),
                         "link_externo" => ($this->input->post('link_externo') != '') ? $this->input->post('link_externo') : null,
@@ -163,12 +171,20 @@ class Panel_vendedores_productos extends ADController {
                 $accion = $this->input->post('accion');
 
                 if ($accion === "producto-editar") {
+                    if ($this->input->post('precio') == 0) {
+                        $precio = 0;
+                        $mostrar_precio = 0;
+                    } else {
+                        $precio = $this->input->post('precio');
+                        $mostrar_precio = $this->input->post('mostrar_precio');
+                    }
+                    
                     $data = array(
                         "nombre" => $this->input->post('nombre'),
                         "descripcion" => $this->input->post('descripcion'),
-                        "precio" => $this->input->post('precio'),
+                        "precio" => $precio,
                         "mostrar_producto" => $this->input->post('mostrar_producto'),
-                        "mostrar_precio" => $this->input->post('mostrar_precio'),
+                        "mostrar_precio" => $mostrar_precio,
                         "vendedor_id" => $vendedor->get_vendedor_id(),
                         "categoria_id" => $this->input->post('categoria_id'),
                         "link_externo" => ($this->input->post('link_externo') != '') ? $this->input->post('link_externo') : null,
