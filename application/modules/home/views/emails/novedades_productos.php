@@ -48,29 +48,15 @@
                                                         </div>
                                                     </td>
                                                     <td width="50%" style="padding: 20px 0 30px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">                                                        
-                                                        <b><a href="<?php echo site_url("productos/" . $producto->unique_slug) ?>"><?php echo truncate($producto->nombre, 50); ?></a></b>
-                                                        <br><br>
-                                                        <?php if ($producto->precio_anterior == null): ?>
-                                                            <?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?>
-                                                        <?php elseif ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5): ?>    
-                                                            <?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?>
-                                                        <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
-                                                            <?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?>  &nbsp;&nbsp;&nbsp; <del><?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?></del>
-                                                        <?php endif; ?>                                                        
+                                                        <b><a href="<?php echo site_url("productos/" . $producto->unique_slug) ?>"><?php echo truncate($producto->nombre, 50); ?></a></b>                                                        
+                                                        <?php echo print_precio('precio', $producto->precio, false, $producto->precio_anterior, true); ?>
                                                     </td>
                                                 </tr>
                                             <?php else: ?>
                                                 <tr>                                                    
                                                     <td colspan="2" width="100%" style="padding: 25px 0 10px 50px; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-                                                        <b><a href="<?php echo site_url("productos/" . $producto->unique_slug) ?>"><?php echo truncate($producto->nombre, 50); ?></a></b>
-                                                        <br><br>
-                                                        <?php if ($producto->precio_anterior == null): ?>
-                                                            <?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?>
-                                                        <?php elseif ($producto->precio_anterior != null && diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) < 5): ?>    
-                                                            <?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?>
-                                                        <?php elseif (diferencia_dias($producto->fecha_precio_modificar, date("Y-m-d")) >= 5): ?>
-                                                            <?php echo $producto->precio . ' ' . $this->config->item('money_sign') ?>  &nbsp;&nbsp;&nbsp; <del><?php echo $producto->precio_anterior . ' ' . $this->config->item('money_sign') ?></del>
-                                                        <?php endif; ?>
+                                                        <b><a href="<?php echo site_url("productos/" . $producto->unique_slug) ?>"><?php echo truncate($producto->nombre, 50); ?></a></b>                                                        
+                                                        <?php echo print_precio('precio', $producto->precio, false, $producto->precio_anterior, true); ?>
                                                     </td>                                                    
                                                 </tr>                                                
                                             <?php endif; ?>

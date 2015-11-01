@@ -254,7 +254,7 @@ class Main extends MY_Controller {
     /**
      * 
      */
-    public function test_url() {
+    public function test_url() {        
         show_404();
         /*$params = array();
         $params["cliente_id"] = "20565";
@@ -265,7 +265,7 @@ class Main extends MY_Controller {
             "contenido" => "Contenido del anuncio",
             "productos" => $productos
         );
-        echo $this->load->view('home/emails/enviar_anuncio_email', $data_email, true);*/
+        echo $this->load->view('home/emails/enviar_anuncio_email', $data_email, true);    */
     }
 
 }

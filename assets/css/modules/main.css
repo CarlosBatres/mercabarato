@@ -400,6 +400,7 @@ span.arrow {
     font-size: 20px;
     font-weight: 800;
     padding-top: 5px;
+    color:#000;
 }
 
 .manual-title{
@@ -409,8 +410,8 @@ span.arrow {
 .inicio-localizacion{
     padding-top: 20px;
 }
-.inicio-precios .panel{
-    background: transparent;
+.inicio-precios{
+    padding-bottom: 15px;
 }
 
 
@@ -700,6 +701,12 @@ hr.panel-opciones{
 
 .infocompras-general-icono,.infocompras-seguros-icono{
     height: 75px;
+}
+.no-padding-left{
+    padding-left: 0px;
+}
+.no-padding-right{
+    padding-right: 0px;
 }
 
 @media (max-width: 768px) {
