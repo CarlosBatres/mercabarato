@@ -436,7 +436,7 @@ class Usuario extends MY_Controller {
                 $data = array("key" => $secret_key);
                 $this->template->load_view('home/usuario/olvido_cambio_password', $data);
             } else {
-                redirect('404');
+                redirect('');
             }
         } else {
             redirect('');

@@ -46,7 +46,7 @@
                 <div class="col-sm-12 col-md-8">
                     <div class="box-simple">
                         <?php echo form_open('', 'id="form_buscar"'); ?>                        
-                            <div class="row hidden-xs hidden-sm">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">                                
                                         <select name="provincia" class="form-control">
