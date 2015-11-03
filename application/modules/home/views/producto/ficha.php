@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="frame-ficha">
                             <span class="helper"></span>
-                            <a href="<?php echo site_url("") ?>">                                                                
+                            <a href="">                                                                
                                 <img src="<?php echo assets_url($this->config->item('productos_img_path')) . '/' . $producto_imagen->filename ?>" alt="" class="producto-img-ficha">                                            
                             </a>                        
                         </div>
