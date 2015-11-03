@@ -126,7 +126,7 @@
                                                 </div> 
                                             <?php else: ?>
                                                 <div class="row">
-                                                    <?php echo print_precio('precio', $producto->precio, true, $producto->precio_anterior, true); ?>
+                                                    <?php echo print_precio('precio', $producto->precio, false, $producto->precio_anterior, true); ?>
                                                 </div>
                                             <?php endif; ?>
                                         <?php endif; ?>
