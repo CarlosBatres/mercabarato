@@ -99,25 +99,31 @@ $(document).ready(function() {
 
 function validateForms() {
     jQuery.validator.addMethod("pasado5Dias", function(value, element) {
-        var inicio = $('input[name="fecha_anterior"]').val();
-        var fin = $.datepicker.formatDate('dd/mm/yy', new Date());
-        var diff = daydiff(parseDate(inicio), parseDate(fin));
-        var precio_sinmodificar=$('input[name="precio_sinmodif"]').val();
-        var precio_modificado=$('input[name="precio"]').val();
+        if ($('input[name="fecha_anterior"]').length) {
+            var inicio = $('input[name="fecha_anterior"]').val();
+            var fin = $.datepicker.formatDate('dd/mm/yy', new Date());
+            var diff = daydiff(parseDate(inicio), parseDate(fin));
+            var precio_sinmodificar = $('input[name="precio_sinmodif"]').val();
+            var precio_modificado = $('input[name="precio"]').val();
 
-        if ( parseFloat(precio_sinmodificar) != parseFloat(precio_modificado)) {
-            if (diff > 5) {
-                return true;
+            if (parseFloat(precio_sinmodificar) != parseFloat(precio_modificado)) {
+                if (diff > 5) {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
-                return false;
+                return true;
             }
         } else {
             return true;
         }
     }, "Tienen que haber pasado 5 dias desde la ultima modificacion.");
 
+
     $("#admin_producto_form").validate({
         submitHandler: function(form) {
+            console.log("submit");
             var flag = true;
             var numFiles = $("#fileupload")[0].files.length;
 

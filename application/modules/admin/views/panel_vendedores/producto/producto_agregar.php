@@ -8,6 +8,7 @@
         </div>
     </div>
     <!-- /.row -->
+    <?php echo form_open('panel_vendedor/producto/agregar', 'id="admin_producto_form" enctype="multipart/form-data"'); ?>                 
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="box box_registro">
@@ -19,7 +20,7 @@
                         <?= $this->session->flashdata('error') ?> 
                     </div>
                 <?php } ?>
-                <?php echo form_open('panel_vendedor/producto/agregar', 'id="admin_producto_form" enctype="multipart/form-data"'); ?>                 
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">                            
@@ -221,17 +222,15 @@
                     </div>
                 </div>                                  
             </div>
-
-
+            <input type="hidden" name="categoria_id" value="">
+            <input type="hidden" name="accion" value="producto-crear">            
             <hr>                                
             <div class="text-center">
                 <button type="submit" id="admin_producto_submit" class="btn btn-lg btn-primary"> Agregar</button>
             </div>
-            <input type="hidden" name="categoria_id" value="">
-            <input type="hidden" name="accion" value="producto-crear">
-            <?php echo form_close(); ?>
         </div>
     </div>
+    <?php echo form_close(); ?>
 </div>
 <br>
 <div id="throbber" style="display:none;">
