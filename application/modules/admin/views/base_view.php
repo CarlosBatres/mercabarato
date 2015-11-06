@@ -44,6 +44,16 @@
             <script src="<?php echo assets_url('js/html5shiv.min.js'); ?>"></script>
             <script src="<?php echo assets_url('js/respond.min.js'); ?>"></script>            
         <![endif]-->
+        <script>
+            var $buoop = {vs: {i: 8, f: 25, o: 12.1, s: 7}, c: 2,reminder: 24};
+            function $buo_f() {                
+                var e = document.createElement("script");
+                e.src = "//browser-update.org/update.min.js";
+                document.body.appendChild(e);
+            };
+            try {document.addEventListener("DOMContentLoaded", $buo_f, false);}
+            catch (e) {window.attachEvent("onload", $buo_f);}
+        </script> 
     </head>
     <body>        
         <?php echo $body; ?>

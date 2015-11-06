@@ -9,7 +9,7 @@
                     <h4 class="modal-title text-center" id="Login">Iniciar sesión</h4>
                 </div>
                 <div class="modal-body">                    
-                    <?php echo form_open('login', 'id="loginForm"'); ?>                 
+                    <?php echo form_open('login', 'id="loginForm" rel="preventDoubleSubmission"'); ?>                 
                     <div class="row">  
                         <div class="col-md-12">
                             <div class="form-group">                    
@@ -23,13 +23,13 @@
                                     <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
                                     <input type="password" class="form-control" name="password" placeholder="Contraseña" autocomplete="off">                                    
                                 </div>
+                            </div>                            
+                            <div class="alert alert-danger hidden" role="alert">
+                                El usuario y/o la contraseña son incorrectas
                             </div>
                             <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar</button>                            
                         </div>
-                    </div>
-                    <div class="alert alert-danger hidden" role="alert">
-                        El usuario y/o la contraseña son incorrectas
-                    </div>
+                    </div>                    
                     <?php echo form_close(); ?>
                     <p class="text-center text-muted"><a href="<?php echo site_url('olvido-password'); ?>"><strong>Olvidaste tu contraseña?</strong></a></p>
                     <p class="text-center text-muted"><a href="<?php echo site_url('registro'); ?>"><strong>Regístrese ahora</strong></a>!</p>

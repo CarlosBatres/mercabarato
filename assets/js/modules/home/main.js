@@ -197,8 +197,6 @@
             e.preventDefault();
         });
 
-//        sliderHomepage();
-//        sliders();
         validateLogin();
         searchButtonHeader();
 
@@ -244,19 +242,18 @@
             $('#copyright').css('margin-bottom', '0');
         });
 
-        var $buoop = {vs: {i: 8, f: 25, o: 12.1, s: 7}, c: 2};
+        /*var $buoop = {vs: {i: 8, f: 25, o: 12.1, s: 7}, c: 2};
         function $buo_f() {
             var e = document.createElement("script");
             e.src = "//browser-update.org/update.min.js";
             document.body.appendChild(e);
-        }
-        ;
+        };
         try {
             document.addEventListener("DOMContentLoaded", $buo_f, false)
         }
         catch (e) {
             window.attachEvent("onload", $buo_f)
-        }
+        }*/
 
         $.ajaxSetup({data: csfrData});
 
@@ -296,43 +293,6 @@
 
 })(window);
 
-//function sliderHomepage() {
-//    if ($('#slider').length) {
-//        var owl = $("#slider");
-//
-//        $("#slider").owlCarousel({
-//            autoPlay: 3000,
-//            items: 4,
-//            itemsDesktopSmall: [900, 3],
-//            itemsTablet: [600, 3],
-//            itemsMobile: [500, 2]
-//        });
-//    }
-//
-//}
-/* sliders */
-//function sliders() {
-//    if ($('.owl-carousel').length) {
-//        $('.homepage').owlCarousel({
-//            navigation: false, // Show next and prev buttons
-//            navigationText: ["<i class='fa fa-angle-left'></i>", "<i class='fa fa-angle-right'></i>"],
-//            slideSpeed: 2000,
-//            paginationSpeed: 1000,
-//            autoPlay: true,
-//            stopOnHover: true,
-//            singleItem: true,
-//            lazyLoad: false,
-//            addClassActive: true,
-//            afterInit: function() {
-//                //animationsSlider();
-//            },
-//            afterMove: function() {
-//                //animationsSlider();
-//            }
-//        });
-//    }
-//}
-
 function validateLogin() {
     $("#loginForm").validate({
         rules: {
@@ -370,9 +330,11 @@ function validateLogin() {
             data: $("#loginForm").serialize(),
             dataType: 'json',
             success: function(response) {
+                $('#loginForm').find('button').removeClass('disabled');
+                $('#loginForm').data('submitted', false);
                 if (response.success === "true") {
-                    $('#login-modal').modal('hide')
-                    window.location.href = response.url;
+                    $('#login-modal').modal('hide');
+                    window.location.href = response.url;                    
                 } else {
                     $('#login-modal').find('.alert-danger').removeClass('hidden');
                 }

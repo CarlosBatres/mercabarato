@@ -154,19 +154,28 @@ body .box_registro{
     background-color: #dbdbdb;
 }
 
-#footer li a {
+#footer-div{
+    overflow:hidden;
+}
+
+#footer-div>div{
+    float:left;
+    width:33%;
+}
+
+#footer-div>div a{
     padding: 8px 0;
     display: -moz-inline-stack;
     display: inline-block;
     vertical-align: middle;
     zoom: 1;
     font-size: 16px;
+    color: #999999;    
 }
 
-#footer ul{
-    -webkit-column-count: 3; /* Chrome, Safari, Opera */
-    -moz-column-count: 3; /* Firefox */
-    column-count: 3;
+#footer-div>div a:hover {
+  color: #38a7bb;
+  text-decoration: none;
 }
 
 /**/
