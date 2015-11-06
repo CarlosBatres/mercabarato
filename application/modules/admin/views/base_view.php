@@ -38,6 +38,12 @@
             <link rel="stylesheet" href="<?php echo assets_url("css/modules/fix_internet_explorer.css"); ?>" >
         <![endif]-->
         <!-- / -->
+        
+        <!--[if lte IE 8]>
+            <script type="text/javascript">
+                iebad = 1;
+            </script>
+        <![endif]-->
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>

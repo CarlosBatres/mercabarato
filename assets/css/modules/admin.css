@@ -110,6 +110,9 @@ textarea{
     resize: none;
 }
 
+.noie_label{display:block!important;}
+.ie_label{display:none!important;}
+
 /* MEDIA */
 
 @media (max-width: 768px) {

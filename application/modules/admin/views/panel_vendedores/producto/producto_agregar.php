@@ -42,7 +42,8 @@
                 <div class="row" id="grupo-imagenes">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Seleccione varias imágenes para el producto ( Limite 3 y solo JPG , GIF y PNG )</label>                    
+                            <label class='noie_label'>Seleccione varias imágenes para el producto ( Limite 3 y solo JPG , GIF y PNG )</label>                    
+                            <label class='ie_label'>Seleccione una imágen para el producto ( solo JPG , GIF y PNG )</label>                    
                             <input id="fileupload" type="file" name="files[]" multiple data-url="<?php echo site_url('panel_vendedor/producto/upload_image') ?>">
                             <input type="hidden" name="file_name" id="file_name" value="">                                                            
                         </div> 

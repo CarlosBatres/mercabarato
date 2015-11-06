@@ -8,13 +8,17 @@ $(document).ready(function() {
         singleFileUploads: false,
         add: function(e, data) {
             $("#admin_producto_submit").off('click').on('click', function(e) {
-                var numFiles = $("#fileupload")[0].files.length;
+                var numFiles;
+                if (typeof iebad !== 'undefined') {
+                    numFiles = 0;
+                }else{
+                    numFiles = $("#fileupload")[0].files.length;
+                }
+
                 if ($("#admin_producto_form").valid() && $('input[name="categoria_id"]').val() !== "" && (numFiles >= 0 && numFiles <= 3)) {
                     e.preventDefault();
                     data.submit();
                 }
-                //e.preventDefault(); //prevent the default action
-                //data.submit();
             });
         },
         start: function(e, data) {
@@ -125,7 +129,12 @@ function validateForms() {
         submitHandler: function(form) {
             console.log("submit");
             var flag = true;
-            var numFiles = $("#fileupload")[0].files.length;
+            var numFiles;
+                if (typeof iebad !== 'undefined') {
+                    numFiles = 0;
+                }else{
+                    numFiles = $("#fileupload")[0].files.length;
+                }
 
             if (numFiles >= 0 && numFiles <= 3) {
                 $('#fileupload_alert').css('display', 'none');

@@ -40,7 +40,8 @@
                 <div class="row" id="grupo-imagenes">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Seleccione varias imágenes para el producto ( Limite 3 y solo JPG , GIF y PNG )</label>
+                            <label class='noie_label'>Seleccione varias imágenes para el producto ( Limite 3 y solo JPG , GIF y PNG )</label>                    
+                            <label class='ie_label'>Seleccione una imágen para el producto ( solo JPG , GIF y PNG )</label>                    
                             <br><br>                            
                             <?php if ($producto_imagenes): ?>
                                 <?php foreach ($producto_imagenes as $image):
