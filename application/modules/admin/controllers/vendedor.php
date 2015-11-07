@@ -176,6 +176,7 @@ class Vendedor extends ADController {
             $vendedor = $this->vendedor_model->get($id);
             $cliente = $this->cliente_model->get($vendedor->cliente_id);
             $this->usuario_model->inhabilitar($cliente->usuario_id);
+            $this->vendedor_model->inhabilitar($id);
             redirect('admin/vendedores');
         }
     }
@@ -183,9 +184,10 @@ class Vendedor extends ADController {
     public function habilitar($id) {
         if ($this->input->is_ajax_request()) {
             $this->vendedor_model->habilitar_vendedor($id);
-            /* $vendedor = $this->vendedor_model->get($id);            
-              $cliente = $this->cliente_model->get($vendedor->cliente_id);
-              $this->usuario_model->habilitar($cliente->usuario_id); */
+            $this->vendedor_model->habilitar_productos($id);
+            $vendedor = $this->vendedor_model->get($id);
+            $cliente = $this->cliente_model->get($vendedor->cliente_id);
+            $this->usuario_model->habilitar($cliente->usuario_id);
             redirect('admin/vendedores');
         }
     }
@@ -379,7 +381,7 @@ class Vendedor extends ADController {
                         } else {
                             $autorizado_por = $this->authentication->read('identifier');   // Quien lo autoriza     
                         }
-                        
+
                         $limite_productos = ($this->input->post("limite_productos")) ? $this->input->post("limite_productos") : $paquete_curso->limite_productos;
                         $limite_anuncios = ($this->input->post("limite_anuncios")) ? $this->input->post("limite_anuncios") : $paquete_curso->limite_anuncios;
                         $infocompra = ($this->input->post("infocompra")) ? $this->input->post("infocompra") : $paquete_curso->infocompra;
@@ -410,7 +412,7 @@ class Vendedor extends ADController {
                 $vendedor = $this->vendedor_model->get_vendedor($vendedor_id);
                 $paquete_curso = $this->vendedor_model->get_paquete_en_curso($vendedor_id);
 
-                if ($vendedor && $paquete_curso) {                    
+                if ($vendedor && $paquete_curso) {
                     $this->vendedor_paquete_model->delete($paquete_curso->id);
                     $this->vendedor_model->inhabilitar($paquete_curso->vendedor_id);
                     $this->session->set_flashdata('success', 'Se ha eliminado con exito');

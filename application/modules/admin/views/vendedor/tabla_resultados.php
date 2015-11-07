@@ -12,7 +12,7 @@
                     <th style="width: 20%">Nombre Empresa</th>                                
                     <th style="width: 10%">Sitio Web</th>                
                     <th style="width: 10%">Email</th>            
-                    <th style="width: 5%;text-align: center">Activo</th>
+                    <th style="width: 5%;text-align: center">Estado Cuenta</th>
                     <th style="width: 10%">Ultimo Acceso</th>                
                     <th style="width: 5%;text-align: center">&nbsp; Acciones</th> 
                 </tr>
@@ -25,8 +25,9 @@
                         <td><?php echo $vendedor->sitio_web; ?></td>                    
                         <td><?php echo $vendedor->email; ?></td>
                         <td style="text-align: center"><?php
-                            if ($vendedor->habilitado == 1): echo "<span class='label label-success'>Si</span>";
-                            else: echo "<span class='label label-danger'>No</span>";
+                            if ($vendedor->activo == 1): echo "<span class='label label-success'>Activo</span>";
+                            elseif ($vendedor->activo == 0 && $vendedor->temporal == 0): echo "<span class='label label-danger'>Inactivo</span>";
+                            elseif ($vendedor->activo == 0 && $vendedor->temporal == 1): echo "<span class='label label-warning'>Temporal</span>";
                             endif;
                             ?>
                         </td>
@@ -37,10 +38,12 @@
                         <?php endif; ?>
                         <td>
                             <div class="options">
-                                <a href="<?php echo site_url('admin/vendedores/administrar') . '/' . $vendedor->id ?>" data-toogle="tooltip"  title="Administrar"><i class="glyphicon glyphicon-edit"></i></a>
-                                <?php if ($vendedor->habilitado == 0): ?>
+                                <?php if ($vendedor->activo == 1 && $vendedor->temporal == 0): ?>
+                                    <a href="<?php echo site_url('admin/vendedores/administrar') . '/' . $vendedor->id ?>" data-toogle="tooltip"  title="Administrar"><i class="glyphicon glyphicon-cog"></i></a>
+                                <?php endif; ?>
+                                <?php if ($vendedor->activo == 0 && $vendedor->temporal == 0): ?>
                                     <a class="action vendedor_habilitar" href="<?php echo site_url('admin/vendedores/habilitar') . '/' . $vendedor->id ?>" title="Habilitar"><i class="glyphicon glyphicon-check"></i></a>
-                                <?php else: ?>
+                                <?php elseif ($vendedor->temporal != 1): ?>
                                     <a class="action vendedor_inhabilitar" href="<?php echo site_url('admin/vendedores/inhabilitar') . '/' . $vendedor->id ?>" title="Inhabilitar"><i class="glyphicon glyphicon-remove"></i></a>
                                 <?php endif; ?>                            
                                 <a class="action vendedor_borrar" href="<?php echo site_url('admin/vendedores/borrar') . '/' . $vendedor->id ?>"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>

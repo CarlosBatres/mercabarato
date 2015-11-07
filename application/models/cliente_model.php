@@ -20,16 +20,16 @@ class Cliente_model extends MY_Model {
      * @param type $order
      * @return type
      */
-    public function get_admin_search($params, $limit, $offset, $order_by = "cliente.id", $order = "asc") {
+    public function get_admin_search($params, $limit, $offset, $order_by = "cliente.id", $order = "DESC") {
         $this->db->start_cache();
 
         if (isset($params["join_vendedor"])) {
-            $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.fecha_creado,usuario.activo,vendedor.nombre as nombre_vendedor");
+            $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.fecha_creado,usuario.activo,usuario.temporal,vendedor.nombre as nombre_vendedor");
             $this->db->from($this->_table);
             $this->db->join("usuario", "cliente.usuario_id=usuario.id", 'INNER');
             $this->db->join("vendedor", "vendedor.cliente_id=cliente.id", 'LEFT');
         } else {
-            $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.fecha_creado,usuario.activo");
+            $this->db->select("cliente.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.fecha_creado,usuario.activo,usuario.temporal");
             $this->db->from($this->_table);
             $this->db->join("usuario", "cliente.usuario_id=usuario.id", 'INNER');
         }

@@ -41,7 +41,7 @@ class Vendedor_model extends MY_Model {
      */
     public function get_admin_search($params, $limit, $offset) {
         $query = "SELECT SQL_CALC_FOUND_ROWS * FROM ";
-        $query .= "(SELECT vendedor.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.activo ";
+        $query .= "(SELECT vendedor.*,usuario.email,usuario.ultimo_acceso,usuario.ip_address,usuario.activo,usuario.temporal ";
 
         $query.= "FROM vendedor ";
         $query.="INNER JOIN cliente ON cliente.id=vendedor.cliente_id ";
@@ -146,6 +146,28 @@ class Vendedor_model extends MY_Model {
 
         $permiso = $this->permisos_model->get_permiso_vendedor_afiliado();
         $this->usuario_model->update($usuario->id, array("permisos_id" => $permiso->id));
+    }
+
+    public function habilitar_productos($id) {        
+        $vigente = $this->vendedor_model->get_paquete_en_curso($id);        
+        if ($vigente) {            
+            $productos = $this->producto_model->get_many_by("vendedor_id", $vigente->vendedor_id);
+            $anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vigente->vendedor_id);
+
+            if (sizeof($productos) <= $vigente->limite_productos || $vigente->limite_productos == -1) {
+                $this->producto_model->update_by(array('vendedor_id' => $vigente->vendedor_id), array('habilitado' => 1));
+            } else {
+                $this->producto_model->update_by(array('vendedor_id' => $vigente->vendedor_id), array('habilitado' => 0));
+                $this->producto_model->habilitar_productos(array('vendedor_id' => $vigente->vendedor_id, "limit" => $vigente->limite_productos));
+            }
+
+            if (sizeof($anuncios) <= $vigente->limite_anuncios || $vigente->limite_anuncios == -1) {
+                $this->anuncio_model->update_by(array('vendedor_id' => $vigente->vendedor_id), array('habilitado' => 1));
+            } else {
+                $this->anuncio_model->update_by(array('vendedor_id' => $vigente->vendedor_id), array('habilitado' => 0));
+                $this->anuncio_model->habilitar_anuncios(array('vendedor_id' => $vigente->vendedor_id, "limit" => $vigente->limite_anuncios));
+            }
+        }
     }
 
     /**
@@ -568,6 +590,5 @@ class Vendedor_model extends MY_Model {
         }
         return $ids;
     }
-    
 
 }

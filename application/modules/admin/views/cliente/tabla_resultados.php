@@ -23,7 +23,7 @@
                     <th style="width: 5%">ID</th>
                     <th style="width: 15%">Nombre Completo</th>                                    
                     <th style="width: 15%">Email</th>
-                    <th style="width: 5%;text-align: center">Activo</th>
+                    <th style="width: 5%;text-align: center">Estado Cuenta</th>
                     <th style="width: 15%">Ultimo Acceso</th>                
                     <th style="width: 5%;text-align: center">&nbsp; Acciones</th> 
                 </tr>
@@ -39,8 +39,9 @@
                         <?php endif; ?>                      
                         <td><?php echo $cliente->email; ?></td>
                         <td style="text-align: center"><?php
-                            if ($cliente->activo == 1): echo "<span class='label label-success'>Si</span>";
-                            else: echo "<span class='label label-danger'>No</span>";
+                            if ($cliente->activo == 1): echo "<span class='label label-success'>Activo</span>";
+                            elseif ($cliente->activo == 0 && $cliente->temporal == 0): echo "<span class='label label-danger'>Inactivo</span>";
+                            elseif ($cliente->activo == 0 && $cliente->temporal == 1): echo "<span class='label label-warning'>Temporal</span>";
                             endif;
                             ?>
                         </td>
@@ -52,11 +53,14 @@
                         <td>
                             <div class="options">
         <!--                                <a href="<?php echo site_url('admin/usuarios/editar') . '/' . $cliente->id ?>" data-toogle="tooltip"  title="Modificar"><i class="glyphicon glyphicon-edit"></i></a>-->
-                                <?php if ($cliente->activo == 0): ?>
+                                <?php if ($cliente->activo == 0 && $cliente->temporal == 0): ?>
                                     <a class="action habilitar" href="<?php echo site_url('admin/usuarios/habilitar') . '/' . $cliente->id ?>" title="Habilitar"><i class="glyphicon glyphicon-check"></i></a>
-                                <?php else: ?>
+                                <?php elseif ($cliente->temporal != 1): ?>
                                     <a class="action inhabilitar" href="<?php echo site_url('admin/usuarios/inhabilitar') . '/' . $cliente->id ?>" title="Inhabilitar"><i class="glyphicon glyphicon-remove"></i></a>
-                                <?php endif; ?>                            
+                                <?php else: ?>
+                                    &nbsp;
+                                <?php endif; ?>
+
                                 <a class="action borrar" href="<?php echo site_url('admin/usuarios/borrar') . '/' . $cliente->id ?>" data-toogle="tooltip"  title="Eliminar"><i class="glyphicon glyphicon-trash"></i></a>
                             </div>                           
                         </td>
