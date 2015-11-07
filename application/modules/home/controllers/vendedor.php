@@ -103,7 +103,7 @@ class Vendedor extends MY_Controller {
                 "sitio_web" => $this->input->post('sitio_web'),
                 "habilitado" => 0,
                 "nif_cif" => $this->input->post('nif_cif'),
-                "nickname" => $this->input->post('nickname'),
+                "nickname" => strtolower($this->input->post('nickname')),
                 "keyword" => $keyword_id
             );
 
@@ -962,7 +962,7 @@ class Vendedor extends MY_Controller {
 
 
                 if ($this->input->post("nickname") != "") {
-                    $nickname = $this->input->post("nickname");
+                    $nickname = strtolower($this->input->post("nickname"));
                     $data_vendedor["unique_slug"] = $this->slug->create_uri($nickname);
                     $this->usuario_model->update($user_id, array("nickname" => $nickname));
                 }

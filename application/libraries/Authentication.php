@@ -138,7 +138,7 @@ class Authentication {
 
         // Define data to insert
         $data = array(
-            $this->username_field => $username,
+            $this->username_field => strtolower($username),
             $this->password_field => $password,
             "permisos_id" => $permiso->id
         );
