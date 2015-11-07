@@ -71,7 +71,7 @@ class Vendedor_paquete_model extends MY_Model {
      * Funcion para aprobar un paquete de un vendedor
      * @param type $id del vendedor_paquete
      */
-    public function aprobar_paquete($id, $user_id=false) {
+    public function aprobar_paquete($id, $user_id = false) {
         $vendedor_paquete = $this->get($id);
         $periodo = $vendedor_paquete->duracion_paquete;
 
@@ -84,12 +84,12 @@ class Vendedor_paquete_model extends MY_Model {
         $data = array(
             "fecha_aprobado" => date("Y-m-d"),
             "aprobado" => 1,
-            "fecha_terminar" => date('Y-m-d', strtotime("+$periodo months", strtotime($fecha_inicio))),            
+            "fecha_terminar" => date('Y-m-d', strtotime("+$periodo months", strtotime($fecha_inicio))),
             "fecha_inicio" => $fecha_inicio
         );
-        
-        if($user_id){
-            $data["autorizado_por"]=$user_id;
+
+        if ($user_id) {
+            $data["autorizado_por"] = $user_id;
         }
         $this->update($id, $data);
 
@@ -164,9 +164,9 @@ class Vendedor_paquete_model extends MY_Model {
 
         if ($count > 0) {
             $this->db->order_by('vendedor.id', 'asc');
-            if($limit){
+            if ($limit) {
                 $this->db->limit($limit, $offset);
-            }            
+            }
             $vendedores = $this->db->get()->result();
             $this->db->flush_cache();
             return array("vendedores" => $vendedores, "total" => $count);
@@ -228,8 +228,8 @@ class Vendedor_paquete_model extends MY_Model {
             $date = strtotime(date('Y-m-d'));
             $date = strtotime("+" . $days . " day", $date);
             $this->db->where('fecha_terminar =', date("Y-m-d", $date));
-        } else {
-            $this->db->where('fecha_terminar <', date('Y-m-d'));
+        } else {            
+            $this->db->where('DATE(DATE_ADD(fecha_terminar, INTERVAL +1 DAY)) = CURRENT_DATE');
         }
 
 
@@ -254,8 +254,8 @@ class Vendedor_paquete_model extends MY_Model {
             if (!$vigente) {
                 $this->vendedor_model->inhabilitar($paquete->vendedor_id);
             } else {
-                
-                
+
+
                 $productos = $this->producto_model->get_many_by("vendedor_id", $vigente->vendedor_id);
                 $anuncios = $this->anuncio_model->get_many_by("vendedor_id", $vigente->vendedor_id);
 
