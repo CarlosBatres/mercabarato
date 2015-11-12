@@ -282,6 +282,11 @@ span.arrow {
     margin-top: 7px;
 }
 
+#producto-principal-categorias .nav-sub-level .clicked>a{
+    color: #ffffff;    
+    background-color: #e5972b!important;    
+}
+
 #producto-principal-categorias .nav-sub-level .active>a{
     color: #ffffff;
     background-color: #38a7bb;
@@ -295,6 +300,15 @@ span.arrow {
     color: #ffffff;
     background-color: #38a7bb;
 }
+
+.seleccion_categoria .active,.seleccion_categoria .clicked{
+    background-color:#f6eded;
+}
+
+ul.nav-sub-level .active>a{    
+    background-color: #75c5c4!important;
+}
+
 
 .precios-productos{
     padding-left: 10px;
