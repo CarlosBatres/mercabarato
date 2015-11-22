@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="box box_registro">
-                <h2 class="text-uppercase">Informacion del Anuncio</h2>                                        
+                <h2 class="text-uppercase">Información del Anuncio</h2>                                        
                 <hr>
                 <?php if ($this->session->flashdata('error')) { ?>
                     <div class="alert alert-danger"> 

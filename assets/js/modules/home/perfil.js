@@ -16,7 +16,7 @@ $(document).ready(function() {
         rules: {
             nombre_empresa: {required: true},
             nif_cif: {required: true},
-            nickname: {required: true, maxlength: 30,minlength: 3,
+            nickname: {required: true, maxlength: 30, minlength: 3,
                 remote: {
                     url: SITE_URL + "util/verificar_nickname",
                     type: "post",
@@ -78,7 +78,7 @@ $(document).ready(function() {
                 }
             },
             nif_cif: {required: true},
-            nickname: {required: true, maxlength: 30,minlength: 3,
+            nickname: {required: true, maxlength: 30, minlength: 3,
                 remote: {
                     url: SITE_URL + "util/verificar_nickname",
                     type: "post",
@@ -120,11 +120,11 @@ $(document).ready(function() {
             },
             done: function(e, data) {
                 $.each(data.result.files, function(index, file) {
-                    if (typeof file.error !== 'undefined') {                        
+                    if (typeof file.error !== 'undefined') {
                         $('#fileupload_alert').css('display', 'block');
                         $('html, body').animate({
                             scrollTop: $('#fileupload_alert').offset().top
-                        }, 1000);                        
+                        }, 1000);
                         $('#fileupload_alert').find('span').html(file.error);
                     } else {
                         $('#file_name').val(file.name);
@@ -177,6 +177,10 @@ $(document).ready(function() {
                 $('select[name="poblacion"]').html(response.html);
             }
         });
+    });
+
+    $('.btn-comprar').click(function() {
+        $('.btn-comprar').addClass('disabled');        
     });
 
     //$('#form_afiliarse').find('select[name="pais"]').trigger('change');

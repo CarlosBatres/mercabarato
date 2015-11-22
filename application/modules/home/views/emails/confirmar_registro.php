@@ -29,7 +29,7 @@
                             <tr>
                                 <td style="padding: 30px 0 15px 0; color: #153643; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
                                     <b><strong> Enlace de confirmación:</strong></b>                                    
-                                    <p><a href="<?php echo $link;?>">Link para continuar...</a></p>
+                                    <p><a href="<?php echo $link;?>"><?php echo $link ?></a></p>
                                 </td>
                             </tr>   
                                                      

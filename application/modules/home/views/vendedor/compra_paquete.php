@@ -69,7 +69,7 @@
                                             </li>
                                         <?php endif; ?>
                                     </ul>
-                                    <a href="<?php echo site_url("usuario/paquetes/comprar_paquete/" . $paquete->id) ?>" class="btn btn-primary <?php echo (!$puede_comprar) ? 'disabled' : '' ?>"> Comprar </a>
+                                    <a href="<?php echo site_url("usuario/paquetes/comprar_paquete/" . $paquete->id) ?>" class="btn btn-primary btn-comprar <?php echo (!$puede_comprar) ? 'disabled' : '' ?>"> Comprar </a>
                                 </div>                                
                             </div>
                         <?php endforeach; ?>                                                    

@@ -70,7 +70,7 @@
                                             </li>
                                         <?php endif; ?>
                                     </ul>                                                                                                          
-                                    <a href="<?php echo site_url("usuario/afiliacion-final/" . $paquete->id) ?>" class="btn btn-template-main"> Comprar </a>
+                                    <a href="<?php echo site_url("usuario/afiliacion-final/" . $paquete->id) ?>" class="btn btn-template-primary btn-comprar"> Comprar </a>
                                 </div>                                
                             </div>
                         <?php endforeach; ?>                        
