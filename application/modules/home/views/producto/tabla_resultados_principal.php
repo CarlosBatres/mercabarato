@@ -84,6 +84,19 @@
 
                         </div>
                     </div>
+                    <div class="col-xs-12">
+                        <p><a class="producto-nombre-vendedor" href="<?php echo site_url($producto->vendedor_slug) ?>"><?php echo truncate($producto->nombre_vendedor, 60); ?></a></p>
+                        <p class="text-right producto-localidad">
+                            <?php if(isset($producto->pais)):?>
+                                <i class="fa fa-map-marker fa-fw"></i>
+                            <?php endif;?>
+                            <?php
+                            echo (isset($producto->poblacion)) ? $producto->poblacion . ' , ' : '';
+                            echo (isset($producto->provincia)) ? $producto->provincia . ' , ' : '';
+                            echo (isset($producto->pais)) ? $producto->pais : '';
+                            ?>
+                        </p>
+                    </div>
             </li>        
         <?php endforeach; ?>
     </ul>

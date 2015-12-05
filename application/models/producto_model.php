@@ -95,7 +95,8 @@ class Producto_model extends MY_Model {
              * ------------------------------------------------------------------------- 
              */
 
-            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre,vd.filename as imagen_vendedor, "
+            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre,vd.filename as imagen_vendedor,vd.nombre as nombre_vendedor,vd.unique_slug as vendedor_slug, "
+                    . "pa.nombre as pais,pro.nombre as provincia,po.nombre as poblacion, "
                     . "CASE WHEN inv1.id IS NOT NULL THEN true WHEN inv2.id IS NOT NULL THEN true ELSE false END AS invitacion, ";
 
             if (isset($params["order_by_grupo_txt"])) {
@@ -114,6 +115,9 @@ class Producto_model extends MY_Model {
             $query.="INNER JOIN vendedor vd ON vd.id = p.vendedor_id ";
             $query.="INNER JOIN cliente c ON c.id=vd.cliente_id ";
             $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
+            $query.="LEFT JOIN pais pa ON pl.pais_id = pa.id ";
+            $query.="LEFT JOIN provincia pro ON pl.provincia_id = pro.id ";
+            $query.="LEFT JOIN poblacion po ON pl.poblacion_id = po.id ";
 
             $query.="LEFT JOIN ( SELECT * FROM invitacion i WHERE i.invitar_desde='$usuario_tmp->usuario_id' AND i.estado='2' ) as inv1 ON inv1.invitar_para=c.usuario_id ";
             $query.="LEFT JOIN ( SELECT * FROM invitacion i WHERE i.invitar_para='$usuario_tmp->usuario_id' AND i.estado='2' ) as inv2 ON inv2.invitar_desde=c.usuario_id ";
@@ -246,7 +250,8 @@ class Producto_model extends MY_Model {
              *
              * ------------------------------------------------------------------------- 
              */
-            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre, vd.filename as imagen_vendedor, ";
+            $query = "SELECT SQL_CALC_FOUND_ROWS p.*, pr.filename as imagen_nombre, vd.filename as imagen_vendedor,vd.nombre as nombre_vendedor,vd.unique_slug as vendedor_slug, "
+                    . "pa.nombre as pais,pro.nombre as provincia,po.nombre as poblacion, ";
 
             if (isset($params["order_by_grupo_txt"])) {
                 $familia = (isset($params["order_by_familia_txt"]) ? $params["order_by_familia_txt"] : '');
@@ -263,6 +268,9 @@ class Producto_model extends MY_Model {
             $query.="LEFT JOIN producto_resource pr ON pr.producto_id = p.id AND pr.tipo='imagen_principal' ";
             $query.="INNER JOIN vendedor vd ON vd.id = p.vendedor_id ";
             $query.="INNER JOIN productos_localizacion pl ON pl.producto_id = p.id ";
+            $query.="LEFT JOIN pais pa ON pl.pais_id = pa.id ";
+            $query.="LEFT JOIN provincia pro ON pl.provincia_id = pro.id ";
+            $query.="LEFT JOIN poblacion po ON pl.poblacion_id = po.id ";
 
             $query.="WHERE ( 1";
             $sub_query = "";

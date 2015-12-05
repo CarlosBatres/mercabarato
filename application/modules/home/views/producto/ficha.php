@@ -151,7 +151,7 @@
                     <div class="col-md-6 pull-right">
                         <div class="text-right">                        
                             <!--<a class="btn btn-template-primary" href="<?php echo site_url($vendedor->unique_slug) ?>">Ir a la pagina del Vendedor</a>-->                            
-                            <a href="<?php echo site_url($vendedor->unique_slug) ?>"><strong><?php echo $vendedor->nombre ?></strong></a>
+                            <a href="<?php echo site_url($vendedor->unique_slug) ?>"><strong><?php echo truncate($vendedor->nombre,80) ?></strong></a>
                             <?php if ($vendedor->direccion != ""): ?>                        
                                 <p class="text-right"><i class="fa fa-map-marker fa-fw"></i><strong><?php echo $vendedor->direccion ?></strong></p>
                             <?php endif; ?>

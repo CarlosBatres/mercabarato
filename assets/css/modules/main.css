@@ -732,6 +732,16 @@ hr.panel-opciones{
     padding-right: 0px;
 }
 
+.producto-nombre-vendedor{
+    font-weight: bolder;
+    font-size: 15px;    
+}
+
+.producto-localidad{
+    font-weight: bolder;
+    font-size: 14px;
+}
+
 @media (max-width: 768px) {
     .navbar-custom ul{
         background-color: #fff;
